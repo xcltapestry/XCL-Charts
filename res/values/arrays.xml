@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+     <string-array name="chartsTitle">
+ 		
+ 		<item>竖向柱形图</item>
+	    <item>横向柱形图</item>
+	  	<item>竖向3D柱形图 </item>
+	  	<item>横向3D柱形图</item>
+	  	<item>竖向堆叠柱形图 </item>
+	  	<item>横向堆叠柱形图 </item>
+	   	<item>折线图</item>
+	    <item>曲线图</item>
+	    <item>区域图</item>
+	    
+	    <item>多轴混合图1</item>
+	    <item>多轴混合图2</item>
+	    
+	    
+	    
+        <item>饼图</item>
+        <item>3D饼图</item>
+        <item>环形图</item>
+        <item>南丁格尔玫瑰图</item>
+        
+        <item>同源圆图汇总 </item>
+        <item>同源柱形图汇总 </item>
+               
+        <item>半圆图</item>
+        <item>圆形图</item>
+        <item>仪表盘</item>
+    </string-array>
+    
+     <string-array name="chartsDesc">
+	  <item>Bar Chart</item>
+	  <item>Bar Chart </item>
+	 
+	  <item>3D Bar Chart</item>
+	  <item>3D Bar Chart</item>
+	  <item>Stacked Bar Chart</item> 
+	  <item>Stacked Bar Chart</item>
+	  <item>Line Chart</item>
+	  <item>Spline Chart </item>
+	  <item>Area Chart</item>  
+	  
+	   <item>MultiAxis Chart</item>
+	   <item>MultiAxis Chart</item>
+	   
+      <item>Pie Chart</item>
+      <item>3D Pie Chart</item>     
+      <item>Dount Chart</item>
+      <item>Rose Chart</item>     
+      
+      <item>同一数据源可换成不同类型的柱形类的图</item>
+      <item>同一数据源可显示成不同类型的饼，环，玫瑰图等</item>     
+      
+      <item>Circle Chart</item>
+      <item>Circle Chart</item>
+   	  <item>Gauge Chart</item>
+    </string-array>
+    
+     
+      <string-array name="chartsHelp">
+	  <item>http://blog.csdn.net/xcl168/article/details/26813747</item>
+	  <item>http://blog.csdn.net/xcl168 </item>
+	 
+	  <item>3DChart</item>
+	  <item>3DChart2</item>
+	  <item>StackBarChart01</item> 
+	  <item>StackBarChart02</item>
+	  <item>LineChart01</item>
+	  <item>SplineChart01 </item>
+	  <item>AreaChart01</item>  
+	  
+	   <item>MultiAxisChart01View</item>
+	   <item>MultiAxisChart02View</item>
+	   
+      <item>PieChart01</item>
+      <item>Pie3DChart01</item>     
+      <item>DountChart01</item>
+      <item>RoseChart01</item>     
+      
+      <item>同一数据源可换成不同类型的柱形类的图</item>
+      <item>同一数据源可显示成不同类型的饼，环，玫瑰图等</item>     
+      
+      <item>CircleChart01</item>
+      <item>CircleChart02</item>
+   	  <item>GaugeChart01</item>
+    </string-array>
+    
+     
+     <string-array name="spinnerbarstyle">
+        <item>竖向柱形图</item>	  
+        <item>横向柱形图</item> 		
+	  	<item>竖向3D柱形图 </item>
+	  	<item>横向3D柱形图</item>
+	  	<item>竖向堆叠柱形图 </item>
+	  	<item>横向堆叠柱形图 </item>
+    </string-array>
+    
+     <string-array name="spinnercirstyle">
+         <item>饼图</item>
+        <item>3D饼图</item>
+        <item>环形图</item>
+        <item>南丁格尔玫瑰图</item>
+    </string-array>
+    
+</resources>

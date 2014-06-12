@@ -1,0 +1,9 @@
+com.demo.xclcharts
+com.demo.xclcharts.view
+org.xclcharts.chart
+org.xclcharts.renderer
+org.xclcharts.renderer.axis
+org.xclcharts.renderer.bar
+org.xclcharts.renderer.line
+org.xclcharts.renderer.plot
+org.xclcharts.until
