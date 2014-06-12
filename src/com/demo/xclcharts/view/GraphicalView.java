@@ -23,13 +23,13 @@
 package com.demo.xclcharts.view;
 
 
-//import android.annotation.SuppressLint;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-//import android.util.AttributeSet;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -39,9 +39,10 @@ import android.view.View;
  * @ClassName GraphicalView
  * @Description  展示XCL-Charts图表的View基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * 于Android低版本的用户，可通过注释"禁用硬件加速"来支持图表的显示
  */
 
-//@SuppressLint("NewApi")
+@SuppressLint("NewApi")
 public class GraphicalView extends View { 
 
 	protected int mScrWidth = 0;
@@ -131,10 +132,10 @@ public class GraphicalView extends View {
 	private void disableHardwareAccelerated()
 	{
 		// 是否开启了硬件加速,如开启将其禁掉，否则在有些机器上显示不出一些图形,如Rect或Path
-		//if(!isHardwareAccelerated())
-		//{
-		//	setLayerType(View.LAYER_TYPE_SOFTWARE,null); 
-		//}
+		if(!isHardwareAccelerated())
+		{
+			setLayerType(View.LAYER_TYPE_SOFTWARE,null); 
+		}
 	}
 	
 	/**

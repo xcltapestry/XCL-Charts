@@ -4,7 +4,7 @@
     <string name="app_name">XCL-Charts</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="helpurl">http://blog.csdn.net/xcl168</string>
+    <string name="helpurl">http://blog.csdn.net/xcl168/article/details/29675613</string>
     <string name="spinner_label">换一换:</string>
     <string name="seekbar_label">滑动它:</string>
     <string name="title_activity_charts">ChartsActivity</string>
