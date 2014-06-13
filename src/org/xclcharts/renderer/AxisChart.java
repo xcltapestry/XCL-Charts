@@ -22,7 +22,7 @@
 package org.xclcharts.renderer;
 
 
-import org.xclcharts.chart.common.DrawHelper;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.axis.LabelsAxis;

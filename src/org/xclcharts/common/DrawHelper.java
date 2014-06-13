@@ -20,7 +20,7 @@
  * @version v0.1
  */
 
-package org.xclcharts.chart.common;
+package org.xclcharts.common;
 
 import java.util.Random;
 

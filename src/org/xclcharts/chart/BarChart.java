@@ -24,8 +24,8 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import org.xclcharts.chart.common.DrawHelper;
-import org.xclcharts.chart.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.AxisChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;

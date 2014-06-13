@@ -24,7 +24,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import org.xclcharts.chart.common.DrawHelper;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.Bar3D;
 

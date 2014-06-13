@@ -25,8 +25,8 @@ package org.xclcharts.renderer;
 import java.util.List;
 
 import org.xclcharts.chart.LnData;
-import org.xclcharts.chart.common.DrawHelper;
-import org.xclcharts.chart.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotLines;
 

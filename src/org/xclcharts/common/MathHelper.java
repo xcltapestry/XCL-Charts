@@ -19,7 +19,7 @@
  * @license http://www.apache.org/licenses/  Apache v2 License
  * @version v0.1
  */
-package org.xclcharts.chart.common;
+package org.xclcharts.common;
 
 /**
  * @ClassName MathHelper

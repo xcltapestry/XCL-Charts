@@ -29,7 +29,7 @@ package org.xclcharts.renderer;
  * MODIFIED    YYYY-MM-DD   REASON
  */
 
-import org.xclcharts.chart.common.DrawHelper;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.plot.PlotArea;
 import org.xclcharts.renderer.plot.PlotAreaRender;
 import org.xclcharts.renderer.plot.PlotGrid;

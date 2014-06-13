@@ -23,8 +23,8 @@ package org.xclcharts.renderer.axis;
 
 import java.util.List;
 
-import org.xclcharts.chart.common.DrawHelper;
-import org.xclcharts.chart.common.IFormatterTextCallBack;
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.graphics.Canvas;
 

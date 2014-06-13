@@ -22,7 +22,7 @@
  */
 package org.xclcharts.renderer.plot;
 
-import org.xclcharts.chart.common.DrawHelper;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.IRender;
 
 import android.graphics.Canvas;
