@@ -71,8 +71,11 @@ public class PlotGrid {
 		mPaintGridLinesHorizontal = new Paint();
 		mPaintGridLinesVertical = new Paint();
 		
-		mPaintGridLinesHorizontal.setColor((int)Color.rgb(239, 239, 239));
-		mPaintGridLinesVertical.setColor((int)Color.rgb(218, 218, 218));
+		//mPaintGridLinesHorizontal.setColor((int)Color.rgb(239, 239, 239));
+		
+		mPaintGridLinesHorizontal.setColor((int)Color.rgb(180, 205, 230));
+		//mPaintGridLinesVertical.setColor((int)Color.rgb(218, 218, 218));
+		mPaintGridLinesVertical.setColor((int)Color.rgb(180, 205, 230));
 		
 		mPaintGridLinesHorizontal.setStrokeWidth(1);
 		mPaintGridLinesVertical.setStrokeWidth(1);

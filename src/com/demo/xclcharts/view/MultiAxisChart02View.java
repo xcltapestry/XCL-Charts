@@ -30,11 +30,11 @@ import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
-import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.LabelsAxis;
+import org.xclcharts.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
 import android.graphics.Color;

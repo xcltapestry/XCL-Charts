@@ -23,8 +23,8 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.CirChart;
+import org.xclcharts.common.DrawHelper;
 
 import android.graphics.Color;
 import android.graphics.Paint;

@@ -30,9 +30,9 @@ import android.graphics.Canvas;
 
 /**
  * @ClassName XYAxis
- * @Description XY坐标系类，定义了具体的绘制，及格式回调函数的处理
+ * @Description XY坐标系类，定义了具体的绘制及格式回调函数的处理
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 public class XYAxis extends Axis {

@@ -26,7 +26,6 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
 import org.xclcharts.common.IFormatterDoubleCallBack;

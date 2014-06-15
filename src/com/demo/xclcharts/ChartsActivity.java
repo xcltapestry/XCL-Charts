@@ -39,6 +39,7 @@ import com.demo.xclcharts.view.Bar3DChart01View;
 import com.demo.xclcharts.view.Bar3DChart02View;
 import com.demo.xclcharts.view.BarChart01View;
 import com.demo.xclcharts.view.BarChart02View;
+import com.demo.xclcharts.view.BarChart03View;
 import com.demo.xclcharts.view.CircleChart01View;
 import com.demo.xclcharts.view.CircleChart02View;
 import com.demo.xclcharts.view.DountChart01View;
@@ -48,6 +49,7 @@ import com.demo.xclcharts.view.MultiAxisChart01View;
 import com.demo.xclcharts.view.MultiAxisChart02View;
 import com.demo.xclcharts.view.Pie3DChart01View;
 import com.demo.xclcharts.view.PieChart01View;
+import com.demo.xclcharts.view.PolarChart01View;
 import com.demo.xclcharts.view.RoseChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.StackBarChart01View;
@@ -70,6 +72,7 @@ public class ChartsActivity extends Activity {
 		
 		View[] mCharts = new View[]{new BarChart01View(this),
 				new BarChart02View(this),
+				new BarChart03View(this),
 				
 				new Bar3DChart01View(this),
 				new Bar3DChart02View(this),
@@ -84,7 +87,8 @@ public class ChartsActivity extends Activity {
 				new PieChart01View(this),
 				new Pie3DChart01View(this),
 				new DountChart01View(this),
-				new RoseChart01View(this)}; 
+				new RoseChart01View(this),
+				new PolarChart01View(this)}; 
 		
 		
 		Bundle bunde = this.getIntent().getExtras();  
@@ -112,7 +116,7 @@ public class ChartsActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		super.onCreateOptionsMenu(menu);
-        menu.add(Menu.NONE, Menu.FIRST + 1, 0, "Help");  
+        menu.add(Menu.NONE, Menu.FIRST + 1, 0, "帮助");  
         menu.add(Menu.NONE, Menu.FIRST + 2, 0, "关于XCL-Charts"); 
 		return true;
 	}

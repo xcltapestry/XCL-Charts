@@ -1,7 +1,7 @@
 com.demo.xclcharts
 com.demo.xclcharts.view
 org.xclcharts.chart
-org.xclcharts.chart.common
+org.xclcharts.common
 org.xclcharts.renderer
 org.xclcharts.renderer.axis
 org.xclcharts.renderer.bar

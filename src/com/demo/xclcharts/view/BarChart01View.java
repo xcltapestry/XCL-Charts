@@ -28,15 +28,11 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
-import org.xclcharts.chart.LineChart;
-import org.xclcharts.chart.LineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 
 /**
  * @ClassName BarChart01View

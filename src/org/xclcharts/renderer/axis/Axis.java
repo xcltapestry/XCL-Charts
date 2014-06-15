@@ -70,7 +70,10 @@ public class Axis {
 	//刻度标记与轴的间距
 	private int mTickLabelsMargin = 10;	
 	
+	//标签显示位置，分别在轴的左边，中间，右边
 	private Align mTickMarksAlign  = Align.RIGHT;
+	
+	//标签显示位置，分别在轴的上面，中间，底下
 	private XEnum.Postion mTickMarksPostion =  XEnum.Postion.LOWER;	
 	 
 
@@ -286,6 +289,9 @@ public class Axis {
 	{
 		return mTickMarksAlign;
 	}
+	
+	
+	
 	
 	//轴结束方式,以Default还是箭头什么的,暂不实现
 	//public void setEndArrowType()

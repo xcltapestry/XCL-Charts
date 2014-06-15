@@ -36,7 +36,9 @@ import android.graphics.Canvas;
 
 public class DataAxisRender extends DataAxis implements IRender{
 
-
+	//当前刻度线ID
+	private int mCurrentId = 0;
+		
 	public DataAxisRender()
 	{
 		super();
@@ -62,14 +64,61 @@ public class DataAxisRender extends DataAxis implements IRender{
 		
 		return tickCount;
 	}
-		
+	
+	
+	/**
+	 * 设置当前刻度线在轴上的序号ID,注意,此序号与轴的值与关，仅用来说明是轴上的第几个标识
+	 * @param id  刻度线ID
+	 */
+	public void setAxisTickCurrentID(int id)
+	{
+		mCurrentId = id;
+	}
+	
+	/**
+	 * 依据当前id序号与steps的比较来区分当前是否为主tick
+	 * @return 是否为主tick
+	 */
+	public boolean isPrimaryTick()
+	{
+		if(isDetailMode())
+		{			
+			if(mCurrentId >= getDetailModeSteps() && 
+					mCurrentId%getDetailModeSteps() == 0 ) 
+			{
+				return true;
+			}else{
+				return false;
+			}
+		}		
+		return true;		
+	}
+	
+	/**
+	 * 用于处理明细横式下，细分部份的轴刻度线长度缩短为正常的一半，用来突出主明细刻度
+	 * @return 刻度线长度
+	 */
+	@Override
+	public int getTickMarksLength()
+	{		
+		int len = super.getTickMarksLength();		
+		return(isPrimaryTick()?len:len/2);
+	}
+	
+	/**
+	 * 用于处理明细横式下，细分部份的标签不显示出来
+	 */
+	@Override
+	public boolean getAxisTickLabelsVisible() {		
+		return (!isPrimaryTick()?false:super.getAxisTickLabelsVisible());		
+	}
+			
 	/*
 	 * 绘制横向刻度标记
 	 */
 	public 	void renderAxisHorizontalTick(float centerX,float centerY,String text)
 	{		
-		if(getVisible())
-			renderHorizontalTick(centerX,centerY,text);
+		if(getVisible()) renderHorizontalTick(centerX,centerY,text);
 	}
 
 	/**

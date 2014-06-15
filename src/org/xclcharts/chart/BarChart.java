@@ -24,12 +24,12 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.AxisChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.IFormatterDoubleCallBack;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -53,9 +53,22 @@ public class BarChart extends AxisChart {
 	private List<BarData> mDataSet;
 	// 确定是竖向柱形图(默认)还是横向
 	private XEnum.Direction mDirection = XEnum.Direction.VERTICAL;
+	
+	//期望线画笔
+	private Paint mPaintDesireLine = null;
+	//期望线集合
+	private List<DesireLineData> mDesireLineDataSet;
+	
 
 	public BarChart() {
 		super();
+		//期望线
+		mPaintDesireLine = new Paint();
+		mPaintDesireLine.setAntiAlias(true);
+		mPaintDesireLine.setStrokeWidth(3);
+		mPaintDesireLine.setTextSize(18);
+		mPaintDesireLine.setTextAlign(Align.LEFT);
+		
 		// 默认显示Key
 		setPlotKeyVisible(true);
 		
@@ -70,7 +83,25 @@ public class BarChart extends AxisChart {
 	public Bar getBar() {
 		return mFlatBar;
 	}
+	
+	/**
+	 * 开放期望线画笔
+	 * @return 画笔
+	 */
+	public Paint getDesireLinePaint()
+	{
+		return mPaintDesireLine;
+	}
 
+	/**
+	 * 设置期望线值
+	 * @param desireLineDataSet 期望线数据集合
+	 */
+	public void setDesireLines(List<DesireLineData> desireLineDataSet)
+	{
+		mDesireLineDataSet = desireLineDataSet;
+	}
+	
 	/**
 	 * 设置柱形顶上标签显示格式
 	 * @param callBack 回调函数
@@ -114,6 +145,10 @@ public class BarChart extends AxisChart {
 		this.mDataSet = dataSeries;
 	}
 
+	/**
+	 * 返回数据库的数据源
+	 * @return 数据源
+	 */
 	public List<BarData> getDataSource() {
 		return mDataSet;
 	}
@@ -149,7 +184,9 @@ public class BarChart extends AxisChart {
 					labelsAxis.getAxisTickLabelsPaint().setTextAlign(Align.RIGHT);					
 					dataAxis.setAxisHorizontalTickAlign(Align.CENTER);
 					dataAxis.getAxisTickLabelsPaint().setTextAlign(Align.CENTER);					
-					getBar().getItemLabelsPaint().setTextAlign(Align.LEFT);			
+					getBar().getItemLabelsPaint().setTextAlign(Align.LEFT);	
+										
+					
 					break;
 				}
 				case VERTICAL: {					
@@ -158,7 +195,8 @@ public class BarChart extends AxisChart {
 									
 					labelsAxis.setAxisHorizontalTickAlign(Align.CENTER);			
 					labelsAxis.getAxisTickLabelsPaint().setTextAlign(Align.CENTER);					
-					labelsAxis.setAxisVerticalTickPostion(XEnum.Postion.LOWER);				
+					labelsAxis.setAxisVerticalTickPostion(XEnum.Postion.LOWER);	
+					
 					break;
 				}
 			}
@@ -318,6 +356,64 @@ public class BarChart extends AxisChart {
 				/ (this.labelsAxis.getDataSet().size() + 1));
 		return YSteps;
 	}
+	
+	
+	/**
+	 * 用来画竖向柱形图，横向的期望线
+	 */
+	protected void renderVerticalDesirelinesDataAxis() {
+		
+		if(null == mDesireLineDataSet)return;
+		
+		double axisHeight = dataAxis.getAxisMax() - dataAxis.getAxisMin();
+		
+		for(DesireLineData line : mDesireLineDataSet)
+		{			
+			getDesireLinePaint().setColor(line.getColor());
+			getDesireLinePaint().setStrokeWidth(line.getLineWidth());
+			
+			double  postion = getAxisScreenHeight() * ( 
+					(line.getDesireValue() - dataAxis.getAxisMin()) /axisHeight  );
+			
+			float currentY = (float) (plotArea.getPlotBottom() - postion); 
+			
+			this.mCanvas.drawLine(plotArea.getPlotLeft(), currentY,
+								  plotArea.getPlotRight(), currentY, this.getDesireLinePaint());
+			
+			if(line.getLabel().length()  > 0)
+				mCanvas.drawText(line.getLabel(), plotArea.getPlotRight(), currentY, getDesireLinePaint());
+		}
+		
+		
+	}
+	
+	/**
+	 * 用来画横向柱形图，竖向的期望线
+	 */
+	protected void renderHorizontalDesirelinesDataAxis() {
+		
+		if(null == mDesireLineDataSet)return;
+		
+		double axisHeight = dataAxis.getAxisMax() - dataAxis.getAxisMin();
+		
+		for(DesireLineData line : mDesireLineDataSet)
+		{			
+			getDesireLinePaint().setColor(line.getColor());
+			getDesireLinePaint().setStrokeWidth(line.getLineWidth());
+			
+			double  postion = getAxisScreenWidth() * ( 
+					(line.getDesireValue() - dataAxis.getAxisMin()) /axisHeight  );
+			
+			float currentX = (float) (plotArea.getPlotLeft() + postion); 
+			
+			this.mCanvas.drawLine(currentX, plotArea.getPlotBottom(),
+									currentX, plotArea.getPlotTop(), this.getDesireLinePaint());
+			
+			if(line.getLabel().length()  > 0)
+				mCanvas.drawText(line.getLabel(), currentX, plotArea.getPlotTop(), getDesireLinePaint());
+		}		
+	}
+
 
 	/**
 	 * 绘制左边竖轴，及上面的刻度线和标签
@@ -328,12 +424,16 @@ public class BarChart extends AxisChart {
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
 		float currentY = plotArea.getPlotBottom();
-		float maskHeight =  dataAxis.getAxisTickMarksPaint().getStrokeWidth()/2;
+		//float maskHeight =  dataAxis.getAxisTickMarksPaint().getStrokeWidth()/2;
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
 			if (i == 0)
 				continue;
+			
+			//将当前为第几个tick传递轴，用以区分是否为主明tick
+			dataAxis.setAxisTickCurrentID(i);
+			
 			// 依起始数据坐标与数据刻度间距算出上移高度
 			//currentY = (float) Math.rint(plotArea.getPlotBottom() - i * YSteps);
 			currentY = (float)(plotArea.getPlotBottom() - i * YSteps);
@@ -350,18 +450,18 @@ public class BarChart extends AxisChart {
 						+ YSteps, plotArea.getPlotRight(), currentY);
 			}
 			
-			plotGrid.renderGridLinesHorizontal(plotArea.getPlotLeft(),
-					currentY, plotArea.getPlotRight(), currentY);
-			
+			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
+			plotGrid.renderGridLinesHorizontal(plotArea.getPlotLeft(), currentY, 
+											   plotArea.getPlotRight(), currentY);			
 					
 			if(i == tickCount)
 			{
 				dataAxis.renderAxisHorizontalTick(plotArea.getPlotLeft(),
 												  plotArea.getPlotTop() , //- maskHeight, 
-								Float.toString(currentTickLabel));
+												  Float.toString(currentTickLabel));
 			}else{
-				this.dataAxis.renderAxisHorizontalTick(plotArea.getPlotLeft(),
-						currentY, Float.toString(currentTickLabel));
+				dataAxis.renderAxisHorizontalTick(plotArea.getPlotLeft(),
+												currentY, Float.toString(currentTickLabel));
 			}
 			
 		}
@@ -381,19 +481,18 @@ public class BarChart extends AxisChart {
 		List<String> dataSet = labelsAxis.getDataSet();
 
 		// 依传入的标签个数与轴总宽度算出要画的标签间距数是多少
-		// 总宽度 / 标签个数 = 间距长度
-		int XSteps = (int) Math.ceil(getAxisScreenWidth()
-				/ (dataSet.size() + 1));
+		// 总宽度 / 标签个数 = 间距长度  
+		float XSteps = getAxisScreenWidth() / (dataSet.size() + 1); //Math.ceil
 
 		for (int i = 0; i < dataSet.size(); i++) {
 			// 依初超始X坐标与标签间距算出当前刻度的X坐标
-			currentX = Math.round(plotArea.getPlotLeft() + (i + 1) * XSteps);
+			currentX = plotArea.getPlotLeft() + (i + 1) * XSteps; //Math.round
 
 			// 绘制横向网格线
 			if (plotGrid.getVerticalLinesVisible()) {
 				this.mCanvas.drawLine(currentX, plotArea.getPlotBottom(),
 						currentX, plotArea.getPlotTop(),
-						this.plotGrid.getVerticalLinesPaint());
+						plotGrid.getVerticalLinesPaint());
 			}
 			// 画上标签/刻度线
 			labelsAxis.renderAxisVerticalTick(currentX,
@@ -408,7 +507,7 @@ public class BarChart extends AxisChart {
 		// 依数据轴最大刻度值与数据间的间距 算出要画多少个数据刻度
 		double tickCount = dataAxis.getAixTickCount();		
 		// 得到数据标签刻度间距
-		float XSteps = (float) Math.ceil(this.getAxisScreenWidth() / tickCount);
+		float XSteps = (float) (this.getAxisScreenWidth() / tickCount); // Math.ceil
 
 		// x 轴
 		float currentX = this.plotArea.getPlotLeft();
@@ -416,17 +515,21 @@ public class BarChart extends AxisChart {
 			
 			if (i == 0)continue;
 			
+			//将当前为第几个tick传递轴，用以区分是否为主明tick
+			dataAxis.setAxisTickCurrentID(i);
+						
 			// 依起始数据坐标与数据刻度间距算出上移高度
-			currentX = (int) Math.round((this.plotArea.getPlotLeft() + i
-					* XSteps));
+			currentX = plotArea.getPlotLeft() + i * XSteps;
 									
 			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
 					.getAxisSteps()));
+						
+			//绘制tick
 			this.dataAxis.renderAxisVerticalTick(currentX,
 					plotArea.getPlotBottom(), Float.toString(currentTickLabel));
 		
-
 			// 从底到上的竖向网格线
+			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
 			if (i % 2 != 0) {
 				plotGrid.renderOddRowsFill(currentX, plotArea.getPlotTop(),
 						currentX - XSteps, plotArea.getPlotBottom());
@@ -446,8 +549,8 @@ public class BarChart extends AxisChart {
 	protected void renderHorizontalBarLabelAxis() {
 		// Y 轴
 		// 标签横向间距高度
-		float YSteps = (float) Math.ceil(this.getAxisScreenHeight()
-				/ (this.labelsAxis.getDataSet().size() + 1));
+		float YSteps = (float)(getAxisScreenHeight()
+								/ (labelsAxis.getDataSet().size() + 1)); // Math.ceil
 		float currentY = 0.0f;
 		for (int i = 0; i < labelsAxis.getDataSet().size(); i++) {
 			// 依初超始Y坐标与标签间距算出当前刻度的Y坐标
@@ -502,7 +605,7 @@ public class BarChart extends AxisChart {
 				float drawBarTopY = drawBarButtomY - barHeight;
 
 				// 宽度
-				float valuePostion = (float) Math.round(scrWidth
+				float valuePostion = (float)(scrWidth
 						* ((bv - dataAxis.getAxisMin()) / valueWidth));
 
 				// 画出柱形
@@ -530,6 +633,8 @@ public class BarChart extends AxisChart {
 				plotArea.getPlotRight(), plotArea.getPlotBottom());
 		// 画Key说明
 		drawDataSetKey();
+		//画横向柱形图，竖向的期望线
+		renderHorizontalDesirelinesDataAxis();
 	}
 
 	/**
@@ -566,7 +671,7 @@ public class BarChart extends AxisChart {
 			for (int j = 0; j < barValues.size(); j++) {
 				Double bv = barValues.get(j);
 
-				float valuePostion = (float) Math.round(axisScreenHeight
+				float valuePostion = (float) (axisScreenHeight
 						* ((bv - dataAxis.getAxisMin()) / axisDataHeight));
 
 				float currLableX = plotArea.getPlotLeft() + (j + 1) * XSteps;
@@ -599,7 +704,8 @@ public class BarChart extends AxisChart {
 
 		// 绘制标签各柱形集的说明描述
 		drawDataSetKey();
-
+		//画竖向柱形图，横向的期望线
+		renderVerticalDesirelinesDataAxis();
 	}
 
 	public boolean render() throws Exception {

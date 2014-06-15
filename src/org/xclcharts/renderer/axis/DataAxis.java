@@ -35,6 +35,8 @@ public class DataAxis extends XYAxis {
 	 private double mDataAxisMin = 0d;
 	 private double mDataAxisMax = 0d;
 	 private double mDataAxisSteps = 0d;	
+	 private double mDetailModeSteps = 0d;
+	 
 
 	public DataAxis()
 	{
@@ -65,7 +67,18 @@ public class DataAxis extends XYAxis {
 	 {
 		 mDataAxisSteps = steps;
 	 }
-
+	 
+	 
+	 /**
+	  * 设置后，会启用为明细模式，轴刻度线会分长短,背景线会分粗细
+	  * @param steps 步长
+	  */
+	 public void setDetailModeSteps(double steps)
+	 {
+		 mDetailModeSteps = steps;
+	 }
+	 
+		 
 	 /**
 	  * 返回数据轴最小值
 	  * @return 最小值
@@ -89,4 +102,23 @@ public class DataAxis extends XYAxis {
 	public double getAxisSteps() {
 		return mDataAxisSteps;
 	}	
+	
+	/**
+	 * 返回区分刻度线明细的步长
+	 * @return 步长
+	 */
+	public double getDetailModeSteps() {
+		return mDetailModeSteps;
+	}	
+	
+	/**
+	 * 返回是否启用明细模式
+	 * @return
+	 */
+	public boolean isDetailMode()
+	{		
+		return((0d == mDetailModeSteps)?false:true); 
+	}
+	
+	
 }

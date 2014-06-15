@@ -39,6 +39,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 /**
  * @ClassName MainActivity
@@ -98,13 +99,14 @@ public class MainActivity extends Activity {
 			}
         };
         mListView.setOnItemClickListener(listener); 
+              
     }
 
     @Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		super.onCreateOptionsMenu(menu);
-		menu.add(Menu.NONE, Menu.FIRST + 1, 0, "Help");  
+		menu.add(Menu.NONE, Menu.FIRST + 1, 0, "帮助");  
         menu.add(Menu.NONE, Menu.FIRST + 2, 0, "关于XCL-Charts");
         return true;
 	}

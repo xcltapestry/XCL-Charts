@@ -28,9 +28,9 @@ import java.util.List;
 
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
+import org.xclcharts.renderer.XEnum;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Color;

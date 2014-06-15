@@ -26,9 +26,6 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.IRender;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 
 /**
  * @ClassName PlotGridRender
@@ -40,18 +37,30 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	
 	private Canvas mCanvas = null;	
 	private DrawHelper mDrawHelper = new DrawHelper();
+	private boolean mPrimaryTickLine = false;
+	
+	private final int BLOB_WIDTH =  2;;
 	
 	public PlotGridRender()
 	{
 		super();
 	}
+	
+	/**
+	 * 是否为主Tick对应的网格线,如果是,在划线时需加粗
+	 * @param primary 是否为主Tick如是则会加粗显示
+	 */
+	public void setPrimaryTickLine(boolean primary)
+	{
+		mPrimaryTickLine = primary;
+	}
 		
 	/**
 	 * 绘制奇数行填充
-	 * @param left
-	 * @param top
-	 * @param right
-	 * @param bottom
+	 * @param left		左边X坐标
+	 * @param top		顶上Y坐标
+	 * @param right		右边X坐标
+	 * @param bottom	底上Y坐标
 	 */
 	public void renderOddRowsFill(float left,float top,float right,float bottom)
 	{
@@ -63,10 +72,10 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	
 	/**
 	 * 绘制偶数行填充
-	 * @param left
-	 * @param top
-	 * @param right
-	 * @param bottom
+	 * @param left 		左边X坐标
+	 * @param top		顶上Y坐标
+	 * @param right		右边X坐标
+	 * @param bottom	 底上Y坐标
 	 */
 	public void renderEvenRowsFill(float left,float top,float right,float bottom)
 	{
@@ -76,36 +85,47 @@ public class PlotGridRender extends PlotGrid implements IRender{
 		 }		
 	}
 	
+		
+	
 	/**
 	 * 绘制横向网格线
-	 * @param startX
-	 * @param startY
-	 * @param stopX
-	 * @param stopY
+	 * @param startX	起始点X坐标
+	 * @param startY	起始点Y坐标
+	 * @param stopX		终止点X坐标
+	 * @param stopY		终止点Y坐标
 	 */
 	public void renderGridLinesHorizontal(float startX,float startY,float stopX,float stopY)
 	{
 		 if(null != mCanvas &&this.getHorizontalLinesVisible())
 		 {	
-			mDrawHelper.drawLine(this.getHorizontalLinesDashStyle(), startX, startY, stopX, stopY,
+			 float initWidth = getHorizontalLinesPaint().getStrokeWidth() ;
+			 if(mPrimaryTickLine) getHorizontalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 
+			 mDrawHelper.drawLine(this.getHorizontalLinesDashStyle(), startX, startY, stopX, stopY,
 					mCanvas, getHorizontalLinesPaint());
+			 
+			 if(mPrimaryTickLine)getHorizontalLinesPaint().setStrokeWidth(initWidth);
 		 }
 	}
 	
 	/**
 	 * 绘制竖向网格线
-	 * @param startX
-	 * @param startY
-	 * @param stopX
-	 * @param stopY
+	 * @param startX	起始点X坐标
+	 * @param startY	起始点Y坐标
+	 * @param stopX		终止点X坐标
+	 * @param stopY		终止点Y坐标
 	 */
 	public void renderGridLinesVertical(float startX,float startY,float stopX,float stopY)
 	{
-		 if(getVerticalLinesVisible())
-		 {
-			if(null == mCanvas) return;
-			mDrawHelper.drawLine(this.getVerticalLinesDashStyle(), startX, startY, stopX, stopY,
+		 if(null != mCanvas && getVerticalLinesVisible())
+		 {						
+			 float initWidth = getVerticalLinesPaint().getStrokeWidth() ;
+			 if(mPrimaryTickLine) getVerticalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 
+			 mDrawHelper.drawLine(this.getVerticalLinesDashStyle(), startX, startY, stopX, stopY,
 					mCanvas, getVerticalLinesPaint());
+			
+			 if(mPrimaryTickLine)getVerticalLinesPaint().setStrokeWidth(initWidth);
 			
 		 }
 	}

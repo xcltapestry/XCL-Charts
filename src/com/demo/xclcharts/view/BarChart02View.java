@@ -33,9 +33,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Bitmap.Config;
 
 /**
  * @ClassName BarChart02View

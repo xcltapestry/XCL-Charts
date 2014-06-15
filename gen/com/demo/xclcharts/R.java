@@ -10,10 +10,15 @@ package com.demo.xclcharts;
 public final class R {
     public static final class array {
         public static final int chartsDesc=0x7f040001;
-        public static final int chartsHelp=0x7f040002;
         public static final int chartsTitle=0x7f040000;
-        public static final int spinnerbarstyle=0x7f040003;
-        public static final int spinnercirstyle=0x7f040004;
+        /**  
+      <string-array name="chartsHelp">
+	  <item>http://blog.csdn.net/xcl168/article/details/26813747</item>
+    </string-array>
+    
+         */
+        public static final int spinnerbarstyle=0x7f040002;
+        public static final int spinnercirstyle=0x7f040003;
     }
     public static final class attr {
     }
