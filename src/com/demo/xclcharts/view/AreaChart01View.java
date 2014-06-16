@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.xclcharts.chart.AreaChart;
 import org.xclcharts.chart.AreaData;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -75,19 +76,23 @@ public class AreaChart01View extends GraphicalView {
 							
 				//数据轴最大值
 				chart.getDataAxis().setAxisMax(100);
-				//数据轴最小值
-				//chart.getDataAxis().setAxisMin(0);
 				//数据轴刻度间隔
 				chart.getDataAxis().setAxisSteps(10);
 				
 				//背景网格
-				chart.getPlotGrid().setHorizontalLinesVisible(true);
-				chart.getPlotGrid().setVerticalLinesVisible(true);
 				chart.getPlotGrid().setEvenRowsFillVisible(true);
 				chart.getPlotGrid().setOddRowsFillVisible(true);
 				
-				chart.setChartTitle("Area Chart");
+				//标题
+				chart.setChartTitle("区域图(Area Chart)");
+				chart.setChartSubTitle("(XCL-Charts Demo)");	
+				//图例
 				chart.getLegend().setLowerLegend("(年份)");
+				
+				//透明度
+				//chart.setAreaAlpha(200);
+				//显示键值
+				chart.setPlotKeyVisible(true);
 			
 				//绘制
 				chart.render();
@@ -104,24 +109,30 @@ public class AreaChart01View extends GraphicalView {
 		//标签对应的数据集
 		List<Double> dataSeries1= new LinkedList<Double>();	
 		dataSeries1.add((double)55); 
-		dataSeries1.add((double)21); 
-		dataSeries1.add((double)31); 
+		dataSeries1.add((double)60); 
+		dataSeries1.add((double)71); 
 		dataSeries1.add((double)40);
 		dataSeries1.add((double)35);
 		
-		List<Double> dataSeries2 = new LinkedList<Double>();	
-		dataSeries2.add((double)30); 
-		dataSeries2.add((double)52); 
-		dataSeries2.add((double)70); 	
-		dataSeries2.add((double)60); 
+		List<Double> dataSeries2 = new LinkedList<Double>();			
 		dataSeries2.add((double)10); 
+		dataSeries2.add((double)22); 
+		dataSeries2.add((double)30); 	
+		dataSeries2.add((double)30); 
+		dataSeries2.add((double)15); 
 		
+		//设置每条线各自的显示属性
 		//key,数据集,线颜色,区域颜色
-		AreaData line1 = new AreaData("小熊",dataSeries1,(int)Color.rgb(22, 107, 164),
-														(int)Color.rgb(1, 78, 130));
+		AreaData line1 = new AreaData("小熊",dataSeries1,Color.BLUE,Color.YELLOW);
+		//不显示点
+		line1.setDotStyle(XEnum.DotStyle.HIDE);
+		
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
-				(int)Color.rgb(79, 200, 100),(int)Color.rgb(75, 179, 124));
-	
+											(int)Color.rgb(79, 200, 100),Color.GREEN);
+		//设置线上每点对应标签的颜色
+		line2.getPlotLabelsPaint().setColor(Color.RED);
+		//设置点标签
+		line2.setLineLabelVisible(true);
 		
 		mChartDataSet.add(line1);
 		mChartDataSet.add(line2);	

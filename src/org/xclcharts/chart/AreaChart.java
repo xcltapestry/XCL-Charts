@@ -22,6 +22,7 @@
 package org.xclcharts.chart;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.renderer.LnChart;
@@ -123,6 +124,9 @@ public class AreaChart extends LnChart{
         //透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
         mPaintAreaFill.setAlpha( mAreaAlpha );            
         PlotLines pLine = bd.getPlotLines(); 
+        //设置当前填充色
+        mPaintAreaFill.setColor(bd.getAreaFillColor());
+        
 		int j = 0;					 
 		for(Double bv : chartValues)
         {								
@@ -189,7 +193,10 @@ public class AreaChart extends LnChart{
 		pathArea.lineTo(lineStartX ,lineStartY);  
 		pathArea.lineTo(lineStartX ,initY);  
 		pathArea.close(); 
-		mCanvas.drawPath(pathArea, mPaintAreaFill);
+		if(type.equalsIgnoreCase("LINE"))
+    	{
+			mCanvas.drawPath(pathArea, mPaintAreaFill);
+    	}
 	}
 	
 	
@@ -198,13 +205,16 @@ public class AreaChart extends LnChart{
 		renderVerticalDataAxis();
 		renderVerticalLabelsAxis();
 		
+		List<LnData> lstKey = new ArrayList<LnData>();		
 		//开始处 X 轴 即标签轴                  
 		for(int i=0;i<mDataSet.size();i++)
 		{								
 			this.renderLine( mDataSet.get(i),"LINE",(int)Math.round(mDataSet.size() *i));
-			this.renderLine( mDataSet.get(i),"DOT2LABEL",(int)Math.round(mDataSet.size() *i));		
+			this.renderLine( mDataSet.get(i),"DOT2LABEL",(int)Math.round(mDataSet.size() *i));
+			lstKey.add(mDataSet.get(i));
 		}
 			
+		renderKey(lstKey);	
 	}
 	
 	
@@ -212,13 +222,7 @@ public class AreaChart extends LnChart{
 		// TODO Auto-generated method stub
 	
 		try {
-			super.render();
-			
-			//绘制标题
-			//drawTitle();		
-			//绘制图例
-			//legend.setRange(this);
-			//legend.render();				
+			super.render();			
 			//绘制图表
 			renderVerticalPlot();
 			

@@ -50,6 +50,7 @@ import com.demo.xclcharts.view.MultiAxisChart02View;
 import com.demo.xclcharts.view.Pie3DChart01View;
 import com.demo.xclcharts.view.PieChart01View;
 import com.demo.xclcharts.view.PolarChart01View;
+import com.demo.xclcharts.view.RadarChart01View;
 import com.demo.xclcharts.view.RoseChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.StackBarChart01View;
@@ -88,7 +89,8 @@ public class ChartsActivity extends Activity {
 				new Pie3DChart01View(this),
 				new DountChart01View(this),
 				new RoseChart01View(this),
-				new PolarChart01View(this)}; 
+				new PolarChart01View(this),
+				new RadarChart01View(this)}; 
 		
 		
 		Bundle bunde = this.getIntent().getExtras();  

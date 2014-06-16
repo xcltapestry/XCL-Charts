@@ -69,7 +69,8 @@ public class AreaData extends LineData {
 	{
 		setLineLabel(key);	
 		setLinePoint(dataSeries);
-		setLineColor(lineColor);				
+		setLineColor(lineColor);	
+		setAreaFillColor(areaColor);
 	}
 	
 	/**
@@ -88,6 +89,7 @@ public class AreaData extends LineData {
 		setLineColor(color);
 		setLinePoint(dataSeries);
 		setDotStyle(dotStyle);
+		setAreaFillColor(color);
 	}
 	
 	private void init()

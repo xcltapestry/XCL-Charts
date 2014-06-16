@@ -22,6 +22,7 @@
         <item>环形图</item>
         <item>南丁格尔玫瑰图</item>
         
+        <item>极性图</item> 
         <item>雷达图</item> 
         
         <item>同源圆图汇总 </item>
@@ -54,6 +55,7 @@
       <item>Rose Chart</item>     
       
        <item>Polar Chart</item>    
+       <item>Radar Chart</item>    
       
       <item>同一数据源可换成不同类型的柱形类的图</item>
       <item>同一数据源可显示成不同类型的饼，环，玫瑰图等</item>     
