@@ -24,6 +24,7 @@ package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
 import org.xclcharts.renderer.XEnum;
@@ -42,6 +43,7 @@ public class LineChart01View extends GraphicalView {
 	//标签集合
 	private LinkedList<String> lables = new LinkedList<String>();
 	private LinkedList<LineData> chartData = new LinkedList<LineData>();
+    LineChart chart = new LineChart();
 
 	public LineChart01View(Context context) {
 		super(context);
@@ -50,15 +52,20 @@ public class LineChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();	
 	}
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 
-	private void chartRender()
+    private void chartRender()
 	{
 		try {				
 			
-			LineChart chart = new LineChart();
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
 			chart.setPadding(20, 20, 10, 5);
 			
 			//设定数据源
@@ -90,7 +97,6 @@ public class LineChart01View extends GraphicalView {
 			
 		
 			
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

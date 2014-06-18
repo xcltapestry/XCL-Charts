@@ -23,6 +23,7 @@ package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.Pie3DChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.renderer.XEnum;
@@ -37,8 +38,9 @@ import android.graphics.Color;
  */
 public class Pie3DChart01View extends GraphicalView {
 
-	LinkedList<PieData> lPieData = new LinkedList<PieData>();	
-	
+	LinkedList<PieData> lPieData = new LinkedList<PieData>();
+    Pie3DChart chart = new Pie3DChart();
+
 	public Pie3DChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -46,15 +48,21 @@ public class Pie3DChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();		
 	}
-	
-	private void chartRender()
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
+    private void chartRender()
 	{
 		try {
 			
-			Pie3DChart chart = new Pie3DChart();
 			//图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setChartRange(0.0f, 0.0f, getScreenWidth(), getScreenHeight());
 			//图的内边距
 			chart.setPadding(10, 20, 15, 15);
 			
@@ -63,13 +71,12 @@ public class Pie3DChart01View extends GraphicalView {
 			
 			//标题
 			chart.setChartTitle("3D Pie Chart");
-			chart.getPlotTitle().setChartTitlePosition(XEnum.Postion.LOWER);
+			chart.getPlotTitle().setChartTitlePosition(XEnum.Position.LOWER);
 			
 			chart.setKeyVisible(false);
 			chart.getLabelsPaint().setColor(Color.WHITE);
 			
 			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

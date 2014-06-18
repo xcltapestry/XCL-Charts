@@ -35,8 +35,6 @@ import android.graphics.Canvas;
 
 public class PlotAreaRender extends PlotArea implements IRender{
 	
-	private Canvas mCanvas = null;
-	
 	private float mCenterX = 0.0f;
 	private float mCenterY = 0.0f;
 		
@@ -54,11 +52,11 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	/**
 	 * 绘制背景
 	 */
-	protected void drawPlotBackgroup()
+	protected void drawPlotBackground(Canvas canvas)
 	{
-		if(null == mCanvas) return;		
-		if(mBackgroupColorVisible)
-			this.mCanvas.drawRect(mPlotLeft,mPlotTop,
+		if(null == canvas) return;
+		if(mBackgroundColorVisible)
+			canvas.drawRect(mPlotLeft,mPlotTop,
 					mPlotRight,mPlotBottom, mPlotBackgroundPaint);
 	}		
 	
@@ -117,17 +115,11 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	}
 
 	@Override
-	public void setCanvas(Canvas canvas) {
-		// TODO Auto-generated method stub
-		mCanvas = canvas;
-	}
-
-	@Override
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 		try{
-			if(null == mCanvas) return false;
-			drawPlotBackgroup();
+			if(null == canvas) return false;
+			drawPlotBackground(canvas);
 		}catch( Exception e){
 			 throw e;
 		}

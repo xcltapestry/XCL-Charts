@@ -24,6 +24,7 @@ package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
 
@@ -39,6 +40,7 @@ public class CircleChart02View extends GraphicalView {
 	//设置图表数据源
 	private LinkedList<PieData> mlPieData = new LinkedList<PieData>();	
 	private String mDataInfo = "";
+    CircleChart chart = new CircleChart();
 
 	public CircleChart02View(Context context) {
 		super(context);
@@ -47,13 +49,17 @@ public class CircleChart02View extends GraphicalView {
 		setPercentage(0);
 		chartRender();
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
 	public void chartRender()
 	{
 		try {
-			CircleChart chart = new CircleChart();
-			chart.setCanvas(this.mCacheCanvas);
-							
 			//图所占范围大小
 			if(getScreenWidth() < this.getScreenHeight())
 			{
@@ -75,8 +81,6 @@ public class CircleChart02View extends GraphicalView {
 			chart.getPaintFillCircle().setColor((int)Color.rgb(77, 180, 123));
 			//信息颜色
 			chart.getPaintDataInfo().setColor((int)Color.rgb(243, 75, 125));
-			
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

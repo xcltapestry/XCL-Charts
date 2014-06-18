@@ -25,6 +25,7 @@ package com.demo.xclcharts.view;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.renderer.XEnum;
@@ -45,7 +46,8 @@ public class SplineChart01View extends GraphicalView {
 	//标签轴标签集合
 	private LinkedList<String> lables = new LinkedList<String>();
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
-	
+    SplineChart chart = new SplineChart();
+
 	public SplineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -54,15 +56,19 @@ public class SplineChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();	
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 	private void chartRender()
 	{
 		try {
 			
-			SplineChart chart = new SplineChart();
 			//柱形图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setChartRange(0.0f, 0.0f, getScreenWidth(), getScreenHeight());
 			chart.setPadding(20, 20, 13, 5);
 			
 			//数据源	
@@ -100,8 +106,6 @@ public class SplineChart01View extends GraphicalView {
 			chart.setChartSubTitle("(XCL-Charts Demo)");
 			
 			
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

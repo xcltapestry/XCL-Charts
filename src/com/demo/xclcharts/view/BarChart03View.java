@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.DesireLineData;
@@ -47,7 +48,8 @@ public class BarChart03View extends GraphicalView {
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
 	private List<DesireLineData> mDesireLineDataSet = new LinkedList<DesireLineData>();
-	
+    BarChart chart = new BarChart();
+
 	public BarChart03View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -57,15 +59,20 @@ public class BarChart03View extends GraphicalView {
 		chartRender();
 		
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
 	private void chartRender()
 	{
 		try {
 			
-			BarChart chart = new BarChart();
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 8, 10);
@@ -129,7 +136,6 @@ public class BarChart03View extends GraphicalView {
 			//隐藏Key
 			chart.setPlotKeyVisible(false);
 			//绘制图
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

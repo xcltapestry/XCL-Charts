@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.LineChart;
@@ -71,12 +72,19 @@ public class MultiAxisChart01View extends GraphicalView {
 			chartLnRender();
 
 		}
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+            lnChart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 
 		private void chartRender()
 		{
 			try {
 								
-				chart.setCanvas(this.mCacheCanvas);
 				//柱形图所占范围大小
 				chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
 				chart.setChartDirection(XEnum.Direction.VERTICAL);	
@@ -109,7 +117,6 @@ public class MultiAxisChart01View extends GraphicalView {
 				
 				chart.setPlotKeyVisible(false);
 				
-				chart.render();		
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -274,7 +281,7 @@ public class MultiAxisChart01View extends GraphicalView {
 			//将标签与对应的数据集分别绑定
 			LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
 			LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
-			lineData1.setDotStyle(XEnum.DotStyle.TRIGANALE);
+			lineData1.setDotStyle(XEnum.DotStyle.TRIANGLE);
 			lineData1.getPlotDotPaint().setColor((int)Color.rgb(234, 83, 71));
 						
 			chartDataLn.add(lineData1);
@@ -296,9 +303,8 @@ public class MultiAxisChart01View extends GraphicalView {
 			try {
 				
 				//柱形图所占范围大小
-				lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-				lnChart.setCanvas(this.mCacheCanvas);
-				
+				lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(), getScreenHeight());
+
 				if(lnChart.isVerticalScreen())
 				{
 					lnChart.setPadding(20, 10, 10, 10);
@@ -308,7 +314,6 @@ public class MultiAxisChart01View extends GraphicalView {
 				renderLnAxis();
 								
 				lnChart.setPlotKeyVisible(true);
-				lnChart.render();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

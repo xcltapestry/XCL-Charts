@@ -24,6 +24,7 @@ package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.DountChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.renderer.XEnum;
@@ -39,7 +40,8 @@ import android.graphics.Color;
 public class DountChart01View extends GraphicalView {
 
 	LinkedList<PieData> lPieData = new LinkedList<PieData>();
-	
+    DountChart chart = new DountChart();
+
 	public DountChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -47,14 +49,19 @@ public class DountChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
 	private void chartRender()
 	{
 		try {
-			DountChart chart = new DountChart();
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
 			chart.setPadding(20, 30, 15, 15);
 							
 			//设置起始偏移角度
@@ -64,12 +71,11 @@ public class DountChart01View extends GraphicalView {
 			chart.setDataSource(lPieData);
 						
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+			chart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
 			
 			chart.setChartTitle("Dount Chart");
 			chart.setChartSubTitle("(XCL-Charts Demo)");
 							
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

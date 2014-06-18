@@ -43,7 +43,7 @@ import android.view.View;
  */
 
 @SuppressLint("NewApi")
-public class GraphicalView extends View { 
+public abstract class GraphicalView extends View {
 
 	protected int mScrWidth = 0;
 	protected int mScrHeight = 0;
@@ -72,17 +72,14 @@ public class GraphicalView extends View {
 		createCacheBitmap(getScreenWidth(),getScreenHeight());		
 		setCacheBitmapCanvas();
 	}
-	
+
+    public abstract void render(Canvas canvas);
 	
 	  public void onDraw(Canvas canvas)
 	    {
 		 
-		  try {	
-			  if(null != mCacheBitmap)
-			  {
-			     Paint bmpPaint = new Paint();		   
-			     canvas.drawBitmap(mCacheBitmap, 0, 0, bmpPaint);	
-			  }		    	 		
+		  try {
+              render(canvas);
 		  } catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -159,7 +156,7 @@ public class GraphicalView extends View {
 			    	 System.gc();
 			     }
 			  }
-			 mCacheBitmap = Bitmap.createBitmap(width,height,Config.ARGB_8888);	
+//			 mCacheBitmap = Bitmap.createBitmap(width,height,Config.ARGB_4444);
 		}catch(Exception ex){
 			Log.e("ERROR-GraphicalView",ex.toString());
 		}
@@ -176,7 +173,7 @@ public class GraphicalView extends View {
 			//生成画布
 		    mCacheCanvas = new Canvas();	    
 		    //将图绘制到内存中的mCacheBitmap上
-		    mCacheCanvas.setBitmap(mCacheBitmap);
+//		    mCacheCanvas.setBitmap(mCacheBitmap);
 		}
 	}
 

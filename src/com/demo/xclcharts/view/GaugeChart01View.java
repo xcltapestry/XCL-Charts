@@ -25,6 +25,7 @@ package com.demo.xclcharts.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.GaugeChart;
 
 import android.content.Context;
@@ -53,7 +54,14 @@ public class GaugeChart01View  extends GraphicalView {
 		
 		//new Thread(this).start();
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
 	
 	public void setAgent(float currentAgent)
 	{
@@ -66,7 +74,6 @@ public class GaugeChart01View  extends GraphicalView {
 		try {								
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth() - 100,getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);								
 			chart.setPadding(25, 20, 10, 10);
 				
 			//设置标题
@@ -83,7 +90,6 @@ public class GaugeChart01View  extends GraphicalView {
 			//设置当前指向角度(0-180).
 			//chart.setCurrentAgent(90f);
 			chart.setCurrentAgent(mAgent);
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.Bar3DChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.renderer.XEnum;
@@ -46,7 +47,7 @@ public class Bar3DChart01View extends GraphicalView {
 	private List<String> chartLabels = new LinkedList<String>();
 	//数据轴
 	private List<BarData> BarDataSet = new LinkedList<BarData>();
-	
+    Bar3DChart chart = new Bar3DChart();
 	
 	public Bar3DChart01View(Context context) {
 		super(context);
@@ -56,12 +57,19 @@ public class Bar3DChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();				
 	}
-	
-	private void chartRender()
+    @Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
+
+    private void chartRender()
 	{
 		try {						
-			Bar3DChart chart = new Bar3DChart();
-			chart.setCanvas(this.mCacheCanvas);
+
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//Plot的内边距比例		
@@ -132,7 +140,6 @@ public class Bar3DChart01View extends GraphicalView {
 				}});	        
 		
 			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

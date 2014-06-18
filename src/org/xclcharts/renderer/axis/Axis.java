@@ -74,7 +74,7 @@ public class Axis {
 	private Align mTickMarksAlign  = Align.RIGHT;
 	
 	//标签显示位置，分别在轴的上面，中间，底下
-	private XEnum.Postion mTickMarksPostion =  XEnum.Postion.LOWER;	
+	private XEnum.Position mTickMarksPosition =  XEnum.Position.LOWER;
 	 
 
 	public Axis()
@@ -259,20 +259,20 @@ public class Axis {
 	
 	/**
 	 *  设置时刻度显示在上，中，下哪个地方,针对横轴
-	 * @param postion 上方，居中，下方
+	 * @param position 上方，居中，下方
 	 */
-	public void setAxisVerticalTickPostion(XEnum.Postion postion)
+	public void setAxisVerticalTickPosition(XEnum.Position position)
 	{
-		mTickMarksPostion = postion;
+		mTickMarksPosition = position;
 	}
 	
 	/**
 	 * 返回轴上刻度线显示的位置
 	 * @return 位置
 	 */
-	public XEnum.Postion getAxisVerticalTickPostion()
+	public XEnum.Position getAxisVerticalTickPosition()
 	{
-		return mTickMarksPostion;
+		return mTickMarksPosition;
 	}
 	
 	

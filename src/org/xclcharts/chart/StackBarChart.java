@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 
@@ -63,11 +64,11 @@ public class StackBarChart  extends BarChart{
 	}
 	
 	@Override
-	protected void renderHorizontalBar()
+	protected void renderHorizontalBar(Canvas canvas)
 	{
 	
-		renderHorizontalBarDataAxis();	
-		renderHorizontalBarLabelAxis(); 		
+		renderHorizontalBarDataAxis(canvas);
+		renderHorizontalBarLabelAxis(canvas);
 		
 		 float axisScreenWidth  =  getAxisScreenWidth(); 
 		 float axisDataRange = (float) dataAxis.getAxisRange(); 	
@@ -107,11 +108,11 @@ public class StackBarChart  extends BarChart{
 					
 				   	//宽度                	
 				   flatBar.renderBar(currentX ,currentY - barHeight/2,
-						   			 currentX + valuePostion,currentY + barHeight/2,this.mCanvas); 	             	
+						   			 currentX + valuePostion,currentY + barHeight/2,canvas);
 				    				    
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-												currentX + valuePostion/2, currentY , mCanvas);											
+												currentX + valuePostion/2, currentY , canvas);
 					currentX += valuePostion ;						 
 				 }
 				
@@ -120,28 +121,28 @@ public class StackBarChart  extends BarChart{
 				 {
 					 float totalPostion = (float)( axisScreenWidth/axisDataRange * (total- dataAxis.getAxisMin()) );					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
-							 					plotArea.getPlotLeft()  - totalPostion, currentY, mCanvas);
+							 					plotArea.getPlotLeft()  - totalPostion, currentY, canvas);
 				 }
 		 }	
 	 		 		 
 	 	//Y轴线
-		dataAxis.renderAxis(plotArea.getPlotLeft(), plotArea.getPlotBottom(), 
+		dataAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
 							  plotArea.getPlotLeft(), plotArea.getPlotTop());	
 		 
 		//X轴 线		
-		labelsAxis.renderAxis(plotArea.getPlotLeft(), plotArea.getPlotBottom(), 
+		labelsAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
 								  plotArea.getPlotRight(),  plotArea.getPlotBottom());	
 		//画Key说明
-		drawDataSetKey();				
+		drawDataSetKey(canvas);
 	}
 	
 	@Override
-	protected void renderVerticalBar()
+	protected void renderVerticalBar(Canvas canvas)
 	{
 	
 			//坐标布局
-			renderVerticalBarDataAxis();
-			renderVerticalBarLabelsAxis();
+			renderVerticalBarDataAxis(canvas);
+			renderVerticalBarLabelsAxis(canvas);
 		
 			//得到标签轴数据集
 			List<String> dataSet =  labelsAxis.getDataSet();			 
@@ -178,23 +179,23 @@ public class StackBarChart  extends BarChart{
 							
 						}
 						flatBar.renderBar(currentX - barWidht/2, currentY - valuePostion, 
-										  currentX + barWidht /2, currentY, mCanvas);	 
+										  currentX + barWidht /2, currentY, canvas);
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
-													currentX, currentY - valuePostion/2, mCanvas);											
+													currentX, currentY - valuePostion/2, canvas);
 						currentY -= valuePostion ;						 
 					 }
 					 //合计					 
 					 float totalPostion = (float) ( axisScreenHeight/axisDataHeight * (total- dataAxis.getAxisMin()) ); 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
-							 					currentX, plotArea.getPlotBottom() - totalPostion, mCanvas);							
+							 					currentX, plotArea.getPlotBottom() - totalPostion, canvas);
 			 }			 
 			 
 			//轴 线		 		 
-			 dataAxis.renderAxis(plotArea.getPlotLeft(),  plotArea.getPlotBottom(),
+			 dataAxis.renderAxis(canvas,plotArea.getPlotLeft(),  plotArea.getPlotBottom(),
 		 			   			 plotArea.getPlotRight(),  plotArea.getPlotBottom());
 			 
-			 drawDataSetKey();			 		
+			 drawDataSetKey(canvas);
 	}
 	
 	

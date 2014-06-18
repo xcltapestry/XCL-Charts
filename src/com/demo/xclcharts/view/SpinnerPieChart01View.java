@@ -2,6 +2,7 @@ package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.DountChart;
 import org.xclcharts.chart.Pie3DChart;
 import org.xclcharts.chart.PieChart;
@@ -29,7 +30,14 @@ public class SpinnerPieChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();
 	}
-	
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            mChart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 	
      private void initChart(int chartStyle)
  	{
@@ -37,12 +45,12 @@ public class SpinnerPieChart01View extends GraphicalView {
  		{
  		case 0: //饼图
  			mChart = new PieChart();
- 			mChart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+ 			mChart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
  			
  			break;
  		case 1:	//3D饼图
  			mChart = new Pie3DChart();
- 			mChart.setLablesDisplay(XEnum.DisplayPostion.CENTER);
+ 			mChart.setLabelsDisplay(XEnum.DisplayPosition.CENTER);
  			mChart.getLabelsPaint().setColor(Color.WHITE); 
  			
  			break;
@@ -51,10 +59,10 @@ public class SpinnerPieChart01View extends GraphicalView {
  			break;
  		case 3:	//南丁格尔玫瑰图
  			mChart = new RoseChart();
- 			mChart.setBackgroupColor(true, (int)Color.rgb(115, 153, 0));
+ 			mChart.setBackgroundColor(true, (int)Color.rgb(115, 153, 0));
  			((RoseChart) mChart).getInnerPaint().setColor((int)Color.rgb(153, 204, 0));
  			mChart.getLabelsPaint().setColor(Color.WHITE);
- 			mChart.setLablesDisplay(XEnum.DisplayPostion.CENTER);
+ 			mChart.setLabelsDisplay(XEnum.DisplayPosition.CENTER);
  			break;		
  		}
  	}
@@ -67,7 +75,6 @@ public class SpinnerPieChart01View extends GraphicalView {
  			mChart.setChartRange( 0.0f,mMoveHeight,
  									getScreenWidth(),
  									getScreenHeight() - mMoveHeight);
- 			mChart.setCanvas(this.mCacheCanvas);
  			//图的内边距
  			mChart.setPadding(5, 35, 15, 20);
  			
@@ -79,7 +86,6 @@ public class SpinnerPieChart01View extends GraphicalView {
  			//显示Key值
  			mChart.setKeyVisible(true);
  			//绘制
- 			mChart.render();
  		} catch (Exception e) {
  			// TODO Auto-generated catch block
  			e.printStackTrace();

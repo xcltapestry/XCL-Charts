@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.Bar3DChart;
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
@@ -36,9 +37,16 @@ public class SpinnerBarChart01View extends GraphicalView {
 		chartRender();
 		
 	}
-	
-	
-	private void initChart(int chartStyle)
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            mChart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
+    private void initChart(int chartStyle)
 	{
 		switch(chartStyle)
 		{
@@ -77,8 +85,7 @@ public class SpinnerBarChart01View extends GraphicalView {
 			initChart(mChartStyle);
 			
 			//图所占范围大小
-			mChart.setChartRange(0.0f, mMoveHeight, getScreenWidth(),getScreenHeight() - mMoveHeight);
-			mChart.setCanvas(this.mCacheCanvas);
+			mChart.setChartRange(0.0f, mMoveHeight, getScreenWidth(), getScreenHeight() - mMoveHeight);
 			if(mChart.isVerticalScreen())
 			{
 				mChart.setPadding(5, 40, 10, 15);
@@ -122,7 +129,6 @@ public class SpinnerBarChart01View extends GraphicalView {
 					return label+"%";
 				}});	       
 								
-			mChart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

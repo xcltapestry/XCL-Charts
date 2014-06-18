@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
 import org.xclcharts.renderer.XEnum;
@@ -44,7 +45,8 @@ public class StackBarChart02View extends GraphicalView {
 	//标签轴
 	List<String> chartLabels = new LinkedList<String>();
 	List<BarData> BarDataSet = new LinkedList<BarData>();
-	
+    StackBarChart chart = new StackBarChart();
+
 	public StackBarChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -53,12 +55,16 @@ public class StackBarChart02View extends GraphicalView {
 		chartDataSet();
 		chartRender();
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 	private void chartRender()
 	{
 		try {		
-			StackBarChart chart = new StackBarChart();
-			chart.setCanvas(this.mCacheCanvas);
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//指定显示为横向柱形
@@ -125,7 +131,6 @@ public class StackBarChart02View extends GraphicalView {
 				}});	        
 				
 			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
