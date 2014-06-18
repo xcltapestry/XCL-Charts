@@ -25,6 +25,7 @@ package com.demo.xclcharts.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.AreaChart;
 import org.xclcharts.chart.AreaData;
 import org.xclcharts.renderer.XEnum;
@@ -46,6 +47,7 @@ public class AreaChart01View extends GraphicalView {
 	private LinkedList<String> mChartLabels = new LinkedList<String>();
 	//数据集合
 	private LinkedList<AreaData> mChartDataSet = new LinkedList<AreaData>();
+    AreaChart chart = new AreaChart();
 			
 
 	public AreaChart01View(Context context) {
@@ -61,11 +63,8 @@ public class AreaChart01View extends GraphicalView {
 	private void chartRender()
 	{
 		try{				
-				AreaChart chart = new AreaChart();
-				 
 				//柱形图所占范围大小
 				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-				chart.setCanvas(this.mCacheCanvas);
 				chart.setPadding(15, 30, 10, 5);
 											
 				//轴数据源						
@@ -95,15 +94,22 @@ public class AreaChart01View extends GraphicalView {
 				chart.setPlotKeyVisible(true);
 			
 				//绘制
-				chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.e("ERROR-AreaChart01View", e.toString());
 		}
 	}
-	
-	private void chartDataSet()
+
+    @Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
+    private void chartDataSet()
 	{
 		//将标签与对应的数据集分别绑定
 		//标签对应的数据集

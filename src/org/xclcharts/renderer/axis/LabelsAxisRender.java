@@ -45,7 +45,7 @@ public class LabelsAxisRender extends LabelsAxis implements IRender{
 	{
 		super();
 		getAxisTickLabelsPaint().setTextAlign(Align.CENTER);		
-		setAxisVerticalTickPostion(XEnum.Postion.LOWER);	
+		setAxisVerticalTickPosition(XEnum.Position.LOWER);
 	}
 	
 	/**
@@ -63,10 +63,10 @@ public class LabelsAxisRender extends LabelsAxis implements IRender{
 	 * @param centerY	点Y坐标
 	 * @param text	内容
 	 */
-	public 	void renderAxisHorizontalTick(float centerX,float centerY,String text)
+	public 	void renderAxisHorizontalTick(Canvas canvas, float centerX,float centerY,String text)
 	{		
 		if(getVisible())
-			renderHorizontalTick(centerX,centerY,text);
+			renderHorizontalTick(canvas,centerX,centerY,text);
 	}
 	
 	/**
@@ -75,11 +75,11 @@ public class LabelsAxisRender extends LabelsAxis implements IRender{
 	 * @param centerY	点Y坐标
 	 * @param text	内容
 	 */
-	public void renderAxisVerticalTick(float centerX,float centerY,String text)
+	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
 	{
 		
 		if(getVisible())
-			renderVerticalTick(centerX,centerY,text);
+			renderVerticalTick(canvas,centerX,centerY,text);
 	}
 	
 	/**
@@ -89,21 +89,16 @@ public class LabelsAxisRender extends LabelsAxis implements IRender{
 	 * @param stopX	 终止点X坐标	
 	 * @param stopY	 终止点Y坐标
 	 */
-	public void renderAxis(float startX,float startY,float stopX,float stopY)
+	public void renderAxis(Canvas canvas,float startX,float startY,float stopX,float stopY)
 	{
 		if(getVisible() && getAxisLineVisible())
-			mCanvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
 	}
 	
 
-	@Override
-	public void setCanvas(Canvas canvas) {
-		// TODO Auto-generated method stub
-		mCanvas = canvas;
-	}
 
 	@Override
-	public boolean render() {
+	public boolean render(Canvas canvas) {
 		// TODO Auto-generated method stub
 		
 		if(false == getVisible())return true;

@@ -38,7 +38,6 @@ import android.graphics.Color;
 
 public class LegendRender extends Legend implements IRender{
 	
-	private Canvas mCanvas = null;
 	private DrawHelper mDrawHelper =  null;
 	
 	private XChart mChart = null;
@@ -67,33 +66,28 @@ public class LegendRender extends Legend implements IRender{
 		mChart = chart;
 	}
 
-	@Override
-	public void setCanvas(Canvas canvas) {
-		// TODO Auto-generated method stub
-		mCanvas = canvas;
-	}
 
 	@Override
-	public boolean render() {
+	public boolean render(Canvas canvas) {
 		// TODO Auto-generated method stub
 		
 		if(null == mChart) return false;
 		
 		if(this.getLeftLegend().length() > 0)
 		{
-			drawLeftLegend(getLeftLegend(),mChart.getChartLeft(),mChart.getChartTop(),
+			drawLeftLegend(canvas,getLeftLegend(),mChart.getChartLeft(),mChart.getChartTop(),
 										mChart.getChartRight(),mChart.getChartBottom());
 		}
 		
 		if(this.getLowerLegend().length() > 0)
 		{						
-			drawLegendLower(getLowerLegend(),mChart.getChartLeft(),mChart.getChartTop(),
+			drawLegendLower(canvas,getLowerLegend(),mChart.getChartLeft(),mChart.getChartTop(),
 					mChart.getChartRight(),mChart.getChartBottom());
 		}
 		
 		if(this.getRightLegend().length() > 0)
 		{
-			drawRightLegend(getRightLegend(),mChart.getChartLeft(),mChart.getChartTop(),
+			drawRightLegend(canvas,getRightLegend(),mChart.getChartLeft(),mChart.getChartTop(),
 					mChart.getChartRight(),mChart.getChartBottom());
 		}
 		
@@ -109,10 +103,10 @@ public class LegendRender extends Legend implements IRender{
 	  * @param right	右边X坐标
 	  * @param bottom	下方Y坐标
 	  */
-	public void drawLeftLegend(String legend,double left,double top,
+	public void drawLeftLegend(Canvas canvas, String legend,double left,double top,
 											 double right,double bottom) //,Canvas canvas)
 	{							
-		if(null == this.mCanvas) return ;
+		if(null == canvas) return ;
 		
 		//是否需要绘制图例
 		if( 0 == legend.length() || "" == legend)return;
@@ -136,7 +130,7 @@ public class LegendRender extends Legend implements IRender{
         	 mDrawHelper.drawRotateText(legend.substring(i, i+1),
 					        			 legendTextStartX,legendTextStartY,
 					        			 -90,
-					        			 mCanvas, mPaintLeftLegend );            	             	                       	 
+					        			 canvas, mPaintLeftLegend );
         	 legendTextStartY -= legendCharHeight;
          }
 	}
@@ -149,9 +143,9 @@ public class LegendRender extends Legend implements IRender{
 	 * @param right		右边X坐标
 	 * @param bottom	下方Y坐标
 	 */
-	public void drawLegendLower(String legend,double left,double top,double right,double bottom) 
+	public void drawLegendLower(Canvas canvas, String legend,double left,double top,double right,double bottom)
 	{         
-         if(null == this.mCanvas) return ; 		
+         if(null == canvas) return ;
  		 //是否需要绘制图例
  		 if( 0 == legend.length() )return;
  	
@@ -174,7 +168,7 @@ public class LegendRender extends Legend implements IRender{
  		
  		
  		mDrawHelper.drawRotateText(legend,
-       		 legendTextStartX,legendY,0,mCanvas, getLowerLegendPaint());	
+       		 legendTextStartX,legendY,0,canvas, getLowerLegendPaint());
 	}
 	
 	/**
@@ -185,9 +179,9 @@ public class LegendRender extends Legend implements IRender{
 	 * @param right		右边X坐标
 	 * @param bottom	下方Y坐标
 	 */
-	public void drawRightLegend(String legend,double left,double top,double right,double bottom)
+	public void drawRightLegend(Canvas canvas,String legend,double left,double top,double right,double bottom)
 	{			
-		if(null == mCanvas) return ;
+		if(null == canvas) return ;
 		
 		//是否需要绘制图例
 		if( 0 == legend.length() || "" == legend)return;
@@ -205,7 +199,7 @@ public class LegendRender extends Legend implements IRender{
         	 legendCharHeight = mDrawHelper.getTextWidth(mPaintRightLegend,legend.substring(i, i+1));        	 
         	 //绘制文字，旋转-90得到横向效果
         	 mDrawHelper.drawRotateText(legend.substring(i, i+1),
-        			 legendTextStartX,legendTextStartY,90,mCanvas, mPaintRightLegend );            	             	                       	 
+        			 legendTextStartX,legendTextStartY,90,canvas, mPaintRightLegend );
         	 legendTextStartY += legendCharHeight;
          }
 	

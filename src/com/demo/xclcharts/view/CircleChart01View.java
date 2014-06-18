@@ -25,6 +25,7 @@ package com.demo.xclcharts.view;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.renderer.XEnum;
@@ -43,20 +44,28 @@ public class CircleChart01View extends GraphicalView {
 	private List<PieData> mlPieData = new LinkedList<PieData>();	
 	
 	private String mDataInfo = "";
-	
-	public CircleChart01View(Context context) {
+    CircleChart chart = new CircleChart();
+
+    public CircleChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
 		setPercentage(0);
 		chartRender();
 	}
-	
-	public void chartRender()
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
+    public void chartRender()
 	{
 		try {			
-			CircleChart chart = new CircleChart();	
-			
+
 			//图所占范围大小			
 			if(getScreenWidth() < this.getScreenHeight())
 			{
@@ -64,8 +73,7 @@ public class CircleChart01View extends GraphicalView {
 			}else{
 				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
 			}
-			chart.setCanvas(this.mCacheCanvas);			
-		
+
 			//设置附加信息
 			chart.setAttributeInfo(mDataInfo); 	
 			//图的内间距
@@ -78,8 +86,7 @@ public class CircleChart01View extends GraphicalView {
 			chart.setDataSource(mlPieData);				
 			
 			//绘制
-			chart.render();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

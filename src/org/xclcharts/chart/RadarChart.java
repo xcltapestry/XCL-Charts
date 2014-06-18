@@ -23,6 +23,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -128,7 +129,7 @@ public class RadarChart extends XChart{
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
 	 * @param dp 显示位置
 	 */
-	public void setLablesDisplay(XEnum.DisplayPostion dp)
+	public void setLabelsDisplay(XEnum.DisplayPosition dp)
 	{
 		//mLablesDP = dp;
 	}
@@ -165,7 +166,7 @@ public class RadarChart extends XChart{
 	*/
 	
 	
-	private void renderGridLines()
+	private void renderGridLines(Canvas canvas)
 	{
 		mRadius = 50;
 		int DuCount = 5; //labels.size(); //总环数
@@ -193,11 +194,11 @@ public class RadarChart extends XChart{
 			for(int i=DuCount;i>=0;i--)
 			{
 				float curRadius = avgRadius * i;
-				this.mCanvas.drawCircle(cirX,cirY,curRadius,mPaintLabels);
+				canvas.drawCircle(cirX,cirY,curRadius,mPaintLabels);
 				if(i == 5)
 				{  
 					//最外环扇区	
-					mCanvas.drawArc(arcRF0, pAngleOffset + pAngle * (DuCount -1) ,pAngle, true,mPaintLabels); 
+					canvas.drawArc(arcRF0, pAngleOffset + pAngle * (DuCount -1) ,pAngle, true,mPaintLabels);
 				}			
 			}		
 				
@@ -207,7 +208,7 @@ public class RadarChart extends XChart{
 	/**
 	 * 绘制key
 	 */
-	protected void renderKey()
+	protected void renderKey(Canvas canvas)
 	{
 		
 	}
@@ -215,30 +216,30 @@ public class RadarChart extends XChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot()
+	protected void renderPlot(Canvas canvas)
 	{
-		renderGridLines();
+		renderGridLines(canvas);
 	}
 	
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
 		try {
 		
-			super.render();
+			super.render(canvas);
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
-			 plotArea.render();			 
+			 plotArea.render(canvas);
 			//画奇偶行填充,横竖网格线			
-			 plotGrid.render();			
+			 plotGrid.render(canvas);
 			 
 			
 			 
 			//绘制标题
-			renderTitle();
+			renderTitle(canvas);
 			
-			 renderPlot();
+			 renderPlot(canvas);
 			 
 			
 		}catch( Exception e){

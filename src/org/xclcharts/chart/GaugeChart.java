@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.renderer.CirChart;
 
 import android.graphics.Color;
@@ -47,7 +48,7 @@ public class GaugeChart extends CirChart{
 	//刻度步长
 	private double mTickSteps = 10d;
 	//标签
-	private List<String> mLables = null;
+	private List<String> mLabels = null;
 	
 	//刻度
 	private Paint mPaintTick = null;
@@ -166,7 +167,7 @@ public class GaugeChart extends CirChart{
 	 * @param curretAgent	当前角度
 	 * @throws Exception	例外
 	 */
-	protected void drawPercent( Paint paintArc,
+	protected void drawPercent(Canvas canvas, Paint paintArc,
 			final float cirX,
 			final float cirY,
 			final float radius,
@@ -181,7 +182,7 @@ public class GaugeChart extends CirChart{
 	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
 			
 			//在饼图中显示所占比例  
-			mCanvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);     
+			canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
 		  
 		
 		}catch( Exception e){
@@ -204,7 +205,7 @@ public class GaugeChart extends CirChart{
 	 */
 	public void setLabels(List<String> labels)
 	{
-		mLables = labels;
+		mLabels = labels;
 	}
 	
 	
@@ -227,29 +228,29 @@ public class GaugeChart extends CirChart{
 		mPointerAgent = agent;
 	}
 	
-	private void rederLabels()
+	private void renderLabels(Canvas canvas)
 	{		
-		float stepsAgent = Math.round(180/(mLables.size() - 1 ));					
+		float stepsAgent = Math.round(180/(mLabels.size() - 1 ));
 		float calcRadius = this.getRadius()  + getRadius()/10;		
 				 
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
 		getLabelsPaint().setTextAlign(Align.CENTER);	
 		int i = 0;
-		for(String label : mLables)
+		for(String label : mLabels)
 		{							
 			if(0 == i) //开头
 			{			
-				mCanvas.drawText(label,
+				canvas.drawText(label,
 						cirX - calcRadius, cirY ,this.getLabelsPaint());   			
-			}else if(i == mLables.size() -1 ){ //结尾				
-				mCanvas.drawText(label,
+			}else if(i == mLabels.size() -1 ){ //结尾
+                canvas.drawText(label,
 						cirX + calcRadius, cirY ,this.getLabelsPaint());   				
 			}else{				
 				//计算百分比标签
 				mCalc.CalcArcEndPointXY(cirX, cirY, calcRadius, 180 + i *stepsAgent); 
 				//标识
-				mCanvas.drawText(label,
+                canvas.drawText(label,
 					 mCalc.getPosX(), mCalc.getPosY() ,this.getLabelsPaint());   
 				
 			}
@@ -260,7 +261,7 @@ public class GaugeChart extends CirChart{
 	/**
 	 * 绘制刻度
 	 */
-	private void renderTick()
+	private void renderTick(Canvas canvas)
 	{
 		//步长角度
 		double stepsAgent = Math.round(180/mTickSteps);		
@@ -278,14 +279,14 @@ public class GaugeChart extends CirChart{
 			float startY = mCalc.getPosY();
 			mCalc.CalcArcEndPointXY(cirX, cirY,tickRadius, agent); 		
 			
-			mCanvas.drawLine(startX, startY, mCalc.getPosX(), mCalc.getPosY(), mPaintTick);			
+			canvas.drawLine(startX, startY, mCalc.getPosX(), mCalc.getPosY(), mPaintTick);
 		}
 	}	
 	
 	/**
 	 * 绘制指针
 	 */
-	private void renderPointerLine()
+	private void renderPointerLine(Canvas canvas)
 	{		
 		if(mPointerAgent > 180) //爆表了 
 		{
@@ -298,19 +299,19 @@ public class GaugeChart extends CirChart{
 			float cirX = plotArea.getCenterX();
 			float cirY = plotArea.getCenterY();
 					
-			mCalc.CalcArcEndPointXY(cirX, cirY, currentRadius, calcAgent); 				
-			mCanvas.drawLine(cirX, cirY, mCalc.getPosX(), mCalc.getPosY(), mPaintPointerLine);
+			mCalc.CalcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);
+            canvas.drawLine(cirX, cirY, mCalc.getPosX(), mCalc.getPosY(), mPaintPointerLine);
 		}		
 	}
 	
 	/**
 	 * 绘制指针底部的圆
 	 */
-	private void renderPinterCircle()
+	private void renderPinterCircle(Canvas canvas)
 	{
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
-		mCanvas.drawCircle(cirX, cirY, Math.round(this.getRadius() * 0.05), mPaintPinterCircle);
+		canvas.drawCircle(cirX, cirY, Math.round(this.getRadius() * 0.05), mPaintPinterCircle);
 	}
 	
 		
@@ -318,7 +319,7 @@ public class GaugeChart extends CirChart{
 	 * 绘制内部颜色分区填充
 	 * @throws Exception
 	 */
-	private void renderPartitionFill() throws Exception
+	private void renderPartitionFill(Canvas canvas) throws Exception
 	{		
 		Integer totalAgent = 0;		
 		 float newRadius = Math.round(getRadius() * 0.8);
@@ -340,7 +341,7 @@ public class GaugeChart extends CirChart{
 		    	 return ;
 		     }			 			 
 			 mPaintPartitionFill.setColor((Integer) pr.second);				 
-			 mCanvas.drawArc(rect, totalAgent + 180, agentValue, true, mPaintPartitionFill);  
+			 canvas.drawArc(rect, totalAgent + 180, agentValue, true, mPaintPartitionFill);
 		     totalAgent += agentValue;
 		 }
 				 
@@ -350,31 +351,31 @@ public class GaugeChart extends CirChart{
 	 * 绘制环
 	 * @throws Exception
 	 */
-	private void renderDount() throws Exception
+	private void renderDount(Canvas canvas) throws Exception
 	{		
-		 drawPercent(mPaintDount,plotArea.getCenterX(),plotArea.getCenterY(),getRadius(),180, 180);
+		 drawPercent(canvas, mPaintDount,plotArea.getCenterX(),plotArea.getCenterY(),getRadius(),180, 180);
 	}
 	
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot()
+	protected void renderPlot(Canvas canvas)
 	{
 		try{	
 			
 			 //外环
-			 renderDount();
+			 renderDount(canvas);
 		     //依角度画好刻度线
 			// 计算出坐标点,从圆心到点间画线
-		     renderTick();	
+		     renderTick(canvas);
 			//画上用于标识分区的扇区
-			 renderPartitionFill() ;
+			 renderPartitionFill(canvas) ;
 			 //画上外围标签
-			 rederLabels();			 
+			 renderLabels(canvas);
 			//最后再画指针
-			 renderPointerLine();
+			 renderPointerLine(canvas);
 			 //画上指针尾部的白色圆心
-			 renderPinterCircle();
+			 renderPinterCircle(canvas);
 			
 				
 		}catch( Exception e){
@@ -384,13 +385,13 @@ public class GaugeChart extends CirChart{
 	}
 	
 			
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
 		try {
-			super.render();				
+			super.render(canvas);
 			//绘制图表
-			renderPlot();
+			renderPlot(canvas);
 			
 		}catch( Exception e){
 			 throw e;

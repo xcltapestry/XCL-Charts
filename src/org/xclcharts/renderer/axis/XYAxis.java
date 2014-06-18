@@ -37,7 +37,6 @@ import android.graphics.Canvas;
 
 public class XYAxis extends Axis {
 
-	protected Canvas mCanvas = null;
 	protected DrawHelper mDrawHelper = null;
 	// 数据集
 	protected List<String> mDataSet = null;
@@ -64,7 +63,7 @@ public class XYAxis extends Axis {
 	 * @param centerY 轴上中点X坐标
 	 * @param text    标签文本
 	 */
-	protected void renderHorizontalTick(float centerX, float centerY,
+	protected void renderHorizontalTick(Canvas canvas, float centerX, float centerY,
 			String text) {
 		if (false == getVisible())
 			return;
@@ -106,7 +105,7 @@ public class XYAxis extends Axis {
 
 		//横轴竖线
 		if (getAxisTickMarksVisible()) {
-			mCanvas.drawLine(marksStartX, centerY, markeStopX
+			canvas.drawLine(marksStartX, centerY, markeStopX
 					+ this.getAxisPaint().getStrokeWidth() / 2, centerY,
 					getAxisTickMarksPaint());
 
@@ -127,7 +126,7 @@ public class XYAxis extends Axis {
 			textHeight /=4;
 			
 			mDrawHelper.drawRotateText(itemLabel, lablesStartX, lablesStartY + textHeight,
-					getAxisTickLabelsRotateAgent(), mCanvas,
+					getAxisTickLabelsRotateAgent(), canvas,
 					getAxisTickLabelsPaint());
 		}
 	}
@@ -138,21 +137,21 @@ public class XYAxis extends Axis {
 	 * @param centerY	轴上中点Y坐标
 	 * @param text		标签文本
 	 */
-	protected void renderVerticalTick(float centerX, float centerY, String text) {
+	protected void renderVerticalTick(Canvas canvas, float centerX, float centerY, String text) {
 		if (false == getVisible())
 			return;
 
 		float marksStartY = centerY;
 		float marksStopY = centerY;
-		float lablesStartY = centerY;
+		float labelsStartY = centerY;
 
-		switch (getAxisVerticalTickPostion()) {
+		switch (getAxisVerticalTickPosition()) {
 		case UP: {
 			if (getAxisTickMarksVisible()) {
 				marksStartY = Math.round(centerY - getTickMarksLength());
 				marksStopY = centerY;
 
-				lablesStartY = marksStartY
+				labelsStartY = marksStartY
 						- getTickLabelsMargin()
 						- mDrawHelper
 								.getPaintFontHeight(getAxisTickLabelsPaint());
@@ -172,7 +171,7 @@ public class XYAxis extends Axis {
 				marksStartY = centerY;
 				marksStopY = Math.round(centerY + getTickMarksLength());
 
-				lablesStartY = marksStopY
+				labelsStartY = marksStopY
 						+ getTickLabelsMargin()
 						+ mDrawHelper
 								.getPaintFontHeight(getAxisTickLabelsPaint())
@@ -185,7 +184,7 @@ public class XYAxis extends Axis {
 
 		
 		if (getAxisTickMarksVisible()) {
-			mCanvas.drawLine(centerX, marksStartY
+			canvas.drawLine(centerX, marksStartY
 					- this.getAxisPaint().getStrokeWidth() / 2, centerX,
 					marksStopY, getAxisTickMarksPaint());
 		}
@@ -201,8 +200,8 @@ public class XYAxis extends Axis {
 				itemLabel = text;
 			}
 
-			mDrawHelper.drawRotateText(itemLabel, centerX, lablesStartY,
-					getAxisTickLabelsRotateAgent(), mCanvas,
+			mDrawHelper.drawRotateText(itemLabel, centerX, labelsStartY,
+					getAxisTickLabelsRotateAgent(), canvas,
 					getAxisTickLabelsPaint());
 		}
 		

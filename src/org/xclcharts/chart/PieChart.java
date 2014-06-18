@@ -23,6 +23,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.renderer.CirChart;
 import org.xclcharts.common.DrawHelper;
 
@@ -117,7 +118,7 @@ public class PieChart extends CirChart{
 	 * @param curretAgent 当前绘制角度
 	 * @throws Exception  例外处理
 	 */
-	protected void drawSlice( Paint paintArc,RectF arcRF0,
+	protected void drawSlice(Canvas canvas, Paint paintArc,RectF arcRF0,
 							PieData cData,
 							final float cirX,
 							final float cirY,
@@ -128,10 +129,10 @@ public class PieChart extends CirChart{
 		try{
 		
 			//在饼图中显示所占比例  
-        	mCanvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);                 
+        	canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
          
             //标签
-        	drawLables(cData.getLabel(),cirX, cirY,
+        	drawLables(canvas,cData.getLabel(),cirX, cirY,
 	        			radius,offsetAgent,curretAgent);          
 		}catch( Exception e){
 			throw e;
@@ -150,7 +151,7 @@ public class PieChart extends CirChart{
 	 * @param curretAgent 当前绘制角度
 	 * @throws Exception  例外处理
 	 */
-	protected void drawSelectedSlice( Paint paintArc,
+	protected void drawSelectedSlice(Canvas canvas, Paint paintArc,
 									PieData cData,
 									final float cirX,
 									final float cirY,
@@ -171,10 +172,10 @@ public class PieChart extends CirChart{
 	        RectF arcRF1 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
 	        
 	        //在饼图中显示所占比例  
-	        mCanvas.drawArc(arcRF1, offsetAgent, curretAgent, true, paintArc);     
+	        canvas.drawArc(arcRF1, offsetAgent, curretAgent, true, paintArc);
 	        
 	        //标签
-	        drawLables(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+	        drawLables(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
 	        			radius,offsetAgent,curretAgent);	   
 	        
 		}catch( Exception e){
@@ -185,7 +186,7 @@ public class PieChart extends CirChart{
 	/**
 	 * 绘制key
 	 */
-	protected void renderKey()
+	protected void renderKey(Canvas canvas)
 	{
 		
 		  if(!getKeyVisible())return ;
@@ -213,11 +214,11 @@ public class PieChart extends CirChart{
 				mPaintKey.setColor(cData.getSliceColor());							
 				if( !isVerticalScreen()) //横屏
 				{								
-					this.mCanvas.drawRect(currentX			 , currentY, 
+					canvas.drawRect(currentX			 , currentY,
 										  currentX - rectWidth, currentY - textHeight, 
 										  mPaintKey);					
 					
-					mCanvas.drawText(cData.getKey(),currentX - rectWidth, currentY, mPaintKey);			
+					canvas.drawText(cData.getKey(),currentX - rectWidth, currentY, mPaintKey);
 					currentY += textHeight;
 				
 				}else{ //竖屏			
@@ -230,10 +231,10 @@ public class PieChart extends CirChart{
 						currentX = plotArea.getPlotLeft();
 						totalTextWidth = 0;
 					}				
-					mCanvas.drawRect(currentX			   , currentY, 
+					canvas.drawRect(currentX			   , currentY,
 									 currentX + rectWidth, currentY - textHeight, 
 									 mPaintKey);						
-					mCanvas.drawText(cData.getKey(), currentX + rectWidth, currentY, mPaintKey);					
+					canvas.drawText(cData.getKey(), currentX + rectWidth, currentY, mPaintKey);
 					currentX += rectWidth + keyTextWidth + 5;
 				}									
 			}	
@@ -242,7 +243,7 @@ public class PieChart extends CirChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot()
+	protected void renderPlot(Canvas canvas)
 	{
 		try{	
 			
@@ -274,18 +275,18 @@ public class PieChart extends CirChart{
 				
 			    if(cData.getSelected()) //指定突出哪个块
 	            {			    	            		            	
-	            	drawSelectedSlice(paintArc,cData,
+	            	drawSelectedSlice(canvas,paintArc,cData,
 	            			cirX,cirY,radius,
 	            			mOffsetAgent,currentAgent);			    		            		            		            
 	            }else{
-	            	drawSlice(paintArc,arcRF0,cData,
+	            	drawSlice(canvas,paintArc,arcRF0,cData,
 	            			cirX,cirY,radius,
 	            			mOffsetAgent,currentAgent);	            	
 	            }
 	          //下次的起始角度  
 	            mOffsetAgent += currentAgent;  
 			}					
-			renderKey();
+			renderKey(canvas);
 		
 		 }catch( Exception e){
 			 Log.e("ERROR-PieChart",e.toString());
@@ -313,17 +314,17 @@ public class PieChart extends CirChart{
 		return true;
 	}
 	
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
 		try {
-			super.render();
+			super.render(canvas);
 			
 			//检查值是否合理
 	        if(false == checkInput())return false;
 			
 			//绘制图表
-			renderPlot();
+			renderPlot(canvas);
 			
 		}catch( Exception e){
 			 throw e;

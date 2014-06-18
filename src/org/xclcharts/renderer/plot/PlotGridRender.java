@@ -35,7 +35,6 @@ import android.graphics.Canvas;
 
 public class PlotGridRender extends PlotGrid implements IRender{
 	
-	private Canvas mCanvas = null;	
 	private DrawHelper mDrawHelper = new DrawHelper();
 	private boolean mPrimaryTickLine = false;
 	
@@ -62,11 +61,11 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	 * @param right		右边X坐标
 	 * @param bottom	底上Y坐标
 	 */
-	public void renderOddRowsFill(float left,float top,float right,float bottom)
+	public void renderOddRowsFill(Canvas canvas,float left,float top,float right,float bottom)
 	{
-		 if(null != mCanvas && getOddRowsFillVisible())
+		 if(null != canvas && getOddRowsFillVisible())
 		 {
-			 mCanvas.drawRect( left,  bottom  ,right, top,getOddFillPaint());
+             canvas.drawRect( left,  bottom  ,right, top,getOddFillPaint());
 		 }		
 	}
 	
@@ -77,11 +76,11 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	 * @param right		右边X坐标
 	 * @param bottom	 底上Y坐标
 	 */
-	public void renderEvenRowsFill(float left,float top,float right,float bottom)
+	public void renderEvenRowsFill(Canvas canvas,float left,float top,float right,float bottom)
 	{
-		 if(null != mCanvas && getEvenRowsFillVisible())
+		 if(null != canvas && getEvenRowsFillVisible())
 		 {				
-			 mCanvas.drawRect( left,  bottom  ,right, top,getEvenFillPaint());
+			 canvas.drawRect( left,  bottom  ,right, top,getEvenFillPaint());
 		 }		
 	}
 	
@@ -94,15 +93,15 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	 * @param stopX		终止点X坐标
 	 * @param stopY		终止点Y坐标
 	 */
-	public void renderGridLinesHorizontal(float startX,float startY,float stopX,float stopY)
+	public void renderGridLinesHorizontal(Canvas canvas,float startX,float startY,float stopX,float stopY)
 	{
-		 if(null != mCanvas &&this.getHorizontalLinesVisible())
+		 if(null != canvas &&this.getHorizontalLinesVisible())
 		 {	
 			 float initWidth = getHorizontalLinesPaint().getStrokeWidth() ;
 			 if(mPrimaryTickLine) getHorizontalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 
 			 mDrawHelper.drawLine(this.getHorizontalLinesDashStyle(), startX, startY, stopX, stopY,
-					mCanvas, getHorizontalLinesPaint());
+					canvas, getHorizontalLinesPaint());
 			 
 			 if(mPrimaryTickLine)getHorizontalLinesPaint().setStrokeWidth(initWidth);
 		 }
@@ -115,15 +114,15 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	 * @param stopX		终止点X坐标
 	 * @param stopY		终止点Y坐标
 	 */
-	public void renderGridLinesVertical(float startX,float startY,float stopX,float stopY)
+	public void renderGridLinesVertical(Canvas canvas,float startX,float startY,float stopX,float stopY)
 	{
-		 if(null != mCanvas && getVerticalLinesVisible())
+		 if(null != canvas && getVerticalLinesVisible())
 		 {						
 			 float initWidth = getVerticalLinesPaint().getStrokeWidth() ;
 			 if(mPrimaryTickLine) getVerticalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 
 			 mDrawHelper.drawLine(this.getVerticalLinesDashStyle(), startX, startY, stopX, stopY,
-					mCanvas, getVerticalLinesPaint());
+					canvas, getVerticalLinesPaint());
 			
 			 if(mPrimaryTickLine)getVerticalLinesPaint().setStrokeWidth(initWidth);
 			
@@ -131,14 +130,10 @@ public class PlotGridRender extends PlotGrid implements IRender{
 	}
 	
 	
-	@Override
-	public void setCanvas(Canvas canvas) {
-		// TODO Auto-generated method stub
-		mCanvas = canvas;
-	}
+
 
 	@Override
-	public boolean render() { //throws Exception {
+	public boolean render(Canvas canvas) { //throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}

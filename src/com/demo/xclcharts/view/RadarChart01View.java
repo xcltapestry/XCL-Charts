@@ -22,6 +22,7 @@
  */
 package com.demo.xclcharts.view;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.RadarChart;
 
 import android.content.Context;
@@ -33,6 +34,7 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 public class RadarChart01View extends GraphicalView {
+    RadarChart chart = new RadarChart();
 
 	public RadarChart01View(Context context) {
 		super(context);
@@ -42,19 +44,23 @@ public class RadarChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();
 	}
-	
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 	private void chartRender()
 	{
 		try{				
-			RadarChart chart = new RadarChart();
-			 
+
 			//柱形图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setChartRange(0.0f, 0.0f, getScreenWidth(), getScreenHeight());
 			chart.setPadding(15, 30, 10, 5);
 			
 			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
@@ -45,6 +46,7 @@ public class BarChart02View extends GraphicalView {
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
+    BarChart chart = new BarChart();
 
 	public BarChart02View(Context context) {
 		super(context);
@@ -55,16 +57,21 @@ public class BarChart02View extends GraphicalView {
 		chartRender();
 		
 	}
-	
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
+
 	private void chartRender()
 	{
 		try {
 			
-			BarChart chart = new BarChart();
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
-			
+
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 15, 10);
@@ -75,7 +82,7 @@ public class BarChart02View extends GraphicalView {
 			
 			chart.setChartTitle("每日收益情况");
 			chart.setChartSubTitle("(XCL-Charts Demo)");		
-			chart.setChartTitlePosition(XEnum.Postion.CENTER);
+			chart.setChartTitlePosition(XEnum.Position.CENTER);
 			chart.setChartTitleAlign(XEnum.ChartTitleAlign.LEFT);
 			
 			//数据源
@@ -139,7 +146,6 @@ public class BarChart02View extends GraphicalView {
 				}});	        
 			
 		
-				chart.render();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

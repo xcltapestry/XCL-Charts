@@ -26,6 +26,7 @@ import java.text.DecimalFormat;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
 import org.xclcharts.common.IFormatterDoubleCallBack;
@@ -46,6 +47,7 @@ public class StackBarChart01View extends GraphicalView {
 	//标签轴
 	List<String> chartLables = new LinkedList<String>();
 	List<BarData> BarDataSet = new LinkedList<BarData>();
+    StackBarChart chart = new StackBarChart();
 
 	public StackBarChart01View(Context context) {
 		super(context);
@@ -54,13 +56,19 @@ public class StackBarChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();
 	}
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 	
 	private void chartRender()
 	{
 		try {
 			
-			StackBarChart chart = new StackBarChart();
-			chart.setCanvas(this.mCacheCanvas);
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			chart.setChartDirection(XEnum.Direction.VERTICAL);
@@ -88,7 +96,7 @@ public class StackBarChart01View extends GraphicalView {
 			chart.setChartTitle("文件服务器空间使用情况");
 			chart.setChartSubTitle("(XCL-Charts Demo)");
 			chart.setChartTitleAlign(XEnum.ChartTitleAlign.CENTER);
-			chart.setChartTitlePosition(XEnum.Postion.CENTER);
+			chart.setChartTitlePosition(XEnum.Position.CENTER);
 			
 			//图例
 			chart.getLegend().setLeftLegend("单位(TB)");
@@ -138,7 +146,6 @@ public class StackBarChart01View extends GraphicalView {
 				}});	        
 				
 			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -24,6 +24,7 @@ package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RoseChart;
 import org.xclcharts.renderer.XEnum;
@@ -38,8 +39,9 @@ import android.graphics.Color;
  */
 public class RoseChart01View extends GraphicalView {
 
-	LinkedList<PieData> lPieData = new LinkedList<PieData>();	
-	
+	LinkedList<PieData> lPieData = new LinkedList<PieData>();
+    RoseChart chart = new RoseChart();
+
 	public RoseChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -47,16 +49,21 @@ public class RoseChart01View extends GraphicalView {
 		chartDataSet();
 		chartRender();
 	}
-	
+
+    @Override
+    public void render(Canvas canvas) {
+        try {
+            chart.render(canvas);
+        } catch (Exception e){
+        }
+    }
 	private void chartRender()
 	{
 		try {						
-			RoseChart chart = new RoseChart();
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);		
 			chart.setPadding(20, 20, 15, 15);
-			chart.setBackgroupColor(true,Color.BLACK);
+			chart.setBackgroundColor(true, Color.BLACK);
 			
 			//数据源
 			chart.setDataSource(lPieData);							
@@ -68,9 +75,8 @@ public class RoseChart01View extends GraphicalView {
 			chart.getPlotTitle().getChartSubTitlePaint().setColor(Color.WHITE);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+			chart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
 			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

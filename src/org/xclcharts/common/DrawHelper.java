@@ -160,8 +160,8 @@ public class DrawHelper {
 	public void drawTrigangle(	float baseLine,
 								float baseLnCentX,
 								float baseLnCentY,
-								XEnum.TrigangleDirection direction,
-								XEnum.TrigangleStyle style,
+								XEnum.TriangleDirection direction,
+								XEnum.TriangleStyle style,
 								Canvas canvas,
 								Paint paint)
 	{
