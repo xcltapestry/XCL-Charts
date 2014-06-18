@@ -30,6 +30,7 @@ import org.xclcharts.chart.AreaData;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
 
@@ -40,39 +41,48 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class AreaChart01View extends GraphicalView {
+public class AreaChart01View extends DemoView {
 	
 	//标签集合
-	private LinkedList<String> mChartLabels = new LinkedList<String>();
+	private LinkedList<String> mLabels = new LinkedList<String>();
 	//数据集合
-	private LinkedList<AreaData> mChartDataSet = new LinkedList<AreaData>();
+	private LinkedList<AreaData> mDataset = new LinkedList<AreaData>();
 			
 
 	public AreaChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-				
-		chartLabels();
-		chartDataSet();
-		chartRender();
+		initChart();		
 	}
 	
 	
-	private void chartRender()
+	private void initChart()
+	{
+		chartLabels();
+		chartDataSet();
+	}
+	
+	protected void drawChart(Canvas canvas)
+	{
+		chartRender(canvas);
+	}
+	
+	
+	private void chartRender(Canvas canvas)
 	{
 		try{				
 				AreaChart chart = new AreaChart();
 				 
 				//柱形图所占范围大小
 				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-				chart.setCanvas(this.mCacheCanvas);
+				chart.setCanvas(canvas); //this.mCacheCanvas);
 				chart.setPadding(15, 30, 10, 5);
 											
 				//轴数据源						
 				//标签轴
-				chart.setLabels(mChartLabels);
+				chart.setLabels(mLabels);
 				//数据轴
-				chart.setDataSource(mChartDataSet);
+				chart.setDataSource(mDataset);
 							
 				//数据轴最大值
 				chart.getDataAxis().setAxisMax(100);
@@ -130,21 +140,21 @@ public class AreaChart01View extends GraphicalView {
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
 											(int)Color.rgb(79, 200, 100),Color.GREEN);
 		//设置线上每点对应标签的颜色
-		line2.getPlotLabelsPaint().setColor(Color.RED);
+		line2.getDotLabelPaint().setColor(Color.RED);
 		//设置点标签
 		line2.setLineLabelVisible(true);
 		
-		mChartDataSet.add(line1);
-		mChartDataSet.add(line2);	
+		mDataset.add(line1);
+		mDataset.add(line2);	
 	}
 	
 	private void chartLabels()
 	{		
-		mChartLabels.add("2010");
-		mChartLabels.add("2011");
-		mChartLabels.add("2012");
-		mChartLabels.add("2013");
-		mChartLabels.add("2014");
+		mLabels.add("2010");
+		mLabels.add("2011");
+		mLabels.add("2012");
+		mLabels.add("2013");
+		mLabels.add("2014");
 	}
 	
 }

@@ -38,6 +38,7 @@ import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 
@@ -46,37 +47,52 @@ import android.graphics.Paint.Align;
  * @Description 主要演示一个轴上显示多种图的坐标系	
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class MultiAxisChart01View extends GraphicalView {
+public class MultiAxisChart01View extends DemoView {
 	//标签轴
 		List<String> chartLables = new LinkedList<String>();
-		List<BarData> chartData = new LinkedList<BarData>();
+		List<BarData> chartDataset = new LinkedList<BarData>();
 		
 		//标签轴
 		List<String> chartLablesLn = new LinkedList<String>();
-		LinkedList<LineData> chartDataLn = new LinkedList<LineData>();
+		LinkedList<LineData> chartDatasetLn = new LinkedList<LineData>();
 		
 		BarChart chart = new BarChart();
 		LineChart lnChart = new LineChart();
 
 		public MultiAxisChart01View(Context context) {
 			super(context);
-			// TODO Auto-generated constructor stub
-			chartLabels();
-			chartDataLnSet();
-			
-			chartLnLabels();
-			chartLnDataSet();
-			
-			chartRender();
-			chartLnRender();
-
+			// TODO Auto-generated constructor stub		
+			initChart();
 		}
 
-		private void chartRender()
+		
+		/**
+		 * 用于初始化
+		 */		
+		private void initChart()
+		{			
+			chartLabels();
+			chartDatasetLnSet();			
+			chartLnLabels();
+			chartLnDataSet();			
+		}
+		
+		/**
+		 * 绘制图表
+		 * @param canvas 视图画布
+		 */
+		protected void drawChart(Canvas canvas)
+		{						
+			chartRender(canvas);
+			chartLnRender(canvas);
+		}
+		
+		
+		private void chartRender(Canvas canvas)
 		{
 			try {
 								
-				chart.setCanvas(this.mCacheCanvas);
+				chart.setCanvas(canvas);
 				//柱形图所占范围大小
 				chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
 				chart.setChartDirection(XEnum.Direction.VERTICAL);	
@@ -115,7 +131,7 @@ public class MultiAxisChart01View extends GraphicalView {
 				e.printStackTrace();
 			}
 		}
-		private void chartDataLnSet()
+		private void chartDatasetLnSet()
 		{
 			//标签1对应的柱形数据集
 			List<Double> dataSeries1= new LinkedList<Double>();	
@@ -127,8 +143,8 @@ public class MultiAxisChart01View extends GraphicalView {
 			BarData BarDataA = new BarData("Virtual OPM",dataSeries1,(int)Color.rgb(0, 221, 177));	
 			BarData BarDataB = new BarData("Physical OPM",dataSeries2,(int)Color.rgb(238, 28, 161));		
 						
-			chartData.add(BarDataA);
-			chartData.add(BarDataB);			
+			chartDataset.add(BarDataA);
+			chartDataset.add(BarDataB);			
 		}
 		
 		private void chartLabels()
@@ -167,7 +183,7 @@ public class MultiAxisChart01View extends GraphicalView {
 			chart.setLabels(chartLables);	
 			
 			//数据轴
-			chart.setDataSource(chartData);
+			chart.setDataSource(chartDataset);
 			chart.getDataAxis().setAxisMax(90000);
 			chart.getDataAxis().setAxisSteps(10000);					
 			
@@ -212,7 +228,7 @@ public class MultiAxisChart01View extends GraphicalView {
 			lnChart.getLabelsAxis().setVisible(false);	
 			
 			//设定数据源						
-			lnChart.setDataSource(chartDataLn);
+			lnChart.setDataSource(chartDatasetLn);
 			//数据轴
 			DataAxis dataAxis = lnChart.getDataAxis();
 			dataAxis.setAxisHorizontalTickAlign(Align.RIGHT);	
@@ -253,8 +269,8 @@ public class MultiAxisChart01View extends GraphicalView {
 			LineData lineDataBarKey2 = new LineData("Physical OPM",BarKey2,(int)Color.rgb(238, 28, 161));
 			lineDataBarKey1.setDotStyle(XEnum.DotStyle.RECT);
 			lineDataBarKey2.setDotStyle(XEnum.DotStyle.RECT);
-			chartDataLn.add(lineDataBarKey1);
-			chartDataLn.add(lineDataBarKey2);	
+			chartDatasetLn.add(lineDataBarKey1);
+			chartDatasetLn.add(lineDataBarKey2);	
 			
 			//实际的折线图的数据集
 			//标签1对应的数据集
@@ -275,10 +291,10 @@ public class MultiAxisChart01View extends GraphicalView {
 			LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
 			LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
 			lineData1.setDotStyle(XEnum.DotStyle.TRIGANALE);
-			lineData1.getPlotDotPaint().setColor((int)Color.rgb(234, 83, 71));
+			lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
 						
-			chartDataLn.add(lineData1);
-			chartDataLn.add(lineData2);	
+			chartDatasetLn.add(lineData1);
+			chartDatasetLn.add(lineData2);	
 			
 		}
 		
@@ -291,13 +307,13 @@ public class MultiAxisChart01View extends GraphicalView {
 			chartLablesLn.add(" "); 
 		}
 		
-		private void chartLnRender()
+		private void chartLnRender(Canvas canvas)
 		{
 			try {
 				
 				//柱形图所占范围大小
 				lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-				lnChart.setCanvas(this.mCacheCanvas);
+				lnChart.setCanvas(canvas);
 				
 				if(lnChart.isVerticalScreen())
 				{

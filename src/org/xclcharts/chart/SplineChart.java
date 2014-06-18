@@ -30,7 +30,7 @@ import java.util.Map.Entry;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
-import org.xclcharts.renderer.line.PlotLines;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Paint.Align;
 
@@ -43,11 +43,11 @@ import android.graphics.Paint.Align;
 public class SplineChart extends LnChart{
 	
 	//数据源
-	private List<SplineData> mDataSet;
+	private List<SplineData> mDataset;
 	
 	//标签轴的最大，最小值
-	private float mLablesValuesMax = 0.0f;
-	private float mLablesValuesMin = 0.0f;
+	private float mLablesAxisMax = 0.0f;
+	private float mLablesAxisMin = 0.0f;
 		
 	public SplineChart()
 	{
@@ -76,7 +76,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setDataSource(List<SplineData> dataSeries)
 	{
-		this.mDataSet = dataSeries;		
+		this.mDataset = dataSeries;		
 	}	
 	
 	/**
@@ -85,7 +85,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setLabelsAxisMax(float value)
 	{
-		mLablesValuesMax = value;
+		mLablesAxisMax = value;
 	}	
 	
 	/**
@@ -94,7 +94,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setLabelsAxisMin(float value)
 	{
-		mLablesValuesMin = value;
+		mLablesAxisMin = value;
 	}	
 	
 	/**
@@ -133,7 +133,7 @@ public class SplineChart extends LnChart{
             	
             	//对应的X坐标	                	
             	float XvaluePostion = (float) Math.round( 
-            			axisScreenWidth * ( (xValue - mLablesValuesMin ) / (mLablesValuesMax - mLablesValuesMin))) ;  
+            			axisScreenWidth * ( (xValue - mLablesAxisMin ) / (mLablesAxisMax - mLablesAxisMin))) ;  
             
             	if(j == 0 )
 				{	                		
@@ -147,10 +147,10 @@ public class SplineChart extends LnChart{
 					lineEndY = initY - YvaluePostion;
 				}
             	            	
-            	PlotLines pLine = bd.getPlotLines();             
+            	PlotLine pLine = bd.getPlotLine();             
             	if(type.equalsIgnoreCase("LINE"))
             	{
-            		mCanvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,pLine.getPlotLinesPaint());
+            		mCanvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,pLine.getLinePaint());
             	}else if(type.equalsIgnoreCase("DOT2LABEL")){
             		
             		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
@@ -162,7 +162,7 @@ public class SplineChart extends LnChart{
                 		renderDot(pDot, 
                 				lineStartX ,lineStartY ,
                 				lineEndX ,lineEndY,
-                				pLine.getPlotDotPaint()); //标识图形            			                	
+                				pLine.getDotPaint()); //标识图形            			                	
             			lineEndX = rendEndX;
                 	}
             		
@@ -170,7 +170,7 @@ public class SplineChart extends LnChart{
                 	{
                 		//fromatter
             			mCanvas.drawText("("+Double.toString(xValue)+","+ Double.toString(yValue) +")",
-    							lineEndX, lineEndY,  pLine.getPlotLabelsPaint());
+    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
                 	}
             	}else{
             		return ;
@@ -189,7 +189,7 @@ public class SplineChart extends LnChart{
 	private void renderVerticalPlot()
 	{
 		//检查是否有设置标签轴的最大最小值		
-		if(mLablesValuesMax == mLablesValuesMin && 0 == mLablesValuesMax) return ;
+		if(mLablesAxisMax == mLablesAxisMin && 0 == mLablesAxisMax) return ;
 						
 		renderVerticalDataAxis();
 		renderVerticalLabelsAxis();		
@@ -197,11 +197,11 @@ public class SplineChart extends LnChart{
 		
 		//开始处 X 轴 即标签轴              
 		List<LnData> lstKey = new ArrayList<LnData>();		
-		for(int i=0;i<mDataSet.size();i++)
+		for(int i=0;i<mDataset.size();i++)
 		{										
-			renderLine( mDataSet.get(i),"LINE");
-			renderLine( mDataSet.get(i),"DOT2LABEL");	
-			lstKey.add(mDataSet.get(i));
+			renderLine( mDataset.get(i),"LINE");
+			renderLine( mDataset.get(i),"DOT2LABEL");	
+			lstKey.add(mDataset.get(i));
 		}	
 		renderKey(lstKey);
 	}

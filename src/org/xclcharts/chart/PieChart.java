@@ -131,7 +131,7 @@ public class PieChart extends CirChart{
         	mCanvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);                 
          
             //标签
-        	drawLables(cData.getLabel(),cirX, cirY,
+        	drawLabel(cData.getLabel(),cirX, cirY,
 	        			radius,offsetAgent,curretAgent);          
 		}catch( Exception e){
 			throw e;
@@ -174,7 +174,7 @@ public class PieChart extends CirChart{
 	        mCanvas.drawArc(arcRF1, offsetAgent, curretAgent, true, paintArc);     
 	        
 	        //标签
-	        drawLables(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+	        drawLabel(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
 	        			radius,offsetAgent,curretAgent);	   
 	        
 		}catch( Exception e){
@@ -306,7 +306,7 @@ public class PieChart extends CirChart{
 			if( totalAgent > 360)
 			{
 				//圆心角总计大于360度
-				Log.e("PieChart","传入参数不合理，圆心角总计大于360度. 现有圆心角合计:"+Float.toString(totalAgent));
+				Log.e("ERROR-PieChart","传入参数不合理，圆心角总计大于360度. 现有圆心角合计:"+Float.toString(totalAgent));
 				return false;
 			}
 		}

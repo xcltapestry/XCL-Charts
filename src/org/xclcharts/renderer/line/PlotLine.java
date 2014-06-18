@@ -34,31 +34,31 @@ import android.graphics.Paint.Align;
  *  * MODIFIED    YYYY-MM-DD   REASON
  */
 
-public class PlotLines {
+public class PlotLine {
 	
-	private Paint mPaintLines = null;
-	private Paint mPaintLabels = null;
+	private Paint mPaintLine = null;
+	private Paint mPaintLabel = null;
 	
 	private PlotDot mPlotDot = null;
 	
-	public PlotLines()
+	public PlotLine()
 	{
 		init();
 	}
 	
 	private void init()
 	{
-		mPaintLines = new Paint();
-		mPaintLines.setColor(Color.BLUE);
-		mPaintLines.setAntiAlias(true);
-		mPaintLines.setStrokeWidth(5);
+		mPaintLine = new Paint();
+		mPaintLine.setColor(Color.BLUE);
+		mPaintLine.setAntiAlias(true);
+		mPaintLine.setStrokeWidth(5);
 		
 		
-		mPaintLabels= new Paint();
-		mPaintLabels.setColor(Color.BLUE);
-		mPaintLabels.setTextSize(18);
-		mPaintLabels.setTextAlign(Align.CENTER);
-		mPaintLabels.setAntiAlias(true);
+		mPaintLabel= new Paint();
+		mPaintLabel.setColor(Color.BLUE);
+		mPaintLabel.setTextSize(18);
+		mPaintLabel.setTextAlign(Align.CENTER);
+		mPaintLabel.setAntiAlias(true);
 		
 		mPlotDot = new PlotDot();
 		
@@ -68,25 +68,25 @@ public class PlotLines {
 	 * 开放线画笔
 	 * @return 画笔
 	 */
-	public Paint getPlotLinesPaint()
+	public Paint getLinePaint()
 	{
-		return mPaintLines;
+		return mPaintLine;
 	}
 	
 	/**
 	 * 开放标签画笔
 	 * @return 画笔
 	 */
-	public Paint getPlotLabelsPaint()
+	public Paint getDotLabelPaint()
 	{
-		return mPaintLabels;
+		return mPaintLabel;
 	}
 	
 	/**
 	 * 开放点画笔
 	 * @return 画笔
 	 */
-	public Paint getPlotDotPaint()
+	public Paint getDotPaint()
 	{
 		return mPlotDot.getDotPaint();
 	}

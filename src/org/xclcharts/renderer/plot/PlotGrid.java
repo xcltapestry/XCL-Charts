@@ -58,8 +58,8 @@ public class PlotGrid {
 	 private Paint mPaintEvenFill = null;
 	 
 	 // Solid、Dot、Dash。
-	 private XEnum.LineDashStyle mHorizontalLineDashStyle = XEnum.LineDashStyle.SOLID;
-	 private XEnum.LineDashStyle mVerticalLineDashStyle = XEnum.LineDashStyle.SOLID;
+	 private XEnum.LineStyle mHorizontalLineStyle = XEnum.LineStyle.SOLID;
+	 private XEnum.LineStyle mVerticalLineStyle = XEnum.LineStyle.SOLID;
 	
 	public PlotGrid()
 	{
@@ -230,36 +230,36 @@ public class PlotGrid {
 	 * 返回竖向网格线当前绘制风格
 	 * @return  绘制风格
 	 */
-	public XEnum.LineDashStyle getVerticalLinesDashStyle()
+	public XEnum.LineStyle getVerticalLinesStyle()
 	{ 
-		return mVerticalLineDashStyle;
+		return mVerticalLineStyle;
 	}
 
 	/**
 	 * 设置竖向网格线当前绘制风格
 	 * @param style 绘制风格
 	 */
-	public void setVerticalLinesDashStyle(XEnum.LineDashStyle style)
+	public void setVerticalLinesStyle(XEnum.LineStyle style)
 	{
-		mVerticalLineDashStyle = style;
+		mVerticalLineStyle = style;
 	}
 	
 	/**
 	 * 返回横向网格线当前绘制风格
 	 * @return 绘制风格
 	 */
-	public XEnum.LineDashStyle getHorizontalLinesDashStyle()
+	public XEnum.LineStyle getHorizontalLinesStyle()
 	{
-		return mHorizontalLineDashStyle;
+		return mHorizontalLineStyle;
 	}
 
 	/**
 	 * 设置横向网格线当前绘制风格 
 	 * @param style 绘制风格
 	 */
-	public void setHorizontalLinesDashStyle(XEnum.LineDashStyle style)
+	public void setHorizontalLinesStyle(XEnum.LineStyle style)
 	{
-		mHorizontalLineDashStyle = style;
+		mHorizontalLineStyle = style;
 	}
 	 
 }

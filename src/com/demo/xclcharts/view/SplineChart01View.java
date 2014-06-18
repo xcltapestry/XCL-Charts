@@ -33,6 +33,7 @@ import org.xclcharts.renderer.axis.LabelsAxis;
 import org.xclcharts.renderer.plot.PlotGrid;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
 /**
@@ -40,7 +41,7 @@ import android.util.Log;
  * @Description  曲线图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class SplineChart01View extends GraphicalView {
+public class SplineChart01View extends DemoView {
 
 	//标签轴标签集合
 	private LinkedList<String> lables = new LinkedList<String>();
@@ -50,19 +51,35 @@ public class SplineChart01View extends GraphicalView {
 		super(context);
 		// TODO Auto-generated constructor stub
 				
-		chartLabels();
-		chartDataSet();
-		chartRender();	
+		initChart();	
 	}
 	
-	private void chartRender()
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);
+	}
+	
+	private void chartRender(Canvas canvas)
 	{
 		try {
 			
 			SplineChart chart = new SplineChart();
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			chart.setPadding(20, 20, 13, 5);
 			
 			//数据源	
@@ -92,7 +109,7 @@ public class SplineChart01View extends GraphicalView {
 			plot.setVerticalLinesVisible(true);			
 			plot.getHorizontalLinesPaint().setStrokeWidth(3);
 			plot.getHorizontalLinesPaint().setColor((int)Color.rgb(127, 204, 204));			
-			plot.setHorizontalLinesDashStyle(XEnum.LineDashStyle.DOT);
+			plot.setHorizontalLinesStyle(XEnum.LineStyle.DOT);
 		
 			
 			//标题
@@ -137,7 +154,7 @@ public class SplineChart01View extends GraphicalView {
 		
 		dataSeries2.setLineLabelVisible(true);		
 		dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
-		dataSeries2.getPlotLabelsPaint().setColor(Color.RED);
+		dataSeries2.getDotLabelPaint().setColor(Color.RED);
 						
 		//设定数据源		
 		chartData.add(dataSeries1);				

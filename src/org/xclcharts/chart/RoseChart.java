@@ -94,15 +94,15 @@ public class RoseChart extends PieChart{
 	        //外环
 	        mCanvas.drawCircle(cirX,cirY,radius,mPaintInner); 
 	    
-	        float Percentage = 0.0f;		 		
-	 		float NewRaidus = 0.0f;		
+	        float percentage = 0.0f;		 		
+	 		float newRaidus = 0.0f;		
 	 		
 	 		//数据源
 	 		List<PieData> chartDataSource = this.getDataSource();
 			
 			//依参数个数，算出总个要算多少个扇区的角度
-			Percentage = 360 / chartDataSource.size();
-			Percentage = (float)(Math.round(Percentage *100))/100; 
+			percentage = 360 / chartDataSource.size();
+			percentage = (float)(Math.round(percentage *100))/100; 
 			
 	        
 	        for(PieData cData : chartDataSource)
@@ -110,25 +110,25 @@ public class RoseChart extends PieChart{
 				paintArc.setColor(cData.getSliceColor());	
 				
 				//将百分比转换为新扇区的半径    
-				NewRaidus = (float) (radius * (cData.getPercentage()/ 100));  
-	            NewRaidus = (float)(Math.round(NewRaidus *100))/100;    
+				newRaidus = (float) (radius * (cData.getPercentage()/ 100));  
+	            newRaidus = (float)(Math.round(newRaidus *100))/100;    
 	            
 	            //在饼图中显示所占比例  
-	            float NewarcLeft = cirX - NewRaidus;  
-	            float NewarcTop  = cirY - NewRaidus ;  
-	            float NewarcRight = cirX + NewRaidus ;  
-	            float NewarcBottom = cirY + NewRaidus ;  
-	            RectF NewarcRF = new RectF(NewarcLeft ,NewarcTop,NewarcRight,NewarcBottom);  
-	            this.mCanvas.drawArc(NewarcRF, mOffsetAgent, Percentage, true, paintArc);       
+	            float nLeft = cirX - newRaidus;  
+	            float nTop  = cirY - newRaidus ;  
+	            float nRight = cirX + newRaidus ;  
+	            float nBottom = cirY + newRaidus ;  
+	            RectF nRF = new RectF(nLeft ,nTop,nRight,nBottom);  
+	            this.mCanvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
 				
 	          //计算百分比标签  
-	            this.mCalc.CalcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + Percentage/2); 
+	            this.mCalc.CalcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
 	            
 	            //标识  
 	           mCanvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelsPaint());             
 	         
 	          //下次的起始角度  
-	            mOffsetAgent += Percentage;  
+	            mOffsetAgent += percentage;  
 			}			
 	        
 	}

@@ -99,19 +99,19 @@ public class SeekBarActivity extends Activity {
 	            	mDesc.setText(Integer.toString(progress));	            
 		            if(0 == mSelected )
 		       		{
-		            	mGaChart.initCache();
+		            	//mGaChart.initCache();
 		                mGaChart.setAgent(progress);
-		        		mGaChart.chartRender();
+		        		//mGaChart.chartRender();
 		        		mGaChart.invalidate();	            	
 		       		}else if(1 == mSelected ){
-		       			mCirChart2.initCache();
+		       			//mCirChart2.initCache();
 		        		mCirChart2.setPercentage(progress);
-		        		mCirChart2.chartRender();
+		        		//mCirChart2.chartRender();
 		        		mCirChart2.invalidate();
 		       		}else if(2 == mSelected ){
-		       			mCirChart.initCache();
+		       			//mCirChart.initCache();
 		        		mCirChart.setPercentage(progress);
-		        		mCirChart.chartRender();
+		        		//mCirChart.chartRender();
 		        		mCirChart.invalidate();
 		       		}
 	               

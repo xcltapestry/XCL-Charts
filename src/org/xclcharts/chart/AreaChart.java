@@ -28,7 +28,7 @@ import java.util.List;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
-import org.xclcharts.renderer.line.PlotLines;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -123,7 +123,7 @@ public class AreaChart extends LnChart{
         
         //透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
         mPaintAreaFill.setAlpha( mAreaAlpha );            
-        PlotLines pLine = bd.getPlotLines(); 
+        PlotLine pLine = bd.getPlotLine(); 
         //设置当前填充色
         mPaintAreaFill.setColor(bd.getAreaFillColor());
         
@@ -157,7 +157,7 @@ public class AreaChart extends LnChart{
         	if(type.equalsIgnoreCase("LINE"))
         	{
         		mCanvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
-        												pLine.getPlotLinesPaint());            	
+        												pLine.getLinePaint());            	
         	}else if(type.equalsIgnoreCase("DOT2LABEL")){
         		
         		
@@ -169,7 +169,7 @@ public class AreaChart extends LnChart{
             		renderDot(pDot, 
             				lineStartX ,lineStartY ,
             				lineEndX ,lineEndY,
-            				pLine.getPlotDotPaint()); //标识图形            			                	
+            				pLine.getDotPaint()); //标识图形            			                	
         			lineEndX = rendEndX;
             	}
         		
@@ -177,7 +177,7 @@ public class AreaChart extends LnChart{
             	{
             		//fromatter
             		mCanvas.drawText(Double.toString(bv) ,
-							lineEndX, lineEndY,  pLine.getPlotLabelsPaint());
+							lineEndX, lineEndY,  pLine.getDotLabelPaint());
             	}
         	}else{
         		return ;

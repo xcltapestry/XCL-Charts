@@ -28,6 +28,7 @@ import java.util.List;
 import org.xclcharts.chart.GaugeChart;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Pair;
 
@@ -36,7 +37,7 @@ import android.util.Pair;
  * @Description  仪表盘例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class GaugeChart01View  extends GraphicalView {
+public class GaugeChart01View  extends DemoView {
 
 	private List<String> mLabels = new ArrayList<String>();
 	private List<Pair> mPartitionSet = new ArrayList<Pair>();		
@@ -47,13 +48,27 @@ public class GaugeChart01View  extends GraphicalView {
 		super(context);
 		// TODO Auto-generated constructor stub
 						
-		chartLabels();
-		chartDataSet();
-		chartRender();
-		
+		initChart();
 		//new Thread(this).start();
 	}
 	
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
 	
 	public void setAgent(float currentAgent)
 	{
@@ -61,12 +76,12 @@ public class GaugeChart01View  extends GraphicalView {
 	}
 	
 		
-	public void chartRender()
+	public void chartRender(Canvas canvas)
 	{
 		try {								
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth() - 100,getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);								
+			chart.setCanvas(canvas);								
 			chart.setPadding(25, 20, 10, 10);
 				
 			//设置标题

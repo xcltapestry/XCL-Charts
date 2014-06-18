@@ -28,7 +28,7 @@ import java.util.List;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
-import org.xclcharts.renderer.line.PlotLines;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Paint.Align;
 
@@ -41,7 +41,7 @@ import android.graphics.Paint.Align;
 public class LineChart extends LnChart{
 	
 	//数据源
-	protected List<LineData> mDataSet;
+	protected List<LineData> mDataset;
 	
 	//数据轴显示在左边还是右边
 	private XEnum.LineDataAxisPostion mDataAxisPostion = XEnum.LineDataAxisPostion.LEFT;
@@ -102,7 +102,7 @@ public class LineChart extends LnChart{
 		 */
 		public void setDataSource(LinkedList<LineData> dataSet)
 		{
-			this.mDataSet = dataSet;		
+			this.mDataset = dataSet;		
 		}
 						
 		private void renderLine(LineData bd,String type)
@@ -151,12 +151,12 @@ public class LineChart extends LnChart{
 				if(bv != dataAxis.getAxisMin())
 				{
 				
-	            	PlotLines pLine = bd.getPlotLines();           
+	            	PlotLine pLine = bd.getPlotLine();           
 	            	if(type.equalsIgnoreCase("LINE"))
 	            	{
 	            		if( lineStartY != initY )	            			
 	            			mCanvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
-	            												pLine.getPlotLinesPaint()); 
+	            												pLine.getLinePaint()); 
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
 	            		
 	            		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
@@ -167,7 +167,7 @@ public class LineChart extends LnChart{
 	                		renderDot(pDot, 
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,
-	                				pLine.getPlotDotPaint()); //标识图形            			                	
+	                				pLine.getDotPaint()); //标识图形            			                	
 	            			lineEndX = rendEndX;
 	                	}
 	            		
@@ -175,7 +175,7 @@ public class LineChart extends LnChart{
 	                	{
 	                		//fromatter
 	                		mCanvas.drawText(Double.toString(bv) ,
-	    							lineEndX, lineEndY,  pLine.getPlotLabelsPaint());
+	    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
 	                	}
 	            	}else{
 	            		return ;
@@ -206,11 +206,11 @@ public class LineChart extends LnChart{
 			
 			List<LnData> lstKey = new ArrayList<LnData>();								
 			//开始处 X 轴 即标签轴                  
-			for(int i=0;i<mDataSet.size();i++)
+			for(int i=0;i<mDataset.size();i++)
 			{								
-				renderLine(mDataSet.get(i),"LINE");
-				renderLine(mDataSet.get(i),"DOT2LABEL");						
-				lstKey.add(mDataSet.get(i));
+				renderLine(mDataset.get(i),"LINE");
+				renderLine(mDataset.get(i),"DOT2LABEL");						
+				lstKey.add(mDataset.get(i));
 			}			
 			renderKey(lstKey);				
 		}	

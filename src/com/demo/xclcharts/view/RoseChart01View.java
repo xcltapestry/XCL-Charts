@@ -29,6 +29,7 @@ import org.xclcharts.chart.RoseChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 
 /**
@@ -36,7 +37,7 @@ import android.graphics.Color;
  * @Description  南丁格尔玫瑰图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RoseChart01View extends GraphicalView {
+public class RoseChart01View extends DemoView {
 
 	LinkedList<PieData> lPieData = new LinkedList<PieData>();	
 	
@@ -44,17 +45,33 @@ public class RoseChart01View extends GraphicalView {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		chartDataSet();
-		chartRender();
+		initChart();
 	}
 	
-	private void chartRender()
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartDataSet();
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
+	
+	private void chartRender(Canvas canvas)
 	{
 		try {						
 			RoseChart chart = new RoseChart();
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);		
+			chart.setCanvas(canvas);		
 			chart.setPadding(20, 20, 15, 15);
 			chart.setBackgroupColor(true,Color.BLACK);
 			

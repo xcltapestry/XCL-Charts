@@ -10,9 +10,10 @@ import org.xclcharts.chart.RoseChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 
-public class SpinnerPieChart01View extends GraphicalView {
+public class SpinnerPieChart01View extends DemoView {
 	
 	
 	private PieChart mChart = null;
@@ -26,9 +27,27 @@ public class SpinnerPieChart01View extends GraphicalView {
 		// TODO Auto-generated constructor stub
 		mChartStyle = chartStyle;
 		mMoveHeight = moveHeight;
-		chartDataSet();
-		chartRender();
+		
+		initChart();
 	}
+	
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartDataSet();	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);
+	}
+	
 	
 	
      private void initChart(int chartStyle)
@@ -59,7 +78,7 @@ public class SpinnerPieChart01View extends GraphicalView {
  		}
  	}
      
-     private void chartRender()
+     private void chartRender(Canvas canvas)
  	{
  		try {					
  			initChart(mChartStyle);
@@ -67,7 +86,7 @@ public class SpinnerPieChart01View extends GraphicalView {
  			mChart.setChartRange( 0.0f,mMoveHeight,
  									getScreenWidth(),
  									getScreenHeight() - mMoveHeight);
- 			mChart.setCanvas(this.mCacheCanvas);
+ 			mChart.setCanvas(canvas);
  			//图的内边距
  			mChart.setPadding(5, 35, 15, 20);
  			

@@ -33,6 +33,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 
 /**
@@ -41,7 +42,7 @@ import android.graphics.Color;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * MODIFIED    YYYY-MM-DD   REASON
  */
-public class BarChart03View extends GraphicalView {
+public class BarChart03View extends DemoView {
 	
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
@@ -51,21 +52,38 @@ public class BarChart03View extends GraphicalView {
 	public BarChart03View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();
-		chartDesireLines();
-		chartRender();
+		
+		initChart();
 		
 	}
 	
-	private void chartRender()
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();
+		chartDesireLines();
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
+	
+	private void chartRender(Canvas canvas)
 	{
 		try {
 			
 			BarChart chart = new BarChart();
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 8, 10);

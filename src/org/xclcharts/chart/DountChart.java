@@ -38,7 +38,7 @@ public class DountChart  extends PieChart{
 	//内环半径
 	private int mFillRadius = 0;
 	
-	private float mInnerRelativePercentage = 0.8f;
+	private float mInnerSize = 0.8f;
 	
 	//内环填充颜色
 	private Paint mPaintFill;
@@ -73,9 +73,9 @@ public class DountChart  extends PieChart{
 	 * 设置环内部填充相对于环所占的比例
 	 * @param precentage 环所占比例
 	 */
-	public void setInnerRelativePercentage(float precentage)
+	public void setInnerSize(float precentage)
 	{
-		mInnerRelativePercentage = precentage;
+		mInnerSize = precentage;
 	}
 	
 	/**
@@ -84,7 +84,7 @@ public class DountChart  extends PieChart{
 	 */
 	public float calcInnerRadius()
 	{
-		mFillRadius = (int) Math.round(getRadius() * mInnerRelativePercentage);
+		mFillRadius = (int) Math.round(getRadius() * mInnerSize);
 		return mFillRadius;
 	}
 

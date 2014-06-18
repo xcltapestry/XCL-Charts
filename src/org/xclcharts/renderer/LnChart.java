@@ -28,7 +28,7 @@ import org.xclcharts.chart.LnData;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.line.PlotDot;
-import org.xclcharts.renderer.line.PlotLines;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -404,12 +404,12 @@ public class LnChart extends AxisChart {
 			float dotLeft = currentX + rectWidth / 4;
 			float dotRight = currentX + 2 * (rectWidth / 4);
 
-			PlotLines pLine = cData.getPlotLines();
+			PlotLine pLine = cData.getPlotLine();
 
 			if (!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE)) {
 				PlotDot pDot = pLine.getPlotDot();
 				renderDot(pDot, dotLeft, currentY, dotRight, currentY
-						- textHeight / 2, pLine.getPlotDotPaint()); // 标识图形
+						- textHeight / 2, pLine.getDotPaint()); // 标识图形
 			}
 
 			currentX += rectWidth + keyTextWidth + 10;

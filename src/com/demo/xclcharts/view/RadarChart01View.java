@@ -25,6 +25,7 @@ package com.demo.xclcharts.view;
 import org.xclcharts.chart.RadarChart;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.util.Log;
 
 /**
@@ -32,33 +33,52 @@ import android.util.Log;
  * @Description  雷达图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RadarChart01View extends GraphicalView {
+public class RadarChart01View extends DemoView {
 
 	public RadarChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		chartLabels();
-		chartDataSet();
-		chartRender();
+		initChart();
 	}
 	
-	private void chartRender()
+
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
+	
+	private void chartRender(Canvas canvas)
 	{
 		try{				
 			RadarChart chart = new RadarChart();
 			 
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			chart.setPadding(15, 30, 10, 5);
+			
+			chart.setChartTitle("雷达图");
 			
 			//绘制
 			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.e("ERROR-AreaChart01View", e.toString());
+			Log.e("ERROR-RadarChart01View", e.toString());
 		}
 		
 	}

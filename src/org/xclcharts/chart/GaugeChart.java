@@ -50,7 +50,7 @@ public class GaugeChart extends CirChart{
 	private List<String> mLables = null;
 	
 	//刻度
-	private Paint mPaintTick = null;
+	private Paint mPaintTicks = null;
 	
 	//指针
 	private float mPointerAgent = 20f;		
@@ -80,11 +80,11 @@ public class GaugeChart extends CirChart{
 		getLabelsPaint().setTextSize(18);
 		getLabelsPaint().setColor(Color.BLUE);
 		
-		mPaintTick = new Paint();
-		mPaintTick.setStyle(Style.FILL);
-		mPaintTick.setAntiAlias(true);	
-		mPaintTick.setColor( (int)Color.rgb(50, 149, 222) ); 
-		mPaintTick.setStrokeWidth(1);
+		mPaintTicks = new Paint();
+		mPaintTicks.setStyle(Style.FILL);
+		mPaintTicks.setAntiAlias(true);	
+		mPaintTicks.setColor( (int)Color.rgb(50, 149, 222) ); 
+		mPaintTicks.setStrokeWidth(1);
 		
 		mPaintPointerLine = new Paint();
 		mPaintPointerLine.setStyle(Style.FILL);
@@ -114,9 +114,9 @@ public class GaugeChart extends CirChart{
 	 * 开放刻度画笔
 	 * @return 画笔
 	 */
-	public Paint getTickPaint()
+	public Paint getTicksPaint()
 	{
-		return mPaintTick;
+		return mPaintTicks;
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class GaugeChart extends CirChart{
 			float startY = mCalc.getPosY();
 			mCalc.CalcArcEndPointXY(cirX, cirY,tickRadius, agent); 		
 			
-			mCanvas.drawLine(startX, startY, mCalc.getPosX(), mCalc.getPosY(), mPaintTick);			
+			mCanvas.drawLine(startX, startY, mCalc.getPosX(), mCalc.getPosY(), mPaintTicks);			
 		}
 	}	
 	

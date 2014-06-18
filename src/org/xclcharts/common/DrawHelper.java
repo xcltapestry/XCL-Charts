@@ -259,7 +259,7 @@ public class DrawHelper {
 		canvas.drawLine(startX, startY, stopX, stopY, paint);  		
 	}
 	
-	public void drawLine(XEnum.LineDashStyle style,
+	public void drawLine(XEnum.LineStyle style,
 				float startX,float startY,
 				float stopX,float stopY,			 
 				Canvas canvas,

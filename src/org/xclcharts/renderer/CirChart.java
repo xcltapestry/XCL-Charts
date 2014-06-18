@@ -44,7 +44,7 @@ public class CirChart extends XChart{
 	private XEnum.DisplayPostion mLablesDP;
 	
 	//开放标签画笔让用户设置
-	private Paint mPaintLabels = null;
+	private Paint mPaintLabel = null;
 	
 	//初始偏移角度
 	protected int mOffsetAgent = 0;//180;
@@ -63,10 +63,10 @@ public class CirChart extends XChart{
 		//标签显示位置
 		mLablesDP = XEnum.DisplayPostion.CENTER;
 		
-		mPaintLabels = new Paint();
-		mPaintLabels.setColor(Color.BLACK);
-		mPaintLabels.setTextSize(18);
-		mPaintLabels.setAntiAlias(true);
+		mPaintLabel = new Paint();
+		mPaintLabel.setColor(Color.BLACK);
+		mPaintLabel.setTextSize(18);
+		mPaintLabel.setAntiAlias(true);
 	}
 	
 	@Override
@@ -134,7 +134,7 @@ public class CirChart extends XChart{
 	 */
 	public Paint getLabelsPaint()
 	{
-		return mPaintLabels;
+		return mPaintLabel;
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class CirChart extends XChart{
 	 * @param offsetAgent	偏移角度
 	 * @param curretAgentt	当前角度
 	 */
-	protected void drawLables(String text,
+	protected void drawLabel(String text,
 			final float cirX,
 			final float cirY,
 			final float radius,		
@@ -158,7 +158,7 @@ public class CirChart extends XChart{
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
 		
-		mPaintLabels.setTextAlign(Align.CENTER);
+		mPaintLabel.setTextAlign(Align.CENTER);
 		
 		if(XEnum.DisplayPostion.CENTER == mLablesDP )
 		{			 
@@ -170,7 +170,7 @@ public class CirChart extends XChart{
 					 
 				//标识
 				mCanvas.drawText( text ,
-					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabels);
+					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabel);
 		}else if(XEnum.DisplayPostion.OUTSIDE == mLablesDP ){
 				//显示在扇形的外部
 				calcRadius = radius  + radius/10;
@@ -180,7 +180,7 @@ public class CirChart extends XChart{
 					 
 				//标识
 				mCanvas.drawText(text,
-					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabels);          	
+					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabel);          	
 		}else{
 			return;
 		}		 

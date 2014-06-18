@@ -93,7 +93,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum LineDashStyle {
+		public enum LineStyle {
 			SOLID,DOT,DASH
 		}
 		
@@ -155,10 +155,10 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum LineStyle
-		{
-			Default,BezierCurve
-		}
+		//public enum LineStyle
+		//{
+		//	Default,BezierCurve
+		//}
 	
 		
 		

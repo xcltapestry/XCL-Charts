@@ -13,10 +13,11 @@ import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.Log;
 
-public class SpinnerBarChart01View extends GraphicalView {
+public class SpinnerBarChart01View extends DemoView {
 	
 	private int mChartStyle = 0;
 	private int mMoveHeight = 0;
@@ -31,12 +32,28 @@ public class SpinnerBarChart01View extends GraphicalView {
 		
 		mChartStyle = chartStyle;
 		mMoveHeight = moveHeight;		
-		chartLabels();
-		chartDataSet();
-		chartRender();
+		
+		initChart();
 		
 	}
 	
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
 	
 	private void initChart(int chartStyle)
 	{
@@ -60,17 +77,17 @@ public class SpinnerBarChart01View extends GraphicalView {
 			break;
 		case 4:	//竖向堆叠柱形图 
 			mChart = new StackBarChart();
-			((StackBarChart) mChart).setTotalLabelVisible(false);
+			((StackBarChart) mChart).setTotalVisible(false);
 			break;
 		case 5:	//横向堆叠柱形图
 			mChart = new StackBarChart();
 			mChart.setChartDirection(XEnum.Direction.HORIZONTAL);
-			((StackBarChart) mChart).setTotalLabelVisible(false);
+			((StackBarChart) mChart).setTotalVisible(false);
 			break;			
 		}
 	}
 	
-	public void chartRender()
+	public void chartRender(Canvas canvas)
 	{
 		try {
 			
@@ -78,7 +95,7 @@ public class SpinnerBarChart01View extends GraphicalView {
 			
 			//图所占范围大小
 			mChart.setChartRange(0.0f, mMoveHeight, getScreenWidth(),getScreenHeight() - mMoveHeight);
-			mChart.setCanvas(this.mCacheCanvas);
+			mChart.setCanvas(canvas);
 			if(mChart.isVerticalScreen())
 			{
 				mChart.setPadding(5, 40, 10, 15);

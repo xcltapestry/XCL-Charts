@@ -130,11 +130,11 @@ public class Pie3DChart extends PieChart{
 		        float arcBottom2 = mCalc.getPosY() + radius ;  
 		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);   
 		        mCanvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc); 
-		        drawLables(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+		        drawLabel(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
 		        			radius,mOffsetAgent,currentAgent);                
             }else{            
             	mCanvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);       	    
-     	        drawLables(cData.getLabel(),cirX, cirY,radius,mOffsetAgent,currentAgent);
+     	        drawLabel(cData.getLabel(),cirX, cirY,radius,mOffsetAgent,currentAgent);
      	    }				    		    
            //下次的起始角度  
             mOffsetAgent += currentAgent;  		                    		        

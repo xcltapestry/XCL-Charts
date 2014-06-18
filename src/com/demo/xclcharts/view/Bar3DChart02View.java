@@ -34,6 +34,7 @@ import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 
 /**
@@ -41,7 +42,7 @@ import android.graphics.Color;
  * @Description  3D柱形图例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class Bar3DChart02View extends GraphicalView {
+public class Bar3DChart02View extends DemoView {
 	
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
@@ -49,18 +50,33 @@ public class Bar3DChart02View extends GraphicalView {
 	
 	public Bar3DChart02View(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
-		
-		chartLabels();
-		chartDataSet();
-		chartRender();
+		// TODO Auto-generated constructor stub	
+		initChart();
 	}
 	
-	private void chartRender()
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
+	
+	private void chartRender(Canvas canvas)
 	{
 		try {			
 			Bar3DChart chart = new Bar3DChart();
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//Plot的内边距比例

@@ -33,6 +33,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 
 /**
@@ -40,7 +41,7 @@ import android.graphics.Color;
  * @Description  柱形图例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class BarChart02View extends GraphicalView {
+public class BarChart02View extends DemoView {
 	
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
@@ -50,20 +51,37 @@ public class BarChart02View extends GraphicalView {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		chartLabels();
-		chartDataSet();
-		chartRender();
+		
+		initChart();
 		
 	}
 	
-	private void chartRender()
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		chartLabels();
+		chartDataSet();		
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
+	
+	private void chartRender(Canvas canvas)
 	{
 		try {
 			
 			BarChart chart = new BarChart();
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			
 			if(chart.isVerticalScreen())
 			{

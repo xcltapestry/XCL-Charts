@@ -101,7 +101,7 @@ public class PlotGridRender extends PlotGrid implements IRender{
 			 float initWidth = getHorizontalLinesPaint().getStrokeWidth() ;
 			 if(mPrimaryTickLine) getHorizontalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 
-			 mDrawHelper.drawLine(this.getHorizontalLinesDashStyle(), startX, startY, stopX, stopY,
+			 mDrawHelper.drawLine(this.getHorizontalLinesStyle(), startX, startY, stopX, stopY,
 					mCanvas, getHorizontalLinesPaint());
 			 
 			 if(mPrimaryTickLine)getHorizontalLinesPaint().setStrokeWidth(initWidth);
@@ -122,7 +122,7 @@ public class PlotGridRender extends PlotGrid implements IRender{
 			 float initWidth = getVerticalLinesPaint().getStrokeWidth() ;
 			 if(mPrimaryTickLine) getVerticalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 
-			 mDrawHelper.drawLine(this.getVerticalLinesDashStyle(), startX, startY, stopX, stopY,
+			 mDrawHelper.drawLine(this.getVerticalLinesStyle(), startX, startY, stopX, stopY,
 					mCanvas, getVerticalLinesPaint());
 			
 			 if(mPrimaryTickLine)getVerticalLinesPaint().setStrokeWidth(initWidth);

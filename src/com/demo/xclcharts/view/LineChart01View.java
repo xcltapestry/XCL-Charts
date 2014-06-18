@@ -29,6 +29,7 @@ import org.xclcharts.chart.LineData;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 
@@ -37,7 +38,7 @@ import android.graphics.Paint.Align;
  * @Description  折线图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class LineChart01View extends GraphicalView {
+public class LineChart01View extends DemoView {
 	
 	//标签集合
 	private LinkedList<String> lables = new LinkedList<String>();
@@ -46,19 +47,35 @@ public class LineChart01View extends GraphicalView {
 	public LineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		initChart();	
+	}
+	
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
 		chartLabels();
 		chartDataSet();
-		chartRender();	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
 	}
 
-	private void chartRender()
+	private void chartRender(Canvas canvas)
 	{
 		try {				
 			
 			LineChart chart = new LineChart();
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			chart.setPadding(20, 20, 10, 5);
 			
 			//设定数据源
@@ -77,8 +94,8 @@ public class LineChart01View extends GraphicalView {
 			chart.getPlotGrid().setOddRowsFillVisible(true);
 			
 			chart.getPlotGrid().getHorizontalLinesPaint().setStrokeWidth(2);
-			chart.getPlotGrid().setHorizontalLinesDashStyle(XEnum.LineDashStyle.DASH);
-			chart.getPlotGrid().setVerticalLinesDashStyle(XEnum.LineDashStyle.DOT);
+			chart.getPlotGrid().setHorizontalLinesStyle(XEnum.LineStyle.DASH);
+			chart.getPlotGrid().setVerticalLinesStyle(XEnum.LineStyle.DOT);
 			
 			chart.getPlotGrid().getHorizontalLinesPaint().setColor(Color.RED);
 			chart.getPlotGrid().getVerticalLinesPaint().setColor(Color.BLUE);
@@ -87,8 +104,6 @@ public class LineChart01View extends GraphicalView {
 			chart.setChartSubTitle("(XCL-Charts Demo)");
 			
 			chart.getLegend().setLowerLegend("(年份)");
-			
-		
 			
 			chart.render();
 		} catch (Exception e) {
@@ -108,9 +123,9 @@ public class LineChart01View extends GraphicalView {
 		LineData lineData1 = new LineData("方块",valuesA,(int)Color.rgb(234, 83, 71));
 		lineData1.setLineLabelVisible(true);		
 		lineData1.setDotStyle(XEnum.DotStyle.RECT);				
-		lineData1.getPlotLabelsPaint().setColor(Color.BLUE);
-		lineData1.getPlotLabelsPaint().setTextSize(22);
-		lineData1.getPlotLabelsPaint().setTextAlign(Align.RIGHT);		
+		lineData1.getDotLabelPaint().setColor(Color.BLUE);
+		lineData1.getDotLabelPaint().setTextSize(22);
+		lineData1.getDotLabelPaint().setTextAlign(Align.RIGHT);		
 		//Line 2
 		LinkedList<Double> valuesB= new LinkedList<Double>();	
 		valuesB.add((double)30); 
@@ -120,7 +135,7 @@ public class LineChart01View extends GraphicalView {
 		valuesB.add((double)40); 
 		LineData lineData2 = new LineData("空心圆",valuesB,(int)Color.rgb(75, 166, 51));
 		lineData2.setDotStyle(XEnum.DotStyle.RING);				
-		lineData2.getPlotLines().getPlotDotPaint().setColor(Color.BLACK);
+		lineData2.getPlotLine().getDotPaint().setColor(Color.BLACK);
 		lineData2.setLineLabelVisible(true);		
 		//Line 3
 		LinkedList<Double> valuesC= new LinkedList<Double>();	

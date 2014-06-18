@@ -39,7 +39,7 @@ import android.graphics.Paint.Align;
 public class StackBarChart  extends BarChart{
 	
 	private FlatBar flatBar = null;
-	private boolean mTotalLableVisible = true;
+	private boolean mTotalVisible = true;
 
 	public StackBarChart()
 	{
@@ -51,9 +51,9 @@ public class StackBarChart  extends BarChart{
 	 * 是否在柱形的最上方，显示汇总标签
 	 * @param visible
 	 */
-	public void setTotalLabelVisible(boolean visible)
+	public void setTotalVisible(boolean visible)
 	{
-		mTotalLableVisible = visible;
+		mTotalVisible = visible;
 	}
 	
 	@Override
@@ -96,27 +96,27 @@ public class StackBarChart  extends BarChart{
 					//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来	
 					Double bv = bd.getDataSet().get(r);						
 					total += bv;				
-					float valuePostion = 0.0f;
+					float postion = 0.0f;
 					if(i == 0 )
 					{					
-						valuePostion = (float) ( 
+						postion = (float) ( 
 	                			axisScreenWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;						
 					}else{						
-						valuePostion = (float)( axisScreenWidth * ( (bv ) / valueWidth)) ;
+						postion = (float)( axisScreenWidth * ( (bv ) / valueWidth)) ;
 					}
 					
 				   	//宽度                	
 				   flatBar.renderBar(currentX ,currentY - barHeight/2,
-						   			 currentX + valuePostion,currentY + barHeight/2,this.mCanvas); 	             	
+						   			 currentX + postion,currentY + barHeight/2,this.mCanvas); 	             	
 				    				    
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-												currentX + valuePostion/2, currentY , mCanvas);											
-					currentX += valuePostion ;						 
+												currentX + postion/2, currentY , mCanvas);											
+					currentX += postion ;						 
 				 }
 				
 				 //合计		
-				 if(mTotalLableVisible)
+				 if(mTotalVisible)
 				 {
 					 float totalPostion = (float)( axisScreenWidth/axisDataRange * (total- dataAxis.getAxisMin()) );					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
@@ -169,20 +169,20 @@ public class StackBarChart  extends BarChart{
 						Double bv = bd.getDataSet().get(r);						
 						total += bv;
 					
-						float valuePostion = 0.0f;
+						float postion = 0.0f;
 						if(i == 0 )
 						{						
-							 valuePostion = (float)( axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  							
+							 postion = (float)( axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  							
 						}else{
-							valuePostion = (float) (axisScreenHeight * ( (bv  ) / axisDataHeight)) ;
+							postion = (float) (axisScreenHeight * ( (bv  ) / axisDataHeight)) ;
 							
 						}
-						flatBar.renderBar(currentX - barWidht/2, currentY - valuePostion, 
+						flatBar.renderBar(currentX - barWidht/2, currentY - postion, 
 										  currentX + barWidht /2, currentY, mCanvas);	 
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
-													currentX, currentY - valuePostion/2, mCanvas);											
-						currentY -= valuePostion ;						 
+													currentX, currentY - postion/2, mCanvas);											
+						currentY -= postion ;						 
 					 }
 					 //合计					 
 					 float totalPostion = (float) ( axisScreenHeight/axisDataHeight * (total- dataAxis.getAxisMin()) ); 

@@ -21,6 +21,8 @@
  */
 package org.xclcharts.chart;
 
+import android.util.Log;
+
 /**
  * @ClassName PieData
  * @Description 数据类, 饼图,rose图,环形图等都用这个传数据
@@ -33,7 +35,7 @@ public class PieData {
 	private String mPieLabel = "";
 	private double mPieValue = 0.0d;
 	private int mPieColor = 0 ;
-	private int mSliceAgent = 0;
+	private float mSliceAgent = 0;
 	
 	//是否突出饼图
 	private boolean mSelected = false;
@@ -196,9 +198,15 @@ public class PieData {
 	 * 将百分比转换为饼图显示角度
 	 * @return 圆心角度
 	 */
-	public int getSliceAgent()
-	{						
-		mSliceAgent =  (int) Math.round( 360 *  (mPieValue / 100) );		
+	public float getSliceAgent() 
+	{							
+		
+		if(mPieValue > 100 || mPieValue < 0)
+		{
+			Log.e("ERROR-PieData","输入的百分比不合规范.");
+			return 0.0f;
+		}
+		mSliceAgent =  (float) (360 *  (mPieValue / 100)) ;
 		return mSliceAgent;
 	}
 }

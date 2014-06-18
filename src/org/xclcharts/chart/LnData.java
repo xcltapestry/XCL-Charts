@@ -22,7 +22,7 @@
 package org.xclcharts.chart;
 
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.line.PlotLines;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Paint;
 
@@ -36,16 +36,16 @@ import android.graphics.Paint;
 
 public class LnData {
 	//标签轴用的到值
-	private String mLables;
+	private String mLable;
 	//是否在点上显示标签
-	private boolean mLablesVisible = false;
+	private boolean mLableVisible = false;
 
 	//线的基类
-	private PlotLines mPlotLines = null;
+	private PlotLine mPlotLine = null;
 	
 	public LnData()
 	{
-		mPlotLines = new PlotLines(); 
+		mPlotLine = new PlotLine(); 
 	}
 	
 	/**
@@ -54,7 +54,7 @@ public class LnData {
 	 */
 	public void setLineLabelVisible(boolean visible) 
 	{
-		mLablesVisible = visible;
+		mLableVisible = visible;
 	}
 	
 	/**
@@ -63,7 +63,7 @@ public class LnData {
 	 */
 	public boolean getLineLabelVisible()
 	{
-		return mLablesVisible;
+		return mLableVisible;
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class LnData {
 	 */
 	public void setLineLabel(String value) 
 	{
-		mLables = value;
+		mLable = value;
 	}
 	
 	/**
@@ -80,16 +80,16 @@ public class LnData {
 	 * @return 标签
 	 */
 	public String getLineLabel() {
-		return mLables;
+		return mLable;
 	}
 	
 	/**
 	 * 返回线的基类
 	 * @return 线的基类
 	 */
-	public PlotLines getPlotLines()
+	public PlotLine getPlotLine()
 	{
-		return mPlotLines;
+		return mPlotLine;
 	}			
 				
 	/**
@@ -98,9 +98,9 @@ public class LnData {
 	 */
 	public void setLineColor(int color) 
 	{				
-		mPlotLines.getPlotLinesPaint().setColor(color );
-		mPlotLines.getPlotLabelsPaint().setColor(color );	
-		mPlotLines.getPlotDotPaint().setColor(color );	
+		mPlotLine.getLinePaint().setColor(color );
+		mPlotLine.getDotLabelPaint().setColor(color );	
+		mPlotLine.getDotPaint().setColor(color );	
 	}
 	
 	/**
@@ -108,7 +108,7 @@ public class LnData {
 	 * @return 线的颜色
 	 */
 	public int getLineColor() {
-		return mPlotLines.getPlotLinesPaint().getColor();
+		return mPlotLine.getLinePaint().getColor();
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class LnData {
 	 */
 	public void setDotStyle(XEnum.DotStyle style)
 	{
-		mPlotLines.setDotStyle(style);
+		mPlotLine.setDotStyle(style);
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class LnData {
 	 */
 	public XEnum.DotStyle getDotStyle()
 	{
-		return mPlotLines.getDotStyle();
+		return mPlotLine.getDotStyle();
 	}
 	
 	/**
@@ -135,41 +135,41 @@ public class LnData {
 	 */
 	public void setLineKey(String value) 
 	{
-		mLables = value;
+		mLable = value;
 	}
 	/**
 	 * 返回Key值
 	 * @return Key值
 	 */
 	public String getLineKey() {
-		return mLables;
+		return mLable;
 	}
 	
 	/**
 	 * 开放标签画笔
 	 * @return 画笔
 	 */
-	public Paint getPlotLabelsPaint()
+	public Paint getDotLabelPaint()
 	{
-		return mPlotLines.getPlotLabelsPaint();
+		return mPlotLine.getDotLabelPaint();
 	}
 	
 	/**
 	 * 开放线的画笔
 	 * @return 画笔
 	 */
-	public Paint getPlotLinesPaint()
+	public Paint getLinePaint()
 	{
-		return mPlotLines.getPlotLinesPaint();
+		return mPlotLine.getLinePaint();
 	}
 	
 	/**
 	 * 开放点的画笔
 	 * @return 画笔
 	 */
-	public Paint getPlotDotPaint()
+	public Paint getDotPaint()
 	{
-		return mPlotLines.getPlotDotPaint();
+		return mPlotLine.getDotPaint();
 	}
 	
 	/**
@@ -178,7 +178,7 @@ public class LnData {
 	 */
 	public void setDotRadius(int radius)
 	{
-		 mPlotLines.getPlotDot().setDotRadius(radius);
+		 mPlotLine.getPlotDot().setDotRadius(radius);
 	}
 	
 }

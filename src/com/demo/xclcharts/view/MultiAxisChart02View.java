@@ -37,6 +37,7 @@ import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -48,7 +49,7 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class MultiAxisChart02View extends GraphicalView {
+public class MultiAxisChart02View extends DemoView {
 
 	//标签轴
 	List<String> chartLables = new LinkedList<String>();
@@ -63,22 +64,37 @@ public class MultiAxisChart02View extends GraphicalView {
 	public MultiAxisChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		initChart();
+	}
+	
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
 		chartLabels();
 		chartDataLnSet();
 		
 		chartLnLabels();
-		chartLnDataSet();
-		
-		chartRender();
-		chartLnRender();
+		chartLnDataSet();		
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);
+		chartLnRender(canvas);
 	}
 
-	private void chartRender()
+	private void chartRender(Canvas canvas)
 	{
 		try {
 			
 			BarChart chart = new BarChart();
-			chart.setCanvas(this.mCacheCanvas);
+			chart.setCanvas(canvas);
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
 			chart.setChartDirection(XEnum.Direction.VERTICAL);	
@@ -208,7 +224,7 @@ public class MultiAxisChart02View extends GraphicalView {
 		LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
 		LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
 		lineData1.setDotStyle(XEnum.DotStyle.TRIGANALE);
-		lineData1.getPlotDotPaint().setColor((int)Color.rgb(234, 83, 71));
+		lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
 		
 		LinkedList<Double> BarKey1= new LinkedList<Double>();				
 		BarKey1.add(0d); 
@@ -236,13 +252,13 @@ public class MultiAxisChart02View extends GraphicalView {
 		chartLablesLn.add(" "); 
 	}
 	
-	private void chartLnRender()
+	private void chartLnRender(Canvas canvas)
 	{
 		try {
 			
 			//柱形图所占范围大小
 			lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			lnChart.setCanvas(this.mCacheCanvas);
+			lnChart.setCanvas(canvas);
 			
 			if(lnChart.isVerticalScreen())
 			{

@@ -30,6 +30,7 @@ import org.xclcharts.chart.PieData;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
+import android.graphics.Canvas;
 import android.graphics.Color;
 
 /**
@@ -38,7 +39,7 @@ import android.graphics.Color;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class CircleChart01View extends GraphicalView {
+public class CircleChart01View extends DemoView {
 
 	private List<PieData> mlPieData = new LinkedList<PieData>();	
 	
@@ -48,11 +49,28 @@ public class CircleChart01View extends GraphicalView {
 		super(context);
 		// TODO Auto-generated constructor stub
 		
-		setPercentage(0);
-		chartRender();
+		
+		initChart();
 	}
 	
-	public void chartRender()
+	/**
+	 * 用于初始化
+	 */
+	private void initChart()
+	{			
+		setPercentage(0);	
+	}
+	
+	/**
+	 * 绘制图表
+	 * @param canvas 视图画布
+	 */
+	protected void drawChart(Canvas canvas)
+	{						
+		chartRender(canvas);	
+	}
+	
+	public void chartRender(Canvas canvas)
 	{
 		try {			
 			CircleChart chart = new CircleChart();	
@@ -64,7 +82,7 @@ public class CircleChart01View extends GraphicalView {
 			}else{
 				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
 			}
-			chart.setCanvas(this.mCacheCanvas);			
+			chart.setCanvas(canvas);			
 		
 			//设置附加信息
 			chart.setAttributeInfo(mDataInfo); 	
