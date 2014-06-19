@@ -34,6 +34,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName BarChart01View
@@ -41,7 +42,10 @@ import android.graphics.Color;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class BarChart01View extends DemoView {
+public class BarChart01View extends GraphicalView {
+	
+	private String TAG = "BarChart01View";
+	private BarChart chart = new BarChart();
 	
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
@@ -50,35 +54,17 @@ public class BarChart01View extends DemoView {
 	public BarChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
 		chartDataSet();
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
 			
-			BarChart chart = new BarChart();
 			//图所占范围大小
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());			
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 15, 5);
@@ -130,11 +116,10 @@ public class BarChart01View extends DemoView {
 					String label = df.format(value).toString();
 					return label;
 				}});
-			//绘制图
-			chart.render();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -171,5 +156,12 @@ public class BarChart01View extends DemoView {
 		chartLabels.add("观澜数据中心"); 
 	}	
 		
-	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

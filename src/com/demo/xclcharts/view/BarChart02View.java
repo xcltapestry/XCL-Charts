@@ -35,13 +35,17 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName BarChart02View
  * @Description  柱形图例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class BarChart02View extends DemoView {
+public class BarChart02View extends GraphicalView {
+	
+	private String TAG = "BarChart02View";
+	private BarChart chart = new BarChart();
 	
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
@@ -50,50 +54,28 @@ public class BarChart02View extends DemoView {
 	public BarChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		
-		initChart();
-		
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
-		chartDataSet();		
+		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
-			
-			BarChart chart = new BarChart();
+						
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
-			
+						
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 15, 10);
 			}else{
 				chart.setPadding(25, 20, 10, 5);
-			}
-		
+			}		
 			
 			chart.setChartTitle("每日收益情况");
 			chart.setChartSubTitle("(XCL-Charts Demo)");		
-			chart.setChartTitlePosition(XEnum.Postion.CENTER);
+			chart.setChartTitlePosition(XEnum.Position.CENTER);
 			chart.setChartTitleAlign(XEnum.ChartTitleAlign.LEFT);
 			
 			//数据源
@@ -136,9 +118,9 @@ public class BarChart02View extends DemoView {
 			*/
 			
 			//网格
-			chart.getPlotGrid().setHorizontalLinesVisible(true);
-			chart.getPlotGrid().setVerticalLinesVisible(true);
-			chart.getPlotGrid().setEvenRowsFillVisible(true);
+			chart.getPlotGrid().showHorizontalLines(true);
+			chart.getPlotGrid().showVerticalLines(true);
+			chart.getPlotGrid().showEvenRowsBgColor(true);
 			
 			//标签轴文字旋转-45度
 			chart.getLabelsAxis().setAxisTickLabelsRotateAgent(-45f);
@@ -156,11 +138,9 @@ public class BarChart02View extends DemoView {
 					return label;
 				}});	        
 			
-		
-				chart.render();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(TAG, e.toString());
 			}
 	}
 	private void chartDataSet()
@@ -191,4 +171,12 @@ public class BarChart02View extends DemoView {
 		chartLabels.add("纯净水"); 
 	}
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

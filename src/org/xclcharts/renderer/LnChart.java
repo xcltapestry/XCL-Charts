@@ -24,6 +24,7 @@ package org.xclcharts.renderer;
 
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.chart.LnData;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
@@ -128,7 +129,7 @@ public class LnChart extends AxisChart {
 	/**
 	 * 绘制左边竖轴,Lines图，坐标轴都是封闭的
 	 */
-	protected void renderVerticalDataAxis() {
+	protected void renderVerticalDataAxis(Canvas canvas) {
 		// 数据轴数据刻度总个数
 		double tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
@@ -157,35 +158,35 @@ public class LnChart extends AxisChart {
 			if (i > 0) {
 				// 从左到右的横向网格线
 				if (i % 2 != 0) {
-					plotGrid.renderOddRowsFill(plotLeft, currentY + YSteps,
+					plotGrid.renderOddRowsFill(canvas,plotLeft, currentY + YSteps,
 							plotRight, currentY);
 				} else {
-					plotGrid.renderEvenRowsFill(plotLeft, currentY + YSteps,
+					plotGrid.renderEvenRowsFill(canvas,plotLeft, currentY + YSteps,
 							plotRight, currentY);
 				}
 
 				if (i > 0 && i < tickCount)
-					plotGrid.renderGridLinesHorizontal(plotLeft, currentY,
+					plotGrid.renderGridLinesHorizontal(canvas,plotLeft, currentY,
 							plotRight, currentY);
 			}
-			dataAxis.renderAxisHorizontalTick(plotLeft, currentY,
+			dataAxis.renderAxisHorizontalTick(canvas,plotLeft, currentY,
 					Float.toString(currentTickLabel));
 
 		}
 
 		// top X轴线
 		if (mTopAxisVisible)
-			dataAxis.renderAxis(plotLeft, plotTop, plotRight, plotTop);
+			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop);
 
 		// 左Y轴 线
-		dataAxis.renderAxis(plotLeft, plotBottom, plotLeft, plotTop);
+		dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
 	}
 
 	// 坐标轴是封闭的
 	/**
 	 * 绘制右边数据轴
 	 */
-	protected void renderVerticalDataAxisRight() {
+	protected void renderVerticalDataAxisRight(Canvas canvas) {
 		// 数据轴数据刻度总个数
 		double tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
@@ -204,11 +205,11 @@ public class LnChart extends AxisChart {
 					.getAxisSteps()));
 
 			if (i == tickCount) {
-				dataAxis.renderAxisHorizontalTick(plotArea.getPlotRight(),
+				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getPlotRight(),
 						plotArea.getPlotTop(), Float.toString(currentTickLabel));
 			} else {
 				this.dataAxis
-						.renderAxisHorizontalTick(plotArea.getPlotRight(),
+						.renderAxisHorizontalTick(canvas,plotArea.getPlotRight(),
 								currentY + maskHeight,
 								Float.toString(currentTickLabel));
 			}
@@ -216,7 +217,7 @@ public class LnChart extends AxisChart {
 		}
 		// 轴 线
 		float paintWidth = dataAxis.getAxisPaint().getStrokeWidth() / 2;
-		dataAxis.renderAxis(plotArea.getPlotRight() + paintWidth,
+		dataAxis.renderAxis(canvas,plotArea.getPlotRight() + paintWidth,
 				plotArea.getPlotBottom(), plotArea.getPlotRight() + paintWidth,
 				plotArea.getPlotTop());
 	}
@@ -224,7 +225,7 @@ public class LnChart extends AxisChart {
 	/**
 	 * 绘制底部标签轴
 	 */
-	protected void renderVerticalLabelsAxis() {
+	protected void renderVerticalLabelsAxis(Canvas canvas) {
 		// 标签轴(X 轴)
 		float currentX = plotArea.getPlotLeft();
 
@@ -243,31 +244,31 @@ public class LnChart extends AxisChart {
 																			// XSteps);
 
 			// 绘制竖向网格线
-			if (plotGrid.getVerticalLinesVisible()) {
+			if (plotGrid.isShowVerticalLines()) {
 				if (i > 0 && i + 1 < dataSet.size())
-					plotGrid.renderGridLinesVertical(currentX,
+					plotGrid.renderGridLinesVertical(canvas,currentX,
 							plotArea.getPlotBottom(), currentX,
 							plotArea.getPlotTop());
 			}
 
 			if (dataSet.size() == i + 1) {
-				labelsAxis.renderAxisVerticalTick(plotArea.getPlotRight(),
+				labelsAxis.renderAxisVerticalTick(canvas,plotArea.getPlotRight(),
 						plotArea.getPlotBottom(), dataSet.get(i));
 			} else {
 				// 画上标签/刻度线
-				labelsAxis.renderAxisVerticalTick(currentX,
+				labelsAxis.renderAxisVerticalTick(canvas,currentX,
 						plotArea.getPlotBottom(), dataSet.get(i));
 			}
 
 		}
 		// 右边轴线
 	if (mRightAxisVisible)
-		labelsAxis.renderAxis(plotArea.getPlotRight(),
+		labelsAxis.renderAxis(canvas,plotArea.getPlotRight(),
 				plotArea.getPlotBottom(), plotArea.getPlotRight(),
 				plotArea.getPlotTop());
 
 		// bottom轴 线		
-		labelsAxis.renderAxis(plotArea.getPlotLeft(),
+		labelsAxis.renderAxis(canvas,plotArea.getPlotLeft(),
 				plotArea.getPlotBottom(), plotArea.getPlotRight(),
 				plotArea.getPlotBottom());
 	}
@@ -310,7 +311,7 @@ public class LnChart extends AxisChart {
 	 * @param bottom
 	 * @param paint
 	 */
-	protected void renderDot(PlotDot pDot, float left, float top, float right,
+	protected void renderDot(Canvas canvas, PlotDot pDot, float left, float top, float right,
 			float bottom, Paint paint) {
 
 		float radius = pDot.getDotRadius();
@@ -318,29 +319,29 @@ public class LnChart extends AxisChart {
 
 		switch (pDot.getDotStyle()) {
 		case CIRCLE:
-			this.mCanvas.drawCircle(left + Math.abs(right - left), bottom,
+			canvas.drawCircle(left + Math.abs(right - left), bottom,
 					radius, paint);
 			break;
 		case RING:
 			int ringRadius = (int) Math.round(radius * 0.7);
-			this.mCanvas.drawCircle(left + Math.abs(right - left), bottom,
+            canvas.drawCircle(left + Math.abs(right - left), bottom,
 					radius, paint);
 
 			Paint paintfill = new Paint();
 			paintfill.setColor(Color.WHITE);
 			paintfill.setStyle(Style.FILL);
-			this.mCanvas.drawCircle(left + Math.abs(right - left), bottom,
+            canvas.drawCircle(left + Math.abs(right - left), bottom,
 					ringRadius, paintfill);
 
 			break;
-		case TRIGANALE: // 等腰三角形
+		case TRIANGLE: // 等腰三角形
 			float triganaleHeight = radius + radius / 2;
 			Path path = new Path();
 			path.moveTo(right - radius, bottom + halfRadius);
 			path.lineTo(right, bottom - triganaleHeight);
 			path.lineTo(right + radius, bottom + halfRadius);
 			path.close();
-			mCanvas.drawPath(path, paint);
+            canvas.drawPath(path, paint);
 			break;
 		// Prismatic
 		case PRISMATIC: // 棱形 Prismatic
@@ -350,11 +351,11 @@ public class LnChart extends AxisChart {
 			pathPir.lineTo(right + radius, bottom);
 			pathPir.lineTo(left + (right - left), bottom + radius);
 			pathPir.close();
-			mCanvas.drawPath(pathPir, paint);
+            canvas.drawPath(pathPir, paint);
 			break;
 		case RECT:
 			paint.setStyle(Style.FILL);
-			mCanvas.drawRect(right - radius, bottom + radius, right + radius,
+            canvas.drawRect(right - radius, bottom + radius, right + radius,
 					bottom - radius, paint);
 			break;
 		case HIDE:
@@ -367,7 +368,7 @@ public class LnChart extends AxisChart {
 	 * 
 	 * @param dataSet
 	 */
-	protected void renderKey(List<LnData> dataSet) {
+	protected void renderKey(Canvas canvas, List<LnData> dataSet) {
 		if (getPlotKeyVisible() == false)
 			return;
 
@@ -395,10 +396,10 @@ public class LnChart extends AxisChart {
 				totalTextWidth = 0;
 			}
 
-			mCanvas.drawLine(currentX, currentY - textHeight / 2, currentX
+            canvas.drawLine(currentX, currentY - textHeight / 2, currentX
 					+ rectWidth, currentY - textHeight / 2, mPaintKey);
 
-			mCanvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY
+            canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY
 					- textHeight / 3, mPaintKey);
 
 			float dotLeft = currentX + rectWidth / 4;
@@ -408,7 +409,7 @@ public class LnChart extends AxisChart {
 
 			if (!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE)) {
 				PlotDot pDot = pLine.getPlotDot();
-				renderDot(pDot, dotLeft, currentY, dotRight, currentY
+				renderDot(canvas, pDot, dotLeft, currentY, dotRight, currentY
 						- textHeight / 2, pLine.getDotPaint()); // 标识图形
 			}
 

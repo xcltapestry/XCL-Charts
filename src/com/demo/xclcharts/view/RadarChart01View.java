@@ -33,52 +33,34 @@ import android.util.Log;
  * @Description  雷达图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RadarChart01View extends DemoView {
+public class RadarChart01View extends GraphicalView {
 
+	private String TAG = "RadarChart01View";
+	private RadarChart chart = new RadarChart();
+	
+	
 	public RadarChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		initChart();
-	}
-	
-
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
 		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try{				
-			RadarChart chart = new RadarChart();
-			 
-			//柱形图所占范围大小
+						 
+			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+			
 			chart.setPadding(15, 30, 10, 5);
 			
 			chart.setChartTitle("雷达图");
 			
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			Log.e("ERROR-RadarChart01View", e.toString());
+			Log.e(TAG, e.toString());
 		}
 		
 	}
@@ -92,5 +74,14 @@ public class RadarChart01View extends DemoView {
 	{
 		
 	}
+	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 
 }

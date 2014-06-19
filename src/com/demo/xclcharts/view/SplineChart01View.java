@@ -28,8 +28,6 @@ import java.util.LinkedList;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.axis.DataAxis;
-import org.xclcharts.renderer.axis.LabelsAxis;
 import org.xclcharts.renderer.plot.PlotGrid;
 
 import android.content.Context;
@@ -41,49 +39,32 @@ import android.util.Log;
  * @Description  曲线图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class SplineChart01View extends DemoView {
+public class SplineChart01View extends GraphicalView {
 
+	private String TAG = "SplineChart01View";
+	private SplineChart chart = new SplineChart();
 	//标签轴标签集合
-	private LinkedList<String> lables = new LinkedList<String>();
+	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
 	
 	public SplineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-				
-		initChart();	
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
 		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
-			
-			SplineChart chart = new SplineChart();
-			//柱形图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+						
+			//图所占范围大小
+			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());		
 			chart.setPadding(20, 20, 13, 5);
 			
 			//数据源	
-			chart.setLabels(lables);
+			chart.setLabels(labels);
 			chart.setDataSource(chartData);
 						
 			//坐标系
@@ -105,8 +86,8 @@ public class SplineChart01View extends DemoView {
 			
 			//背景网格
 			PlotGrid plot = chart.getPlotGrid();			
-			plot.setHorizontalLinesVisible(true);
-			plot.setVerticalLinesVisible(true);			
+			plot.showHorizontalLines(true);
+			plot.showVerticalLines(true);			
 			plot.getHorizontalLinesPaint().setStrokeWidth(3);
 			plot.getHorizontalLinesPaint().setColor((int)Color.rgb(127, 204, 204));			
 			plot.setHorizontalLinesStyle(XEnum.LineStyle.DOT);
@@ -115,10 +96,6 @@ public class SplineChart01View extends DemoView {
 			//标题
 			chart.setChartTitle("Spline Chart");
 			chart.setChartSubTitle("(XCL-Charts Demo)");
-			
-			
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -163,13 +140,22 @@ public class SplineChart01View extends DemoView {
 	
 	private void chartLabels()
 	{
-		lables.add("5:52:33");
-		lables.add("5:52:35");
-		lables.add("5:52:37");
-		lables.add("5:52:39");
-		lables.add("5:52:41");
-		lables.add("5:52:43");
-		lables.add("5:52:45");
+		labels.add("5:52:33");
+		labels.add("5:52:35");
+		labels.add("5:52:37");
+		labels.add("5:52:39");
+		labels.add("5:52:41");
+		labels.add("5:52:43");
+		labels.add("5:52:45");
 	}
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
+	
 }

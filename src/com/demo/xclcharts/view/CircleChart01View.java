@@ -32,6 +32,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName CircleChart01View
@@ -39,41 +40,24 @@ import android.graphics.Color;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class CircleChart01View extends DemoView {
+public class CircleChart01View extends GraphicalView {
 
-	private List<PieData> mlPieData = new LinkedList<PieData>();	
+	private String TAG = "CircleChart01View";
+	private CircleChart chart = new CircleChart();	
 	
+	private List<PieData> mlPieData = new LinkedList<PieData>();		
 	private String mDataInfo = "";
 	
 	public CircleChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		setPercentage(0);	
+		chartRender();
 	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	public void chartRender(Canvas canvas)
+			
+	public void chartRender()
 	{
-		try {			
-			CircleChart chart = new CircleChart();	
+		try {						
 			
 			//图所占范围大小			
 			if(getScreenWidth() < this.getScreenHeight())
@@ -82,7 +66,7 @@ public class CircleChart01View extends DemoView {
 			}else{
 				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
 			}
-			chart.setCanvas(canvas);			
+						
 		
 			//设置附加信息
 			chart.setAttributeInfo(mDataInfo); 	
@@ -94,9 +78,6 @@ public class CircleChart01View extends DemoView {
 			
 			//设置图表数据源			
 			chart.setDataSource(mlPieData);				
-			
-			//绘制
-			chart.render();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -120,5 +101,12 @@ public class CircleChart01View extends DemoView {
 		mlPieData.add(new PieData(Integer.toString(per)+"%",per,(int)Color.rgb(72, 201, 176)));		
 	}
 
-
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

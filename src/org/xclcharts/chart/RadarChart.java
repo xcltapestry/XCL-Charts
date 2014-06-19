@@ -36,6 +36,7 @@ import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.axis.LabelsAxis;
 import org.xclcharts.renderer.axis.LabelsAxisRender;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -194,7 +195,7 @@ public class RadarChart extends XChart{
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
 	 * @param dp 显示位置
 	 */
-	public void setLablesDisplay(XEnum.DisplayPostion dp)
+	public void setLablesDisplay(XEnum.DisplayPosition dp)
 	{
 		//mLablesDP = dp;
 	}
@@ -269,7 +270,7 @@ public class RadarChart extends XChart{
 	/**
 	 * 用来绘制蜘蛛网线
 	 */
-	private void renderWebLines()
+	private void renderGridLines(Canvas canvas)
 	{				
 		Path lnPath = new Path();		
 		for(int i=0; i <dataCount ;i++)
@@ -284,13 +285,13 @@ public class RadarChart extends XChart{
 				}
 			}
 			lnPath.close();
-			mCanvas.drawPath(lnPath, mPaintWebLines);
+			canvas.drawPath(lnPath, mPaintWebLines);
 			lnPath.reset();
 		}
 	}
 	
 	
-	private void renderAxisLines()
+	private void renderAxisLines(Canvas canvas)
 	{
 				
 		float cirX = plotArea.getCenterX();
@@ -324,11 +325,11 @@ public class RadarChart extends XChart{
 				if(i == dataCount - 1  )
 				{
 					//用于绘制各个方向上的轴线
-					mCanvas.drawLine(cirX,cirY, arrayLabelX[i][j], 
+					canvas.drawLine(cirX,cirY, arrayLabelX[i][j], 
 												arrayLabelY[i][j], mPaintWebLines);
 					
 					
-					mCanvas.drawText(Integer.toString(i)+" - "+Integer.toString(j),
+					canvas.drawText(Integer.toString(i)+" - "+Integer.toString(j),
 							 arrayLabelX[i][j], arrayLabelY[i][j], mPaintLabels);
 				}
 				
@@ -336,11 +337,11 @@ public class RadarChart extends XChart{
 				if(0 == j){ //显示在第一轴线上(即270度的那根线)
 					
 					//DataAxis 
-					mCanvas.drawLine(arrayLabelX[i][j] - 10, 
+					canvas.drawLine(arrayLabelX[i][j] - 10, 
 							arrayLabelY[i][j], arrayLabelX[i][j], 
 									arrayLabelY[i][j], mPaintLabels);
 					
-					mCanvas.drawText("["+Integer.toString(i)+"]",
+					canvas.drawText("["+Integer.toString(i)+"]",
 							 arrayLabelX[i][j]- 15, arrayLabelY[i][j], mPaintTick);
 				}
 			      
@@ -399,7 +400,7 @@ public class RadarChart extends XChart{
 				
 	}
 	
-	private void renderWebArea()
+	private void renderDataArea(Canvas canvas)
 	{
 		
 		//curRadius = 值占轴的比例
@@ -414,7 +415,7 @@ public class RadarChart extends XChart{
 		// 再依次连接起来即可
 		
 		// dataAxis.getAxisMax() - dataAxis.getAxisMin()
-		this.mCanvas.drawText("aaaaaaaa", 200, 300, mPaintLabels);
+		//canvas.drawText("aaaaaaaa", 200, 300, mPaintLabels);
 			
 		for(LineData lineData : mDataSet)
 		{
@@ -432,20 +433,13 @@ public class RadarChart extends XChart{
 	}
 	
 	
-	private void renderGridLines()
-	{
-		mRadius = 300;
 	
-			GetAllXY();
-			renderWebLines();
-			renderAxisLines();
-	}
 	
 	
 	/**
 	 * 绘制key
 	 */
-	protected void renderKey()
+	protected void renderKey(Canvas canvas)
 	{
 		
 	}
@@ -453,35 +447,35 @@ public class RadarChart extends XChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot()
+	protected void renderPlot(Canvas canvas)
 	{
 		//renderGridLines();
 		
 		GetAllXY();
-		renderWebLines();
-		renderAxisLines();
-		renderWebArea();
-		renderKey();
+		renderGridLines(canvas);
+		renderAxisLines(canvas);
+		renderDataArea(canvas);
+		renderKey(canvas);
 	}
 	
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
 		try {
 		
-			super.render();
+			super.render(canvas);
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
-			 plotArea.render();			 
+			 plotArea.render(canvas);			 
 			//画奇偶行填充,横竖网格线			
 			// plotGrid.render();			
 			 
 			//绘制标题
-			renderTitle();
+			renderTitle(canvas);
 			
 			//绘制图表
-			renderPlot();
+			renderPlot(canvas);
 			 
 			
 		}catch( Exception e){

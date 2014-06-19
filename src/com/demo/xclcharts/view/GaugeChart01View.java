@@ -30,6 +30,7 @@ import org.xclcharts.chart.GaugeChart;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 import android.util.Pair;
 
 /**
@@ -37,51 +38,37 @@ import android.util.Pair;
  * @Description  仪表盘例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class GaugeChart01View  extends DemoView {
+public class GaugeChart01View  extends GraphicalView {
 
+	private String TAG = "GaugeChart01View";
+	private GaugeChart chart = new GaugeChart();
+	
 	private List<String> mLabels = new ArrayList<String>();
 	private List<Pair> mPartitionSet = new ArrayList<Pair>();		
 	private float mAgent = 0f;
-	private GaugeChart chart = new GaugeChart();
+
 	
 	public GaugeChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-						
-		initChart();
+		chartLabels();
+		chartDataSet();	
+		chartRender();
 		//new Thread(this).start();
 	}
 	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
-		chartLabels();
-		chartDataSet();	
-	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
+	//从seekbar传入的值
 	public void setAgent(float currentAgent)
 	{
 		mAgent = currentAgent;
-	}
-	
+	}	
 		
-	public void chartRender(Canvas canvas)
+	public void chartRender()
 	{
 		try {								
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth() - 100,getScreenHeight());
-			chart.setCanvas(canvas);								
+										
 			chart.setPadding(25, 20, 10, 10);
 				
 			//设置标题
@@ -98,10 +85,10 @@ public class GaugeChart01View  extends DemoView {
 			//设置当前指向角度(0-180).
 			//chart.setCurrentAgent(90f);
 			chart.setCurrentAgent(mAgent);
-			chart.render();
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 		
 	}
@@ -149,4 +136,13 @@ public class GaugeChart01View  extends DemoView {
         }
 	}
 	*/
+	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

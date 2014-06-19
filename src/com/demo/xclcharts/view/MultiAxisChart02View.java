@@ -30,16 +30,15 @@ import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
+import org.xclcharts.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.LabelsAxis;
-import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.Log;
 
@@ -49,16 +48,19 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class MultiAxisChart02View extends DemoView {
+public class MultiAxisChart02View extends GraphicalView {
 
+	private String TAG = "MultiAxisChart02View";
+	private
 	//标签轴
-	List<String> chartLables = new LinkedList<String>();
+	List<String> chartLabels = new LinkedList<String>();
 	List<BarData> chartData = new LinkedList<BarData>();
 	
 	//标签轴
-	List<String> chartLablesLn = new LinkedList<String>();
+	List<String> chartLabelsLn = new LinkedList<String>();
 	LinkedList<LineData> chartDataLn = new LinkedList<LineData>();
 	
+	BarChart chart = new BarChart();
 	LineChart lnChart = new LineChart();
 
 	public MultiAxisChart02View(Context context) {
@@ -76,25 +78,16 @@ public class MultiAxisChart02View extends DemoView {
 		chartDataLnSet();
 		
 		chartLnLabels();
-		chartLnDataSet();		
-	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);
-		chartLnRender(canvas);
+		chartLnDataSet();	
+		
+		chartRender();
+		chartLnRender();
 	}
 
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
-			
-			BarChart chart = new BarChart();
-			chart.setCanvas(canvas);
+						
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
 			chart.setChartDirection(XEnum.Direction.VERTICAL);	
@@ -116,7 +109,7 @@ public class MultiAxisChart02View extends DemoView {
 			chart.getLegend().setRightLegend("Average Response Time (RT)");			
 			
 			//标签轴
-			chart.setLabels(chartLables);				
+			chart.setLabels(chartLabels);				
 			//数据轴
 			chart.setDataSource(chartData);
 			chart.getDataAxis().setAxisMax(90000);
@@ -164,16 +157,14 @@ public class MultiAxisChart02View extends DemoView {
 				}});	
 			
 			//网格背景
-			chart.getPlotGrid().setHorizontalLinesVisible(true);
-			chart.getPlotGrid().setEvenRowsFillVisible(true);
-			chart.getPlotGrid().setOddRowsFillVisible(true);
+			chart.getPlotGrid().showHorizontalLines(true);
+			chart.getPlotGrid().showEvenRowsBgColor(true);
+			chart.getPlotGrid().showOddRowsBgColor(true);
 			//隐藏Key值
-			chart.setPlotKeyVisible(false);
-			//绘制
-			chart.render();		
+			chart.setPlotKeyVisible(false);	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();			
+			Log.e(TAG, e.toString());			
 		}
 	}
 	private void chartDataLnSet()
@@ -199,8 +190,8 @@ public class MultiAxisChart02View extends DemoView {
 	private void chartLabels()
 	{
 		
-		chartLables.add("4 Cores Per Node"); 
-		chartLables.add("8 Cores per Node"); 	
+		chartLabels.add("4 Cores Per Node"); 
+		chartLabels.add("8 Cores per Node"); 	
 	}
 	
 	
@@ -223,7 +214,7 @@ public class MultiAxisChart02View extends DemoView {
 		//将标签与对应的数据集分别绑定
 		LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
 		LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
-		lineData1.setDotStyle(XEnum.DotStyle.TRIGANALE);
+		lineData1.setDotStyle(XEnum.DotStyle.TRIANGLE);
 		lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
 		
 		LinkedList<Double> BarKey1= new LinkedList<Double>();				
@@ -246,34 +237,29 @@ public class MultiAxisChart02View extends DemoView {
 	
 	private void chartLnLabels()
 	{
-		chartLablesLn.add(" "); 
-		chartLablesLn.add("4 Cores Per Node"); 
-		chartLablesLn.add("8 Cores per Node"); 	
-		chartLablesLn.add(" "); 
+		chartLabelsLn.add(" "); 
+		chartLabelsLn.add("4 Cores Per Node"); 
+		chartLabelsLn.add("8 Cores per Node"); 	
+		chartLabelsLn.add(" "); 
 	}
 	
-	private void chartLnRender(Canvas canvas)
+	private void chartLnRender()
 	{
 		try {
 			
 			//柱形图所占范围大小
-			lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			lnChart.setCanvas(canvas);
-			
+			lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());					
 			if(lnChart.isVerticalScreen())
 			{
 				lnChart.setPadding(20, 10, 10, 10);
 			}else{
 				lnChart.setPadding(20, 30, 18, 10);
-			}
-			
-			renderLnAxis();
-			
+			}			
+			renderLnAxis();			
 			lnChart.setPlotKeyVisible(true);
-			lnChart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	
@@ -283,13 +269,13 @@ public class MultiAxisChart02View extends DemoView {
 	private void renderLnAxis()
 	{
 		//标签轴
-		lnChart.setLabels(chartLablesLn);		
+		lnChart.setLabels(chartLabelsLn);		
 		lnChart.getLabelsAxis().setVisible(false);	
 		
 		//设定数据源						
 		lnChart.setDataSource(chartDataLn);
 		//数据轴
-		lnChart.setDataAxisDisplay(XEnum.LineDataAxisPostion.RIGHT);		
+		lnChart.setDataAxisDisplay(XEnum.LineDataAxisPosition.RIGHT);		
 		DataAxis dataAxis = lnChart.getDataAxis();		
 		dataAxis.setAxisMax(135);
 		dataAxis.setAxisMin(0);
@@ -311,4 +297,15 @@ public class MultiAxisChart02View extends DemoView {
 			
 		});		
 	}
+	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+        	chart.render(canvas);
+        	lnChart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
+	
 }

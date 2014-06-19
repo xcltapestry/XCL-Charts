@@ -31,52 +31,39 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName RoseChart01View
  * @Description  南丁格尔玫瑰图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RoseChart01View extends DemoView {
+public class RoseChart01View extends GraphicalView {
 
-	LinkedList<PieData> lPieData = new LinkedList<PieData>();	
+	private String TAG = "RoseChart01View";
+	private RoseChart chart = new RoseChart();
+	
+	LinkedList<PieData> roseData = new LinkedList<PieData>();	
 	
 	public RoseChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartDataSet();
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {						
-			RoseChart chart = new RoseChart();
+			
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);		
+			
 			chart.setPadding(20, 20, 15, 15);
-			chart.setBackgroupColor(true,Color.BLACK);
+			chart.setBackgroundColor(true,Color.BLACK);
 			
 			//数据源
-			chart.setDataSource(lPieData);							
+			chart.setDataSource(roseData);							
 				
 			//设置标题
 			chart.setChartTitle("南丁格尔玫瑰图");
@@ -85,12 +72,11 @@ public class RoseChart01View extends DemoView {
 			chart.getPlotTitle().getChartSubTitlePaint().setColor(Color.WHITE);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
-			//绘制
-			chart.render();
+			chart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -98,14 +84,21 @@ public class RoseChart01View extends DemoView {
 		//设置图表数据源
 							
 		//PieData(标签，百分比，在饼图中对应的颜色)
-		lPieData.add(new PieData("PostgreSQL",40,(int)Color.rgb(77, 83, 97) ));
-		lPieData.add(new PieData("Sybase"	 ,50,(int)Color.rgb(148, 159, 181)));
-		lPieData.add(new PieData("DB2"		 ,60,(int)Color.rgb(253, 180, 90)));
-		lPieData.add(new PieData("国产及其它"	 ,35,(int)Color.rgb(52, 194, 188)));
-		lPieData.add(new PieData("SQL Server",70,(int)Color.rgb(39, 51, 72)));
-		lPieData.add(new PieData("DB2"		 ,80,(int)Color.rgb(255, 135, 195)));
-		lPieData.add(new PieData("Oracle"    ,90,(int)Color.rgb(215, 124, 124)));	
+		roseData.add(new PieData("PostgreSQL",40,(int)Color.rgb(77, 83, 97) ));
+		roseData.add(new PieData("Sybase"	 ,50,(int)Color.rgb(148, 159, 181)));
+		roseData.add(new PieData("DB2"		 ,60,(int)Color.rgb(253, 180, 90)));
+		roseData.add(new PieData("国产及其它"	 ,35,(int)Color.rgb(52, 194, 188)));
+		roseData.add(new PieData("SQL Server",70,(int)Color.rgb(39, 51, 72)));
+		roseData.add(new PieData("DB2"		 ,80,(int)Color.rgb(255, 135, 195)));
+		roseData.add(new PieData("Oracle"    ,90,(int)Color.rgb(215, 124, 124)));	
 	}
 	
-
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

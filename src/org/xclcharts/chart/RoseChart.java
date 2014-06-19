@@ -23,6 +23,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -79,7 +80,7 @@ public class RoseChart extends PieChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot()
+	protected void renderPlot(Canvas canvas)
 	{			 							
 			//计算中心点坐标
 			float cirX = plotArea.getCenterX();
@@ -92,7 +93,7 @@ public class RoseChart extends PieChart{
 			paintArc.setStyle(Style.FILL);	
 	        
 	        //外环
-	        mCanvas.drawCircle(cirX,cirY,radius,mPaintInner); 
+			canvas.drawCircle(cirX,cirY,radius,mPaintInner); 
 	    
 	        float percentage = 0.0f;		 		
 	 		float newRaidus = 0.0f;		
@@ -119,13 +120,13 @@ public class RoseChart extends PieChart{
 	            float nRight = cirX + newRaidus ;  
 	            float nBottom = cirY + newRaidus ;  
 	            RectF nRF = new RectF(nLeft ,nTop,nRight,nBottom);  
-	            this.mCanvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
+	            canvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
 				
 	          //计算百分比标签  
 	            this.mCalc.CalcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
 	            
 	            //标识  
-	           mCanvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelsPaint());             
+	            canvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelsPaint());             
 	         
 	          //下次的起始角度  
 	            mOffsetAgent += percentage;  

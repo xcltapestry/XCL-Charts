@@ -27,10 +27,7 @@ import org.xclcharts.common.SysinfoHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -43,55 +40,38 @@ import android.view.View;
  */
 
 @SuppressLint("NewApi")
-public class GraphicalView extends View { 
+public abstract class GraphicalView extends View { 
 
+	private String TAG = "GraphicalView";
+	
 	protected int mScrWidth = 0;
 	protected int mScrHeight = 0;
-	
-	//定义一个内存中的图片,作为绘图缓冲区
-	protected Bitmap mCacheBitmap = null;
-    //定义canvas对象
-	protected Canvas mCacheCanvas = null;
 
 	public GraphicalView(Context context) {
-		super(context);
-		
+		super(context);	
 		
 		//禁用硬件加速
 		disableHardwareAccelerated();	
 		//得到屏幕信息
 		getScreenInfo();
-		
-		initCache();
 	}
 	
 	
-	public void initCache()
-	{	
-		//生成缓存区
-		createCacheBitmap(getScreenWidth(),getScreenHeight());		
-		setCacheBitmapCanvas();
-	}
-	
+	  public abstract void render(Canvas canvas);
 	
 	  public void onDraw(Canvas canvas)
 	    {
 		 
 		  try {	
-			  if(null != mCacheBitmap)
-			  {
-			     Paint bmpPaint = new Paint();		   
-			     canvas.drawBitmap(mCacheBitmap, 0, 0, bmpPaint);	
-			  }		    	 		
+			  render(canvas);	    	 		
 		  } catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
-				Log.e("GraphicalView", e.toString());
+			  Log.e(TAG, e.toString());
 		  }	
 	    }
 	  
 	
-	//可在此通过调试图大小来达到放到缩小的效果
+	//可在此通过调整图表范围大小来达到放大缩小效果
 	public boolean dispatchTouchEvent(MotionEvent event) {
 
 		  switch (event.getAction()) {
@@ -111,8 +91,26 @@ public class GraphicalView extends View {
 		  }
 
 		  return true;
-
 		 }
+	
+	
+	/**
+	 * 禁用硬件加速.
+	 * 原因:android自3.0引入了硬件加速，即使用GPU进行绘图,但它并不能完善的支持所有的绘图，
+	 * 通常表现为内容(如Rect或Path)不可见，异常或渲染错误。所以类了保证图表的正常显示，强制禁用掉.
+	 */
+	private void disableHardwareAccelerated()
+	{
+		SysinfoHelper sysinfo = new SysinfoHelper();		
+		if(sysinfo.supportHardwareAccelerated())
+		{		
+			//是否开启了硬件加速,如开启将其禁掉
+			if(!isHardwareAccelerated())
+			{
+				setLayerType(View.LAYER_TYPE_SOFTWARE,null); 
+			}
+		}
+	}
 	
 	/**
 	 * 得到屏幕信息
@@ -125,65 +123,10 @@ public class GraphicalView extends View {
 		mScrWidth = dm.widthPixels;
 		mScrHeight = dm.heightPixels;					
 	}
-	
-	
-	/**
-	 * 禁用硬件加速.
-	 * 原因:android自3.0引入了硬件加速，即使用GPU进行绘图,但它并不能完善的支持所有的绘图，
-	 * 通常表现为内容不可见，异常或渲染错误。所以类了保证图表的正常显示，强制禁用掉.
-	 */
-	private void disableHardwareAccelerated()
-	{
-		SysinfoHelper sysinfo = new SysinfoHelper();
-		if(sysinfo.supportHardwareAccelerated())
-		{		
-			// 是否开启了硬件加速,如开启将其禁掉，否则在有些机器上显示不出一些图形,如Rect或Path
-			if(!isHardwareAccelerated())
-			{
-				setLayerType(View.LAYER_TYPE_SOFTWARE,null); 
-			}
-		}
-	}
-	
-	/**
-	 * 生成缓存区
-	 */
-	protected void createCacheBitmap(int width,int height)
-	{			
-		try{
-			 if(null != mCacheBitmap)
-			  {
-				 if(!mCacheBitmap.isRecycled())
-			     {
-			    	 mCacheBitmap.recycle();
-			    	 System.gc();
-			     }
-			  }
-			 mCacheBitmap = Bitmap.createBitmap(width,height,Config.ARGB_8888);	 //ARGB_8888  ARGB_4444
-		}catch(Exception ex){
-			Log.e("ERROR-GraphicalView",ex.toString());
-		}
-	 	   					 
-	}
-	
-	/**
-	 * 将缓存的图片绘制到画布
-	 */
-	private void setCacheBitmapCanvas()
-	{
-		if(null != mCacheBitmap)
-		{
-			//生成画布
-		    mCacheCanvas = new Canvas();	    
-		    //将图绘制到内存中的mCacheBitmap上
-		    mCacheCanvas.setBitmap(mCacheBitmap);
-		}
-	}
 
 	public int getScreenWidth() {
 		return mScrWidth;
 	}
-
 
 	public int getScreenHeight() {
 		return mScrHeight;

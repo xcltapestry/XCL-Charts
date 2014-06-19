@@ -28,20 +28,24 @@ import java.util.List;
 
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
-import org.xclcharts.renderer.XEnum;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 /**
  * @ClassName StackBarChart02View
  * @Description  堆叠图 的例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class StackBarChart02View extends DemoView {
+public class StackBarChart02View extends GraphicalView {
 
+	private String TAG = "StackBarChart02View";
+	private StackBarChart chart = new StackBarChart();
+	
 	//标签轴
 	List<String> chartLabels = new LinkedList<String>();
 	List<BarData> BarDataSet = new LinkedList<BarData>();
@@ -49,33 +53,15 @@ public class StackBarChart02View extends DemoView {
 	public StackBarChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
-		chartDataSet();		
+		chartDataSet();
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {		
-			StackBarChart chart = new StackBarChart();
-			chart.setCanvas(canvas);
+			
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//指定显示为横向柱形
@@ -107,7 +93,7 @@ public class StackBarChart02View extends DemoView {
 			chart.getLegend().setLowerLegend("单位为(W)");
 			
 			//背景网格
-			chart.getPlotGrid().setVerticalLinesVisible(true);
+			chart.getPlotGrid().showVerticalLines(true);
 			chart.getPlotGrid().setVerticalLinesStyle(XEnum.LineStyle.DOT);
 			//chart.getPlotGrid().setVerticalLinesVisible(true);
 			//chart.getPlotGrid().setEvenRowsFillVisible(true);
@@ -143,11 +129,9 @@ public class StackBarChart02View extends DemoView {
 					return label;
 				}});	        
 				
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -173,5 +157,14 @@ public class StackBarChart02View extends DemoView {
 		chartLabels.add("二季度(Q2)"); 
 		chartLabels.add("三季度(Q3)"); 
 	}
+	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 
 }

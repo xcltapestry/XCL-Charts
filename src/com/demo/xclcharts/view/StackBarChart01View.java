@@ -37,57 +37,43 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.util.Log;
 /**
  * @ClassName StackBarChart01View
  * @Description  堆叠图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class StackBarChart01View extends DemoView {
+public class StackBarChart01View extends GraphicalView {
 	
+	private String TAG = "StackBarChart01View";
+	private StackBarChart chart = new StackBarChart();
 	//标签轴
-	List<String> chartLables = new LinkedList<String>();
+	List<String> chartLabels = new LinkedList<String>();
 	List<BarData> BarDataSet = new LinkedList<BarData>();
 
 	public StackBarChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
 		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
 			
-			StackBarChart chart = new StackBarChart();
-			chart.setCanvas(canvas);
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			chart.setChartDirection(XEnum.Direction.VERTICAL);
 			if(chart.isVerticalScreen())
 			{
-			chart.setPadding(15, 20, 10, 5);
+				chart.setPadding(15, 20, 10, 5);
 			}else{
 				chart.setPadding(25, 30, 18, 5);
 			}
 			//数据源		
-			chart.setLabels(chartLables);	
+			chart.setLabels(chartLabels);	
 			chart.setDataSource(BarDataSet);
 			
 			//坐标系
@@ -104,7 +90,7 @@ public class StackBarChart01View extends DemoView {
 			chart.setChartTitle("文件服务器空间使用情况");
 			chart.setChartSubTitle("(XCL-Charts Demo)");
 			chart.setChartTitleAlign(XEnum.ChartTitleAlign.CENTER);
-			chart.setChartTitlePosition(XEnum.Postion.CENTER);
+			chart.setChartTitlePosition(XEnum.Position.CENTER);
 			
 			//图例
 			chart.getLegend().setLeftLegend("单位(TB)");
@@ -112,8 +98,8 @@ public class StackBarChart01View extends DemoView {
 			//chart.getLegend().setRightLegend("右边图例");
 			
 			//背景网格
-			chart.getPlotGrid().setEvenRowsFillVisible(true);
-			chart.getPlotGrid().setOddRowsFillVisible(true);
+			chart.getPlotGrid().showEvenRowsBgColor(true);
+			chart.getPlotGrid().showOddRowsBgColor(true);
 			
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -153,35 +139,41 @@ public class StackBarChart01View extends DemoView {
 					return label;
 				}});	        
 				
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
 	{
 		//标签1对应的柱形数据集
-		List<Double> valuesA= new LinkedList<Double>();	
-		valuesA.add((double)200);
-		valuesA.add((double)250);
-		valuesA.add((double)400); 
+		List<Double> dataSeriesA= new LinkedList<Double>();	
+		dataSeriesA.add((double)200);
+		dataSeriesA.add((double)250);
+		dataSeriesA.add((double)400); 
 
-		List<Double> valuesB= new LinkedList<Double>();	
-		valuesB.add((double)300);
-		valuesB.add((double)150); 
-		valuesB.add((double)450); 
+		List<Double> dataSeriesB= new LinkedList<Double>();	
+		dataSeriesB.add((double)300);
+		dataSeriesB.add((double)150); 
+		dataSeriesB.add((double)450); 
 
 		
-		BarDataSet.add(new BarData("已用空间",valuesA,(int)Color.rgb(0, 0,255)));
-		BarDataSet.add(new BarData("空闲空间",valuesB,(int)Color.rgb(255, 0, 0)));
+		BarDataSet.add(new BarData("已用空间",dataSeriesA,(int)Color.rgb(0, 0,255)));
+		BarDataSet.add(new BarData("空闲空间",dataSeriesB,(int)Color.rgb(255, 0, 0)));
 	}
 	private void chartLabels()
 	{
-		chartLables.add("172.16.8.1"); 
-		chartLables.add("172.16.8.6"); 
-		chartLables.add("172.16.8.8"); 
+		chartLabels.add("172.16.8.1"); 
+		chartLabels.add("172.16.8.6"); 
+		chartLabels.add("172.16.8.8"); 
 	}
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

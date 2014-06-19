@@ -31,48 +31,33 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName DountChart01View
  * @Description  环形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class DountChart01View extends DemoView {
+public class DountChart01View extends GraphicalView {
 
+	private String TAG = "DountChart01View";
+	private DountChart chart = new DountChart();
+	
 	LinkedList<PieData> lPieData = new LinkedList<PieData>();
 	
 	public DountChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		initChart();
-		
+		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
-		chartDataSet();		
-	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
-			DountChart chart = new DountChart();
-			//柱形图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+			
+			//图所占范围大小
+			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());			
 			chart.setPadding(20, 30, 15, 15);
 							
 			//设置起始偏移角度
@@ -82,15 +67,14 @@ public class DountChart01View extends DemoView {
 			chart.setDataSource(lPieData);
 						
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+			chart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
 			
+			//标题
 			chart.setChartTitle("Dount Chart");
 			chart.setChartSubTitle("(XCL-Charts Demo)");
-							
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -103,6 +87,13 @@ public class DountChart01View extends DemoView {
 		lPieData.add(new PieData("Linux","40%",40,(int)Color.rgb(52, 194, 188)));
 	}
 	
-
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 
 }

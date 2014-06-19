@@ -116,9 +116,9 @@ public class DataAxisRender extends DataAxis implements IRender{
 	/*
 	 * 绘制横向刻度标记
 	 */
-	public 	void renderAxisHorizontalTick(float centerX,float centerY,String text)
+	public 	void renderAxisHorizontalTick(Canvas canvas, float centerX,float centerY,String text)
 	{		
-		if(getVisible()) renderHorizontalTick(centerX,centerY,text);
+		if(getVisible()) renderHorizontalTick(canvas, centerX,centerY,text);
 	}
 
 	/**
@@ -127,10 +127,10 @@ public class DataAxisRender extends DataAxis implements IRender{
 	 * @param centerY
 	 * @param text
 	 */
-	public void renderAxisVerticalTick(float centerX,float centerY,String text)
+	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
 	{
 		if(getVisible())
-			renderVerticalTick(centerX,centerY,text);
+			renderVerticalTick(canvas,centerX,centerY,text);
 	}
 	
 	
@@ -141,20 +141,15 @@ public class DataAxisRender extends DataAxis implements IRender{
 	 * @param stopX
 	 * @param stopY
 	 */
-	public void renderAxis(float startX,float startY,float stopX,float stopY)
+	public void renderAxis(Canvas canvas, float startX,float startY,float stopX,float stopY)
 	{
 		if(getVisible() && getAxisLineVisible())
-			mCanvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
 	}	
 	
-	@Override
-	public void setCanvas(Canvas canvas) {
-		// TODO Auto-generated method stub
-		mCanvas = canvas;
-	}
 
 	@Override
-	public boolean render() {
+	public boolean render(Canvas canvas) {
 		// TODO Auto-generated method stub
 		if(false == getVisible())return true;
 		

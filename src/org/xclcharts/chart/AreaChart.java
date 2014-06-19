@@ -25,6 +25,7 @@ package org.xclcharts.chart;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -101,7 +102,7 @@ public class AreaChart extends LnChart{
 	 * @param type	绘制类型
 	 * @param alpha 透明度
 	 */
-	private void renderLine(AreaData bd,String type,int alpha)
+	private void renderLine(Canvas canvas, AreaData bd,String type,int alpha)
 	{
 		float initX =  plotArea.getPlotLeft();
         float initY =  plotArea.getPlotBottom();
@@ -131,19 +132,19 @@ public class AreaChart extends LnChart{
 		for(Double bv : chartValues)
         {								
 			//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
-        	float valuePostion = (float) Math.round( 
+        	float valuePosition = (float) Math.round(
 					axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ; 
         	
         	if(j == 0 )
 			{
 				lineStartX = initX;
-				lineStartY = initY - valuePostion;
+				lineStartY = initY - valuePosition;
 				
 				lineEndX = lineStartX;
 				lineEndY = lineStartY;
 			}else{
 				lineEndX =  initX + (j) * currLablesSteps;
-				lineEndY = initY - valuePostion;
+				lineEndY = initY - valuePosition;
 			}
         	        	 
         	if(j == chartValues.size() - 1)    //收尾，将path连接一气  
@@ -156,7 +157,7 @@ public class AreaChart extends LnChart{
         	////////////////////
         	if(type.equalsIgnoreCase("LINE"))
         	{
-        		mCanvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
+        		canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
         												pLine.getLinePaint());            	
         	}else if(type.equalsIgnoreCase("DOT2LABEL")){
         		
@@ -166,7 +167,7 @@ public class AreaChart extends LnChart{
             		PlotDot pDot = pLine.getPlotDot();	              
             		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
         			
-            		renderDot(pDot, 
+            		renderDot(canvas,pDot,
             				lineStartX ,lineStartY ,
             				lineEndX ,lineEndY,
             				pLine.getDotPaint()); //标识图形            			                	
@@ -176,7 +177,7 @@ public class AreaChart extends LnChart{
         		if(bd.getLineLabelVisible())
             	{
             		//fromatter
-            		mCanvas.drawText(Double.toString(bv) ,
+            		canvas.drawText(Double.toString(bv) ,
 							lineEndX, lineEndY,  pLine.getDotLabelPaint());
             	}
         	}else{
@@ -195,36 +196,34 @@ public class AreaChart extends LnChart{
 		pathArea.close(); 
 		if(type.equalsIgnoreCase("LINE"))
     	{
-			mCanvas.drawPath(pathArea, mPaintAreaFill);
+			canvas.drawPath(pathArea, mPaintAreaFill);
     	}
 	}
 	
 	
-	private void renderVerticalPlot()
+	private void renderVerticalPlot(Canvas canvas)
 	{				
-		renderVerticalDataAxis();
-		renderVerticalLabelsAxis();
+		renderVerticalDataAxis(canvas);
+		renderVerticalLabelsAxis(canvas);
 		
 		List<LnData> lstKey = new ArrayList<LnData>();		
 		//开始处 X 轴 即标签轴                  
 		for(int i=0;i<mDataSet.size();i++)
 		{								
-			this.renderLine( mDataSet.get(i),"LINE",(int)Math.round(mDataSet.size() *i));
-			this.renderLine( mDataSet.get(i),"DOT2LABEL",(int)Math.round(mDataSet.size() *i));
+			this.renderLine(canvas, mDataSet.get(i),"LINE",(int)Math.round(mDataSet.size() *i));
+			this.renderLine(canvas, mDataSet.get(i),"DOT2LABEL",(int)Math.round(mDataSet.size() *i));
 			lstKey.add(mDataSet.get(i));
 		}
 			
-		renderKey(lstKey);	
+		renderKey(canvas, lstKey);
 	}
 	
 	
-	public boolean render() throws Exception {
-		// TODO Auto-generated method stub
-	
+	public boolean render(Canvas canvas) throws Exception {
 		try {
-			super.render();			
+			super.render(canvas);
 			//绘制图表
-			renderVerticalPlot();
+			renderVerticalPlot(canvas);
 			
 		}catch( Exception e){
 			 throw e;

@@ -24,10 +24,11 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.Bar3D;
-import org.xclcharts.common.DrawHelper;
 
+import android.graphics.Canvas;
 import android.util.Log;
 
 /**
@@ -148,7 +149,7 @@ public class Bar3DChart extends BarChart{
 	
 	
 	@Override
-	protected void renderHorizontalBarLabelAxis() {
+	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
 		// Y 轴
 		// 标签横向间距高度
 		float YSteps = (float)(getAxisScreenHeight()
@@ -158,31 +159,31 @@ public class Bar3DChart extends BarChart{
 			// 依初超始Y坐标与标签间距算出当前刻度的Y坐标
 			currentY = plotArea.getPlotBottom() - (i + 1) * YSteps;
 			// 横的grid线
-			plotGrid.renderGridLinesHorizontal(plotArea.getPlotLeft(),
+			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getPlotLeft(),
 					currentY, plotArea.getPlotRight(), currentY);
 							
 			// 标签
 			float labelX = (float) (plotArea.getPlotLeft() - mBar3D.getOffsetX() * 2); 
-			this.labelsAxis.renderAxisHorizontalTick(labelX,
+			this.labelsAxis.renderAxisHorizontalTick(canvas, labelX,
 					currentY, labelsAxis.getDataSet().get(i));
 		}
 	}
 	
 	
 	@Override
-	protected void renderHorizontalBar()
+	protected void renderHorizontalBar(Canvas canvas)
 	{		
-		renderHorizontalBarDataAxis();		
+		renderHorizontalBarDataAxis(canvas);
 		 
 		//x轴 线 [要向里突]
-		 dataAxis.renderAxis(plotArea.getPlotLeft(), plotArea.getPlotBottom(), 
+		 dataAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
 				 			 plotArea.getPlotRight(),  plotArea.getPlotBottom());	
 		 //Y 轴           
-		 renderHorizontalBarLabelAxis(); 	
+		 renderHorizontalBarLabelAxis(canvas);
 			
 			//Y轴线
 		 mBar3D.render3DYAxis(plotArea.getPlotLeft(), plotArea.getPlotTop(), 
-							 plotArea.getPlotRight(), plotArea.getPlotBottom(),mCanvas); 
+							 plotArea.getPlotRight(), plotArea.getPlotBottom(),canvas);
 			
 			//得到Y 轴标签横向间距高度
 			 float YSteps = getHorizontalYSteps();
@@ -225,25 +226,25 @@ public class Bar3DChart extends BarChart{
 	                							drawBarButtomY - barHeight, 
 						                		(float) (plotArea.getPlotLeft()  +  valuePostion), 
 						                		drawBarButtomY, 
-	                							mBar3D.getBarPaint().getColor(), this.mCanvas);
+	                							mBar3D.getBarPaint().getColor(), canvas);
 	                	             	
                 	                               	
                 	//在柱形的顶端显示上柱形的当前值	                
 	                mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
 	                		 (float) (plotArea.getPlotLeft() + valuePostion)  , 
-	                		 (float) (drawBarButtomY - barHeight/2), mCanvas);
+	                		 (float) (drawBarButtomY - barHeight/2), canvas);
                                
                 	k++;
                 }
 				currNumber ++;
 			}	
 			//画Key说明
-			drawDataSetKey();	 
+			drawDataSetKey(canvas);
 	}
 	
 	
 	@Override
-	protected void renderVerticalBarLabelsAxis() {
+	protected void renderVerticalBarLabelsAxis(Canvas canvas) {
 		// 标签轴(X 轴)
 		float currentX = plotArea.getPlotLeft();
 
@@ -268,24 +269,24 @@ public class Bar3DChart extends BarChart{
 			currentX = (plotArea.getPlotLeft() + (i + 1) * XSteps); //Math.round
 
 			// 绘制横向网格线
-			if (plotGrid.getVerticalLinesVisible()) {
-				this.mCanvas.drawLine(currentX, plotArea.getPlotBottom(),
+			if (plotGrid.isShowVerticalLines()) {
+				canvas.drawLine(currentX, plotArea.getPlotBottom(),
 						currentX, plotArea.getPlotTop(),
 						this.plotGrid.getVerticalLinesPaint());
 			}
 			// 画上标签/刻度线
 			float currentY = (float) (plotArea.getPlotBottom() + baseOffsetY + baseTickness+labelHeight);
 			currentX = (float) (currentX - baseOffsetX);
-			labelsAxis.renderAxisVerticalTick(currentX,currentY, dataSet.get(i));
+			labelsAxis.renderAxisVerticalTick(canvas, currentX,currentY, dataSet.get(i));
 		}
 	}
 		
 	
 	@Override
-	protected void renderVerticalBar()
+	protected void renderVerticalBar(Canvas canvas)
 	{		
-		renderVerticalBarDataAxis();			
-		renderVerticalBarLabelsAxis();
+		renderVerticalBarDataAxis(canvas);
+		renderVerticalBarLabelsAxis(canvas);
 		
 		//标签轴(X 轴) 且在这画柱形    
 		 float initX= plotArea.getPlotLeft();
@@ -300,7 +301,7 @@ public class Bar3DChart extends BarChart{
 	 	//X轴 线
 		mBar3D.render3DXAxis(plotArea.getPlotLeft(), plotArea.getPlotBottom(),
 							 plotArea.getPlotRight(), plotArea.getPlotBottom(), 
-							 this.mCanvas); 
+							 canvas);
 	
 		//得到数据源
 		List<BarData> chartDataSource = this.getDataSource();
@@ -343,21 +344,21 @@ public class Bar3DChart extends BarChart{
            								(float)(plotArea.getPlotBottom()  -  valuePostion) ,
 				               			drawBarEndX, 
 				               			plotArea.getPlotBottom(),
-				               			bd.getColor(), this.mCanvas);
+				               			bd.getColor(), canvas);
         
 			
            		//在柱形的顶端显示上柱形的当前值
            		mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
 			                		 (float)(drawBarStartX + barWidth/2) ,	
 			                		 (float)(plotArea.getPlotBottom()  -  valuePostion),  
-			                		 mCanvas);            				
+			                		 canvas);
 				k++;                
            }	
 			currNumber ++;				
 		}
 	 
 		//绘制标签各柱形集的说明描述
-		drawDataSetKey();
+		drawDataSetKey(canvas);
 	}
 	
 	

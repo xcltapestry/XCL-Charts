@@ -30,11 +30,11 @@ import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.DesireLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName BarChart03View
@@ -42,9 +42,11 @@ import android.graphics.Color;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * MODIFIED    YYYY-MM-DD   REASON
  */
-public class BarChart03View extends DemoView {
+public class BarChart03View extends GraphicalView {
 	
-	//标签轴
+	private String TAG = "BarChart03View";
+	private BarChart chart = new BarChart();
+	//轴数据源
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
 	private List<DesireLineData> mDesireLineDataSet = new LinkedList<DesireLineData>();
@@ -52,38 +54,18 @@ public class BarChart03View extends DemoView {
 	public BarChart03View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		initChart();
-		
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
 		chartDataSet();
 		chartDesireLines();
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {
 			
-			BarChart chart = new BarChart();
 			//图所占范围大小
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());		
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 8, 10);
@@ -111,7 +93,7 @@ public class BarChart03View extends DemoView {
 			chart.getDataAxis().setDetailModeSteps(4);
 			
 			//背景网格
-			chart.getPlotGrid().setHorizontalLinesVisible(true);
+			chart.getPlotGrid().showHorizontalLines(true);
 									
 			//横向显示柱形,如想看横向显示效果，可打开这两行的注释即可
 			//chart.setChartDirection(XEnum.Direction.HORIZONTAL);
@@ -146,8 +128,6 @@ public class BarChart03View extends DemoView {
 			
 			//隐藏Key
 			chart.setPlotKeyVisible(false);
-			//绘制图
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -184,4 +164,12 @@ public class BarChart03View extends DemoView {
 		mDesireLineDataSet.add(new DesireLineData("优秀",90d,(int)Color.rgb(35, 172, 57),5));		
 	}
 	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

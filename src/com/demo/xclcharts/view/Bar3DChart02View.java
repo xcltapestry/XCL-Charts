@@ -29,54 +29,42 @@ import java.util.List;
 
 import org.xclcharts.chart.Bar3DChart;
 import org.xclcharts.chart.BarData;
-import org.xclcharts.renderer.XEnum;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName Bar3DChart02View
  * @Description  3D柱形图例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class Bar3DChart02View extends DemoView {
+public class Bar3DChart02View extends GraphicalView {
 	
-	//标签轴
+	private String TAG = "Bar3DChart02View";
+	private Bar3DChart chart = new Bar3DChart();
+	
+	//轴数据源
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
 	
 	public Bar3DChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub	
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
 		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
 	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {			
-			Bar3DChart chart = new Bar3DChart();
-			chart.setCanvas(canvas);
+			
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//Plot的内边距比例
@@ -109,9 +97,9 @@ public class Bar3DChart02View extends DemoView {
 			chart.getLegend().setLowerLegend("进货量");
 			
 			//背景网格
-			chart.getPlotGrid().setHorizontalLinesVisible(true);
-			chart.getPlotGrid().setVerticalLinesVisible(true);
-			chart.getPlotGrid().setEvenRowsFillVisible(true);
+			chart.getPlotGrid().showHorizontalLines(true);
+			chart.getPlotGrid().showVerticalLines(true);
+			chart.getPlotGrid().showEvenRowsBgColor(true);
 			
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -141,11 +129,9 @@ public class Bar3DChart02View extends DemoView {
 			//定义基座颜色
 			chart.setAxis3DBaseColor((int)Color.rgb(132, 162, 197));
 			
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 
@@ -174,4 +160,12 @@ public class Bar3DChart02View extends DemoView {
 		
 	}
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

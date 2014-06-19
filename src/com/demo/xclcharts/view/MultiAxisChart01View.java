@@ -41,19 +41,23 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName MultiAxisChart01View
  * @Description 主要演示一个轴上显示多种图的坐标系	
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class MultiAxisChart01View extends DemoView {
+public class MultiAxisChart01View extends GraphicalView {
+	
+	private String TAG = "MultiAxisChart01View";
+	
 	//标签轴
-		List<String> chartLables = new LinkedList<String>();
+		List<String> chartLabels = new LinkedList<String>();
 		List<BarData> chartDataset = new LinkedList<BarData>();
 		
 		//标签轴
-		List<String> chartLablesLn = new LinkedList<String>();
+		List<String> chartLabelsLn = new LinkedList<String>();
 		LinkedList<LineData> chartDatasetLn = new LinkedList<LineData>();
 		
 		BarChart chart = new BarChart();
@@ -74,25 +78,15 @@ public class MultiAxisChart01View extends DemoView {
 			chartLabels();
 			chartDatasetLnSet();			
 			chartLnLabels();
-			chartLnDataSet();			
-		}
-		
-		/**
-		 * 绘制图表
-		 * @param canvas 视图画布
-		 */
-		protected void drawChart(Canvas canvas)
-		{						
-			chartRender(canvas);
-			chartLnRender(canvas);
+			chartLnDataSet();	
+			chartRender();
+			chartLnRender();
 		}
 		
 		
-		private void chartRender(Canvas canvas)
+		private void chartRender()
 		{
 			try {
-								
-				chart.setCanvas(canvas);
 				//柱形图所占范围大小
 				chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
 				chart.setChartDirection(XEnum.Direction.VERTICAL);	
@@ -118,17 +112,15 @@ public class MultiAxisChart01View extends DemoView {
 				renderBar();
 				
 				//网格背景
-				chart.getPlotGrid().setHorizontalLinesVisible(true);
-				chart.getPlotGrid().setVerticalLinesVisible(false);
-				chart.getPlotGrid().setEvenRowsFillVisible(true);
-				chart.getPlotGrid().setOddRowsFillVisible(true);
+				chart.getPlotGrid().showHorizontalLines(true);
+	
+				chart.getPlotGrid().showEvenRowsBgColor(true);
+				chart.getPlotGrid().showOddRowsBgColor(true);
 				
 				chart.setPlotKeyVisible(false);
-				
-				chart.render();		
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(TAG, e.toString());
 			}
 		}
 		private void chartDatasetLnSet()
@@ -149,8 +141,8 @@ public class MultiAxisChart01View extends DemoView {
 		
 		private void chartLabels()
 		{			
-			chartLables.add("4 Cores Per Node"); 
-			chartLables.add("8 Cores per Node"); 	
+			chartLabels.add("4 Cores Per Node"); 
+			chartLabels.add("8 Cores per Node"); 	
 		}
 		
 						
@@ -180,7 +172,7 @@ public class MultiAxisChart01View extends DemoView {
 		private void renderBarAxis()
 		{
 			//标签轴
-			chart.setLabels(chartLables);	
+			chart.setLabels(chartLabels);	
 			
 			//数据轴
 			chart.setDataSource(chartDataset);
@@ -224,7 +216,7 @@ public class MultiAxisChart01View extends DemoView {
 		private void renderLnAxis()
 		{
 			//标签轴
-			lnChart.setLabels(chartLablesLn);		
+			lnChart.setLabels(chartLabelsLn);		
 			lnChart.getLabelsAxis().setVisible(false);	
 			
 			//设定数据源						
@@ -290,7 +282,7 @@ public class MultiAxisChart01View extends DemoView {
 			//将标签与对应的数据集分别绑定
 			LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
 			LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
-			lineData1.setDotStyle(XEnum.DotStyle.TRIGANALE);
+			lineData1.setDotStyle(XEnum.DotStyle.TRIANGLE);
 			lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
 						
 			chartDatasetLn.add(lineData1);
@@ -301,19 +293,19 @@ public class MultiAxisChart01View extends DemoView {
 		private void chartLnLabels()
 		{
 			//折线图坐标系是封闭，所以前后要加上两个空白的
-			chartLablesLn.add(" "); 
-			chartLablesLn.add("4 Cores Per Node"); 
-			chartLablesLn.add("8 Cores per Node"); 	
-			chartLablesLn.add(" "); 
+			chartLabelsLn.add(" "); 
+			chartLabelsLn.add("4 Cores Per Node"); 
+			chartLabelsLn.add("8 Cores per Node"); 	
+			chartLabelsLn.add(" "); 
 		}
 		
-		private void chartLnRender(Canvas canvas)
+		private void chartLnRender()
 		{
 			try {
 				
 				//柱形图所占范围大小
 				lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-				lnChart.setCanvas(canvas);
+			
 				
 				if(lnChart.isVerticalScreen())
 				{
@@ -324,10 +316,20 @@ public class MultiAxisChart01View extends DemoView {
 				renderLnAxis();
 								
 				lnChart.setPlotKeyVisible(true);
-				lnChart.render();
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Log.e(TAG, e.toString());
 			}
 		}
+		
+		@Override
+	    public void render(Canvas canvas) {
+	        try{
+	        	chart.render(canvas);
+				lnChart.render(canvas);
+	        } catch (Exception e){
+	        	Log.e(TAG, e.toString());
+	        }
+	    }
 }

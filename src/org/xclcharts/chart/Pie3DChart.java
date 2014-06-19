@@ -46,7 +46,7 @@ public class Pie3DChart extends PieChart{
 	}
 
 	@Override 
-	protected void renderPlot()
+	protected void renderPlot(Canvas canvas)
 	{		
 		//计算中心点坐标		
 		float cirX = plotArea.getCenterX();
@@ -73,9 +73,9 @@ public class Pie3DChart extends PieChart{
 		//3D
         float currentAgent = 0.0f;	        	        
 		for(int i=0;i < mRender3DLevel;i++)
-		{			
-		  this.mCanvas.save(Canvas.MATRIX_SAVE_FLAG); 			
-		  mCanvas.translate(0,mRender3DLevel - i );		  			  
+		{
+            canvas.save(Canvas.MATRIX_SAVE_FLAG);
+            canvas.translate(0,mRender3DLevel - i );
 		  for(int j=0;j< chartDataSource.size();j++)
 		  {			  
 			    PieData cData =  chartDataSource.get(j);			  
@@ -93,16 +93,16 @@ public class Pie3DChart extends PieChart{
 			        float arcTop2  = mCalc.getPosY() - radius ;  
 			        float arcRight2 = mCalc.getPosX() + radius ;  
 			        float arcBottom2 = mCalc.getPosY() + radius ;  
-			        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);   			        			        
-			        mCanvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc); 
-	            }else{	            
-	            	mCanvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true,paintArc); 
+			        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
+                    canvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc);
+	            }else{
+                    canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true,paintArc);
 	            }			    			    
 	            //下次的起始角度  
 	            mOffsetAgent += currentAgent;  	            
 	            //k += 2;
-			}			
-		    mCanvas.restore();  
+			}
+            canvas.restore();
 		    mOffsetAgent = initOffsetAgent;
 		}
 		
@@ -128,18 +128,18 @@ public class Pie3DChart extends PieChart{
 		        float arcTop2  = mCalc.getPosY() - radius ;  
 		        float arcRight2 = mCalc.getPosX() + radius ;  
 		        float arcBottom2 = mCalc.getPosY() + radius ;  
-		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);   
-		        mCanvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc); 
-		        drawLabel(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
+                canvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc);
+		        drawLables(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
 		        			radius,mOffsetAgent,currentAgent);                
-            }else{            
-            	mCanvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);       	    
-     	        drawLabel(cData.getLabel(),cirX, cirY,radius,mOffsetAgent,currentAgent);
+            }else{
+                canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);
+     	        drawLables(canvas,cData.getLabel(),cirX, cirY,radius,mOffsetAgent,currentAgent);
      	    }				    		    
            //下次的起始角度  
             mOffsetAgent += currentAgent;  		                    		        
 		}			
-		renderKey();
+		renderKey(canvas);
 	}
 
 }

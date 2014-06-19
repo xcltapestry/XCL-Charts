@@ -31,9 +31,6 @@ package org.xclcharts.renderer;
 
 import android.graphics.Canvas;
 
-public interface IRender {
-	
-	public void setCanvas(Canvas canvas);
-	public boolean render() throws Exception;
-
+public interface IRender {	
+	public boolean render(Canvas canvas) throws Exception;
 }

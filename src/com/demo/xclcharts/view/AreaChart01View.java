@@ -41,41 +41,29 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class AreaChart01View extends DemoView {
+public class AreaChart01View extends GraphicalView {
 	
+	private String TAG = "AreaChart01View";
+	private AreaChart chart = new AreaChart();	
 	//标签集合
 	private LinkedList<String> mLabels = new LinkedList<String>();
 	//数据集合
 	private LinkedList<AreaData> mDataset = new LinkedList<AreaData>();
-			
 
 	public AreaChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		initChart();		
-	}
-	
-	
-	private void initChart()
-	{
 		chartLabels();
-		chartDataSet();
+		chartDataSet();		
+		chartRender();
 	}
-	
-	protected void drawChart(Canvas canvas)
+		
+	private void chartRender()
 	{
-		chartRender(canvas);
-	}
-	
-	
-	private void chartRender(Canvas canvas)
-	{
-		try{				
-				AreaChart chart = new AreaChart();
-				 
-				//柱形图所占范围大小
+		try{												 
+				//图所占范围大小
 				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-				chart.setCanvas(canvas); //this.mCacheCanvas);
+				//绘图区缩进去的比例
 				chart.setPadding(15, 30, 10, 5);
 											
 				//轴数据源						
@@ -90,8 +78,8 @@ public class AreaChart01View extends DemoView {
 				chart.getDataAxis().setAxisSteps(10);
 				
 				//背景网格
-				chart.getPlotGrid().setEvenRowsFillVisible(true);
-				chart.getPlotGrid().setOddRowsFillVisible(true);
+				chart.getPlotGrid().showEvenRowsBgColor(true);
+				chart.getPlotGrid().showOddRowsBgColor(true);
 				
 				//标题
 				chart.setChartTitle("区域图(Area Chart)");
@@ -104,12 +92,10 @@ public class AreaChart01View extends DemoView {
 				//显示键值
 				chart.setPlotKeyVisible(true);
 			
-				//绘制
-				chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			Log.e("ERROR-AreaChart01View", e.toString());
+			Log.e(TAG, e.toString());
 		}
 	}
 	
@@ -156,5 +142,14 @@ public class AreaChart01View extends DemoView {
 		mLabels.add("2013");
 		mLabels.add("2014");
 	}
+	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 	
 }

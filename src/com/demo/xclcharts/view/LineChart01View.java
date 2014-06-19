@@ -32,54 +32,42 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName LineChart01View
  * @Description  折线图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class LineChart01View extends DemoView {
+public class LineChart01View extends GraphicalView {
+	
+	private String TAG = "LineChart01View";
+	private LineChart chart = new LineChart();
 	
 	//标签集合
-	private LinkedList<String> lables = new LinkedList<String>();
+	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<LineData> chartData = new LinkedList<LineData>();
 
 	public LineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		initChart();	
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
-		chartDataSet();
-	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
+		chartDataSet();	
+		chartRender();
 	}
 
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {				
 			
-			LineChart chart = new LineChart();
+			
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+		
 			chart.setPadding(20, 20, 10, 5);
 			
 			//设定数据源
-			chart.setLabels(lables);								
+			chart.setLabels(labels);								
 			chart.setDataSource(chartData);
 			
 			//数据轴最大值
@@ -88,10 +76,10 @@ public class LineChart01View extends DemoView {
 			chart.getDataAxis().setAxisSteps(10);
 			
 			//背景网格
-			chart.getPlotGrid().setHorizontalLinesVisible(true);
-			chart.getPlotGrid().setVerticalLinesVisible(true);
-			chart.getPlotGrid().setEvenRowsFillVisible(true);
-			chart.getPlotGrid().setOddRowsFillVisible(true);
+			chart.getPlotGrid().showHorizontalLines(true);
+			chart.getPlotGrid().showVerticalLines(true);
+			chart.getPlotGrid().showEvenRowsBgColor(true);
+			chart.getPlotGrid().showOddRowsBgColor(true);
 			
 			chart.getPlotGrid().getHorizontalLinesPaint().setStrokeWidth(2);
 			chart.getPlotGrid().setHorizontalLinesStyle(XEnum.LineStyle.DASH);
@@ -104,11 +92,9 @@ public class LineChart01View extends DemoView {
 			chart.setChartSubTitle("(XCL-Charts Demo)");
 			
 			chart.getLegend().setLowerLegend("(年份)");
-			
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -173,11 +159,20 @@ public class LineChart01View extends DemoView {
 	
 	private void chartLabels()
 	{
-		lables.add("2010");
-		lables.add("2011");
-		lables.add("2012");
-		lables.add("2013");
-		lables.add("2014");
+		labels.add("2010");
+		labels.add("2011");
+		labels.add("2012");
+		labels.add("2013");
+		labels.add("2014");
 	}
+	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 	
 }

@@ -30,48 +30,33 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName Pie3DChart01View
  * @Description  3D饼图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class Pie3DChart01View extends DemoView {
+public class Pie3DChart01View extends GraphicalView {
 
-	LinkedList<PieData> lPieData = new LinkedList<PieData>();	
+	private String TAG = "Pie3DChart01View";
+	private Pie3DChart chart = new Pie3DChart();
+	
+	private LinkedList<PieData> lPieData = new LinkedList<PieData>();	
 	
 	public Pie3DChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-					
-		initChart();		
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{					
 		chartDataSet();		
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
-		try {
-			
-			Pie3DChart chart = new Pie3DChart();
+		try {						
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+			
 			//图的内边距
 			chart.setPadding(10, 20, 15, 15);
 			
@@ -80,16 +65,14 @@ public class Pie3DChart01View extends DemoView {
 			
 			//标题
 			chart.setChartTitle("3D Pie Chart");
-			chart.getPlotTitle().setChartTitlePosition(XEnum.Postion.LOWER);
+			chart.getPlotTitle().setChartTitlePosition(XEnum.Position.LOWER);
 			
 			chart.setKeyVisible(false);
 			chart.getLabelsPaint().setColor(Color.WHITE);
-			
-			//绘制
-			chart.render();
+		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -110,5 +93,12 @@ public class Pie3DChart01View extends DemoView {
 								(int)Color.rgb(164, 233, 0),true));
 	}
 	
-
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

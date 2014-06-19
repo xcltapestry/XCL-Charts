@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import android.graphics.Canvas;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -41,10 +42,10 @@ import android.graphics.Paint.Align;
 public class LineChart extends LnChart{
 	
 	//数据源
-	protected List<LineData> mDataset;
+	protected List<LineData> mDataSet;
 	
 	//数据轴显示在左边还是右边
-	private XEnum.LineDataAxisPostion mDataAxisPostion = XEnum.LineDataAxisPostion.LEFT;
+	private XEnum.LineDataAxisPosition mDataAxisPosition = XEnum.LineDataAxisPosition.LEFT;
 
 	
 	public LineChart()
@@ -60,11 +61,11 @@ public class LineChart extends LnChart{
 	
 	/**
 	 * 设置数据轴显示在哪边,默认是左边
-	 * @param postion
+	 * @param position
 	 */
-	public void setDataAxisDisplay(XEnum.LineDataAxisPostion postion)
+	public void setDataAxisDisplay(XEnum.LineDataAxisPosition position)
 	{
-		mDataAxisPostion = postion;
+		mDataAxisPosition = position;
 		
 			
 		defaultAxisSetting();
@@ -75,7 +76,7 @@ public class LineChart extends LnChart{
 	 */
 	private void defaultAxisSetting()
 	{
-		if(XEnum.LineDataAxisPostion.LEFT == mDataAxisPostion)
+		if(XEnum.LineDataAxisPosition.LEFT == mDataAxisPosition)
 		{
 			//renderVerticalDataAxis();
 			labelsAxis.setAxisHorizontalTickAlign(Align.CENTER);
@@ -102,10 +103,10 @@ public class LineChart extends LnChart{
 		 */
 		public void setDataSource(LinkedList<LineData> dataSet)
 		{
-			this.mDataset = dataSet;		
+			this.mDataSet = dataSet;		
 		}
 						
-		private void renderLine(LineData bd,String type)
+		private void renderLine(Canvas canvas, LineData bd,String type)
 		{
 			float initX =  plotArea.getPlotLeft();
             float initY =  plotArea.getPlotBottom();
@@ -155,7 +156,7 @@ public class LineChart extends LnChart{
 	            	if(type.equalsIgnoreCase("LINE"))
 	            	{
 	            		if( lineStartY != initY )	            			
-	            			mCanvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
+	            			canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
 	            												pLine.getLinePaint()); 
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
 	            		
@@ -164,7 +165,7 @@ public class LineChart extends LnChart{
 	                		PlotDot pDot = pLine.getPlotDot();	                
 	                		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
 	            			
-	                		renderDot(pDot, 
+	                		renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,
 	                				pLine.getDotPaint()); //标识图形            			                	
@@ -174,7 +175,7 @@ public class LineChart extends LnChart{
 	            		if(bd.getLineLabelVisible())
 	                	{
 	                		//fromatter
-	                		mCanvas.drawText(Double.toString(bv) ,
+	                		canvas.drawText(Double.toString(bv) ,
 	    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
 	                	}
 	            	}else{
@@ -193,36 +194,36 @@ public class LineChart extends LnChart{
 		/**
 		 * 绘制图表
 		 */
-		private void renderVerticalPlot()
+		private void renderVerticalPlot(Canvas canvas)
 		{			
 								
-			if(XEnum.LineDataAxisPostion.LEFT == mDataAxisPostion)
+			if(XEnum.LineDataAxisPosition.LEFT == mDataAxisPosition)
 			{
-				renderVerticalDataAxis();
+				renderVerticalDataAxis(canvas);
 			}else{
-				renderVerticalDataAxisRight();
+				renderVerticalDataAxisRight(canvas);
 			}						
-			renderVerticalLabelsAxis();	
+			renderVerticalLabelsAxis(canvas);
 			
 			List<LnData> lstKey = new ArrayList<LnData>();								
 			//开始处 X 轴 即标签轴                  
-			for(int i=0;i<mDataset.size();i++)
+			for(int i=0;i<mDataSet.size();i++)
 			{								
-				renderLine(mDataset.get(i),"LINE");
-				renderLine(mDataset.get(i),"DOT2LABEL");						
-				lstKey.add(mDataset.get(i));
+				renderLine(canvas,mDataSet.get(i),"LINE");
+				renderLine(canvas,mDataSet.get(i),"DOT2LABEL");
+				lstKey.add(mDataSet.get(i));
 			}			
-			renderKey(lstKey);				
+			renderKey(canvas, lstKey);
 		}	
 		 
 		
-		public boolean render() throws Exception {
+		public boolean render(Canvas canvas) throws Exception {
 			// TODO Auto-generated method stub
 		
 			try {
-				super.render();			
+				super.render(canvas);
 				//绘制图表
-				renderVerticalPlot();	
+				renderVerticalPlot(canvas);
 				
 			}catch( Exception e){
 				 throw e;

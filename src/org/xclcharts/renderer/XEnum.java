@@ -45,7 +45,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum DisplayPostion {		
+		public enum DisplayPosition {		
 			CENTER,OUTSIDE,HIDE
 		}
 				
@@ -64,7 +64,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum TrigangleDirection {
+		public enum TriangleDirection {
 			UP,DOWN,LEFT,RIGHT
 		}
 		 
@@ -73,7 +73,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum TrigangleStyle {
+		public enum TriangleStyle {
 			OUTLINE,FILL 
 		}
 		
@@ -144,7 +144,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum Postion
+		public enum Position
 		{
 			UP,CENTER,LOWER
 		}
@@ -166,14 +166,14 @@ public class XEnum {
 		 * 点的类型，隐藏，三角形,方形,实心圆,空心圆,棱形
 		 * @author XCL
 		 * @param HIDE	隐藏，不显示点
-		 * @param TRIGANALE	三角形
+		 * @param TRIANGLE	三角形
 		 * @param RECT	方形
 		 * @param CIRCLE	实心圆
 		 * @param RING	空心圆
 		 * @param PRISMATIC	棱形
 		 */
 		public enum DotStyle {		
-			HIDE,TRIGANALE,RECT,CIRCLE,RING,PRISMATIC
+			HIDE,TRIANGLE,RECT,CIRCLE,RING,PRISMATIC
 		}
 		
 		
@@ -182,7 +182,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum LineDataAxisPostion {  
+		public enum LineDataAxisPosition {  
 			LEFT, RIGHT
 		}
 		

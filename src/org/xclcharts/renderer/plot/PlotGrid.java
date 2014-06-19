@@ -101,7 +101,7 @@ public class PlotGrid {
 	 * 设置奇数行填充色
 	 * @param color 填充色
 	 */
-	public void setOddRowsFillColor(int color)
+	public void setOddRowsBackgroundColor(int color) // OddRowsFillColor(int color)
 	{
 		mGridLinesOddColor = color;
 		mPaintOddFill.setColor(color);
@@ -110,7 +110,7 @@ public class PlotGrid {
 	 * 设置偶数行填充色
 	 * @param color 填充色
 	 */
-	public void setEvenRowsFillColor(int color)
+	public void setEvenRowsBackgroundColor(int color)
 	{
 		mGridLinesEvenColor = color;		
 		mPaintOddFill.setColor(color);
@@ -120,7 +120,7 @@ public class PlotGrid {
 	 * 是否显示横向网格线
 	 * @param visible 是否显示
 	 */
-	public void setHorizontalLinesVisible(boolean visible)
+	public void showHorizontalLines(boolean visible)
 	{
 		mGridLinesHorizontalVisible = visible;
 	}
@@ -129,7 +129,7 @@ public class PlotGrid {
 	 * 返回是否显示横向网格线
 	 * @return 是否显示
 	 */
-	public boolean getHorizontalLinesVisible()
+	public boolean isShowHorizontalLines()
 	{
 		return mGridLinesHorizontalVisible;
 	}	
@@ -138,7 +138,7 @@ public class PlotGrid {
 	 * 是否显示竖向网格线
 	 * @param visible 是否显示
 	 */
-	public void setVerticalLinesVisible(boolean visible)
+	public void showVerticalLines(boolean visible) 
 	{
 		mGridLinesVerticalVisible = visible;
 	}
@@ -147,7 +147,7 @@ public class PlotGrid {
 	 * 返回是否显示竖向网格线
 	 * @return 是否显示
 	 */
-	public boolean getVerticalLinesVisible()
+	public boolean isShowVerticalLines()
 	{
 		return mGridLinesVerticalVisible;
 	}
@@ -157,16 +157,18 @@ public class PlotGrid {
 	 * 设置是否显示奇数行填充
 	 * @param visible 是否填充
 	 */
-	public void setOddRowsFillVisible(boolean visible)
+	public void showOddRowsBgColor(boolean visible)
 	{
 		mOddRowFillVisible = visible;
 	}
+	
+	//setOddRowsBackgroundColor
 	
 	/**
 	 * 返回是否显示奇数行填充
 	 * @return 是否填充
 	 */
-	public boolean getOddRowsFillVisible()
+	public boolean isShowOddRowsBgColor() 
 	{
 		return mOddRowFillVisible;
 	}
@@ -175,7 +177,7 @@ public class PlotGrid {
 	 * 设置是否显示偶数行填充
 	 * @param visible 是否填充
 	 */
-	public void setEvenRowsFillVisible(boolean visible)
+	public void  showEvenRowsBgColor(boolean visible) 
 	{
 		mEvenRowFillVisible = visible;
 	}
@@ -184,7 +186,7 @@ public class PlotGrid {
 	 * 返回是否显示偶数行填充
 	 * @return 是否填充
 	 */
-	public boolean getEvenRowsFillVisible()
+	public boolean isShowEvenRowsBgColor()
 	{
 		return mEvenRowFillVisible;
 	}
@@ -212,7 +214,7 @@ public class PlotGrid {
 	 * 开放奇数行填充画笔
 	 * @return 画笔
 	 */
-	public Paint getOddFillPaint()
+	public Paint getOddRowsBgColorPaint()
 	{
 		return mPaintOddFill;	
 	}
@@ -221,7 +223,7 @@ public class PlotGrid {
 	 * 开放偶数行填充画笔
 	 * @return 画笔
 	 */
-	public Paint getEvenFillPaint()
+	public Paint getEvenRowsBgColorPaint()
 	{
 		return mPaintEvenFill;	
 	}

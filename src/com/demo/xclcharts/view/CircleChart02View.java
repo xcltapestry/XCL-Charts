@@ -30,12 +30,16 @@ import org.xclcharts.chart.PieData;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 /**
  * @ClassName CircleChart02View
  * @Description  图形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class CircleChart02View extends DemoView {
+public class CircleChart02View extends GraphicalView {
+	
+	private String TAG = "CircleChart02View";
+	private CircleChart chart = new CircleChart();
 	
 	//设置图表数据源
 	private LinkedList<PieData> mlPieData = new LinkedList<PieData>();	
@@ -44,34 +48,14 @@ public class CircleChart02View extends DemoView {
 	public CircleChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-						
-		
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		setPercentage(0);
+		chartRender();
 	}
 	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	public void chartRender(Canvas canvas)
+	public void chartRender()
 	{
 		try {
-			CircleChart chart = new CircleChart();
-			chart.setCanvas(canvas);
-							
+			
 			//图所占范围大小
 			if(getScreenWidth() < this.getScreenHeight())
 			{
@@ -93,32 +77,38 @@ public class CircleChart02View extends DemoView {
 			chart.getPaintFillCircle().setColor((int)Color.rgb(77, 180, 123));
 			//信息颜色
 			chart.getPaintDataInfo().setColor((int)Color.rgb(243, 75, 125));
-			
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	
 	//百分比
-		public void setPercentage(int per)
-		{					
-			//PieData(标签，百分比，在饼图中对应的颜色)
-			mlPieData.clear();	
-			int color = (int)Color.rgb(72, 201, 176);
-			if(per < 40)
-			{
-				mDataInfo = "容易容易";
-			}else if(per < 60){
-				mDataInfo = "严肃认真";
-				color = (int)Color.rgb(246, 202, 13);
-			}else{
-				mDataInfo = "压力山大";
-				color = (int)Color.rgb(243, 75, 125);
-			}
-			mlPieData.add(new PieData(Integer.toString(per)+"%",per,color));		
-				
+	public void setPercentage(int per)
+	{					
+		//PieData(标签，百分比，在饼图中对应的颜色)
+		mlPieData.clear();	
+		int color = (int)Color.rgb(72, 201, 176);
+		if(per < 40)
+		{
+			mDataInfo = "容易容易";
+		}else if(per < 60){
+			mDataInfo = "严肃认真";
+			color = (int)Color.rgb(246, 202, 13);
+		}else{
+			mDataInfo = "压力山大";
+			color = (int)Color.rgb(243, 75, 125);
 		}
+		mlPieData.add(new PieData(Integer.toString(per)+"%",per,color));		
+			
+	}
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

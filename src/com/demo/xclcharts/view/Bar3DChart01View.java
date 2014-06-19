@@ -28,20 +28,24 @@ import java.util.List;
 
 import org.xclcharts.chart.Bar3DChart;
 import org.xclcharts.chart.BarData;
-import org.xclcharts.renderer.XEnum;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName Bar3DChart01View
  * @Description  3D柱形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class Bar3DChart01View extends DemoView {
+public class Bar3DChart01View extends GraphicalView {
+	
+	private String TAG = "Bar3DChart01View";
+	private Bar3DChart chart = new Bar3DChart();
 	
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
@@ -52,32 +56,15 @@ public class Bar3DChart01View extends DemoView {
 	public Bar3DChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub				
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartLabels();
-		chartDataSet();		
+		chartDataSet();	
+		chartRender();
 	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);	
-	}
-	
-	private void chartRender(Canvas canvas)
+		
+	private void chartRender()
 	{
 		try {						
-			Bar3DChart chart = new Bar3DChart();
-			chart.setCanvas(canvas);
+			
 			//柱形图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//Plot的内边距比例		
@@ -104,10 +91,10 @@ public class Bar3DChart01View extends DemoView {
 			chart.setChartTitleAlign(XEnum.ChartTitleAlign.RIGHT);
 			
 			//背景网格
-			chart.getPlotGrid().setHorizontalLinesVisible(true);
-			chart.getPlotGrid().setVerticalLinesVisible(true);
-			chart.getPlotGrid().setEvenRowsFillVisible(true);
-			chart.getPlotGrid().setOddRowsFillVisible(true);
+			chart.getPlotGrid().showHorizontalLines(true);
+			chart.getPlotGrid().showVerticalLines(true);
+			chart.getPlotGrid().showEvenRowsBgColor(true);
+			chart.getPlotGrid().showOddRowsBgColor(true);
 			
 			//定义数据轴标签显示格式		
 			chart.getDataAxis().setAxisTickLabelsRotateAgent(-45);
@@ -147,8 +134,6 @@ public class Bar3DChart01View extends DemoView {
 					return label;
 				}});	        
 		
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -180,4 +165,12 @@ public class Bar3DChart01View extends DemoView {
 	}
 
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

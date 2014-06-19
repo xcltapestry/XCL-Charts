@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 
 import org.xclcharts.renderer.XEnum;
 
+import android.graphics.Canvas;
 import android.graphics.Paint;
 
 /**
@@ -57,7 +58,7 @@ public class DountChart  extends PieChart{
 		mPaintFill.setColor(fillColor); 
 		mPaintFill.setAntiAlias(true);
 		
-		this.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+		this.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
 	}
 	
 	/**
@@ -91,15 +92,16 @@ public class DountChart  extends PieChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot()
+	@Override
+	protected void renderPlot(Canvas canvas)
 	{
-		 super.renderPlot();
+		 super.renderPlot(canvas);
 		//中心点坐标
 		 float cirX = plotArea.getCenterX();
 	     float cirY = plotArea.getCenterY();
 	     
 	     calcInnerRadius();
-		 this.mCanvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);		 			
+	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);		 			
 	}	
 
 }

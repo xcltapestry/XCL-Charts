@@ -44,8 +44,6 @@ import android.graphics.Paint.Style;
 
 public class XChart implements IRender {
 
-	// 画布
-	protected Canvas mCanvas = null;
 	// 开放主图表区
 	protected PlotAreaRender plotArea = null;
 	// 开放主图表区网格
@@ -69,7 +67,7 @@ public class XChart implements IRender {
 	// 图表背景色
 	private Paint mChartBackgroundPaint = null;
 	// 是否画背景色
-	private boolean mBackgroupColorVisible = false;
+	private boolean mBackgroundColorVisible = false;
 
 	public XChart() {
 		initChart();
@@ -80,7 +78,7 @@ public class XChart implements IRender {
 		plotArea = new PlotAreaRender();
 		plotGrid = new PlotGridRender();
 		plotTitle = new PlotTitleRender();
-		plotTitle.setChartTitlePosition(XEnum.Postion.CENTER);
+		plotTitle.setChartTitlePosition(XEnum.Position.CENTER);
 		plotTitle.setChartTitleAlign(XEnum.ChartTitleAlign.CENTER);
 
 		initPaint();
@@ -240,8 +238,8 @@ public class XChart implements IRender {
 	/**
 	 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
 	 */
-	public void setChartTitlePosition(XEnum.Postion postion) {
-		plotTitle.setChartTitlePosition(postion);
+	public void setChartTitlePosition(XEnum.Position position) {
+		plotTitle.setChartTitlePosition(position);
 	}
 
 	/**
@@ -339,8 +337,8 @@ public class XChart implements IRender {
 	 * 
 	 * @param visible 是否绘制背景
 	 */
-	public void setBackgroupColorVisible(boolean visible) {
-		mBackgroupColorVisible = visible;
+	public void setBackgroundColorVisible(boolean visible) {
+		mBackgroundColorVisible = visible;
 	}
 
 	/**
@@ -349,8 +347,8 @@ public class XChart implements IRender {
 	 * @param visible 是否绘制背景
 	 * @param color   背景色
 	 */
-	public void setBackgroupColor(boolean visible, int color) {
-		mBackgroupColorVisible = visible;
+	public void setBackgroundColor(boolean visible, int color) {
+		mBackgroundColorVisible = visible;
 		getChartBackgroundPaint().setColor(color);
 		getPlotArea().getBackgroundPaint().setColor(color);
 	}
@@ -358,9 +356,9 @@ public class XChart implements IRender {
 	/**
 	 * 绘制图的背景
 	 */
-	protected void drawChartBackgroup() {
-		if (mBackgroupColorVisible)
-			this.mCanvas.drawRect(mChartLeft, mChartTop, mChartRight,
+	protected void drawChartBackground(Canvas canvas) {
+		if (mBackgroundColorVisible)
+			canvas.drawRect(mChartLeft, mChartTop, mChartRight,
 					mChartBottom, mChartBackgroundPaint);
 	}
 
@@ -421,40 +419,24 @@ public class XChart implements IRender {
 	/**
 	 * 绘制标题
 	 */
-	protected void renderTitle() {
+	protected void renderTitle(Canvas canvas) {
 		this.plotTitle.renderTitle(mChartLeft, mChartRight, mChartTop,
-				mChartWidth, this.plotArea.getPlotTop(), this.mCanvas);
-	}
-
-	/**
-	 * 返回当前画布
-	 * 
-	 * @return 画布
-	 */
-	public Canvas getCanvas() {
-		return this.mCanvas;
+				mChartWidth, this.plotArea.getPlotTop(), canvas);
 	}
 
 	@Override
-	public void setCanvas(Canvas canvas) {
-		// TODO Auto-generated method stub
-		mCanvas = canvas;
-	}
-
-	@Override
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stubcalcPlotRange
 
 		try {
-			// 检查画笔
-			if (null == mCanvas)
+			if (null == canvas)
 				return false;
 			// 绘制图背景
-			drawChartBackgroup();
+			drawChartBackground(canvas);
 			// 设置图表区画布
-			plotArea.setCanvas(mCanvas);
+//			plotArea.setCanvas(mCanvas);
 			// 设置图表区网格画布
-			plotGrid.setCanvas(mCanvas);
+//			plotGrid.setCanvas(mCanvas);
 		} catch (Exception e) {
 			throw e;
 		}

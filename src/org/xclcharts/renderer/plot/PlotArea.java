@@ -49,7 +49,7 @@ public class PlotArea {
 	protected Paint mPlotBackgroundPaint = null;	
 	
 	//是否画背景色
-	protected boolean mBackgroupColorVisible = false;
+	protected boolean mBackgroundColorVisible = false;
 		
 	
 	public PlotArea()
@@ -78,9 +78,9 @@ public class PlotArea {
 	  * 设置是否显示背景色
 	  * @param visible 是否显示背景色
 	  */
-	public void setBackgroupColorVisitle(boolean visible)
+	public void setBackgroundColorVisitle(boolean visible)
 	{
-		mBackgroupColorVisible = visible;
+		mBackgroundColorVisible = visible;
 	}
 	
 	/**
@@ -88,9 +88,9 @@ public class PlotArea {
 	 * @param visible 是否显示背景色
 	 * @param color	      背景色
 	 */
-	public void setBackgroupColor(boolean visible,int color)
+	public void setBackgroundColor(boolean visible,int color)
 	{
-		mBackgroupColorVisible = visible;
+		mBackgroundColorVisible = visible;
 		getBackgroundPaint().setColor(color);
 	}	
 	

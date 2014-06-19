@@ -31,47 +31,33 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName PieChart01View
  * @Description  饼图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class PieChart01View extends DemoView {
+public class PieChart01View extends GraphicalView {
 	
-	LinkedList<PieData> lPieData = new LinkedList<PieData>();
+	private String TAG = "PieChart01View";
+	private PieChart chart = new PieChart();	
+	private LinkedList<PieData> lPieData = new LinkedList<PieData>();
 
 	public PieChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		
-		initChart();
+		chartDataSet();	
+		chartRender();
 	}
 	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
-		chartDataSet();		
-	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);
-	}
-	
-	private void chartRender(Canvas canvas)
+	private void chartRender()
 	{
 		try {					
-			PieChart chart = new PieChart();
+			
 			//图所占范围大小
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			chart.setCanvas(canvas);
+			
 			//图的内边距
 			chart.setPadding(10, 20, 15, 15);
 			
@@ -82,17 +68,15 @@ public class PieChart01View extends DemoView {
 			chart.setInitialAngle(90);	
 			
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+			chart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
 			
 			chart.setChartTitle("Pie Chart");
-			chart.getPlotTitle().setChartTitlePosition(XEnum.Postion.LOWER);
+			chart.getPlotTitle().setChartTitlePosition(XEnum.Position.LOWER);
 			
 			chart.setKeyVisible(true);
-			//绘制
-			chart.render();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			Log.e(TAG, e.toString());
 		}
 	}
 	private void chartDataSet()
@@ -105,4 +89,12 @@ public class PieChart01View extends DemoView {
 		lPieData.add(new PieData("EMC","40%",40,(int)Color.rgb(60, 173, 213),true));
 	}
 
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

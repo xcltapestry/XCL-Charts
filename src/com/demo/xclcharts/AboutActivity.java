@@ -81,12 +81,14 @@ public class AboutActivity extends Activity {
 				+ " <br/><br/>有什么改进或建议可发邮件联系或至博客留言。 "
 				+ " <br/><big>Blog:http://blog.csdn.net/xcl168</big> "
 				+ " <br/><big>Mail:xcl_168@aliyun.com</big> "
+				+ " <br/><br/>感谢 cubehead的大力修正及其它网友的支持与反馈。"
+				
 				+ "</body></html>";
 		CharSequence charSequenceInfo = Html.fromHtml(htmlInfo);
 		tv_info.setText(charSequenceInfo);
 		tv_info.setMovementMethod(LinkMovementMethod.getInstance());
-
 	}
+		
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {

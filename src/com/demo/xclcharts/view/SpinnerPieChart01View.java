@@ -12,43 +12,26 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.Log;
 
-public class SpinnerPieChart01View extends DemoView {
+public class SpinnerPieChart01View extends GraphicalView {
 	
-	
+	private String TAG = "SpinnerPieChart01View";
+
 	private PieChart mChart = null;
 	private int mChartStyle = 0;
 	private int mMoveHeight = 0;
 	
-	LinkedList<PieData> lPieData = new LinkedList<PieData>();
+	private LinkedList<PieData> chartData = new LinkedList<PieData>();
 
 	public SpinnerPieChart01View(Context context,int chartStyle,int moveHeight) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		mChartStyle = chartStyle;
 		mMoveHeight = moveHeight;
-		
-		initChart();
-	}
-	
-	/**
-	 * 用于初始化
-	 */
-	private void initChart()
-	{			
 		chartDataSet();	
+		chartRender();
 	}
-	
-	/**
-	 * 绘制图表
-	 * @param canvas 视图画布
-	 */
-	protected void drawChart(Canvas canvas)
-	{						
-		chartRender(canvas);
-	}
-	
-	
 	
      private void initChart(int chartStyle)
  	{
@@ -56,12 +39,12 @@ public class SpinnerPieChart01View extends DemoView {
  		{
  		case 0: //饼图
  			mChart = new PieChart();
- 			mChart.setLablesDisplay(XEnum.DisplayPostion.OUTSIDE);
+ 			mChart.setLabelsDisplay(XEnum.DisplayPosition.OUTSIDE);
  			
  			break;
  		case 1:	//3D饼图
  			mChart = new Pie3DChart();
- 			mChart.setLablesDisplay(XEnum.DisplayPostion.CENTER);
+ 			mChart.setLabelsDisplay(XEnum.DisplayPosition.CENTER);
  			mChart.getLabelsPaint().setColor(Color.WHITE); 
  			
  			break;
@@ -70,15 +53,16 @@ public class SpinnerPieChart01View extends DemoView {
  			break;
  		case 3:	//南丁格尔玫瑰图
  			mChart = new RoseChart();
- 			mChart.setBackgroupColor(true, (int)Color.rgb(115, 153, 0));
+ 			mChart.setBackgroundColor(true, (int)Color.rgb(115, 153, 0));
  			((RoseChart) mChart).getInnerPaint().setColor((int)Color.rgb(153, 204, 0));
  			mChart.getLabelsPaint().setColor(Color.WHITE);
- 			mChart.setLablesDisplay(XEnum.DisplayPostion.CENTER);
+ 			mChart.setLabelsDisplay(XEnum.DisplayPosition.CENTER);
  			break;		
  		}
+ 		
  	}
      
-     private void chartRender(Canvas canvas)
+     private void chartRender()
  	{
  		try {					
  			initChart(mChartStyle);
@@ -86,35 +70,41 @@ public class SpinnerPieChart01View extends DemoView {
  			mChart.setChartRange( 0.0f,mMoveHeight,
  									getScreenWidth(),
  									getScreenHeight() - mMoveHeight);
- 			mChart.setCanvas(canvas);
+ 			
  			//图的内边距
  			mChart.setPadding(5, 35, 15, 20);
  			
  			//设定数据源
- 			mChart.setDataSource(lPieData);			
+ 			mChart.setDataSource(chartData);			
  			
  			//设置起始偏移角度(即第一个扇区从哪个角度开始绘制)
  			mChart.setInitialAngle(90);	
  			//显示Key值
  			mChart.setKeyVisible(true);
- 			//绘制
- 			mChart.render();
+ 			
  		} catch (Exception e) {
  			// TODO Auto-generated catch block
- 			e.printStackTrace();
+ 			Log.e(TAG, e.toString());
  		}
 	}
 	private void chartDataSet()
 	{
 		//设置图表数据源		
-		lPieData.add(new PieData("User1","15%",15,(int)Color.rgb(203, 183, 60)));
-		lPieData.add(new PieData("User2","25%",25,(int)Color.rgb(214, 222, 207),false));
-		lPieData.add(new PieData("User3","10%",10,(int)Color.rgb(164, 202, 81)));
+		chartData.add(new PieData("User1","15%",15,(int)Color.rgb(203, 183, 60)));
+		chartData.add(new PieData("User2","25%",25,(int)Color.rgb(214, 222, 207),false));
+		chartData.add(new PieData("User3","10%",10,(int)Color.rgb(164, 202, 81)));
 		//将此比例块突出显示
-		lPieData.add(new PieData("User4","18%",18,(int)Color.rgb(1, 172, 241),true));
-		lPieData.add(new PieData("User5","22%",22,(int)Color.rgb(99, 179, 150),true));
-		lPieData.add(new PieData("User6","10%",10,(int)Color.rgb(52, 97, 138)));
+		chartData.add(new PieData("User4","18%",18,(int)Color.rgb(1, 172, 241),true));
+		chartData.add(new PieData("User5","22%",22,(int)Color.rgb(99, 179, 150),true));
+		chartData.add(new PieData("User6","10%",10,(int)Color.rgb(52, 97, 138)));
 	}
 	
-	
+	@Override
+    public void render(Canvas canvas) {
+        try{
+        	mChart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
 }

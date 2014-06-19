@@ -22,6 +22,7 @@
 package org.xclcharts.renderer;
 
 
+import android.graphics.Canvas;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
@@ -55,7 +56,7 @@ public class AxisChart extends XChart {
 	private Paint mDataSetKeyDescPaint = null;
 		
 	//是否显示Key
-	private boolean mPoltDataKeyVisible = false;
+	private boolean mPlotDataKeyVisible = false;
 	
 	public AxisChart() {
 		// TODO Auto-generated constructor stub		
@@ -89,7 +90,7 @@ public class AxisChart extends XChart {
 	 */
 	public void setPlotKeyVisible(boolean visible)
 	{
-		mPoltDataKeyVisible = visible;
+		mPlotDataKeyVisible = visible;
 	}
 	
 	/**
@@ -98,7 +99,7 @@ public class AxisChart extends XChart {
 	 */
 	public boolean getPlotKeyVisible()
 	{
-		return mPoltDataKeyVisible;
+		return mPlotDataKeyVisible;
 	}
 	 
 	 /**
@@ -231,30 +232,25 @@ public class AxisChart extends XChart {
 	}
 	
 
-	public boolean render() throws Exception {
+	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
 		try {
 		
-			super.render();
+			super.render(canvas);
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
-			 plotArea.render();			 
+			 plotArea.render(canvas);
 			//画奇偶行填充,横竖网格线			
-			 plotGrid.render();			 
+			// plotGrid.render(canvas);
 			//画图例Legend
-			 legend.setCanvas(mCanvas);
-			//设置数据轴画布
-			dataAxis.setCanvas(mCanvas);
-			//设置标签轴画布
-			labelsAxis.setCanvas(mCanvas);	
-			
+
 			//绘制标题
-			renderTitle();
+			renderTitle(canvas);
 			//绘制图例
 			legend.setRange(this);
-			legend.render();	
+			legend.render(canvas);
 			
 			
 		}catch( Exception e){
