@@ -12,6 +12,10 @@ XCL-Charts
  Mail: xcl_168@aliyun.com <br/>
  Blog: http://blog.csdn.net/xcl168
  <br/>
+   类库如何使用的例子工程，放在Demo目录下的XCL-Charts-demo.zip中，解压后，将此工程文件导入到工作区即可。
+  里面有相对详细的使用方法。 对git不太了解，怎么把这两个工程并排放呢?
+ 
+ <br/>
 
  <b>例图:</b><br/> 
  <img src="http://img.blog.csdn.net/20140611213206921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D bar chart" />
