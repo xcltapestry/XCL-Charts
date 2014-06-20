@@ -75,20 +75,20 @@ public class LegendRender extends Legend implements IRender{
 		
 		if(this.getLeftLegend().length() > 0)
 		{
-			drawLeftLegend(canvas,getLeftLegend(),mChart.getChartLeft(),mChart.getChartTop(),
-										mChart.getChartRight(),mChart.getChartBottom());
+			drawLeftLegend(canvas,getLeftLegend(),mChart.getLeft(),mChart.getTop(),
+										mChart.getChartRight(),mChart.getBottom());
 		}
 		
 		if(this.getLowerLegend().length() > 0)
 		{						
-			drawLegendLower(canvas,getLowerLegend(),mChart.getChartLeft(),mChart.getChartTop(),
-					mChart.getChartRight(),mChart.getChartBottom());
+			drawLegendLower(canvas,getLowerLegend(),mChart.getLeft(),mChart.getTop(),
+					mChart.getChartRight(),mChart.getBottom());
 		}
 		
 		if(this.getRightLegend().length() > 0)
 		{
-			drawRightLegend(canvas,getRightLegend(),mChart.getChartLeft(),mChart.getChartTop(),
-					mChart.getChartRight(),mChart.getChartBottom());
+			drawRightLegend(canvas,getRightLegend(),mChart.getLeft(),mChart.getTop(),
+					mChart.getChartRight(),mChart.getBottom());
 		}
 		
 		return true;
@@ -159,9 +159,9 @@ public class LegendRender extends Legend implements IRender{
         //		 legendTextStartX,legendTextStartY,0,mCanvas, getLowerLegendPaint());	
  		 
  		//显示在 Chart与Plot bottom间的中间位置
- 		//float legendY =(float) Math.abs((bottom - mChart.getPlotArea().getPlotBottom()) / 2 - (legendTextHeight/2));
+ 		//float legendY =(float) Math.abs((bottom - mChart.getPlotArea().getBottom()) / 2 - (legendTextHeight/2));
  		
- 		 float plotBottom =  mChart.getPlotArea().getPlotBottom();
+ 		 float plotBottom =  mChart.getPlotArea().getBottom();
  		 float legendY =(float) Math.abs(
  				plotBottom +
  				 ((bottom - plotBottom) / 2 - (legendTextHeight/2)) );

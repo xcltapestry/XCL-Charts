@@ -64,8 +64,8 @@ public class AreaChart extends LnChart{
 		mPaintAreaFill.setAntiAlias(true);
 		mPaintAreaFill.setColor((int)Color.rgb(73, 172, 72));		
 		
-		labelsAxis.setAxisHorizontalTickAlign(Align.CENTER);
-		dataAxis.setAxisHorizontalTickAlign(Align.LEFT);
+		labelsAxis.setHorizontalTickAlign(Align.CENTER);
+		dataAxis.setHorizontalTickAlign(Align.LEFT);
 		
 	}
 	
@@ -104,8 +104,8 @@ public class AreaChart extends LnChart{
 	 */
 	private void renderLine(Canvas canvas, AreaData bd,String type,int alpha)
 	{
-		float initX =  plotArea.getPlotLeft();
-        float initY =  plotArea.getPlotBottom();
+		float initX =  plotArea.getLeft();
+        float initY =  plotArea.getBottom();
          
 		float lineStartX = initX;
         float lineStartY = initY;

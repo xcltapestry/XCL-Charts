@@ -147,9 +147,9 @@ public class RadarChart extends XChart{
 		
 		if(isVerticalScreen())
 		{
-			this.mRadius = this.plotArea.getPlotWidth() / 2;
+			this.mRadius = this.plotArea.getWidth() / 2;
 		}else{
-			this.mRadius =  this.plotArea.getPlotHeight() / 2;
+			this.mRadius =  this.plotArea.getHeight() / 2;
 		}
 	}
 

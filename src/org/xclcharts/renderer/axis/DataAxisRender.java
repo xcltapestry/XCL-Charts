@@ -109,8 +109,8 @@ public class DataAxisRender extends DataAxis implements IRender{
 	 * 用于处理明细横式下，细分部份的标签不显示出来
 	 */
 	@Override
-	public boolean getAxisTickLabelsVisible() {		
-		return (!isPrimaryTick()?false:super.getAxisTickLabelsVisible());		
+	public boolean getTickLabelVisible() {		
+		return (!isPrimaryTick()?false:super.getTickLabelVisible());		
 	}
 			
 	/*

@@ -68,9 +68,9 @@ public class CircleChart extends CirChart {
         mPaintFillCircle.setColor((int) Color.rgb(77, 83, 97));
         mPaintFillCircle.setAntiAlias(true);
 
-        getLabelsPaint().setColor(Color.WHITE);
-        getLabelsPaint().setTextSize(36);
-        getLabelsPaint().setTextAlign(Align.CENTER);
+        getLabelPaint().setColor(Color.WHITE);
+        getLabelPaint().setTextSize(36);
+        getLabelPaint().setTextAlign(Align.CENTER);
 
 
         mPaintDataInfo = new Paint();
@@ -198,7 +198,7 @@ public class CircleChart extends CirChart {
             DrawHelper dw = new DrawHelper();
 
             int infoHeight = dw.getPaintFontHeight(mPaintDataInfo);
-            int LabelHeight = dw.getPaintFontHeight(getLabelsPaint());
+            int LabelHeight = dw.getPaintFontHeight(getLabelPaint());
             int textHeight = LabelHeight + infoHeight;
 
             for (PieData cData : mDataSet) {
@@ -212,7 +212,7 @@ public class CircleChart extends CirChart {
                     currentAgent = (int) Math.round(180 * (cData.getPercentage() / 100));
                     drawPercent(canvas, paintArc, cirX, cirY, radius, 180f, currentAgent);
                     drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.8)), 180f, 180);
-                    canvas.drawText(cData.getLabel(), cirX, cirY - textHeight, getLabelsPaint());
+                    canvas.drawText(cData.getLabel(), cirX, cirY - textHeight, getLabelPaint());
                     canvas.drawText(mDataInfo, cirX, cirY - infoHeight, mPaintDataInfo);
 
                 } else {
@@ -222,7 +222,7 @@ public class CircleChart extends CirChart {
 
                     canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);
                     canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.8)), mPaintFillCircle);
-                    canvas.drawText(cData.getLabel(), cirX, cirY, getLabelsPaint());
+                    canvas.drawText(cData.getLabel(), cirX, cirY, getLabelPaint());
 
                     if (mDataInfo.length() > 0)
                         canvas.drawText(mDataInfo, cirX, cirY + LabelHeight, mPaintDataInfo);

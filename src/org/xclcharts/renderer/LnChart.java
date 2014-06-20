@@ -51,14 +51,12 @@ public class LnChart extends AxisChart {
 	// 格式化柱形上的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
 	// 绘制Key的画笔
-	private Paint mPaintKey = null;
+	private Paint mPaintKeyLabel = null;
 
 	// 是否显示顶轴
 	private boolean mTopAxisVisible = true;
 	// 是否显示底轴
-	private boolean mRightAxisVisible = true;
-	
-	
+	private boolean mRightAxisVisible = true;	
 
 	public LnChart() {
 		super();
@@ -66,12 +64,12 @@ public class LnChart extends AxisChart {
 	}
 
 	private void initChart() {
-		mPaintKey = new Paint();
-		mPaintKey.setTextSize(18);
-		mPaintKey.setStyle(Style.FILL);
-		mPaintKey.setAntiAlias(true);
+		mPaintKeyLabel = new Paint();
+		mPaintKeyLabel.setTextSize(18);
+		mPaintKeyLabel.setStyle(Style.FILL);
+		mPaintKeyLabel.setAntiAlias(true);
 		
-		setPlotKeyVisible(true);
+		showKeyLabel();
 	}
 
 	/**
@@ -79,8 +77,8 @@ public class LnChart extends AxisChart {
 	 * 
 	 * @return 画笔
 	 */
-	public Paint getKeyPaint() {
-		return mPaintKey;
+	public Paint getDataKeyLabelPaint() {
+		return mPaintKeyLabel;
 	}
 
 	/**
@@ -135,14 +133,14 @@ public class LnChart extends AxisChart {
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
 
-		float plotLeft = plotArea.getPlotLeft();
-		float plotTop = plotArea.getPlotTop();
-		float plotRight = plotArea.getPlotRight();
-		float plotBottom = plotArea.getPlotBottom();
+		float plotLeft = plotArea.getLeft();
+		float plotTop = plotArea.getTop();
+		float plotRight = plotArea.getRight();
+		float plotBottom = plotArea.getBottom();
 		float currentY = plotBottom;
 		float currentTickLabel = 0.0f;
 
-		float maskHeight = dataAxis.getAxisTickMarksPaint().getStrokeWidth() / 2;
+		float markHeight = dataAxis.getTickMarksPaint().getStrokeWidth() / 2;
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
@@ -191,35 +189,35 @@ public class LnChart extends AxisChart {
 		double tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
-		float currentY = plotArea.getPlotBottom();
+		float currentY = plotArea.getBottom();
 
-		float maskHeight = dataAxis.getAxisTickMarksPaint().getStrokeWidth() / 2;
+		float markHeight = dataAxis.getTickMarksPaint().getStrokeWidth() / 2;
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
 			if (i == 0)
 				continue;
-			currentY = Math.round(plotArea.getPlotBottom() - i * YSteps);
+			currentY = Math.round(plotArea.getBottom() - i * YSteps);
 			// 标签
 			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
 					.getAxisSteps()));
 
 			if (i == tickCount) {
-				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getPlotRight(),
-						plotArea.getPlotTop(), Float.toString(currentTickLabel));
+				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getRight(),
+						plotArea.getTop(), Float.toString(currentTickLabel));
 			} else {
 				this.dataAxis
-						.renderAxisHorizontalTick(canvas,plotArea.getPlotRight(),
-								currentY + maskHeight,
+						.renderAxisHorizontalTick(canvas,plotArea.getRight(),
+								currentY + markHeight,
 								Float.toString(currentTickLabel));
 			}
 			// 右边轴默认不显示网格,所以在此忽略不作处理
 		}
 		// 轴 线
 		float paintWidth = dataAxis.getAxisPaint().getStrokeWidth() / 2;
-		dataAxis.renderAxis(canvas,plotArea.getPlotRight() + paintWidth,
-				plotArea.getPlotBottom(), plotArea.getPlotRight() + paintWidth,
-				plotArea.getPlotTop());
+		dataAxis.renderAxis(canvas,plotArea.getRight() + paintWidth,
+				plotArea.getBottom(), plotArea.getRight() + paintWidth,
+				plotArea.getTop());
 	}
 
 	/**
@@ -227,7 +225,7 @@ public class LnChart extends AxisChart {
 	 */
 	protected void renderVerticalLabelsAxis(Canvas canvas) {
 		// 标签轴(X 轴)
-		float currentX = plotArea.getPlotLeft();
+		float currentX = plotArea.getLeft();
 
 		// 得到标签轴数据集
 		List<String> dataSet = labelsAxis.getDataSet();
@@ -237,40 +235,36 @@ public class LnChart extends AxisChart {
 		for (int i = 0; i < dataSet.size(); i++) {
 
 			// 依初超始X坐标与标签间距算出当前刻度的X坐标
-			currentX = Math.round(plotArea.getPlotLeft() + (i) * XSteps); // (i
-																			// +
-																			// 1)
-																			// *
-																			// XSteps);
-
+			currentX = Math.round(plotArea.getLeft() + (i) * XSteps); 
+			
 			// 绘制竖向网格线
 			if (plotGrid.isShowVerticalLines()) {
 				if (i > 0 && i + 1 < dataSet.size())
 					plotGrid.renderGridLinesVertical(canvas,currentX,
-							plotArea.getPlotBottom(), currentX,
-							plotArea.getPlotTop());
+							plotArea.getBottom(), currentX,
+							plotArea.getTop());
 			}
 
 			if (dataSet.size() == i + 1) {
-				labelsAxis.renderAxisVerticalTick(canvas,plotArea.getPlotRight(),
-						plotArea.getPlotBottom(), dataSet.get(i));
+				labelsAxis.renderAxisVerticalTick(canvas,plotArea.getRight(),
+						plotArea.getBottom(), dataSet.get(i));
 			} else {
 				// 画上标签/刻度线
 				labelsAxis.renderAxisVerticalTick(canvas,currentX,
-						plotArea.getPlotBottom(), dataSet.get(i));
+						plotArea.getBottom(), dataSet.get(i));
 			}
 
 		}
 		// 右边轴线
 	if (mRightAxisVisible)
-		labelsAxis.renderAxis(canvas,plotArea.getPlotRight(),
-				plotArea.getPlotBottom(), plotArea.getPlotRight(),
-				plotArea.getPlotTop());
+		labelsAxis.renderAxis(canvas,plotArea.getRight(),
+				plotArea.getBottom(), plotArea.getRight(),
+				plotArea.getTop());
 
 		// bottom轴 线		
-		labelsAxis.renderAxis(canvas,plotArea.getPlotLeft(),
-				plotArea.getPlotBottom(), plotArea.getPlotRight(),
-				plotArea.getPlotBottom());
+		labelsAxis.renderAxis(canvas,plotArea.getLeft(),
+				plotArea.getBottom(), plotArea.getRight(),
+				plotArea.getBottom());
 	}
 
 	/**
@@ -369,38 +363,38 @@ public class LnChart extends AxisChart {
 	 * @param dataSet
 	 */
 	protected void renderKey(Canvas canvas, List<LnData> dataSet) {
-		if (getPlotKeyVisible() == false)
+		if (isShowKeyLabel() == false)
 			return;
 
 		DrawHelper dw = new DrawHelper();
-		float textHeight = dw.getPaintFontHeight(this.mPaintKey);
+		float textHeight = dw.getPaintFontHeight(this.mPaintKeyLabel);
 		float rectWidth = 2 * textHeight;
 		float currentX = 0.0f;
 		float currentY = 0.0f;
 
-		mPaintKey.setTextAlign(Align.LEFT);
-		currentX = plotArea.getPlotLeft();
-		currentY = plotArea.getPlotTop() - 5;
+		mPaintKeyLabel.setTextAlign(Align.LEFT);
+		currentX = plotArea.getLeft();
+		currentY = plotArea.getTop() - 5;
 
 		int totalTextWidth = 0;
 		for (LnData cData : dataSet) {
-			mPaintKey.setColor(cData.getLineColor());
+			mPaintKeyLabel.setColor(cData.getLineColor());
 
 			// 竖屏
-			int keyTextWidth = dw.getTextWidth(mPaintKey, cData.getLineKey());
+			int keyTextWidth = dw.getTextWidth(mPaintKeyLabel, cData.getLineKey());
 			totalTextWidth += keyTextWidth;
 
-			if (totalTextWidth > plotArea.getPlotWidth()) {
+			if (totalTextWidth > plotArea.getWidth()) {
 				currentY -= textHeight;
-				currentX = plotArea.getPlotLeft();
+				currentX = plotArea.getLeft();
 				totalTextWidth = 0;
 			}
 
             canvas.drawLine(currentX, currentY - textHeight / 2, currentX
-					+ rectWidth, currentY - textHeight / 2, mPaintKey);
+					+ rectWidth, currentY - textHeight / 2, mPaintKeyLabel);
 
             canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY
-					- textHeight / 3, mPaintKey);
+					- textHeight / 3, mPaintKeyLabel);
 
 			float dotLeft = currentX + rectWidth / 4;
 			float dotRight = currentX + 2 * (rectWidth / 4);

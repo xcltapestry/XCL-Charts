@@ -55,9 +55,9 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	protected void drawPlotBackground(Canvas canvas)
 	{
 		if(null == canvas) return;
-		if(mBackgroundColorVisible)
-			canvas.drawRect(mPlotLeft,mPlotTop,
-					mPlotRight,mPlotBottom, mPlotBackgroundPaint);
+		if(getBackgroundColorVisible())
+			canvas.drawRect(mLeft,mTop,
+					mRight,mBottom, getBackgroundPaint());
 	}		
 	
 	/**
@@ -65,7 +65,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	 * @return X坐标
 	 */
 	public float getCenterX() {		
-		mCenterX = ((float)Math.abs(mPlotLeft + (mPlotRight - mPlotLeft)/2));		
+		mCenterX = ((float)Math.abs(mLeft + (mRight - mLeft)/2));		
 		return mCenterX;
 	}
 
@@ -74,44 +74,44 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	 * @return Y坐标
 	 */
 	public float getCenterY() {		
-		mCenterY = ((float)Math.abs(mPlotBottom - (mPlotBottom - mPlotTop)/2));		
+		mCenterY = ((float)Math.abs(mBottom - (mBottom - mTop)/2));		
 		return mCenterY;
 	}
 	
-	public float getPlotLeft() {
-		return mPlotLeft;
+	public float getLeft() {
+		return mLeft;
 	}
 
 	/**
 	 * 设置绘图区的左边X坐标
 	 * @param left
 	 */
-	public void setPlotLeft(float left) {
-		this.mPlotLeft = left;
+	public void setLeft(float left) {
+		this.mLeft = left;
 	}
 	
 	/**
 	 * 设置绘图区的上面Y坐标
 	 * @param top
 	 */
-	public void setPlotTop(float top) {
-		this.mPlotTop = top;
+	public void setTop(float top) {
+		this.mTop = top;
 	}
 
 	/**
 	 * 设置绘图区的右边X坐标
 	 * @param right
 	 */
-	public void setPlotRight(float right) {
-		this.mPlotRight = right;
+	public void setRight(float right) {
+		this.mRight = right;
 	}
 	
 	/**
 	 * 设置绘图区的底部Y坐标
 	 * @param bottom
 	 */
-	public void setPlotBottom(float bottom) {
-		this.mPlotBottom = bottom;
+	public void setBottom(float bottom) {
+		this.mBottom = bottom;
 	}
 
 	@Override

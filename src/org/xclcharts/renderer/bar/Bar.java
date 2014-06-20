@@ -50,14 +50,14 @@ public class Bar {
 	protected Paint mPaintBar = null;
 	
 	//文字画笔
-	private Paint mPaintItemLabels = new Paint();		
+	private Paint mPaintItemLabel = new Paint();		
 	
 	//柱形顶上文字偏移量
-	private int mItemLabelsOffset = 10;
+	private int mItemLabelAnchorOffset = 10;
 	//柱形顶上文字旋转角度
-	private float mItemLabelsRotateAgent = 0.0f;	
+	private float mItemLabelRotateAgent = 0.0f;	
 	//是否显示柱形顶上文字标签
-	private boolean mShowItemLabels = false;		
+	private boolean mShowItemLabel = false;		
 	
 	public Bar()
 	{				
@@ -71,9 +71,9 @@ public class Bar {
 		mPaintBar.setStyle(Style.FILL);
 		
 		//柱形顶上的文字标签		
-		mPaintItemLabels.setTextSize(12);
-		mPaintItemLabels.setColor(Color.BLACK);
-		mPaintItemLabels.setTextAlign(Align.CENTER);
+		mPaintItemLabel.setTextSize(12);
+		mPaintItemLabel.setColor(Color.BLACK);
+		mPaintItemLabel.setTextAlign(Align.CENTER);
 	}
 		
 	/**
@@ -104,48 +104,48 @@ public class Bar {
 	 * 开放柱形顶部标签画笔
 	 * @return 画笔
 	 */
-	public Paint getItemLabelsPaint() {
-		return mPaintItemLabels;
+	public Paint getItemLabelPaint() {
+		return mPaintItemLabel;
 	}
 
 	/**
 	 * 返回柱形顶部标签在显示时的偏移距离
 	 * @return 偏移距离
 	 */
-	public int getItemLabelsOffset() {
-		return mItemLabelsOffset;
+	public int getItemLabelAnchorOffset() {
+		return mItemLabelAnchorOffset;
 	}
 
 	/**
 	 * 设置柱形顶部标签在显示时的偏移距离
 	 * @param offset 偏移距离
 	 */
-	public void setItemLabelsOffset(int offset) {
-		this.mItemLabelsOffset = offset;
+	public void setItemLabelAnchorOffset(int offset) {
+		this.mItemLabelAnchorOffset = offset;
 	}
 
 	/**
 	 * 返回柱形顶部标签在显示时的旋转角度
 	 * @return 旋转角度
 	 */
-	public float getItemLabelsRotateAgent() {
-		return mItemLabelsRotateAgent;
+	public float getItemLabelRotateAgent() {
+		return mItemLabelRotateAgent;
 	}
 
 	/**
 	 * 设置柱形顶部标签在显示时的旋转角度
 	 * @param rotateAgent 旋转角度
 	 */
-	public void setItemLabelsRotateAgent(float rotateAgent) {
-		this.mItemLabelsRotateAgent = rotateAgent;
+	public void setItemLabelRotateAgent(float rotateAgent) {
+		this.mItemLabelRotateAgent = rotateAgent;
 	}
 
 	/**
 	 * 设置是否显示柱形顶部标签
 	 * @param visible 是否显示
 	 */
-	public void setItemLabelsVisible(boolean visible) {
-		this.mShowItemLabels = visible;
+	public void setItemLabelVisible(boolean visible) {
+		this.mShowItemLabel = visible;
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class Bar {
 	 */
 	public boolean getItemLabelsVisible()
 	{
-		return mShowItemLabels;
+		return mShowItemLabel;
 	}
 	
 	/**
@@ -215,9 +215,9 @@ public class Bar {
 			dw.drawRotateText(text,
 								x ,
 								y,
-	            			  getItemLabelsRotateAgent(),
+	            			  getItemLabelRotateAgent(),
 	            			  canvas, 
-	            			  getItemLabelsPaint());	
+	            			  getItemLabelPaint());	
 		}
 	}
 

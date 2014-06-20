@@ -35,8 +35,13 @@ public class DesireLineData {
 	private String mLabel = "";
 	private Double mDesireValue = 0d;
 	private int mColor = Color.BLACK;
-	private int mLineWidth = 0;
+	private int mLineStroke = 0;
 	
+	/**
+	 * 期望线
+	 * @param desireValue	期望值
+	 * @param color			线颜色
+	 */
 	public DesireLineData(
 				  Double desireValue,
 				  int color) 
@@ -45,52 +50,95 @@ public class DesireLineData {
 		setColor(color);
 	}
 			
+	/**
+	 * 期望线
+	 * @param label			标签
+	 * @param desireValue	期望值
+	 * @param color			线颜色
+	 * @param stroke	线精细
+	 */
 	public DesireLineData(String label,
 						  Double desireValue,
 						  int color,
-						  int lineWidth) 
+						  int stroke) 
 	{
 		setLabel(label);
 		setDesireValue(desireValue);
 		setColor(color);
-		setLineWidth(lineWidth);
+		setLineStroke(stroke);
 	}
 
+	/**
+	 * 返回标签
+	 * @return 标签
+	 */
 	public String getLabel() {
 		return mLabel;
 	}
 
+	/**
+	 * 设置标签
+	 * @param label 标签
+	 */
 	public void setLabel(String label) {
 		this.mLabel = label;
 	}
 
+	/**
+	 * 取得当前期望值
+	 * @return 期望值
+	 */
 	public Double getDesireValue() {
 		return mDesireValue;
 	}
 
+	/**
+	 * 设置期望值
+	 * @param desireValue 期望值
+	 */
 	public void setDesireValue(Double desireValue) {
 		this.mDesireValue = desireValue;
 	}
 
+	/**
+	 * 返回颜色
+	 * @return 颜色
+	 */
 	public int getColor() {
 		return mColor;
 	}
 
+	/**
+	 * 设置颜色
+	 * @param color 颜色
+	 */
 	public void setColor(int color) {
 		this.mColor = color;
 	}
 
-	public int getLineWidth() {
-		return mLineWidth;
+	/**
+	 * 得到当前线粗细
+	 * @return 线粗细
+	 */
+	public int getLineStroke() {
+		return mLineStroke;
 	}
 
-	public void setLineWidth(int lineWidth) {
-		this.mLineWidth = lineWidth;
+	/**
+	 * 设置线的粗细
+	 * @param stroke 粗细
+	 */
+	public void setLineStroke(int stroke) {
+		this.mLineStroke = stroke;
 	}
 	
-	public boolean isSetLineWidth()
+	/**
+	 *  返回是否有手工指定线的精细
+	 * @return 是否有指定
+	 */
+	public boolean isSetLineStroke()
 	{
-		return ((0 == mLineWidth)?false:true);
+		return ((0 == mLineStroke)?false:true);
 	}
 
 }

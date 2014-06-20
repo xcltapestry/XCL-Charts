@@ -113,7 +113,7 @@ public class DataAxis extends XYAxis {
 	
 	/**
 	 * 返回是否启用明细模式
-	 * @return
+	 * @return 是否有启用
 	 */
 	public boolean isDetailMode()
 	{		

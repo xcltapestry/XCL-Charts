@@ -65,21 +65,21 @@ public class PlotTitleRender extends PlotTitle{
 		float subtitleX = 0.0f;
 		float subtitleY = 0.0f;
 		
-		if(this.getChartTitle().length() == 0 && getChartSubTitle().length() == 0) return;	
+		if(this.getTitle().length() == 0 && getChartSubTitle().length() == 0) return;	
 
-		if(getChartTitle().length() > 0 )
+		if(getTitle().length() > 0 )
 		{
-			 titleHeight = dw.getPaintFontHeight(this.getChartTitlePaint());			
+			 titleHeight = dw.getPaintFontHeight(this.getTitlePaint());			
 		}
-		if(getChartTitle().length() > 0 )
+		if(getTitle().length() > 0 )
 		{
-			subtitleHeight = dw.getPaintFontHeight(this.getChartSubTitlePaint());
+			subtitleHeight = dw.getPaintFontHeight(this.getSubtitlePaint());
 		}			
 		totalHegith = titleHeight + subtitleHeight;	
 		float pcHeight = Math.abs(plotTop - chartTop) ;		
 		
 		//用来确定 titleY,需要Chart top的值
-		switch(this.getChartTitlePosition())
+		switch(this.getTitlePosition())
 		{
 		case UP:
 			
@@ -95,7 +95,7 @@ public class PlotTitleRender extends PlotTitle{
 		
 		//
 		
-		switch(this.getChartTitleAlign())
+		switch(this.getTitleAlign())
 		{
 		case LEFT:
 			titleX = chartLeft;
@@ -104,8 +104,8 @@ public class PlotTitleRender extends PlotTitle{
 			subtitleX = chartLeft;
 			subtitleY = titleY + subtitleHeight;
 			
-			getChartTitlePaint().setTextAlign(Align.LEFT);			
-			getChartSubTitlePaint().setTextAlign(Align.LEFT);			
+			getTitlePaint().setTextAlign(Align.LEFT);			
+			getSubtitlePaint().setTextAlign(Align.LEFT);			
 			break;
 		case CENTER:
 			
@@ -115,8 +115,8 @@ public class PlotTitleRender extends PlotTitle{
 			subtitleX = titleX;
 			subtitleY = (float) (titleY + subtitleHeight);
 			
-			getChartTitlePaint().setTextAlign(Align.CENTER);			
-			getChartSubTitlePaint().setTextAlign(Align.CENTER);	
+			getTitlePaint().setTextAlign(Align.CENTER);			
+			getSubtitlePaint().setTextAlign(Align.CENTER);	
 			break;
 		case RIGHT:
 			
@@ -126,20 +126,20 @@ public class PlotTitleRender extends PlotTitle{
 			subtitleX = titleX;
 			subtitleY = titleY + subtitleHeight;
 			
-			getChartTitlePaint().setTextAlign(Align.RIGHT);			
-			getChartSubTitlePaint().setTextAlign(Align.RIGHT);			
+			getTitlePaint().setTextAlign(Align.RIGHT);			
+			getSubtitlePaint().setTextAlign(Align.RIGHT);			
 						
 			break;
 		}
-		if(getChartTitle().length() > 0 )
+		if(getTitle().length() > 0 )
 		{		
 			canvas.drawText(
-					getChartTitle(),titleX , titleY, this.getChartTitlePaint());
+					getTitle(),titleX , titleY, this.getTitlePaint());
 		}
 		if(getChartSubTitle().length() > 0 )
 		{
 			canvas.drawText(
-					getChartSubTitle(),subtitleX , subtitleY, this.getChartSubTitlePaint());
+					getChartSubTitle(),subtitleX , subtitleY, this.getSubtitlePaint());
 		}
 	}
 }

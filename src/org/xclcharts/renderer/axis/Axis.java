@@ -43,15 +43,15 @@ public class Axis {
 	private boolean mAxisLineVisible = true;	
 	
 	 //数据轴刻度线与边上的标注画笔
-	private Paint mPaintAxisTickMarks = null;
-	private Paint mPaintAxisTickLabels = null;	 
+	private Paint mPaintTickMarks = null;
+	private Paint mPaintAxisTickLabel = null;	 
 	 
 	//数据轴刻度线与边上的标注是否显示
-	private boolean mAxisTickMarksVisible = true;
-	private boolean mAxisTickLabelsVisible = true;
+	private boolean mTickMarksVisible = true;
+	private boolean mTickLabelVisible = true;
 	 
 	//刻度标记文字旋转角度
-	private float mAxisTickLabelsRotateAgent = 0.0f; //-45f;
+	private float mTickLabelRotateAgent = 0.0f; //-45f;
 	
 	//默认刻度标记文字大小
 	//private static final int mTickLabelsTextSize = 22;
@@ -68,7 +68,7 @@ public class Axis {
 	//private int mTickMarksLineLength = 5;
 	
 	//刻度标记与轴的间距
-	private int mTickLabelsMargin = 10;	
+	private int mTickLabelMargin = 10;	
 	
 	//标签显示位置，分别在轴的左边，中间，右边
 	private Align mTickMarksAlign  = Align.RIGHT;
@@ -85,19 +85,19 @@ public class Axis {
 	private void initPaint()
 	{
 		mPaintAxis = new Paint();
-		mPaintAxisTickMarks = new Paint();
-		mPaintAxisTickLabels = new Paint();		
+		mPaintTickMarks = new Paint();
+		mPaintAxisTickLabel = new Paint();		
 		
 		mPaintAxis.setColor(Color.BLACK);		
 		mPaintAxis.setStrokeWidth(mAxisLineWidth);
 		
-		mPaintAxisTickMarks.setColor(Color.BLACK);	
-		mPaintAxisTickMarks.setStrokeWidth(3);
+		mPaintTickMarks.setColor(Color.BLACK);	
+		mPaintTickMarks.setStrokeWidth(3);
 		
-		mPaintAxisTickLabels.setColor(Color.BLACK);	
-		mPaintAxisTickLabels.setTextAlign(Align.RIGHT);
-		mPaintAxisTickLabels.setTextSize(18);
-		mPaintAxisTickLabels.setAntiAlias(true);
+		mPaintAxisTickLabel.setColor(Color.BLACK);	
+		mPaintAxisTickLabel.setTextAlign(Align.RIGHT);
+		mPaintAxisTickLabel.setTextSize(18);
+		mPaintAxisTickLabel.setAntiAlias(true);
 		
 	}
 	
@@ -150,65 +150,65 @@ public class Axis {
 	 * 开放轴刻度线画笔
 	 * @return 画笔
 	 */
-	public Paint getAxisTickMarksPaint() {
-		return mPaintAxisTickMarks;
+	public Paint getTickMarksPaint() {
+		return mPaintTickMarks;
 	}
 
 	/**
 	 * 开放轴标签画笔
 	 * @return	画笔
 	 */
-	public Paint getAxisTickLabelsPaint() {
-		return mPaintAxisTickLabels;
+	public Paint getAxisTickLabelPaint() {
+		return mPaintAxisTickLabel;
 	}
 
 	/**
 	 * 设置是否显示轴刻度线
 	 * @param visible 是否显示
 	 */
-	public void setAxisTickMarksVisible(boolean visible) {
-		this.mAxisTickMarksVisible = visible;
+	public void setTickMarksVisible(boolean visible) {
+		this.mTickMarksVisible = visible;
 	}
 	
 	/**
 	 * 返回设置是否显示轴刻度线
 	 * @return 是否显示
 	 */
-	public boolean getAxisTickMarksVisible()
+	public boolean getTickMarksVisible()
 	{
-		return mAxisTickMarksVisible;
+		return mTickMarksVisible;
 	}
 
 	/**
 	 * 设置是否显示轴标签
 	 * @param visible 是否显示
 	 */
-	public void setAxisTickLabelsVisible(boolean visible) {
-		this.mAxisTickLabelsVisible = visible;
+	public void setTickLabelVisible(boolean visible) {
+		this.mTickLabelVisible = visible;
 	}
 
 	/**
 	 * 返回是否显示轴标签
 	 * @return 是否显示
 	 */
-	public boolean getAxisTickLabelsVisible() {
-		return this.mAxisTickLabelsVisible ;
+	public boolean getTickLabelVisible() {
+		return this.mTickLabelVisible ;
 	}
 	
 	/**
 	 * 返回轴标签文字旋转角度
 	 * @return 旋转角度
 	 */
-	public float getAxisTickLabelsRotateAgent() {
-		return mAxisTickLabelsRotateAgent;
+	public float getTickLabelRotateAgent() {
+		return mTickLabelRotateAgent;
 	}
 
 	/**
 	 * 设置轴标签文字旋转角度
 	 * @param rotateAgent 旋转角度
 	 */
-	public void setAxisTickLabelsRotateAgent(float rotateAgent) {
-		this.mAxisTickLabelsRotateAgent = rotateAgent;
+	public void setTickLabelRotateAgent(float rotateAgent) {
+		this.mTickLabelRotateAgent = rotateAgent;
 	}
 	
 	/**
@@ -245,23 +245,23 @@ public class Axis {
 	 */
 	public void setTickLabelsMargin(int margin)
 	{
-		mTickLabelsMargin = margin;
+		mTickLabelMargin = margin;
 	}
 
 	/**
 	 * 返回轴刻度线与标签间的间距
 	 * @return 间距
 	 */
-	public int getTickLabelsMargin()
+	public int getTickLabelMargin()
 	{
-		return mTickLabelsMargin;
+		return mTickLabelMargin;
 	}
 	
 	/**
 	 *  设置时刻度显示在上，中，下哪个地方,针对横轴
 	 * @param position 上方，居中，下方
 	 */
-	public void setAxisVerticalTickPosition(XEnum.Position position)
+	public void setVerticalTickPosition(XEnum.Position position)
 	{
 		mTickMarksPosition = position;
 	}
@@ -270,7 +270,7 @@ public class Axis {
 	 * 返回轴上刻度线显示的位置
 	 * @return 位置
 	 */
-	public XEnum.Position getAxisVerticalTickPosition()
+	public XEnum.Position getVerticalTickPosition()
 	{
 		return mTickMarksPosition;
 	}
@@ -280,12 +280,12 @@ public class Axis {
 	 * 设置刻度靠左，中，右哪个位置显示,针对竖轴
 	 * @param align 靠左，居中，靠右
 	 */
-	public void setAxisHorizontalTickAlign(Align align)
+	public void setHorizontalTickAlign(Align align)
 	{
 		mTickMarksAlign = align;
 	}
 	
-	public Align getAxisHorizontalTickAlign()
+	public Align getHorizontalTickAlign()
 	{
 		return mTickMarksAlign;
 	}

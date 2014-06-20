@@ -78,8 +78,8 @@ public class GaugeChart extends CirChart{
 	
 	private void initPaint()
 	{
-		getLabelsPaint().setTextSize(18);
-		getLabelsPaint().setColor(Color.BLUE);
+		getLabelPaint().setTextSize(18);
+		getLabelPaint().setColor(Color.BLUE);
 		
 		mPaintTick = new Paint();
 		mPaintTick.setStyle(Style.FILL);
@@ -235,23 +235,23 @@ public class GaugeChart extends CirChart{
 				 
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
-		getLabelsPaint().setTextAlign(Align.CENTER);	
+		getLabelPaint().setTextAlign(Align.CENTER);	
 		int i = 0;
 		for(String label : mLabels)
 		{							
 			if(0 == i) //开头
 			{			
 				canvas.drawText(label,
-						cirX - calcRadius, cirY ,this.getLabelsPaint());   			
+						cirX - calcRadius, cirY ,this.getLabelPaint());   			
 			}else if(i == mLabels.size() -1 ){ //结尾
                 canvas.drawText(label,
-						cirX + calcRadius, cirY ,this.getLabelsPaint());   				
+						cirX + calcRadius, cirY ,this.getLabelPaint());   				
 			}else{				
 				//计算百分比标签
 				mCalc.CalcArcEndPointXY(cirX, cirY, calcRadius, 180 + i *stepsAgent); 
 				//标识
                 canvas.drawText(label,
-					 mCalc.getPosX(), mCalc.getPosY() ,this.getLabelsPaint());   
+					 mCalc.getPosX(), mCalc.getPosY() ,this.getLabelPaint());   
 				
 			}
 			i++;

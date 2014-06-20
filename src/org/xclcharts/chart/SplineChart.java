@@ -58,8 +58,8 @@ public class SplineChart extends LnChart{
 	
 	private void initChart()
 	{
-		labelsAxis.setAxisHorizontalTickAlign(Align.CENTER);
-		dataAxis.setAxisHorizontalTickAlign(Align.LEFT);
+		labelsAxis.setHorizontalTickAlign(Align.CENTER);
+		dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
 	
 	/**
@@ -105,8 +105,8 @@ public class SplineChart extends LnChart{
 	 */
 	private void renderLine(Canvas canvas, SplineData bd,String type)
 	{
-		float initX =  plotArea.getPlotLeft();
-        float initY =  plotArea.getPlotBottom();
+		float initX =  plotArea.getLeft();
+        float initY =  plotArea.getBottom();
 		float lineStartX = initX;
         float lineStartY = initY;
         float lineEndX = 0.0f;

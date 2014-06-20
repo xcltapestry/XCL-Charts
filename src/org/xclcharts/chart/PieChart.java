@@ -200,12 +200,12 @@ public class PieChart extends CirChart{
 			if(!isVerticalScreen()) //横屏
 			{
 				mPaintKey.setTextAlign(Align.RIGHT);
-				currentX = plotArea.getPlotRight();
-				currentY = this.plotArea.getPlotTop() + textHeight;			
+				currentX = plotArea.getRight();
+				currentY = this.plotArea.getTop() + textHeight;			
 			}else{
 				mPaintKey.setTextAlign(Align.LEFT);
-				currentX = plotArea.getPlotLeft();
-				currentY = this.plotArea.getPlotBottom();			
+				currentX = plotArea.getLeft();
+				currentY = this.plotArea.getBottom();			
 			}			
 			
 			int totalTextWidth = 0;
@@ -225,10 +225,10 @@ public class PieChart extends CirChart{
 					int keyTextWidth = dw.getTextWidth(mPaintKey, cData.getKey());
 					totalTextWidth += keyTextWidth;
 					
-					if(totalTextWidth > plotArea.getPlotWidth())
+					if(totalTextWidth > plotArea.getWidth())
 					{
 						currentY += textHeight;
-						currentX = plotArea.getPlotLeft();
+						currentX = plotArea.getLeft();
 						totalTextWidth = 0;
 					}				
 					canvas.drawRect(currentX			   , currentY,

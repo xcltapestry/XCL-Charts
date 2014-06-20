@@ -81,8 +81,8 @@ public class StackBarChart  extends BarChart{
 		//标签轴	
 		 for(int r=0;r<labelsAxis.getDataSet().size();r++)
 		 {				 
-			 	 float currentX = plotArea.getPlotLeft();
-				 float currentY = plotArea.getPlotBottom() - (r+1) * YSteps;				 
+			 	 float currentX = plotArea.getLeft();
+				 float currentY = plotArea.getBottom() - (r+1) * YSteps;				 
 				 double total = 0d;				 
 				 
 				//得到数据源
@@ -121,19 +121,19 @@ public class StackBarChart  extends BarChart{
 				 {
 					 float totalPostion = (float)( axisScreenWidth/axisDataRange * (total- dataAxis.getAxisMin()) );					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
-							 					plotArea.getPlotLeft()  - totalPostion, currentY, canvas);
+							 					plotArea.getLeft()  - totalPostion, currentY, canvas);
 				 }
 		 }	
 	 		 		 
 	 	//Y轴线
-		dataAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
-							  plotArea.getPlotLeft(), plotArea.getPlotTop());	
+		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+							  plotArea.getLeft(), plotArea.getTop());	
 		 
 		//X轴 线		
-		labelsAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
-								  plotArea.getPlotRight(),  plotArea.getPlotBottom());	
+		labelsAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+								  plotArea.getRight(),  plotArea.getBottom());	
 		//画Key说明
-		drawDataSetKey(canvas);
+		renderDataKey(canvas);
 	}
 	
 	@Override
@@ -156,8 +156,8 @@ public class StackBarChart  extends BarChart{
 			 
 			 for(int r=0;r<dataSet.size();r++) //轴上的每个标签
 			 {				 
-				 	 float currentX = plotArea.getPlotLeft() + (r+1) * XSteps;	 	 			
-					 float currentY = plotArea.getPlotBottom();
+				 	 float currentX = plotArea.getLeft() + (r+1) * XSteps;	 	 			
+					 float currentY = plotArea.getBottom();
 					 Double total = 0d;
 					 
 					 for(int i=0; i < chartDataSource.size();i++) //各自所占的高度
@@ -188,14 +188,14 @@ public class StackBarChart  extends BarChart{
 					 //合计					 
 					 float totalPostion = (float) ( axisScreenHeight/axisDataHeight * (total- dataAxis.getAxisMin()) ); 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
-							 					currentX, plotArea.getPlotBottom() - totalPostion, canvas);
+							 					currentX, plotArea.getBottom() - totalPostion, canvas);
 			 }			 
 			 
 			//轴 线		 		 
-			 dataAxis.renderAxis(canvas,plotArea.getPlotLeft(),  plotArea.getPlotBottom(),
-		 			   			 plotArea.getPlotRight(),  plotArea.getPlotBottom());
+			 dataAxis.renderAxis(canvas,plotArea.getLeft(),  plotArea.getBottom(),
+		 			   			 plotArea.getRight(),  plotArea.getBottom());
 			 
-			 drawDataSetKey(canvas);
+			 renderDataKey(canvas);
 	}
 	
 	

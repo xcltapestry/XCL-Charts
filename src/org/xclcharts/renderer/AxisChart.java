@@ -51,12 +51,12 @@ public class AxisChart extends XChart {
 	protected LegendRender legend = null;
 	
 	//数据集的说明描述与图这间的空白间距
-	private float mDataSetKeyDescMargin  = 10f;	
+	private float mDataKeyMargin  = 10f;	
 	//数据集的说明描述画笔
-	private Paint mDataSetKeyDescPaint = null;
+	private Paint mDataKeyPaint = null;
 		
 	//是否显示Key
-	private boolean mPlotDataKeyVisible = false;
+	private boolean mKeyLabelVisible = false;
 	
 	public AxisChart() {
 		// TODO Auto-generated constructor stub		
@@ -80,53 +80,63 @@ public class AxisChart extends XChart {
 		//图例
 		legend = new LegendRender();
 		
-		mDataSetKeyDescPaint = new Paint();
-		mDataSetKeyDescPaint.setColor(Color.BLACK);		
+		mDataKeyPaint = new Paint();
+		mDataKeyPaint.setColor(Color.BLACK);		
 	}
 	
 	/**
-	 * 设置是否需绘制图的key
-	 * @param visible 是否显示
+	 * 在图的上方显示键值(key)的标签说明
+	 * 
 	 */
-	public void setPlotKeyVisible(boolean visible)
+	public void showKeyLabel()
 	{
-		mPlotDataKeyVisible = visible;
+		mKeyLabelVisible = true;
 	}
+	
+	/**
+	 * 在图的上方不显示键值(key)的标签说明
+	 */
+	public void hideKeyLabel()
+	{
+		mKeyLabelVisible = false;
+	}
+	
+	
 	
 	/**
 	 * 是否需绘制图的key
 	 * @return 是否显示
 	 */
-	public boolean getPlotKeyVisible()
+	public boolean isShowKeyLabel()
 	{
-		return mPlotDataKeyVisible;
+		return mKeyLabelVisible;
 	}
 	 
 	 /**
 	  * 开放Key绘制画笔
 	  * @return 画笔
 	  */
-	 public Paint getPlotDataSetKeyPaint()
+	 public Paint getKeyLabelPaint()
 	 {		 
-		 return mDataSetKeyDescPaint;
+		 return mDataKeyPaint;
 	 }
 	 
 	 /**
 	  * 设置Key间距
 	  * @param margin Key间距
 	  */
-	 public void setPlotDataSetKeyMargin(float margin)
+	 public void setKeyLabelMargin(float margin)
 	 {		 
-		 mDataSetKeyDescMargin = margin;
+		 mDataKeyMargin = margin;
 	 }
 	 
 	 /**
 	  * 返回Key间距
 	  * @return Key间距
 	  */
-	 public float getPlotDataSetKeyMargin()
+	 public float getKeyLabelMargin()
 	 {
-		 return mDataSetKeyDescMargin;
+		 return mDataKeyMargin;
 	 }
 
 
@@ -164,15 +174,16 @@ public class AxisChart extends XChart {
 	protected void calcPlotRange()
 	{				
 		super.calcPlotRange();
+		DrawHelper dw = new DrawHelper();
 		
 		//图的内边距属性
-		float perLeft = getPaddingPercentLeft();
-		float perRight = getPaddingPercentRight();
+		float perLeft = getPaddingLeft();
+		float perRight = getPaddingRight();
 		//float perTop = mPaddingPercentTop;
-		float perBottom =  getPaddingPercentBottom();	
+		float perBottom =  getPaddingBottom();	
 		
-		float width = getChartWidth();
-		float height = getChartHeight();		
+		float width = getWidth();
+		float height = getHeight();		
 
 		// 要依长宽比，区分横竖屏间的比例 [应当依长宽比设置对应的横竖比]
 		if(width > height) //横屏
@@ -184,7 +195,7 @@ public class AxisChart extends XChart {
 			perRight -= scrPer;		
 		}			
 		
-		DrawHelper dw = new DrawHelper();
+		
 
 		if(perLeft > 0)
 		{
@@ -194,7 +205,7 @@ public class AxisChart extends XChart {
 				float legendLength = dw.getPaintFontHeight(getLegend().getLeftLegendPaint());
 				if(legendLength > rederLeft) rederLeft = legendLength;
 			}
-			plotArea.setPlotLeft( getChartLeft() + rederLeft);
+			plotArea.setLeft( getLeft() + rederLeft);
 		}
 		
 		if(perRight > 0 )
@@ -205,7 +216,7 @@ public class AxisChart extends XChart {
 				float legendLength = dw.getPaintFontHeight(getLegend().getRightLegendPaint());	
 				if(legendLength > rederRight ) rederRight = legendLength;
 			}
-			plotArea.setPlotRight(this.getChartRight() - rederRight);	
+			plotArea.setRight(this.getChartRight() - rederRight);	
 		}
 		
 		if(perBottom > 0 )
@@ -216,19 +227,27 @@ public class AxisChart extends XChart {
 				float legendHeight = dw.getPaintFontHeight(getLegend().getLowerLegendPaint());	
 				if(legendHeight > rederBottom ) rederBottom = legendHeight;
 			}
-			plotArea.setPlotBottom(this.getChartBottom() - rederBottom);	
+			plotArea.setBottom(this.getBottom() - rederBottom);	
 		}
 	}
 	
 	
+	/**
+	 * 轴所占的屏幕宽度
+	 * @return  屏幕宽度
+	 */
 	protected float getAxisScreenWidth()
 	{
-		return(Math.abs(plotArea.getPlotRight() - plotArea.getPlotLeft()));
+		return(Math.abs(plotArea.getRight() - plotArea.getLeft()));
 	}
 	
+	/**
+	 * 轴所占的屏幕高度
+	 * @return 屏幕高度
+	 */
 	protected float getAxisScreenHeight()
 	{
-		return( Math.abs(plotArea.getPlotBottom() - plotArea.getPlotTop()));
+		return( Math.abs(plotArea.getBottom() - plotArea.getTop()));
 	}
 	
 

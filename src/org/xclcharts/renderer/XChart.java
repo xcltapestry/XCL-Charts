@@ -51,19 +51,19 @@ public class XChart implements IRender {
 	// 标题栏
 	private PlotTitleRender plotTitle = null;
 	// 图大小范围
-	private float mChartLeft = 0.0f;
-	private float mChartTop = 0.0f;
+	private float mLeft = 0.0f;
+	private float mTop = 0.0f;
 	private float mChartRight = 0.0f;
-	private float mChartBottom = 5f;
+	private float mBottom = 5f;
 	// 图宽高
-	private float mChartWidth = 0.0f;
-	private float mChartHeight = 0.0f;
+	private float mWidth = 0.0f;
+	private float mHeight = 0.0f;
 
 	// 图的内边距属性
-	private float mPaddingPercentTop = 0f;
-	private float mPaddingPercentBottom = 0f;
-	private float mPaddingPercentLeft = 0f;
-	private float mPaddingPercentRight = 0f;
+	private float mPaddingTop = 0f;
+	private float mPaddingBottom = 0f;
+	private float mPaddingLeft = 0f;
+	private float mPaddingRight = 0f;
 	// 图表背景色
 	private Paint mChartBackgroundPaint = null;
 	// 是否画背景色
@@ -78,8 +78,8 @@ public class XChart implements IRender {
 		plotArea = new PlotAreaRender();
 		plotGrid = new PlotGridRender();
 		plotTitle = new PlotTitleRender();
-		plotTitle.setChartTitlePosition(XEnum.Position.CENTER);
-		plotTitle.setChartTitleAlign(XEnum.ChartTitleAlign.CENTER);
+		plotTitle.setTitlePosition(XEnum.Position.CENTER);
+		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
 
 		initPaint();
 	}
@@ -93,7 +93,7 @@ public class XChart implements IRender {
 
 	// 图的内边距属性
 	/**
-	 * 设置内边距百分比,即绘图区与图边距相隔距离的百分比
+	 * 设置内边距百分比,即绘图区与图边距相隔距离的百分比,不允许负值
 	 * 
 	 * @param top
 	 *            顶
@@ -106,13 +106,13 @@ public class XChart implements IRender {
 	 */
 	public void setPadding(float top, float bottom, float left, float right) {
 		if (top > 0)
-			mPaddingPercentTop = top;
+			mPaddingTop = top;
 		if (bottom > 0)
-			mPaddingPercentBottom = bottom;
+			mPaddingBottom = bottom;
 		if (left > 0)
-			mPaddingPercentLeft = left;
+			mPaddingLeft = left;
 		if (right > 0)
-			mPaddingPercentRight = right;
+			mPaddingRight = right;
 	}
 
 	/**
@@ -157,16 +157,16 @@ public class XChart implements IRender {
 	public void setChartRange(float startX, float startY, float width,
 			float height) {
 		if (startX > 0)
-			mChartLeft = startX;
+			mLeft = startX;
 		if (startY > 0)
-			mChartTop = startY;
+			mTop = startY;
 		mChartRight = startX + width;
-		mChartBottom = startY + height;
+		mBottom = startY + height;
 
 		if (width > 0)
-			mChartWidth = width;
+			mWidth = width;
 		if (height > 0)
-			mChartHeight = height;
+			mHeight = height;
 	}
 
 	/**
@@ -184,15 +184,16 @@ public class XChart implements IRender {
 	public void setChartRect(float left, float top, float right, float bottom) {
 
 		if (left > 0)
-			mChartLeft = left;
+			mLeft = left;
 		if (top > 0)
-			mChartTop = top;
+			mTop = top;
 		if (right > 0)
 			mChartRight = right;
 		if (bottom > 0)
-			mChartBottom = bottom;
-		mChartWidth = right - left;
-		mChartHeight = bottom - top;
+			mBottom = bottom;
+		
+		mWidth = Math.abs(right - left);
+		mHeight = Math.abs(bottom - top);
 	}
 
 	/**
@@ -201,7 +202,7 @@ public class XChart implements IRender {
 	 * @return 是否为竖屏
 	 */
 	public boolean isVerticalScreen() {
-		if (mChartWidth < mChartHeight) {
+		if (mWidth < mHeight) {
 			return true;
 		} else {
 			return false;
@@ -213,7 +214,7 @@ public class XChart implements IRender {
 	 * 
 	 * @return 画笔
 	 */
-	public Paint getChartBackgroundPaint() {
+	public Paint getBackgroundPaint() {
 		return mChartBackgroundPaint;
 	}
 
@@ -222,8 +223,8 @@ public class XChart implements IRender {
 	 * 
 	 * @param title 标题
 	 */
-	public void setChartTitle(String title) {
-		plotTitle.setChartTitle(title);
+	public void setTitle(String title) {
+		plotTitle.setTitle(title);
 	}
 
 	/**
@@ -231,15 +232,15 @@ public class XChart implements IRender {
 	 * 
 	 * @param subtitle 子标题
 	 */
-	public void setChartSubTitle(String subtitle) {
-		plotTitle.setChartSubTitle(subtitle);
+	public void addSubtitle(String subtitle) {
+		plotTitle.setSubtitle(subtitle);
 	}
 
 	/**
 	 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
 	 */
-	public void setChartTitlePosition(XEnum.Position position) {
-		plotTitle.setChartTitlePosition(position);
+	public void setTitlePosition(XEnum.Position position) {
+		plotTitle.setTitlePosition(position);
 	}
 
 	/**
@@ -247,8 +248,8 @@ public class XChart implements IRender {
 	 * 
 	 * @param align 显示位置
 	 */
-	public void setChartTitleAlign(XEnum.ChartTitleAlign align) {
-		plotTitle.setChartTitleAlign(align);
+	public void setTitleAlign(XEnum.ChartTitleAlign align) {
+		plotTitle.setTitleAlign(align);
 	}
 
 	/**
@@ -256,8 +257,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 左边X坐标
 	 */
-	public float getChartLeft() {
-		return mChartLeft;
+	public float getLeft() {
+		return mLeft;
 	}
 
 	/**
@@ -265,8 +266,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 上方Y坐标
 	 */
-	public float getChartTop() {
-		return mChartTop;
+	public float getTop() {
+		return mTop;
 	}
 
 	/**
@@ -283,8 +284,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 底部Y坐标
 	 */
-	public float getChartBottom() {
-		return mChartBottom;
+	public float getBottom() {
+		return mBottom;
 	}
 
 	/**
@@ -292,8 +293,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 宽度
 	 */
-	public float getChartWidth() {
-		return mChartWidth;
+	public float getWidth() {
+		return mWidth;
 	}
 
 	/**
@@ -301,17 +302,17 @@ public class XChart implements IRender {
 	 * 
 	 * @return 高度
 	 */
-	public float getChartHeight() {
-		return mChartHeight;
+	public float getHeight() {
+		return mHeight;
 	}
 
 	/**
-	 * 图绘制区相对图底部边距的缩进比例
+	 * 图绘制区相对图底部边距的缩进百分比
 	 * 
 	 * @return 缩进比例
 	 */
-	public float getPaddingPercentBottom() {
-		return mPaddingPercentBottom;
+	public float getPaddingBottom() {
+		return mPaddingBottom;
 	}
 
 	/**
@@ -319,8 +320,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 缩进比例
 	 */
-	public float getPaddingPercentLeft() {
-		return mPaddingPercentLeft;
+	public float getPaddingLeft() {
+		return mPaddingLeft;
 	}
 
 	/**
@@ -328,8 +329,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 缩进比例
 	 */
-	public float getPaddingPercentRight() {
-		return mPaddingPercentRight;
+	public float getPaddingRight() {
+		return mPaddingRight;
 	}
 
 	/**
@@ -349,7 +350,7 @@ public class XChart implements IRender {
 	 */
 	public void setBackgroundColor(boolean visible, int color) {
 		mBackgroundColorVisible = visible;
-		getChartBackgroundPaint().setColor(color);
+		getBackgroundPaint().setColor(color);
 		getPlotArea().getBackgroundPaint().setColor(color);
 	}
 
@@ -358,8 +359,8 @@ public class XChart implements IRender {
 	 */
 	protected void drawChartBackground(Canvas canvas) {
 		if (mBackgroundColorVisible)
-			canvas.drawRect(mChartLeft, mChartTop, mChartRight,
-					mChartBottom, mChartBackgroundPaint);
+			canvas.drawRect(mLeft, mTop, mChartRight,
+					mBottom, mChartBackgroundPaint);
 	}
 
 	/**
@@ -369,44 +370,44 @@ public class XChart implements IRender {
 		DrawHelper dw = new DrawHelper();
 
 		// 图的内边距属性，默认按竖屏算
-		float perLeft = mPaddingPercentLeft;
-		float perRight = mPaddingPercentRight;
-		float perTop = mPaddingPercentTop;
-		float perBottom = mPaddingPercentBottom;
+		float perLeft = mPaddingLeft;
+		float perRight = mPaddingRight;
+		float perTop = mPaddingTop;
+		float perBottom = mPaddingBottom;
 
 		// 要依长宽比，区分横竖屏间的比例
-		if (mChartWidth > this.mChartHeight) // 当前状态为横屏
+		if (mWidth > this.mHeight) // 当前状态为横屏
 		{
-			float scrPer = mChartHeight / mChartWidth;
+			float scrPer = mHeight / mWidth;
 			perTop += scrPer;
 			perBottom += scrPer;
 			perLeft -= scrPer;
 			perRight -= scrPer;
 		}
-		plotArea.setPlotBottom(this.mChartBottom
-				- Math.round(this.mChartHeight / 100 * perBottom));
-		plotArea.setPlotLeft(this.mChartLeft
-				+ Math.round(this.mChartWidth / 100 * perLeft));
-		plotArea.setPlotRight(this.mChartRight
-				- Math.round(this.mChartWidth / 100 * perRight));
+		plotArea.setBottom(this.mBottom
+				- Math.round(this.mHeight / 100 * perBottom));
+		plotArea.setLeft(this.mLeft
+				+ Math.round(this.mWidth / 100 * perLeft));
+		plotArea.setRight(this.mChartRight
+				- Math.round(this.mWidth / 100 * perRight));
 
 		float rederTop = 0.0f;
 		float titleHeight = 0.0f;
 		float subtitleHeight = 0.0f;
 		// float titlePercentage = 0.0f;
-		if (plotTitle.getChartTitle().length() > 0) {
-			titleHeight = dw.getPaintFontHeight(plotTitle.getChartTitlePaint());
+		if (plotTitle.getTitle().length() > 0) {
+			titleHeight = dw.getPaintFontHeight(plotTitle.getTitlePaint());
 		}
 		if (plotTitle.getChartSubTitle().length() > 0) {
 			subtitleHeight = dw.getPaintFontHeight(plotTitle
-					.getChartTitlePaint());
+					.getTitlePaint());
 		}
-		rederTop = Math.round(this.mChartHeight / 100 * perTop);
+		rederTop = Math.round(this.mHeight / 100 * perTop);
 
 		if (rederTop < titleHeight + subtitleHeight) {
 			rederTop = titleHeight + subtitleHeight;
 		}
-		plotArea.setPlotTop(this.mChartTop + rederTop);
+		plotArea.setTop(this.mTop + rederTop);
 
 	}
 
@@ -420,8 +421,8 @@ public class XChart implements IRender {
 	 * 绘制标题
 	 */
 	protected void renderTitle(Canvas canvas) {
-		this.plotTitle.renderTitle(mChartLeft, mChartRight, mChartTop,
-				mChartWidth, this.plotArea.getPlotTop(), canvas);
+		this.plotTitle.renderTitle(mLeft, mChartRight, mTop,
+				mWidth, this.plotArea.getTop(), canvas);
 	}
 
 	@Override

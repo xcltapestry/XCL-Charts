@@ -79,12 +79,12 @@ public class LineChart extends LnChart{
 		if(XEnum.LineDataAxisPosition.LEFT == mDataAxisPosition)
 		{
 			//renderVerticalDataAxis();
-			labelsAxis.setAxisHorizontalTickAlign(Align.CENTER);
-			dataAxis.setAxisHorizontalTickAlign(Align.LEFT);	
+			labelsAxis.setHorizontalTickAlign(Align.CENTER);
+			dataAxis.setHorizontalTickAlign(Align.LEFT);	
 		}else{
 			//renderVerticalDataAxisRight();			
-			dataAxis.setAxisHorizontalTickAlign(Align.RIGHT);
-			dataAxis.getAxisTickLabelsPaint().setTextAlign(Align.LEFT);			
+			dataAxis.setHorizontalTickAlign(Align.RIGHT);
+			dataAxis.getAxisTickLabelPaint().setTextAlign(Align.LEFT);			
 		}	
 	}
 	 
@@ -108,8 +108,8 @@ public class LineChart extends LnChart{
 						
 		private void renderLine(Canvas canvas, LineData bd,String type)
 		{
-			float initX =  plotArea.getPlotLeft();
-            float initY =  plotArea.getPlotBottom();
+			float initX =  plotArea.getLeft();
+            float initY =  plotArea.getBottom();
              
 			float lineStartX = initX;
             float lineStartY = initY;

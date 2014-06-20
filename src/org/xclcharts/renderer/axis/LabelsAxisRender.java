@@ -44,8 +44,8 @@ public class LabelsAxisRender extends LabelsAxis implements IRender{
 	public LabelsAxisRender()
 	{
 		super();
-		getAxisTickLabelsPaint().setTextAlign(Align.CENTER);		
-		setAxisVerticalTickPosition(XEnum.Position.LOWER);
+		getAxisTickLabelPaint().setTextAlign(Align.CENTER);		
+		setVerticalTickPosition(XEnum.Position.LOWER);
 	}
 	
 	/**

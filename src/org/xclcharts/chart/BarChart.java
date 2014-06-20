@@ -70,7 +70,7 @@ public class BarChart extends AxisChart {
 		mPaintDesireLine.setTextAlign(Align.LEFT);
 		
 		// 默认显示Key
-		setPlotKeyVisible(true);
+		showKeyLabel();
 		
 		//默认为竖向设置
 		defaultAxisSetting();	
@@ -180,22 +180,22 @@ public class BarChart extends AxisChart {
 		try{
 			switch (mDirection) {
 				case HORIZONTAL: {
-					labelsAxis.setAxisHorizontalTickAlign(Align.LEFT);		
-					labelsAxis.getAxisTickLabelsPaint().setTextAlign(Align.RIGHT);					
-					dataAxis.setAxisHorizontalTickAlign(Align.CENTER);
-					dataAxis.getAxisTickLabelsPaint().setTextAlign(Align.CENTER);					
-					getBar().getItemLabelsPaint().setTextAlign(Align.LEFT);	
+					labelsAxis.setHorizontalTickAlign(Align.LEFT);		
+					labelsAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);					
+					dataAxis.setHorizontalTickAlign(Align.CENTER);
+					dataAxis.getAxisTickLabelPaint().setTextAlign(Align.CENTER);					
+					getBar().getItemLabelPaint().setTextAlign(Align.LEFT);	
 										
 					
 					break;
 				}
 				case VERTICAL: {					
-					dataAxis.setAxisHorizontalTickAlign(Align.LEFT);
-					dataAxis.getAxisTickLabelsPaint().setTextAlign(Align.RIGHT);					
+					dataAxis.setHorizontalTickAlign(Align.LEFT);
+					dataAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);					
 									
-					labelsAxis.setAxisHorizontalTickAlign(Align.CENTER);			
-					labelsAxis.getAxisTickLabelsPaint().setTextAlign(Align.CENTER);					
-					labelsAxis.setAxisVerticalTickPosition(XEnum.Position.LOWER);
+					labelsAxis.setHorizontalTickAlign(Align.CENTER);			
+					labelsAxis.getAxisTickLabelPaint().setTextAlign(Align.CENTER);					
+					labelsAxis.setVerticalTickPosition(XEnum.Position.LOWER);
 					
 					break;
 				}
@@ -214,18 +214,18 @@ public class BarChart extends AxisChart {
 	 * @param lableOffsetHeight
 	 *            柱形宽度
 	 */
-	protected void drawDataSetKey(Canvas canvas) {
-		if (false == this.getPlotKeyVisible())
+	protected void renderDataKey(Canvas canvas) {
+		if (false == this.isShowKeyLabel())
 			return;
 
 		// 图表标题显示位置
-		switch (this.getPlotTitle().getChartTitleAlign()) {
+		switch (this.getPlotTitle().getTitleAlign()) {
 		case CENTER:
 		case RIGHT:
 			drawDataSetKeyLeft(canvas);
 			break;
 		case LEFT:
-			drawDataSetKeyRight(canvas);
+			drawDataKeyRight(canvas);
 			break;
 		}
 	}
@@ -238,33 +238,33 @@ public class BarChart extends AxisChart {
 		DrawHelper dw = new DrawHelper();
 
 		float keyTextHeight = dw.getPaintFontHeight(this
-				.getPlotDataSetKeyPaint());
-		float keyLabelsX = this.plotArea.getPlotLeft();
-		float keyLabelsY = this.plotArea.getPlotTop() - keyTextHeight;
+				.getKeyLabelPaint());
+		float keyLabelsX = this.plotArea.getLeft();
+		float keyLabelsY = this.plotArea.getTop() - keyTextHeight;
 
 		// 宽度是个小约定，两倍文字高度即可
 		float rectWidth = 2 * keyTextHeight;
 		float rectHeight = keyTextHeight;
-		float rectOffset = getPlotDataSetKeyMargin();
+		float rectOffset = getKeyLabelMargin();
 		
-		getPlotDataSetKeyPaint().setTextAlign(Align.LEFT);
+		getKeyLabelPaint().setTextAlign(Align.LEFT);
 		for (BarData cData : mDataSet) {
 			String key = cData.getKey();
-			getPlotDataSetKeyPaint().setColor(cData.getColor());
-			float strWidth = getPlotDataSetKeyPaint().measureText(key, 0,
+			getKeyLabelPaint().setColor(cData.getColor());
+			float strWidth = getKeyLabelPaint().measureText(key, 0,
 					key.length());
 
 			if (keyLabelsX + 2 * rectWidth + strWidth > this.getChartRight()) {
-				keyLabelsX = this.plotArea.getPlotLeft();
+				keyLabelsX = this.plotArea.getLeft();
 				keyLabelsY = keyLabelsY + rectHeight * 2;
 			}
 
 			canvas.drawRect(keyLabelsX, keyLabelsY, keyLabelsX + rectWidth,
-					keyLabelsY - rectHeight, getPlotDataSetKeyPaint());
+					keyLabelsY - rectHeight, getKeyLabelPaint());
 
-			getPlotDataSetKeyPaint().setTextAlign(Align.LEFT);
+			getKeyLabelPaint().setTextAlign(Align.LEFT);
 			dw.drawRotateText(key, keyLabelsX + rectWidth + rectOffset,
-					keyLabelsY, 0, canvas, getPlotDataSetKeyPaint());
+					keyLabelsY, 0, canvas, getKeyLabelPaint());
 
 			keyLabelsX += rectWidth + strWidth + 2 * rectOffset;
 		}
@@ -274,32 +274,32 @@ public class BarChart extends AxisChart {
 	/**
 	 * 显示在右边时，采用单条说明占一行的方式显示
 	 */
-	private void drawDataSetKeyRight(Canvas canvas) {
-		if (false == getPlotKeyVisible())
+	private void drawDataKeyRight(Canvas canvas) {
+		if (false == isShowKeyLabel())
 			return;
 
 		DrawHelper dw = new DrawHelper();
 
-		float keyTextHeight = dw.getPaintFontHeight(getPlotDataSetKeyPaint());
-		float keyLablesX = this.plotArea.getPlotRight();
-		float keyLablesY = (float) (this.getChartTop() + keyTextHeight);
+		float keyTextHeight = dw.getPaintFontHeight(getKeyLabelPaint());
+		float keyLablesX = this.plotArea.getRight();
+		float keyLablesY = (float) (this.getTop() + keyTextHeight);
 
 		// 宽度是个小约定，两倍文字高度即可
 		float rectWidth = 2 * keyTextHeight;
 		float rectHeight = keyTextHeight;
-		float rectOffset = getPlotDataSetKeyMargin();
+		float rectOffset = getKeyLabelMargin();
 
-		getPlotDataSetKeyPaint().setTextAlign(Align.RIGHT);
+		getKeyLabelPaint().setTextAlign(Align.RIGHT);
 		for (BarData cData : mDataSet) {
 			String key = cData.getKey();
-			getPlotDataSetKeyPaint().setColor(cData.getColor());
+			getKeyLabelPaint().setColor(cData.getColor());
 
 			canvas.drawRect(keyLablesX, keyLablesY, keyLablesX - rectWidth,
-					keyLablesY + rectHeight, getPlotDataSetKeyPaint());
+					keyLablesY + rectHeight, getKeyLabelPaint());
 
 			dw.drawRotateText(key, keyLablesX - rectWidth - rectOffset,
 					keyLablesY + rectHeight, 0, canvas,
-					getPlotDataSetKeyPaint());
+					getKeyLabelPaint());
 
 			keyLablesY += keyTextHeight;
 		}
@@ -370,18 +370,18 @@ public class BarChart extends AxisChart {
 		for(DesireLineData line : mDesireLineDataSet)
 		{			
 			getDesireLinePaint().setColor(line.getColor());
-			getDesireLinePaint().setStrokeWidth(line.getLineWidth());
+			getDesireLinePaint().setStrokeWidth(line.getLineStroke());
 			
 			double  postion = getAxisScreenHeight() * ( 
 					(line.getDesireValue() - dataAxis.getAxisMin()) /axisHeight  );
 			
-			float currentY = (float) (plotArea.getPlotBottom() - postion); 
+			float currentY = (float) (plotArea.getBottom() - postion); 
 			
-			canvas.drawLine(plotArea.getPlotLeft(), currentY,
-								  plotArea.getPlotRight(), currentY, this.getDesireLinePaint());
+			canvas.drawLine(plotArea.getLeft(), currentY,
+								  plotArea.getRight(), currentY, this.getDesireLinePaint());
 			
 			if(line.getLabel().length()  > 0)
-				canvas.drawText(line.getLabel(), plotArea.getPlotRight(), currentY, getDesireLinePaint());
+				canvas.drawText(line.getLabel(), plotArea.getRight(), currentY, getDesireLinePaint());
 		}
 		
 		
@@ -399,18 +399,18 @@ public class BarChart extends AxisChart {
 		for(DesireLineData line : mDesireLineDataSet)
 		{			
 			getDesireLinePaint().setColor(line.getColor());
-			getDesireLinePaint().setStrokeWidth(line.getLineWidth());
+			getDesireLinePaint().setStrokeWidth(line.getLineStroke());
 			
 			double  postion = getAxisScreenWidth() * ( 
 					(line.getDesireValue() - dataAxis.getAxisMin()) /axisHeight  );
 			
-			float currentX = (float) (plotArea.getPlotLeft() + postion); 
+			float currentX = (float) (plotArea.getLeft() + postion); 
 			
-			canvas.drawLine(currentX, plotArea.getPlotBottom(),
-									currentX, plotArea.getPlotTop(), this.getDesireLinePaint());
+			canvas.drawLine(currentX, plotArea.getBottom(),
+									currentX, plotArea.getTop(), this.getDesireLinePaint());
 			
 			if(line.getLabel().length()  > 0)
-				canvas.drawText(line.getLabel(), currentX, plotArea.getPlotTop(), getDesireLinePaint());
+				canvas.drawText(line.getLabel(), currentX, plotArea.getTop(), getDesireLinePaint());
 		}		
 	}
 
@@ -423,7 +423,7 @@ public class BarChart extends AxisChart {
 		double tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
-		float currentY = plotArea.getPlotBottom();
+		float currentY = plotArea.getBottom();
 		//float maskHeight =  dataAxis.getAxisTickMarksPaint().getStrokeWidth()/2;
 
 		// 数据轴(Y 轴)
@@ -435,39 +435,39 @@ public class BarChart extends AxisChart {
 			dataAxis.setAxisTickCurrentID(i);
 			
 			// 依起始数据坐标与数据刻度间距算出上移高度
-			//currentY = (float) Math.rint(plotArea.getPlotBottom() - i * YSteps);
-			currentY = (float)(plotArea.getPlotBottom() - i * YSteps);
+			//currentY = (float) Math.rint(plotArea.getBottom() - i * YSteps);
+			currentY = (float)(plotArea.getBottom() - i * YSteps);
 			// 标签
 			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
 					.getAxisSteps()));
 						
 			// 从左到右的横向网格线		
 			if ( i % 2 != 0) {
-				plotGrid.renderOddRowsFill(canvas, plotArea.getPlotLeft(), currentY
-						+ YSteps, plotArea.getPlotRight(), currentY);
+				plotGrid.renderOddRowsFill(canvas, plotArea.getLeft(), currentY
+						+ YSteps, plotArea.getRight(), currentY);
 			} else {
-				plotGrid.renderEvenRowsFill(canvas, plotArea.getPlotLeft(), currentY
-						+ YSteps, plotArea.getPlotRight(), currentY);
+				plotGrid.renderEvenRowsFill(canvas, plotArea.getLeft(), currentY
+						+ YSteps, plotArea.getRight(), currentY);
 			}
 			
 			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
-			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getPlotLeft(), currentY,
-											   plotArea.getPlotRight(), currentY);			
+			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(), currentY,
+											   plotArea.getRight(), currentY);			
 					
 			if(i == tickCount)
 			{
-				dataAxis.renderAxisHorizontalTick(canvas, plotArea.getPlotLeft(),
-												  plotArea.getPlotTop() , //- maskHeight, 
+				dataAxis.renderAxisHorizontalTick(canvas, plotArea.getLeft(),
+												  plotArea.getTop() , //- maskHeight, 
 												  Float.toString(currentTickLabel));
 			}else{
-				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getPlotLeft(),
+				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getLeft(),
 												currentY, Float.toString(currentTickLabel));
 			}
 			
 		}
 		// 轴 线
-		dataAxis.renderAxis(canvas, plotArea.getPlotLeft(), plotArea.getPlotBottom(),
-				plotArea.getPlotLeft(), plotArea.getPlotTop());
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
+				plotArea.getLeft(), plotArea.getTop());
 	}
 
 	/**
@@ -475,7 +475,7 @@ public class BarChart extends AxisChart {
 	 */
 	protected void renderVerticalBarLabelsAxis(Canvas canvas) {
 		// 标签轴(X 轴)
-		float currentX = plotArea.getPlotLeft();
+		float currentX = plotArea.getLeft();
 
 		// 得到标签轴数据集
 		List<String> dataSet = labelsAxis.getDataSet();
@@ -486,17 +486,17 @@ public class BarChart extends AxisChart {
 
 		for (int i = 0; i < dataSet.size(); i++) {
 			// 依初超始X坐标与标签间距算出当前刻度的X坐标
-			currentX = plotArea.getPlotLeft() + (i + 1) * XSteps; //Math.round
+			currentX = plotArea.getLeft() + (i + 1) * XSteps; //Math.round
 
 			// 绘制横向网格线
 			if (plotGrid.isShowVerticalLines()) {
-				canvas.drawLine(currentX, plotArea.getPlotBottom(),
-								currentX, plotArea.getPlotTop(),
-								plotGrid.getVerticalLinesPaint());
+				canvas.drawLine(currentX, plotArea.getBottom(),
+								currentX, plotArea.getTop(),
+								plotGrid.getVerticalLinePaint());
 			}
 			// 画上标签/刻度线
 			labelsAxis.renderAxisVerticalTick(canvas,currentX,
-							plotArea.getPlotBottom(), dataSet.get(i));
+							plotArea.getBottom(), dataSet.get(i));
 		}
 	}
 
@@ -510,7 +510,7 @@ public class BarChart extends AxisChart {
 		float XSteps = (float) (this.getAxisScreenWidth() / tickCount); // Math.ceil
 
 		// x 轴
-		float currentX = this.plotArea.getPlotLeft();
+		float currentX = this.plotArea.getLeft();
 		for (int i = 0; i <= tickCount; i++) {	
 			
 			if (i == 0)continue;
@@ -519,27 +519,27 @@ public class BarChart extends AxisChart {
 			dataAxis.setAxisTickCurrentID(i);
 						
 			// 依起始数据坐标与数据刻度间距算出上移高度
-			currentX = plotArea.getPlotLeft() + i * XSteps;
+			currentX = plotArea.getLeft() + i * XSteps;
 									
 			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
 					.getAxisSteps()));
 						
 			//绘制tick
 			this.dataAxis.renderAxisVerticalTick(canvas,currentX,
-					plotArea.getPlotBottom(), Float.toString(currentTickLabel));
+					plotArea.getBottom(), Float.toString(currentTickLabel));
 		
 			// 从底到上的竖向网格线
 			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
 			if (i % 2 != 0) {
-				plotGrid.renderOddRowsFill(canvas,currentX, plotArea.getPlotTop(),
-						currentX - XSteps, plotArea.getPlotBottom());
+				plotGrid.renderOddRowsFill(canvas,currentX, plotArea.getTop(),
+						currentX - XSteps, plotArea.getBottom());
 			} else {
-				plotGrid.renderEvenRowsFill(canvas,currentX, plotArea.getPlotTop(),
-						currentX - XSteps, plotArea.getPlotBottom());
+				plotGrid.renderEvenRowsFill(canvas,currentX, plotArea.getTop(),
+						currentX - XSteps, plotArea.getBottom());
 			}
 			
 			plotGrid.renderGridLinesVertical(canvas,currentX,
-					plotArea.getPlotBottom(), currentX, plotArea.getPlotTop());
+					plotArea.getBottom(), currentX, plotArea.getTop());
 		}
 	}
 
@@ -554,12 +554,12 @@ public class BarChart extends AxisChart {
 		float currentY = 0.0f;
 		for (int i = 0; i < labelsAxis.getDataSet().size(); i++) {
 			// 依初超始Y坐标与标签间距算出当前刻度的Y坐标
-			currentY = plotArea.getPlotBottom() - (i + 1) * YSteps;
+			currentY = plotArea.getBottom() - (i + 1) * YSteps;
 			// 横的grid线
-			plotGrid.renderGridLinesHorizontal(canvas,plotArea.getPlotLeft(),
-					currentY, plotArea.getPlotRight(), currentY);
+			plotGrid.renderGridLinesHorizontal(canvas,plotArea.getLeft(),
+					currentY, plotArea.getRight(), currentY);
 			// 标签
-			this.labelsAxis.renderAxisHorizontalTick(canvas,plotArea.getPlotLeft(),
+			this.labelsAxis.renderAxisHorizontalTick(canvas,plotArea.getLeft(),
 					currentY, labelsAxis.getDataSet().get(i));
 		}
 	}
@@ -598,7 +598,7 @@ public class BarChart extends AxisChart {
 			// 画同标签下的所有柱形
 			int k = 1;
 			for (Double bv : barValues) {
-				float currLableY = plotArea.getPlotBottom() - (k) * YSteps;
+				float currLableY = plotArea.getBottom() - (k) * YSteps;
 				float drawBarButtomY = currLableY + labelBarUseHeight / 2;
 				drawBarButtomY = drawBarButtomY - (barHeight + barInnerMargin)
 						* currNumber;
@@ -609,13 +609,13 @@ public class BarChart extends AxisChart {
 						* ((bv - dataAxis.getAxisMin()) / valueWidth));
 
 				// 画出柱形
-				mFlatBar.renderBar(plotArea.getPlotLeft(), drawBarButtomY,
-						plotArea.getPlotLeft() + valuePostion, drawBarTopY,
+				mFlatBar.renderBar(plotArea.getLeft(), drawBarButtomY,
+						plotArea.getLeft() + valuePostion, drawBarTopY,
 						canvas);
 
 				// 柱形顶端标识
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-						plotArea.getPlotLeft() + valuePostion,
+						plotArea.getLeft() + valuePostion,
 						(float) Math.round(drawBarButtomY - barHeight / 2),
 						canvas);
 
@@ -625,14 +625,14 @@ public class BarChart extends AxisChart {
 		}
 
 		// Y轴线
-		dataAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
-				plotArea.getPlotLeft(), plotArea.getPlotTop());
+		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+				plotArea.getLeft(), plotArea.getTop());
 
 		// X轴 线
-		labelsAxis.renderAxis(canvas,plotArea.getPlotLeft(), plotArea.getPlotBottom(),
-				plotArea.getPlotRight(), plotArea.getPlotBottom());
+		labelsAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+				plotArea.getRight(), plotArea.getBottom());
 		// 画Key说明
-		drawDataSetKey(canvas);
+		renderDataKey(canvas);
 		//画横向柱形图，竖向的期望线
 		renderHorizontalDesirelinesDataAxis(canvas);
 	}
@@ -674,7 +674,7 @@ public class BarChart extends AxisChart {
 				float valuePostion = (float) (axisScreenHeight
 						* ((bv - dataAxis.getAxisMin()) / axisDataHeight));
 
-				float currLableX = plotArea.getPlotLeft() + (j + 1) * XSteps;
+				float currLableX = plotArea.getLeft() + (j + 1) * XSteps;
 				float drawBarStartX = currLableX - labelBarUseWidth / 2;
 
 				// 计算同标签多柱 形时，新柱形的起始X坐标
@@ -684,26 +684,26 @@ public class BarChart extends AxisChart {
 				float drawBarEndX = drawBarStartX + barWidth;
 
 				// 画出柱形
-				mFlatBar.renderBar(drawBarStartX, plotArea.getPlotBottom(),
-						drawBarEndX, plotArea.getPlotBottom() - valuePostion,
+				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),
+						drawBarEndX, plotArea.getBottom() - valuePostion,
 						canvas);
 
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(
 						getFormatterItemLabel(bv),
 						(float) Math.round(drawBarStartX + barWidth / 2),
-						(float) Math.round(plotArea.getPlotBottom()
+						(float) Math.round(plotArea.getBottom()
 								- valuePostion), canvas);
 			}
 			currNumber++;
 		}
 
 		// 轴 线
-		dataAxis.renderAxis(canvas, plotArea.getPlotLeft(), plotArea.getPlotBottom(),
-				plotArea.getPlotRight(), plotArea.getPlotBottom());
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
+				plotArea.getRight(), plotArea.getBottom());
 
 		// 绘制标签各柱形集的说明描述
-		drawDataSetKey(canvas);
+		renderDataKey(canvas);
 		//画竖向柱形图，横向的期望线
 		renderVerticalDesirelinesDataAxis(canvas);
 	}

@@ -74,29 +74,29 @@ public class XYAxis extends Axis {
 		float lablesStartX = centerX;
 		float lablesStartY = centerY;
 
-		switch (getAxisHorizontalTickAlign()) {
+		switch (getHorizontalTickAlign()) {
 		case LEFT: {
-			if (getAxisTickMarksVisible()) {
+			if (getTickMarksVisible()) {
 				marksStartX = Math.round(centerX - getTickMarksLength());
 				markeStopX = centerX;
 
-				lablesStartX = marksStartX - getTickLabelsMargin();
+				lablesStartX = marksStartX - getTickLabelMargin();
 			}
 			break;
 		}
 		case CENTER: {
-			if (getAxisTickMarksVisible()) {
+			if (getTickMarksVisible()) {
 				marksStartX = Math.round(centerX - getTickMarksLength() / 2);
 				markeStopX = Math.round(centerX + getTickMarksLength() / 2);
 			}
 			break;
 		}
 		case RIGHT:
-			if (getAxisTickMarksVisible()) {
+			if (getTickMarksVisible()) {
 				marksStartX = centerX;
 				markeStopX = Math.round(centerX + getTickMarksLength());
 
-				lablesStartX = markeStopX + getTickLabelsMargin();
+				lablesStartX = markeStopX + getTickLabelMargin();
 			}
 			break;
 		default:
@@ -104,15 +104,15 @@ public class XYAxis extends Axis {
 		}
 
 		//横轴竖线
-		if (getAxisTickMarksVisible()) {
+		if (getTickMarksVisible()) {
 			canvas.drawLine(marksStartX, centerY, markeStopX
 					+ this.getAxisPaint().getStrokeWidth() / 2, centerY,
-					getAxisTickMarksPaint());
+					getTickMarksPaint());
 
 		}
 
 		//标签
-		if (getAxisTickLabelsVisible()) {
+		if (getTickLabelVisible()) {
 
 			// 定制化显示格式
 			String itemLabel = "";
@@ -122,12 +122,12 @@ public class XYAxis extends Axis {
 				itemLabel = text;
 			}
 			
-			float textHeight = this.mDrawHelper.getPaintFontHeight(getAxisTickLabelsPaint());
+			float textHeight = this.mDrawHelper.getPaintFontHeight(getAxisTickLabelPaint());
 			textHeight /=4;
 			
 			mDrawHelper.drawRotateText(itemLabel, lablesStartX, lablesStartY + textHeight,
-					getAxisTickLabelsRotateAgent(), canvas,
-					getAxisTickLabelsPaint());
+					getTickLabelRotateAgent(), canvas,
+					getAxisTickLabelPaint());
 		}
 	}
 
@@ -145,21 +145,21 @@ public class XYAxis extends Axis {
 		float marksStopY = centerY;
 		float labelsStartY = centerY;
 
-		switch (getAxisVerticalTickPosition()) {
+		switch (getVerticalTickPosition()) {
 		case UP: {
-			if (getAxisTickMarksVisible()) {
+			if (getTickMarksVisible()) {
 				marksStartY = Math.round(centerY - getTickMarksLength());
 				marksStopY = centerY;
 
 				labelsStartY = marksStartY
-						- getTickLabelsMargin()
+						- getTickLabelMargin()
 						- mDrawHelper
-								.getPaintFontHeight(getAxisTickLabelsPaint());
+								.getPaintFontHeight(getAxisTickLabelPaint());
 			}
 			break;
 		}
 		case CENTER: {
-			if (getAxisTickMarksVisible()) {
+			if (getTickMarksVisible()) {
 				marksStartY = Math.round(centerY - getTickMarksLength() / 2);
 				marksStopY = Math.round(centerY + getTickMarksLength() / 2);
 			}
@@ -167,14 +167,14 @@ public class XYAxis extends Axis {
 		}
 		case LOWER:
 
-			if (getAxisTickMarksVisible()) {
+			if (getTickMarksVisible()) {
 				marksStartY = centerY;
 				marksStopY = Math.round(centerY + getTickMarksLength());
 
 				labelsStartY = marksStopY
-						+ getTickLabelsMargin()
+						+ getTickLabelMargin()
 						+ mDrawHelper
-								.getPaintFontHeight(getAxisTickLabelsPaint())
+								.getPaintFontHeight(getAxisTickLabelPaint())
 						/ 3;
 			}
 			break;
@@ -183,14 +183,14 @@ public class XYAxis extends Axis {
 		}
 
 		
-		if (getAxisTickMarksVisible()) {
+		if (getTickMarksVisible()) {
 			canvas.drawLine(centerX, marksStartY
 					- this.getAxisPaint().getStrokeWidth() / 2, centerX,
-					marksStopY, getAxisTickMarksPaint());
+					marksStopY, getTickMarksPaint());
 		}
 		
 		
-		if (getAxisTickLabelsVisible()) {
+		if (getTickLabelVisible()) {
 
 			// 定制化显示格式
 			String itemLabel = "";
@@ -201,8 +201,8 @@ public class XYAxis extends Axis {
 			}
 
 			mDrawHelper.drawRotateText(itemLabel, centerX, labelsStartY,
-					getAxisTickLabelsRotateAgent(), canvas,
-					getAxisTickLabelsPaint());
+					getTickLabelRotateAgent(), canvas,
+					getAxisTickLabelPaint());
 		}
 		
 		

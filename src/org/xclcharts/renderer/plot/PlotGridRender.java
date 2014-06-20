@@ -62,7 +62,7 @@ public class PlotGridRender extends PlotGrid {
 	 */
 	public void renderOddRowsFill(Canvas canvas,float left,float top,float right,float bottom)
 	{
-		 if(null != canvas && isShowOddRowsBgColor())
+		 if(null != canvas && isShowOddRowBgColor())
 		 {
              canvas.drawRect( left,  bottom  ,right, top,getOddRowsBgColorPaint());
 		 }		
@@ -77,7 +77,7 @@ public class PlotGridRender extends PlotGrid {
 	 */
 	public void renderEvenRowsFill(Canvas canvas,float left,float top,float right,float bottom)
 	{
-		 if(null != canvas && isShowEvenRowsBgColor())
+		 if(null != canvas && isShowEvenRowBgColor())
 		 {				
 			 canvas.drawRect( left,  bottom  ,right, top,getEvenRowsBgColorPaint());
 		 }		
@@ -96,13 +96,13 @@ public class PlotGridRender extends PlotGrid {
 	{
 		 if(null != canvas &&this.isShowHorizontalLines()) 
 		 {	
-			 float initWidth = getHorizontalLinesPaint().getStrokeWidth() ;
-			 if(mPrimaryTickLine) getHorizontalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 float initWidth = getHorizontalLinePaint().getStrokeWidth() ;
+			 if(mPrimaryTickLine) getHorizontalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 
-			 mDrawHelper.drawLine(this.getHorizontalLinesStyle(), startX, startY, stopX, stopY,
-					canvas, getHorizontalLinesPaint());
+			 mDrawHelper.drawLine(this.getHorizontalLineStyle(), startX, startY, stopX, stopY,
+					canvas, getHorizontalLinePaint());
 			 
-			 if(mPrimaryTickLine)getHorizontalLinesPaint().setStrokeWidth(initWidth);
+			 if(mPrimaryTickLine)getHorizontalLinePaint().setStrokeWidth(initWidth);
 		 }
 	}
 	
@@ -117,13 +117,13 @@ public class PlotGridRender extends PlotGrid {
 	{
 		 if(null != canvas && isShowVerticalLines()) 
 		 {						
-			 float initWidth = getVerticalLinesPaint().getStrokeWidth() ;
-			 if(mPrimaryTickLine) getVerticalLinesPaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 float initWidth = getVerticalLinePaint().getStrokeWidth() ;
+			 if(mPrimaryTickLine) getVerticalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 
-			 mDrawHelper.drawLine(this.getVerticalLinesStyle(), startX, startY, stopX, stopY,
-					canvas, getVerticalLinesPaint());
+			 mDrawHelper.drawLine(this.getVerticalLineStyle(), startX, startY, stopX, stopY,
+					canvas, getVerticalLinePaint());
 			
-			 if(mPrimaryTickLine)getVerticalLinesPaint().setStrokeWidth(initWidth);
+			 if(mPrimaryTickLine)getVerticalLinePaint().setStrokeWidth(initWidth);
 			
 		 }
 	}

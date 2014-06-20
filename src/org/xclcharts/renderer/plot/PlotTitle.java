@@ -39,12 +39,12 @@ public class PlotTitle {
 	private  String mChartTitle = "";
 	private  String mChartSubTitle = "";	
 	//图表标题画笔
-	private Paint mChartTitlePaint = null;
-	private Paint mChartSubTitlePaint = null;	
+	private Paint mTitlePaint = null;
+	private Paint mSubtitlePaint = null;	
 	//图表标题显示位置
 	private XEnum.ChartTitleAlign mChartTitleAlign = XEnum.ChartTitleAlign.CENTER;	
 	//标题的显示位置(TOP,CENTER,BOTTOM)即是否靠最上面，还是Chart top与Plot top的中间位置，还是PLOT TOP的位置
-	private XEnum.Position mChartTitlePosition = XEnum.Position.CENTER;
+	private XEnum.Position mTitlePosition = XEnum.Position.CENTER;
 	
 	public PlotTitle()
 	{
@@ -55,16 +55,16 @@ public class PlotTitle {
 	{
 		//标题
 		//图表标题画笔
-		mChartTitlePaint  = new Paint();
-		mChartSubTitlePaint  = new Paint();
-		mChartTitlePaint.setTextSize(32);
-		mChartSubTitlePaint.setTextSize(22);
+		mTitlePaint  = new Paint();
+		mSubtitlePaint  = new Paint();
+		mTitlePaint.setTextSize(32);
+		mSubtitlePaint.setTextSize(22);
 		
-		mChartTitlePaint.setColor(Color.BLACK);
-		mChartSubTitlePaint.setColor(Color.BLACK);	
+		mTitlePaint.setColor(Color.BLACK);
+		mSubtitlePaint.setColor(Color.BLACK);	
 		
-		mChartTitlePaint.setAntiAlias(true);
-		mChartSubTitlePaint.setAntiAlias(true);		
+		mTitlePaint.setAntiAlias(true);
+		mSubtitlePaint.setAntiAlias(true);		
 	}
 	
 
@@ -72,7 +72,7 @@ public class PlotTitle {
 		 * 设置标题
 		 * @param title 标题内容
 		 */
-		public void setChartTitle(String title)
+		public void setTitle(String title)
 		{
 			mChartTitle = title;		
 		}
@@ -81,7 +81,7 @@ public class PlotTitle {
 		 * 返回标题
 		 * @return 标题
 		 */
-		public String getChartTitle()
+		public String getTitle()
 		{
 			return mChartTitle;
 		}
@@ -91,7 +91,7 @@ public class PlotTitle {
 		 * 设置子标题
 		 * @param subtitle 子标题
 		 */
-		public void setChartSubTitle(String subtitle)
+		public void setSubtitle(String subtitle)
 		{
 			mChartSubTitle = subtitle;					
 		}
@@ -110,9 +110,9 @@ public class PlotTitle {
 		 * 开放标题画笔
 		 * @return 画笔
 		 */
-		public Paint getChartTitlePaint()
+		public Paint getTitlePaint()
 		 {
-			 return mChartTitlePaint ;
+			 return mTitlePaint ;
 		 }
 
 		
@@ -120,16 +120,16 @@ public class PlotTitle {
 		 * 开放子标题画笔
 		 * @return 画笔
 		 */
-		public Paint getChartSubTitlePaint()
+		public Paint getSubtitlePaint()
 		 {
-			 return mChartSubTitlePaint ;
+			 return mSubtitlePaint ;
 		 }
 				
 		/**
 		 * 设置标题横向显示位置(靠左，居中，靠右)
 		 * @param align 横向显示位置
 		 */
-		public void setChartTitleAlign(XEnum.ChartTitleAlign align)
+		public void setTitleAlign(XEnum.ChartTitleAlign align)
 		{
 			mChartTitleAlign = align;
 		}
@@ -138,7 +138,7 @@ public class PlotTitle {
 		 * 返回标题横向显示位置
 		 * @return 横向显示位置
 		 */
-		public XEnum.ChartTitleAlign getChartTitleAlign()
+		public XEnum.ChartTitleAlign getTitleAlign()
 		{
 			return mChartTitleAlign;
 		}
@@ -147,18 +147,18 @@ public class PlotTitle {
 		 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
 		 * @param Position  上下显示位置
 		 */
-		public void setChartTitlePosition(XEnum.Position Position)
+		public void setTitlePosition(XEnum.Position Position)
 		{
-			mChartTitlePosition = Position;
+			mTitlePosition = Position;
 		}
 			
 		/**
 		 * 设置标题上下显示位置
 		 * @return 上下显示位置
 		 */
-		public XEnum.Position getChartTitlePosition()
+		public XEnum.Position getTitlePosition()
 		{
-			return mChartTitlePosition;
+			return mTitlePosition;
 		}
 		
 		//

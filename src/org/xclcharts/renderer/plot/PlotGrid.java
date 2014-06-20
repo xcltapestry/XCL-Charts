@@ -35,9 +35,9 @@ import android.graphics.Paint.Style;
  */
 public class PlotGrid {
 	 //横向网格线
-	 private Paint mPaintGridLinesHorizontal = null;
+	 private Paint mPaintGridLineHorizontal = null;
 	 //竖向网格线
-	 private Paint mPaintGridLinesVertical = null;
+	 private Paint mPaintGridLineVertical = null;
 	 
 	 //是否显示横向网格线
 	 private boolean mGridLinesHorizontalVisible = false;
@@ -68,17 +68,14 @@ public class PlotGrid {
 	
 	private void initPaint()
 	{
-		mPaintGridLinesHorizontal = new Paint();
-		mPaintGridLinesVertical = new Paint();
+		mPaintGridLineHorizontal = new Paint();
+		mPaintGridLineVertical = new Paint();
 		
-		//mPaintGridLinesHorizontal.setColor((int)Color.rgb(239, 239, 239));
+		mPaintGridLineHorizontal.setColor((int)Color.rgb(180, 205, 230));
+		mPaintGridLineVertical.setColor((int)Color.rgb(180, 205, 230));
 		
-		mPaintGridLinesHorizontal.setColor((int)Color.rgb(180, 205, 230));
-		//mPaintGridLinesVertical.setColor((int)Color.rgb(218, 218, 218));
-		mPaintGridLinesVertical.setColor((int)Color.rgb(180, 205, 230));
-		
-		mPaintGridLinesHorizontal.setStrokeWidth(1);
-		mPaintGridLinesVertical.setStrokeWidth(1);
+		mPaintGridLineHorizontal.setStrokeWidth(1);
+		mPaintGridLineVertical.setStrokeWidth(1);
 		
 		mPaintOddFill = new Paint();
 		mPaintEvenFill = new Paint();
@@ -92,8 +89,8 @@ public class PlotGrid {
 		mPaintOddFill.setAntiAlias(true);
 		mPaintEvenFill.setAntiAlias(true);
 		
-		mPaintGridLinesHorizontal.setAntiAlias(true);
-		mPaintGridLinesVertical.setAntiAlias(true);
+		mPaintGridLineHorizontal.setAntiAlias(true);
+		mPaintGridLineVertical.setAntiAlias(true);
 	}
 	
 
@@ -101,7 +98,7 @@ public class PlotGrid {
 	 * 设置奇数行填充色
 	 * @param color 填充色
 	 */
-	public void setOddRowsBackgroundColor(int color) // OddRowsFillColor(int color)
+	public void setOddRowBackgroundColor(int color) // OddRowsFillColor(int color)
 	{
 		mGridLinesOddColor = color;
 		mPaintOddFill.setColor(color);
@@ -110,20 +107,28 @@ public class PlotGrid {
 	 * 设置偶数行填充色
 	 * @param color 填充色
 	 */
-	public void setEvenRowsBackgroundColor(int color)
+	public void setEvenRowBackgroundColor(int color)
 	{
 		mGridLinesEvenColor = color;		
 		mPaintOddFill.setColor(color);
 	}
 	
 	/**
-	 * 是否显示横向网格线
-	 * @param visible 是否显示
+	 * 显示横向网格线
 	 */
-	public void showHorizontalLines(boolean visible)
+	public void showHorizontalLines()
 	{
-		mGridLinesHorizontalVisible = visible;
+		mGridLinesHorizontalVisible = true;
 	}
+	
+	/**
+	 * 隐藏横向网格线
+	 */
+	public void hideHorizontalLines()
+	{
+		mGridLinesHorizontalVisible = false;
+	}
+	
 	
 	/**
 	 * 返回是否显示横向网格线
@@ -135,13 +140,22 @@ public class PlotGrid {
 	}	
 	
 	/**
-	 * 是否显示竖向网格线
-	 * @param visible 是否显示
+	 * 显示竖向网格线
+	 * 
 	 */
-	public void showVerticalLines(boolean visible) 
+	public void showVerticalLines() 
 	{
-		mGridLinesVerticalVisible = visible;
+		mGridLinesVerticalVisible = true;
 	}
+	
+	/**
+	 * 隐藏竖向网格线
+	 */
+	public void hideVerticalLines() 
+	{
+		mGridLinesVerticalVisible = false;
+	}
+	
 	
 	/**
 	 * 返回是否显示竖向网格线
@@ -154,39 +168,52 @@ public class PlotGrid {
 	
 	
 	/**
-	 * 设置是否显示奇数行填充
-	 * @param visible 是否填充
+	 * 显示奇数行背景色
 	 */
-	public void showOddRowsBgColor(boolean visible)
+	public void showOddRowBgColor()
 	{
-		mOddRowFillVisible = visible;
+		mOddRowFillVisible = true;
 	}
 	
-	//setOddRowsBackgroundColor
+	/**
+	 * 隐藏奇数行背景色
+	 */
+	public void hideOddRowBgColor()
+	{
+		mOddRowFillVisible = false;
+	}
 	
 	/**
 	 * 返回是否显示奇数行填充
 	 * @return 是否填充
 	 */
-	public boolean isShowOddRowsBgColor() 
+	public boolean isShowOddRowBgColor() 
 	{
 		return mOddRowFillVisible;
 	}
 	
 	/**
-	 * 设置是否显示偶数行填充
-	 * @param visible 是否填充
+	 * 显示偶数行背景色
 	 */
-	public void  showEvenRowsBgColor(boolean visible) 
+	public void  showEvenRowBgColor() 
 	{
-		mEvenRowFillVisible = visible;
+		mEvenRowFillVisible = true;
 	}
+	
+	/**
+	 * 隐藏偶数行背景色
+	 */
+	public void  hideEvenRowBgColor() 
+	{
+		mEvenRowFillVisible = false;
+	}
+	
 	
 	/**
 	 * 返回是否显示偶数行填充
 	 * @return 是否填充
 	 */
-	public boolean isShowEvenRowsBgColor()
+	public boolean isShowEvenRowBgColor()
 	{
 		return mEvenRowFillVisible;
 	}
@@ -196,18 +223,18 @@ public class PlotGrid {
 	 * 开放横向网格线画笔
 	 * @return 画笔
 	 */
-	public Paint getHorizontalLinesPaint()
+	public Paint getHorizontalLinePaint()
 	{
-		return mPaintGridLinesHorizontal;	
+		return mPaintGridLineHorizontal;	
 	}
 	 
 	/**
 	 * 开放竖向网格线画笔
 	 * @return 画笔
 	 */
-	public Paint getVerticalLinesPaint()
+	public Paint getVerticalLinePaint()
 	{
-		return mPaintGridLinesVertical;	
+		return mPaintGridLineVertical;	
 	}
 	
 	/**
@@ -232,7 +259,7 @@ public class PlotGrid {
 	 * 返回竖向网格线当前绘制风格
 	 * @return  绘制风格
 	 */
-	public XEnum.LineStyle getVerticalLinesStyle()
+	public XEnum.LineStyle getVerticalLineStyle()
 	{ 
 		return mVerticalLineStyle;
 	}
@@ -241,7 +268,7 @@ public class PlotGrid {
 	 * 设置竖向网格线当前绘制风格
 	 * @param style 绘制风格
 	 */
-	public void setVerticalLinesStyle(XEnum.LineStyle style)
+	public void setVerticalLineStyle(XEnum.LineStyle style)
 	{
 		mVerticalLineStyle = style;
 	}
@@ -250,7 +277,7 @@ public class PlotGrid {
 	 * 返回横向网格线当前绘制风格
 	 * @return 绘制风格
 	 */
-	public XEnum.LineStyle getHorizontalLinesStyle()
+	public XEnum.LineStyle getHorizontalLineStyle()
 	{
 		return mHorizontalLineStyle;
 	}
@@ -259,7 +286,7 @@ public class PlotGrid {
 	 * 设置横向网格线当前绘制风格 
 	 * @param style 绘制风格
 	 */
-	public void setHorizontalLinesStyle(XEnum.LineStyle style)
+	public void setHorizontalLineStyle(XEnum.LineStyle style)
 	{
 		mHorizontalLineStyle = style;
 	}

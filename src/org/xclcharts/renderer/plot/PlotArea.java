@@ -37,19 +37,19 @@ import android.graphics.Paint.Style;
 public class PlotArea {
 	
 	//主图表区范围
-	protected float mPlotLeft  = 0.0f;
-	protected float mPlotTop  = 0.0f;
-	protected float mPlotRight   = 0.0f;
-	protected float mPlotBottom  = 0.0f;
+	protected float mLeft  = 0.0f;
+	protected float mTop  = 0.0f;
+	protected float mRight   = 0.0f;
+	protected float mBottom  = 0.0f;
 	
-	protected float mPlotWidth = 0.0f;
-	protected float mPlotHeight = 0.0f;
+	private float mWidth = 0.0f;
+	private float mHeight = 0.0f;
 	
 	//主图表区背景色,即画X轴与Y轴围成的区域
-	protected Paint mPlotBackgroundPaint = null;	
+	private Paint mBackgroundPaint = null;	
 	
 	//是否画背景色
-	protected boolean mBackgroundColorVisible = false;
+	private boolean mBackgroundColorVisible = false;
 		
 	
 	public PlotArea()
@@ -59,9 +59,9 @@ public class PlotArea {
 	
 	private void init()
 	{
-		mPlotBackgroundPaint = new Paint();
-		mPlotBackgroundPaint.setStyle(Style.FILL);	
-		mPlotBackgroundPaint.setColor(Color.WHITE);
+		mBackgroundPaint = new Paint();
+		mBackgroundPaint.setStyle(Style.FILL);	
+		mBackgroundPaint.setColor(Color.WHITE);
 	}
 	
 	
@@ -71,17 +71,27 @@ public class PlotArea {
 	 */
 	 public Paint getBackgroundPaint()
 	 {
-		 return mPlotBackgroundPaint;
+		 return mBackgroundPaint;
 	 }
 	 
 	 /**
 	  * 设置是否显示背景色
 	  * @param visible 是否显示背景色
 	  */
-	public void setBackgroundColorVisitle(boolean visible)
+	public void setBackgroundColorVisible(boolean visible)
 	{
 		mBackgroundColorVisible = visible;
 	}
+	
+	/**
+	 * 返回是否显示背景色
+	 * @return 是否显示背景色
+	 */
+	public boolean getBackgroundColorVisible()
+	{
+		return mBackgroundColorVisible;
+	}
+	
 	
 	/**
 	 * 设置是否显示背景色及其背景色的值
@@ -99,50 +109,50 @@ public class PlotArea {
 	 * 绘图区左边位置X坐标
 	 * @return X坐标
 	 */
-	public float getPlotLeft() {
-		return mPlotLeft;
+	public float getLeft() {
+		return mLeft;
 	}
 
 	/**
 	 * 绘图区上方Y坐标
 	 * @return Y坐标
 	 */
-	public float getPlotTop() {
-		return mPlotTop;
+	public float getTop() {
+		return mTop;
 	}
 	
 	/**
 	 * 绘图区下方Y坐标
 	 * @return Y坐标
 	 */
-	public float getPlotBottom() {
-		return mPlotBottom;
+	public float getBottom() {
+		return mBottom;
 	}
 	
 	/**
 	 * 绘图区右边位置X坐标
 	 * @return X坐标
 	 */
-	public float getPlotRight() {
-		return mPlotRight;
+	public float getRight() {
+		return mRight;
 	}
 	
 	/**
 	 * 绘图区宽度
 	 * @return 宽度
 	 */
-	public float getPlotWidth() {		
-		mPlotWidth = (float)Math.abs(mPlotRight - mPlotLeft);		
-		return mPlotWidth;
+	public float getWidth() {		
+		mWidth = (float)Math.abs(mRight - mLeft);		
+		return mWidth;
 	}
 
 	/**
 	 * 绘图区高度
 	 * @return 高度
 	 */
-	public float getPlotHeight() {		
-		mPlotHeight = Math.abs(getPlotBottom() - getPlotTop());
-		return mPlotHeight;
+	public float getHeight() {		
+		mHeight = Math.abs(getBottom() - getTop());
+		return mHeight;
 	}
 		
 }

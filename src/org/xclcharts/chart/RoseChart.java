@@ -56,10 +56,9 @@ public class RoseChart extends PieChart{
 		mPaintInner.setAntiAlias(true);		
 		
 		//白色标签
-		getLabelsPaint().setColor(Color.WHITE);
-		getLabelsPaint().setTextSize(22);
-		getLabelsPaint().setTextAlign(Align.CENTER);	
-				
+		getLabelPaint().setColor(Color.WHITE);
+		getLabelPaint().setTextSize(22);
+		getLabelPaint().setTextAlign(Align.CENTER);	
 	}
 	
 	/**
@@ -126,7 +125,7 @@ public class RoseChart extends PieChart{
 	            this.mCalc.CalcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
 	            
 	            //标识  
-	            canvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelsPaint());             
+	            canvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelPaint());             
 	         
 	          //下次的起始角度  
 	            mOffsetAgent += percentage;  

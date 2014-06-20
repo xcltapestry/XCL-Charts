@@ -45,7 +45,7 @@ public class CirChart extends XChart{
 	private XEnum.DisplayPosition mLabelsDP;
 	
 	//开放标签画笔让用户设置
-	private Paint mPaintLabels = null;
+	private Paint mPaintLabel = null;
 	
 	//初始偏移角度
 	protected int mOffsetAgent = 0;//180;
@@ -64,10 +64,10 @@ public class CirChart extends XChart{
 		//标签显示位置
 		mLabelsDP = XEnum.DisplayPosition.CENTER;
 		
-		mPaintLabels = new Paint();
-		mPaintLabels.setColor(Color.BLACK);
-		mPaintLabels.setTextSize(18);
-		mPaintLabels.setAntiAlias(true);
+		mPaintLabel = new Paint();
+		mPaintLabel.setColor(Color.BLACK);
+		mPaintLabel.setTextSize(18);
+		mPaintLabel.setAntiAlias(true);
 	}
 	
 	@Override
@@ -77,9 +77,9 @@ public class CirChart extends XChart{
 		
 		if(isVerticalScreen())
 		{
-			this.mRadius = this.plotArea.getPlotWidth() / 2;
+			this.mRadius = this.plotArea.getWidth() / 2;
 		}else{
-			this.mRadius =  this.plotArea.getPlotHeight() / 2;
+			this.mRadius =  this.plotArea.getHeight() / 2;
 		}
 	}
 
@@ -133,9 +133,9 @@ public class CirChart extends XChart{
 	 * 开放标签画笔
 	 * @return 画笔
 	 */
-	public Paint getLabelsPaint()
+	public Paint getLabelPaint()
 	{
-		return mPaintLabels;
+		return mPaintLabel;
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class CirChart extends XChart{
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
 		
-		mPaintLabels.setTextAlign(Align.CENTER);
+		mPaintLabel.setTextAlign(Align.CENTER);
 		
 		if(XEnum.DisplayPosition.CENTER == mLabelsDP)
 		{			 
@@ -171,7 +171,7 @@ public class CirChart extends XChart{
 					 
 				//标识
 				canvas.drawText( text ,
-					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabels);
+					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabel);
 		}else if(XEnum.DisplayPosition.OUTSIDE == mLabelsDP){
 				//显示在扇形的外部
 				calcRadius = radius  + radius/10;
@@ -181,7 +181,7 @@ public class CirChart extends XChart{
 					 
 				//标识
 				canvas.drawText(text,
-					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabels);          	
+					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabel);          	
 		}else{
 			return;
 		}		 
