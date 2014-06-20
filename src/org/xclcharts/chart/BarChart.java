@@ -70,7 +70,7 @@ public class BarChart extends AxisChart {
 		mPaintDesireLine.setTextAlign(Align.LEFT);
 		
 		// 默认显示Key
-		showKeyLabel();
+		showKeyLabels();
 		
 		//默认为竖向设置
 		defaultAxisSetting();	
@@ -215,7 +215,7 @@ public class BarChart extends AxisChart {
 	 *            柱形宽度
 	 */
 	protected void renderDataKey(Canvas canvas) {
-		if (false == this.isShowKeyLabel())
+		if (false == this.isShowKeyLabels())
 			return;
 
 		// 图表标题显示位置
@@ -254,7 +254,7 @@ public class BarChart extends AxisChart {
 			float strWidth = getKeyLabelPaint().measureText(key, 0,
 					key.length());
 
-			if (keyLabelsX + 2 * rectWidth + strWidth > this.getChartRight()) {
+			if (keyLabelsX + 2 * rectWidth + strWidth > this.getRight()) {
 				keyLabelsX = this.plotArea.getLeft();
 				keyLabelsY = keyLabelsY + rectHeight * 2;
 			}
@@ -275,7 +275,7 @@ public class BarChart extends AxisChart {
 	 * 显示在右边时，采用单条说明占一行的方式显示
 	 */
 	private void drawDataKeyRight(Canvas canvas) {
-		if (false == isShowKeyLabel())
+		if (false == isShowKeyLabels())
 			return;
 
 		DrawHelper dw = new DrawHelper();

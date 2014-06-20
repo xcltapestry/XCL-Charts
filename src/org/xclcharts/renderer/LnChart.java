@@ -69,7 +69,7 @@ public class LnChart extends AxisChart {
 		mPaintKeyLabel.setStyle(Style.FILL);
 		mPaintKeyLabel.setAntiAlias(true);
 		
-		showKeyLabel();
+		showKeyLabels();
 	}
 
 	/**
@@ -363,7 +363,7 @@ public class LnChart extends AxisChart {
 	 * @param dataSet
 	 */
 	protected void renderKey(Canvas canvas, List<LnData> dataSet) {
-		if (isShowKeyLabel() == false)
+		if (isShowKeyLabels() == false)
 			return;
 
 		DrawHelper dw = new DrawHelper();

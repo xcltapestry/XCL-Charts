@@ -53,7 +53,7 @@ public class XChart implements IRender {
 	// 图大小范围
 	private float mLeft = 0.0f;
 	private float mTop = 0.0f;
-	private float mChartRight = 0.0f;
+	private float mRight = 0.0f;
 	private float mBottom = 5f;
 	// 图宽高
 	private float mWidth = 0.0f;
@@ -160,7 +160,7 @@ public class XChart implements IRender {
 			mLeft = startX;
 		if (startY > 0)
 			mTop = startY;
-		mChartRight = startX + width;
+		mRight = startX + width;
 		mBottom = startY + height;
 
 		if (width > 0)
@@ -188,7 +188,7 @@ public class XChart implements IRender {
 		if (top > 0)
 			mTop = top;
 		if (right > 0)
-			mChartRight = right;
+			mRight = right;
 		if (bottom > 0)
 			mBottom = bottom;
 		
@@ -275,8 +275,8 @@ public class XChart implements IRender {
 	 * 
 	 * @return 右边X坐标
 	 */
-	public float getChartRight() {
-		return mChartRight;
+	public float getRight() {
+		return mRight;
 	}
 
 	/**
@@ -359,7 +359,7 @@ public class XChart implements IRender {
 	 */
 	protected void drawChartBackground(Canvas canvas) {
 		if (mBackgroundColorVisible)
-			canvas.drawRect(mLeft, mTop, mChartRight,
+			canvas.drawRect(mLeft, mTop, mRight,
 					mBottom, mChartBackgroundPaint);
 	}
 
@@ -388,7 +388,7 @@ public class XChart implements IRender {
 				- Math.round(this.mHeight / 100 * perBottom));
 		plotArea.setLeft(this.mLeft
 				+ Math.round(this.mWidth / 100 * perLeft));
-		plotArea.setRight(this.mChartRight
+		plotArea.setRight(this.mRight
 				- Math.round(this.mWidth / 100 * perRight));
 
 		float rederTop = 0.0f;
@@ -421,7 +421,7 @@ public class XChart implements IRender {
 	 * 绘制标题
 	 */
 	protected void renderTitle(Canvas canvas) {
-		this.plotTitle.renderTitle(mLeft, mChartRight, mTop,
+		this.plotTitle.renderTitle(mLeft, mRight, mTop,
 				mWidth, this.plotArea.getTop(), canvas);
 	}
 

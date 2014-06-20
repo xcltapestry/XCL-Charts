@@ -88,7 +88,7 @@ public class AxisChart extends XChart {
 	 * 在图的上方显示键值(key)的标签说明
 	 * 
 	 */
-	public void showKeyLabel()
+	public void showKeyLabels()
 	{
 		mKeyLabelVisible = true;
 	}
@@ -96,7 +96,7 @@ public class AxisChart extends XChart {
 	/**
 	 * 在图的上方不显示键值(key)的标签说明
 	 */
-	public void hideKeyLabel()
+	public void hideKeyLabels()
 	{
 		mKeyLabelVisible = false;
 	}
@@ -107,7 +107,7 @@ public class AxisChart extends XChart {
 	 * 是否需绘制图的key
 	 * @return 是否显示
 	 */
-	public boolean isShowKeyLabel()
+	public boolean isShowKeyLabels()
 	{
 		return mKeyLabelVisible;
 	}
@@ -216,7 +216,7 @@ public class AxisChart extends XChart {
 				float legendLength = dw.getPaintFontHeight(getLegend().getRightLegendPaint());	
 				if(legendLength > rederRight ) rederRight = legendLength;
 			}
-			plotArea.setRight(this.getChartRight() - rederRight);	
+			plotArea.setRight(this.getRight() - rederRight);	
 		}
 		
 		if(perBottom > 0 )

@@ -76,19 +76,19 @@ public class LegendRender extends Legend implements IRender{
 		if(this.getLeftLegend().length() > 0)
 		{
 			drawLeftLegend(canvas,getLeftLegend(),mChart.getLeft(),mChart.getTop(),
-										mChart.getChartRight(),mChart.getBottom());
+										mChart.getRight(),mChart.getBottom());
 		}
 		
 		if(this.getLowerLegend().length() > 0)
 		{						
 			drawLegendLower(canvas,getLowerLegend(),mChart.getLeft(),mChart.getTop(),
-					mChart.getChartRight(),mChart.getBottom());
+					mChart.getRight(),mChart.getBottom());
 		}
 		
 		if(this.getRightLegend().length() > 0)
 		{
 			drawRightLegend(canvas,getRightLegend(),mChart.getLeft(),mChart.getTop(),
-					mChart.getChartRight(),mChart.getBottom());
+					mChart.getRight(),mChart.getBottom());
 		}
 		
 		return true;

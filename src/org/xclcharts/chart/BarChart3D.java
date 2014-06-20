@@ -46,7 +46,7 @@ public class BarChart3D extends BarChart{
 	public BarChart3D()
 	{
 		super();	
-		showKeyLabel();
+		showKeyLabels();
 	}
 	
 	/**
