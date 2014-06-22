@@ -55,7 +55,7 @@ public class PlotTitleRender extends PlotTitle{
 				
 		int titleHeight = 0;
 		int subtitleHeight = 0;
-		int totalHegith = 0;
+		int totalHeight = 0;
 		
 		float titleInitY = 0.0f;
 		
@@ -65,7 +65,7 @@ public class PlotTitleRender extends PlotTitle{
 		float subtitleX = 0.0f;
 		float subtitleY = 0.0f;
 		
-		if(this.getTitle().length() == 0 && getChartSubTitle().length() == 0) return;	
+		if(this.getTitle().length() == 0 && getSubtitle().length() == 0) return;	
 
 		if(getTitle().length() > 0 )
 		{
@@ -75,7 +75,7 @@ public class PlotTitleRender extends PlotTitle{
 		{
 			subtitleHeight = dw.getPaintFontHeight(this.getSubtitlePaint());
 		}			
-		totalHegith = titleHeight + subtitleHeight;	
+		totalHeight = titleHeight + subtitleHeight;	
 		float pcHeight = Math.abs(plotTop - chartTop) ;		
 		
 		//用来确定 titleY,需要Chart top的值
@@ -86,14 +86,13 @@ public class PlotTitleRender extends PlotTitle{
 			titleInitY = chartTop + titleHeight;
 			break;
 		case CENTER:			
-			titleInitY = Math.round(chartTop + pcHeight/2 - totalHegith/2);			
+			titleInitY = Math.round(chartTop + pcHeight/2 - totalHeight/2);			
 			break;
 		case LOWER:
 			titleInitY = plotTop - titleHeight;			
 			break;
 		}
 		
-		//
 		
 		switch(this.getTitleAlign())
 		{
@@ -136,10 +135,10 @@ public class PlotTitleRender extends PlotTitle{
 			canvas.drawText(
 					getTitle(),titleX , titleY, this.getTitlePaint());
 		}
-		if(getChartSubTitle().length() > 0 )
+		if(getSubtitle().length() > 0 )
 		{
 			canvas.drawText(
-					getChartSubTitle(),subtitleX , subtitleY, this.getSubtitlePaint());
+					getSubtitle(),subtitleX , subtitleY, this.getSubtitlePaint());
 		}
 	}
 }

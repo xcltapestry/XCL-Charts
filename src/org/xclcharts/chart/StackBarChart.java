@@ -78,8 +78,8 @@ public class StackBarChart  extends BarChart{
 		 float YSteps = getHorizontalYSteps();		
 		 int   barHeight = (int) Math.round(YSteps * 0.5); 		 		
 		
-		//标签轴	
-		 for(int r=0;r<labelsAxis.getDataSet().size();r++)
+		//分类轴	
+		 for(int r=0;r<categoryAxis.getDataSet().size();r++)
 		 {				 
 			 	 float currentX = plotArea.getLeft();
 				 float currentY = plotArea.getBottom() - (r+1) * YSteps;				 
@@ -130,7 +130,7 @@ public class StackBarChart  extends BarChart{
 							  plotArea.getLeft(), plotArea.getTop());	
 		 
 		//X轴 线		
-		labelsAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
 								  plotArea.getRight(),  plotArea.getBottom());	
 		//画Key说明
 		renderDataKey(canvas);
@@ -142,10 +142,10 @@ public class StackBarChart  extends BarChart{
 	
 			//坐标布局
 			renderVerticalBarDataAxis(canvas);
-			renderVerticalBarLabelsAxis(canvas);
+			renderVerticalBarCategoryAxis(canvas);
 		
-			//得到标签轴数据集
-			List<String> dataSet =  labelsAxis.getDataSet();			 
+			//得到分类轴数据集
+			List<String> dataSet =  categoryAxis.getDataSet();			 
 			float XSteps = getVerticalXSteps(dataSet.size() + 1 );			 
 			float axisScreenHeight  =  getAxisScreenHeight(); 
 			float axisDataHeight =  (float) dataAxis.getAxisRange(); 

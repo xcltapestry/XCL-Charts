@@ -36,9 +36,9 @@ import android.graphics.Paint;
 
 public class LnData {
 	//标签轴用的到值
-	private String mLable;
+	private String mLabel;
 	//是否在点上显示标签
-	private boolean mLableVisible = false;
+	private boolean mLabelVisible = false;
 
 	//线的基类
 	private PlotLine mPlotLine = null;
@@ -52,35 +52,35 @@ public class LnData {
 	 * 设置是否在线上显示标签
 	 * @param visible 是否显示
 	 */
-	public void setLineLabelVisible(boolean visible) 
+	public void setLabelVisible(boolean visible) 
 	{
-		mLableVisible = visible;
+		mLabelVisible = visible;
 	}
 	
 	/**
 	 * 返回是否在线上显示标签
 	 * @return 是否显示
 	 */
-	public boolean getLineLabelVisible()
+	public boolean getLabelVisible()
 	{
-		return mLableVisible;
+		return mLabelVisible;
 	}
 	
 	/**
 	 * 设置标签
 	 * @param value 标签内容
 	 */
-	public void setLineLabel(String value) 
+	public void setLabel(String value) 
 	{
-		mLable = value;
+		mLabel = value;
 	}
 	
 	/**
 	 * 返回标签
 	 * @return 标签
 	 */
-	public String getLineLabel() {
-		return mLable;
+	public String getLabel() {
+		return mLabel;
 	}
 	
 	/**
@@ -135,14 +135,14 @@ public class LnData {
 	 */
 	public void setLineKey(String value) 
 	{
-		mLable = value;
+		mLabel = value;
 	}
 	/**
 	 * 返回Key值
 	 * @return Key值
 	 */
 	public String getLineKey() {
-		return mLable;
+		return mLabel;
 	}
 	
 	/**

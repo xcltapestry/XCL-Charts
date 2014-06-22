@@ -48,14 +48,14 @@ public class PlotGrid {
 	 private int mGridLinesOddColor = (int)Color.GREEN;	
 	 private int mGridLinesEvenColor = (int)Color.BLUE;
 	 //是否显示奇数行填充色
-	 private boolean mOddRowFillVisible = false;
+	 private boolean mOddRowBgColorVisible = false;
 	//是否显示偶数行填充色
-	 private boolean mEvenRowFillVisible = false;
+	 private boolean mEvenRowBgColorVisible = false;
 	 
 	 //横向网格线
-	 private Paint mPaintOddFill = null;
+	 private Paint mPaintOddBgColor = null;
 	 //竖向网格线
-	 private Paint mPaintEvenFill = null;
+	 private Paint mPaintEvenBgColor = null;
 	 
 	 // Solid、Dot、Dash。
 	 private XEnum.LineStyle mHorizontalLineStyle = XEnum.LineStyle.SOLID;
@@ -77,17 +77,17 @@ public class PlotGrid {
 		mPaintGridLineHorizontal.setStrokeWidth(1);
 		mPaintGridLineVertical.setStrokeWidth(1);
 		
-		mPaintOddFill = new Paint();
-		mPaintEvenFill = new Paint();
+		mPaintOddBgColor = new Paint();
+		mPaintEvenBgColor = new Paint();
 		
-		mPaintOddFill.setStyle(Style.FILL);
-		mPaintEvenFill.setStyle(Style.FILL);
+		mPaintOddBgColor.setStyle(Style.FILL);
+		mPaintEvenBgColor.setStyle(Style.FILL);
 		
-		mPaintOddFill.setColor(Color.WHITE);
-		mPaintEvenFill.setColor((int)Color.rgb(239, 239, 239)); 
+		mPaintOddBgColor.setColor(Color.WHITE);
+		mPaintEvenBgColor.setColor((int)Color.rgb(239, 239, 239)); 
 		
-		mPaintOddFill.setAntiAlias(true);
-		mPaintEvenFill.setAntiAlias(true);
+		mPaintOddBgColor.setAntiAlias(true);
+		mPaintEvenBgColor.setAntiAlias(true);
 		
 		mPaintGridLineHorizontal.setAntiAlias(true);
 		mPaintGridLineVertical.setAntiAlias(true);
@@ -101,7 +101,7 @@ public class PlotGrid {
 	public void setOddRowBackgroundColor(int color) // OddRowsFillColor(int color)
 	{
 		mGridLinesOddColor = color;
-		mPaintOddFill.setColor(color);
+		mPaintOddBgColor.setColor(color);
 	}
 	/**
 	 * 设置偶数行填充色
@@ -110,7 +110,7 @@ public class PlotGrid {
 	public void setEvenRowBackgroundColor(int color)
 	{
 		mGridLinesEvenColor = color;		
-		mPaintOddFill.setColor(color);
+		mPaintOddBgColor.setColor(color);
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class PlotGrid {
 	 */
 	public void showOddRowBgColor()
 	{
-		mOddRowFillVisible = true;
+		mOddRowBgColorVisible = true;
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class PlotGrid {
 	 */
 	public void hideOddRowBgColor()
 	{
-		mOddRowFillVisible = false;
+		mOddRowBgColorVisible = false;
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class PlotGrid {
 	 */
 	public boolean isShowOddRowBgColor() 
 	{
-		return mOddRowFillVisible;
+		return mOddRowBgColorVisible;
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class PlotGrid {
 	 */
 	public void  showEvenRowBgColor() 
 	{
-		mEvenRowFillVisible = true;
+		mEvenRowBgColorVisible = true;
 	}
 	
 	/**
@@ -205,7 +205,7 @@ public class PlotGrid {
 	 */
 	public void  hideEvenRowBgColor() 
 	{
-		mEvenRowFillVisible = false;
+		mEvenRowBgColorVisible = false;
 	}
 	
 	
@@ -215,7 +215,7 @@ public class PlotGrid {
 	 */
 	public boolean isShowEvenRowBgColor()
 	{
-		return mEvenRowFillVisible;
+		return mEvenRowBgColorVisible;
 	}
 		
 
@@ -243,7 +243,7 @@ public class PlotGrid {
 	 */
 	public Paint getOddRowsBgColorPaint()
 	{
-		return mPaintOddFill;	
+		return mPaintOddBgColor;	
 	}
 	 
 	/**
@@ -252,7 +252,7 @@ public class PlotGrid {
 	 */
 	public Paint getEvenRowsBgColorPaint()
 	{
-		return mPaintEvenFill;	
+		return mPaintEvenBgColor;	
 	}
 
 	/**

@@ -45,7 +45,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum DisplayPosition {		
+		public enum ArcLabelLocation {		
 			CENTER,OUTSIDE,HIDE
 		}
 				
@@ -54,7 +54,7 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum CircleDisplayType {		
+		public enum CircleType {		
 			FULL,HALF
 		}
 				
@@ -83,9 +83,9 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum GridLinesRows {
-			ODD,EVEN 
-		}
+		//public enum GridLines {
+		//	ODD_ROW,EVEN_ROW 
+		//}
 		
 		
 		/**
@@ -168,12 +168,12 @@ public class XEnum {
 		 * @param HIDE	隐藏，不显示点
 		 * @param TRIANGLE	三角形
 		 * @param RECT	方形
-		 * @param CIRCLE	实心圆
-		 * @param RING	空心圆
+		 * @param DOT	圆点
+		 * @param RING	圆环
 		 * @param PRISMATIC	棱形
 		 */
 		public enum DotStyle {		
-			HIDE,TRIANGLE,RECT,CIRCLE,RING,PRISMATIC
+			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC
 		}
 		
 		
@@ -182,8 +182,17 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum LineDataAxisPosition {  
+		public enum LineDataAxisLocation {  
 			LEFT, RIGHT
+		}
+		
+		/**
+		 * 雷达图数据区域的填充方式
+		 * @author XCL
+		 *
+		 */
+		public enum RadarDataAreaStyle {
+			FILL,STROKE
 		}
 		
 }

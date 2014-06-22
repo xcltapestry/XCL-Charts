@@ -201,11 +201,11 @@ public class GaugeChart extends CirChart{
 	
 	/**
 	 * 设置标签集合,即显示在最外圈的那个文字标签。(标签和步长分开，步长即刻度可以密点，标签可以松点)
-	 * @param labels 标签集合
+	 * @param categories 标签集合
 	 */
-	public void setLabels(List<String> labels)
+	public void setCategories(List<String> categories)
 	{
-		mLabels = labels;
+		mLabels = categories;
 	}
 	
 	
@@ -248,7 +248,7 @@ public class GaugeChart extends CirChart{
 						cirX + calcRadius, cirY ,this.getLabelPaint());   				
 			}else{				
 				//计算百分比标签
-				mCalc.CalcArcEndPointXY(cirX, cirY, calcRadius, 180 + i *stepsAgent); 
+				mCalc.calcArcEndPointXY(cirX, cirY, calcRadius, 180 + i *stepsAgent); 
 				//标识
                 canvas.drawText(label,
 					 mCalc.getPosX(), mCalc.getPosY() ,this.getLabelPaint());   
@@ -273,11 +273,11 @@ public class GaugeChart extends CirChart{
 		{
 			if(0 == i)continue;			
 			float agent =  (float) (180 + i *stepsAgent) ;				
-			mCalc.CalcArcEndPointXY(cirX, cirY, getRadius(), agent); 			
+			mCalc.calcArcEndPointXY(cirX, cirY, getRadius(), agent); 			
 			
 			float startX = mCalc.getPosX();
 			float startY = mCalc.getPosY();
-			mCalc.CalcArcEndPointXY(cirX, cirY,tickRadius, agent); 		
+			mCalc.calcArcEndPointXY(cirX, cirY,tickRadius, agent); 		
 			
 			canvas.drawLine(startX, startY, mCalc.getPosX(), mCalc.getPosY(), mPaintTick);
 		}
@@ -299,7 +299,7 @@ public class GaugeChart extends CirChart{
 			float cirX = plotArea.getCenterX();
 			float cirY = plotArea.getCenterY();
 					
-			mCalc.CalcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);
+			mCalc.calcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);
             canvas.drawLine(cirX, cirY, mCalc.getPosX(), mCalc.getPosY(), mPaintPointerLine);
 		}		
 	}

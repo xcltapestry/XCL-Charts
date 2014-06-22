@@ -243,7 +243,7 @@ public class Axis {
 	 * 设置轴刻度线与标签间的间距
 	 * @param margin 间距
 	 */
-	public void setTickLabelsMargin(int margin)
+	public void setTickLabelMargin(int margin)
 	{
 		mTickLabelMargin = margin;
 	}

@@ -37,7 +37,7 @@ public class PlotTitle {
 
 	//图表标题文字
 	private  String mChartTitle = "";
-	private  String mChartSubTitle = "";	
+	private  String mSubtitle = "";	
 	//图表标题画笔
 	private Paint mTitlePaint = null;
 	private Paint mSubtitlePaint = null;	
@@ -93,16 +93,16 @@ public class PlotTitle {
 		 */
 		public void setSubtitle(String subtitle)
 		{
-			mChartSubTitle = subtitle;					
+			mSubtitle = subtitle;					
 		}
 		
 		/**
 		 * 返回子标题
 		 * @return 子标题
 		 */
-		public String getChartSubTitle()
+		public String getSubtitle()
 		{
-			return mChartSubTitle;
+			return mSubtitle;
 		}
 		 
 		

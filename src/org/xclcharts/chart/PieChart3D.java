@@ -87,7 +87,7 @@ public class PieChart3D extends PieChart{
 			    	//偏移圆心点位置(默认偏移半径的1/10)
 			    	float newRadius = radius /10;
 			    	 //计算百分比标签
-			        mCalc.CalcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
+			        mCalc.calcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
 			        
 			        float arcLeft2 = mCalc.getPosX() - radius;  
 			        float arcTop2  = mCalc.getPosY() - radius ;  
@@ -122,7 +122,7 @@ public class PieChart3D extends PieChart{
 		    	//偏移圆心点位置(默认偏移半径的1/10)
 		    	float newRadius = radius /10;
 		    	 //计算百分比标签
-		        mCalc.CalcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
+		        mCalc.calcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
 		        
 		        float arcLeft2 = mCalc.getPosX() - radius;  
 		        float arcTop2  = mCalc.getPosY() - radius ;  
@@ -130,11 +130,11 @@ public class PieChart3D extends PieChart{
 		        float arcBottom2 = mCalc.getPosY() + radius ;  
 		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
                 canvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc);
-		        drawLables(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+		        renderLabel(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
 		        			radius,mOffsetAgent,currentAgent);                
             }else{
                 canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);
-     	        drawLables(canvas,cData.getLabel(),cirX, cirY,radius,mOffsetAgent,currentAgent);
+     	        renderLabel(canvas,cData.getLabel(),cirX, cirY,radius,mOffsetAgent,currentAgent);
      	    }				    		    
            //下次的起始角度  
             mOffsetAgent += currentAgent;  		                    		        

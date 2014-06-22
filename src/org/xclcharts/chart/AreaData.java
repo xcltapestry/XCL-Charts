@@ -67,7 +67,7 @@ public class AreaData extends LineData {
 	 */
 	public AreaData(String key,List<Double> dataSeries,int lineColor,int areaColor) 
 	{
-		setLineLabel(key);	
+		setLabel(key);	
 		setLinePoint(dataSeries);
 		setLineColor(lineColor);	
 		setAreaFillColor(areaColor);
@@ -85,7 +85,7 @@ public class AreaData extends LineData {
 					int color,
 					XEnum.DotStyle  dotStyle) 
 	{
-		setLineLabel(key);		
+		setLabel(key);		
 		setLineColor(color);
 		setLinePoint(dataSeries);
 		setDotStyle(dotStyle);

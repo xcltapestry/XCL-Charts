@@ -26,6 +26,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.graphics.Canvas;
+
+import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -45,8 +47,10 @@ public class LineChart extends LnChart{
 	protected List<LineData> mDataSet;
 	
 	//数据轴显示在左边还是右边
-	private XEnum.LineDataAxisPosition mDataAxisPosition = XEnum.LineDataAxisPosition.LEFT;
+	private XEnum.LineDataAxisLocation mDataAxisPosition = XEnum.LineDataAxisLocation.LEFT;
 
+	// 格式化线中点的标签显示
+	  private IFormatterDoubleCallBack mDotLabelFormatter;
 	
 	public LineChart()
 	{
@@ -63,11 +67,11 @@ public class LineChart extends LnChart{
 	 * 设置数据轴显示在哪边,默认是左边
 	 * @param position
 	 */
-	public void setDataAxisDisplay(XEnum.LineDataAxisPosition position)
+	public void setDataAxisLocation(XEnum.LineDataAxisLocation position)
 	{
 		mDataAxisPosition = position;
 		
-			
+		
 		defaultAxisSetting();
 	}
 	
@@ -76,10 +80,10 @@ public class LineChart extends LnChart{
 	 */
 	private void defaultAxisSetting()
 	{
-		if(XEnum.LineDataAxisPosition.LEFT == mDataAxisPosition)
+		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
 		{
 			//renderVerticalDataAxis();
-			labelsAxis.setHorizontalTickAlign(Align.CENTER);
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 			dataAxis.setHorizontalTickAlign(Align.LEFT);	
 		}else{
 			//renderVerticalDataAxisRight();			
@@ -89,12 +93,12 @@ public class LineChart extends LnChart{
 	}
 	 
 		/**
-		 * 标签轴的数据源
-		 * @param labels 标签集
+		 * 分类轴的数据源
+		 * @param categories 标签集
 		 */
-		public void setLabels(List<String> labels)
+		public void setCategories(List<String> categories)
 		{
-			labelsAxis.setDataBuilding(labels);
+			categoryAxis.setDataBuilding(categories);
 		}
 		
 		/**
@@ -106,6 +110,35 @@ public class LineChart extends LnChart{
 			this.mDataSet = dataSet;		
 		}
 						
+		
+		/**
+		 * 设置线上点标签显示格式
+		 * 
+		 * @param callBack
+		 *            回调函数
+		 */
+		public void setDotLabelFormatter(IFormatterDoubleCallBack callBack) {
+			this.mDotLabelFormatter = callBack;
+		}
+
+		/**
+		 * 返回线上点标签显示格式
+		 * 
+		 * @param value 传入当前值
+		 * @return 显示格式
+		 */
+		protected String getFormatterDotLabel(double value) {
+			String itemLabel = "";
+			try {
+				itemLabel = mDotLabelFormatter.doubleFormatter(value);
+			} catch (Exception ex) {
+				itemLabel = Double.toString(value);
+				// DecimalFormat df=new DecimalFormat("#0");
+				// itemLabel = df.format(value).toString();
+			}
+			return itemLabel;
+		}
+		
 		private void renderLine(Canvas canvas, LineData bd,String type)
 		{
 			float initX =  plotArea.getLeft();
@@ -119,9 +152,9 @@ public class LineChart extends LnChart{
 			float axisScreenHeight = getAxisScreenHeight();
 			float axisDataHeight = (float) dataAxis.getAxisRange();		
 			
-			 //得到标签轴数据集
-			 List<String> dataSet =  labelsAxis.getDataSet();
-			 //步长
+			//得到分类轴数据集
+			List<String> dataSet =  categoryAxis.getDataSet();
+			//步长
 			int XSteps = (int) Math.ceil( getAxisScreenWidth()/ (dataSet.size() - 1)) ;
 			
 			List<Double> chartValues = bd.getLinePoint();			
@@ -129,9 +162,7 @@ public class LineChart extends LnChart{
 			
 		    //画线
 			for(Double bv : chartValues)
-            {									
-				
-				
+            {																	
 				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
             	float valuePostion = (float) Math.round( 
 						axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
@@ -172,10 +203,10 @@ public class LineChart extends LnChart{
 	            			lineEndX = rendEndX;
 	                	}
 	            		
-	            		if(bd.getLineLabelVisible())
+	            		if(bd.getLabelVisible())
 	                	{
 	                		//fromatter
-	                		canvas.drawText(Double.toString(bv) ,
+	                		canvas.drawText(getFormatterDotLabel(bv), //Double.toString(bv) ,
 	    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
 	                	}
 	            	}else{
@@ -197,16 +228,16 @@ public class LineChart extends LnChart{
 		private void renderVerticalPlot(Canvas canvas)
 		{			
 								
-			if(XEnum.LineDataAxisPosition.LEFT == mDataAxisPosition)
+			if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
 			{
 				renderVerticalDataAxis(canvas);
 			}else{
 				renderVerticalDataAxisRight(canvas);
 			}						
-			renderVerticalLabelsAxis(canvas);
+			renderVerticalCategoryAxis(canvas);
 			
 			List<LnData> lstKey = new ArrayList<LnData>();								
-			//开始处 X 轴 即标签轴                  
+			//开始处 X 轴 即分类轴                  
 			for(int i=0;i<mDataSet.size();i++)
 			{								
 				renderLine(canvas,mDataSet.get(i),"LINE");

@@ -46,11 +46,11 @@ import android.graphics.Path;
 
 public class AreaChart extends LnChart{	
 	
-	//画点标签的画笔
+	//画点分类的画笔
   	protected Paint mPaintAreaFill =  null; 
   	
     //数据源
-  	protected List<AreaData> mDataSet;
+  	protected List<AreaData> mDataset;
   	
   	//透明度
   	private int mAreaAlpha = 100;
@@ -64,27 +64,27 @@ public class AreaChart extends LnChart{
 		mPaintAreaFill.setAntiAlias(true);
 		mPaintAreaFill.setColor((int)Color.rgb(73, 172, 72));		
 		
-		labelsAxis.setHorizontalTickAlign(Align.CENTER);
+		categoryAxis.setHorizontalTickAlign(Align.CENTER);
 		dataAxis.setHorizontalTickAlign(Align.LEFT);
 		
 	}
 	
 	 /**
-	 * 标签轴的数据源
-	 * @param labels 标签集
+	 * 分类轴的数据源
+	 * @param categories 分类集
 	 */
-	public void setLabels(List<String> labels)
+	public void setCategories(List<String> categories)
 	{
-		labelsAxis.setDataBuilding(labels);
+		categoryAxis.setDataBuilding(categories);
 	}
 	
 	/**
 	 *  设置数据轴的数据源
-	 * @param dataSet 数据源
+	 * @param dataset 数据源
 	 */
-	public void setDataSource(List<AreaData> dataSet)
+	public void setDataSource(List<AreaData> dataset)
 	{
-		this.mDataSet = dataSet;		
+		this.mDataset = dataset;		
 	}
 	
 	/**
@@ -114,7 +114,7 @@ public class AreaChart extends LnChart{
         						
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
-		float currLablesSteps = this.getAxisScreenWidth() / (labelsAxis.getDataSet().size() -1) ;  	
+		float currLablesSteps = this.getAxisScreenWidth() / (categoryAxis.getDataSet().size() -1) ;  	
 		
 		//数据源
 		List<Double> chartValues = bd.getLinePoint();
@@ -174,7 +174,7 @@ public class AreaChart extends LnChart{
         			lineEndX = rendEndX;
             	}
         		
-        		if(bd.getLineLabelVisible())
+        		if(bd.getLabelVisible())
             	{
             		//fromatter
             		canvas.drawText(Double.toString(bv) ,
@@ -204,15 +204,15 @@ public class AreaChart extends LnChart{
 	private void renderVerticalPlot(Canvas canvas)
 	{				
 		renderVerticalDataAxis(canvas);
-		renderVerticalLabelsAxis(canvas);
+		renderVerticalCategoryAxis(canvas);
 		
 		List<LnData> lstKey = new ArrayList<LnData>();		
-		//开始处 X 轴 即标签轴                  
-		for(int i=0;i<mDataSet.size();i++)
+		//开始处 X 轴 即分类轴                  
+		for(int i=0;i<mDataset.size();i++)
 		{								
-			this.renderLine(canvas, mDataSet.get(i),"LINE",(int)Math.round(mDataSet.size() *i));
-			this.renderLine(canvas, mDataSet.get(i),"DOT2LABEL",(int)Math.round(mDataSet.size() *i));
-			lstKey.add(mDataSet.get(i));
+			this.renderLine(canvas, mDataset.get(i),"LINE",(int)Math.round(mDataset.size() *i));
+			this.renderLine(canvas, mDataset.get(i),"DOT2LABEL",(int)Math.round(mDataset.size() *i));
+			lstKey.add(mDataset.get(i));
 		}
 			
 		renderKey(canvas, lstKey);

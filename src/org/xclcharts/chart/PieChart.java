@@ -132,7 +132,7 @@ public class PieChart extends CirChart{
         	canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
          
             //标签
-        	drawLables(canvas,cData.getLabel(),cirX, cirY,
+        	renderLabel(canvas,cData.getLabel(),cirX, cirY,
 	        			radius,offsetAgent,curretAgent);          
 		}catch( Exception e){
 			throw e;
@@ -163,7 +163,7 @@ public class PieChart extends CirChart{
 			//偏移圆心点位置(默认偏移半径的1/10)
 	    	float newRadius = radius /10;
 	    	 //计算百分比标签
-	        mCalc.CalcArcEndPointXY(cirX,cirY,newRadius,offsetAgent + curretAgent/2); 	
+	        mCalc.calcArcEndPointXY(cirX,cirY,newRadius,offsetAgent + curretAgent/2); 	
 	        
 	        float arcLeft = mCalc.getPosX() - radius;  
 	        float arcTop  = mCalc.getPosY() - radius ;  
@@ -175,7 +175,7 @@ public class PieChart extends CirChart{
 	        canvas.drawArc(arcRF1, offsetAgent, curretAgent, true, paintArc);
 	        
 	        //标签
-	        drawLables(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+	        renderLabel(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
 	        			radius,offsetAgent,curretAgent);	   
 	        
 		}catch( Exception e){

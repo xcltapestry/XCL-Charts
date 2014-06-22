@@ -223,12 +223,12 @@ public class LnChart extends AxisChart {
 	/**
 	 * 绘制底部标签轴
 	 */
-	protected void renderVerticalLabelsAxis(Canvas canvas) {
+	protected void renderVerticalCategoryAxis(Canvas canvas) {
 		// 标签轴(X 轴)
 		float currentX = plotArea.getLeft();
 
 		// 得到标签轴数据集
-		List<String> dataSet = labelsAxis.getDataSet();
+		List<String> dataSet = categoryAxis.getDataSet();
 		// 与柱形图不同，无须多弄一个
 		float XSteps = getVerticalXSteps(dataSet.size() - 1);
 
@@ -246,23 +246,23 @@ public class LnChart extends AxisChart {
 			}
 
 			if (dataSet.size() == i + 1) {
-				labelsAxis.renderAxisVerticalTick(canvas,plotArea.getRight(),
+				categoryAxis.renderAxisVerticalTick(canvas,plotArea.getRight(),
 						plotArea.getBottom(), dataSet.get(i));
 			} else {
 				// 画上标签/刻度线
-				labelsAxis.renderAxisVerticalTick(canvas,currentX,
+				categoryAxis.renderAxisVerticalTick(canvas,currentX,
 						plotArea.getBottom(), dataSet.get(i));
 			}
 
 		}
 		// 右边轴线
 	if (mRightAxisVisible)
-		labelsAxis.renderAxis(canvas,plotArea.getRight(),
+		categoryAxis.renderAxis(canvas,plotArea.getRight(),
 				plotArea.getBottom(), plotArea.getRight(),
 				plotArea.getTop());
 
 		// bottom轴 线		
-		labelsAxis.renderAxis(canvas,plotArea.getLeft(),
+		categoryAxis.renderAxis(canvas,plotArea.getLeft(),
 				plotArea.getBottom(), plotArea.getRight(),
 				plotArea.getBottom());
 	}
@@ -280,7 +280,7 @@ public class LnChart extends AxisChart {
 	/**
 	 * 返回标签显示格式
 	 * 
-	 * @param value
+	 * @param value 传入当前值
 	 * @return 显示格式
 	 */
 	protected String getFormatterItemLabel(double value) {
@@ -305,14 +305,14 @@ public class LnChart extends AxisChart {
 	 * @param bottom
 	 * @param paint
 	 */
-	protected void renderDot(Canvas canvas, PlotDot pDot, float left, float top, float right,
+	public void renderDot(Canvas canvas, PlotDot pDot, float left, float top, float right,
 			float bottom, Paint paint) {
 
 		float radius = pDot.getDotRadius();
 		float halfRadius = radius / 2;
 
 		switch (pDot.getDotStyle()) {
-		case CIRCLE:
+		case DOT:
 			canvas.drawCircle(left + Math.abs(right - left), bottom,
 					radius, paint);
 			break;

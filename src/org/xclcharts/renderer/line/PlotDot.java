@@ -40,7 +40,7 @@ public class PlotDot {
 	
 	//Triangle 三角  	
 	//线上的点为圆或角
-	protected XEnum.DotStyle mDotStyle = XEnum.DotStyle.CIRCLE;
+	protected XEnum.DotStyle mDotStyle = XEnum.DotStyle.DOT;
 	
 	private int mRadius = 10;
 	

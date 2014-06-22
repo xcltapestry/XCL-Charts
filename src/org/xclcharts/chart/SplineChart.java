@@ -46,7 +46,7 @@ public class SplineChart extends LnChart{
 	//数据源
 	private List<SplineData> mDataSet;
 	
-	//标签轴的最大，最小值
+	//分类轴的最大，最小值
 	private float mLablesValuesMax = 0.0f;
 	private float mLablesValuesMin = 0.0f;
 		
@@ -58,17 +58,17 @@ public class SplineChart extends LnChart{
 	
 	private void initChart()
 	{
-		labelsAxis.setHorizontalTickAlign(Align.CENTER);
+		categoryAxis.setHorizontalTickAlign(Align.CENTER);
 		dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
 	
 	/**
-	 * 标签轴的数据源
-	 * @param labels 标签集
+	 * 分类轴的数据源
+	 * @param categories 标签集
 	 */
-	public void setLabels(List<String> labels)
+	public void setCategories(List<String> categories)
 	{
-		labelsAxis.setDataBuilding(labels);
+		categoryAxis.setDataBuilding(categories);
 	}
 	
 	/**
@@ -84,16 +84,16 @@ public class SplineChart extends LnChart{
 	 *  显示数据的数据轴最大值
 	 * @param value 数据轴最大值
 	 */
-	public void setLabelsAxisMax(float value)
+	public void setCategoryAxisMax(float value)
 	{
 		mLablesValuesMax = value;
 	}	
 	
 	/**
-	 * 设置标签轴最小值
+	 * 设置分类轴最小值
 	 * @param value 最小值
 	 */
-	public void setLabelsAxisMin(float value)
+	public void setCategoryAxisMin(float value)
 	{
 		mLablesValuesMin = value;
 	}	
@@ -167,7 +167,7 @@ public class SplineChart extends LnChart{
             			lineEndX = rendEndX;
                 	}
             		
-            		if(bd.getLineLabelVisible())
+            		if(bd.getLabelVisible())
                 	{
                 		//fromatter
                         canvas.drawText("("+Double.toString(xValue)+","+ Double.toString(yValue) +")",
@@ -189,14 +189,14 @@ public class SplineChart extends LnChart{
 	 */
 	private void renderVerticalPlot(Canvas canvas)
 	{
-		//检查是否有设置标签轴的最大最小值		
+		//检查是否有设置分类轴的最大最小值		
 		if(mLablesValuesMax == mLablesValuesMin && 0 == mLablesValuesMax) return ;
 						
 		renderVerticalDataAxis(canvas);
-		renderVerticalLabelsAxis(canvas);
+		renderVerticalCategoryAxis(canvas);
 		
 		
-		//开始处 X 轴 即标签轴              
+		//开始处 X 轴 即分类轴              
 		List<LnData> lstKey = new ArrayList<LnData>();		
 		for(int i=0;i<mDataSet.size();i++)
 		{										

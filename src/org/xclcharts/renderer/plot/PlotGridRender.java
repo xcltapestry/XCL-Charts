@@ -35,7 +35,7 @@ import android.graphics.Canvas;
 public class PlotGridRender extends PlotGrid {
 	
 	private DrawHelper mDrawHelper = new DrawHelper();
-	private boolean mPrimaryTickLine = false;
+	private boolean mMajorTickLine = false;
 	
 	private final int BLOB_WIDTH =  2;;
 	
@@ -50,7 +50,7 @@ public class PlotGridRender extends PlotGrid {
 	 */
 	public void setPrimaryTickLine(boolean primary)
 	{
-		mPrimaryTickLine = primary;
+		mMajorTickLine = primary;
 	}
 		
 	/**
@@ -96,13 +96,17 @@ public class PlotGridRender extends PlotGrid {
 	{
 		 if(null != canvas &&this.isShowHorizontalLines()) 
 		 {	
-			 float initWidth = getHorizontalLinePaint().getStrokeWidth() ;
-			 if(mPrimaryTickLine) getHorizontalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 float initWidth = 0.0f;
+			 if(mMajorTickLine)
+			 {
+				 initWidth = getHorizontalLinePaint().getStrokeWidth() ;
+				 getHorizontalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 }
 			 
 			 mDrawHelper.drawLine(this.getHorizontalLineStyle(), startX, startY, stopX, stopY,
 					canvas, getHorizontalLinePaint());
 			 
-			 if(mPrimaryTickLine)getHorizontalLinePaint().setStrokeWidth(initWidth);
+			 if(mMajorTickLine)getHorizontalLinePaint().setStrokeWidth(initWidth);
 		 }
 	}
 	
@@ -117,13 +121,18 @@ public class PlotGridRender extends PlotGrid {
 	{
 		 if(null != canvas && isShowVerticalLines()) 
 		 {						
-			 float initWidth = getVerticalLinePaint().getStrokeWidth() ;
-			 if(mPrimaryTickLine) getVerticalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 float initWidth = 0.0f ;
+			 if(mMajorTickLine) //主线
+			 {
+				 initWidth = getVerticalLinePaint().getStrokeWidth() ;
+				 getVerticalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
+			 }
 			 
+			 //默认是minor
 			 mDrawHelper.drawLine(this.getVerticalLineStyle(), startX, startY, stopX, stopY,
 					canvas, getVerticalLinePaint());
 			
-			 if(mPrimaryTickLine)getVerticalLinePaint().setStrokeWidth(initWidth);
+			 if(mMajorTickLine)getVerticalLinePaint().setStrokeWidth(initWidth);
 			
 		 }
 	}

@@ -143,7 +143,7 @@ public class XChart implements IRender {
 	}
 
 	/**
-	 * 设置图表绘制范围
+	 * 设置图表绘制范围,以指定起始点及长度方式确定图表大小.
 	 * 
 	 * @param startX
 	 *            图表起点X坐标
@@ -170,7 +170,7 @@ public class XChart implements IRender {
 	}
 
 	/**
-	 * 设置图表绘制范围
+	 * 设置图表绘制范围,以指定上下左右范围方式确定图表大小.
 	 * 
 	 * @param left
 	 *            图表左上X坐标
@@ -357,7 +357,7 @@ public class XChart implements IRender {
 	/**
 	 * 绘制图的背景
 	 */
-	protected void drawChartBackground(Canvas canvas) {
+	protected void renderChartBackground(Canvas canvas) {
 		if (mBackgroundColorVisible)
 			canvas.drawRect(mLeft, mTop, mRight,
 					mBottom, mChartBackgroundPaint);
@@ -398,7 +398,7 @@ public class XChart implements IRender {
 		if (plotTitle.getTitle().length() > 0) {
 			titleHeight = dw.getPaintFontHeight(plotTitle.getTitlePaint());
 		}
-		if (plotTitle.getChartSubTitle().length() > 0) {
+		if (plotTitle.getSubtitle().length() > 0) {
 			subtitleHeight = dw.getPaintFontHeight(plotTitle
 					.getTitlePaint());
 		}
@@ -432,12 +432,8 @@ public class XChart implements IRender {
 		try {
 			if (null == canvas)
 				return false;
-			// 绘制图背景
-			drawChartBackground(canvas);
-			// 设置图表区画布
-//			plotArea.setCanvas(mCanvas);
-			// 设置图表区网格画布
-//			plotGrid.setCanvas(mCanvas);
+				// 绘制图背景
+				renderChartBackground(canvas);
 		} catch (Exception e) {
 			throw e;
 		}

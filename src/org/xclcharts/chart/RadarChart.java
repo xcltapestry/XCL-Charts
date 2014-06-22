@@ -21,29 +21,29 @@
  */
 package org.xclcharts.chart;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.LnChart;
+import org.xclcharts.renderer.RdChart;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
-import org.xclcharts.renderer.axis.LabelsAxis;
-import org.xclcharts.renderer.axis.LabelsAxisRender;
+import org.xclcharts.renderer.axis.CategoryAxis;
+import org.xclcharts.renderer.axis.CategoryAxisRender;
+import org.xclcharts.renderer.line.PlotDot;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.graphics.Paint.Style;
-import android.util.Pair;
+import android.graphics.Path;
+import android.util.Log;
 
 
 /**
@@ -52,165 +52,51 @@ import android.util.Pair;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  *  * MODIFIED    YYYY-MM-DD   REASON
  */
-public class RadarChart extends XChart{
+public class RadarChart extends RdChart{
 	
-	//半径
-	private float mRadius=0.0f;		
-	
-	//标签注释显示位置 [隐藏,Default,Center,Ouside,Line]
-	//private XEnum.DisplayPostion mLablesDP;
-	
-	//开放标签画笔让用户设置
-	private Paint mPaintLabels = null;
-	
-	private Paint mPaintWebLines = null;
-	private Paint mPaintTick = null;
-	
-	//初始偏移角度
-	protected int mOffsetAgent = 0;//180;
-		
+	private String TAG = "RadarChart";
+	//数据轴
+	private DataAxisRender dataAxis  = null;
+	//分类轴
+	private CategoryAxisRender CategoryAxis  = null;			
+	//数据源
+	private List<RadarData> mDataSet;	
+				
 	//用于计算的辅助类
-	protected MathHelper mCalc = new MathHelper();
+	private MathHelper mCalc = new MathHelper();
 	
 	//依次存下每个圈上，每个标签节点的X,Y坐标
-	private Float[][] arrayLabelX = null;
-	private Float[][] arrayLabelY= null;
+	private Float[][] mArrayDotX = null;
+	private Float[][] mArrayDotY= null;
 	
-	//依次存下每个圈上，每个标签节点归属的角度及总偏移解雇 
-	private Float[][] arrayAgent= null;
-	private Float[][] arrayOffsetAgent = null;
-	
+	private Float[][] mArrayLabelX = null;
+	private Float[][] mArrayLabelY= null;
 	
 	
-	int dataCount= 8;
-	int labelsCount = 5;
+	//依次存下每个标签节点归属的圆心角度
+	private Float[] mArrayLabelAgent = null;
 	
-	//主数据轴
-	//private DataAxis dataAxis = new DataAxisRender();
-	
-	//数据轴
-		protected DataAxisRender dataAxis  = null;
-		//标签轴
-		protected LabelsAxisRender labelsAxis  = null;	
+	//透明度
+  	private int mAreaAlpha = 100;
 		
-	//数据源
-	protected List<LineData> mDataSet;
-	
-	
 	public RadarChart()
 	{
 		super();
 		initChart();
 	}
-	
-	
+		
 	private void initChart()
-	{
-		
+	{		
 		dataAxis = new DataAxisRender();
-		labelsAxis = new LabelsAxisRender();
+		CategoryAxis = new CategoryAxisRender();
+		dataAxis.setHorizontalTickAlign(Align.LEFT);
+		dataAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);	
+		dataAxis.setTickMarksVisible(false);	
 		
-		
-		//标签显示位置
-		//mLablesDP = XEnum.DisplayPostion.CENTER;
-		
-		mPaintLabels = new Paint();
-		mPaintLabels.setColor(Color.RED);
-		mPaintLabels.setTextSize(18);
-		mPaintLabels.setAntiAlias(true);
-		mPaintLabels.setStyle(Style.STROKE);
-		mPaintLabels.setTextAlign(Align.CENTER);
-		
-		mPaintTick = new Paint();
-		mPaintTick.setColor(Color.BLUE);
-		mPaintTick.setTextSize(18);
-		mPaintTick.setAntiAlias(true);
-		mPaintTick.setStyle(Style.STROKE);
-		mPaintTick.setTextAlign(Align.RIGHT);
-		
-		
-		
-		mPaintWebLines = new Paint();
-		mPaintWebLines.setColor(Color.BLACK);
-		mPaintWebLines.setAntiAlias(true);
-		mPaintWebLines.setStyle(Style.STROKE);
-		mPaintWebLines.setStrokeWidth(3);
-		
-		mPaintWebLines.setTextSize(22);
-		
+		showKeyLabels();
 	}
 	
-	@Override
-	protected void calcPlotRange()
-	{
-		super.calcPlotRange();
-		
-		if(isVerticalScreen())
-		{
-			this.mRadius = this.plotArea.getWidth() / 2;
-		}else{
-			this.mRadius =  this.plotArea.getHeight() / 2;
-		}
-	}
-
 	
-	/**
-	 * 设置饼图(pie chart)的半径
-	 * @param radius 饼图的半径
-	 */
-	public void setRadius(final float radius)
-	{
-		mRadius = radius;
-	}
-	
-	/**
-	 * 返回半径
-	 * @return 半径
-	 */
-	public float getRadius()
-	{
-		return mRadius;
-	}
-	
-	/**
-	 * 设置饼图(pie chart)起始偏移角度
-	 * @param agent 偏移角度
-	 */
-	public void setInitialAngle(final int agent)
-	{
-		mOffsetAgent = agent;
-	}
-	
-
-	/**
-	 * 返回图的起始偏移角度
-	 * @return 偏移角度
-	 */
-	public int getInitialAngle()
-	{
-		return mOffsetAgent;
-	}
-
-	/**
-	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
-	 * @param dp 显示位置
-	 */
-	public void setLablesDisplay(XEnum.DisplayPosition dp)
-	{
-		//mLablesDP = dp;
-	}
-	
-	/**
-	 * 开放标签画笔
-	 * @return 画笔
-	 */
-	public Paint getLabelsPaint()
-	{
-		return mPaintLabels;
-	}
-	
-
-
 	/**
 	 * 返回数据轴
 	 * @return 数据轴
@@ -221,23 +107,23 @@ public class RadarChart extends XChart{
 	}
 	
 	/**
-	 * 返回标签轴
-	 * @return 标签轴
+	 * 返回分类轴
+	 * @return 分类轴
 	 */
-	public LabelsAxis getLabelsAxis()
+	public CategoryAxis getCategoryAxis()
 	{
-		return labelsAxis;
+		return CategoryAxis;
 	}
 	
 	
 	/**
-	 * 标签轴的数据源
+	 * 分类轴的数据源
 	 * 
-	 * @param labels
+	 * @param dataSeries
 	 *            标签集
 	 */
-	public void setLabels(List<String> labels) {
-		labelsAxis.setDataBuilding(labels);
+	public void setCategories(List<String> dataSeries) {
+		CategoryAxis.setDataBuilding(dataSeries);
 	}
 
 	/**
@@ -246,7 +132,7 @@ public class RadarChart extends XChart{
 	 * @param dataSeries
 	 *            数据源
 	 */
-	public void setDataSource(List<LineData> dataSeries) {
+	public void setDataSource(List<RadarData> dataSeries) {
 		this.mDataSet = dataSeries;
 	}
 
@@ -254,17 +140,39 @@ public class RadarChart extends XChart{
 	 * 返回图的数据源
 	 * @return 数据源
 	 */
-	public List<LineData> getDataSource() {
+	public List<RadarData> getDataSource() {
 		return mDataSet;
 	}
 	
+	/**
+	 * 设置透明度,默认为100
+	 * @param alpha 透明度
+	 */
+	public void setAreaAlpha(int alpha)
+	{
+		mAreaAlpha = alpha;
+	}	
+
 	
-	private void checkedParm()
+	private boolean validateParams()
 	{
 		//if( avgAgent > 270) return false;
 		//if( avgAgent <=0 ) return false;
 		//if(labelsCount < 3) return false;
 		//if(dataCount < 3) return false;
+		
+		if(this.CategoryAxis.getDataSet().size() <= 0 )
+		{
+			Log.e(TAG,"标签数据源为空");
+			return false;
+		}
+		
+		if(this.mDataSet.size() <= 0 )
+		{
+			Log.e(TAG,"数据源为空");
+			return false;
+		}
+		return true;
 	}
 	
 	/**
@@ -273,92 +181,117 @@ public class RadarChart extends XChart{
 	private void renderGridLines(Canvas canvas)
 	{				
 		Path lnPath = new Path();		
-		for(int i=0; i <dataCount ;i++)
+		for(int i=0; i < getAxisTickCount();i++)
 		{			
-			for(int j=0;j < labelsCount ;j++)
+			for(int j=0;j < getPlotAgentNumber();j++)
 			{
 				if(0 == j)
 				{
-					lnPath.moveTo( arrayLabelX[i][j], arrayLabelY[i][j]);
+					lnPath.moveTo( mArrayDotX[i][j], mArrayDotY[i][j]);
 				}else{
-					lnPath.lineTo( arrayLabelX[i][j], arrayLabelY[i][j]);
+					lnPath.lineTo( mArrayDotX[i][j], mArrayDotY[i][j]);
 				}
 			}
 			lnPath.close();
-			canvas.drawPath(lnPath, mPaintWebLines);
+			canvas.drawPath(lnPath, getLinePaint());
 			lnPath.reset();
 		}
 	}
 	
 	
+	/**
+	 * 绘制各个圆心角的轴线
+	 * @param canvas 画布
+	 */
 	private void renderAxisLines(Canvas canvas)
-	{
-				
-		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
-		
-		for(int i=0; i <dataCount ;i++)
-		{			
-			
-			/*	
-			//用于绘制各个方向上的轴线
-			mCanvas.drawLine(cirX,cirY, arrayLabelX[i][labelsCount-1], 
-										arrayLabelY[i][labelsCount-1], mPaintWebLines);
-			//绘制最外围的标签
-			mCanvas.drawText(Integer.toString(i)+" - "+Integer.toString(labelsCount-1),
-							 arrayLabelX[i][labelsCount-1], 
-							 arrayLabelY[i][labelsCount-1], mPaintLabels);
-						
-			//绘制主轴的刻度线与标签,即显示在第一轴线上,那个圆心角为270度的那根线.
-			//DataAxis 
-			mCanvas.drawText("["+Integer.toString(i)+"]",
-					 			arrayLabelX[i][0], arrayLabelY[i][0], mPaintTick);
-			
-			*/
-			
-			
-			for(int j=0;j < labelsCount ;j++)
-			{				
-			
-				
-				//绘制最外围的标签
-				if(i == dataCount - 1  )
-				{
-					//用于绘制各个方向上的轴线
-					canvas.drawLine(cirX,cirY, arrayLabelX[i][j], 
-												arrayLabelY[i][j], mPaintWebLines);
-					
-					
-					canvas.drawText(Integer.toString(i)+" - "+Integer.toString(j),
-							 arrayLabelX[i][j], arrayLabelY[i][j], mPaintLabels);
-				}
-				
-				//绘制主轴的刻度线与标签
-				if(0 == j){ //显示在第一轴线上(即270度的那根线)
-					
-					//DataAxis 
-					canvas.drawLine(arrayLabelX[i][j] - 10, 
-							arrayLabelY[i][j], arrayLabelX[i][j], 
-									arrayLabelY[i][j], mPaintLabels);
-					
-					canvas.drawText("["+Integer.toString(i)+"]",
-							 arrayLabelX[i][j]- 15, arrayLabelY[i][j], mPaintTick);
-				}
-			      
-			} //end for labels		
-			
-			
-			
-		} //end for data
-	}
-	
-	private void GetAllXY()
 	{				
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
 		
-		//偏移角度
-		//float pAngleOffset = 270f;
+		//标签个数决定角的个数
+		int labelsCount =  getPlotAgentNumber();
+		//轴线tick总数
+		int dataAxisTickCount = getAxisTickCount();
+				
+		//轴线总数
+		int i = dataAxisTickCount - 1;
+		for(int j=0;j < labelsCount ;j++)
+		{														
+			//用于绘制各个方向上的轴线
+			canvas.drawLine(cirX,cirY, mArrayDotX[i][j], 
+										mArrayDotY[i][j], getLinePaint());									
+												      
+		} //end for labels													
+	}
+	
+	
+	/**
+	 * 绘制最外围的标签及主轴的刻度线标签
+	 * @param canvas 画布
+	 */
+	private void renderAxisLabels(Canvas canvas)
+	{				
+		//标签个数决定角的个数
+		int labelsCount =  getPlotAgentNumber();
+		//轴线tick总数
+		int dataAxisTickCount = getAxisTickCount();
+						
+		for(int i=0; i < dataAxisTickCount;i++)
+		{			
+			for(int j=0;j < labelsCount ;j++)
+			{											
+				//绘制最外围的标签
+				if(i == dataAxisTickCount - 1  )
+				{		
+					//绘制最外围的标签		
+					 String label = CategoryAxis.getDataSet().get(j);					
+				        					
+				     canvas.drawText(label, 
+				    		 mArrayLabelX[i][j], mArrayLabelY[i][j], getLabelPaint());   					
+				}
+				
+				//绘制主轴的刻度线与标签
+				if(0 == j){ //显示在第一轴线上(即270度的那根线)										
+					//绘制主轴(DataAxis)的刻度线				
+					double tick = this.dataAxis.getAxisSteps() * i + dataAxis.getAxisMin();										
+					dataAxis.renderAxisHorizontalTick(canvas,
+							 mArrayDotX[i][j], mArrayDotY[i][j],
+							 Double.toString(tick));
+				}
+			      
+			} //end for labels		
+									
+		} //end for data
+	}
+	
+	
+	/**
+	 * 轴线上tick总个数
+	 * @return 总个数
+	 */
+	private int getAxisTickCount()
+	{		
+		return (int) Math.round(dataAxis.getAixTickCount() + 1);
+	}
+	
+	/**
+	 * 标签个数决定了图中角的个数
+	 * @return 标签总个数
+	 */
+	private int getPlotAgentNumber()
+	{
+		return CategoryAxis.getDataSet().size();
+	}
+	
+	private void calcAllPoint()
+	{				
+		float cirX = plotArea.getCenterX();
+		float cirY = plotArea.getCenterY();
+		
+		//标签个数决定角的个数
+		int labelsCount =  getPlotAgentNumber();
+		//轴线tick总数
+		int dataAxisTickCount = getAxisTickCount();
 				
 		//扇形角度,依标签个数决定 				
 		float pAngle = 360 / labelsCount ; //   72f; 
@@ -367,34 +300,48 @@ public class RadarChart extends XChart{
 		float initOffsetAgent = 270f - pAngle;
 		
 		//依标签总个数算出环数,依数据刻度数决定
-		float avgRadius = mRadius / dataCount;
+		float avgRadius = getRadius() / (dataAxisTickCount - 1);
 		
 		//当前半径
 		float curRadius = 0.0f;
 		//当前圆心角偏移量
 		float offsetAgent = 0.0f;
 		
-		arrayLabelX=new Float[dataCount][labelsCount]; 
-		arrayLabelY=new Float[dataCount][labelsCount]; 
+		//坐标与圆心角
+		mArrayDotX=new Float[dataAxisTickCount][labelsCount]; 
+		mArrayDotY=new Float[dataAxisTickCount][labelsCount]; 		
+		mArrayLabelAgent = new Float[labelsCount];
+		
+		mArrayLabelX=new Float[dataAxisTickCount][labelsCount]; 
+		mArrayLabelY=new Float[dataAxisTickCount][labelsCount]; 
+		
+		DrawHelper dw = new DrawHelper();
+		int labelHeight = dw.getPaintFontHeight(getLabelPaint());
+		float labelRadius = this.getRadius() + labelHeight;
 				
-		for(int i=0; i <dataCount ;i++)
+		for(int i=0; i < dataAxisTickCount;i++) //数据轴
 		{
-			curRadius = avgRadius * i; 	////当前半径长度，依此算出各节点坐标	
-			Float[] arrX = new Float[labelsCount];
-			Float[] arrY = new Float[labelsCount];
+			curRadius = avgRadius * i; //当前半径长度，依此算出各节点坐标	
 			
 			for(int j=0;j < labelsCount ;j++)
 			{				
 				offsetAgent = initOffsetAgent +   pAngle * j;
 				
-				//计算百分比标签
-		        mCalc.CalcArcEndPointXY(cirX,cirY,curRadius, offsetAgent + pAngle); 				    
-		    
-		        arrayLabelX[i][j] = mCalc.getPosX();
-		        arrayLabelY[i][j] = mCalc.getPosY();				        
+				//计算位置
+		        mCalc.calcArcEndPointXY(cirX,cirY,curRadius, offsetAgent + pAngle); 				    
+		        //点的位置
+		        mArrayDotX[i][j] = mCalc.getPosX();
+		        mArrayDotY[i][j] = mCalc.getPosY();	
 		        
-		       // arrayOffsetAgent[i][j] = offsetAgent;
-		    	//arrayAgent[i][j] = pAngle;
+		        //记下每个标签对应的圆心角
+		        if(0 == i) mArrayLabelAgent[j] =  offsetAgent + pAngle ;
+		        
+		        //外围标签位置
+		        mCalc.calcArcEndPointXY(cirX,cirY,labelRadius, offsetAgent + pAngle); 	    
+		        mArrayLabelX[i][j] = mCalc.getPosX();
+		        mArrayLabelY[i][j] = mCalc.getPosY();	
+		        
+		        
 			} //end for labelCount					
 		} //end for datacount		
 				
@@ -402,38 +349,152 @@ public class RadarChart extends XChart{
 	
 	private void renderDataArea(Canvas canvas)
 	{
-		
-		//curRadius = 值占轴的比例
-
-        //arrayOffsetAgent[i][j] = offsetAgent;
-    	//arrayAgent[i][j] = pAngle;
-		
-		//计算百分比标签
-        //mCalc.CalcArcEndPointXY(cirX,cirY,curRadius, offsetAgent + pAngle); 
-    
-        //得出点，用数组存下，
-		// 再依次连接起来即可
-		
-		// dataAxis.getAxisMax() - dataAxis.getAxisMin()
-		//canvas.drawText("aaaaaaaa", 200, 300, mPaintLabels);
+		float cirX = plotArea.getCenterX();
+		float cirY = plotArea.getCenterY();
 			
-		for(LineData lineData : mDataSet)
-		{
-			
+		for(RadarData lineData : mDataSet)
+		{			
 			//画各自的网
 			List<Double> dataset =  lineData.getLinePoint();
-			for(Double data : dataset){
-			   Double dataPrc = (data - dataAxis.getAxisMin() ) / dataAxis.getAxisRange();
-			   Double currRadius = mRadius * dataPrc;
-			   //calc xy
+			
+			int dataSize = dataset.size();
+			if(dataSize < 3)
+			{
+				Log.e("ERROR-RadarChart", "这几个数据可不够，最少三个起步.");
+				continue;
 			}
 			
+			Float[] arrayDataX = new Float[dataSize]; 
+			Float[] arrayDataY = new Float[dataSize]; 
+											
+			int i = 0;
+			for(Double data : dataset){
+			   Double per = (data - dataAxis.getAxisMin() ) / dataAxis.getAxisRange();
+			   float curRadius = (float) (getRadius() * per);
+						   
+			   //计算位置
+		        mCalc.calcArcEndPointXY(cirX,cirY,curRadius, mArrayLabelAgent[i]); 
+		        
+		        //依Path还是Line来决定画线风格
+		        arrayDataX[i] = mCalc.getPosX();
+		        arrayDataY[i] = mCalc.getPosY();
+		        
+		        i++; //标签
+			}
+			
+			//画线或填充
+			switch(lineData.getAreaStyle())
+			{
+			case FILL:
+				drawDataPath(canvas,lineData,arrayDataX,arrayDataY);
+					break;
+			case STROKE:
+				renderDataLine(canvas,lineData,arrayDataX,arrayDataY);
+				break;
+			default:
+				Log.e("ERROR-RadarChart","这类型不认识.");
+			}
 		}
         
 	}
 	
+	private void renderDataLine(Canvas canvas,
+								RadarData lineData,
+								Float[] arrayDataX,Float[] arrayDataY )
+	{
+		float startX = 0.0f,startY = 0.0f;
+		float initX = 0.0f,initY = 0.0f;
+		DrawHelper drawHelper = new DrawHelper();		
+		
+		for(int p=0;p< arrayDataX.length;p++)
+		{
+			if(0 == p){
+				initX = startX = arrayDataX[p];
+				initY = startY = arrayDataY[p];
+			}else{	
+				drawHelper.drawLine(lineData.getLineStyle(), startX, startY,
+						arrayDataX[p], arrayDataY[p],
+						canvas, lineData.getPlotLine().getLinePaint());
+				
+								
+				startX = arrayDataX[p];
+				startY = arrayDataY[p];
+			
+			}
+			//绘制点及对应的标签
+			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);
+			
+		}
+		//收尾
+		drawHelper.drawLine(lineData.getLineStyle(), startX, startY,
+				initX, initY,canvas, lineData.getPlotLine().getLinePaint());
+		
+	}
 	
 	
+	private void drawDataPath(Canvas canvas,
+			RadarData lineData,
+			Float[] arrayDataX,Float[] arrayDataY )
+	{
+		float startX = 0.0f,startY = 0.0f;
+		float initX = 0.0f,initY = 0.0f;
+		
+		Path pathArea = new Path();  
+
+		for(int p=0;p< arrayDataX.length;p++)
+		{
+			if(0 == p){
+				initX = startX = arrayDataX[p];
+				initY = startY = arrayDataY[p];
+				
+				pathArea.moveTo(initX,initY);
+			}else{
+				pathArea.lineTo(arrayDataX[p] , arrayDataY[p]);   
+				startX = arrayDataX[p];
+				startY = arrayDataY[p];
+			} 
+			//绘制点及对应的标签
+			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);
+		}
+		//收尾
+		pathArea.lineTo(initX,initY);
+		pathArea.close(); 
+		
+		lineData.getPlotLine().getLinePaint().setAlpha(mAreaAlpha);
+		//lineData.getPlotLine().getLinePaint().setStyle(Style.STROKE);
+		canvas.drawPath(pathArea, lineData.getPlotLine().getLinePaint());
+	}
+	
+	private void renderDotAndLabel(Canvas canvas,
+			RadarData lineData,
+			//float previousX,float previousY,
+			float currentX,float currentY,
+			int listID)
+	{
+		PlotLine plotLine = lineData.getPlotLine();
+		
+		if(!plotLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
+    	{                		       	
+    		PlotDot pDot = plotLine.getPlotDot();	                
+    		 
+    		//这个地方开放了renderDot()给开发，待优化掉
+			LnChart lnChart = new LnChart();            		
+    		lnChart.renderDot(canvas,pDot,
+    				currentX - pDot.getDotRadius() , currentY - pDot.getDotRadius(),
+    				currentX , currentY,
+    				lineData.getPlotLine().getDotPaint()); //标识图形            			                	
+			
+    	}
+		//是否显示标签
+		if(lineData.getLabelVisible())
+		{			
+			canvas.drawText(getFormatterDotLabel(lineData.getLinePoint().get(listID) ),
+							currentX, currentY, 
+							lineData.getPlotLine().getDotLabelPaint());
+		}
+		
+	}
+
 	
 	
 	/**
@@ -441,7 +502,55 @@ public class RadarChart extends XChart{
 	 */
 	protected void renderKey(Canvas canvas)
 	{
-		
+		 if(!getKeyVisible())return ;
+		    
+			DrawHelper dw = new DrawHelper();
+			float textHeight = dw.getPaintFontHeight(getKeyPaint());
+			float rectWidth = 2 *textHeight;		
+			float currentX = 0.0f; 				
+			float currentY = 0.0f;
+			
+			if(!isVerticalScreen()) //横屏
+			{
+				getKeyPaint().setTextAlign(Align.RIGHT);
+				currentX = plotArea.getRight();
+				currentY = this.plotArea.getTop() + textHeight;			
+			}else{
+				getKeyPaint().setTextAlign(Align.LEFT);
+				currentX = plotArea.getLeft();
+				currentY = this.plotArea.getBottom();			
+			}			
+			
+			int totalTextWidth = 0;
+			for(RadarData cData : mDataSet)
+			{
+				getKeyPaint().setColor(cData.getLineColor());							
+				if( !isVerticalScreen()) //横屏
+				{								
+					canvas.drawRect(currentX			 , currentY,
+										  currentX - rectWidth, currentY - textHeight, 
+										  getKeyPaint());					
+					
+					canvas.drawText(cData.getLineKey(),currentX - rectWidth, currentY, getKeyPaint());
+					currentY += textHeight;
+				
+				}else{ //竖屏			
+					int keyTextWidth = dw.getTextWidth(getKeyPaint(), cData.getLineKey());
+					totalTextWidth += keyTextWidth;
+					
+					if(totalTextWidth > plotArea.getWidth())
+					{
+						currentY += textHeight;
+						currentX = plotArea.getLeft();
+						totalTextWidth = 0;
+					}				
+					canvas.drawRect(currentX			   , currentY,
+									 currentX + rectWidth, currentY - textHeight, 
+									 getKeyPaint());						
+					canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY, getKeyPaint());
+					currentX += rectWidth + keyTextWidth + 5;
+				}									
+			}	
 	}
 	
 	/**
@@ -449,12 +558,12 @@ public class RadarChart extends XChart{
 	 */
 	protected void renderPlot(Canvas canvas)
 	{
-		//renderGridLines();
-		
-		GetAllXY();
+		if(!validateParams()) return;
+		calcAllPoint();
 		renderGridLines(canvas);
 		renderAxisLines(canvas);
 		renderDataArea(canvas);
+		renderAxisLabels(canvas);		
 		renderKey(canvas);
 	}
 	

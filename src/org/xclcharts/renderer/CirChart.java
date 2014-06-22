@@ -42,7 +42,7 @@ public class CirChart extends XChart{
 	private float mRadius=0.0f;		
 	
 	//标签注释显示位置 [隐藏,Default,Center,Ouside,Line]
-	private XEnum.DisplayPosition mLabelsDP;
+	private XEnum.ArcLabelLocation mLabelLocation;
 	
 	//开放标签画笔让用户设置
 	private Paint mPaintLabel = null;
@@ -62,7 +62,7 @@ public class CirChart extends XChart{
 	private void initChart()
 	{
 		//标签显示位置
-		mLabelsDP = XEnum.DisplayPosition.CENTER;
+		mLabelLocation = XEnum.ArcLabelLocation.CENTER;
 		
 		mPaintLabel = new Paint();
 		mPaintLabel.setColor(Color.BLACK);
@@ -122,11 +122,11 @@ public class CirChart extends XChart{
 
 	/**
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
-	 * @param dp 显示位置
+	 * @param location 显示位置
 	 */
-	public void setLabelsDisplay(XEnum.DisplayPosition dp)
+	public void setLabelLocation(XEnum.ArcLabelLocation location)
 	{
-		mLabelsDP = dp;
+		mLabelLocation = location;
 	}
 	
 	/**
@@ -147,37 +147,37 @@ public class CirChart extends XChart{
 	 * @param offsetAgent	偏移角度
 	 * @param curretAgentt	当前角度
 	 */
-	protected void drawLables(Canvas canvas, String text,
+	protected void renderLabel(Canvas canvas, String text,
 			final float cirX,
 			final float cirY,
 			final float radius,		
 			final float offsetAgent,
 			final float curretAgentt)
 	{
-		if(XEnum.DisplayPosition.HIDE == mLabelsDP) return;
+		if(XEnum.ArcLabelLocation.HIDE == mLabelLocation) return;
 		
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
 		
 		mPaintLabel.setTextAlign(Align.CENTER);
 		
-		if(XEnum.DisplayPosition.CENTER == mLabelsDP)
+		if(XEnum.ArcLabelLocation.CENTER == mLabelLocation)
 		{			 
 				//显示在扇形的中心
 				calcRadius = radius - radius/2;
 				calcAgent = offsetAgent + curretAgentt/2;
 				//计算百分比标签
-				mCalc.CalcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
+				mCalc.calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
 					 
 				//标识
 				canvas.drawText( text ,
 					 mCalc.getPosX(), mCalc.getPosY() ,mPaintLabel);
-		}else if(XEnum.DisplayPosition.OUTSIDE == mLabelsDP){
+		}else if(XEnum.ArcLabelLocation.OUTSIDE == mLabelLocation){
 				//显示在扇形的外部
 				calcRadius = radius  + radius/10;
 				calcAgent = offsetAgent + curretAgentt/2;
 				//计算百分比标签
-				mCalc.CalcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
+				mCalc.calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
 					 
 				//标识
 				canvas.drawText(text,

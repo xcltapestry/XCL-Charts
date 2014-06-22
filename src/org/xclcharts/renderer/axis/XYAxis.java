@@ -78,10 +78,12 @@ public class XYAxis extends Axis {
 		case LEFT: {
 			if (getTickMarksVisible()) {
 				marksStartX = Math.round(centerX - getTickMarksLength());
-				markeStopX = centerX;
-
-				lablesStartX = marksStartX - getTickLabelMargin();
+				markeStopX = centerX;				
 			}
+			
+			if(this.getTickLabelVisible())
+				lablesStartX = marksStartX - getTickLabelMargin();
+			
 			break;
 		}
 		case CENTER: {
@@ -94,10 +96,11 @@ public class XYAxis extends Axis {
 		case RIGHT:
 			if (getTickMarksVisible()) {
 				marksStartX = centerX;
-				markeStopX = Math.round(centerX + getTickMarksLength());
-
-				lablesStartX = markeStopX + getTickLabelMargin();
+				markeStopX = Math.round(centerX + getTickMarksLength());				
 			}
+			if(this.getTickLabelVisible())
+				lablesStartX = markeStopX + getTickLabelMargin();
+			
 			break;
 		default:
 			break;
@@ -149,13 +152,17 @@ public class XYAxis extends Axis {
 		case UP: {
 			if (getTickMarksVisible()) {
 				marksStartY = Math.round(centerY - getTickMarksLength());
-				marksStopY = centerY;
-
+				marksStopY = centerY;				
+			}
+			
+			if(this.getTickLabelVisible())
+			{
 				labelsStartY = marksStartY
 						- getTickLabelMargin()
 						- mDrawHelper
 								.getPaintFontHeight(getAxisTickLabelPaint());
 			}
+			
 			break;
 		}
 		case CENTER: {
@@ -169,8 +176,11 @@ public class XYAxis extends Axis {
 
 			if (getTickMarksVisible()) {
 				marksStartY = centerY;
-				marksStopY = Math.round(centerY + getTickMarksLength());
-
+				marksStopY = Math.round(centerY + getTickMarksLength());				
+			}
+			
+			if(this.getTickLabelVisible())
+			{
 				labelsStartY = marksStopY
 						+ getTickLabelMargin()
 						+ mDrawHelper

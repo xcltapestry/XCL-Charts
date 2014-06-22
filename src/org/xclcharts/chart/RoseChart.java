@@ -122,7 +122,7 @@ public class RoseChart extends PieChart{
 	            canvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
 				
 	          //计算百分比标签  
-	            this.mCalc.CalcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
+	            this.mCalc.calcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
 	            
 	            //标识  
 	            canvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelPaint());             

@@ -24,37 +24,37 @@ package org.xclcharts.renderer.axis;
 
 
 /**
- * @ClassName LabelsAxisRender
- * @Description 标签轴(Labels Axis)类，设置步长
+ * @ClassName CategoryAxisRender
+ * @Description 分类轴(Category Axis)类，设置步长
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  *  * MODIFIED    YYYY-MM-DD   REASON
  */
-public class LabelsAxis extends XYAxis {
+public class CategoryAxis extends XYAxis {
 	
-	//标签轴分隔值	
-	private double  mLabelsSteps = 0.0d;
+	//分类轴分隔值	
+	private double  mAxisSteps = 0.0d;
 	
-	public LabelsAxis()
+	public CategoryAxis()
 	{
 		super();		
 	}
 	
 	/**
-	 * 设置标签轴步长
+	 * 设置分类轴步长
 	 * @param steps 步长
 	 */
 	public void setAxisSteps(double steps)
 	{
-		 mLabelsSteps = steps;
+		 mAxisSteps = steps;
 	}
 	
 	/**
-	 * 返回标签轴步长
+	 * 返回分类轴步长
 	 * @return 步长
 	 */
 	public double getAxisSteps()
 	{
-		return mLabelsSteps;
+		return mAxisSteps;
 	}
 
 }

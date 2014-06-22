@@ -40,7 +40,7 @@ public class MathHelper {
 	}
 	
 	//依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标
-	public void CalcArcEndPointXY(float cirX, float cirY, float mRadius, float cirAngle){
+	public void calcArcEndPointXY(float cirX, float cirY, float mRadius, float cirAngle){
 	
 		//将角度转换为弧度		
 	    float arcAngle = (float) (Math.PI * cirAngle / 180.0);

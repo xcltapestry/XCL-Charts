@@ -50,7 +50,8 @@ public class LineData extends LnData{
 			 */
 			public LineData(String key,List<Double> dataSeries,int color) 
 			{
-				setLineLabel(key);	
+				setLabel(key);	
+				setLineKey(key);
 				setLinePoint(dataSeries);
 				setLineColor(color);				
 			}
@@ -67,7 +68,8 @@ public class LineData extends LnData{
 							int color,
 							XEnum.DotStyle  dotStyle) 
 			{
-				setLineLabel(key);		
+				setLabel(key);	
+				setLineKey(key);
 				setLineColor(color);
 				setLinePoint(dataSeries);
 				setDotStyle(dotStyle);

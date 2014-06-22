@@ -32,16 +32,16 @@ import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 
 /**
- * @ClassName LabelsAxisRender
- * @Description 标签轴(Labels Axis)绘制类，绑定数据源并负责具体的绘制
+ * @ClassName CategoryAxisRender
+ * @Description 分类轴(Category Axis)绘制类，绑定数据源并负责具体的绘制
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  *  * MODIFIED    YYYY-MM-DD   REASON
  */
 
-public class LabelsAxisRender extends LabelsAxis implements IRender{
+public class CategoryAxisRender extends CategoryAxis implements IRender{
 	
 	
-	public LabelsAxisRender()
+	public CategoryAxisRender()
 	{
 		super();
 		getAxisTickLabelPaint().setTextAlign(Align.CENTER);		

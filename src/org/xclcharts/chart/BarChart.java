@@ -44,10 +44,12 @@ import android.util.Log;
  */
 
 public class BarChart extends AxisChart {
+	
+	private String TAG = "BarChart";
 
 	// 柱形基类
 	private FlatBar mFlatBar = new FlatBar();
-	// 格式化柱形上的标签
+	// 格式化柱形上的分类
 	private IFormatterDoubleCallBack mItemLabelFormatter;
 	// 数据源
 	private List<BarData> mDataSet;
@@ -103,7 +105,7 @@ public class BarChart extends AxisChart {
 	}
 	
 	/**
-	 * 设置柱形顶上标签显示格式
+	 * 设置柱形顶上分类显示格式
 	 * @param callBack 回调函数
 	 */
 	public void setItemLabelFormatter(IFormatterDoubleCallBack callBack) {
@@ -111,9 +113,9 @@ public class BarChart extends AxisChart {
 	}
 
 	/**
-	 * 得到柱形顶上标签显示值
+	 * 得到柱形顶上分类显示值
 	 * @param value 值
-	 * @return 转换后的文本标签
+	 * @return 转换后的文本分类
 	 */
 	protected String getFormatterItemLabel(double value) {
 		String itemLabel = "";
@@ -126,13 +128,13 @@ public class BarChart extends AxisChart {
 	}
 
 	/**
-	 * 标签轴的数据源
+	 * 分类轴的数据源
 	 * 
-	 * @param labels
-	 *            标签集
+	 * @param categories
+	 *            分类集
 	 */
-	public void setLabels(List<String> labels) {
-		labelsAxis.setDataBuilding(labels);
+	public void setCategories(List<String> categories) {
+		categoryAxis.setDataBuilding(categories);
 	}
 
 	/**
@@ -180,8 +182,8 @@ public class BarChart extends AxisChart {
 		try{
 			switch (mDirection) {
 				case HORIZONTAL: {
-					labelsAxis.setHorizontalTickAlign(Align.LEFT);		
-					labelsAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);					
+					categoryAxis.setHorizontalTickAlign(Align.LEFT);		
+					categoryAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);					
 					dataAxis.setHorizontalTickAlign(Align.CENTER);
 					dataAxis.getAxisTickLabelPaint().setTextAlign(Align.CENTER);					
 					getBar().getItemLabelPaint().setTextAlign(Align.LEFT);	
@@ -193,15 +195,15 @@ public class BarChart extends AxisChart {
 					dataAxis.setHorizontalTickAlign(Align.LEFT);
 					dataAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);					
 									
-					labelsAxis.setHorizontalTickAlign(Align.CENTER);			
-					labelsAxis.getAxisTickLabelPaint().setTextAlign(Align.CENTER);					
-					labelsAxis.setVerticalTickPosition(XEnum.Position.LOWER);
+					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
+					categoryAxis.getAxisTickLabelPaint().setTextAlign(Align.CENTER);					
+					categoryAxis.setVerticalTickPosition(XEnum.Position.LOWER);
 					
 					break;
 				}
 			}
 		}catch(Exception ex){
-			Log.e("ERROR-BarChart", ex.toString());
+			Log.e(TAG, ex.toString());
 		}
 	}
 
@@ -222,10 +224,10 @@ public class BarChart extends AxisChart {
 		switch (this.getPlotTitle().getTitleAlign()) {
 		case CENTER:
 		case RIGHT:
-			drawDataSetKeyLeft(canvas);
+			renderKeyLeft(canvas);
 			break;
 		case LEFT:
-			drawDataKeyRight(canvas);
+			renderKeyRight(canvas);
 			break;
 		}
 	}
@@ -233,7 +235,7 @@ public class BarChart extends AxisChart {
 	/**
 	 * 单行可以显示多个Key说明，当一行显示不下时，会自动转到新行
 	 */
-	private void drawDataSetKeyLeft(Canvas canvas) {
+	private void renderKeyLeft(Canvas canvas) {
 
 		DrawHelper dw = new DrawHelper();
 
@@ -274,7 +276,7 @@ public class BarChart extends AxisChart {
 	/**
 	 * 显示在右边时，采用单条说明占一行的方式显示
 	 */
-	private void drawDataKeyRight(Canvas canvas) {
+	private void renderKeyRight(Canvas canvas) {
 		if (false == isShowKeyLabels())
 			return;
 
@@ -346,14 +348,14 @@ public class BarChart extends AxisChart {
 
 	
 	/**
-	 * 横向柱形图,Y轴显示标签
-	 * Y轴的屏幕高度/(标签轴的刻度标记总数+1) = 步长
+	 * 横向柱形图,Y轴显示分类
+	 * Y轴的屏幕高度/(分类轴的刻度标记总数+1) = 步长
 	 * @return Y轴步长
 	 */
 	protected float getHorizontalYSteps() {
 		
 		float YSteps = (float) Math.ceil((getAxisScreenHeight())
-				/ (this.labelsAxis.getDataSet().size() + 1));
+				/ (this.categoryAxis.getDataSet().size() + 1));
 		return YSteps;
 	}
 	
@@ -416,7 +418,7 @@ public class BarChart extends AxisChart {
 
 
 	/**
-	 * 绘制左边竖轴，及上面的刻度线和标签
+	 * 绘制左边竖轴，及上面的刻度线和分类
 	 */
 	protected void renderVerticalBarDataAxis(Canvas canvas) {
 		// 数据轴数据刻度总个数
@@ -437,7 +439,7 @@ public class BarChart extends AxisChart {
 			// 依起始数据坐标与数据刻度间距算出上移高度
 			//currentY = (float) Math.rint(plotArea.getBottom() - i * YSteps);
 			currentY = (float)(plotArea.getBottom() - i * YSteps);
-			// 标签
+			// 分类
 			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
 					.getAxisSteps()));
 						
@@ -471,21 +473,21 @@ public class BarChart extends AxisChart {
 	}
 
 	/**
-	 * 绘制竖向柱形图中的底部标签轴
+	 * 绘制竖向柱形图中的底部分类轴
 	 */
-	protected void renderVerticalBarLabelsAxis(Canvas canvas) {
-		// 标签轴(X 轴)
+	protected void renderVerticalBarCategoryAxis(Canvas canvas) {
+		// 分类轴(X 轴)
 		float currentX = plotArea.getLeft();
 
-		// 得到标签轴数据集
-		List<String> dataSet = labelsAxis.getDataSet();
+		// 得到分类轴数据集
+		List<String> dataSet = categoryAxis.getDataSet();
 
-		// 依传入的标签个数与轴总宽度算出要画的标签间距数是多少
-		// 总宽度 / 标签个数 = 间距长度  
+		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
+		// 总宽度 / 分类个数 = 间距长度  
 		float XSteps = getAxisScreenWidth() / (dataSet.size() + 1); //Math.ceil
 
 		for (int i = 0; i < dataSet.size(); i++) {
-			// 依初超始X坐标与标签间距算出当前刻度的X坐标
+			// 依初超始X坐标与分类间距算出当前刻度的X坐标
 			currentX = plotArea.getLeft() + (i + 1) * XSteps; //Math.round
 
 			// 绘制横向网格线
@@ -494,8 +496,8 @@ public class BarChart extends AxisChart {
 								currentX, plotArea.getTop(),
 								plotGrid.getVerticalLinePaint());
 			}
-			// 画上标签/刻度线
-			labelsAxis.renderAxisVerticalTick(canvas,currentX,
+			// 画上分类/刻度线
+			categoryAxis.renderAxisVerticalTick(canvas,currentX,
 							plotArea.getBottom(), dataSet.get(i));
 		}
 	}
@@ -506,7 +508,7 @@ public class BarChart extends AxisChart {
 	protected void renderHorizontalBarDataAxis(Canvas canvas) {
 		// 依数据轴最大刻度值与数据间的间距 算出要画多少个数据刻度
 		double tickCount = dataAxis.getAixTickCount();		
-		// 得到数据标签刻度间距
+		// 得到数据分类刻度间距
 		float XSteps = (float) (this.getAxisScreenWidth() / tickCount); // Math.ceil
 
 		// x 轴
@@ -544,23 +546,23 @@ public class BarChart extends AxisChart {
 	}
 
 	/**
-	 * 绘制横向柱形图中的标签轴
+	 * 绘制横向柱形图中的分类轴
 	 */
 	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
 		// Y 轴
-		// 标签横向间距高度
+		// 分类横向间距高度
 		float YSteps = (float)(getAxisScreenHeight()
-								/ (labelsAxis.getDataSet().size() + 1)); // Math.ceil
+								/ (categoryAxis.getDataSet().size() + 1)); // Math.ceil
 		float currentY = 0.0f;
-		for (int i = 0; i < labelsAxis.getDataSet().size(); i++) {
-			// 依初超始Y坐标与标签间距算出当前刻度的Y坐标
+		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
+			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
 			currentY = plotArea.getBottom() - (i + 1) * YSteps;
 			// 横的grid线
 			plotGrid.renderGridLinesHorizontal(canvas,plotArea.getLeft(),
 					currentY, plotArea.getRight(), currentY);
-			// 标签
-			this.labelsAxis.renderAxisHorizontalTick(canvas,plotArea.getLeft(),
-					currentY, labelsAxis.getDataSet().get(i));
+			// 分类
+			this.categoryAxis.renderAxisHorizontalTick(canvas,plotArea.getLeft(),
+					currentY, categoryAxis.getDataSet().get(i));
 		}
 	}
 
@@ -572,11 +574,11 @@ public class BarChart extends AxisChart {
 		renderHorizontalBarDataAxis(canvas);
 		renderHorizontalBarLabelAxis(canvas);
 
-		// 得到Y 轴标签横向间距高度
+		// 得到Y 轴分类横向间距高度
 		float YSteps = getHorizontalYSteps();
 
 		// 画柱形
-		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前标签柱形要占的高度
+		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度
 		int barNumber = mDataSet.size();
 		int currNumber = 0;
 		List<Integer> ret = mFlatBar.getBarHeightAndMargin(YSteps, barNumber);
@@ -589,13 +591,13 @@ public class BarChart extends AxisChart {
 		float valueWidth = (float) dataAxis.getAxisRange();
 
 		for (int i = 0; i < barNumber; i++) {
-			// 得到标签对应的值数据集
+			// 得到分类对应的值数据集
 			BarData bd = mDataSet.get(i);
 			List<Double> barValues = bd.getDataSet();
 			// 设置成对应的颜色
 			mFlatBar.getBarPaint().setColor(bd.getColor());
 
-			// 画同标签下的所有柱形
+			// 画同分类下的所有柱形
 			int k = 1;
 			for (Double bv : barValues) {
 				float currLableY = plotArea.getBottom() - (k) * YSteps;
@@ -629,7 +631,7 @@ public class BarChart extends AxisChart {
 				plotArea.getLeft(), plotArea.getTop());
 
 		// X轴 线
-		labelsAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
 				plotArea.getRight(), plotArea.getBottom());
 		// 画Key说明
 		renderDataKey(canvas);
@@ -642,13 +644,13 @@ public class BarChart extends AxisChart {
 	 */
 	protected void renderVerticalBar(Canvas canvas) {
 		renderVerticalBarDataAxis(canvas);
-		renderVerticalBarLabelsAxis(canvas);
+		renderVerticalBarCategoryAxis(canvas);
 
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight = (float) dataAxis.getAxisRange();
 
-		// 得到标签轴数据集
-		List<String> dataSet = labelsAxis.getDataSet();
+		// 得到分类轴数据集
+		List<String> dataSet = categoryAxis.getDataSet();
 		float XSteps = getVerticalXSteps(dataSet.size() + 1);
 
 		int barNumber = mDataSet.size();
@@ -659,15 +661,15 @@ public class BarChart extends AxisChart {
 		int labelBarUseWidth = barNumber * barWidth + (barNumber - 1)
 				* barInnerMargin;
 
-		// X 轴 即标签轴
+		// X 轴 即分类轴
 		for (int i = 0; i < mDataSet.size(); i++) {
-			// 得到标签对应的值数据集
+			// 得到分类对应的值数据集
 			BarData bd = mDataSet.get(i);
 			List<Double> barValues = bd.getDataSet();
 			// 设成对应的颜色
 			mFlatBar.getBarPaint().setColor(bd.getColor());
 
-			// 画出标签对应的所有柱形
+			// 画出分类对应的所有柱形
 			for (int j = 0; j < barValues.size(); j++) {
 				Double bv = barValues.get(j);
 
@@ -677,10 +679,10 @@ public class BarChart extends AxisChart {
 				float currLableX = plotArea.getLeft() + (j + 1) * XSteps;
 				float drawBarStartX = currLableX - labelBarUseWidth / 2;
 
-				// 计算同标签多柱 形时，新柱形的起始X坐标
+				// 计算同分类多柱 形时，新柱形的起始X坐标
 				drawBarStartX = drawBarStartX + (barWidth + barInnerMargin)
 						* currNumber;
-				// 计算同标签多柱 形时，新柱形的结束X坐标
+				// 计算同分类多柱 形时，新柱形的结束X坐标
 				float drawBarEndX = drawBarStartX + barWidth;
 
 				// 画出柱形
@@ -702,7 +704,7 @@ public class BarChart extends AxisChart {
 		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
 				plotArea.getRight(), plotArea.getBottom());
 
-		// 绘制标签各柱形集的说明描述
+		// 绘制分类各柱形集的说明描述
 		renderDataKey(canvas);
 		//画竖向柱形图，横向的期望线
 		renderVerticalDesirelinesDataAxis(canvas);

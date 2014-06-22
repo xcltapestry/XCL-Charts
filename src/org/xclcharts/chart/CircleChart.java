@@ -45,7 +45,7 @@ import java.util.List;
 public class CircleChart extends CirChart {
 
     private String mDataInfo = "";
-    private XEnum.CircleDisplayType mDisplayType = XEnum.CircleDisplayType.FULL;
+    private XEnum.CircleType mDisplayType = XEnum.CircleType.FULL;
     //内环填充颜色
     private Paint mPaintBgCircle = null;
     private Paint mPaintFillCircle = null;
@@ -107,7 +107,7 @@ public class CircleChart extends CirChart {
      *
      * @param display 半圆/完整圆
      */
-    public void setCircleDisplayType(XEnum.CircleDisplayType display) {
+    public void setCircleDisplayType(XEnum.CircleType display) {
         mDisplayType = display;
     }
 
@@ -203,7 +203,7 @@ public class CircleChart extends CirChart {
 
             for (PieData cData : mDataSet) {
                 paintArc.setColor(cData.getSliceColor());
-                if (XEnum.CircleDisplayType.HALF == mDisplayType) {
+                if (XEnum.CircleType.HALF == mDisplayType) {
                     setInitialAngle(180);
 
                     drawPercent(canvas, mPaintBgCircle, cirX, cirY, radius, 180f, 180f);

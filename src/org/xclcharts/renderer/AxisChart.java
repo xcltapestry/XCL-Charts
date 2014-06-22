@@ -26,8 +26,8 @@ import android.graphics.Canvas;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
-import org.xclcharts.renderer.axis.LabelsAxis;
-import org.xclcharts.renderer.axis.LabelsAxisRender;
+import org.xclcharts.renderer.axis.CategoryAxis;
+import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.plot.Legend;
 import org.xclcharts.renderer.plot.LegendRender;
 
@@ -46,7 +46,7 @@ public class AxisChart extends XChart {
 	//数据轴
 	protected DataAxisRender dataAxis  = null;
 	//标签轴
-	protected LabelsAxisRender labelsAxis  = null;	
+	protected CategoryAxisRender categoryAxis  = null;	
 	//图例类
 	protected LegendRender legend = null;
 	
@@ -76,7 +76,7 @@ public class AxisChart extends XChart {
 		//数据轴
 		dataAxis  = new DataAxisRender();
 		//标签轴
-		labelsAxis  = new LabelsAxisRender();				
+		categoryAxis  = new CategoryAxisRender();				
 		//图例
 		legend = new LegendRender();
 		
@@ -152,8 +152,8 @@ public class AxisChart extends XChart {
 	 * 开放标签轴绘制类
 	 * @return 标签轴绘制类
 	 */
-	public LabelsAxis getLabelsAxis() {
-		return labelsAxis;
+	public CategoryAxis getCategoryAxis() {
+		return categoryAxis;
 	}
 
 	/**
