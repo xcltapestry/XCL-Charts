@@ -156,10 +156,12 @@ public class XChart implements IRender {
 	 */
 	public void setChartRange(float startX, float startY, float width,
 			float height) {
+		
 		if (startX > 0)
 			mLeft = startX;
 		if (startY > 0)
 			mTop = startY;
+				
 		mRight = startX + width;
 		mBottom = startY + height;
 
