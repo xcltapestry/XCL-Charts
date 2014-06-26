@@ -35,65 +35,67 @@ import android.view.View;
 
 public class ChartTouch implements IChartTouch {
 	
-	private View view;
-	private XChart chart;
+	private View mView;
+	private XChart mChart;
   
-	//单点移动的前后坐标位置
-	private float afterX = 0.0f,afterY = 0.0f;   
-	private float beforeX = 0.0f,beforeY = 0.0f;  
-		
+	//单点移动前的坐标位置
+	private float oldX = 0.0f,oldY = 0.0f; 	
 	
 	public ChartTouch(View view, XChart chart) {
-		this.chart = chart;
-		this.view = view;
+		this.mChart = chart;
+		this.mView = view;
 	}
 	
-	//用来设置图表的位置   
-	
-	public void setLocation(int x, int y) {
+	//用来设置图表的位置   	
+	public void setLocation(float oldX, float oldY,float newX, float newY ) {
 		// TODO Auto-generated method stub
-		//if(0 != x && 0 != y)
-    	//{
-	    	chart.setChartRange(chart.getLeft() + x, chart.getTop() + y, 
-	    						chart.getWidth(), chart.getHeight());
-	    	view.invalidate();
-    	//}
+		
+		float xx = 0.0f,yy = 0.0f;		          
+        float[] txy = mChart.getTranslateXY();		          
+        xx =  txy[0];
+        yy =  txy[1];
+        
+        if(newX < oldX || newY < oldY)	 
+        {
+      	  xx = (float) (txy[0] + newX - oldX) ;
+      	  yy = (float) (txy[1] + newY - oldY) ;
+        }  
+        mChart.setTranslateXY(xx, yy);
+  
+        mChart.setChartRange(mChart.getLeft() + newX-oldX, mChart.getTop() + newY-oldY, 
+    			mChart.getWidth(), mChart.getHeight());
+    	mView.invalidate();		
 	}
-	
-
-	
+		
 	@Override
 	 public void handleTouch(MotionEvent event) {  
-         	    	
-	        switch(event.getAction()) 
-	        {  	          
-	        case MotionEvent.ACTION_DOWN:  
-	        	 if(event.getPointerCount() == 1) {
-	        		 beforeX = event.getX();  
-	        		 beforeY = event.getY();  
-	        	 }
-	            break;  
-	        case MotionEvent.ACTION_MOVE:  
-	           	              
-	            if(event.getPointerCount() == 1) {     	            	
-	            	afterX = event.getX();  
-	 	            afterY = event.getY();  	 	            
-	            	this.setLocation((int)(afterX-beforeX),(int)(afterY-beforeY));          	            	
-	            	beforeX = afterX;  
-	  	            beforeY = afterY; 
-	            }	              	           
-	            break;  
-	              
-	        case MotionEvent.ACTION_UP:  	        	
-	        	afterX = afterY = 0.0f;   
-	        	beforeX = beforeY = 0.0f;  
-	            break;  
-	        }  
-	        
+		
+		 int action = event.getAction();
+		    if ( action == MotionEvent.ACTION_MOVE) {
+			      if (oldX >= 0 || oldY >= 0) {
+				        float newX = event.getX(0);
+				        float newY = event.getY(0);
+				        
+				        if(newX-oldX == 0 || newY-oldY == 0) return;
+				        
+				        setLocation(oldX,oldY,newX,newY );
+				        
+				        oldX = newX;
+				        oldY = newY;
+			      }
+		    } else if (action == MotionEvent.ACTION_DOWN) {
+			      oldX = event.getX(0);
+			      oldY = event.getY(0);
+		      
+		    } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
+			      oldX = 0;
+			      oldY = 0;
+			      if (action == MotionEvent.ACTION_POINTER_UP) {
+			        oldX = -1;
+			        oldY = -1;
+			      }
+		    }	        
 	    }  
 	 
-	
-   
-	
 
 }

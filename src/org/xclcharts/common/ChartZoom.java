@@ -25,7 +25,6 @@ import org.xclcharts.renderer.XChart;
 
 import android.view.View;
 
-
 /**
  * @ClassName ChartZoom
  * @Description  放大缩小图表
@@ -34,56 +33,81 @@ import android.view.View;
 
 public class ChartZoom implements IChartZoom {
 	
-	private View view;
-	private XChart chart;
-	private float scale = 0.1f; 
-	private static final float FIX_WITH = 300f;
-	private static final float FIX_HEIGHT = 400f;
+	//private static final String TAG = "ChartZoom";	
 	
+	private View mView;
+	private XChart mChart;
+			
+	//图原始的宽高
+	private float mInitWidth = 0.0f;
+	private float mInitHeight = 0.0f;
+	
+	//处理类型
+	private static final int ZOOM_IN = 0; //放大
+	private static final int ZOOM_OUT = 1; //缩小	
+	
+	//当前缩放比
+	private float mScaleRate = 0.1f; 
+	
+	//所允许的最小缩小比,固定为0.5f;
+	private static final float MIN_SCALE_RATE = 0.5f;
+	//最小缩小比对应的宽高
+	private float mScaleMinWidth = 0.0f;	
+	private float mScaleMinHeight = 0.0f;
+		
 	public ChartZoom(View view, XChart chart) {
-		this.chart = chart;
-		this.view = view;
+		this.mChart = chart;
+		this.mView = view;
+		
+		mInitWidth = chart.getWidth();
+		mInitHeight = chart.getHeight();
+		
+		mScaleMinWidth = (int)(MIN_SCALE_RATE * mInitWidth);
+		mScaleMinHeight =  (int)(MIN_SCALE_RATE * mInitHeight);		
 	}
 
 	@Override
 	public void setZoomRate(float rate) {
-		// TODO Auto-generated method stub
-		scale = rate;
+		// TODO Auto-generated method stub		
+		mScaleRate = rate;
 	}
 
 	@Override
 	public void zoomIn() {
 		// TODO Auto-generated method stub
 		 //放大
-		 int offsetX = (int)(scale * chart.getWidth());
-	   	 int offsetY =  (int)(scale * chart.getHeight());
-	   	 
-	   	 float newWidth = chart.getRight() + offsetX;
-	   	 float newHeight = chart.getBottom() + offsetY;
-	   	 	   	 
-	   	 if(newWidth < FIX_WITH) return ; //newWidth = FIX_WITH;
-	   	 if(newHeight < FIX_HEIGHT)return ; //newHeight = FIX_HEIGHT;
-	   	
-	   	 chart.setChartRange( 0.0f, 0.0f, newWidth, newHeight);
-	   	 view.invalidate();
+		reSize(ZOOM_IN);
 	}
 
 	@Override
 	public void zoomOut() {
 		// TODO Auto-generated method stub
-		 int offsetX = (int)(scale * chart.getWidth());
-    	 int offsetY =  (int)(scale * chart.getHeight());
-    	 
-    	 float newWidth = chart.getRight() - offsetX;
-	   	 float newHeight = chart.getBottom() - offsetY;
-	   	 	   	 
-	   	 if(newWidth < FIX_WITH)return ; //newWidth = FIX_WITH;
-	   	 if(newHeight < FIX_HEIGHT)return ; //newHeight = FIX_HEIGHT;
+		reSize(ZOOM_OUT);
+	}
+	
+	private void reSize(int flag)
+	{
+		float newWidth = 0.0f,newHeight = 0.0f;
+		int scaleWidth = (int)(mScaleRate * mInitWidth);
+	   	int scaleHeight =  (int)(mScaleRate * mInitHeight);
 	   	 
-    	 
-    	 chart.setChartRange( 0.0f, 0.0f, newWidth, newHeight);
-					//chart.getRight() - offsetX, chart.getBottom() - offsetY);
-    	 view.invalidate();
+		if(ZOOM_OUT == flag) //缩小
+		{
+			 newWidth = mChart.getWidth() - scaleWidth; 
+		   	 newHeight = mChart.getHeight() - scaleHeight; 
+		   	 
+		   	 if(mScaleMinWidth > newWidth) newWidth = mScaleMinWidth;
+		   	 if(mScaleMinHeight > newHeight) newHeight = mScaleMinHeight;		   	 
+		}else{  //放大
+			 newWidth = mChart.getWidth() + scaleWidth; 
+		   	 newHeight = mChart.getHeight() + scaleHeight; 
+		}
+		
+		if(newWidth > 0 && newHeight > 0 )
+		{
+			mChart.setChartRange(mChart.getLeft(),mChart.getTop(), newWidth, newHeight);
+	   	 	mView.invalidate();
+		}
 	}
 	
 }

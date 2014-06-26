@@ -40,7 +40,7 @@ import android.graphics.Paint.Align;
 public class StackBarChart  extends BarChart{
 	
 	private FlatBar flatBar = null;
-	private boolean mTotalLableVisible = true;
+	private boolean mTotalLabelVisible = true;
 
 	public StackBarChart()
 	{
@@ -54,7 +54,7 @@ public class StackBarChart  extends BarChart{
 	 */
 	public void setTotalLabelVisible(boolean visible)
 	{
-		mTotalLableVisible = visible;
+		mTotalLabelVisible = visible;
 	}
 	
 	@Override
@@ -103,7 +103,7 @@ public class StackBarChart  extends BarChart{
 						valuePostion = (float) ( 
 	                			axisScreenWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;						
 					}else{						
-						valuePostion = (float)( axisScreenWidth * ( (bv ) / valueWidth)) ;
+						valuePostion = (float)( axisScreenWidth * ( bv / valueWidth)) ;
 					}
 					
 				   	//宽度                	
@@ -117,11 +117,11 @@ public class StackBarChart  extends BarChart{
 				 }
 				
 				 //合计		
-				 if(mTotalLableVisible)
+				 if(mTotalLabelVisible)
 				 {
 					 float totalPostion = (float)( axisScreenWidth/axisDataRange * (total- dataAxis.getAxisMin()) );					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
-							 					plotArea.getLeft()  - totalPostion, currentY, canvas);
+							 					plotArea.getLeft() + totalPostion, currentY, canvas);
 				 }
 		 }	
 	 		 		 
@@ -175,11 +175,11 @@ public class StackBarChart  extends BarChart{
 						{						
 							 valuePostion = (float)( axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  							
 						}else{
-							valuePostion = (float) (axisScreenHeight * ( (bv  ) / axisDataHeight)) ;
+							valuePostion = (float) (axisScreenHeight * ( bv / axisDataHeight)) ;
 							
 						}
 						flatBar.renderBar(currentX - barWidht/2, currentY - valuePostion, 
-										  currentX + barWidht /2, currentY, canvas);
+										  currentX + barWidht/2, currentY, canvas);
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
 													currentX, currentY - valuePostion/2, canvas);

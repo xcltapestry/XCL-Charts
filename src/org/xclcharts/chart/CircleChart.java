@@ -107,7 +107,7 @@ public class CircleChart extends CirChart {
      *
      * @param display 半圆/完整圆
      */
-    public void setCircleDisplayType(XEnum.CircleType display) {
+    public void setCircleType(XEnum.CircleType display) {
         mDisplayType = display;
     }
 

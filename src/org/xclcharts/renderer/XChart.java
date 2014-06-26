@@ -68,12 +68,20 @@ public class XChart implements IRender {
 	private Paint mChartBackgroundPaint = null;
 	// 是否画背景色
 	private boolean mBackgroundColorVisible = false;
+	
+	//坐标系原点坐标
+	private float[] mTranslateXY = new float[2];		
+		
 
 	public XChart() {
 		initChart();
 	}
 
 	private void initChart() {
+		
+		mTranslateXY[0] = 0.0f;
+		mTranslateXY[1] = 0.0f;
+		
 		// 图表
 		plotArea = new PlotAreaRender();
 		plotGrid = new PlotGridRender();
@@ -334,13 +342,47 @@ public class XChart implements IRender {
 	public float getPaddingRight() {
 		return mPaddingRight;
 	}
+	
+	/**
+	 * 返回图中心点坐标
+	 * @return
+	 */
+	public double[] getCenterXY()
+	{
+		double [] xy = new double[2];
+		xy[0] = this.getLeft() + this.getWidth() / 2 ;
+		xy[1] = this.getTop() + this.getHeight() / 2 ;		
+		return xy;
+	}
+	
+	
+	/**
+	 * 设置绘画时的坐标系原点位置
+	 * @param x 原点x位置
+	 * @param y 原点y位置
+	 */
+	public void setTranslateXY(float x,float y)
+	{
+		mTranslateXY[0] = x;
+		mTranslateXY[1] = y;
+	}
+	
+	/**
+	 * 返回坐标系原点坐标
+	 * @return 原点坐标
+	 */
+	public float[] getTranslateXY()
+	{
+		return mTranslateXY;
+	}
+	
 
 	/**
 	 * 设置是否绘制背景
 	 * 
 	 * @param visible 是否绘制背景
 	 */
-	public void setBackgroundColorVisible(boolean visible) {
+	public void setApplyBackgroundColor(boolean visible) {
 		mBackgroundColorVisible = visible;
 	}
 
@@ -350,8 +392,8 @@ public class XChart implements IRender {
 	 * @param visible 是否绘制背景
 	 * @param color   背景色
 	 */
-	public void setBackgroundColor(boolean visible, int color) {
-		mBackgroundColorVisible = visible;
+	public void setBackgroundColor(int color) {
+		//mBackgroundColorVisible = visible;
 		getBackgroundPaint().setColor(color);
 		getPlotArea().getBackgroundPaint().setColor(color);
 	}
@@ -393,10 +435,10 @@ public class XChart implements IRender {
 		plotArea.setRight(this.mRight
 				- Math.round(this.mWidth / 100 * perRight));
 
-		float rederTop = 0.0f;
+		float renderTop = 0.0f;
 		float titleHeight = 0.0f;
 		float subtitleHeight = 0.0f;
-		// float titlePercentage = 0.0f;
+		
 		if (plotTitle.getTitle().length() > 0) {
 			titleHeight = dw.getPaintFontHeight(plotTitle.getTitlePaint());
 		}
@@ -404,12 +446,12 @@ public class XChart implements IRender {
 			subtitleHeight = dw.getPaintFontHeight(plotTitle
 					.getTitlePaint());
 		}
-		rederTop = Math.round(this.mHeight / 100 * perTop);
+		renderTop = Math.round(this.mHeight / 100 * perTop);
 
-		if (rederTop < titleHeight + subtitleHeight) {
-			rederTop = titleHeight + subtitleHeight;
+		if (renderTop < titleHeight + subtitleHeight) {
+			renderTop = titleHeight + subtitleHeight;
 		}
-		plotArea.setTop(this.mTop + rederTop);
+		plotArea.setTop(this.mTop + renderTop);
 
 	}
 
@@ -434,6 +476,10 @@ public class XChart implements IRender {
 		try {
 			if (null == canvas)
 				return false;
+			
+				//设置原点位置
+				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
+			
 				// 绘制图背景
 				renderChartBackground(canvas);
 		} catch (Exception e) {

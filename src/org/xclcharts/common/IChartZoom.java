@@ -32,6 +32,11 @@ package org.xclcharts.common;
 
 public interface IChartZoom {
 	
+	
+	  // 最大最小缩小比好像没啥意义，不实现了
+	  // public void setMaxRate(float rate);
+	  // public void setMinRate(float rate);
+	 
 	   public void setZoomRate(float rate);
 	   public void zoomIn();
 	   public void zoomOut();
