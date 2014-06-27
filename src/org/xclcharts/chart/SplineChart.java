@@ -44,11 +44,11 @@ import android.graphics.Paint.Align;
 public class SplineChart extends LnChart{
 	
 	//数据源
-	private List<SplineData> mDataSet;
+	private List<SplineData> mDataset;
 	
 	//分类轴的最大，最小值
-	private float mLablesValuesMax = 0.0f;
-	private float mLablesValuesMin = 0.0f;
+	private float mMaxValue = 0.0f;
+	private float mMinValue = 0.0f;
 		
 	public SplineChart()
 	{
@@ -77,7 +77,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setDataSource(List<SplineData> dataSeries)
 	{
-		this.mDataSet = dataSeries;		
+		this.mDataset = dataSeries;		
 	}	
 	
 	/**
@@ -86,7 +86,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setCategoryAxisMax(float value)
 	{
-		mLablesValuesMax = value;
+		mMaxValue = value;
 	}	
 	
 	/**
@@ -95,7 +95,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setCategoryAxisMin(float value)
 	{
-		mLablesValuesMin = value;
+		mMinValue = value;
 	}	
 	
 	/**
@@ -134,7 +134,7 @@ public class SplineChart extends LnChart{
             	
             	//对应的X坐标	                	
             	float XvaluePostion = (float) Math.round( 
-            			axisScreenWidth * ( (xValue - mLablesValuesMin ) / (mLablesValuesMax - mLablesValuesMin))) ;  
+            			axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
             
             	if(j == 0 )
 				{	                		
@@ -190,7 +190,7 @@ public class SplineChart extends LnChart{
 	private void renderVerticalPlot(Canvas canvas)
 	{
 		//检查是否有设置分类轴的最大最小值		
-		if(mLablesValuesMax == mLablesValuesMin && 0 == mLablesValuesMax) return ;
+		if(mMaxValue == mMinValue && 0 == mMaxValue) return ;
 						
 		renderVerticalDataAxis(canvas);
 		renderVerticalCategoryAxis(canvas);
@@ -198,21 +198,21 @@ public class SplineChart extends LnChart{
 		
 		//开始处 X 轴 即分类轴              
 		List<LnData> lstKey = new ArrayList<LnData>();		
-		for(int i=0;i<mDataSet.size();i++)
+		for(int i=0;i<mDataset.size();i++)
 		{										
-			renderLine(canvas, mDataSet.get(i),"LINE");
-			renderLine(canvas, mDataSet.get(i),"DOT2LABEL");
-			lstKey.add(mDataSet.get(i));
+			renderLine(canvas, mDataset.get(i),"LINE");
+			renderLine(canvas, mDataset.get(i),"DOT2LABEL");
+			lstKey.add(mDataset.get(i));
 		}	
 		renderKey(canvas,lstKey);
 	}
 	
-	
-	public boolean render(Canvas canvas) throws Exception {
+	@Override
+	public boolean postRender(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
 		try {
-			super.render(canvas);
+			super.postRender(canvas);
 						
 			//绘制图表
 			renderVerticalPlot(canvas);

@@ -84,7 +84,8 @@ public class ChartZoom implements IChartZoom {
 		// TODO Auto-generated method stub
 		reSize(ZOOM_OUT);
 	}
-	
+
+	//重置大小
 	private void reSize(int flag)
 	{
 		float newWidth = 0.0f,newHeight = 0.0f;

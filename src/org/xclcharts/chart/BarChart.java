@@ -710,12 +710,13 @@ public class BarChart extends AxisChart {
 		renderVerticalDesirelinesDataAxis(canvas);
 	}
 
-	public boolean render(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stub
-
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{
+		// 绘制图表
 		try {
-			super.render(canvas);
-			// 绘制图表
+			super.postRender(canvas);
+			
 			switch (mDirection) {
 				case HORIZONTAL: {
 					renderHorizontalBar(canvas);
@@ -726,7 +727,6 @@ public class BarChart extends AxisChart {
 					break;
 				}
 			}
-
 		} catch (Exception e) {
 			throw e;
 		}

@@ -54,7 +54,7 @@ public class XChart implements IRender {
 	private float mLeft = 0.0f;
 	private float mTop = 0.0f;
 	private float mRight = 0.0f;
-	private float mBottom = 5f;
+	private float mBottom = 0.0f; //5f;
 	// 图宽高
 	private float mWidth = 0.0f;
 	private float mHeight = 0.0f;
@@ -468,24 +468,43 @@ public class XChart implements IRender {
 		this.plotTitle.renderTitle(mLeft, mRight, mTop,
 				mWidth, this.plotArea.getTop(), canvas);
 	}
+	
 
-	@Override
-	public boolean render(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stubcalcPlotRange
-
-		try {
-			if (null == canvas)
-				return false;
-			
-				//设置原点位置
-				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
-			
-				// 绘制图背景
-				renderChartBackground(canvas);
+	/**
+	 * 用于延迟绘制
+	 * @param canvas	画布
+	 * @return	是否成功
+	 * @throws Exception 例外
+	 */
+	protected boolean postRender(Canvas canvas)  throws Exception
+	{
+		try{
+			// 绘制图背景
+			renderChartBackground(canvas);
 		} catch (Exception e) {
 			throw e;
 		}
 		return true;
+	}
+
+	@Override
+	public boolean render(Canvas canvas) throws Exception {
+		// TODO Auto-generated method stubcalcPlotRange
+		boolean ret = true;
+		try {
+				if (null == canvas)
+						return false;
+			
+				canvas.save();
+				//设置原点位置
+				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
+				//绘制图表							
+				ret = postRender(canvas);					
+				canvas.restore();
+		} catch (Exception e) {
+			throw e;
+		}
+		return ret;
 	}
 
 }

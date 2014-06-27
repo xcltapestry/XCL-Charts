@@ -94,7 +94,7 @@ public class LnChart extends AxisChart {
 	}
 
 	/**
-	 * 竖向柱形图 得到X轴的步长 X轴的屏幕宽度 / 刻度标记总数 = 步长
+	 * 竖向图 得到X轴的步长 X轴的屏幕宽度 / 刻度标记总数 = 步长
 	 * 
 	 * @param num
 	 *            刻度标记总数
@@ -106,7 +106,7 @@ public class LnChart extends AxisChart {
 	}
 
 	/**
-	 * 是否显示顶轴
+	 * 是否显示顶上的轴线
 	 * 
 	 * @param visible
 	 */
@@ -115,7 +115,7 @@ public class LnChart extends AxisChart {
 	}
 
 	/**
-	 * 是否显示底轴
+	 * 是否显示右边轴线
 	 * 
 	 * @param visible
 	 */

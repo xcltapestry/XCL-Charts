@@ -261,7 +261,7 @@ public class GaugeChart extends CirChart{
 	/**
 	 * 绘制刻度
 	 */
-	private void renderTick(Canvas canvas)
+	private void renderTicks(Canvas canvas)
 	{
 		//步长角度
 		double stepsAgent = Math.round(180/mTickSteps);		
@@ -367,7 +367,7 @@ public class GaugeChart extends CirChart{
 			 renderDount(canvas);
 		     //依角度画好刻度线
 			// 计算出坐标点,从圆心到点间画线
-		     renderTick(canvas);
+			 renderTicks(canvas);
 			//画上用于标识分区的扇区
 			 renderPartitionFill(canvas) ;
 			 //画上外围标签
@@ -383,19 +383,21 @@ public class GaugeChart extends CirChart{
 		}
 		
 	}
+
 	
-			
-	public boolean render(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stub
-	
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{
+		// 绘制图表
 		try {
-			super.render(canvas);
+			super.postRender(canvas);
+			
 			//绘制图表
 			renderPlot(canvas);
-			
-		}catch( Exception e){
-			 throw e;
+		} catch (Exception e) {
+			throw e;
 		}
 		return true;
 	}
+	
 }

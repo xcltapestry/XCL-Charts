@@ -218,15 +218,19 @@ public class AreaChart extends LnChart{
 		renderKey(canvas, lstKey);
 	}
 	
+
 	
-	public boolean render(Canvas canvas) throws Exception {
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{
+		// 绘制图表
 		try {
-			super.render(canvas);
+			super.postRender(canvas);
+			
 			//绘制图表
 			renderVerticalPlot(canvas);
-			
-		}catch( Exception e){
-			 throw e;
+		} catch (Exception e) {
+			throw e;
 		}
 		return true;
 	}

@@ -248,19 +248,31 @@ public class LineChart extends LnChart{
 		}	
 		 
 		
+		//绘制图表	
+		@Override
+		protected boolean postRender(Canvas canvas) throws Exception
+		{				
+			try{
+				super.postRender(canvas);	
+				renderVerticalPlot(canvas);
+			} catch (Exception e) {
+				throw e;
+			}
+			return true;
+		}
+		
+		/*
 		public boolean render(Canvas canvas) throws Exception {
 			// TODO Auto-generated method stub
 		
 			try {
 				super.render(canvas);
-				//绘制图表
-				renderVerticalPlot(canvas);
-				
+			
 			}catch( Exception e){
 				 throw e;
 			}
 			return true;
 		}
-		 
+		 */
 		
 }

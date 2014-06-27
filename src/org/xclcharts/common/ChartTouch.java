@@ -47,7 +47,7 @@ public class ChartTouch implements IChartTouch {
 	}
 	
 	//用来设置图表的位置   	
-	public void setLocation(float oldX, float oldY,float newX, float newY ) {
+	private void setLocation(float oldX, float oldY,float newX, float newY ) {
 		// TODO Auto-generated method stub
 		
 		float xx = 0.0f,yy = 0.0f;		          
@@ -87,7 +87,8 @@ public class ChartTouch implements IChartTouch {
 			      oldX = event.getX(0);
 			      oldY = event.getY(0);
 		      
-		    } else if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_POINTER_UP) {
+		    } else if (action == MotionEvent.ACTION_UP 
+		    		|| action == MotionEvent.ACTION_POINTER_UP) {
 			      oldX = 0;
 			      oldY = 0;
 			      if (action == MotionEvent.ACTION_POINTER_UP) {

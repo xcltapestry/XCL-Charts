@@ -41,9 +41,11 @@ import android.util.Log;
  *  * MODIFIED    YYYY-MM-DD   REASON
  */
 public class PieChart extends CirChart{
+	
+	private static final String TAG = "PieChart";
 
 	//数据源
-	private List<PieData> mDataSet;
+	private List<PieData> mDataset;
 	//绘制Key的画笔
 	private Paint mPaintKey = null;
 	//是否显示Key
@@ -93,7 +95,7 @@ public class PieChart extends CirChart{
 	 */
 	public void setDataSource(List<PieData> piedata)
 	{
-		this.mDataSet = piedata;
+		this.mDataset = piedata;
 	}
 	
 	/**
@@ -102,7 +104,7 @@ public class PieChart extends CirChart{
 	 */
 	public List<PieData> getDataSource()
 	{
-		return mDataSet;
+		return mDataset;
 	}
 
 		
@@ -209,7 +211,7 @@ public class PieChart extends CirChart{
 			}			
 			
 			int totalTextWidth = 0;
-			for(PieData cData : mDataSet)
+			for(PieData cData : mDataset)
 			{
 				mPaintKey.setColor(cData.getSliceColor());							
 				if( !isVerticalScreen()) //横屏
@@ -268,7 +270,7 @@ public class PieChart extends CirChart{
 	        float currentAgent = 0.0f;		
 	        //float totalAgent = 0.0f;
 			
-			for(PieData cData : mDataSet)
+			for(PieData cData : mDataset)
 			{
 				paintArc.setColor(cData.getSliceColor());				
 				currentAgent = cData.getSliceAgent();		
@@ -289,7 +291,7 @@ public class PieChart extends CirChart{
 			renderKey(canvas);
 		
 		 }catch( Exception e){
-			 Log.e("ERROR-PieChart",e.toString());
+			 Log.e(TAG,e.toString());
 		 }
 		
 	}
@@ -301,7 +303,7 @@ public class PieChart extends CirChart{
 	protected boolean checkInput()
 	{
 		float totalAgent = 0.0f;				
-		for(PieData cData : mDataSet)
+		for(PieData cData : mDataset)
 		{
 			totalAgent += cData.getSliceAgent();
 			if( totalAgent > 360)
@@ -313,25 +315,23 @@ public class PieChart extends CirChart{
 		}
 		return true;
 	}
+
 	
-	public boolean render(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stub
-	
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{	
 		try {
-			super.render(canvas);
+			super.postRender(canvas);
 			
 			//检查值是否合理
 	        if(false == checkInput())return false;
 			
 			//绘制图表
 			renderPlot(canvas);
-			
-		}catch( Exception e){
-			 throw e;
+		} catch (Exception e) {
+			throw e;
 		}
 		return true;
 	}
-	
-	
 	
 }

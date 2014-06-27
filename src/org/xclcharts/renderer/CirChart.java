@@ -200,12 +200,12 @@ public class CirChart extends XChart{
 	}
 
 	
-	public boolean render(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stub
-	
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{	
 		try {
-		
-			super.render(canvas);
+			super.postRender(canvas);
+			
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
@@ -215,13 +215,12 @@ public class CirChart extends XChart{
 			 
 			//绘制标题
 			renderTitle(canvas);
-			
-		}catch( Exception e){
-			 throw e;
+		} catch (Exception e) {
+			throw e;
 		}
 		return true;
-	}		
-	 
+	}
+	
 	
 
 }

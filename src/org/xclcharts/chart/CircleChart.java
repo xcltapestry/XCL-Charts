@@ -28,6 +28,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.RectF;
+import android.util.Log;
+
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.CirChart;
 import org.xclcharts.renderer.XEnum;
@@ -44,6 +46,8 @@ import java.util.List;
 
 public class CircleChart extends CirChart {
 
+	private static final String TAG = "CircleChart";
+	
     private String mDataInfo = "";
     private XEnum.CircleType mDisplayType = XEnum.CircleType.FULL;
     //内环填充颜色
@@ -234,24 +238,23 @@ public class CircleChart extends CirChart {
             }
 
         } catch (Exception e) {
-
+        	Log.e(TAG,e.toString());
         }
-
     }
 
-
-    public boolean render(Canvas canvas) throws Exception {
-        // TODO Auto-generated method stub
-
-        try {
-            super.render(canvas);
-            //绘制图表
-            renderPlot(canvas);
-
-        } catch (Exception e) {
-            throw e;
-        }
-        return true;
-    }
+    @Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{
+		// 绘制图表
+		try {
+			super.postRender(canvas);
+			
+			renderPlot(canvas);
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+    
 
 }

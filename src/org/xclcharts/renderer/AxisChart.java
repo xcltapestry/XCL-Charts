@@ -195,8 +195,6 @@ public class AxisChart extends XChart {
 			perRight -= scrPer;		
 		}			
 		
-		
-
 		if(perLeft > 0)
 		{
 			float rederLeft = Math.round( height / 100 * perLeft);		
@@ -250,13 +248,10 @@ public class AxisChart extends XChart {
 		return( Math.abs(plotArea.getBottom() - plotArea.getTop()));
 	}
 	
-
-	public boolean render(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stub
 	
+	protected boolean postRender(Canvas canvas) throws Exception
+	{
 		try {
-		
-			super.render(canvas);
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
@@ -264,12 +259,26 @@ public class AxisChart extends XChart {
 			//画奇偶行填充,横竖网格线			
 			// plotGrid.render(canvas);
 			//画图例Legend
-
+	
 			//绘制标题
 			renderTitle(canvas);
 			//绘制图例
 			legend.setRange(this);
 			legend.render(canvas);
+		
+		}catch( Exception e){
+			 throw e;
+		}
+		return true;
+	}
+
+	public boolean render(Canvas canvas) throws Exception {
+		// TODO Auto-generated method stub
+	
+		try {
+		
+			super.render(canvas);
+			
 			
 			
 		}catch( Exception e){
