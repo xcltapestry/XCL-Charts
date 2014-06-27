@@ -59,6 +59,9 @@ public class Bar {
 	//是否显示柱形顶上文字标签
 	private boolean mShowItemLabel = false;		
 	
+	//柱形间距所占比例
+	private double mBarSpacePercentage = 0.2;
+	
 	public Bar()
 	{				
 		initPaint();
@@ -149,6 +152,25 @@ public class Bar {
 	}
 	
 	/**
+	 * 设置柱形间空白所占的百分比
+	 * @param percentage 百分比
+	 */
+	public void setBarSpacePercentage(double percentage)
+	{
+		this.mBarSpacePercentage = percentage;
+	}
+	
+	/**
+	 * 得到柱形间空白所占的百分比
+	 * @return 百分比
+	 */
+	public double getBarSpacePercentage()
+	{
+		return mBarSpacePercentage;
+	}
+	
+	
+	/**
 	 * 返回是否显示柱形顶部标签
 	 * @return 是否显示
 	 */
@@ -165,8 +187,9 @@ public class Bar {
 	 */	
 	protected List<Integer> calcBarHeightAndMargin(float YSteps,int barNumber)
 	{
+			//int barPercentage = 1 - mBarSpacePercentage;					
 			int labelBarTotalHeight = (int) Math.round(YSteps * 0.9);
-			int barTotalInnerMargin = (int) Math.round(labelBarTotalHeight * 0.2);				
+			int barTotalInnerMargin = (int) Math.round(labelBarTotalHeight * mBarSpacePercentage); //0.2);				
 			int barInnerMargin = barTotalInnerMargin / barNumber;
 			int barHeight = (labelBarTotalHeight - barTotalInnerMargin) / barNumber;
 			
@@ -185,8 +208,13 @@ public class Bar {
 	 */
 	protected List<Integer> calcBarWidthAndMargin(float XSteps,int barNumber)
 	{
+			//int barPercentage = 1 - mBarSpacePercentage;
+		
 			int labelBarTotalWidth = (int) Math.round(XSteps * 0.9); 	
-			int barTotalInnerMargin = (int) Math.round(labelBarTotalWidth * 0.2); 	
+			//int barTotalInnerMargin = (int) Math.round(labelBarTotalWidth * 0.2); 	
+			
+			int barTotalInnerMargin = (int) Math.round(labelBarTotalWidth * mBarSpacePercentage);
+			
 			int barTotalWidth = labelBarTotalWidth - barTotalInnerMargin;	   	
 			
 			int barInnerMargin = barTotalInnerMargin / barNumber;
