@@ -71,7 +71,6 @@ http://www.oschina.net/p/xcl-charts
  <img src="http://img.blog.csdn.net/20140611213922187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart" />
 
  <br/>
- 
   <img src="http://img.blog.csdn.net/20140611213949078?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart 横向" />
   &nbsp;
  <img src="http://img.blog.csdn.net/20140611214040453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D bar chart" />
@@ -83,17 +82,13 @@ http://www.oschina.net/p/xcl-charts
 <br/>
 
   <img src="http://img.blog.csdn.net/20140611214155312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="half circle chart" />
-  &nbsp;
+ 
  <img src="http://img.blog.csdn.net/20140611214208953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Gauge Chart" />
-<br/>
 
  <img src="http://img.blog.csdn.net/20140615222523593?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart" />
- &nbsp;
-  <img src="http://img.blog.csdn.net/20140616233734500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="area chart" />
+
  <br/>
 <img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />  
- &nbsp;
  <img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" />  
-  &nbsp;
   <img src="http://img.blog.csdn.net/20140628212346140" alt="Line chart(开放式)" />  
 <br/>
