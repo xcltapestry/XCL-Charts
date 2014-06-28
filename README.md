@@ -18,13 +18,14 @@ https://github.com/xcltapestry/XCL-Charts <br/>
 https://git.oschina.net/xclcharts/XCL-Charts <br/>
 开源中国项目地址:
 http://www.oschina.net/p/xcl-charts
- <br/>
- <b>
-    &nbsp;&nbsp;&nbsp;&nbsp;类库如何使用的例子工程，放在Demo目录下的XCL-Charts-demo.zip中，解压后，将此工程文件导入到工作区即可。
-  里面针对每种图，都有相应的例子，供实际使用时参考。
+<br/>
+<b>
+&nbsp;&nbsp;&nbsp;&nbsp;类库如何使用的例子工程，放在Demo目录下的XCL-Charts-demo.zip中，解压后，将此工程导入到工作区即可。
+里面针对每种图，都有相应的例子供实际使用时参考。
  </b>
  <br/>
-    &nbsp;&nbsp;&nbsp;&nbsp;ps: 因代码更新比较频繁，建议用<b>jar</b>方式使用图表库。
+    &nbsp;&nbsp;&nbsp;&nbsp;ps: 因代码更新比较频繁，建议用<b>jar</b>方式使用图表库。<br/>同时欢迎大家在此库基础上增加不同类型的图表和相关例子，或分享您的改进。
+	<br/>人人都可以参与开源，只要你有心。
  <br/>
 
  <b>例图:</b><br/> 
@@ -56,39 +57,30 @@ http://www.oschina.net/p/xcl-charts
   
   <img src="http://img.blog.csdn.net/20140611213655281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="spline chart" />
   &nbsp;
-   <img src="http://img.blog.csdn.net/20140616233734500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="area chart" />
-
-  
+   <img src="http://img.blog.csdn.net/20140616233734500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="area chart" />  
   <br/>
   
-  <img src="http://img.blog.csdn.net/20140611213735312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="rose chart" />
+  <img src="http://img.blog.csdn.net/20140628215606296" alt="rose chart" />
    &nbsp;
  <img src="http://img.blog.csdn.net/20140611213841375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart 1" />
- <br/>
- 
+ <br/> 
    <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2" />
  &nbsp;
  <img src="http://img.blog.csdn.net/20140611213922187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart" />
-
  <br/>
   <img src="http://img.blog.csdn.net/20140611213949078?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart 横向" />
   &nbsp;
  <img src="http://img.blog.csdn.net/20140611214040453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D bar chart" />
- <br/>
- 
+ <br/> 
   <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D bar chart" />
  &nbsp;
   <img src="http://img.blog.csdn.net/20140611214132625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="circle chart" /> 
 <br/>
-
-  <img src="http://img.blog.csdn.net/20140611214155312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="half circle chart" />
- 
+ <img src="http://img.blog.csdn.net/20140611214155312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="half circle chart" /> 
  <img src="http://img.blog.csdn.net/20140611214208953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Gauge Chart" />
-
  <img src="http://img.blog.csdn.net/20140615222523593?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart" />
-
  <br/>
-<img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />  
- <img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" />  
-  <img src="http://img.blog.csdn.net/20140628212346140" alt="Line chart(开放式)" />  
+<img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />
+<img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" /> 
+<img src="http://img.blog.csdn.net/20140628212346140" alt="Line chart(开放式)" /> 
 <br/>
