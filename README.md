@@ -44,20 +44,18 @@ http://www.oschina.net/p/xcl-charts
     </p>
   <br/>
     <p>
-   <img src="http://img.blog.csdn.net/20140611213451328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="pie chart" />  
-  <img src="http://img.blog.csdn.net/20140611213512890?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D Pie chart" />
-  <img src="http://img.blog.csdn.net/20140611214132625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="circle chart" /> 
+<img src="http://img.blog.csdn.net/20140611213451328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="pie chart" />
+<img src="http://img.blog.csdn.net/20140611213512890?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D Pie chart" />
+<img src="http://img.blog.csdn.net/20140611214132625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="circle chart" /> 
     </p>
-  <br/>  
-    <p>
-  <img src="http://img.blog.csdn.net/20140611213603093?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="dount chart" />  
- <img src="http://img.blog.csdn.net/20140611213636640?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="line chart" />
-    </p>
-  <br/>  
-  <img src="http://img.blog.csdn.net/20140611213655281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="spline chart" />
-   <img src="http://img.blog.csdn.net/20140616233734500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="area chart" />  
-  <br/> 
-    <p>
+<br/>
+<p>
+<img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />
+<img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" /> 
+<img src="http://img.blog.csdn.net/20140628212346140" alt="Line chart(开放式)" /> 
+ </p> 
+  <br/>    
+<p>
  <img src="http://img.blog.csdn.net/20140628215606296" alt="rose chart" />
  <img src="http://img.blog.csdn.net/20140611213841375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart 1" /> 
  <img src="http://img.blog.csdn.net/20140611213922187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart" />
@@ -73,10 +71,12 @@ http://www.oschina.net/p/xcl-charts
  <img src="http://img.blog.csdn.net/20140611214208953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Gauge Chart" />
  <img src="http://img.blog.csdn.net/20140615222523593?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart" />
    </p>
+ <br/>  
+<p>
+<img src="http://img.blog.csdn.net/20140611213603093?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="dount chart" />
+<img src="http://img.blog.csdn.net/20140611213636640?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="line chart" />
+</p>
  <br/>
-   <p>
-<img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />
-<img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" /> 
-<img src="http://img.blog.csdn.net/20140628212346140" alt="Line chart(开放式)" /> 
-  </p>
-<br/>
+<img src="http://img.blog.csdn.net/20140611213655281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="spline chart" />
+<img src="http://img.blog.csdn.net/20140616233734500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="area chart" />  
+<br/> 
