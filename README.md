@@ -22,9 +22,9 @@ http://www.oschina.net/p/xcl-charts
  <b>
     &nbsp;&nbsp;&nbsp;&nbsp;类库如何使用的例子工程，放在Demo目录下的XCL-Charts-demo.zip中，解压后，将此工程文件导入到工作区即可。
   里面针对每种图，都有相应的例子，供实际使用时参考。
-  </b>
-  <br/>
-    &nbsp;&nbsp;&nbsp;&nbsp;ps: 因代码更新比较频繁，建议用jar方式使用。
+ </b>
+ <br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;ps: 因代码更新比较频繁，建议用<b>jar</b>方式使用图表库。
  <br/>
 
  <b>例图:</b><br/> 
