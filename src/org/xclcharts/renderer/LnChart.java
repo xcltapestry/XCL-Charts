@@ -48,11 +48,6 @@ import android.graphics.Path;
 
 public class LnChart extends AxisChart {
 
-	// 格式化柱形上的标签
-	private IFormatterDoubleCallBack mItemLabelFormatter;
-	// 绘制Key的画笔
-	private Paint mPaintKeyLabel = null;
-
 	// 是否显示顶轴
 	private boolean mTopAxisVisible = true;
 	// 是否显示底轴
@@ -64,22 +59,10 @@ public class LnChart extends AxisChart {
 	}
 
 	private void initChart() {
-		mPaintKeyLabel = new Paint();
-		mPaintKeyLabel.setTextSize(18);
-		mPaintKeyLabel.setStyle(Style.FILL);
-		mPaintKeyLabel.setAntiAlias(true);
-		
-		showKeyLabels();
+		//默认显示Key
+		plotKey.showKeyLabels();
 	}
 
-	/**
-	 * 开放Key绘制画笔
-	 * 
-	 * @return 画笔
-	 */
-	public Paint getDataKeyLabelPaint() {
-		return mPaintKeyLabel;
-	}
 
 	/**
 	 * 竖向柱形图 Y轴的屏幕高度/数据轴的刻度标记总数 = 步长
@@ -146,6 +129,10 @@ public class LnChart extends AxisChart {
 		for (int i = 0; i <= tickCount; i++) {
 			// if (i == 0)
 			// continue;
+			
+			//将当前为第几个tick传递轴，用以区分是否为主明tick
+			dataAxis.setAxisTickCurrentID(i);
+			
 			// 依起始数据坐标与数据刻度间距算出上移高度
 			// currentY = (float) Math.rint(plotBottom - i * YSteps);
 			currentY = (float) (plotBottom - i * YSteps);
@@ -163,9 +150,11 @@ public class LnChart extends AxisChart {
 							plotRight, currentY);
 				}
 
-				if (i > 0 && i < tickCount)
+				if (i > 0 && i < tickCount){
+					plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
 					plotGrid.renderGridLinesHorizontal(canvas,plotLeft, currentY,
 							plotRight, currentY);
+				}
 			}
 			dataAxis.renderAxisHorizontalTick(canvas,plotLeft, currentY,
 					Float.toString(currentTickLabel));
@@ -197,6 +186,10 @@ public class LnChart extends AxisChart {
 		for (int i = 0; i <= tickCount; i++) {
 			if (i == 0)
 				continue;
+			
+			//将当前为第几个tick传递轴，用以区分是否为主明tick
+			dataAxis.setAxisTickCurrentID(i);
+			
 			currentY = Math.round(plotArea.getBottom() - i * YSteps);
 			// 标签
 			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
@@ -265,151 +258,6 @@ public class LnChart extends AxisChart {
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(),
 				plotArea.getBottom(), plotArea.getRight(),
 				plotArea.getBottom());
-	}
-
-	/**
-	 * 设置标签显示格式
-	 * 
-	 * @param callBack
-	 *            回调函数
-	 */
-	public void setItemLabelFormatter(IFormatterDoubleCallBack callBack) {
-		this.mItemLabelFormatter = callBack;
-	}
-
-	/**
-	 * 返回标签显示格式
-	 * 
-	 * @param value 传入当前值
-	 * @return 显示格式
-	 */
-	protected String getFormatterItemLabel(double value) {
-		String itemLabel = "";
-		try {
-			itemLabel = mItemLabelFormatter.doubleFormatter(value);
-		} catch (Exception ex) {
-			itemLabel = Double.toString(value);
-			// DecimalFormat df=new DecimalFormat("#0");
-			// itemLabel = df.format(value).toString();
-		}
-		return itemLabel;
-	}
-
-	/**
-	 * 绘制线上的坐标点
-	 * 
-	 * @param pDot
-	 * @param left
-	 * @param top
-	 * @param right
-	 * @param bottom
-	 * @param paint
-	 */
-	public void renderDot(Canvas canvas, PlotDot pDot, float left, float top, float right,
-			float bottom, Paint paint) {
-
-		float radius = pDot.getDotRadius();
-		float halfRadius = radius / 2;
-
-		switch (pDot.getDotStyle()) {
-		case DOT:
-			canvas.drawCircle(left + Math.abs(right - left), bottom,
-					radius, paint);
-			break;
-		case RING:
-			int ringRadius = (int) Math.round(radius * 0.7);
-            canvas.drawCircle(left + Math.abs(right - left), bottom,
-					radius, paint);
-
-			Paint paintfill = new Paint();
-			paintfill.setColor(Color.WHITE);
-			paintfill.setStyle(Style.FILL);
-            canvas.drawCircle(left + Math.abs(right - left), bottom,
-					ringRadius, paintfill);
-
-			break;
-		case TRIANGLE: // 等腰三角形
-			float triganaleHeight = radius + radius / 2;
-			Path path = new Path();
-			path.moveTo(right - radius, bottom + halfRadius);
-			path.lineTo(right, bottom - triganaleHeight);
-			path.lineTo(right + radius, bottom + halfRadius);
-			path.close();
-            canvas.drawPath(path, paint);
-			break;
-		// Prismatic
-		case PRISMATIC: // 棱形 Prismatic
-			Path pathPir = new Path();
-			pathPir.moveTo(right - radius, bottom);
-			pathPir.lineTo(right, bottom - radius);
-			pathPir.lineTo(right + radius, bottom);
-			pathPir.lineTo(left + (right - left), bottom + radius);
-			pathPir.close();
-            canvas.drawPath(pathPir, paint);
-			break;
-		case RECT:
-			paint.setStyle(Style.FILL);
-            canvas.drawRect(right - radius, bottom + radius, right + radius,
-					bottom - radius, paint);
-			break;
-		case HIDE:
-		default:
-		}
-	}
-
-	/**
-	 * 绘制Key
-	 * 
-	 * @param dataSet
-	 */
-	protected void renderKey(Canvas canvas, List<LnData> dataSet) {
-		if (isShowKeyLabels() == false)
-			return;
-
-		DrawHelper dw = new DrawHelper();
-		float textHeight = dw.getPaintFontHeight(this.mPaintKeyLabel);
-		float rectWidth = 2 * textHeight;
-		float currentX = 0.0f;
-		float currentY = 0.0f;
-
-		mPaintKeyLabel.setTextAlign(Align.LEFT);
-		currentX = plotArea.getLeft();
-		currentY = plotArea.getTop() - 5;
-
-		int totalTextWidth = 0;
-		for (LnData cData : dataSet) {
-			mPaintKeyLabel.setColor(cData.getLineColor());
-
-			// 竖屏
-			int keyTextWidth = dw.getTextWidth(mPaintKeyLabel, cData.getLineKey());
-			totalTextWidth += keyTextWidth;
-
-			if (totalTextWidth > plotArea.getWidth()) {
-				currentY -= textHeight;
-				currentX = plotArea.getLeft();
-				totalTextWidth = 0;
-			}
-
-            canvas.drawLine(currentX, currentY - textHeight / 2, currentX
-					+ rectWidth, currentY - textHeight / 2, mPaintKeyLabel);
-
-            canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY
-					- textHeight / 3, mPaintKeyLabel);
-
-			float dotLeft = currentX + rectWidth / 4;
-			float dotRight = currentX + 2 * (rectWidth / 4);
-
-			PlotLine pLine = cData.getPlotLine();
-
-			if (!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE)) {
-				PlotDot pDot = pLine.getPlotDot();
-				renderDot(canvas, pDot, dotLeft, currentY, dotRight, currentY
-						- textHeight / 2, pLine.getDotPaint()); // 标识图形
-			}
-
-			currentX += rectWidth + keyTextWidth + 10;
-
-		}
 	}
 
 }

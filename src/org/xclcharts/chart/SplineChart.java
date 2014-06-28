@@ -31,6 +31,7 @@ import android.graphics.Canvas;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
+import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Paint.Align;
@@ -117,7 +118,9 @@ public class SplineChart extends LnChart{
 		float axisDataHeight = (float) dataAxis.getAxisRange(); //getAxisDataRange();		
 		
 		//得到标签对应的值数据集		
-		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();		
+		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();	
+		
+		PlotDotRender dotRender = new PlotDotRender();
 															
 	    //画出数据集对应的线条				
 		int j = 0;	
@@ -160,7 +163,7 @@ public class SplineChart extends LnChart{
                 		PlotDot pDot = pLine.getPlotDot();	                
                 		rendEndX  = lineEndX  + pDot.getDotRadius();               		
             			
-                		renderDot(canvas,pDot,
+                		dotRender.renderDot(canvas,pDot,
                 				lineStartX ,lineStartY ,
                 				lineEndX ,lineEndY,
                 				pLine.getDotPaint()); //标识图形            			                	
@@ -204,7 +207,8 @@ public class SplineChart extends LnChart{
 			renderLine(canvas, mDataset.get(i),"DOT2LABEL");
 			lstKey.add(mDataset.get(i));
 		}	
-		renderKey(canvas,lstKey);
+		//key
+		plotKey.renderLineKey(canvas,lstKey);
 	}
 	
 	@Override

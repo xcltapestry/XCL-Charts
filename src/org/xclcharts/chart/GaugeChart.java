@@ -45,6 +45,7 @@ import android.util.Pair;
 public class GaugeChart extends CirChart{
 	
 	/////////////////////////////////////////////
+	private String TAG = "GaugeChart";
 	//刻度步长
 	private double mTickSteps = 10d;
 	//标签
@@ -290,9 +291,9 @@ public class GaugeChart extends CirChart{
 	{		
 		if(mPointerAgent > 180) //爆表了 
 		{
-			Log.e("ERROR-GaugeChart","爆表了 !!!");
+			Log.e(TAG,"爆表了 !!!");
 		}else if(mPointerAgent < 0){
-			Log.e("ERROR-GaugeChart","负角度???!!!");
+			Log.e(TAG,"负角度???!!!");
 		}else{
 			float currentRadius = Math.round(this.getRadius() * 0.9);
 			float calcAgent =  Math.round( mPointerAgent + mStartAgent );
@@ -334,10 +335,10 @@ public class GaugeChart extends CirChart{
 		 {			
 			 Integer agentValue = (Integer) pr.first;					 
 			 if(agentValue < 0){
-					Log.e("ERROR","负角度???!!!");
+					Log.e(TAG,"负角度???!!!");
 			 }else if((totalAgent + agentValue) > 180)
 		     {
-		    	 Log.e("ERROR","输入的角度总计大于mStartAgent度");
+		    	 Log.e(TAG,"输入的角度总计大于mStartAgent度");
 		    	 return ;
 		     }			 			 
 			 mPaintPartitionFill.setColor((Integer) pr.second);				 
@@ -361,8 +362,7 @@ public class GaugeChart extends CirChart{
 	 */
 	protected void renderPlot(Canvas canvas)
 	{
-		try{	
-			
+		try{				
 			 //外环
 			 renderDount(canvas);
 		     //依角度画好刻度线
@@ -379,7 +379,7 @@ public class GaugeChart extends CirChart{
 			
 				
 		}catch( Exception e){
-			Log.e("ERROR",e.toString());
+			Log.e(TAG,e.toString());
 		}
 		
 	}
@@ -388,7 +388,6 @@ public class GaugeChart extends CirChart{
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
 	{
-		// 绘制图表
 		try {
 			super.postRender(canvas);
 			

@@ -31,9 +31,8 @@ import android.graphics.Paint;
  * @ClassName PlotDot
  * @Description  用于处理线条上的点
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
-
 public class PlotDot {
 
 	private Paint mPaintDot = null;

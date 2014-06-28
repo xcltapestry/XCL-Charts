@@ -139,7 +139,8 @@ public class PieChart3D extends PieChart{
            //下次的起始角度  
             mOffsetAgent += currentAgent;  		                    		        
 		}			
-		renderKey(canvas);
+		//图KEY
+		plotKey.renderPieKey(canvas,this.getDataSource());
 	}
 
 }

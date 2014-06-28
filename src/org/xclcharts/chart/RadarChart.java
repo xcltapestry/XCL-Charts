@@ -35,6 +35,7 @@ import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.line.PlotDot;
+import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
@@ -475,11 +476,9 @@ public class RadarChart extends RdChart{
 		
 		if(!plotLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
     	{                		       	
-    		PlotDot pDot = plotLine.getPlotDot();	                
-    		 
-    		//这个地方开放了renderDot()给开发，待优化掉
-			LnChart lnChart = new LnChart();            		
-    		lnChart.renderDot(canvas,pDot,
+    		PlotDot pDot = plotLine.getPlotDot();	  
+    		PlotDotRender dotRender = new PlotDotRender();           		
+			dotRender.renderDot(canvas,pDot,
     				currentX - pDot.getDotRadius() , currentY - pDot.getDotRadius(),
     				currentX , currentY,
     				lineData.getPlotLine().getDotPaint()); //标识图形            			                	

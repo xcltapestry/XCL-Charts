@@ -24,12 +24,11 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.AxisChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
+import org.xclcharts.renderer.line.PlotDesireLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -49,30 +48,22 @@ public class BarChart extends AxisChart {
 
 	// 柱形基类
 	private FlatBar mFlatBar = new FlatBar();
-	// 格式化柱形上的分类
-	private IFormatterDoubleCallBack mItemLabelFormatter;
 	// 数据源
 	private List<BarData> mDataSet;
 	// 确定是竖向柱形图(默认)还是横向
 	private XEnum.Direction mDirection = XEnum.Direction.VERTICAL;
-	
-	//期望线画笔
-	private Paint mPaintDesireLine = null;
-	//期望线集合
-	private List<DesireLineData> mDesireLineDataSet;
-	
+
+	//用于绘制期望线(分界线)
+	private PlotDesireLine mDesireLine = null;	
 
 	public BarChart() {
 		super();
+			
 		//期望线
-		mPaintDesireLine = new Paint();
-		mPaintDesireLine.setAntiAlias(true);
-		mPaintDesireLine.setStrokeWidth(3);
-		mPaintDesireLine.setTextSize(18);
-		mPaintDesireLine.setTextAlign(Align.LEFT);
+		mDesireLine = new PlotDesireLine();
 		
-		// 默认显示Key
-		showKeyLabels();
+		// 默认显示Key		
+		plotKey.showKeyLabels();
 		
 		//默认为竖向设置
 		defaultAxisSetting();	
@@ -92,7 +83,7 @@ public class BarChart extends AxisChart {
 	 */
 	public Paint getDesireLinePaint()
 	{
-		return mPaintDesireLine;
+		return mDesireLine.getDesireLinePaint();
 	}
 
 	/**
@@ -101,30 +92,7 @@ public class BarChart extends AxisChart {
 	 */
 	public void setDesireLines(List<DesireLineData> desireLineDataSet)
 	{
-		mDesireLineDataSet = desireLineDataSet;
-	}
-	
-	/**
-	 * 设置柱形顶上分类显示格式
-	 * @param callBack 回调函数
-	 */
-	public void setItemLabelFormatter(IFormatterDoubleCallBack callBack) {
-		this.mItemLabelFormatter = callBack;
-	}
-
-	/**
-	 * 得到柱形顶上分类显示值
-	 * @param value 值
-	 * @return 转换后的文本分类
-	 */
-	protected String getFormatterItemLabel(double value) {
-		String itemLabel = "";
-		try {
-			itemLabel = mItemLabelFormatter.doubleFormatter(value);
-		} catch (Exception ex) {
-			itemLabel = Double.toString(value);
-		}
-		return itemLabel;
+		mDesireLine.setDesireLines(desireLineDataSet);
 	}
 
 	/**
@@ -209,106 +177,6 @@ public class BarChart extends AxisChart {
 
 
 	/**
-	 * 绘制柱形键值对应的说明描述
-	 * 
-	 * @param barWidth
-	 *            柱形宽度
-	 * @param lableOffsetHeight
-	 *            柱形宽度
-	 */
-	protected void renderDataKey(Canvas canvas) {
-		if (false == this.isShowKeyLabels())
-			return;
-
-		// 图表标题显示位置
-		switch (this.getPlotTitle().getTitleAlign()) {
-		case CENTER:
-		case RIGHT:
-			renderKeyLeft(canvas);
-			break;
-		case LEFT:
-			renderKeyRight(canvas);
-			break;
-		}
-	}
-
-	/**
-	 * 单行可以显示多个Key说明，当一行显示不下时，会自动转到新行
-	 */
-	private void renderKeyLeft(Canvas canvas) {
-
-		DrawHelper dw = new DrawHelper();
-
-		float keyTextHeight = dw.getPaintFontHeight(this
-				.getKeyLabelPaint());
-		float keyLabelsX = this.plotArea.getLeft();
-		float keyLabelsY = this.plotArea.getTop() - keyTextHeight;
-
-		// 宽度是个小约定，两倍文字高度即可
-		float rectWidth = 2 * keyTextHeight;
-		float rectHeight = keyTextHeight;
-		float rectOffset = getKeyLabelMargin();
-		
-		getKeyLabelPaint().setTextAlign(Align.LEFT);
-		for (BarData cData : mDataSet) {
-			String key = cData.getKey();
-			getKeyLabelPaint().setColor(cData.getColor());
-			float strWidth = getKeyLabelPaint().measureText(key, 0,
-					key.length());
-
-			if (keyLabelsX + 2 * rectWidth + strWidth > this.getRight()) {
-				keyLabelsX = this.plotArea.getLeft();
-				keyLabelsY = keyLabelsY + rectHeight * 2;
-			}
-
-			canvas.drawRect(keyLabelsX, keyLabelsY, keyLabelsX + rectWidth,
-					keyLabelsY - rectHeight, getKeyLabelPaint());
-
-			getKeyLabelPaint().setTextAlign(Align.LEFT);
-			dw.drawRotateText(key, keyLabelsX + rectWidth + rectOffset,
-					keyLabelsY, 0, canvas, getKeyLabelPaint());
-
-			keyLabelsX += rectWidth + strWidth + 2 * rectOffset;
-		}
-
-	}
-
-	/**
-	 * 显示在右边时，采用单条说明占一行的方式显示
-	 */
-	private void renderKeyRight(Canvas canvas) {
-		if (false == isShowKeyLabels())
-			return;
-
-		DrawHelper dw = new DrawHelper();
-
-		float keyTextHeight = dw.getPaintFontHeight(getKeyLabelPaint());
-		float keyLablesX = this.plotArea.getRight();
-		float keyLablesY = (float) (this.getTop() + keyTextHeight);
-
-		// 宽度是个小约定，两倍文字高度即可
-		float rectWidth = 2 * keyTextHeight;
-		float rectHeight = keyTextHeight;
-		float rectOffset = getKeyLabelMargin();
-
-		getKeyLabelPaint().setTextAlign(Align.RIGHT);
-		for (BarData cData : mDataSet) {
-			String key = cData.getKey();
-			getKeyLabelPaint().setColor(cData.getColor());
-
-			canvas.drawRect(keyLablesX, keyLablesY, keyLablesX - rectWidth,
-					keyLablesY + rectHeight, getKeyLabelPaint());
-
-			dw.drawRotateText(key, keyLablesX - rectWidth - rectOffset,
-					keyLablesY + rectHeight, 0, canvas,
-					getKeyLabelPaint());
-
-			keyLablesY += keyTextHeight;
-		}
-
-	}
-
-	/**
 	 * 比较传入的各个数据集，找出最大数据个数
 	 * @return 最大数据个数
 	 */
@@ -360,62 +228,6 @@ public class BarChart extends AxisChart {
 	}
 	
 	
-	/**
-	 * 用来画竖向柱形图，横向的期望线
-	 */
-	protected void renderVerticalDesirelinesDataAxis(Canvas canvas) {
-		
-		if(null == mDesireLineDataSet)return;
-		
-		double axisHeight = dataAxis.getAxisMax() - dataAxis.getAxisMin();
-		
-		for(DesireLineData line : mDesireLineDataSet)
-		{			
-			getDesireLinePaint().setColor(line.getColor());
-			getDesireLinePaint().setStrokeWidth(line.getLineStroke());
-			
-			double  postion = getAxisScreenHeight() * ( 
-					(line.getDesireValue() - dataAxis.getAxisMin()) /axisHeight  );
-			
-			float currentY = (float) (plotArea.getBottom() - postion); 
-			
-			canvas.drawLine(plotArea.getLeft(), currentY,
-								  plotArea.getRight(), currentY, this.getDesireLinePaint());
-			
-			if(line.getLabel().length()  > 0)
-				canvas.drawText(line.getLabel(), plotArea.getRight(), currentY, getDesireLinePaint());
-		}
-		
-		
-	}
-	
-	/**
-	 * 用来画横向柱形图，竖向的期望线
-	 */
-	protected void renderHorizontalDesirelinesDataAxis(Canvas canvas) {
-		
-		if(null == mDesireLineDataSet)return;
-		
-		double axisHeight = dataAxis.getAxisMax() - dataAxis.getAxisMin();
-		
-		for(DesireLineData line : mDesireLineDataSet)
-		{			
-			getDesireLinePaint().setColor(line.getColor());
-			getDesireLinePaint().setStrokeWidth(line.getLineStroke());
-			
-			double  postion = getAxisScreenWidth() * ( 
-					(line.getDesireValue() - dataAxis.getAxisMin()) /axisHeight  );
-			
-			float currentX = (float) (plotArea.getLeft() + postion); 
-			
-			canvas.drawLine(currentX, plotArea.getBottom(),
-									currentX, plotArea.getTop(), this.getDesireLinePaint());
-			
-			if(line.getLabel().length()  > 0)
-				canvas.drawText(line.getLabel(), currentX, plotArea.getTop(), getDesireLinePaint());
-		}		
-	}
-
 
 	/**
 	 * 绘制左边竖轴，及上面的刻度线和分类
@@ -594,13 +406,17 @@ public class BarChart extends AxisChart {
 			// 得到分类对应的值数据集
 			BarData bd = mDataSet.get(i);
 			List<Double> barValues = bd.getDataSet();
+			List<Integer> barDataColor = bd.getDataColor();
 			// 设置成对应的颜色
-			mFlatBar.getBarPaint().setColor(bd.getColor());
+			int barDefualtColor = bd.getColor();
+			mFlatBar.getBarPaint().setColor(barDefualtColor);
 
 			// 画同分类下的所有柱形
-			int k = 1;
-			for (Double bv : barValues) {
-				float currLableY = plotArea.getBottom() - (k) * YSteps;
+			for (int j = 0; j < barValues.size(); j++) {
+				Double bv = barValues.get(j);
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
+				
+				float currLableY = plotArea.getBottom() - (j + 1) * YSteps;
 				float drawBarButtomY = currLableY + labelBarUseHeight / 2;
 				drawBarButtomY = drawBarButtomY - (barHeight + barInnerMargin)
 						* currNumber;
@@ -614,14 +430,12 @@ public class BarChart extends AxisChart {
 				mFlatBar.renderBar(plotArea.getLeft(), drawBarButtomY,
 						plotArea.getLeft() + valuePostion, drawBarTopY,
 						canvas);
-
+			
 				// 柱形顶端标识
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 						plotArea.getLeft() + valuePostion,
 						(float) Math.round(drawBarButtomY - barHeight / 2),
 						canvas);
-
-				k++;
 			}
 			currNumber++;
 		}
@@ -634,9 +448,10 @@ public class BarChart extends AxisChart {
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
 				plotArea.getRight(), plotArea.getBottom());
 		// 画Key说明
-		renderDataKey(canvas);
+		plotKey.renderBarKey(canvas, this.mDataSet);
 		//画横向柱形图，竖向的期望线
-		renderHorizontalDesirelinesDataAxis(canvas);
+		mDesireLine.setHorizontalPlot(dataAxis, plotArea, this.getAxisScreenWidth());
+		mDesireLine.renderHorizontalDesirelinesDataAxis(canvas);
 	}
 
 	/**
@@ -666,13 +481,17 @@ public class BarChart extends AxisChart {
 			// 得到分类对应的值数据集
 			BarData bd = mDataSet.get(i);
 			List<Double> barValues = bd.getDataSet();
+			//用于处理单独针对某些柱子指定颜色的情况
+			List<Integer> barDataColor = bd.getDataColor();			
 			// 设成对应的颜色
-			mFlatBar.getBarPaint().setColor(bd.getColor());
-
+			int barDefualtColor = bd.getColor();
+			mFlatBar.getBarPaint().setColor(barDefualtColor);
+						
 			// 画出分类对应的所有柱形
 			for (int j = 0; j < barValues.size(); j++) {
 				Double bv = barValues.get(j);
-
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
+				
 				float valuePostion = (float) (axisScreenHeight
 						* ((bv - dataAxis.getAxisMin()) / axisDataHeight));
 
@@ -705,9 +524,34 @@ public class BarChart extends AxisChart {
 				plotArea.getRight(), plotArea.getBottom());
 
 		// 绘制分类各柱形集的说明描述
-		renderDataKey(canvas);
-		//画竖向柱形图，横向的期望线
-		renderVerticalDesirelinesDataAxis(canvas);
+		plotKey.renderBarKey(canvas, this.mDataSet);
+		//画竖向柱形图的期望线		
+		mDesireLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+		mDesireLine.renderVerticalDesirelinesDataAxis(canvas);
+	}
+	
+	/**
+	 * 对于有为单个柱形设置颜色的情况，以这个函数来为画笔设置相应的颜色
+	 * @param paint			柱形画笔
+	 * @param lstDataColor	数据颜色集
+	 * @param currNumber	当前序号
+	 * @param defaultColor	默认的柱形颜色
+	 */
+	protected void setBarDataColor(  Paint paint,
+								   List<Integer> lstDataColor,
+								   int currNumber,								  
+								   int defaultColor)
+	{		
+		if(null != lstDataColor)
+		{
+			if( lstDataColor.size() > currNumber)
+			{
+				paint.setColor( lstDataColor.get(currNumber));	
+			}else{
+				paint.setColor( defaultColor);
+			}					
+		}
+		
 	}
 
 	@Override

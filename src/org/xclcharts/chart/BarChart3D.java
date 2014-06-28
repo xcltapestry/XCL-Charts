@@ -40,13 +40,15 @@ import android.util.Log;
 
 public class BarChart3D extends BarChart{
 	
+	private static final String TAG = "BarChart3D";
+	
 	//3D柱形绘制
 	private Bar3D mBar3D  = new Bar3D();
 
 	public BarChart3D()
 	{
 		super();	
-		showKeyLabels();
+		plotKey.showKeyLabels();
 	}
 	
 	/**
@@ -143,7 +145,7 @@ public class BarChart3D extends BarChart{
 				}
 			}
 		}catch(Exception ex){
-			Log.e("ERROR-Bar3DChart", ex.toString());
+			Log.e(TAG, ex.toString());
 		}
 	}
 	
@@ -207,15 +209,19 @@ public class BarChart3D extends BarChart{
 				//得到分类对应的值数据集
 				BarData bd = chartDataSource.get(i) ; 
 				List<Double> barValues = bd.getDataSet(); 
-				//设置成对应的颜色
-				mBar3D.getBarPaint().setColor(bd.getColor());				
-				int k = 1;						 
+				List<Integer> barDataColor = bd.getDataColor();	
+				//设置成对应的颜色	
+				int barDefualtColor = bd.getColor();
+				mBar3D.getBarPaint().setColor(barDefualtColor);
+				
+									
 			    //画同分类下的所有柱形
-				for(Double bv : barValues)
-                {																																						
-					float drawBarButtomY = plotArea.getBottom() - (k) * YSteps + labelBarUseHeight / 2;							
-					drawBarButtomY = drawBarButtomY - (barHeight + barInnerMargin ) * currNumber;
+				for (int j = 0; j < barValues.size(); j++) {
+					Double bv = barValues.get(j);					
+					setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
 					
+					float drawBarButtomY = plotArea.getBottom() - (j+1) * YSteps + labelBarUseHeight / 2;							
+					drawBarButtomY = drawBarButtomY - (barHeight + barInnerMargin ) * currNumber;					
 																				
                 	//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来
                 	float valuePostion = (float) ( 
@@ -233,13 +239,12 @@ public class BarChart3D extends BarChart{
 	                mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
 	                		 (float) (plotArea.getLeft() + valuePostion)  , 
 	                		 (float) (drawBarButtomY - barHeight/2), canvas);
-                               
-                	k++;
                 }
 				currNumber ++;
 			}	
 			//画Key说明
-			renderDataKey(canvas);
+			//renderDataKey(canvas);
+			plotKey.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	
@@ -289,8 +294,9 @@ public class BarChart3D extends BarChart{
 		renderVerticalBarCategoryAxis(canvas);
 		
 		//分类轴(X 轴) 且在这画柱形    
-		 float initX= plotArea.getLeft();
-		 float currentX = initX;		
+		 float currentX = 0.0f;
+		 float initX = currentX = plotArea.getLeft();
+				
 			 		
 		 //得到分类轴数据集
 		List<String> dataSet =  categoryAxis.getDataSet();
@@ -323,17 +329,20 @@ public class BarChart3D extends BarChart{
 			//得到分类对应的值数据集				
 			BarData bd = chartDataSource.get(i);
 			List<Double> barValues = bd.getDataSet();
+			List<Integer> barDataColor = bd.getDataColor();	
 			//设成对应的颜色
-			mBar3D.getBarPaint().setColor(bd.getColor());				
-			
-		   int k=0;					 
+			int barDefualtColor = bd.getColor();
+			mBar3D.getBarPaint().setColor(barDefualtColor);
+					 
 		   //画出分类下的所有柱形
-		   for(Double bv : barValues)
-           {
+			 for (int j = 0; j < barValues.size(); j++) {
+			   Double bv = barValues.get(j);
+			   setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
+			   
 				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来					
 				float valuePostion = (float)( plotArea.getHeight() * 
 											( (bv - dataAxis.getAxisMin() ) / dataAxis.getAxisRange())) ;              																
-				float drawBarStartX = initX + (k + 1) * XSteps - labelBarUseWidth / 2;
+				float drawBarStartX = initX + (j + 1) * XSteps - labelBarUseWidth / 2;
 				//计算同分类多柱 形时，新柱形的起始X坐标
 				drawBarStartX = drawBarStartX + (barWidth + barInnerMargin ) * currNumber;
 				//计算同分类多柱 形时，新柱形的结束X坐标
@@ -344,7 +353,7 @@ public class BarChart3D extends BarChart{
            								(float)(plotArea.getBottom()  -  valuePostion) ,
 				               			drawBarEndX, 
 				               			plotArea.getBottom(),
-				               			bd.getColor(), canvas);
+				               			mBar3D.getBarPaint().getColor(), canvas);
         
 			
            		//在柱形的顶端显示上柱形的当前值
@@ -352,13 +361,13 @@ public class BarChart3D extends BarChart{
 			                		 (float)(drawBarStartX + barWidth/2) ,	
 			                		 (float)(plotArea.getBottom()  -  valuePostion),  
 			                		 canvas);
-				k++;                
            }	
 			currNumber ++;				
 		}
 	 
 		//绘制分类各柱形集的说明描述
-		renderDataKey(canvas);
+		//renderDataKey(canvas);
+		plotKey.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	

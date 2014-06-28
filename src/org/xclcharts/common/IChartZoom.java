@@ -27,7 +27,7 @@ package org.xclcharts.common;
  * @InterfaceName IChartZoom
  * @Description  用于放大缩小图表的接口
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 public interface IChartZoom {

@@ -25,14 +25,16 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import android.graphics.Canvas;
-
-import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.line.PlotDesireLine;
 import org.xclcharts.renderer.line.PlotDot;
+import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
+import org.xclcharts.renderer.plot.PlotKeyRender;
 
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
 /**
@@ -49,8 +51,9 @@ public class LineChart extends LnChart{
 	//数据轴显示在左边还是右边
 	private XEnum.LineDataAxisLocation mDataAxisPosition = XEnum.LineDataAxisLocation.LEFT;
 
-	// 格式化线中点的标签显示
-	  private IFormatterDoubleCallBack mDotLabelFormatter;
+	//用于绘制期望线(分界线)
+	private PlotDesireLine mDesireLine = null;
+	
 	
 	public LineChart()
 	{
@@ -60,6 +63,7 @@ public class LineChart extends LnChart{
 
 	private void initChart()
 	{		
+		mDesireLine = new PlotDesireLine();
 		defaultAxisSetting();		
 	}
 	
@@ -69,9 +73,7 @@ public class LineChart extends LnChart{
 	 */
 	public void setDataAxisLocation(XEnum.LineDataAxisLocation position)
 	{
-		mDataAxisPosition = position;
-		
-		
+		mDataAxisPosition = position;				
 		defaultAxisSetting();
 	}
 	
@@ -108,35 +110,25 @@ public class LineChart extends LnChart{
 		public void setDataSource(LinkedList<LineData> dataSet)
 		{
 			this.mDataSet = dataSet;		
-		}
-						
+		}						
+			
 		
 		/**
-		 * 设置线上点标签显示格式
-		 * 
-		 * @param callBack
-		 *            回调函数
+		 * 开放期望线画笔
+		 * @return 画笔
 		 */
-		public void setDotLabelFormatter(IFormatterDoubleCallBack callBack) {
-			this.mDotLabelFormatter = callBack;
+		public Paint getDesireLinePaint()
+		{
+			return mDesireLine.getDesireLinePaint();
 		}
-
+		
 		/**
-		 * 返回线上点标签显示格式
-		 * 
-		 * @param value 传入当前值
-		 * @return 显示格式
+		 * 设置期望线值
+		 * @param desireLineDataSet 期望线数据集合
 		 */
-		protected String getFormatterDotLabel(double value) {
-			String itemLabel = "";
-			try {
-				itemLabel = mDotLabelFormatter.doubleFormatter(value);
-			} catch (Exception ex) {
-				itemLabel = Double.toString(value);
-				// DecimalFormat df=new DecimalFormat("#0");
-				// itemLabel = df.format(value).toString();
-			}
-			return itemLabel;
+		public void setDesireLines(List<DesireLineData> desireLineDataSet)
+		{
+			mDesireLine.setDesireLines(desireLineDataSet);
 		}
 		
 		private void renderLine(Canvas canvas, LineData bd,String type)
@@ -159,6 +151,7 @@ public class LineChart extends LnChart{
 			
 			List<Double> chartValues = bd.getLinePoint();			
 			int j = 0;	
+			PlotDotRender dotRender = new PlotDotRender();
 			
 		    //画线
 			for(Double bv : chartValues)
@@ -196,7 +189,7 @@ public class LineChart extends LnChart{
 	                		PlotDot pDot = pLine.getPlotDot();	                
 	                		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
 	            			
-	                		renderDot(canvas,pDot,
+	                		dotRender.renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,
 	                				pLine.getDotPaint()); //标识图形            			                	
@@ -205,8 +198,8 @@ public class LineChart extends LnChart{
 	            		
 	            		if(bd.getLabelVisible())
 	                	{
-	                		//fromatter
-	                		canvas.drawText(getFormatterDotLabel(bv), //Double.toString(bv) ,
+	                		//fromatter	            			
+	                		canvas.drawText(this.getFormatterItemLabel(bv), 
 	    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
 	                	}
 	            	}else{
@@ -242,37 +235,34 @@ public class LineChart extends LnChart{
 			{								
 				renderLine(canvas,mDataSet.get(i),"LINE");
 				renderLine(canvas,mDataSet.get(i),"DOT2LABEL");
-				lstKey.add(mDataSet.get(i));
+				String key = mDataSet.get(i).getLineKey();				
+				if("" != key)
+					lstKey.add(mDataSet.get(i));
 			}			
-			renderKey(canvas, lstKey);
+			
+			if(null == plotKey) plotKey = new PlotKeyRender(this);
+					plotKey.renderLineKey(canvas, lstKey);
 		}	
 		 
 		
 		//绘制图表	
 		@Override
 		protected boolean postRender(Canvas canvas) throws Exception
-		{				
+		{			
+			boolean ret = true;
 			try{
 				super.postRender(canvas);	
 				renderVerticalPlot(canvas);
+				
+				//画横向柱形图，竖向的期望线
+				mDesireLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				ret = mDesireLine.renderVerticalDesirelinesDataAxis(canvas);
+				
 			} catch (Exception e) {
 				throw e;
 			}
-			return true;
+			return ret;
 		}
 		
-		/*
-		public boolean render(Canvas canvas) throws Exception {
-			// TODO Auto-generated method stub
-		
-			try {
-				super.render(canvas);
-			
-			}catch( Exception e){
-				 throw e;
-			}
-			return true;
-		}
-		 */
 		
 }

@@ -60,8 +60,7 @@ public class DataAxisRender extends DataAxis implements IRender{
 	 */
 	public double getAixTickCount()
 	{
-		double tickCount = Math.ceil( getAxisRange() / getAxisSteps() ) ;
-		
+		double tickCount = Math.ceil( getAxisRange() / getAxisSteps() ) ;		
 		return tickCount;
 	}
 	
@@ -83,13 +82,9 @@ public class DataAxisRender extends DataAxis implements IRender{
 	{
 		if(isDetailMode())
 		{			
-			if(mCurrentId >= getDetailModeSteps() && 
-					mCurrentId%getDetailModeSteps() == 0 ) 
-			{
-				return true;
-			}else{
+			if(mCurrentId < getDetailModeSteps() 
+					|| mCurrentId%getDetailModeSteps() != 0 )
 				return false;
-			}
 		}		
 		return true;		
 	}
@@ -106,40 +101,48 @@ public class DataAxisRender extends DataAxis implements IRender{
 	}
 	
 	/**
-	 * 用于处理明细横式下，细分部份的标签不显示出来
+	 * 用于处理明细模式下，细分部份的标签不显示出来
 	 */
 	@Override
 	public boolean getTickLabelVisible() {		
 		return (!isPrimaryTick()?false:super.getTickLabelVisible());		
 	}
 			
-	/*
+
+	/**
 	 * 绘制横向刻度标记
+	 * @param canvas	画布
+	 * @param centerX	中心点X坐标
+	 * @param centerY	中心点Y坐标
+	 * @param text		文本
 	 */
 	public 	void renderAxisHorizontalTick(Canvas canvas, float centerX,float centerY,String text)
 	{		
 		if(getVisible()) renderHorizontalTick(canvas, centerX,centerY,text);
 	}
 
+
 	/**
 	 * 绘制竖向刻度标记
-	 * @param centerX
-	 * @param centerY
-	 * @param text
+	 * @param canvas	画布
+	 * @param centerX	中心点X坐标
+	 * @param centerY	中心点Y坐标
+	 * @param text		文本
 	 */
 	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
 	{
 		if(getVisible())
 			renderVerticalTick(canvas,centerX,centerY,text);
 	}
-	
-	
+		
+
 	/**
 	 * 绘制轴
-	 * @param startX
-	 * @param startY
-	 * @param stopX
-	 * @param stopY
+	 * @param canvas 画布
+	 * @param startX 起始点X坐标
+	 * @param startY 起始点Y坐标
+	 * @param stopX	  结束点X坐标	
+	 * @param stopY	  结束点Y坐标
 	 */
 	public void renderAxis(Canvas canvas, float startX,float startY,float stopX,float stopY)
 	{

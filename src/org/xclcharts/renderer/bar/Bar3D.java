@@ -56,7 +56,7 @@ public class Bar3D extends Bar{
 	private Paint mPaintBase3D = null;
 	//3D效果厚度
 	private int mAxisBaseThickness = 20;
-	
+	//底盘颜色
 	private int mAxisBaseColor = (int)Color.rgb(73, 172, 72);
 	
 	DrawHelper mDrawHelper = new DrawHelper();
@@ -68,8 +68,6 @@ public class Bar3D extends Bar{
 		mPaintBase = new Paint();
 		mPaintBase3D = new Paint();		
 	}
-
-	
 
 	/**
 	 * 得到水平偏移量
@@ -360,7 +358,8 @@ public class Bar3D extends Bar{
 	 * @param baseBottom	底部Y坐标
 	 * @param canvas	画布
 	 */
-	 public void render3DYAxis(float baseLeft,float baseTop,float baseRight,float baseBottom,						
+	 public void render3DYAxis(float baseLeft,float baseTop,
+			 					float baseRight,float baseBottom,						
 			  					Canvas canvas) 
 	{
 		//浅色
@@ -415,7 +414,7 @@ public class Bar3D extends Bar{
 		 * @param thickness 厚度
 		 */
 		public void setThickness(int thickness) {
-			this.mThickness = mThickness;
+			this.mThickness =  thickness;
 		}
 
 		/**
@@ -431,7 +430,7 @@ public class Bar3D extends Bar{
 		 * @param angle 角度
 		 */
 		public void setAngle(int angle) {
-			this.mAngle = mAngle;
+			this.mAngle = angle;
 		}
 		
 		/**

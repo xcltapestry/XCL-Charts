@@ -24,6 +24,8 @@ package org.xclcharts.renderer;
 
 import android.graphics.Canvas;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.plot.PlotKey;
+import org.xclcharts.renderer.plot.PlotKeyRender;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -53,6 +55,9 @@ public class CirChart extends XChart{
 	//用于计算的辅助类
 	protected MathHelper mCalc = new MathHelper();
 	
+	//图的Key基类
+	protected PlotKeyRender plotKey = null;
+	
 		
 	public CirChart()
 	{
@@ -64,11 +69,15 @@ public class CirChart extends XChart{
 		//标签显示位置
 		mLabelLocation = XEnum.ArcLabelLocation.CENTER;
 		
+		//key值
+		plotKey = new PlotKeyRender(this);
+		
 		mPaintLabel = new Paint();
 		mPaintLabel.setColor(Color.BLACK);
 		mPaintLabel.setTextSize(18);
 		mPaintLabel.setAntiAlias(true);
 	}
+	
 	
 	@Override
 	protected void calcPlotRange()
@@ -82,6 +91,15 @@ public class CirChart extends XChart{
 			this.mRadius =  this.plotArea.getHeight() / 2;
 		}
 	}
+	
+	/**
+	 * 开放图的key基类
+	 * @return	基类
+	 */
+	public PlotKey getPlotKey()
+	{
+		return plotKey;
+	}	
 
 	
 	/**

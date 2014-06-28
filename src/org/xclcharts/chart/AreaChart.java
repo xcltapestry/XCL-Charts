@@ -29,6 +29,7 @@ import android.graphics.Canvas;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
+import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Color;
@@ -127,6 +128,7 @@ public class AreaChart extends LnChart{
         PlotLine pLine = bd.getPlotLine(); 
         //设置当前填充色
         mPaintAreaFill.setColor(bd.getAreaFillColor());
+        PlotDotRender dotRender = new PlotDotRender();      
         
 		int j = 0;					 
 		for(Double bv : chartValues)
@@ -167,7 +169,7 @@ public class AreaChart extends LnChart{
             		PlotDot pDot = pLine.getPlotDot();	              
             		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
         			
-            		renderDot(canvas,pDot,
+            		dotRender.renderDot(canvas,pDot,
             				lineStartX ,lineStartY ,
             				lineEndX ,lineEndY,
             				pLine.getDotPaint()); //标识图形            			                	
@@ -215,7 +217,7 @@ public class AreaChart extends LnChart{
 			lstKey.add(mDataset.get(i));
 		}
 			
-		renderKey(canvas, lstKey);
+		plotKey.renderLineKey(canvas, lstKey);
 	}
 	
 

@@ -133,7 +133,8 @@ public class StackBarChart  extends BarChart{
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
 								  plotArea.getRight(),  plotArea.getBottom());	
 		//画Key说明
-		renderDataKey(canvas);
+		//renderDataKey(canvas);
+		plotKey.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	@Override
@@ -195,7 +196,8 @@ public class StackBarChart  extends BarChart{
 			 dataAxis.renderAxis(canvas,plotArea.getLeft(),  plotArea.getBottom(),
 		 			   			 plotArea.getRight(),  plotArea.getBottom());
 			 
-			 renderDataKey(canvas);
+			 //renderDataKey(canvas);
+			 plotKey.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	

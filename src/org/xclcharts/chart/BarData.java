@@ -37,6 +37,8 @@ public class BarData {
 
 		//线上每个点的值
 		private List<Double> mDataSet;
+		
+		private List<Integer> mDataColor;
 
 		//值
 		private String mKey;
@@ -65,7 +67,7 @@ public class BarData {
 		/**
 		 * 构成一条完整的数据集合
 		 * @param key	键值	
-		 * @param dataSeries 对应的数据
+		 * @param dataSeries 对应的数据集
 		 */
 		public BarData(String key,Double dataSeries) 
 		{
@@ -76,6 +78,41 @@ public class BarData {
 			setDataSet(valueList);
 			
 			setColor(Color.BLACK);
+		}
+		
+		
+		/**
+		 * 可用于处理单独针对某些柱子指定颜色的情况，常见于标签单柱的情况
+		 * @param key			键值	
+		 * @param dataSeries	对应的数据集
+		 * @param dataColor		每个数据柱形所对应的显示颜色
+		 * @param color			柱形颜色
+		 */
+		public BarData(String key,List<Double> dataSeries,
+								  List<Integer> dataColor,Integer color) 
+		{
+			setKey(key);		
+			setColor(color);
+			setDataSet(dataSeries);
+			setDataColor(dataColor);
+		}
+		
+		/**
+		 * 设置每个数据柱形所对应的显示颜色
+		 * @param dataColor 柱形颜色集
+		 */
+		public void setDataColor(List<Integer> dataColor) 
+		{
+			mDataColor = dataColor;
+		}
+		
+		/**
+		 * 每个数据柱形所对应的显示颜色
+		 * @return 柱形颜色集
+		 */
+		public List<Integer> getDataColor()
+		{
+			return mDataColor;
 		}
 		
 		

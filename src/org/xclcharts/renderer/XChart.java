@@ -345,7 +345,7 @@ public class XChart implements IRender {
 	
 	/**
 	 * 返回图中心点坐标
-	 * @return
+	 * @return 坐标
 	 */
 	public double[] getCenterXY()
 	{
@@ -389,7 +389,6 @@ public class XChart implements IRender {
 	/**
 	 * 设置图的背景色
 	 * 
-	 * @param visible 是否绘制背景
 	 * @param color   背景色
 	 */
 	public void setBackgroundColor(int color) {

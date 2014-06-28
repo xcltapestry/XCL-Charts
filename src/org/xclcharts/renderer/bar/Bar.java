@@ -33,6 +33,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.util.Log;
 
 /**
  * @ClassName Bar
@@ -42,6 +43,8 @@ import android.graphics.Paint.Style;
  */
 
 public class Bar {
+	
+	private static final String TAG ="Bar";
 	
 	//确定是横向柱形还是竖向柱形图
 	private XEnum.Direction mBarDirection = XEnum.Direction.VERTICAL;
@@ -157,7 +160,12 @@ public class Bar {
 	 */
 	public void setBarSpacePercentage(double percentage)
 	{
-		this.mBarSpacePercentage = percentage;
+		if(percentage < 0d)
+		{
+			Log.e(TAG, "此比例不能为负数噢!");
+		}else{
+			this.mBarSpacePercentage = percentage;
+		}
 	}
 	
 	/**
