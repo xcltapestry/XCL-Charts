@@ -24,11 +24,10 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import android.graphics.Canvas;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 
-import android.graphics.Paint.Align;
+import android.graphics.Canvas;
 
 /**
  * @ClassName StackBarChart

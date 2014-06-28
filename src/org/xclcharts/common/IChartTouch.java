@@ -25,14 +25,13 @@ package org.xclcharts.common;
 import android.view.MotionEvent;
 
 /**
- * @InterfaceName IFormatterDoubleCallBack
+ * @InterfaceName IChartTouch
  * @Description  用于手势操作图表的接口
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public interface IChartTouch {
 
 	public void handleTouch(MotionEvent event);
-	//public void setLocation(int x,int y);
 }

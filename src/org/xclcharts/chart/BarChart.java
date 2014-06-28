@@ -39,7 +39,7 @@ import android.util.Log;
  * @ClassName BarChart
  * @Description  柱形图的基类,包含横向和竖向柱形图
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class BarChart extends AxisChart {
@@ -196,8 +196,6 @@ public class BarChart extends AxisChart {
 	 * @return Y轴步长
 	 */
 	private float getVerticalYSteps(double tickCount) {
-		//return (float) Math.floor(getAxisScreenHeight() / tickCount);
-		
 		return (float)(getAxisScreenHeight() / tickCount);
 	}
 

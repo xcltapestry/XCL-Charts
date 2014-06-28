@@ -39,7 +39,7 @@ import android.util.Pair;
  * @ClassName GaugeChart
  * @Description  刻度盘基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class GaugeChart extends CirChart{
