@@ -27,40 +27,56 @@ http://www.oschina.net/p/xcl-charts
  <br/>
 
  <b>部份例图:</b><br/> 
+ <p>
  <img src="http://img.blog.csdn.net/20140611213206921?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart 竖向" />
    <img src="http://img.blog.csdn.net/20140611213310468?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart" />
   <img src="http://img.blog.csdn.net/20140611213416625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="横向3D bar chart " />  
+  </p>
   <br/>
+    <p>
  <img src="http://img.blog.csdn.net/20140611213359250?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D bar chart" />
  <img src="http://img.blog.csdn.net/20140611214040453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart" />
+   </p>
  <br/>
+   <p>
  <img src="http://img.blog.csdn.net/20140611213233687?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart 横向" />
  <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
-   <br/>
+    </p>
+  <br/>
+    <p>
    <img src="http://img.blog.csdn.net/20140611213451328?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="pie chart" />  
-   &nbsp;
   <img src="http://img.blog.csdn.net/20140611213512890?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="3D Pie chart" />
   <img src="http://img.blog.csdn.net/20140611214132625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="circle chart" /> 
+    </p>
   <br/>  
+    <p>
   <img src="http://img.blog.csdn.net/20140611213603093?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="dount chart" />  
-  &nbsp;
  <img src="http://img.blog.csdn.net/20140611213636640?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="line chart" />
+    </p>
   <br/>  
   <img src="http://img.blog.csdn.net/20140611213655281?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="spline chart" />
    <img src="http://img.blog.csdn.net/20140616233734500?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="area chart" />  
   <br/> 
+    <p>
  <img src="http://img.blog.csdn.net/20140628215606296" alt="rose chart" />
  <img src="http://img.blog.csdn.net/20140611213841375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart 1" /> 
  <img src="http://img.blog.csdn.net/20140611213922187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart" />
+   </p>
  <br/>
+   <p>
  <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />
  <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart 横向" />
-<br/>
+  </p>
+ <br/>
+   <p>
  <img src="http://img.blog.csdn.net/20140611214155312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="half circle chart" /> 
  <img src="http://img.blog.csdn.net/20140611214208953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Gauge Chart" />
  <img src="http://img.blog.csdn.net/20140615222523593?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart" />
+   </p>
  <br/>
+   <p>
 <img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />
 <img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" /> 
 <img src="http://img.blog.csdn.net/20140628212346140" alt="Line chart(开放式)" /> 
+  </p>
 <br/>
