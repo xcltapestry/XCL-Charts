@@ -24,25 +24,19 @@ package org.xclcharts.chart;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.MathHelper;
-import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.RdChart;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.axis.DataAxis;
-import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
+import org.xclcharts.renderer.axis.DataAxis;
+import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.util.Log;
 
@@ -51,7 +45,7 @@ import android.util.Log;
  * @ClassName RadarChart
  * @Description  雷达图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class RadarChart extends RdChart{
 	
@@ -62,10 +56,7 @@ public class RadarChart extends RdChart{
 	private CategoryAxisRender CategoryAxis  = null;			
 	//数据源
 	private List<RadarData> mDataSet;	
-				
-	//用于计算的辅助类
-	private MathHelper mCalc = new MathHelper();
-	
+					
 	//依次存下每个圈上，每个标签节点的X,Y坐标
 	private Float[][] mArrayDotX = null;
 	private Float[][] mArrayDotY= null;
@@ -316,8 +307,8 @@ public class RadarChart extends RdChart{
 		mArrayLabelX=new Float[dataAxisTickCount][labelsCount]; 
 		mArrayLabelY=new Float[dataAxisTickCount][labelsCount]; 
 		
-		DrawHelper dw = new DrawHelper();
-		int labelHeight = dw.getPaintFontHeight(getLabelPaint());
+
+		int labelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
 		float labelRadius = this.getRadius() + labelHeight;
 				
 		for(int i=0; i < dataAxisTickCount;i++) //数据轴
@@ -329,18 +320,19 @@ public class RadarChart extends RdChart{
 				offsetAgent = initOffsetAgent +   pAngle * j;
 				
 				//计算位置
-		        mCalc.calcArcEndPointXY(cirX,cirY,curRadius, offsetAgent + pAngle); 				    
+				MathHelper.getInstance().calcArcEndPointXY(
+							cirX,cirY,curRadius, offsetAgent + pAngle); 				    
 		        //点的位置
-		        mArrayDotX[i][j] = mCalc.getPosX();
-		        mArrayDotY[i][j] = mCalc.getPosY();	
+		        mArrayDotX[i][j] = MathHelper.getInstance().getPosX();
+		        mArrayDotY[i][j] = MathHelper.getInstance().getPosY();	
 		        
 		        //记下每个标签对应的圆心角
 		        if(0 == i) mArrayLabelAgent[j] =  offsetAgent + pAngle ;
 		        
 		        //外围标签位置
-		        mCalc.calcArcEndPointXY(cirX,cirY,labelRadius, offsetAgent + pAngle); 	    
-		        mArrayLabelX[i][j] = mCalc.getPosX();
-		        mArrayLabelY[i][j] = mCalc.getPosY();	
+		        MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,labelRadius, offsetAgent + pAngle); 	    
+		        mArrayLabelX[i][j] = MathHelper.getInstance().getPosX();
+		        mArrayLabelY[i][j] = MathHelper.getInstance().getPosY();	
 		        
 		        
 			} //end for labelCount					
@@ -374,11 +366,12 @@ public class RadarChart extends RdChart{
 			   float curRadius = (float) (getRadius() * per);
 						   
 			   //计算位置
-		        mCalc.calcArcEndPointXY(cirX,cirY,curRadius, mArrayLabelAgent[i]); 
+			   MathHelper.getInstance().calcArcEndPointXY(
+					   	cirX,cirY,curRadius, mArrayLabelAgent[i]); 
 		        
 		        //依Path还是Line来决定画线风格
-		        arrayDataX[i] = mCalc.getPosX();
-		        arrayDataY[i] = mCalc.getPosY();
+		        arrayDataX[i] = MathHelper.getInstance().getPosX();
+		        arrayDataY[i] = MathHelper.getInstance().getPosY();
 		        
 		        i++; //标签
 			}
@@ -405,7 +398,7 @@ public class RadarChart extends RdChart{
 	{
 		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
-		DrawHelper drawHelper = new DrawHelper();		
+		
 		
 		for(int p=0;p< arrayDataX.length;p++)
 		{
@@ -413,7 +406,7 @@ public class RadarChart extends RdChart{
 				initX = startX = arrayDataX[p];
 				initY = startY = arrayDataY[p];
 			}else{	
-				drawHelper.drawLine(lineData.getLineStyle(), startX, startY,
+				DrawHelper.getInstance().drawLine(lineData.getLineStyle(), startX, startY,
 						arrayDataX[p], arrayDataY[p],
 						canvas, lineData.getPlotLine().getLinePaint());
 				
@@ -427,8 +420,8 @@ public class RadarChart extends RdChart{
 			
 		}
 		//收尾
-		drawHelper.drawLine(lineData.getLineStyle(), startX, startY,
-				initX, initY,canvas, lineData.getPlotLine().getLinePaint());
+		DrawHelper.getInstance().drawLine(lineData.getLineStyle(), startX, startY,
+						initX, initY,canvas, lineData.getPlotLine().getLinePaint());
 		
 	}
 	
@@ -477,8 +470,8 @@ public class RadarChart extends RdChart{
 		if(!plotLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
     	{                		       	
     		PlotDot pDot = plotLine.getPlotDot();	  
-    		PlotDotRender dotRender = new PlotDotRender();           		
-			dotRender.renderDot(canvas,pDot,
+    		          		
+    		PlotDotRender.getInstance().renderDot(canvas,pDot,
     				currentX - pDot.getDotRadius() , currentY - pDot.getDotRadius(),
     				currentX , currentY,
     				lineData.getPlotLine().getDotPaint()); //标识图形            			                	

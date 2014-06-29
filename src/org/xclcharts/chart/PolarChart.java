@@ -24,19 +24,16 @@ package org.xclcharts.chart;
 
 
 /**
- * @ClassName PieChart
- * @Description  雷达图基类
+ * @ClassName Polar
+ * @Description  极限图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * Radar Chart  雷达图
-Polar Chart  极地图
+ * 
  */
 public class PolarChart {
 	
 	public PolarChart()
 	{
-		super();
-		
-		
+		super();				
 	}
 	
 

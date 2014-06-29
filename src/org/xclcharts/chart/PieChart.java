@@ -23,6 +23,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 
 import android.graphics.Canvas;
@@ -34,7 +35,7 @@ import android.util.Log;
  * @ClassName PieChart
  * @Description  饼图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class PieChart extends CirChart{
 	
@@ -124,19 +125,21 @@ public class PieChart extends CirChart{
 			//偏移圆心点位置(默认偏移半径的1/10)
 	    	float newRadius = radius /10;
 	    	 //计算百分比标签
-	        mCalc.calcArcEndPointXY(cirX,cirY,newRadius,offsetAgent + curretAgent/2); 	
+	    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
+	    							newRadius,offsetAgent + curretAgent/2); 	
 	        
-	        float arcLeft = mCalc.getPosX() - radius;  
-	        float arcTop  = mCalc.getPosY() - radius ;  
-	        float arcRight = mCalc.getPosX() + radius ;  
-	        float arcBottom = mCalc.getPosY() + radius ;  
+	        float arcLeft = MathHelper.getInstance().getPosX() - radius;  
+	        float arcTop  = MathHelper.getInstance().getPosY() - radius ;  
+	        float arcRight = MathHelper.getInstance().getPosX() + radius ;  
+	        float arcBottom = MathHelper.getInstance().getPosY() + radius ;  
 	        RectF arcRF1 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
 	        
 	        //在饼图中显示所占比例  
 	        canvas.drawArc(arcRF1, offsetAgent, curretAgent, true, paintArc);
 	        
 	        //标签
-	        renderLabel(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+	        renderLabel(canvas,cData.getLabel(),MathHelper.getInstance().getPosX(), 
+	        									MathHelper.getInstance().getPosY(),
 	        			radius,offsetAgent,curretAgent);	   
 	        
 		}catch( Exception e){
@@ -213,7 +216,8 @@ public class PieChart extends CirChart{
 			if( totalAgent > 360)
 			{
 				//圆心角总计大于360度
-				Log.e(TAG,"传入参数不合理，圆心角总计大于360度. 现有圆心角合计:"+Float.toString(totalAgent));
+				Log.e(TAG,"传入参数不合理，圆心角总计大于360度. 现有圆心角合计:"
+							+Float.toString(totalAgent));
 				return false;
 			}
 		}

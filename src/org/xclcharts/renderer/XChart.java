@@ -26,7 +26,7 @@ package org.xclcharts.renderer;
  * @ClassName XChart
  * @Description 所有图表类的基类,定义了图表区，标题，背景等
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 import org.xclcharts.common.DrawHelper;
@@ -78,13 +78,13 @@ public class XChart implements IRender {
 	}
 
 	private void initChart() {
-		
+		//默认的原点坐标
 		mTranslateXY[0] = 0.0f;
 		mTranslateXY[1] = 0.0f;
 		
 		// 图表
 		plotArea = new PlotAreaRender();
-		plotGrid = new PlotGridRender();
+		plotGrid = new PlotGridRender();		
 		plotTitle = new PlotTitleRender();
 		plotTitle.setTitlePosition(XEnum.Position.CENTER);
 		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
@@ -410,7 +410,7 @@ public class XChart implements IRender {
 	 * 计算图的显示范围
 	 */
 	protected void calcPlotRange() {
-		DrawHelper dw = new DrawHelper();
+		
 
 		// 图的内边距属性，默认按竖屏算
 		float perLeft = mPaddingLeft;
@@ -439,10 +439,11 @@ public class XChart implements IRender {
 		float subtitleHeight = 0.0f;
 		
 		if (plotTitle.getTitle().length() > 0) {
-			titleHeight = dw.getPaintFontHeight(plotTitle.getTitlePaint());
+			titleHeight = DrawHelper.getInstance().getPaintFontHeight(
+												plotTitle.getTitlePaint());
 		}
 		if (plotTitle.getSubtitle().length() > 0) {
-			subtitleHeight = dw.getPaintFontHeight(plotTitle
+			subtitleHeight = DrawHelper.getInstance().getPaintFontHeight(plotTitle
 					.getTitlePaint());
 		}
 		renderTop = Math.round(this.mHeight / 100 * perTop);

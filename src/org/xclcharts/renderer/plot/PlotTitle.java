@@ -30,7 +30,7 @@ import android.graphics.Paint;
  * @ClassName PlotTitle
  * @Description 标题类,定制其属性
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 public class PlotTitle {	
@@ -43,7 +43,8 @@ public class PlotTitle {
 	private Paint mSubtitlePaint = null;	
 	//图表标题显示位置
 	private XEnum.ChartTitleAlign mChartTitleAlign = XEnum.ChartTitleAlign.CENTER;	
-	//标题的显示位置(TOP,CENTER,BOTTOM)即是否靠最上面，还是Chart top与Plot top的中间位置，还是PLOT TOP的位置
+	//标题的显示位置(TOP,CENTER,BOTTOM)即是否靠最上面，
+	//还是Chart top与Plot top的中间位置，还是PLOT TOP的位置
 	private XEnum.Position mTitlePosition = XEnum.Position.CENTER;
 	
 	public PlotTitle()

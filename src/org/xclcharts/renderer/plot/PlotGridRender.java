@@ -33,10 +33,8 @@ import android.graphics.Canvas;
  */
 
 public class PlotGridRender extends PlotGrid {
-	
-	private DrawHelper mDrawHelper = new DrawHelper();
-	private boolean mMajorTickLine = false;
-	
+		
+	private boolean mMajorTickLine = false;	
 	private final int BLOB_WIDTH =  2;;
 	
 	public PlotGridRender()
@@ -60,7 +58,8 @@ public class PlotGridRender extends PlotGrid {
 	 * @param right		右边X坐标
 	 * @param bottom	底上Y坐标
 	 */
-	public void renderOddRowsFill(Canvas canvas,float left,float top,float right,float bottom)
+	public void renderOddRowsFill(Canvas canvas,
+									float left,float top,float right,float bottom)
 	{
 		 if(null != canvas && isShowOddRowBgColor())
 		 {
@@ -75,7 +74,8 @@ public class PlotGridRender extends PlotGrid {
 	 * @param right		右边X坐标
 	 * @param bottom	 底上Y坐标
 	 */
-	public void renderEvenRowsFill(Canvas canvas,float left,float top,float right,float bottom)
+	public void renderEvenRowsFill(Canvas canvas,
+									float left,float top,float right,float bottom)
 	{
 		 if(null != canvas && isShowEvenRowBgColor())
 		 {				
@@ -92,7 +92,8 @@ public class PlotGridRender extends PlotGrid {
 	 * @param stopX		终止点X坐标
 	 * @param stopY		终止点Y坐标
 	 */
-	public void renderGridLinesHorizontal(Canvas canvas,float startX,float startY,float stopX,float stopY)
+	public void renderGridLinesHorizontal(Canvas canvas,
+								float startX,float startY,float stopX,float stopY)
 	{
 		 if(null != canvas &&this.isShowHorizontalLines()) 
 		 {	
@@ -103,8 +104,9 @@ public class PlotGridRender extends PlotGrid {
 				 getHorizontalLinePaint().setStrokeWidth( initWidth + BLOB_WIDTH );	
 			 }
 			 
-			 mDrawHelper.drawLine(this.getHorizontalLineStyle(), startX, startY, stopX, stopY,
-					canvas, getHorizontalLinePaint());
+			 DrawHelper.getInstance().drawLine(this.getHorizontalLineStyle(), 
+									 startX, startY, stopX, stopY,
+									canvas, getHorizontalLinePaint());
 			 
 			 if(mMajorTickLine)getHorizontalLinePaint().setStrokeWidth(initWidth);
 		 }
@@ -117,7 +119,8 @@ public class PlotGridRender extends PlotGrid {
 	 * @param stopX		终止点X坐标
 	 * @param stopY		终止点Y坐标
 	 */
-	public void renderGridLinesVertical(Canvas canvas,float startX,float startY,float stopX,float stopY)
+	public void renderGridLinesVertical(Canvas canvas,
+							float startX,float startY,float stopX,float stopY)
 	{
 		 if(null != canvas && isShowVerticalLines()) 
 		 {						
@@ -129,8 +132,9 @@ public class PlotGridRender extends PlotGrid {
 			 }
 			 
 			 //默认是minor
-			 mDrawHelper.drawLine(this.getVerticalLineStyle(), startX, startY, stopX, stopY,
-					canvas, getVerticalLinePaint());
+			 DrawHelper.getInstance().drawLine(this.getVerticalLineStyle(), 
+												 startX, startY, stopX, stopY,
+												canvas, getVerticalLinePaint());
 			
 			 if(mMajorTickLine)getVerticalLinePaint().setStrokeWidth(initWidth);
 			

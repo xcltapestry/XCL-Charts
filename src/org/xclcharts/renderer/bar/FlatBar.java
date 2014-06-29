@@ -34,7 +34,7 @@ import android.graphics.Shader;
  * @ClassName FlatBar
  * @Description  平面柱形类，对柱形加了一点渲染效果
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class FlatBar extends Bar{
@@ -94,8 +94,8 @@ public class FlatBar extends Bar{
 	private void setBarTo2D(float left,float top,float right ,float bottom)
 	{
 		int barColor = getBarPaint().getColor();				
-		DrawHelper dw = new DrawHelper();
-		int lightColor = dw.getLightColor(barColor,150);
+		
+		int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
 		
 		float width = Math.abs(right - left);
 		float height = Math.abs(bottom - top);

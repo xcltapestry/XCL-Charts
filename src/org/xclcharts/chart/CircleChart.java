@@ -37,11 +37,10 @@ import org.xclcharts.renderer.XEnum;
 import java.util.List;
 
 
-/**
- * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *         * MODIFIED    YYYY-MM-DD   REASON
+/**    
  * @ClassName CircleChart
  * @Description 圆形图基类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
 public class CircleChart extends CirChart {
@@ -199,10 +198,9 @@ public class CircleChart extends CirChart {
             //用于存放当前百分比的圆心角度
             float currentAgent = 0.0f;
 
-            DrawHelper dw = new DrawHelper();
 
-            int infoHeight = dw.getPaintFontHeight(mPaintDataInfo);
-            int LabelHeight = dw.getPaintFontHeight(getLabelPaint());
+            int infoHeight = DrawHelper.getInstance().getPaintFontHeight(mPaintDataInfo);
+            int LabelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
             int textHeight = LabelHeight + infoHeight;
 
             for (PieData cData : mDataSet) {

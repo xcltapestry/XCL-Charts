@@ -39,7 +39,7 @@ import android.util.Log;
  * @ClassName Bar
  * @Description  柱形基类，定义了柱形的一些属性
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class Bar {
@@ -243,12 +243,10 @@ public class Bar {
 	 */
 	protected void drawBarItemLabel(String text,float x,float y,Canvas canvas)
 	{
-		//在柱形的顶端显示上柱形的当前值
-			
+		//在柱形的顶端显示上柱形的当前值			
 		if(getItemLabelsVisible())
-		{		
-			DrawHelper dw = new DrawHelper();	
-			dw.drawRotateText(text,
+		{				
+			DrawHelper.getInstance().drawRotateText(text,
 								x ,
 								y,
 	            			  getItemLabelRotateAgent(),

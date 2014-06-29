@@ -33,19 +33,16 @@ import android.graphics.Color;
  * @ClassName Legend
  * @Description  图例(Legend)绘制类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 public class LegendRender extends Legend implements IRender{
-	
-	private DrawHelper mDrawHelper =  null;
-	
+			
 	private XChart mChart = null;
 	 	 	
 	public LegendRender()
 	{
 		super();
-		mDrawHelper = new DrawHelper();	
 		
 		getLeftLegendPaint().setTextSize(26);
 		getLeftLegendPaint().setColor((int)Color.rgb(255, 153, 204));
@@ -112,7 +109,8 @@ public class LegendRender extends Legend implements IRender{
 		if( 0 == legend.length() || "" == legend)return;
 		
 		 //计算图列宽度		 
-		 double legendTextHeight = mDrawHelper.getTextWidth(mPaintLeftLegend,legend);
+		 double legendTextHeight = DrawHelper.getInstance().getTextWidth(
+				 										mPaintLeftLegend,legend);
          
 		 //画布与图表1/3的地方显示
 		 float legendTextStartX = (float) Math.round(left + mPaintLeftLegend.getTextSize()) ; 		 
@@ -125,9 +123,10 @@ public class LegendRender extends Legend implements IRender{
          
          for(int i= 0; i< legend.length();i++)
          {        	 
-        	 legendCharHeight = mDrawHelper.getTextWidth(mPaintLeftLegend,legend.substring(i, i+1));        	 
+        	 legendCharHeight = DrawHelper.getInstance().getTextWidth(
+        			 						mPaintLeftLegend,legend.substring(i, i+1));        	 
         	 //绘制文字，旋转-90得到横向效果
-        	 mDrawHelper.drawRotateText(legend.substring(i, i+1),
+        	 DrawHelper.getInstance().drawRotateText(legend.substring(i, i+1),
 					        			 legendTextStartX,legendTextStartY,
 					        			 -90,
 					        			 canvas, mPaintLeftLegend );
@@ -143,31 +142,23 @@ public class LegendRender extends Legend implements IRender{
 	 * @param right		右边X坐标
 	 * @param bottom	下方Y坐标
 	 */
-	public void drawLegendLower(Canvas canvas, String legend,double left,double top,double right,double bottom)
+	public void drawLegendLower(Canvas canvas, String legend,
+								double left,double top,double right,double bottom)
 	{         
          if(null == canvas) return ;
  		 //是否需要绘制图例
  		 if( 0 == legend.length() )return;
  	
  		 //计算图列宽度		 
- 		 double legendTextHeight = mDrawHelper.getPaintFontHeight(getLowerLegendPaint());          
+ 		 double legendTextHeight = DrawHelper.getInstance().getPaintFontHeight(
+ 				 												getLowerLegendPaint());          
  		 //画布与图表1/3的地方显示
- 		 float legendTextStartX =  (float) Math.round(left +  (right - left) / 2) ; 		 
-          //图例Y坐标
- 		// float legendTextStartY = Math.round( bottom - legendTextHeight);
- 		// mDrawHelper.drawRotateText(legend,
-        //		 legendTextStartX,legendTextStartY,0,mCanvas, getLowerLegendPaint());	
- 		 
- 		//显示在 Chart与Plot bottom间的中间位置
- 		//float legendY =(float) Math.abs((bottom - mChart.getPlotArea().getBottom()) / 2 - (legendTextHeight/2));
- 		
+ 		 float legendTextStartX =  (float) Math.round(left +  (right - left) / 2) ; 		  
  		 float plotBottom =  mChart.getPlotArea().getBottom();
  		 float legendY =(float) Math.abs(
  				plotBottom +
- 				 ((bottom - plotBottom) / 2 - (legendTextHeight/2)) );
- 		
- 		
- 		mDrawHelper.drawRotateText(legend,
+ 				 ((bottom - plotBottom) / 2 - (legendTextHeight/2)) ); 		 		
+ 		DrawHelper.getInstance().drawRotateText(legend,
        		 legendTextStartX,legendY,0,canvas, getLowerLegendPaint());
 	}
 	
@@ -179,7 +170,8 @@ public class LegendRender extends Legend implements IRender{
 	 * @param right		右边X坐标
 	 * @param bottom	下方Y坐标
 	 */
-	public void drawRightLegend(Canvas canvas,String legend,double left,double top,double right,double bottom)
+	public void drawRightLegend(Canvas canvas,String legend,
+								double left,double top,double right,double bottom)
 	{			
 		if(null == canvas) return ;
 		
@@ -187,7 +179,8 @@ public class LegendRender extends Legend implements IRender{
 		if( 0 == legend.length() || "" == legend)return;
 		
 		//计算图列高度，超过最大高度要用...表示,这个后面再加		 
-		 int legendTextHeight = mDrawHelper.getTextWidth(mPaintRightLegend,legend);         
+		 int legendTextHeight = DrawHelper.getInstance().getTextWidth(
+				 										mPaintRightLegend,legend);         
 		 //画布与图表1/3的地方显示
 		 float legendTextStartX =  (float) Math.round(right - mPaintRightLegend.getTextSize()) ;         
          //图例Y坐标
@@ -196,9 +189,10 @@ public class LegendRender extends Legend implements IRender{
  		 int legendCharHeight = 0 ;
          for(int i= 0; i< legend.length();i++)
          {        	 
-        	 legendCharHeight = mDrawHelper.getTextWidth(mPaintRightLegend,legend.substring(i, i+1));        	 
+        	 legendCharHeight = DrawHelper.getInstance().getTextWidth(
+        			 						mPaintRightLegend,legend.substring(i, i+1));        	 
         	 //绘制文字，旋转-90得到横向效果
-        	 mDrawHelper.drawRotateText(legend.substring(i, i+1),
+        	 DrawHelper.getInstance().drawRotateText(legend.substring(i, i+1),
         			 legendTextStartX,legendTextStartY,90,canvas, mPaintRightLegend );
         	 legendTextStartY += legendCharHeight;
          }

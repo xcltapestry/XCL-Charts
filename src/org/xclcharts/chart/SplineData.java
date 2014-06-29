@@ -30,7 +30,7 @@ import org.xclcharts.renderer.XEnum;
  * @ClassName SplineData
  * @Description 数据类, 曲线图用这个传数据
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class SplineData extends LnData{
 

@@ -31,14 +31,13 @@ import android.graphics.Paint.Align;
  * @ClassName PlotLines
  * @Description  用于处理线条
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class PlotLine {
 	
 	private Paint mPaintLine = null;
-	private Paint mPaintLabel = null;
-	
+	private Paint mPaintLabel = null;	
 	private PlotDot mPlotDot = null;
 	
 	public PlotLine()

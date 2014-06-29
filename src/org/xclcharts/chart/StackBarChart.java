@@ -33,7 +33,7 @@ import android.graphics.Canvas;
  * @ClassName StackBarChart
  * @Description  堆叠图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class StackBarChart  extends BarChart{
@@ -132,7 +132,6 @@ public class StackBarChart  extends BarChart{
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
 								  plotArea.getRight(),  plotArea.getBottom());	
 		//画Key说明
-		//renderDataKey(canvas);
 		plotKey.renderBarKey(canvas, this.getDataSource());
 	}
 	
@@ -195,7 +194,7 @@ public class StackBarChart  extends BarChart{
 			 dataAxis.renderAxis(canvas,plotArea.getLeft(),  plotArea.getBottom(),
 		 			   			 plotArea.getRight(),  plotArea.getBottom());
 			 
-			 //renderDataKey(canvas);
+			 //key值说明
 			 plotKey.renderBarKey(canvas, this.getDataSource());
 	}
 	

@@ -36,8 +36,7 @@ import android.graphics.Canvas;
  */
 
 public class XYAxis extends Axis {
-
-	protected DrawHelper mDrawHelper = null;
+	
 	// 数据集
 	protected List<String> mDataSet = null;
 
@@ -46,7 +45,7 @@ public class XYAxis extends Axis {
 
 	public XYAxis() {
 		super();
-		mDrawHelper = new DrawHelper();
+		
 	}
 
 	/**
@@ -125,10 +124,10 @@ public class XYAxis extends Axis {
 				itemLabel = text;
 			}
 			
-			float textHeight = this.mDrawHelper.getPaintFontHeight(getAxisTickLabelPaint());
+			float textHeight = DrawHelper.getInstance().getPaintFontHeight(getAxisTickLabelPaint());
 			textHeight /=4;
 			
-			mDrawHelper.drawRotateText(itemLabel, lablesStartX, lablesStartY + textHeight,
+			DrawHelper.getInstance().drawRotateText(itemLabel, lablesStartX, lablesStartY + textHeight,
 					getTickLabelRotateAgent(), canvas,
 					getAxisTickLabelPaint());
 		}
@@ -159,7 +158,7 @@ public class XYAxis extends Axis {
 			{
 				labelsStartY = marksStartY
 						- getTickLabelMargin()
-						- mDrawHelper
+						- DrawHelper.getInstance()
 								.getPaintFontHeight(getAxisTickLabelPaint());
 			}
 			
@@ -183,7 +182,7 @@ public class XYAxis extends Axis {
 			{
 				labelsStartY = marksStopY
 						+ getTickLabelMargin()
-						+ mDrawHelper
+						+ DrawHelper.getInstance()
 								.getPaintFontHeight(getAxisTickLabelPaint())
 						/ 3;
 			}
@@ -210,7 +209,7 @@ public class XYAxis extends Axis {
 				itemLabel = text;
 			}
 
-			mDrawHelper.drawRotateText(itemLabel, centerX, labelsStartY,
+			DrawHelper.getInstance().drawRotateText(itemLabel, centerX, labelsStartY,
 					getTickLabelRotateAgent(), canvas,
 					getAxisTickLabelPaint());
 		}

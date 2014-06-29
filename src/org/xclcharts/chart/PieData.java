@@ -27,7 +27,7 @@ import android.util.Log;
  * @ClassName PieData
  * @Description 数据类, 饼图,rose图,环形图等都用这个传数据
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class PieData {
 

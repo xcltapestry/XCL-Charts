@@ -25,17 +25,6 @@ package org.xclcharts.renderer;
 import java.util.List;
 
 import android.graphics.Canvas;
-import org.xclcharts.chart.LnData;
-import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.renderer.line.PlotDot;
-import org.xclcharts.renderer.line.PlotLine;
-
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
-import android.graphics.Path;
 
 /**
  * @ClassName XChart
@@ -43,7 +32,7 @@ import android.graphics.Path;
  * 
  * @author XiongChuanLiang<br/>
  *         (xcl_168@aliyun.com) 
- *         * MODIFIED YYYY-MM-DD REASON
+ *         
  */
 
 public class LnChart extends AxisChart {
@@ -70,8 +59,6 @@ public class LnChart extends AxisChart {
 	 * @return Y轴步长
 	 */
 	private float getVerticalYSteps(double tickCount) {
-		// float YSteps = (float) Math.r(getAxisScreenHeight()/ tickCount );
-
 		float YSteps = (float) (getAxisScreenHeight() / tickCount);
 		return YSteps;
 	}
@@ -163,10 +150,22 @@ public class LnChart extends AxisChart {
 
 		// top X轴线
 		if (mTopAxisVisible)
+		{		
 			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop);
+		}else{
+			//即如果顶轴不显示的话，补上一条网格线
+			plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
+		}
 
 		// 左Y轴 线
 		dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
+		
+		//如底线不显示，则补上一条网格线
+		if(!dataAxis.getAxisLineVisible() || !dataAxis.getVisible())
+		{
+			plotGrid.renderGridLinesHorizontal(
+					canvas,plotLeft, plotBottom,plotRight, plotBottom);
+		}
 	}
 
 	// 坐标轴是封闭的
@@ -250,14 +249,27 @@ public class LnChart extends AxisChart {
 		}
 		// 右边轴线
 	if (mRightAxisVisible)
+	{
 		categoryAxis.renderAxis(canvas,plotArea.getRight(),
 				plotArea.getBottom(), plotArea.getRight(),
 				plotArea.getTop());
+	}else{
+		//即如果右轴不显示的话，补上一条网格线
+		plotGrid.renderGridLinesVertical(canvas,plotArea.getRight(),
+				plotArea.getBottom(), plotArea.getRight(),plotArea.getTop());
+	}
 
 		// bottom轴 线		
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(),
 				plotArea.getBottom(), plotArea.getRight(),
 				plotArea.getBottom());
+		if(!categoryAxis.getAxisLineVisible() || !categoryAxis.getVisible())
+		{
+			//补上一条网格线
+			plotGrid.renderGridLinesVertical(canvas,plotArea.getLeft(),
+					plotArea.getBottom(), plotArea.getLeft(),plotArea.getTop());
+			
+		}
 	}
 
 }

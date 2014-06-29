@@ -31,7 +31,7 @@ import android.graphics.Paint.Style;
  * @ClassName PlotArea
  * @Description 主图表区类，用于定制其属性
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 public class PlotArea {

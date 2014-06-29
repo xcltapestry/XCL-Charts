@@ -33,7 +33,7 @@ import android.graphics.Paint;
  * @ClassName AreaData
  * @Description  面积图数据传输类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 public class AreaData extends LineData {
 	

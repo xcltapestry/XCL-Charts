@@ -26,7 +26,7 @@ package org.xclcharts.renderer.axis;
  * @ClassName DataAxis
  * @Description 数据轴(Data Axis)基类，主要用于设置步长及最大，最小值
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class DataAxis extends XYAxis {

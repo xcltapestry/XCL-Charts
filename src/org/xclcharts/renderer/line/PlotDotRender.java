@@ -34,10 +34,21 @@ import android.graphics.Paint.Style;
  *  
  */
 public class PlotDotRender {
+	
+	private static PlotDotRender instance = null;
 
 	public PlotDotRender()
 	{
 
+	}
+	
+	public static synchronized PlotDotRender getInstance()
+	{
+		if(instance == null)
+		{
+			instance = new PlotDotRender();
+		}
+		return instance;
 	}
 	
 	/**

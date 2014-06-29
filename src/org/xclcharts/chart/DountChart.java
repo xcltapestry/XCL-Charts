@@ -31,7 +31,7 @@ import android.graphics.Paint;
  * @ClassName DountChart
  * @Description  环形图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class DountChart  extends PieChart{	

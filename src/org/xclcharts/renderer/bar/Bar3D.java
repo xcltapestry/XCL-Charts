@@ -38,7 +38,7 @@ import android.graphics.Shader;
  * @ClassName Bar3D
  * @Description  3d柱形类，增加柱形的一些3D效果处理
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class Bar3D extends Bar{
@@ -59,7 +59,6 @@ public class Bar3D extends Bar{
 	//底盘颜色
 	private int mAxisBaseColor = (int)Color.rgb(73, 172, 72);
 	
-	DrawHelper mDrawHelper = new DrawHelper();
 	
 	public Bar3D()
 	{
@@ -150,7 +149,7 @@ public class Bar3D extends Bar{
 			  Canvas canvas)
 	{
 		//浅色	
-		int lightColor = mDrawHelper.getLightColor(color,mAlpha);
+		int lightColor = DrawHelper.getInstance().getLightColor(color,mAlpha);
 		
 		mPaintBar.setColor(color);		
 		mPaint3D.setColor(lightColor);
@@ -229,7 +228,7 @@ public class Bar3D extends Bar{
 			  Canvas canvas) //	  int color,
 	{
 		//浅色	
-		int baseLightColor = this.mDrawHelper.getLightColor(getAxis3DBaseColor(), mAlpha);		
+		int baseLightColor = DrawHelper.getInstance().getLightColor(getAxis3DBaseColor(), mAlpha);		
 		mPaintBase.setColor(getAxis3DBaseColor());		
 		mPaintBase3D.setColor(baseLightColor);
 		
@@ -303,7 +302,7 @@ public class Bar3D extends Bar{
 			  Canvas canvas)
 	{
 		//浅色
-		int lightColor =  mDrawHelper.getLightColor(color,mAlpha);
+		int lightColor =  DrawHelper.getInstance().getLightColor(color,mAlpha);
 		
 		mPaintBar.setColor(color);		
 		mPaint3D.setColor(lightColor);
@@ -363,7 +362,7 @@ public class Bar3D extends Bar{
 			  					Canvas canvas) 
 	{
 		//浅色
-		int baseLightColor = this.mDrawHelper.getLightColor(getAxis3DBaseColor(), mAlpha);						
+		int baseLightColor = DrawHelper.getInstance().getLightColor(getAxis3DBaseColor(), mAlpha);						
 		mPaintBase.setColor(getAxis3DBaseColor());		
 		mPaintBase3D.setColor(baseLightColor);
 		

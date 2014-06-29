@@ -25,11 +25,12 @@ import android.graphics.Color;
 
 /**
  * @ClassName DesireLineData
- * @Description 期望线类，期望线用于强调目标或底线
+ * @Description 期望线类，期望线用于强调目标或底线,也可用于显示计算出来的平均线之类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * 
  */
 
+//这个应当可以引入PlotLine来定制线类型，引入dot来定制两端或中间的箭头,待看
 public class DesireLineData {
 	
 	private String mLabel = "";

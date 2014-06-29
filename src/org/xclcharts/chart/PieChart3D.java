@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -33,7 +34,7 @@ import android.graphics.RectF;
  * @ClassName Pie3DChart
  * @Description  3D饼图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class PieChart3D extends PieChart{
 	
@@ -87,12 +88,12 @@ public class PieChart3D extends PieChart{
 			    	//偏移圆心点位置(默认偏移半径的1/10)
 			    	float newRadius = radius /10;
 			    	 //计算百分比标签
-			        mCalc.calcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
+			    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
 			        
-			        float arcLeft2 = mCalc.getPosX() - radius;  
-			        float arcTop2  = mCalc.getPosY() - radius ;  
-			        float arcRight2 = mCalc.getPosX() + radius ;  
-			        float arcBottom2 = mCalc.getPosY() + radius ;  
+			        float arcLeft2 = MathHelper.getInstance().getPosX() - radius;  
+			        float arcTop2  = MathHelper.getInstance().getPosY() - radius ;  
+			        float arcRight2 = MathHelper.getInstance().getPosX() + radius ;  
+			        float arcBottom2 = MathHelper.getInstance().getPosY() + radius ;  
 			        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
                     canvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc);
 	            }else{
@@ -122,15 +123,16 @@ public class PieChart3D extends PieChart{
 		    	//偏移圆心点位置(默认偏移半径的1/10)
 		    	float newRadius = radius /10;
 		    	 //计算百分比标签
-		        mCalc.calcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
+		    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,newRadius,mOffsetAgent + currentAgent/2); 	
 		        
-		        float arcLeft2 = mCalc.getPosX() - radius;  
-		        float arcTop2  = mCalc.getPosY() - radius ;  
-		        float arcRight2 = mCalc.getPosX() + radius ;  
-		        float arcBottom2 = mCalc.getPosY() + radius ;  
+		        float arcLeft2 = MathHelper.getInstance().getPosX() - radius;  
+		        float arcTop2  = MathHelper.getInstance().getPosY() - radius ;  
+		        float arcRight2 = MathHelper.getInstance().getPosX() + radius ;  
+		        float arcBottom2 = MathHelper.getInstance().getPosY() + radius ;  
 		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
                 canvas.drawArc(arcRF1, mOffsetAgent, currentAgent, true,paintArc);
-		        renderLabel(canvas,cData.getLabel(),mCalc.getPosX(), mCalc.getPosY(),
+		        renderLabel(canvas,cData.getLabel(),MathHelper.getInstance().getPosX(),
+		        									MathHelper.getInstance().getPosY(),
 		        			radius,mOffsetAgent,currentAgent);                
             }else{
                 canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);

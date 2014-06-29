@@ -23,6 +23,8 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.MathHelper;
+
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -34,7 +36,7 @@ import android.graphics.RectF;
  * @ClassName RoseChart
  * @Description  南丁格尔图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class RoseChart extends PieChart{
 	
@@ -122,10 +124,10 @@ public class RoseChart extends PieChart{
 	            canvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
 				
 	          //计算百分比标签  
-	            this.mCalc.calcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
+	            MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
 	            
 	            //标识  
-	            canvas.drawText(cData.getLabel(),mCalc.getPosX(), mCalc.getPosY() ,getLabelPaint());             
+	            canvas.drawText(cData.getLabel(),MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,getLabelPaint());             
 	         
 	          //下次的起始角度  
 	            mOffsetAgent += percentage;  

@@ -29,7 +29,7 @@ import org.xclcharts.renderer.XEnum;
  * @ClassName LineData
  * @Description 数据类, 折线图,面积图都用这个传数据
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class LineData extends LnData{

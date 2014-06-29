@@ -132,9 +132,7 @@ public class PlotKeyRender extends PlotKey{
 	 */
 	private void renderBarKeyLeft(Canvas canvas) {
 
-		DrawHelper dw = new DrawHelper();
-
-		float keyTextHeight = dw.getPaintFontHeight(this
+		float keyTextHeight = DrawHelper.getInstance().getPaintFontHeight(this
 				.getKeyLabelPaint());
 		float keyLabelsX = mPlotArea.getLeft();
 		float keyLabelsY = mPlotArea.getTop() - keyTextHeight;
@@ -162,7 +160,8 @@ public class PlotKeyRender extends PlotKey{
 					keyLabelsY - rectHeight, getKeyLabelPaint());
 
 			getKeyLabelPaint().setTextAlign(Align.LEFT);
-			dw.drawRotateText(key, keyLabelsX + rectWidth + rectOffset,
+			DrawHelper.getInstance().drawRotateText(
+					key, keyLabelsX + rectWidth + rectOffset,
 					keyLabelsY, 0, canvas, getKeyLabelPaint());
 
 			keyLabelsX += rectWidth + strWidth + 2 * rectOffset;
@@ -179,9 +178,8 @@ public class PlotKeyRender extends PlotKey{
 		if (false == isShowKeyLabels())
 			return;
 
-		DrawHelper dw = new DrawHelper();
-
-		float keyTextHeight = dw.getPaintFontHeight(getKeyLabelPaint());
+		float keyTextHeight = DrawHelper.getInstance().getPaintFontHeight(
+														getKeyLabelPaint());
 		float keyLablesX = mPlotArea.getRight();
 		float keyLablesY = (float) (mXChart.getTop() + keyTextHeight); //mPlotArea
 
@@ -199,9 +197,10 @@ public class PlotKeyRender extends PlotKey{
 			canvas.drawRect(keyLablesX, keyLablesY, keyLablesX - rectWidth,
 					keyLablesY + rectHeight, getKeyLabelPaint());
 
-			dw.drawRotateText(key, keyLablesX - rectWidth - rectOffset,
-					keyLablesY + rectHeight, 0, canvas,
-					getKeyLabelPaint());
+			DrawHelper.getInstance().drawRotateText(
+								key, keyLablesX - rectWidth - rectOffset,
+								keyLablesY + rectHeight, 0, canvas,
+								getKeyLabelPaint());
 
 			keyLablesY += keyTextHeight;
 		}
@@ -220,10 +219,8 @@ public class PlotKeyRender extends PlotKey{
 		
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
 		
-		
-		PlotDotRender dotRender = new PlotDotRender();
-		DrawHelper dw = new DrawHelper();
-		float textHeight = dw.getPaintFontHeight(this.getKeyLabelPaint());
+		float textHeight = DrawHelper.getInstance().getPaintFontHeight(
+													getKeyLabelPaint());
 		float rectWidth = 2 * textHeight;
 		float currentX = 0.0f;
 		float currentY = 0.0f;
@@ -240,7 +237,8 @@ public class PlotKeyRender extends PlotKey{
 			getKeyLabelPaint().setColor(cData.getLineColor());
 
 			// 竖屏
-			int keyTextWidth = dw.getTextWidth(getKeyLabelPaint(), key);
+			int keyTextWidth = DrawHelper.getInstance().getTextWidth(
+													getKeyLabelPaint(), key);
 			totalTextWidth += keyTextWidth;
 
 			if (totalTextWidth > mPlotArea.getWidth()) {
@@ -262,7 +260,7 @@ public class PlotKeyRender extends PlotKey{
 
 			if (!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE)) {
 				PlotDot pDot = pLine.getPlotDot();
-				dotRender.renderDot(canvas, pDot, dotLeft, currentY, dotRight, currentY
+				PlotDotRender.getInstance().renderDot(canvas, pDot, dotLeft, currentY, dotRight, currentY
 						- textHeight / 2, pLine.getDotPaint()); // 标识图形
 			}
 
@@ -284,8 +282,9 @@ public class PlotKeyRender extends PlotKey{
 		
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
 		    
-			DrawHelper dw = new DrawHelper();
-			float textHeight = dw.getPaintFontHeight(this.getKeyLabelPaint());
+			
+			float textHeight = DrawHelper.getInstance().getPaintFontHeight(
+														getKeyLabelPaint());
 			float rectWidth = 2 *textHeight;		
 			float currentX = 0.0f; 				
 			float currentY = 0.0f;
@@ -311,11 +310,13 @@ public class PlotKeyRender extends PlotKey{
 										  currentX - rectWidth, currentY - textHeight, 
 										  getKeyLabelPaint());					
 					
-					canvas.drawText(cData.getKey(),currentX - rectWidth, currentY, getKeyLabelPaint());
+					canvas.drawText(cData.getKey(),currentX - rectWidth,
+													currentY, getKeyLabelPaint());
 					currentY += textHeight;
 				
 				}else{ //竖屏			
-					int keyTextWidth = dw.getTextWidth(getKeyLabelPaint(), cData.getKey());
+					int keyTextWidth = DrawHelper.getInstance().getTextWidth(
+													getKeyLabelPaint(), cData.getKey());
 					totalTextWidth += keyTextWidth;
 					
 					if(totalTextWidth > mPlotArea.getWidth())
@@ -327,7 +328,8 @@ public class PlotKeyRender extends PlotKey{
 					canvas.drawRect(currentX			   , currentY,
 									 currentX + rectWidth, currentY - textHeight, 
 									 getKeyLabelPaint());						
-					canvas.drawText(cData.getKey(), currentX + rectWidth, currentY, getKeyLabelPaint());
+					canvas.drawText(cData.getKey(), currentX + rectWidth,
+														currentY, getKeyLabelPaint());
 					currentX += rectWidth + keyTextWidth + 5;
 				}									
 			}	

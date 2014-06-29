@@ -27,7 +27,7 @@ package org.xclcharts.renderer.axis;
  * @ClassName DataAxis
  * @Description 数据轴(Data Axis)绘制类，负责具体的绘制
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 import org.xclcharts.renderer.IRender;

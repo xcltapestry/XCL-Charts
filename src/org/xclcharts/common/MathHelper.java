@@ -33,10 +33,20 @@ public class MathHelper {
 	//Position位置
 	private float posX = 0.0f;
 	private float posY = 0.0f;
+	
+	private static MathHelper instance = null;
 
 	public MathHelper()
-	{
+	{	
+	}
 	
+	public static synchronized MathHelper getInstance()
+	{
+		 if(instance == null)
+		 {
+			 instance = new MathHelper();
+		 }
+		 return instance;
 	}
 	
 	//依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标

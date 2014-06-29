@@ -23,7 +23,6 @@ package org.xclcharts.renderer.plot;
 
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 
 /**
  * @ClassName PlotKey

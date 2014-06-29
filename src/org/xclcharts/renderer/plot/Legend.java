@@ -21,17 +21,15 @@
  */
 package org.xclcharts.renderer.plot;
 
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
 
 /**
  * @ClassName Legend
  * @Description  图例(Legend)基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
-
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
-
 public class Legend {
 	
 	//图例文字画笔

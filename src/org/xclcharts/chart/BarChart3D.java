@@ -35,7 +35,7 @@ import android.util.Log;
  * @ClassName Bar3DChart
  * @Description  3D柱形图的基类,包含横向和竖向3D柱形图
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class BarChart3D extends BarChart{
@@ -265,9 +265,9 @@ public class BarChart3D extends BarChart{
 	    double baseAngle = mBar3D.getAngle();	
 		double baseOffsetX = mBar3D.getOffsetX(baseTickness,baseAngle);
 		double baseOffsetY = mBar3D.getOffsetY(baseTickness,baseAngle);	
-	
-		DrawHelper dw = new DrawHelper();
-		double labelHeight = dw.getPaintFontHeight(categoryAxis.getAxisTickLabelPaint());
+		
+		double labelHeight = DrawHelper.getInstance().getPaintFontHeight(
+								categoryAxis.getAxisTickLabelPaint());
 		
 		for (int i = 0; i < dataSet.size(); i++) {
 			// 依初超始X坐标与分类间距算出当前刻度的X坐标

@@ -31,7 +31,7 @@ import android.graphics.Paint;
  * @ClassName LnData
  * @Description 线图(曲线图  折线图 面积图)数据基类 
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class LnData {

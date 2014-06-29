@@ -25,6 +25,8 @@ package org.xclcharts.chart;
 import java.util.List;
 
 import android.graphics.Canvas;
+
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 
 import android.graphics.Color;
@@ -43,8 +45,7 @@ import android.util.Pair;
  */
 
 public class GaugeChart extends CirChart{
-	
-	/////////////////////////////////////////////
+		
 	private String TAG = "GaugeChart";
 	//刻度步长
 	private double mTickSteps = 10d;
@@ -249,10 +250,12 @@ public class GaugeChart extends CirChart{
 						cirX + calcRadius, cirY ,this.getLabelPaint());   				
 			}else{				
 				//计算百分比标签
-				mCalc.calcArcEndPointXY(cirX, cirY, calcRadius, 180 + i *stepsAgent); 
+				MathHelper.getInstance().calcArcEndPointXY(
+								cirX, cirY, calcRadius, 180 + i *stepsAgent); 
 				//标识
                 canvas.drawText(label,
-					 mCalc.getPosX(), mCalc.getPosY() ,this.getLabelPaint());   
+                		MathHelper.getInstance().getPosX(), 
+                		MathHelper.getInstance().getPosY() ,this.getLabelPaint());   
 				
 			}
 			i++;
@@ -274,13 +277,14 @@ public class GaugeChart extends CirChart{
 		{
 			if(0 == i)continue;			
 			float agent =  (float) (180 + i *stepsAgent) ;				
-			mCalc.calcArcEndPointXY(cirX, cirY, getRadius(), agent); 			
+			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, getRadius(), agent); 			
 			
-			float startX = mCalc.getPosX();
-			float startY = mCalc.getPosY();
-			mCalc.calcArcEndPointXY(cirX, cirY,tickRadius, agent); 		
+			float startX = MathHelper.getInstance().getPosX();
+			float startY = MathHelper.getInstance().getPosY();
+			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY,tickRadius, agent); 		
 			
-			canvas.drawLine(startX, startY, mCalc.getPosX(), mCalc.getPosY(), mPaintTick);
+			canvas.drawLine(startX, startY, MathHelper.getInstance().getPosX(), 
+											MathHelper.getInstance().getPosY(), mPaintTick);
 		}
 	}	
 	
@@ -300,8 +304,9 @@ public class GaugeChart extends CirChart{
 			float cirX = plotArea.getCenterX();
 			float cirY = plotArea.getCenterY();
 					
-			mCalc.calcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);
-            canvas.drawLine(cirX, cirY, mCalc.getPosX(), mCalc.getPosY(), mPaintPointerLine);
+			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);
+            canvas.drawLine(cirX, cirY, MathHelper.getInstance().getPosX(),
+            							MathHelper.getInstance().getPosY(), mPaintPointerLine);
 		}		
 	}
 	
@@ -354,7 +359,8 @@ public class GaugeChart extends CirChart{
 	 */
 	private void renderDount(Canvas canvas) throws Exception
 	{		
-		 drawPercent(canvas, mPaintDount,plotArea.getCenterX(),plotArea.getCenterY(),getRadius(),180, 180);
+		 drawPercent(canvas, mPaintDount,plotArea.getCenterX(),plotArea.getCenterY(),
+				 			getRadius(),180, 180);
 	}
 	
 	/**

@@ -51,8 +51,7 @@ public class PlotTitleRender extends PlotTitle{
 							 Canvas canvas)
 	{
 		
-		DrawHelper dw = new DrawHelper();
-				
+	
 		int titleHeight = 0;
 		int subtitleHeight = 0;
 		int totalHeight = 0;
@@ -69,11 +68,11 @@ public class PlotTitleRender extends PlotTitle{
 
 		if(getTitle().length() > 0 )
 		{
-			 titleHeight = dw.getPaintFontHeight(this.getTitlePaint());			
+			 titleHeight = DrawHelper.getInstance().getPaintFontHeight(getTitlePaint());			
 		}
 		if(getTitle().length() > 0 )
 		{
-			subtitleHeight = dw.getPaintFontHeight(this.getSubtitlePaint());
+			subtitleHeight = DrawHelper.getInstance().getPaintFontHeight(getSubtitlePaint());
 		}			
 		totalHeight = titleHeight + subtitleHeight;	
 		float pcHeight = Math.abs(plotTop - chartTop) ;		

@@ -42,7 +42,7 @@ public class Axis {
 	//是否显示轴线
 	private boolean mAxisLineVisible = true;	
 	
-	 //数据轴刻度线与边上的标注画笔
+	//数据轴刻度线与边上的标注画笔
 	private Paint mPaintTickMarks = null;
 	private Paint mPaintAxisTickLabel = null;	 
 	 
@@ -52,11 +52,8 @@ public class Axis {
 	 
 	//刻度标记文字旋转角度
 	private float mTickLabelRotateAgent = 0.0f; //-45f;
-	
-	//默认刻度标记文字大小
-	//private static final int mTickLabelsTextSize = 22;
-	
-	 //是否显示轴(包含轴线，刻度线和标签)
+		
+	//是否显示轴(包含轴线，刻度线和标签)
 	private boolean mAxisVisible = true;	
 	 
 	//设置轴线条粗细
@@ -64,8 +61,6 @@ public class Axis {
 	 
 	 //默认刻度线所占宽度
 	private int mTickMarksLength = 15;	
-	//设置刻度线线条粗细
-	//private int mTickMarksLineLength = 5;
 	
 	//刻度标记与轴的间距
 	private int mTickLabelMargin = 10;	
@@ -97,8 +92,7 @@ public class Axis {
 		mPaintAxisTickLabel.setColor(Color.BLACK);	
 		mPaintAxisTickLabel.setTextAlign(Align.RIGHT);
 		mPaintAxisTickLabel.setTextSize(18);
-		mPaintAxisTickLabel.setAntiAlias(true);
-		
+		mPaintAxisTickLabel.setAntiAlias(true);		
 	}
 	
 	/**
@@ -210,25 +204,7 @@ public class Axis {
 	public void setTickLabelRotateAgent(float rotateAgent) {
 		this.mTickLabelRotateAgent = rotateAgent;
 	}
-	
-	/**
-	 * 设置轴线长度大小
-	 * @param size 长度大小
-	 */
-	//public void setAxisLineSize(int size)
-	//{
-	//	mAxisLineWidth = size;
-	//}
-	
-	/**
-	 * 设置轴刻度线长度大小
-	 * @param size 长度大小
-	 */
-	//public void setTickMarksLength(int size)
-	//{
-	//	mTickMarksLength = size;  //默认刻度线所占宽度
-	//}
-	
+		
 	/**
 	 * 返回轴刻度线长度
 	 * @return 刻度线长度
@@ -289,7 +265,6 @@ public class Axis {
 	{
 		return mTickMarksAlign;
 	}
-	
 	
 	
 	

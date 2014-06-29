@@ -2,9 +2,17 @@ package org.xclcharts.common;
 
 public class SysinfoHelper {
 	
-	public SysinfoHelper()
-	{
+	private static SysinfoHelper instance = null;
 	
+	public SysinfoHelper()
+	{	
+	}
+	
+	public static synchronized SysinfoHelper getInstance(){
+		if(instance == null){
+			instance = new SysinfoHelper();
+		}
+		return instance;
 	}
 	
 	

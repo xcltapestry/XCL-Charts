@@ -30,7 +30,7 @@ import android.graphics.Canvas;
  * @ClassName PlotAreaRender
  * @Description 主图表区绘制类，绘制背景等
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- * * MODIFIED    YYYY-MM-DD   REASON
+ * 
  */
 
 public class PlotAreaRender extends PlotArea implements IRender{

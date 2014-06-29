@@ -41,7 +41,7 @@ import android.graphics.Paint.Align;
  * @ClassName LineChart
  * @Description  线图基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class LineChart extends LnChart{
 	
@@ -69,7 +69,7 @@ public class LineChart extends LnChart{
 	
 	/**
 	 * 设置数据轴显示在哪边,默认是左边
-	 * @param position
+	 * @param position 显示位置
 	 */
 	public void setDataAxisLocation(XEnum.LineDataAxisLocation position)
 	{
@@ -151,8 +151,7 @@ public class LineChart extends LnChart{
 			
 			List<Double> chartValues = bd.getLinePoint();			
 			int j = 0;	
-			PlotDotRender dotRender = new PlotDotRender();
-			
+						
 		    //画线
 			for(Double bv : chartValues)
             {																	
@@ -189,7 +188,7 @@ public class LineChart extends LnChart{
 	                		PlotDot pDot = pLine.getPlotDot();	                
 	                		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
 	            			
-	                		dotRender.renderDot(canvas,pDot,
+	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,
 	                				pLine.getDotPaint()); //标识图形            			                	

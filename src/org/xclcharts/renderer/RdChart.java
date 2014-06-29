@@ -30,9 +30,9 @@ import android.graphics.Paint.Style;
 
 /**
  * @ClassName RdChart
- * @Description  钭是雷达图,极限图等图的基类
+ * @Description  这是雷达图,极限图等图的基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class RdChart extends XChart {
@@ -150,7 +150,7 @@ public class RdChart extends XChart {
 	 * 
 	 * @param value 传入当前值
 	 * @return 显示格式
-	 */
+	 */	
 	protected String getFormatterDotLabel(double value) {
 		String itemLabel = "";
 		try {
@@ -162,6 +162,7 @@ public class RdChart extends XChart {
 		}
 		return itemLabel;
 	}
+	
 	
 	/**
 	 * 开放Key画笔

@@ -22,26 +22,24 @@
 package org.xclcharts.renderer;
 
 
-import android.graphics.Canvas;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.renderer.axis.DataAxis;
-import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
+import org.xclcharts.renderer.axis.DataAxis;
+import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.plot.Legend;
 import org.xclcharts.renderer.plot.LegendRender;
 import org.xclcharts.renderer.plot.PlotKey;
 import org.xclcharts.renderer.plot.PlotKeyRender;
 
-import android.graphics.Color;
-import android.graphics.Paint;
+import android.graphics.Canvas;
 
 /**
  * @ClassName AxisChart
  * @Description 所有用到坐标类的图表的基类,主要用于定义和绘制坐标轴
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class AxisChart extends XChart {
@@ -128,8 +126,7 @@ public class AxisChart extends XChart {
 	protected void calcPlotRange()
 	{				
 		super.calcPlotRange();
-		DrawHelper dw = new DrawHelper();
-		
+				
 		//图的内边距属性
 		float perLeft = getPaddingLeft();
 		float perRight = getPaddingRight();
@@ -154,7 +151,7 @@ public class AxisChart extends XChart {
 			float rederLeft = Math.round( height / 100 * perLeft);		
 			if(this.getLegend().getLeftLegend().length() > 0)
 			{	
-				float legendLength = dw.getPaintFontHeight(getLegend().getLeftLegendPaint());
+				float legendLength = DrawHelper.getInstance().getPaintFontHeight(getLegend().getLeftLegendPaint());
 				if(legendLength > rederLeft) rederLeft = legendLength;
 			}
 			plotArea.setLeft( getLeft() + rederLeft);
@@ -165,7 +162,8 @@ public class AxisChart extends XChart {
 			float rederRight =  Math.round( width / 100 * perRight);
 			if(this.getLegend().getRightLegend().length() > 0)
 			{	
-				float legendLength = dw.getPaintFontHeight(getLegend().getRightLegendPaint());	
+				float legendLength = DrawHelper.getInstance().getPaintFontHeight(
+												getLegend().getRightLegendPaint());	
 				if(legendLength > rederRight ) rederRight = legendLength;
 			}
 			plotArea.setRight(this.getRight() - rederRight);	
@@ -176,7 +174,8 @@ public class AxisChart extends XChart {
 			float rederBottom = Math.round( height / 100 * perBottom );
 			if(this.getLegend().getLowerLegend().length() > 0)
 			{			
-				float legendHeight = dw.getPaintFontHeight(getLegend().getLowerLegendPaint());	
+				float legendHeight = DrawHelper.getInstance().getPaintFontHeight(
+													getLegend().getLowerLegendPaint());	
 				if(legendHeight > rederBottom ) rederBottom = legendHeight;
 			}
 			plotArea.setBottom(this.getBottom() - rederBottom);	

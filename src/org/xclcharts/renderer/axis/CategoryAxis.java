@@ -27,7 +27,7 @@ package org.xclcharts.renderer.axis;
  * @ClassName CategoryAxisRender
  * @Description 分类轴(Category Axis)类，设置步长
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 public class CategoryAxis extends XYAxis {
 	

@@ -38,15 +38,35 @@ import android.graphics.PathEffect;
  * @ClassName DrawHelper
  * @Description  集中了绘制中，相关的一些小函数
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 
 public class DrawHelper {
-
-	public DrawHelper()
-	{
 	
+	private static DrawHelper instance = null;
+
+	public DrawHelper(){}
+	
+	//使用懒汉式单例模式
+	public static synchronized DrawHelper getInstance()
+	{
+		if(instance == null){
+			instance = new DrawHelper();
+		}
+		return instance;
+	}
+	
+	/**
+	 * 得到指定范围内的随机数
+	 * @param max	随机数最大值
+	 * @param min	随机数最小值
+	 * @return	返回的随机数
+	 */
+	public int randomNumber(int max,int min)
+	{
+		Random random = new Random();
+		return random.nextInt(max)%(max-min+1) + min;			
 	}
 	
 	

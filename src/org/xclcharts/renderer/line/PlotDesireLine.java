@@ -38,7 +38,7 @@ import org.xclcharts.renderer.plot.PlotAreaRender;
  * @ClassName PlotDesireLine
  * @Description  处理期望线(分界线)的绘制
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
- *  * MODIFIED    YYYY-MM-DD   REASON
+ *  
  */
 
 public class PlotDesireLine {
