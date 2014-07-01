@@ -24,7 +24,7 @@
 		<item value="public" key="access"/>
 		<item value="true" key="version"/>
 		<item value="false" key="nodeprecated"/>
-		<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts\doc" key="destdir"/>
+		<item value="E:\GitHub\GitHub\XCL-Charts\doc" key="destdir"/>
 		<item value="true" key="author"/>
 		<item value="" key="docletname"/>
 		<item value="1.6" key="source"/>
@@ -36,13 +36,23 @@
 		<item value="true" key="fromStandard"/>
 		<item value="-locale en_US -encoding UTF-8 -charset UTF-8 -tag ClassName:a:&quot;ClassName:&quot; -tag Description:a:&quot;Description:&quot; -tag InterfaceName:a:&quot;InterfaceName:&quot;" key="vmparam"/>
 		<section name="projects">
+			<section name="XCL-Charts">
+				<item value="E:\GitHub\GitHub\XCL-Charts\doc" key="destdir"/>
+				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts\javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
+			<section name="XCL-Charts-demo">
+				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\doc" key="destdir"/>
+				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
+			</section>
 		</section>
 	</section>
 	<section name="JavadocWizardDialog">
 		<item value="616" key="DIALOG_WIDTH"/>
 		<item value="8" key="DIALOG_Y_ORIGIN"/>
-		<item value="383" key="DIALOG_X_ORIGIN"/>
 		<item value="659" key="DIALOG_HEIGHT"/>
+		<item value="383" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="NewPackageWizardPage">
