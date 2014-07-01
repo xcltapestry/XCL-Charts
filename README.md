@@ -12,7 +12,7 @@ XCL-Charts
       采用Apache v2 License开源协议。<br/>
  
  Mail: xcl_168@aliyun.com <br/>
- Blog: http://blog.csdn.net/xcl168
+ Blog: http://blog.csdn.net/xcl168 <br/>
  QQ群: 374780627
 <br/> 
 GitHub代码托管地址:
