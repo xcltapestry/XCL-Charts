@@ -76,7 +76,7 @@ public class SplineData extends LnData{
 			
 			/**
 			 * 设置绘制线的数据序列,由x与y坐标构建
-			 * @param dataSeries
+			 * @param dataSeries <X坐标值，Y坐标值>
 			 */
 			public void setLineDataSet( LinkedHashMap<Double,Double>  dataSeries) 
 			{
@@ -85,7 +85,7 @@ public class SplineData extends LnData{
 			
 			/**
 			 * 返回绘制线的数据序列
-			 * @return 线的数据序列
+			 * @return 线的数据序列<X坐标值，Y坐标值>
 			 */
 			public LinkedHashMap<Double,Double> getLineDataSet() {
 				return mLinePointMap;

@@ -76,9 +76,7 @@ public class PlotCustomLine {
 		setPlotArea(plotArea);
 		setAxisScreenWidth(axisScreenWidth);		
 	}
-	
-	
-	
+			
 	private boolean validateParams()
 	{
 		if(null == mDataAxis)
@@ -153,7 +151,7 @@ public class PlotCustomLine {
 			
 			//显示在哪个高度位置
 			currentY = (float) (mPlotArea.getBottom() - chartPostion); 		
-						
+		
 			switch (line.getLabelHorizontalPostion())
 			{
 			case LEFT:
@@ -164,14 +162,14 @@ public class PlotCustomLine {
 				break;
 			case CENTER:				
 				currentX = mPlotArea.getLeft() + 
-							(mPlotArea.getRight() -  mPlotArea.getLeft() ) /2  - line.getLabelOffset();		
+							(mPlotArea.getRight() -  mPlotArea.getLeft() ) /2  - line.getLabelOffset();									
 				line.getLineLabelPaint().setTextAlign(Align.CENTER);
-				
-				capX = mPlotArea.getLeft() + (mPlotArea.getRight() -  mPlotArea.getLeft() ) /2;				
+									
+				capX = mPlotArea.getLeft() + (mPlotArea.getRight() -  mPlotArea.getLeft() ) /2;					
 				break;
 			case RIGHT:
 				currentX =  mPlotArea.getRight() + line.getLabelOffset();	
-				line.getLineLabelPaint().setTextAlign(Align.LEFT);
+				line.getLineLabelPaint().setTextAlign(Align.LEFT);		
 				
 				capX =  mPlotArea.getLeft() ;
 				break;				
@@ -179,17 +177,40 @@ public class PlotCustomLine {
 			
 			//绘制箭头			
 			renderLineCapVerticalPlot( canvas,  line, capX,currentY);
-						
+				
 			//绘制标签
-			DrawHelper.getInstance().drawRotateText(line.getLabel(), 
-													currentX, currentY,
-													line.getLabelRotateAgent(), 
-													canvas,line.getLineLabelPaint());
-		}
-		
+			renderLabel(canvas,line,currentX,currentY);		
+		}		
 	}
 	
 	
+	private void renderLabel(Canvas canvas,
+							 CustomLineData line,float currentX,float currentY){
+		float txtHeight = DrawHelper.getInstance().getPaintFontHeight(
+				line.getLineLabelPaint());	
+		switch (line.getLabelHorizontalPostion())
+		{
+		case LEFT:				
+			currentY += txtHeight/3;
+			break;
+		case CENTER:				
+			if(line.isShowLine())
+				currentY -= DrawHelper.getInstance().getPaintFontHeight( line.getCustomLinePaint());
+															
+			break;
+		case RIGHT:
+			currentY += txtHeight/3;
+			break;				
+		}		
+		
+		//绘制标签				
+		DrawHelper.getInstance().drawRotateText(line.getLabel(), 
+												currentX, currentY,
+												line.getLabelRotateAgent(), 
+												canvas,line.getLineLabelPaint());
+		
+	}
+		
 	/**
 	 * 用来画横向柱形图，竖向的定制线
 	 * @param canvas 画布
@@ -242,8 +263,7 @@ public class PlotCustomLine {
 			float currentX = 0.0f,currentY = 0.0f;
 			float capY = 0.0f;
 			
-			currentX = (float) (mPlotArea.getLeft() + chartPostion); 
-			
+			currentX = (float) (mPlotArea.getLeft() + chartPostion); 						
 			switch (line.getLabelVerticalPostion())
 			{
 			case UP:
@@ -254,7 +274,7 @@ public class PlotCustomLine {
 				break;
 			case CENTER:
 				currentY =  mPlotArea.getBottom() - 
-							(mPlotArea.getBottom() -  mPlotArea.getTop() ) / 2  - line.getLabelOffset();
+							(mPlotArea.getBottom() - mPlotArea.getTop()) / 2 - line.getLabelOffset();
 				
 				capY = mPlotArea.getBottom() - (mPlotArea.getBottom() -  mPlotArea.getTop() ) / 2 ;
 				break;
@@ -270,6 +290,7 @@ public class PlotCustomLine {
 			renderLineCapHorizontalPlot( canvas, line, currentX,capY);
 						
 			//绘制标签
+		
 			DrawHelper.getInstance().drawRotateText(
 									line.getLabel(), currentX, currentY,
 									line.getLabelRotateAgent(),
