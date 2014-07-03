@@ -25,7 +25,7 @@ package org.xclcharts.renderer.axis;
 
 import java.util.List;
 
-import org.xclcharts.renderer.IRender;
+import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
@@ -38,7 +38,7 @@ import android.graphics.Paint.Align;
  *  
  */
 
-public class CategoryAxisRender extends CategoryAxis implements IRender{
+public class CategoryAxisRender extends CategoryAxis { 
 	
 	
 	public CategoryAxisRender()
@@ -57,17 +57,23 @@ public class CategoryAxisRender extends CategoryAxis implements IRender{
 		return this.mDataSet;
 	}
 	
+
+
 	/**
 	 * 绘制横向刻度标识
+	 * @param xchart	图表基类
+	 * @param canvas	画布
 	 * @param centerX	点X坐标
 	 * @param centerY	点Y坐标
 	 * @param text	内容
-	 */
-	public 	void renderAxisHorizontalTick(Canvas canvas, float centerX,float centerY,String text)
+	 */	
+	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
+							float centerX,float centerY,String text)
 	{		
 		if(getVisible())
-			renderHorizontalTick(canvas,centerX,centerY,text);
+			renderHorizontalTick(xchart,canvas,centerX,centerY,text);
 	}
+	
 	
 	/**
 	 * 绘制竖向刻度标识
@@ -75,7 +81,8 @@ public class CategoryAxisRender extends CategoryAxis implements IRender{
 	 * @param centerY	点Y坐标
 	 * @param text	内容
 	 */
-	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
+	public void renderAxisVerticalTick(Canvas canvas,
+							float centerX,float centerY,String text)
 	{
 		
 		if(getVisible())
@@ -95,21 +102,14 @@ public class CategoryAxisRender extends CategoryAxis implements IRender{
 			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
 	}
 	
-
-
-	@Override
-	public boolean render(Canvas canvas) {
-		// TODO Auto-generated method stub
-		
-		if(false == getVisible())return true;
-		return true;
-	}
-	
+	/**
+	 * 设置分类轴数据源
+	 * @param dataSet 数据源
+	 */
 	public void setDataBuilding(List<String> dataSet)
 	{
 		 mDataSet = dataSet;
 	}
-	
 	
 
 }

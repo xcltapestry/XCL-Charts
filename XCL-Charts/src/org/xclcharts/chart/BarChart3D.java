@@ -168,8 +168,8 @@ public class BarChart3D extends BarChart{
 							
 			// 分类
 			float labelX = (float) (plotArea.getLeft() - mBar3D.getOffsetX() * 2); 
-			this.categoryAxis.renderAxisHorizontalTick(canvas, labelX,
-					currentY, categoryAxis.getDataSet().get(i));
+			this.categoryAxis.renderAxisHorizontalTick(this,canvas, labelX,
+													currentY, categoryAxis.getDataSet().get(i) );
 		}
 	}
 	

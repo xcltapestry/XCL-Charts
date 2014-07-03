@@ -36,7 +36,6 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
 /**
@@ -216,7 +215,7 @@ public class SplineChart extends LnChart{
             		
             		if(bd.getLabelVisible())
                 	{            			
-                		//fromatter
+                		//请自行在回调函数中处理显示格式
                         canvas.drawText(
                         		getFormatterDotLabel(Double.toString(xValue)+","+ Double.toString(yValue)),
     							lineEndX, lineEndY,  pLine.getDotLabelPaint());

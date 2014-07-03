@@ -60,7 +60,7 @@ public class CustomLineData {
 	//定制线画笔
 	private Paint mPaintCustomLine = null;
 	private Paint mPaintLineLabel = null;
-	
+	//是否显示线
 	private boolean mLineVisible = true;	
 	
 	

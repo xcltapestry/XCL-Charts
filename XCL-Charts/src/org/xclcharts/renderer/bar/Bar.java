@@ -163,6 +163,8 @@ public class Bar {
 		if(percentage < 0d)
 		{
 			Log.e(TAG, "此比例不能为负数噢!");
+		}if(percentage >= 0.9d){
+			Log.e(TAG, "此比例不能大于等于0.9,要给柱形留下点显示空间!");
 		}else{
 			this.mBarInnerMargin = percentage;
 		}

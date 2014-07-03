@@ -30,11 +30,11 @@ package org.xclcharts.renderer.axis;
  *  
  */
 
-import org.xclcharts.renderer.IRender;
+import org.xclcharts.renderer.XChart;
 
 import android.graphics.Canvas;
 
-public class DataAxisRender extends DataAxis implements IRender{
+public class DataAxisRender extends DataAxis { 
 
 	//当前刻度线ID
 	private int mCurrentId = 0;
@@ -116,9 +116,9 @@ public class DataAxisRender extends DataAxis implements IRender{
 	 * @param centerY	中心点Y坐标
 	 * @param text		文本
 	 */
-	public 	void renderAxisHorizontalTick(Canvas canvas, float centerX,float centerY,String text)
+	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, float centerX,float centerY,String text)
 	{		
-		if(getVisible()) renderHorizontalTick(canvas, centerX,centerY,text);
+		if(getVisible()) renderHorizontalTick(xchart,canvas, centerX,centerY,text);
 	}
 
 
@@ -149,14 +149,5 @@ public class DataAxisRender extends DataAxis implements IRender{
 		if(getVisible() && getAxisLineVisible())
 			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
 	}	
-	
-
-	@Override
-	public boolean render(Canvas canvas) {
-		// TODO Auto-generated method stub
-		if(false == getVisible())return true;
-		
-		return true;
-	}
 
 }

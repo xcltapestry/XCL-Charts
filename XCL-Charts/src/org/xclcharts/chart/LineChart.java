@@ -83,11 +83,9 @@ public class LineChart extends LnChart{
 	{
 		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
 		{
-			//renderVerticalDataAxis();
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 			dataAxis.setHorizontalTickAlign(Align.LEFT);	
-		}else{
-			//renderVerticalDataAxisRight();			
+		}else{		
 			dataAxis.setHorizontalTickAlign(Align.RIGHT);
 			dataAxis.getAxisTickLabelPaint().setTextAlign(Align.LEFT);			
 		}	

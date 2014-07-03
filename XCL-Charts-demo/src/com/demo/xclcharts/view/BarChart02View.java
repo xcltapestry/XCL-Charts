@@ -170,7 +170,7 @@ public class BarChart02View extends TouchView {
 	{		
 		chartLabels.add("擂茶"); 
 		chartLabels.add("槟榔"); 				
-		chartLabels.add("纯净水"); 
+		chartLabels.add("纯净水(强势插入，演示多行标签)"); 
 	}
 
 	@Override

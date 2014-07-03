@@ -23,6 +23,7 @@ package org.xclcharts.common;
 
 import org.xclcharts.renderer.XChart;
 
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -38,7 +39,7 @@ import android.view.View;
 
 public class ChartZoom implements IChartZoom {
 	
-	//private static final String TAG = "ChartZoom";	
+	private static final String TAG = "ChartZoom";	
 	
 	private View mView;
 	private XChart mChart;
@@ -103,10 +104,12 @@ public class ChartZoom implements IChartZoom {
 		   	 newHeight = mChart.getHeight() - scaleHeight; 
 		   	 
 		   	 if(mScaleMinWidth > newWidth) newWidth = mScaleMinWidth;
-		   	 if(mScaleMinHeight > newHeight) newHeight = mScaleMinHeight;		   	 
-		}else{  //放大
+		   	 if(mScaleMinHeight > newHeight) newHeight = mScaleMinHeight;		
+		}else if(ZOOM_IN == flag){  //放大		 
 			 newWidth = mChart.getWidth() + scaleWidth; 
 		   	 newHeight = mChart.getHeight() + scaleHeight; 
+		}else{
+			Log.e(TAG, "不认识这个参数.");
 		}
 		
 		if(newWidth > 0 && newHeight > 0 )

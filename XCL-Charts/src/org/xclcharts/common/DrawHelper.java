@@ -117,6 +117,7 @@ public class DrawHelper {
 	 */
 	public int getTextWidth(Paint paint,String str)
 	{
+		if(str.length() == 0) return 0;
 		 int width = (int) Math.abs(paint.measureText(str, 0, str.length()));		 
 		 return width;
 	}
@@ -129,6 +130,7 @@ public class DrawHelper {
 	 */
 	public int calcTextHeight(Paint paint,String str)
 	{		
+		if(str.length() == 0) return 0;
 		return getPaintFontHeight(paint) * str.length();
 	}
 	
@@ -145,9 +147,12 @@ public class DrawHelper {
 									Canvas canvas,
 									Paint paint 
 									){
+		
+		if(text.length() == 0 ) return;
+		
 		if(angle != 0){
 			canvas.rotate(angle, x, y); 
-		}
+		}		
 		canvas.drawText(text, x, y, paint);
 		if(angle != 0){
 			canvas.rotate(-angle, x, y); 
@@ -266,6 +271,8 @@ public class DrawHelper {
 		canvas.drawLine(startX, startY, stopX, stopY, paint);  		
 	}
 	
+	
+	//下次应当做的:虚实线 比例的灵活定制,线的阴影渲染
 	public void drawLine(XEnum.LineStyle style,
 				float startX,float startY,
 				float stopX,float stopY,			 

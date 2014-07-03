@@ -27,6 +27,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.util.Log;
 
 /**
  * @ClassName RdChart
@@ -37,7 +38,7 @@ import android.graphics.Paint.Style;
 
 public class RdChart extends XChart {
 	
-	//private String TAG = "RdChart";
+	private String TAG = "RdChart";
 	
 	//半径
 	private float mRadius=0.0f;	
@@ -103,7 +104,11 @@ public class RdChart extends XChart {
 	 */
 	public void setRadius(final float radius)
 	{
-		mRadius = radius;
+		if(radius < 0 )
+		{
+			Log.e(TAG, "半径不能小于0");
+		}else
+			mRadius = radius;
 	}
 	
 	/**
@@ -116,12 +121,16 @@ public class RdChart extends XChart {
 	}
 	
 	/**
-	 * 设置饼图(pie chart)起始偏移角度
+	 * 设置图起始偏移角度
 	 * @param agent 偏移角度
 	 */
 	public void setInitialAngle(final int agent)
 	{
-		mOffsetAgent = agent;
+		if(agent < 0 || agent > 360)
+		{
+			Log.e(TAG, "起始偏移角度不能小于0或大于360");
+		}else
+			mOffsetAgent = agent;
 	}
 	
 

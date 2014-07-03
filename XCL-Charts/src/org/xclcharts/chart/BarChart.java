@@ -256,11 +256,11 @@ public class BarChart extends AxisChart {
 					
 			if(i == tickCount)
 			{
-				dataAxis.renderAxisHorizontalTick(canvas, plotArea.getLeft(),
+				dataAxis.renderAxisHorizontalTick(this,canvas, plotArea.getLeft(),
 												  plotArea.getTop() , //- maskHeight, 
 												  Float.toString(currentTickLabel));
 			}else{
-				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getLeft(),
+				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
 												currentY, Float.toString(currentTickLabel));
 			}
 			
@@ -359,7 +359,7 @@ public class BarChart extends AxisChart {
 			plotGrid.renderGridLinesHorizontal(canvas,plotArea.getLeft(),
 					currentY, plotArea.getRight(), currentY);
 			// 分类
-			this.categoryAxis.renderAxisHorizontalTick(canvas,plotArea.getLeft(),
+			this.categoryAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
 					currentY, categoryAxis.getDataSet().get(i));
 		}
 	}

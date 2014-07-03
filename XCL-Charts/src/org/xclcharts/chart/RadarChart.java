@@ -246,7 +246,7 @@ public class RadarChart extends RdChart{
 				if(0 == j){ //显示在第一轴线上(即270度的那根线)										
 					//绘制主轴(DataAxis)的刻度线				
 					double tick = this.dataAxis.getAxisSteps() * i + dataAxis.getAxisMin();										
-					dataAxis.renderAxisHorizontalTick(canvas,
+					dataAxis.renderAxisHorizontalTick(this,canvas,
 							 mArrayDotX[i][j], mArrayDotY[i][j],
 							 Double.toString(tick));
 				}

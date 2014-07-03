@@ -78,7 +78,7 @@ public class LnChart extends AxisChart {
 	/**
 	 * 是否显示顶上的轴线
 	 * 
-	 * @param visible
+	 * @param visible 是否显示
 	 */
 	public void setTopAxisVisible(boolean visible) {
 		mTopAxisVisible = visible;
@@ -87,7 +87,7 @@ public class LnChart extends AxisChart {
 	/**
 	 * 是否显示右边轴线
 	 * 
-	 * @param visible
+	 * @param visible 是否显示
 	 */
 	public void setRightAxisVisible(boolean visible) {
 		mRightAxisVisible = visible;
@@ -95,7 +95,7 @@ public class LnChart extends AxisChart {
 
 	//
 	/**
-	 * 绘制左边竖轴,Lines图，坐标轴都是封闭的
+	 * 绘制左边竖轴(对线图而言坐标轴默认都是封闭的)
 	 */
 	protected void renderVerticalDataAxis(Canvas canvas) {
 		// 数据轴数据刻度总个数
@@ -110,12 +110,8 @@ public class LnChart extends AxisChart {
 		float currentY = plotBottom;
 		float currentTickLabel = 0.0f;
 
-		//float markHeight = dataAxis.getTickMarksPaint().getStrokeWidth() / 2;
-
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
-			// if (i == 0)
-			// continue;
 			
 			//将当前为第几个tick传递轴，用以区分是否为主明tick
 			dataAxis.setAxisTickCurrentID(i);
@@ -143,7 +139,7 @@ public class LnChart extends AxisChart {
 							plotRight, currentY);
 				}
 			}
-			dataAxis.renderAxisHorizontalTick(canvas,plotLeft, currentY,
+			dataAxis.renderAxisHorizontalTick(this,canvas,plotLeft, currentY,
 					Float.toString(currentTickLabel));
 
 		}
@@ -195,11 +191,11 @@ public class LnChart extends AxisChart {
 					.getAxisSteps()));
 
 			if (i == tickCount) {
-				dataAxis.renderAxisHorizontalTick(canvas,plotArea.getRight(),
+				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
 						plotArea.getTop(), Float.toString(currentTickLabel));
 			} else {
 				this.dataAxis
-						.renderAxisHorizontalTick(canvas,plotArea.getRight(),
+						.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
 								currentY + markHeight,
 								Float.toString(currentTickLabel));
 			}

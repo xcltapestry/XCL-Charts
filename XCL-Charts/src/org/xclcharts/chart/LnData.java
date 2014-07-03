@@ -94,7 +94,7 @@ public class LnData {
 				
 	/**
 	 * 设置线的颜色	
-	 * @param color
+	 * @param color 线的颜色
 	 */
 	public void setLineColor(int color) 
 	{				

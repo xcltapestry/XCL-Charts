@@ -80,8 +80,7 @@ public class PlotTitleRender extends PlotTitle{
 		//用来确定 titleY,需要Chart top的值
 		switch(this.getTitlePosition())
 		{
-		case UP:
-			
+		case UP:			
 			titleInitY = chartTop + titleHeight;
 			break;
 		case CENTER:			
