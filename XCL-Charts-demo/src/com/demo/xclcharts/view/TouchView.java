@@ -31,6 +31,7 @@ import org.xclcharts.renderer.XChart;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
@@ -51,6 +52,11 @@ public abstract class TouchView  extends GraphicalView implements IChartZoom {
 		// TODO Auto-generated constructor stub
 		
 	}	
+	
+	 public TouchView(Context context, AttributeSet attrs){   
+	        super(context, attrs);   
+	        
+	 }
 	
 	public abstract List<XChart> bindChart();		
 	

@@ -28,6 +28,7 @@ import org.xclcharts.common.SysinfoHelper;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -55,6 +56,11 @@ public abstract class GraphicalView extends View {
 		//得到屏幕信息
 		getScreenInfo();
 	}
+	
+	 public GraphicalView(Context context, AttributeSet attrs){   
+	        super(context, attrs);   
+	        
+	 }
 	
 	
 	  public abstract void render(Canvas canvas);

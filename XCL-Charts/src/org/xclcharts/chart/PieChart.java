@@ -23,12 +23,16 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RadialGradient;
 import android.graphics.RectF;
+import android.graphics.Shader;
 import android.util.Log;
 
 /**
@@ -40,6 +44,9 @@ import android.util.Log;
 public class PieChart extends CirChart{
 	
 	private static final String TAG = "PieChart";
+			
+	//是否使用渲染来突出效果
+	private boolean mGradient = true;
 
 	//数据源
 	private List<PieData> mDataset;
@@ -67,6 +74,56 @@ public class PieChart extends CirChart{
 	{
 		return mDataset;
 	}
+	
+	/**
+	 * 显示渲染效果(此函数对3D饼图无效)
+	 */
+	public void showGradient()
+	{
+		mGradient = true;
+	}
+	
+	/**
+	 * 隐藏渲染效果(此函数对3D饼图无效)
+	 */
+	public void hideGradient()
+	{
+		mGradient = false;
+	}
+	
+	/**
+	 * 确认是否可使用渲染效果(此函数对3D饼图无效)
+	 * @return 是否使用渲染
+	 */
+	public boolean getGradient()
+	{
+		return mGradient;
+	}
+	  
+	/**
+	 * 给画笔设置渲染颜色和效果
+	 * @param paintArc	画笔
+	 * @param cirX		中心点X坐标
+	 * @param cirY		中心点Y坐标
+	 * @param radius	半径
+	 * @return	返回渲染效果类
+	 */
+	private RadialGradient renderRadialGradient(Paint paintArc,
+												final float cirX,
+												final float cirY,
+												final float radius)
+	{				
+		float radialRadius = (float) (radius * 0.8);				
+		int color = paintArc.getColor();		
+		int darkerColor = DrawHelper.getInstance().getDarkerColor(color);
+	
+		RadialGradient radialGradient = new RadialGradient(cirX, cirY, radialRadius,
+				darkerColor,color,
+				Shader.TileMode.MIRROR); 
+		
+		//返回环形渐变  
+		return radialGradient;
+	}
 		
 	/**
 	 * 绘制指定角度扇区
@@ -89,7 +146,11 @@ public class PieChart extends CirChart{
 							final float curretAgent) throws Exception
 	{
 		try{
-		
+			
+			// 绘制环形渐变
+			if(getGradient())
+				paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
+	        
 			//在饼图中显示所占比例  
         	canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
          
@@ -133,6 +194,10 @@ public class PieChart extends CirChart{
 	        float arcRight = MathHelper.getInstance().getPosX() + radius ;  
 	        float arcBottom = MathHelper.getInstance().getPosY() + radius ;  
 	        RectF arcRF1 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
+	        
+	        //绘制环形渐变  
+	        if(getGradient())
+	        	paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
 	        
 	        //在饼图中显示所占比例  
 	        canvas.drawArc(arcRF1, offsetAgent, curretAgent, true, paintArc);

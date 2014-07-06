@@ -70,7 +70,7 @@ public class DountChart01View extends TouchView {
 			chart.setDataSource(lPieData);
 						
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLabelLocation(XEnum.ArcLabelLocation.OUTSIDE);
+			chart.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
 			
 			//标题
 			chart.setTitle("Dount Chart");

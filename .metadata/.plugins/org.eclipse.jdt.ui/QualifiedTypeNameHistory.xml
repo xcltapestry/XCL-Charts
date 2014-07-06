@@ -4,4 +4,17 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.view.PieChart02View"/>
+<fullyQualifiedTypeName name="android.graphics.LinearGradient"/>
+<fullyQualifiedTypeName name="android.graphics.Rect"/>
+<fullyQualifiedTypeName name="android.graphics.RectF"/>
+<fullyQualifiedTypeName name="android.graphics.Shader.TileMode"/>
+<fullyQualifiedTypeName name="android.graphics.BlurMaskFilter"/>
+<fullyQualifiedTypeName name="android.graphics.EmbossMaskFilter"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="android.graphics.MaskFilter"/>
+<fullyQualifiedTypeName name="android.graphics.Path"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
+<fullyQualifiedTypeName name="android.util.AttributeSet"/>
 </qualifiedTypeNameHistroy>

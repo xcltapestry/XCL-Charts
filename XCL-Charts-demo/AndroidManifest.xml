@@ -42,6 +42,18 @@
             android:name="com.demo.xclcharts.MultiTouchActivity"
             android:label="@string/title_activity_multi_touch" >
         </activity>
+        <activity
+            android:name="com.demo.xclcharts.GradientActivity"
+            android:label="@string/title_activity_gradient" >
+        </activity>
+        <activity
+            android:name="com.demo.xclcharts.HBARScrollActivity"
+            android:label="@string/title_activity_hbarscroll" >
+        </activity>
+        <activity
+            android:name="com.demo.xclcharts.HLNScrollActivity"
+            android:label="@string/title_activity_hlnscroll" >
+        </activity>
     </application>
 
 </manifest>

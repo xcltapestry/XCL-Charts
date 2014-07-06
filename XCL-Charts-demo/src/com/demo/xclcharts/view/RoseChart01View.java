@@ -76,7 +76,7 @@ public class RoseChart01View extends TouchView {
 			chart.getPlotTitle().getSubtitlePaint().setColor(Color.WHITE);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chart.setLabelLocation(XEnum.ArcLabelLocation.OUTSIDE);
+			chart.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

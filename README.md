@@ -40,7 +40,7 @@ http://www.oschina.net/p/xcl-charts
 <img src="http://img.blog.csdn.net/20140701205633076" alt="bar chart 柱形渐显动画" />
  <br/>
 <img src="http://img.blog.csdn.net/20140701205702014" alt="Line chart(开放式) 渐显动画" />
-<img src="http://img.blog.csdn.net/20140701205734104" alt="pie chart 饼块渐显" />
+<img src="http://img.blog.csdn.net/20140706140434609" alt="pie chart 饼块渐显" />
  <br/>
 <img src="http://img.blog.csdn.net/20140701205807534" alt="横向定制线 柱形渐显动画" />
 <img src="http://img.blog.csdn.net/20140701205927890" alt="竖向定线 渐显动画" />
@@ -49,7 +49,7 @@ http://www.oschina.net/p/xcl-charts
 <p>
 <img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />
 <img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" /> 
-<img src="http://img.blog.csdn.net/20140611214040453?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart" />
+<img src="http://img.blog.csdn.net/20140706140637953" alt="同源 pie chart" />
  </p> 
   <br/>    
 <p>

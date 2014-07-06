@@ -1,0 +1,121 @@
+package com.demo.xclcharts.view;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Paint;
+import android.graphics.RadialGradient;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.util.AttributeSet;
+import android.view.View;
+
+public class PieChart02View extends View {
+
+	Paint mPaint = null;
+	// 环形渐变渲染
+	Shader mRadialGradient = null;
+	
+	private LinearGradient linearGradient = null;  
+	
+	public PieChart02View(Context context) {
+		super(context);
+		//1.圆心X坐标2.Y坐标3.半径 4.颜色数组 5.相对位置数组，可为null 6.渲染器平铺模式 
+		//mRadialGradient = new RadialGradient(240, 240, 240, new int[] {  
+		//		Color.YELLOW, Color.GREEN, Color.TRANSPARENT, Color.RED }, null,  
+       //         Shader.TileMode.REPEAT);  
+		
+		
+		//mRadialGradient = new RadialGradient(240, 240, 240, new int[] {  
+		//		Color.YELLOW, Color.GREEN }, null,  
+        //        Shader.TileMode.REPEAT);  
+		
+		/**
+		 * public RadialGradient(float x, float y, float radius, int[] colors, float[] positions,Shader.TileMode tile)
+float x:  圆心X坐标
+float y:  圆心Y坐标
+float radius: 半径
+int[] colors:  渲染颜色数组
+floate[] positions: 相对位置数组,可为null,  若为null,可为null,颜色沿渐变线均匀分布
+Shader.TileMode tile:渲染器平铺模式
+
+public RadialGradient(float x, float y, float radius, int color0, int color1,Shader.TileMode tile)
+float x:  圆心X坐标
+float y:  圆心Y坐标
+float radius: 半径
+int color0: 圆心颜色    //外围
+int color1: 圆边缘颜色  //里
+Shader.TileMode tile:渲染器平铺模式
+		 */
+		//	Color.rgb(2, 98, 198),Color.rgb(140, 218, 254),
+		
+		mRadialGradient = new RadialGradient(240, 240, 240,
+				Color.rgb(141, 52, 75),Color.rgb(228, 73, 112), // Color.argb(255,0, 94, 196),
+				Shader.TileMode.MIRROR); 
+				
+	
+		// linearGradient = new LinearGradient(0, 0, 100, 100, new int[] {    
+	    //            Color.YELLOW, Color.GREEN, Color.TRANSPARENT, Color.WHITE }, null,    
+	    //            Shader.TileMode.REPEAT);    
+		 
+		 linearGradient = new LinearGradient(0, 0, 100, 100, new int[] {    
+	                Color.YELLOW, Color.GREEN, Color.TRANSPARENT, Color.BLUE }, null,    
+	                Shader.TileMode.REPEAT);    		 
+  
+        mPaint = new Paint();  
+        mPaint.setAntiAlias(true);
+        
+	}
+	
+	
+	public PieChart02View(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+	
+	 @Override  
+	    protected void onDraw(Canvas canvas) {  
+	        // 绘制环形渐变  
+	        mPaint.setShader(mRadialGradient);  
+	        
+	        //设置渲染器  
+		// mPaint.setShader(linearGradient);   
+	        
+	        // 第一个,第二个参数表示圆心坐标  
+	        // 第三个参数表示半径  
+	       // canvas.drawCircle(240, 360, 200, mPaint);  
+	        
+	        
+	        canvas.drawCircle(240,240, 260, mPaint);  
+	        
+	        
+	        RadialGradient mRadialGradient2 = new RadialGradient(240, 240, 240,
+	        		Color.rgb(37, 91, 114),Color.rgb(40, 135, 175),
+					Shader.TileMode.MIRROR); 
+	        mPaint.setShader(mRadialGradient2);  
+	        
+	        
+	        RectF rect = new RectF();
+	        rect.left = 240 - 260;
+	        rect.top = 240 - 260;
+	        rect.right = 240 + 260;
+	        rect.bottom = 240 + 260;
+	        
+	        canvas.drawArc(rect, 0, 90, true, mPaint);
+	        
+	        
+	    }
+
+
+	 /*
+	@Override
+	public List<XChart> bindChart() {
+		// TODO Auto-generated method stub
+		//List<XChart> lst = new ArrayList<XChart>();
+		//lst.add(chart);		
+		return null;
+	}  
+	  */
+	 
+}

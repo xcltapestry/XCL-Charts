@@ -52,6 +52,7 @@ import com.demo.xclcharts.view.LineChart02View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
 import com.demo.xclcharts.view.MultiAxisChart02View;
 import com.demo.xclcharts.view.PieChart01View;
+import com.demo.xclcharts.view.PieChart02View;
 import com.demo.xclcharts.view.PieChart3D01View;
 import com.demo.xclcharts.view.RadarChart01View;
 import com.demo.xclcharts.view.RoseChart01View;
@@ -98,6 +99,7 @@ public class ChartsActivity extends Activity {
 				new MultiAxisChart02View(this),
 				
 				new PieChart01View(this),
+				//new PieChart02View(this),
 				new PieChart3D01View(this),
 				new DountChart01View(this),
 				new RoseChart01View(this),

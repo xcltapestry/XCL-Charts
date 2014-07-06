@@ -44,7 +44,7 @@ public class CirChart extends XChart{
 	private float mRadius=0.0f;		
 	
 	//标签注释显示位置 [隐藏,Default,Center,Ouside,Line]
-	private XEnum.ArcLabelLocation mLabelLocation;
+	private XEnum.SliceLabelPosition mLabelPosition;
 	
 	//开放标签画笔让用户设置
 	private Paint mPaintLabel = null;
@@ -64,7 +64,7 @@ public class CirChart extends XChart{
 	private void initChart()
 	{
 		//标签显示位置
-		mLabelLocation = XEnum.ArcLabelLocation.CENTER;
+		mLabelPosition = XEnum.SliceLabelPosition.INNER;
 		
 		//key值
 		plotKey = new PlotKeyRender(this);
@@ -139,9 +139,9 @@ public class CirChart extends XChart{
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
 	 * @param location 显示位置
 	 */
-	public void setLabelLocation(XEnum.ArcLabelLocation location)
+	public void setLabelPosition(XEnum.SliceLabelPosition location)
 	{
-		mLabelLocation = location;
+		mLabelPosition = location;
 	}
 	
 	/**
@@ -169,14 +169,14 @@ public class CirChart extends XChart{
 			final float offsetAgent,
 			final float curretAgentt)
 	{
-		if(XEnum.ArcLabelLocation.HIDE == mLabelLocation) return;
+		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return;
 		
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
 		
 		mPaintLabel.setTextAlign(Align.CENTER);
 		
-		if(XEnum.ArcLabelLocation.CENTER == mLabelLocation)
+		if(XEnum.SliceLabelPosition.INNER == mLabelPosition)
 		{			 
 				//显示在扇形的中心
 				calcRadius = radius - radius/2;
@@ -187,7 +187,7 @@ public class CirChart extends XChart{
 				//标识
 				canvas.drawText( text ,
 						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);
-		}else if(XEnum.ArcLabelLocation.OUTSIDE == mLabelLocation){
+		}else if(XEnum.SliceLabelPosition.OUTSIDE == mLabelPosition){
 				//显示在扇形的外部
 				calcRadius = radius  + radius/10;
 				calcAgent = offsetAgent + curretAgentt/2;

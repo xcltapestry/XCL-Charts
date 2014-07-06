@@ -1,0 +1,50 @@
+package com.demo.xclcharts.view;
+
+import android.content.Context;
+import android.graphics.BlurMaskFilter;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.EmbossMaskFilter;
+import android.graphics.LinearGradient;
+import android.graphics.MaskFilter;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.RadialGradient;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.util.AttributeSet;
+import android.view.View;
+
+public class PieChart02View extends View {
+
+
+	
+	public PieChart02View(Context context) {
+		super(context);
+		
+	}
+	
+	
+	public PieChart02View(Context context, AttributeSet attrs) {
+		super(context, attrs);
+	}
+	
+	 @Override  
+	    protected void onDraw(Canvas canvas) {  
+	      
+	    }
+
+
+	 /*
+	@Override
+	public List<XChart> bindChart() {
+		// TODO Auto-generated method stub
+		//List<XChart> lst = new ArrayList<XChart>();
+		//lst.add(chart);		
+		return null;
+	}  
+	  */
+	 
+}

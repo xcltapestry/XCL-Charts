@@ -51,11 +51,11 @@ public class XEnum {
 		
 		/**
 		 * 对于圆形的图，如饼图之类，用来确定标签的显示位置
-		 * @author XCL
+		 * @author XCL  
 		 *
 		 */
-		public enum ArcLabelLocation {		
-			CENTER,OUTSIDE,HIDE
+		public enum SliceLabelPosition{		
+			INNER,OUTSIDE,HIDE
 		}
 				
 		/**
@@ -122,9 +122,9 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum AxisType {
-			DATA, LABEL
-		}
+		//public enum AxisType {
+		//	DATA, LABEL
+		//}
 		
 		
 		/**
@@ -204,4 +204,6 @@ public class XEnum {
 			FILL,STROKE
 		}
 		
+
+	
 }
