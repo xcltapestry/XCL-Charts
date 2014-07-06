@@ -8,21 +8,60 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HLNScrollActivity" >
     
+    <!-- 
+     android:layout_marginRight="100dp"
+						         android:layout_marginLeft="100dp"
+						         
+						          <com.demo.xclcharts.view.LineChart03View_left
+						         android:id="@+id/lineChartView_left"
+						         android:layout_width="180dp"
+						         android:layout_height="160dp" 
+						        
+						         android:layout_alignParentLeft="true"
+						         />
+						         
+						         
+						         
+        <RelativeLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+     -->
     
-    <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+
+     
+         
+       
         
-         <TextView  android:layout_width="fill_parent" android:layout_height="wrap_content" 
-             android:background="#ff654321" 
-             android:layout_weight="200" 
+         <FrameLayout  android:layout_width="fill_parent" android:layout_height="fill_parent"
             
-             android:text="1"/>
- 
-     
-     
-				<HorizontalScrollView
+	            		android:layout_centerInParent="true"
+	            		
+             
+             >
+             
+             <com.demo.xclcharts.view.LineChart03View_left
+						         android:id="@+id/lineChartView_left"
+						         android:layout_width="800dp"
+						         android:layout_height="600dp" 
+						        
+						        
+						          android:layout_marginLeft="0dp"
+						          android:layout_marginRight="0dp"
+						          
+						         />
+             
+             
+          
+             <HorizontalScrollView
 				        android:id="@+id/horizontalScrollView1"
 				        android:layout_width="wrap_content"
-				        android:layout_height="wrap_content" >
+				        android:layout_height="wrap_content" 
+	            		
+	            		  android:layout_marginRight="0dp"
+						  android:layout_marginLeft="38dp"
+						  
+						   android:scrollbars="none"
+	            		android:fadingEdge="none"
+						         
+				        >
 				
 				        <LinearLayout
 				            android:id="@+id/line"
@@ -31,16 +70,49 @@
 				            android:orientation="horizontal" >
 				            
 				           
-				         <com.demo.xclcharts.view.LineChart03View
-				         android:id="@+id/lineChartView1"
-				         android:layout_width="800dp"
-				         android:layout_height="600dp" 
-				         android:layout_centerInParent="true"/>
+				             <com.demo.xclcharts.view.LineChart03View
+						         android:id="@+id/lineChartView_right"
+						         android:layout_width="800dp"
+						         android:layout_height="600dp" />
 				            
 				        </LinearLayout>
 				    </HorizontalScrollView>
+				    
+           
+             
+         </FrameLayout>
+         
+         
+        <!-- 
+        android:scrollbars="none"
+	            		android:fadingEdge="none"
+	            		
+				<HorizontalScrollView
+				        android:id="@+id/horizontalScrollView1"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content" 
+	            		android:layout_toRightOf="@+id/lineChartView_left"
+	            		android:layout_centerInParent="true"
+				        >
+				
+				        <LinearLayout
+				            android:id="@+id/line"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:orientation="horizontal" >
+				            
+				           
+				             <com.demo.xclcharts.view.LineChart03View
+						         android:id="@+id/lineChartView_right"
+						         android:layout_width="800dp"
+						         android:layout_height="600dp" />
+				            
+				        </LinearLayout>
+				    </HorizontalScrollView>
+				     </RelativeLayout> 
+				 -->
     
-   </LinearLayout>
+
 
 
 </RelativeLayout>

@@ -1,0 +1,58 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".HLNScrollActivity" >
+    
+    
+    <LinearLayout android:orientation="horizontal" 
+        android:layout_width="fill_parent" 
+        android:layout_height="fill_parent">
+        
+        <!-- 
+         <TextView  android:layout_width="fill_parent" android:layout_height="wrap_content" 
+             android:background="#ff654321" 
+             android:layout_weight="200" 
+            
+             android:text="1"/>
+ -->
+      <com.demo.xclcharts.view.LineChart03View
+				         android:id="@+id/lineChartView1"
+				         android:layout_width="800dp"
+				         android:layout_height="600dp" 
+				           android:layout_weight="200" 
+				         android:layout_gravity="Left"/>
+				         
+     
+				<HorizontalScrollView
+				        android:id="@+id/horizontalScrollView1"
+				        android:layout_width="wrap_content"
+				        android:layout_height="wrap_content" >
+				
+				        <LinearLayout
+				            android:id="@+id/line"
+				            android:layout_width="wrap_content"
+				            android:layout_height="wrap_content"
+				            android:orientation="horizontal" >
+				            
+				           
+				            <!--  
+				         <com.demo.xclcharts.view.LineChart03View
+				         android:id="@+id/lineChartView1"
+				         android:layout_width="800dp"
+				         android:layout_height="600dp" 
+				         android:layout_centerInParent="true"/>
+				            -->
+				        </LinearLayout>
+				    </HorizontalScrollView>
+    
+				
+				
+   </LinearLayout>
+
+
+</RelativeLayout>

@@ -61,6 +61,10 @@ public class LineChart03View  extends GraphicalView {
 			//数据轴刻度间隔
 			chart.getDataAxis().setAxisSteps(10);
 			
+			//chart.getDataAxis().setAxisLineVisible(false);
+			chart.getDataAxis().setVisible(false);
+			
+			
 			//背景网格
 			chart.getPlotGrid().showHorizontalLines();
 			//chart.getPlotGrid().showVerticalLines();
@@ -192,7 +196,11 @@ public class LineChart03View  extends GraphicalView {
 	
 		 int measuredHeight = measureHeight(heightMeasureSpec);		 
 		 int measuredWidth = measureWidth(widthMeasureSpec);		 
-		 setMeasuredDimension(measuredHeight, measuredWidth);		    		    
+		// setMeasuredDimension(measuredHeight, measuredWidth);		    
+		 
+		// setMeasuredDimension(measuredWidth,measuredHeight );	
+		 
+		 setMeasuredDimension(800,600 );
 	}
 	
 
