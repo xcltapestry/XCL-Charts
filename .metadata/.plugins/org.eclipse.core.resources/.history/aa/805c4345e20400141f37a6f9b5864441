@@ -1,0 +1,4 @@
+package org.xclcharts.chart;
+
+public class RangeBarChart extends BarChart{
+}

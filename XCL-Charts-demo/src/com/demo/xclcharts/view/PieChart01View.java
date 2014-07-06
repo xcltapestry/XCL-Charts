@@ -90,6 +90,7 @@ public class PieChart01View extends TouchView implements Runnable{
 			Log.e(TAG, e.toString());
 		}
 	}
+	
 	private void chartDataSet()
 	{
 		//设置图表数据源		

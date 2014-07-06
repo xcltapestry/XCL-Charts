@@ -24,7 +24,7 @@
 	    <item>多轴混合图2</item>
 	    
         <item>饼图</item>
-      <!--    <item>饼图-渲染效果</item> -->
+        <item>饼图</item>
         <item>3D饼图</item>
         <item>环形图</item>
         <item>南丁格尔玫瑰图</item>
@@ -66,7 +66,7 @@
 	   <item>MultiAxis Chart</item>
 	   
       <item>Pie Chart - 饼块渐显动画效果</item>
-       <!--  <item>Pie Chart-渲染效果</item> -->
+      <item>Pie Chart-另一种风格</item> 
       <item>3D Pie Chart - 由远及近的动画效果</item>     
       <item>Dount Chart</item>
       <item>Rose Chart</item>     

@@ -99,7 +99,7 @@ public class ChartsActivity extends Activity {
 				new MultiAxisChart02View(this),
 				
 				new PieChart01View(this),
-				//new PieChart02View(this),
+				new PieChart02View(this),
 				new PieChart3D01View(this),
 				new DountChart01View(this),
 				new RoseChart01View(this),

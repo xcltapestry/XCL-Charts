@@ -9,19 +9,20 @@
     tools:context=".HBARScrollActivity" >
 
        
+  
    				 <com.demo.xclcharts.view.BarChart07View
 			         android:id="@+id/BarChart07View"
 			         android:layout_width="400dip"  
 			         android:layout_height="400dip"  
 			         android:layout_centerInParent="true"/>   				    				 			
-			        
+			          <!-- 
 			        <SeekBar
 			        android:id="@+id/seekBar1"
 			        android:layout_below="@id/BarChart07View" 
 			        android:layout_width="400dip"  
                		android:layout_height="50dip"  
 			        android:layout_marginBottom="136dp" />
-      
+       -->
     
     
 </RelativeLayout>

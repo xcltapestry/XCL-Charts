@@ -146,6 +146,11 @@ public class PieChart extends CirChart{
 							final float curretAgent) throws Exception
 	{
 		try{
+			if(0 == curretAgent)
+			{
+				Log.e(TAG, "圆心角为0度.");
+				return;
+			}
 			
 			// 绘制环形渐变
 			if(getGradient())
@@ -154,7 +159,7 @@ public class PieChart extends CirChart{
 			//在饼图中显示所占比例  
         	canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
          
-            //标签
+            //标签 
         	renderLabel(canvas,cData.getLabel(),cirX, cirY,
 	        			radius,offsetAgent,curretAgent);          
 		}catch( Exception e){
@@ -183,6 +188,12 @@ public class PieChart extends CirChart{
 									final float curretAgent) throws Exception
 	{
 		try{
+			if(0 == curretAgent)
+			{
+				Log.e(TAG, "选中扇区圆心角为0度.");
+				return;
+			}
+			
 			//偏移圆心点位置(默认偏移半径的1/10)
 	    	float newRadius = radius /10;
 	    	 //计算百分比标签

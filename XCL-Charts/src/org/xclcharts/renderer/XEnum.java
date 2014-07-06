@@ -55,7 +55,7 @@ public class XEnum {
 		 *
 		 */
 		public enum SliceLabelPosition{		
-			INNER,OUTSIDE,HIDE
+			HIDE,INNER,OUTSIDE,LINE
 		}
 				
 		/**

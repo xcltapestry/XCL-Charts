@@ -31,7 +31,7 @@
 				            android:orientation="horizontal" >
 				            
 				           
-				             <com.demo.xclcharts.view.LineChart03View
+				         <com.demo.xclcharts.view.LineChart03View
 				         android:id="@+id/lineChartView1"
 				         android:layout_width="800dp"
 				         android:layout_height="600dp" 

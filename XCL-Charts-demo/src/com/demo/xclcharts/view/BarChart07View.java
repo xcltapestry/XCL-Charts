@@ -20,6 +20,11 @@ import android.util.Log;
 public class BarChart07View  extends GraphicalView {
 	
 	private String TAG = "BarChart04View";
+	
+	
+	
+	private BarChart chartAxis = new BarChart();
+	
 	private BarChart chart = new BarChart();
 	//private BarChart3D chart = new BarChart3D();
 	//轴数据源
@@ -37,6 +42,7 @@ public class BarChart07View  extends GraphicalView {
 		chartDataSet();
 		chartDesireLines();
 		chartRender();
+		chartRender2();
 	}
 	
 	 public BarChart07View(Context context, AttributeSet attrs){   
@@ -45,7 +51,7 @@ public class BarChart07View  extends GraphicalView {
 			chartDataSet();
 			chartDesireLines();
 			chartRender();
-			
+			chartRender2();
 	 }
 	 
 	 
@@ -62,15 +68,103 @@ public class BarChart07View  extends GraphicalView {
 		 
 		 
 	 }
+	 
+	 private void chartRender2()
+		{
+			try {
+				
+				//图所占范围大小
+				//chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());	
+				
+				chartAxis.setChartRange(0.0f, 0.0f, 400f,400f);
+				
+				if(chartAxis.isVerticalScreen())
+				{
+					//chartAxis.setPadding(15, 20, 8, 10);
+				}else{
+				//	chart.setPadding(20, 20, 10, 8);
+				}
+						
+				//标题
+				chartAxis.setTitle("BMI自测");
+				chartAxis.addSubtitle("(XCL-Charts Demo)");	
+				//数据源
+				chartAxis.setDataSource(chartData);
+				chartAxis.setCategories(chartLabels);	
+				//chartAxis.setCustomLines(mCustomLineDataset);
+				
+				//图例
+				//chart.getLegend().setLeftLegend("参考成年男性标准值");
+				//chart.getLegend().setLowerLegend("(请不要忽视您的健康)");
+				
+				//数据轴
+				chartAxis.getDataAxis().setAxisMax(40);
+				chartAxis.getDataAxis().setAxisMin(0);
+				chartAxis.getDataAxis().setAxisSteps(5);		
+				//指隔多少个轴刻度(即细刻度)后为主刻度
+				chartAxis.getDataAxis().setDetailModeSteps(2);
+				
+				/*
+				
+				//背景网格
+				chart.getPlotGrid().showHorizontalLines();
+				
+				//定义数据轴标签显示格式
+				chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
+		
+					@Override
+					public String textFormatter(String value) {
+						// TODO Auto-generated method stub		
+						Double tmp = Double.parseDouble(value);
+						DecimalFormat df=new DecimalFormat("#0");
+						String label = df.format(tmp).toString();				
+						return (label);
+					}
+					
+				});
+				
+				//标签旋转45度
+				chart.getCategoryAxis().setTickLabelRotateAgent(45f);
+				chart.getCategoryAxis().getAxisTickLabelPaint().setTextSize(15);
+				
+				//在柱形顶部显示值
+				chart.getBar().setItemLabelVisible(true);
+				//设定格式
+				chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
+					@Override
+					public String doubleFormatter(Double value) {
+						// TODO Auto-generated method stub
+						DecimalFormat df=new DecimalFormat("#0");					 
+						String label = df.format(value).toString();
+						return label;
+					}});
+				
+				//隐藏Key
+				chart.getPlotKey().hideKeyLabels();
+				
+				 //让柱子间没空白
+				 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
+				 
+				 */
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	 
+	 
 	
 	private void chartRender()
 	{
 		try {
 			
+			if(null == chart) return;
+			
 			//图所占范围大小
 			//chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());	
 			
-			chart.setChartRange(0.0f, 0.0f, 450f,650f);
+			chart.setChartRange(0.0f, 0.0f, 400f,400f);
 			
 			if(chart.isVerticalScreen())
 			{
@@ -199,7 +293,10 @@ public class BarChart07View  extends GraphicalView {
 	@Override
     public void render(Canvas canvas) {
         try{
-            chart.render(canvas);
+          //  chart.render(canvas);
+            
+            chartAxis.render(canvas);
+            
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
@@ -219,7 +316,10 @@ public class BarChart07View  extends GraphicalView {
 			
 			 int measuredHeight = measureHeight(heightMeasureSpec);
 			 int measuredWidth = measureWidth(widthMeasureSpec);
-			 chart.setChartRange(mChartX, mChartY, measuredWidth,measuredHeight);			 
+			 //chart.setChartRange(mChartX, mChartY, measuredWidth,measuredHeight);			 
+			 
+			 chartAxis.setChartRange(mChartX, mChartY, measuredWidth,measuredHeight);
+			 
 			 setMeasuredDimension(measuredHeight, measuredWidth);
 		}
 		
@@ -231,7 +331,7 @@ public class BarChart07View  extends GraphicalView {
 		 
 		    // Default size if no limits are specified.
 		 
-		    int result = 500;
+		    int result = 400;
 		    if (specMode == MeasureSpec.AT_MOST) {
 		 
 		        // Calculate the ideal size of your
@@ -255,7 +355,7 @@ public class BarChart07View  extends GraphicalView {
 		    int specSize = MeasureSpec.getSize(measureSpec);
 		 
 		    // Default size if no limits are specified.
-		    int result = 500;
+		    int result = 400;
 		    if (specMode == MeasureSpec.AT_MOST) {
 		        // Calculate the ideal size of your control
 		        // within this maximum size.
