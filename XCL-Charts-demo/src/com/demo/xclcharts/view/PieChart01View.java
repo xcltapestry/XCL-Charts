@@ -73,6 +73,7 @@ public class PieChart01View extends TouchView implements Runnable{
 			
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
 			chart.setLabelPosition(XEnum.SliceLabelPosition.INNER);
+			chart.getLabelPaint().setColor(Color.WHITE);
 			
 			//标题
 			chart.setTitle("饼图-Pie Chart");
@@ -93,12 +94,14 @@ public class PieChart01View extends TouchView implements Runnable{
 	
 	private void chartDataSet()
 	{
+		
 		//设置图表数据源		
 		chartData.add(new PieData("HP","20%",20,(int)Color.rgb(155, 187, 90)));
 		chartData.add(new PieData("IBM","30%",30,(int)Color.rgb(191, 79, 75),false));
 		chartData.add(new PieData("DELL","10%",10,(int)Color.rgb(242, 167, 69)));
 		//将此比例块突出显示
 		chartData.add(new PieData("EMC","40%",40,(int)Color.rgb(60, 173, 213),true));
+		
 	}
 
 	@Override

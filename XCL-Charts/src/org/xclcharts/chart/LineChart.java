@@ -64,6 +64,12 @@ public class LineChart extends LnChart{
 	{		
 		mCustomLine = new PlotCustomLine();
 		defaultAxisSetting();		
+				
+		getDataAxis().getAxisPaint().setStrokeWidth(2);
+		getDataAxis().getTickMarksPaint().setStrokeWidth(2);
+		
+		getCategoryAxis().getAxisPaint().setStrokeWidth(2);
+		getCategoryAxis().getTickMarksPaint().setStrokeWidth(2);
 	}
 	
 	/**

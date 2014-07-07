@@ -211,28 +211,26 @@ public class CirChart extends XChart{
 			final float offsetAgent,
 			final float curretAgentt)
 	{
-		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return;
+		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return;		
+		if(""==text||text.length()==0)return;
 		
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
 		
-		//mPaintLabel.setTextAlign(Align.CENTER);\
 		
 		calcAgent = offsetAgent + curretAgentt/2;
 		if(calcAgent == 0 ){
 			Log.e(TAG,"计算出来的圆心角等于0.");
 			return ;
 		}
-		
-		
+				
 		if(XEnum.SliceLabelPosition.INNER == mLabelPosition)
 		{			 
 				//显示在扇形的中心
 				calcRadius = radius - radius/2;
 				
 				//计算百分比标签
-				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
-					 
+				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 						 
 				//标识
 				canvas.drawText( text ,
 						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);
@@ -246,9 +244,7 @@ public class CirChart extends XChart{
 				canvas.drawText(text,
 						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);          	
 		
-		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){
-			
-			
+		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){						
 			//显示在扇形的外部
 			//1/4处为起始点
 			calcRadius = radius  - radius / 4;
@@ -265,21 +261,38 @@ public class CirChart extends XChart{
 		    //连接线
 		    canvas.drawLine(startX, startY, stopX, stopY, mPaintLabelLine);		    		    
 		    		    
-		    float endX = 0.0f;		    
-		    if(stopX + mLabelBrokenLineLength > cirX) //右边
+		    float endX = 0.0f;				    		    		    
+		    if(stopX == cirX){ //位于中间竖线上		    			    			    	
+		    	if( stopY > cirY ) //中点上方,左折线
+		    	{
+		    		mPaintLabel.setTextAlign(Align.LEFT);
+		    		endX = stopX + mLabelBrokenLineLength;	
+		    	}else{ //中点下方,右折线
+		    		
+		    		endX = stopX - mLabelBrokenLineLength;	
+		    		mPaintLabel.setTextAlign(Align.RIGHT);
+		    	}
+		    }else if(stopY == cirY){ //中线横向两端
+		    	
+		    	if(stopX <= cirX) //左边
+		    	{
+		    		mPaintLabel.setTextAlign(Align.RIGHT);
+		    	}else{
+		    		mPaintLabel.setTextAlign(Align.LEFT);
+		    	}		    	
+		    	endX = stopX;		    
+		    }else if(stopX + mLabelBrokenLineLength > cirX) //右边
 		    {
 		    	mPaintLabel.setTextAlign(Align.LEFT);
 		    	endX = stopX + mLabelBrokenLineLength;		    		    	
 		    }else if(stopX - mLabelBrokenLineLength < cirX) //左边
 		    {
 		    	mPaintLabel.setTextAlign(Align.RIGHT);
-		    	endX = stopX - mLabelBrokenLineLength;		    	
-		    	//		    	
-		    }else if(stopX == cirX){ //中间
-		    	mPaintLabel.setTextAlign(Align.CENTER);
+		    	endX = stopX - mLabelBrokenLineLength;		    			    	    
+		    }else {
 		    	endX = stopX;
-		    }
-		    
+		    	mPaintLabel.setTextAlign(Align.CENTER);
+		    }		    
 		 
 		    //转折线
 		    canvas.drawLine(stopX, stopY, endX, stopY, mPaintLabelLine);

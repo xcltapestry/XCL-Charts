@@ -2,10 +2,12 @@ package com.demo.xclcharts;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.util.Log;
 import android.view.Menu;
 
 public class HBARScrollActivity extends Activity {
 	
+	private static final String TAG="HBARScrollActivity";
 	com.demo.xclcharts.view.BarChart07View chart = null;
 
 	@Override
@@ -14,6 +16,8 @@ public class HBARScrollActivity extends Activity {
 		setContentView(R.layout.activity_hbarscroll);
 		
 		chart = (com.demo.xclcharts.view.BarChart07View)findViewById(R.id.BarChart07View);  
+		
+		/*
 		//chart.setChartRange(chart.getLeft(),chart.getBottom());
 		int[] locations = new int[2];  
 		chart.getLocationOnScreen(locations);
@@ -23,6 +27,11 @@ public class HBARScrollActivity extends Activity {
 		//chart.setChartRange(chart.getLeft(),chart.getBottom(),chart.getRight() - chart.getLeft(),chart.getBottom() - chart.getTop());
 		
 		chart.setChartRange(x,y);//,chart.getRight() - chart.getLeft(),chart.getBottom() - chart.getTop());
+		*/
+		
+		//chart.setChartRange(0.0f, 0.0f,getLayoutParams().width,getLayoutParams().height);
+		//Log.e(TAG, getLayoutParams().width+","+getLayoutParams().height);
+		
 		
 	}
 

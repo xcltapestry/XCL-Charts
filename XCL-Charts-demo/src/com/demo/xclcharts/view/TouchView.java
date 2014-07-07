@@ -35,6 +35,23 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 
+/**
+ * 计划中
+ * public class TZoomChatViewListener implements View.OnTouchListener {
+ * 
+ * public class TZoomAxisViewListener implements View.OnTouchListener {
+ * 
+ * public class TZoomDataViewListener implements View.OnTouchListener {
+ * 
+ * public class TCustomChartViewListener implements View.OnTouchListener {
+ * 
+ * public  class TClickViewListener implements View.OnClickListener
+ * 
+ * @author XCL
+ *
+ */
+
+
 public abstract class TouchView  extends GraphicalView implements IChartZoom {
 	
 	private String TAG = "TouchView";
@@ -156,8 +173,7 @@ public abstract class TouchView  extends GraphicalView implements IChartZoom {
 		
 		if(null == mChartTouch)
 				if(!initArrayTouch())return false;
-
-		//多轴混合图手工移动会错位，搞不懂
+		
 		for(int i=0;i<mChartTouch.length;i++)
 		{
 			mChartTouch[i].handleTouch(event);		

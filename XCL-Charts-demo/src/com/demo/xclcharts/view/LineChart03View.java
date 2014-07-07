@@ -47,10 +47,14 @@ public class LineChart03View  extends GraphicalView {
 			//chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 
 			
-			chart.setChartRange(0.0f, 0.0f,800f,600f);
+			//chart.setChartRange(38f, 0.0f,800f,600f);
+			
+			chart.setChartRange(0, 0.0f,800f,600f);			
+			float per  = 38f / 800f * 100 ;			
+			chart.setPadding(20, 20,per, 5);
 			
 			
-			chart.setPadding(20, 20, 10, 5);
+			//chart.setPadding(20, 20, 10, 5);
 			
 			//设定数据源
 			chart.setCategories(labels);								
@@ -66,6 +70,7 @@ public class LineChart03View  extends GraphicalView {
 			
 			
 			//背景网格
+			/*
 			chart.getPlotGrid().showHorizontalLines();
 			//chart.getPlotGrid().showVerticalLines();
 			chart.getPlotGrid().showEvenRowBgColor();
@@ -77,12 +82,19 @@ public class LineChart03View  extends GraphicalView {
 			
 			chart.getPlotGrid().getHorizontalLinePaint().setColor(Color.RED);
 			chart.getPlotGrid().getVerticalLinePaint().setColor(Color.BLUE);
+			*/
 			
-			chart.setTitle("折线图 (scroll view)");
-			chart.addSubtitle("(XCL-Charts Demo)");
+			//chart.setTitle("折线图 (scroll view)");
+			//chart.addSubtitle("(XCL-Charts Demo)");
 			
-			chart.getLegend().setLowerLegend("(年份)");			
-		
+			chart.getLegend().setLowerLegend("(年份)");	
+			
+			chart.setRightAxisVisible(false);
+			chart.setTopAxisVisible(false);
+			
+			chart.getPlotKey().hideKeyLabels();
+			
+			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.Position.UP);
 			
 			/*
 			//想隐藏轴线的可以下面的四个函数来隐藏
@@ -184,7 +196,7 @@ public class LineChart03View  extends GraphicalView {
 	@Override
 	 public void onDraw(Canvas canvas){   
 		
-		 canvas.drawColor(Color.GREEN);
+		// canvas.drawColor(Color.GREEN);
 	        super.onDraw(canvas);  
 	        
 	 }

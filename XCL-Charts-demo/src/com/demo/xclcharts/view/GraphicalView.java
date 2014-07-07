@@ -32,6 +32,7 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 
 /**
  * @ClassName GraphicalView
@@ -96,15 +97,21 @@ public abstract class GraphicalView extends View {
 	}
 	
 	/**
-	 * 得到屏幕信息
+	 * 得到屏幕信息,当有父控件在时，取父控件的宽度
 	 */	
 	private void getScreenInfo()
-	{
+	{				
 		//屏幕信息
 		DisplayMetrics dm = getResources().getDisplayMetrics();
-		
-		mScrWidth = dm.widthPixels;
-		mScrHeight = dm.heightPixels;					
+		ViewGroup vg=(ViewGroup)getParent();
+		if(vg!=null){ 
+			mScrWidth =	vg.getLayoutParams().width/2;
+			mScrHeight = vg.getLayoutParams().height/2;
+		}else{
+			mScrWidth = dm.widthPixels;
+			mScrHeight = dm.heightPixels;					
+		}
+
 	}
 
 	public int getScreenWidth() {

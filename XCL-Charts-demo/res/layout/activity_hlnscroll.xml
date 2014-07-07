@@ -37,17 +37,15 @@
              
              >
              
+         
              <com.demo.xclcharts.view.LineChart03View_left
 						         android:id="@+id/lineChartView_left"
 						         android:layout_width="800dp"
-						         android:layout_height="600dp" 
-						        
-						        
+						         android:layout_height="600dp" 						        						       
 						          android:layout_marginLeft="0dp"
-						          android:layout_marginRight="0dp"
-						          
+						          android:layout_marginRight="0dp"						          
 						         />
-             
+            
              
           
              <HorizontalScrollView

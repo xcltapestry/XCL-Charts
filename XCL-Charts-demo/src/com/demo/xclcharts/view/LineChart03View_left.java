@@ -54,10 +54,12 @@ public class LineChart03View_left extends GraphicalView {
 			//chart.setPadding(20, 20, 10, 5);
 			
 			//方法二
-			chart.setChartRange(0.0f, 0.0f,80f,600f);
+			chart.setChartRange(0.0f, 0.0f,800f,600f);						
 			chart.setPadding(20, 20, 12, 5); //主要是12,即左边从原点x坐标，偏移12%,让轴可以显示在屏幕中,手机屏幕不同，不一定是合适比例			
 			//你可以依y轴比例( 80 * 0.12) 得到宽度。再用代码把xml中的layout_marginLeft 为这个宽度.即右边scrollview偏移这个宽度。
 			
+			chart.setTitle("折线图 (scroll view)");
+			chart.addSubtitle("(XCL-Charts Demo)");
 			
 			
 			//设定数据源
@@ -70,8 +72,9 @@ public class LineChart03View_left extends GraphicalView {
 			chart.getDataAxis().setAxisSteps(10);
 			
 		
-			chart.getCategoryAxis().setVisible(false);
-		
+			chart.getCategoryAxis().setVisible(false);		
+			chart.setTopAxisVisible(false);
+			chart.setRightAxisVisible(false);
 			
 			
 		} catch (Exception e) {
@@ -85,7 +88,38 @@ public class LineChart03View_left extends GraphicalView {
 		LinkedList<Double> dataSeries1= new LinkedList<Double>();	
 		dataSeries1.add(0d); 
 		LineData lineData1 = new LineData("方块",dataSeries1,(int)Color.rgb(234, 83, 71));
-		chartData.add(lineData1);
+		//chartData.add(lineData1);
+		
+		
+		
+		//Line 2
+				LinkedList<Double> dataSeries2= new LinkedList<Double>();	
+				dataSeries2.add((double)0);
+				LineData lineData2 = new LineData("圆环",dataSeries2,(int)Color.rgb(75, 166, 51));
+				lineData2.setDotStyle(XEnum.DotStyle.RING);				
+				lineData2.getPlotLine().getDotPaint().setColor(Color.BLACK);
+				lineData2.setLabelVisible(true);		
+				//Line 3
+				LinkedList<Double> dataSeries3= new LinkedList<Double>();	
+				dataSeries3.add(0d);
+				LineData lineData3 = new LineData("圆点",dataSeries3,(int)Color.rgb(123, 89, 168));
+				lineData3.setDotStyle(XEnum.DotStyle.DOT);
+				//Line 4
+				LinkedList<Double> dataSeries4= new LinkedList<Double>();	
+				dataSeries4.add(0d);
+				LineData lineData4 = new LineData("棱形",dataSeries4,(int)Color.rgb(84, 206, 231));		
+				lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
+				//Line 5
+				LinkedList<Double> valuesE= new LinkedList<Double>();	
+				valuesE.add(0d);
+				LineData lineData5 = new LineData("定制",valuesE,(int)Color.rgb(234, 142, 43));
+				lineData5.setDotRadius(15);
+				
+				chartData.add(lineData1);
+				chartData.add(lineData2);
+				chartData.add(lineData3);
+				chartData.add(lineData4);
+				chartData.add(lineData5);
 	}
 	
 	private void chartLabels()
@@ -109,7 +143,7 @@ public class LineChart03View_left extends GraphicalView {
 	@Override
 	 public void onDraw(Canvas canvas){   
 		
-		 canvas.drawColor(Color.BLUE);
+		 //canvas.drawColor(Color.BLUE);
 	        super.onDraw(canvas);  
 	        
 	 }

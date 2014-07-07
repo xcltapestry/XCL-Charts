@@ -3,7 +3,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
-<fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.PieChart02View"/>
 <fullyQualifiedTypeName name="android.graphics.LinearGradient"/>
 <fullyQualifiedTypeName name="android.graphics.Rect"/>
@@ -16,5 +15,10 @@
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="android.util.AttributeSet"/>
+<fullyQualifiedTypeName name="android.widget.HorizontalScrollView"/>
+<fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Position"/>
+<fullyQualifiedTypeName name="android.view.ViewGroup"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 </qualifiedTypeNameHistroy>
