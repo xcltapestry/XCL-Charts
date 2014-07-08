@@ -97,6 +97,9 @@ public class MainActivity extends Activity {
 				 }else if(position >= chartsTitleCurr.length - 7) //倒数7  scroll view bar
 				 {
 					 intent.setClass(MainActivity.this,HBARScrollActivity.class);		
+				 }else if(position >= chartsTitleCurr.length - 8) //倒数8  自定义view放入xml中 (circle chart)
+				 {
+					 intent.setClass(MainActivity.this,CircleChartActivity.class);		
 				 }else{
 					 intent.setClass(MainActivity.this,ChartsActivity.class);	
 				 }

@@ -17,7 +17,7 @@ public class HLNScrollActivity extends Activity {
 		setContentView(R.layout.activity_hlnscroll);
 		
 		//计算horizontalScrollvView需要隔左边多远距离，可能我计算式有误
-				int paddingLeft = Math.round(800 / 100 * 10);
+				//int paddingLeft = Math.round(800 / 100 * 10);
 				
 				/*
 				horiView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);

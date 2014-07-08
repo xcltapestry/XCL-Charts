@@ -115,8 +115,7 @@ public class AxisChart extends XChart {
 	public Legend getLegend() {
 		return legend;
 	}
-	
-	
+		
 	
 	/**
 	 * 计算主图表区范围内,这个还不完善, 如3D底座厚度...., 
@@ -126,6 +125,10 @@ public class AxisChart extends XChart {
 	protected void calcPlotRange()
 	{				
 		super.calcPlotRange();
+		
+		//对于把view放入xml的情况，下面的代码暂时没有用了.
+		
+		/*
 				
 		//图的内边距属性
 		float perLeft = getPaddingLeft();
@@ -179,7 +182,7 @@ public class AxisChart extends XChart {
 				if(legendHeight > rederBottom ) rederBottom = legendHeight;
 			}
 			plotArea.setBottom(this.getBottom() - rederBottom);	
-		}
+		}*/
 	}
 	
 	

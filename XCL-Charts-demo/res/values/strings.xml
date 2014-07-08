@@ -15,5 +15,6 @@
     <string name="title_activity_gradient">GradientActivity</string>
     <string name="title_activity_hbarscroll">HBARScrollActivity</string>
     <string name="title_activity_hlnscroll">HLNScrollActivity</string>
+    <string name="title_activity_circle_chart">CircleChartActivity</string>
 
 </resources>

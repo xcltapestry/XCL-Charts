@@ -69,7 +69,8 @@ public abstract class GraphicalView extends View {
 	  public void onDraw(Canvas canvas)
 	  {		 
 		  try {	
-			  
+			  //canvas.getWidth()
+			  //canvas.
 			  render(canvas);	    	 		
 		  } catch (Exception e) {
 				// TODO Auto-generated catch block

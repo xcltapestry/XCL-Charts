@@ -54,8 +54,8 @@ public class LineChart03View_left extends GraphicalView {
 			//chart.setPadding(20, 20, 10, 5);
 			
 			//方法二
-			chart.setChartRange(0.0f, 0.0f,800f,600f);						
-			chart.setPadding(20, 20, 12, 5); //主要是12,即左边从原点x坐标，偏移12%,让轴可以显示在屏幕中,手机屏幕不同，不一定是合适比例			
+			//chart.setChartRange(0.0f, 0.0f,800f,600f);						
+			//chart.setPadding(20, 20, 12, 5); //主要是12,即左边从原点x坐标，偏移12%,让轴可以显示在屏幕中,手机屏幕不同，不一定是合适比例			
 			//你可以依y轴比例( 80 * 0.12) 得到宽度。再用代码把xml中的layout_marginLeft 为这个宽度.即右边scrollview偏移这个宽度。
 			
 			chart.setTitle("折线图 (scroll view)");
@@ -131,9 +131,22 @@ public class LineChart03View_left extends GraphicalView {
 		labels.add("2014");
 	}
 	
+	public static int dip2px(Context context, float dipValue){ 
+        final float scale = context.getResources().getDisplayMetrics().density; 
+        return (int)(dipValue * scale + 0.5f); 
+	} 
+	
 	@Override
     public void render(Canvas canvas) {
         try{
+        	
+        	 //设置图表大小
+	        chart.setChartRange(10f, 10f,  
+	        		this.getLayoutParams().width - 10,
+	        		 this.getLayoutParams().height - 10);
+	        
+	        chart.setPadding(120, 180, 70, 0);	//70是轴所点总宽度，在右边轴绘图时，偏移这个宽度就对好了
+        	
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());
@@ -158,9 +171,9 @@ public class LineChart03View_left extends GraphicalView {
 		// setMeasuredDimension(measuredHeight, measuredWidth);	
 		 
 		 //setMeasuredDimension(80,600 );
-		 //setMeasuredDimension(measuredWidth,measuredHeight);	
+		 setMeasuredDimension(measuredWidth,measuredHeight);	
 		 
-		 setMeasuredDimension(800,600 );
+		// setMeasuredDimension(800,600 );
 		 
 		 //setMeasuredDimension(80,600 );
 	}

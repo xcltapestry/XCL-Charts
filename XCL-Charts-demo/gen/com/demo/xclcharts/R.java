@@ -36,43 +36,47 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int BarChart07View=0x7f090003;
-        public static final int action_settings=0x7f09000e;
-        public static final int horizontalScrollView1=0x7f090005;
+        public static final int BarChart07View=0x7f090006;
+        public static final int action_settings=0x7f090010;
+        public static final int chartview=0x7f090003;
+        public static final int horizontalScrollView1=0x7f090008;
         public static final int imageView1=0x7f090000;
-        public static final int lay_chart=0x7f09000b;
-        public static final int line=0x7f090006;
-        public static final int lineChartView_left=0x7f090004;
-        public static final int lineChartView_right=0x7f090007;
-        public static final int scroll=0x7f09000a;
-        public static final int sk_process=0x7f090009;
-        public static final int spinner1=0x7f09000d;
+        public static final int lay_chart=0x7f09000d;
+        public static final int line=0x7f090009;
+        public static final int lineChartView_left=0x7f090007;
+        public static final int lineChartView_right=0x7f09000a;
+        public static final int scroll=0x7f09000c;
+        public static final int seekBar1=0x7f090004;
+        public static final int sk_process=0x7f09000b;
+        public static final int spinner1=0x7f09000f;
         public static final int tv_info=0x7f090002;
-        public static final int tv_label=0x7f09000c;
-        public static final int tv_process=0x7f090008;
+        public static final int tv_label=0x7f09000e;
+        public static final int tv_process=0x7f090005;
         public static final int tv_title=0x7f090001;
     }
     public static final class layout {
         public static final int activity_about=0x7f030000;
         public static final int activity_charts=0x7f030001;
-        public static final int activity_gradient=0x7f030002;
-        public static final int activity_hbarscroll=0x7f030003;
-        public static final int activity_hlnscroll=0x7f030004;
-        public static final int activity_main=0x7f030005;
-        public static final int activity_multi_touch=0x7f030006;
-        public static final int activity_seek_bar=0x7f030007;
-        public static final int activity_spinner=0x7f030008;
+        public static final int activity_circle_chart=0x7f030002;
+        public static final int activity_gradient=0x7f030003;
+        public static final int activity_hbarscroll=0x7f030004;
+        public static final int activity_hlnscroll=0x7f030005;
+        public static final int activity_main=0x7f030006;
+        public static final int activity_multi_touch=0x7f030007;
+        public static final int activity_seek_bar=0x7f030008;
+        public static final int activity_spinner=0x7f030009;
     }
     public static final class menu {
         public static final int about=0x7f080000;
         public static final int charts=0x7f080001;
-        public static final int gradient=0x7f080002;
-        public static final int hbarscroll=0x7f080003;
-        public static final int hlnscroll=0x7f080004;
-        public static final int main=0x7f080005;
-        public static final int multi_touch=0x7f080006;
-        public static final int seek_bar=0x7f080007;
-        public static final int spinner=0x7f080008;
+        public static final int circle_chart=0x7f080002;
+        public static final int gradient=0x7f080003;
+        public static final int hbarscroll=0x7f080004;
+        public static final int hlnscroll=0x7f080005;
+        public static final int main=0x7f080006;
+        public static final int multi_touch=0x7f080007;
+        public static final int seek_bar=0x7f080008;
+        public static final int spinner=0x7f080009;
     }
     public static final class string {
         public static final int action_settings=0x7f040001;
@@ -83,6 +87,7 @@ public final class R {
         public static final int spinner_label=0x7f040008;
         public static final int title_activity_about=0x7f040004;
         public static final int title_activity_charts=0x7f040003;
+        public static final int title_activity_circle_chart=0x7f04000e;
         public static final int title_activity_gradient=0x7f04000b;
         public static final int title_activity_hbarscroll=0x7f04000c;
         public static final int title_activity_hlnscroll=0x7f04000d;

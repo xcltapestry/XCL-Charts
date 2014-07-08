@@ -42,19 +42,7 @@ public class LineChart03View  extends GraphicalView {
 	{
 		try {				
 			
-			
-			//图所占范围大小
-			//chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-
-			
-			//chart.setChartRange(38f, 0.0f,800f,600f);
-			
-			chart.setChartRange(0, 0.0f,800f,600f);			
-			float per  = 38f / 800f * 100 ;			
-			chart.setPadding(20, 20,per, 5);
-			
-			
-			//chart.setPadding(20, 20, 10, 5);
+		
 			
 			//设定数据源
 			chart.setCategories(labels);								
@@ -69,46 +57,14 @@ public class LineChart03View  extends GraphicalView {
 			chart.getDataAxis().setVisible(false);
 			
 			
-			//背景网格
-			/*
-			chart.getPlotGrid().showHorizontalLines();
-			//chart.getPlotGrid().showVerticalLines();
-			chart.getPlotGrid().showEvenRowBgColor();
-			chart.getPlotGrid().showOddRowBgColor();
-			
-			chart.getPlotGrid().getHorizontalLinePaint().setStrokeWidth(2);
-			chart.getPlotGrid().setHorizontalLineStyle(XEnum.LineStyle.DASH);
-			chart.getPlotGrid().setVerticalLineStyle(XEnum.LineStyle.DOT);
-			
-			chart.getPlotGrid().getHorizontalLinePaint().setColor(Color.RED);
-			chart.getPlotGrid().getVerticalLinePaint().setColor(Color.BLUE);
-			*/
-			
-			//chart.setTitle("折线图 (scroll view)");
-			//chart.addSubtitle("(XCL-Charts Demo)");
 			
 			chart.getLegend().setLowerLegend("(年份)");	
 			
 			chart.setRightAxisVisible(false);
 			chart.setTopAxisVisible(false);
 			
-			chart.getPlotKey().hideKeyLabels();
+			chart.getPlotKey().hideKeyLabels();			
 			
-			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.Position.UP);
-			
-			/*
-			//想隐藏轴线的可以下面的四个函数来隐藏
-			chart.getDataAxis().setVisible(false);
-			chart.getCategoryAxis().setVisible(false);
-			chart.setTopAxisVisible(false);
-			chart.setRightAxisVisible(false);
-			//想设置刻度线属性的可用下面函数
-			chart.getDataAxis().getTickMarksPaint()
-			chart.getCategoryAxis().getTickMarksPaint()
-			//想设置刻度线标签属性的可用下面函数 
-			chart.getDataAxis().getAxisTickLabelPaint()	
-			chart.getCategoryAxis().getAxisTickLabelPaint()
-			*/
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -187,6 +143,16 @@ public class LineChart03View  extends GraphicalView {
 	@Override
     public void render(Canvas canvas) {
         try{
+        	
+        	//this.getBackground().setAlpha(100);
+        	
+        	//设置图表大小
+	        chart.setChartRange(10f, 10f,  
+	        		this.getLayoutParams().width - 10,
+	        		 this.getLayoutParams().height - 10);
+	        //设置绘图区内边距	  
+	        chart.setPadding(120, 180, 70, 100);	
+	        	        
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());
@@ -196,7 +162,7 @@ public class LineChart03View  extends GraphicalView {
 	@Override
 	 public void onDraw(Canvas canvas){   
 		
-		// canvas.drawColor(Color.GREEN);
+		 //canvas.drawColor(Color.GREEN);
 	        super.onDraw(canvas);  
 	        
 	 }
@@ -210,9 +176,9 @@ public class LineChart03View  extends GraphicalView {
 		 int measuredWidth = measureWidth(widthMeasureSpec);		 
 		// setMeasuredDimension(measuredHeight, measuredWidth);		    
 		 
-		// setMeasuredDimension(measuredWidth,measuredHeight );	
+		 setMeasuredDimension(measuredWidth,measuredHeight );	
 		 
-		 setMeasuredDimension(800,600 );
+		 //setMeasuredDimension(800,600 );
 	}
 	
 

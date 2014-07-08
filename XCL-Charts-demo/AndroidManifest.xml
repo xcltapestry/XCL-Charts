@@ -54,6 +54,10 @@
             android:name="com.demo.xclcharts.HLNScrollActivity"
             android:label="@string/title_activity_hlnscroll" >
         </activity>
+        <activity
+            android:name="com.demo.xclcharts.CircleChartActivity"
+            android:label="@string/title_activity_circle_chart" >
+        </activity>
     </application>
 
 </manifest>

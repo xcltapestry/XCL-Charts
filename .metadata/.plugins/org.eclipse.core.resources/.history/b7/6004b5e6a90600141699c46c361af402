@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+     <string-array name="chartsTitle">
+ 		
+ 		<item>竖向柱形图</item>
+	    <item>横向柱形图</item>
+	    <item>横向定制线柱形图</item>
+	    <item>竖向定制线柱形图</item>
+	    <item>高密度柱形图</item>
+	    
+	  	<item>竖向3D柱形图 </item>
+	  	<item>横向3D柱形图</item>
+	  	<item>竖向堆叠柱形图 </item>
+	  	<item>横向堆叠柱形图 </item>
+	   	<item>折线图(封闭式)</item>
+	   	<item>折线图(开放式)</item>
+	   	
+	    <item>曲线图</item>
+	    <item>三角函数曲线图</item>
+	    <item>区域图</item>
+	    
+	    <item>多轴混合图1</item>
+	    <item>多轴混合图2</item>
+	    
+        <item>饼图</item>
+        <item>饼图</item>
+        <item>3D饼图</item>
+        <item>环形图</item>
+        <item>南丁格尔玫瑰图</item>
+        
+        <!--  
+        <item>极性图</item> -->
+        <item>雷达图</item> 
+        <item>柱形渐显动画演示</item> 
+        
+        <item>半圆图(view形式)</item> 
+        
+        <item>大批量Bar Chart</item> 
+        <item>大批量Line Chart</item> 
+        
+        <item>同数据源圆图切换 </item>
+        <item>同数据源柱图切换</item>
+               
+        <item>半圆图</item>
+        <item>圆形图</item>
+        <item>仪表盘</item>
+    </string-array>
+    
+     <string-array name="chartsDesc">
+	  <item>Bar Chart - 柱形集渐显动画效果</item>
+	  <item>Bar Chart </item>
+	  <item>Bar Chart - 柱形依次显现动画 </item>
+	  <item>Bar Chart - 柱形依次显现动画 </item>
+	  <item>Bar Chart </item>
+	 
+	  <item>3D Bar Chart</item>
+	  <item>3D Bar Chart</item>
+	  <item>Stacked Bar Chart</item> 
+	  <item>Stacked Bar Chart</item>
+	  <item>Line Chart</item>
+	   <item>Line Chart - 线条渐绘动画效果</item>
+	  <item>Spline Chart </item>
+	  <item>Spline Chart </item>
+	  <item>Area Chart</item>  
+	  
+	   <item>MultiAxis Chart</item>
+	   <item>MultiAxis Chart</item>
+	   
+      <item>Pie Chart - 饼块渐显动画效果</item>
+      <item>Pie Chart-另一种风格</item> 
+      <item>3D Pie Chart - 由远及近的动画效果</item>     
+      <item>Dount Chart</item>
+      <item>Rose Chart</item>     
+      
+      <!--  <item>Polar Chart</item>    -->
+       <item>Radar Chart</item>           
+       <item>Bar Chart - 柱形渐显动画效果</item>    
+       
+       
+        <item>底轴用滑动条切换数据显示</item> 
+        <item>左轴右ScrollView显示图表</item> 
+      
+      
+      <item>同一数据源可换成不同类型的柱形类的图</item>
+      <item>同一数据源可显示成不同类型的饼，环，玫瑰图等</item>     
+      
+      <item>Circle Chart</item>
+      <item>Circle Chart</item>
+   	  <item>Gauge Chart</item>
+    </string-array>
+    
+     
+     <!-- 
+      <string-array name="chartsHelp">
+	  <item>http://blog.csdn.net/xcl168/article/details/26813747</item>
+    </string-array>
+    -->
+    
+     
+     <string-array name="spinnerbarstyle">
+        <item>竖向柱形图</item>	  
+        <item>横向柱形图</item> 		
+	  	<item>竖向3D柱形图 </item>
+	  	<item>横向3D柱形图</item>
+	  	<item>竖向堆叠柱形图 </item>
+	  	<item>横向堆叠柱形图 </item>
+    </string-array>
+    
+     <string-array name="spinnercirstyle">
+         <item>饼图</item>
+        <item>3D饼图</item>
+        <item>环形图</item>
+        <item>南丁格尔玫瑰图</item>
+    </string-array>
+    
+</resources>

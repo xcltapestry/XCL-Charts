@@ -100,17 +100,18 @@ public class XChart implements IRender {
 	}
 
 	// 图的内边距属性
+	//设置内边距百分比,即绘图区与图边距相隔距离的百分比,不允许负值
 	/**
-	 * 设置内边距百分比,即绘图区与图边距相隔距离的百分比,不允许负值
+	 * 用于指定绘图区与图范围的内边距。单位为PX值.
 	 * 
 	 * @param top
-	 *            顶
+	 *            绘图区与图顶部的保留距离，用于显示标题及key之类
 	 * @param bottom
-	 *            底
+	 *            绘图区与图底部的保留距离，用于显示底轴及底部的图例之类
 	 * @param left
-	 *            左边
+	 *            绘图区与图左边的保留宽度，用于显示左边图例与轴之类
 	 * @param right
-	 *            右边
+	 *            绘图区与图右边的保留宽度，用于显示右边图例及右轴之类
 	 */
 	public void setPadding(float top, float bottom, float left, float right) {
 		if (top > 0)
@@ -149,6 +150,18 @@ public class XChart implements IRender {
 	public PlotTitle getPlotTitle() {
 		return plotTitle;
 	}
+	
+	/**
+	 * 设置图表绘制范围.
+	 * @param width
+	 *            图表宽度
+	 * @param height
+	 *            图表高度
+	 */
+	public void setChartRange( float width,float height) {	
+		setChartRange(0.0f,0.0f,width,height);
+	}
+	
 
 	/**
 	 * 设置图表绘制范围,以指定起始点及长度方式确定图表大小.
@@ -205,6 +218,7 @@ public class XChart implements IRender {
 		mWidth = Math.abs(right - left);
 		mHeight = Math.abs(bottom - top);
 	}
+			
 
 	/**
 	 * 是否为竖屏显示
@@ -317,27 +331,27 @@ public class XChart implements IRender {
 	}
 
 	/**
-	 * 图绘制区相对图底部边距的缩进百分比
+	 * 返回图绘制区相对图底部边距的高度
 	 * 
-	 * @return 缩进比例
+	 * @return 绘图区与图边距间的PX值
 	 */
 	public float getPaddingBottom() {
 		return mPaddingBottom;
 	}
 
 	/**
-	 * 图绘制区相对图左边边距的缩进比例
+	 * 图绘制区相对图左边边距的宽度
 	 * 
-	 * @return 缩进比例
+	 * @return 绘图区与图边距间的PX值
 	 */
 	public float getPaddingLeft() {
 		return mPaddingLeft;
 	}
 
 	/**
-	 * 图绘制区相对图右边边距的缩进比例
+	 * 图绘制区相对图右边边距的宽度
 	 * 
-	 * @return 缩进比例
+	 * @return 绘图区与图边距间的PX值
 	 */
 	public float getPaddingRight() {
 		return mPaddingRight;
@@ -406,13 +420,25 @@ public class XChart implements IRender {
 					mBottom, mChartBackgroundPaint);
 	}
 
+	
 	/**
-	 * 计算图的显示范围
+	 * 计算图的显示范围,依屏幕px值来计算.
 	 */
-	protected void calcPlotRange() {
+	protected void calcPlotRange() {		
+		plotArea.setBottom(this.mBottom - mPaddingBottom );
+		plotArea.setLeft(this.mLeft + mPaddingLeft);
+		plotArea.setRight(this.mRight - mPaddingRight);		
+		plotArea.setTop(this.mTop + mPaddingTop);
+	}
+	
+	/**
+	 * 计算图的显示范围,依百分比来计算
+	 */
+	protected void calcPlotRange2() {
 		
-
-		// 图的内边距属性，默认按竖屏算
+		//对于把view放入xml的情况，下面的代码暂时没有用了.
+		/*
+		//图的内边距属性，默认按竖屏算
 		float perLeft = mPaddingLeft;
 		float perRight = mPaddingRight;
 		float perTop = mPaddingTop;
@@ -452,7 +478,7 @@ public class XChart implements IRender {
 			renderTop = titleHeight + subtitleHeight;
 		}
 		plotArea.setTop(this.mTop + renderTop);
-
+*/
 	}
 
 	// 导出成文件,待实现

@@ -46,7 +46,7 @@
 						          android:layout_marginRight="0dp"						          
 						         />
             
-             
+             <!--  android:layout_marginLeft="50dp" -->
           
              <HorizontalScrollView
 				        android:id="@+id/horizontalScrollView1"
@@ -54,7 +54,7 @@
 				        android:layout_height="wrap_content" 
 	            		
 	            		  android:layout_marginRight="0dp"
-						  android:layout_marginLeft="38dp"
+						  android:layout_marginLeft="0dp"
 						  
 						   android:scrollbars="none"
 	            		android:fadingEdge="none"

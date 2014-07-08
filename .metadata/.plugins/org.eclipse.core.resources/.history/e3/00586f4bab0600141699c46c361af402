@@ -1,0 +1,62 @@
+package com.demo.xclcharts;
+
+import android.os.Bundle;
+import android.app.Activity;
+import android.view.Menu;
+import android.widget.SeekBar;
+
+public class CircleChartActivity extends Activity {
+	
+	com.demo.xclcharts.view.CircleChart03View chart = null;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_circle_chart);
+		
+		chart = (com.demo.xclcharts.view.CircleChart03View)findViewById(R.id.chartview); 
+		
+		SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar1);	
+		 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+	         
+	            @Override
+	            public void onStopTrackingTouch(SeekBar seekBar) {	               
+	            }
+	          
+	            @Override
+	            public void onStartTrackingTouch(SeekBar seekBar) {	                
+	            }
+	        
+	            @Override
+	            public void onProgressChanged(SeekBar seekBar, int progress,
+	                    boolean fromUser) {
+	            	
+	            	mDesc.setText(Integer.toString(progress));	            
+		            if(0 == mSelected )
+		       		{
+		                mGaChart.setAgent(progress);
+		        		mGaChart.chartRender();
+		        		mGaChart.invalidate();	            	
+		       		}else if(1 == mSelected ){
+		        		mCirChart2.setPercentage(progress);
+		        		mCirChart2.chartRender();
+		        		mCirChart2.invalidate();
+		       		}else if(2 == mSelected ){
+		        		mCirChart.setPercentage(progress);
+		        		mCirChart.chartRender();
+		        		mCirChart.invalidate();
+		       		}
+	               
+	            }
+	        });
+		 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.circle_chart, menu);
+		return true;
+	}
+
+}
