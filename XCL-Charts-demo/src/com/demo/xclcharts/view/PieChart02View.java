@@ -64,16 +64,28 @@ public class PieChart02View extends TouchView {
 		chartRender();
 	}
 	
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  	
+	
 
 	private void chartRender()
 	{
 		try {					
 			
 			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			
 			//图的内边距
 			chart.setPadding(30, 30, 30, 30);
+			*/
+			
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 			
 			//设定数据源
 			chart.setDataSource(chartData);			

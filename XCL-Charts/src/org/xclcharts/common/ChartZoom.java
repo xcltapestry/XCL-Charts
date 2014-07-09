@@ -97,9 +97,45 @@ public class ChartZoom implements IChartZoom {
 		float newWidth = 0.0f,newHeight = 0.0f;
 		int scaleWidth = (int)(mScaleRate * mInitWidth);
 	   	int scaleHeight =  (int)(mScaleRate * mInitHeight);
+	   	
+	   	
+	   //	float newBottom = 0.0f;
+	   	
+	   	
+	   	/*
+	   	float newTop = 0.0f;
+	   	float newBottom = 0.0f;   		   	
+		float newLeft = 0.0f;
+	   	float newRight = 0.0f;
+	   	
+	   	
+	   	if(ZOOM_OUT == flag) //缩小
+		{	   	
+	   		 newTop = mChart.getPaddingTop() + scaleHeight/2; 
+		   	 newBottom = mChart.getPaddingBottom() - scaleHeight/2; 	   		   	
+			 newLeft = mChart.getPaddingLeft() + scaleWidth/2; 
+		   	 newRight = mChart.getPaddingRight() - scaleWidth/2; 
+		   	
+		}else if(ZOOM_IN == flag){  //放大	
+			 newTop = mChart.getPaddingTop() - scaleHeight/2; 
+		   	 newBottom = mChart.getPaddingBottom() + scaleHeight/2; 	   		   	
+			 newLeft = mChart.getPaddingLeft() - scaleWidth/2; 
+		   	 newRight = mChart.getPaddingRight() + scaleWidth/2; 
+		}else{
+			Log.e(TAG, "不认识这个参数.");
+			return ;
+		}
+	   	
+	   	mChart.setPadding(newTop,newBottom,newLeft,newRight);
+	   	mView.invalidate();
+	   	
+	   	*/
+
+	
 	   	 
 		if(ZOOM_OUT == flag) //缩小
 		{
+			
 			 newWidth = mChart.getWidth() - scaleWidth; 
 		   	 newHeight = mChart.getHeight() - scaleHeight; 
 		   	 
@@ -110,6 +146,7 @@ public class ChartZoom implements IChartZoom {
 		   	 newHeight = mChart.getHeight() + scaleHeight; 
 		}else{
 			Log.e(TAG, "不认识这个参数.");
+			return ;
 		}
 		
 		if(newWidth > 0 && newHeight > 0 )
@@ -117,6 +154,8 @@ public class ChartZoom implements IChartZoom {
 			mChart.setChartRange(mChart.getLeft(),mChart.getTop(), newWidth, newHeight);
 	   	 	mView.invalidate();
 		}
+	
+		
 	}
 	
 }

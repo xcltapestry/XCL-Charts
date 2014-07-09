@@ -59,15 +59,25 @@ public class LineChart01View extends TouchView {
 		chartRender();
 	}
 
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  
+	
 	private void chartRender()
 	{
 		try {				
 			
 			
 			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 		
 			chart.setPadding(20, 20, 10, 5);
+			*/
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 			
 			//设定数据源
 			chart.setCategories(labels);								

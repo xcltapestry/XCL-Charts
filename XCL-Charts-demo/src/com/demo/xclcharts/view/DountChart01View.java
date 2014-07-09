@@ -55,13 +55,24 @@ public class DountChart01View extends TouchView {
 		chartRender();
 	}
 	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  				
+	
 	private void chartRender()
 	{
 		try {
 			
 			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());			
 			chart.setPadding(20, 30, 15, 15);
+			*/
+			
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 							
 			//设置起始偏移角度
 			chart.setInitialAngle(90);	

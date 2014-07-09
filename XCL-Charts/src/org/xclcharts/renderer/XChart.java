@@ -331,6 +331,15 @@ public class XChart implements IRender {
 	}
 
 	/**
+	 * 返回图绘制区相对图顶部边距的高度
+	 * 
+	 * @return 绘图区与图边距间的PX值
+	 */
+	public float getPaddingTop() {
+		return this.mPaddingTop;
+	}
+	
+	/**
 	 * 返回图绘制区相对图底部边距的高度
 	 * 
 	 * @return 绘图区与图边距间的PX值

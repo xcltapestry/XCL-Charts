@@ -24,8 +24,10 @@ package com.demo.xclcharts;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,6 +37,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.ZoomControls;
 
 import com.demo.xclcharts.view.BarChart06View;
@@ -142,29 +145,47 @@ public class ChartsActivity extends Activity {
 			//完全动态创建,无须XML文件.
 	       FrameLayout content = new FrameLayout(this);
 	       
+	       /*
+			RelativeLayout.LayoutParams layoutParams= 
+		          // new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
+		          // RelativeLayout.LayoutParams.WRAP_CONTENT); 		
+					new RelativeLayout.LayoutParams(400, 400);
+		            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT); 		            		        
+		            layoutParams.setMargins(0, 0, 0, 0);	            
+		            chart.setLayoutParams(layoutParams); 
+		    */
+	    	      
+	      
+    
 	 
-	       //缩放控件
-	       mZoomControls = new ZoomControls(this);
-	       mZoomControls.setIsZoomInEnabled(true);
-	       mZoomControls.setIsZoomOutEnabled(true);	       
 		   FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(
 		   FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);  
 		   flp.gravity = Gravity.BOTTOM|Gravity.RIGHT;  
+		   
+		   //缩放控件
+	       mZoomControls = new ZoomControls(this);
+	       mZoomControls.setIsZoomInEnabled(true);
+	       mZoomControls.setIsZoomOutEnabled(true);	  
 		   mZoomControls.setLayoutParams(flp);  
 		   
-		   //图表视图 
-		   LinearLayout.LayoutParams llp = new LinearLayout.LayoutParams(  
-		       	    LinearLayout.LayoutParams.MATCH_PARENT,  
-		       	    LinearLayout.LayoutParams.MATCH_PARENT);
-		   llp.gravity = Gravity.CENTER;
+		   //图表
+		   DisplayMetrics dm = getResources().getDisplayMetrics();
 		   
-		   final LinearLayout chartLayout = new LinearLayout(this);  					
-		   chartLayout.setOrientation(LinearLayout.VERTICAL);  	        
-		   chartLayout.setLayoutParams(llp);	   
-		   chartLayout.addView( mCharts[mSelected] );  	
+		   int scrWidth = (int) (dm.widthPixels * 0.8); 	
+		   int scrHeight = (int) (dm.heightPixels * 0.8); 	
 		   
+		   //int scrWidth = dm.widthPixels;
+		   //int scrHeight = dm.heightPixels;
+		
+	       RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(scrWidth, scrHeight);	     
+           layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);            
+           //mCharts[mSelected].setBackgroundColor(Color.CYAN);
+           
+           final RelativeLayout chartLayout2 = new RelativeLayout(this);  	
+           chartLayout2.addView( mCharts[mSelected], layoutParams);
+                      		  
 	        //增加控件
-		   ((ViewGroup) content).addView(chartLayout);
+		   ((ViewGroup) content).addView(chartLayout2);		   
 		   ((ViewGroup) content).addView(mZoomControls);
 		    setContentView(content);
 		   	       

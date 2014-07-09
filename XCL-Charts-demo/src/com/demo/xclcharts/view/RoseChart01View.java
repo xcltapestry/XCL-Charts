@@ -55,14 +55,26 @@ public class RoseChart01View extends TouchView {
 		chartRender();
 	}
 	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  	
+	
 	private void chartRender()
 	{
 		try {						
 			
-			//柱形图所占范围大小
+			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			
 			chart.setPadding(20, 20, 15, 15);
+			*/
+			
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
 			chart.setApplyBackgroundColor(true);
 			chart.setBackgroundColor(Color.BLACK);
 			

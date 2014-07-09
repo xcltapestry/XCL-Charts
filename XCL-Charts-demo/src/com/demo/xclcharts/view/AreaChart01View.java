@@ -65,14 +65,25 @@ public class AreaChart01View extends TouchView {
 		chartDataSet();		
 		chartRender();
 	}	 
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  
+	
+	
 	 
 	private void chartRender()
 	{
 		try{												 
 				//图所占范围大小
-				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+				//chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 				//绘图区缩进去的比例
-				chart.setPadding(20, 20, 10, 5);
+				//chart.setPadding(20, 20, 10, 5);				
+				chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 											
 				//轴数据源						
 				//标签轴

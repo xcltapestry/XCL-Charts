@@ -31,10 +31,13 @@
 		            android:layout_height="wrap_content" />
         </LinearLayout>
         
+         <!--    android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+             -->
         <LinearLayout
              android:id="@+id/lay_chart"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="500dip"
+            android:layout_height="500dip"
             android:orientation="vertical">
         </LinearLayout>
         

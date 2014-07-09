@@ -28,6 +28,10 @@ import org.xclcharts.common.SysinfoHelper;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -48,35 +52,60 @@ public abstract class GraphicalView extends View {
 	protected int mScrWidth = 0;
 	protected int mScrHeight = 0;
 	
-
+	//chart.setPadding(200, 200, 100, 10);	
+	
+	
 	public GraphicalView(Context context) {
 		super(context);	
-		
-		//禁用硬件加速
-		disableHardwareAccelerated();	
-		//得到屏幕信息
-		getScreenInfo();
+		initView();		
 	}
 	
 	 public GraphicalView(Context context, AttributeSet attrs){   
 	        super(context, attrs);   
-	        
+	        initView();
 	 }
-	
-	
+	 
+	 public GraphicalView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+		
 	  public abstract void render(Canvas canvas);
 	
 	  public void onDraw(Canvas canvas)
 	  {		 
 		  try {	
-			  //canvas.getWidth()
-			  //canvas.
+			  
+			//绘制出view所占范围
+		         RectF rect = new RectF();
+		         rect.left = 1f;
+		        // rect.right = getLayoutParams().width -1 ;
+		         rect.right = getMeasuredWidth() -1 ;
+		         rect.top = 1f;
+		        // rect.bottom = getLayoutParams().height - 1;	  
+		         rect.bottom = this.getMeasuredHeight() - 1;	  
+		        
+		         Paint paint2 = new Paint();
+			     paint2.setColor(Color.BLUE);
+			     paint2.setStyle(Style.STROKE);		       
+		         canvas.drawRect(rect, paint2);
+		         
+			 
 			  render(canvas);	    	 		
 		  } catch (Exception e) {
 				// TODO Auto-generated catch block
 			  Log.e(TAG, e.toString());
 		  }	
 	   }
+	  
+	  private void initView()
+	  {
+		//禁用硬件加速
+			disableHardwareAccelerated();	
+			//得到屏幕信息
+			getScreenInfo();
+	  }
+	  
 	  
 	  
 	
@@ -98,21 +127,28 @@ public abstract class GraphicalView extends View {
 	}
 	
 	/**
-	 * 得到屏幕信息,当有父控件在时，取父控件的宽度
+	 * 得到屏幕信息,当有父控件在时，取View的宽高，否则取屏幕的宽高
 	 */	
 	private void getScreenInfo()
 	{				
-		//屏幕信息
-		DisplayMetrics dm = getResources().getDisplayMetrics();
+		/*
 		ViewGroup vg=(ViewGroup)getParent();
 		if(vg!=null){ 
-			mScrWidth =	vg.getLayoutParams().width/2;
-			mScrHeight = vg.getLayoutParams().height/2;
+			mScrWidth =  this.getWidth();
+			mScrHeight = this.getHeight();
 		}else{
+			DisplayMetrics dm = getResources().getDisplayMetrics();
 			mScrWidth = dm.widthPixels;
 			mScrHeight = dm.heightPixels;					
-		}
-
+		}	
+		*/
+		
+		DisplayMetrics dm = getResources().getDisplayMetrics();
+		mScrWidth = dm.widthPixels;
+		mScrHeight = dm.heightPixels;
+		
+		//mScrWidth =  this.getWidth();
+		//mScrHeight = this.getHeight();
 	}
 
 	public int getScreenWidth() {
@@ -121,6 +157,64 @@ public abstract class GraphicalView extends View {
 
 	public int getScreenHeight() {
 		return mScrHeight;
+	}
+	
+	public float getChartTop()
+	{
+		return 200f;
+	}
+	
+	public float getChartBottom()
+	{
+		return 200f;
+	}
+	
+	
+	public float getChartLeft()
+	{
+		return 100f;
+	}
+	
+	
+	public float getChartRight()
+	{
+		return 10f;
+	}
+	
+	
+	
+	
+	@Override
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+		setMeasuredDimension(measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
+	}
+	
+	private int measureWidth(int measureSpec) {
+		int result = 0;
+		int specMode = MeasureSpec.getMode(measureSpec);
+		int specSize = MeasureSpec.getSize(measureSpec);
+
+		if (specMode == MeasureSpec.EXACTLY) { //fill_parent
+			result = specSize;
+		} else if (specMode == MeasureSpec.AT_MOST) { //wrap_content
+			result = Math.min(result, specSize);
+		}
+		return result;
+	}
+
+	private int measureHeight(int measureSpec) {
+		int result = 0;
+		int specMode = MeasureSpec.getMode(measureSpec);
+		int specSize = MeasureSpec.getSize(measureSpec);
+
+		if (specMode == MeasureSpec.EXACTLY) { //fill_parent
+			result = specSize;
+		} else if (specMode == MeasureSpec.AT_MOST) { //wrap_content
+			result = Math.min(result, specSize);
+		}
+		return result;
 	}
 
 	

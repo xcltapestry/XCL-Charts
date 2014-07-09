@@ -65,10 +65,18 @@ public class SpinnerPieChart01View extends GraphicalView {
  		
  	}
      
+     @Override  
+     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+         super.onSizeChanged(w, h, oldw, oldh);  
+        //图所占范围大小
+       //  mChart.setChartRange(w,h);
+     }  		
+     
      private void chartRender()
  	{
  		try {					
  			initChart(mChartStyle);
+ 		
  			//图所占范围大小 		
  			mChart.setChartRange( 0.0f,mMoveHeight,
  									getScreenWidth(),
@@ -76,6 +84,9 @@ public class SpinnerPieChart01View extends GraphicalView {
  			
  			//图的内边距
  			mChart.setPadding(5, 35, 15, 20);
+ 			
+ 			
+ 			//mChart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
  			
  			//设定数据源
  			mChart.setDataSource(chartData);			
@@ -105,6 +116,9 @@ public class SpinnerPieChart01View extends GraphicalView {
 	@Override
     public void render(Canvas canvas) {
         try{
+        	
+        	//mChart.setChartRange(this.getMeasuredWidth(), this.getMeasuredHeight());
+        	
         	mChart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());

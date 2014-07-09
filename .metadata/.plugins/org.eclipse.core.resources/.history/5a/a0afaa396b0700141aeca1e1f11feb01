@@ -1,0 +1,7 @@
+package org.xclcharts.common;
+
+public class DensityUtil {
+	
+	 private DensityUtil() {   }
+
+}

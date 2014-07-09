@@ -86,12 +86,24 @@ public class MultiAxisChart01View extends TouchView {
 		}
 		
 		
+		@Override  
+	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+	        super.onSizeChanged(w, h, oldw, oldh);  
+	       //图所占范围大小
+	        chart.setChartRange(w,h);
+	        
+	        lnChart.setChartRange(w,h);
+	    }  
+		
+		
 		private void chartRender()
 		{
 			try {
 				//柱形图所占范围大小
+				
+				/*
 				chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-				chart.setChartDirection(XEnum.Direction.VERTICAL);	
+					
 				
 				if(chart.isVerticalScreen())
 				{
@@ -99,7 +111,10 @@ public class MultiAxisChart01View extends TouchView {
 				}else{
 					chart.setPadding(20, 30, 18, 10);
 				}
+				*/
+				chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 				
+				chart.setChartDirection(XEnum.Direction.VERTICAL);
 				//标题
 				chart.setTitle("Virtual vs Native Oracle RAC Performance");
 				chart.addSubtitle("(XCL-Charts Demo)");				
@@ -304,7 +319,9 @@ public class MultiAxisChart01View extends TouchView {
 		{
 			try {
 				
-				//柱形图所占范围大小
+				
+				//线图所占范围大小
+				/*
 				lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
 							
 				if(lnChart.isVerticalScreen())
@@ -312,7 +329,11 @@ public class MultiAxisChart01View extends TouchView {
 					lnChart.setPadding(20, 10, 10, 10);
 				}else{
 					lnChart.setPadding(20, 30, 18, 10);
-				}							
+				}			
+				*/
+				lnChart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+				
+				
 				renderLnAxis();
 				
 				lnChart.getPlotKey().showKeyLabels();

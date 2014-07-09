@@ -63,22 +63,32 @@ public class BarChart01View extends TouchView implements Runnable{
 		chartDataSet();
 		chartRender();
 		new Thread(this).start();
+		
+		
 	}
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  
+	
 	
 	private void chartRender()
 	{
-		try {
-			
+		try {								
 			//图所占范围大小
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());			
+			//chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());			
 			if(chart.isVerticalScreen())
 			{
-				chart.setPadding(15, 20, 10, 5);
+			//	chart.setPadding(15, 20, 10, 5);
 			}else{
-				chart.setPadding(20, 20, 18, 5);
+				//chart.setPadding(20, 20, 18, 5);
 			}
+			chart.setPadding(200, 200, 100, 10);	
 			
-		
 			//标题
 			chart.setTitle("主要数据库分布情况");
 			chart.addSubtitle("(XCL-Charts Demo)");	
@@ -170,12 +180,22 @@ public class BarChart01View extends TouchView implements Runnable{
 		
 	@Override
     public void render(Canvas canvas) {
-        try{        	        	
+        try{        	  
+      
+        //float mScrWidth =  this.getWidth();
+		//	float  mScrHeight = this.getHeight();
+		//	chart.setChartRange( mScrWidth,mScrHeight);
+		//chart.setChartRange( this.getMeasuredWidth(),this.getMeasuredHeight());	        	
+        	
+			
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
     }
+	
+	
+	
 
 	@Override
 	public List<XChart> bindChart() {

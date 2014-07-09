@@ -74,6 +74,12 @@ public abstract class TouchView  extends GraphicalView implements IChartZoom {
 	        super(context, attrs);   
 	        
 	 }
+	 
+	 public TouchView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		
+	 }
+	 
 	
 	public abstract List<XChart> bindChart();		
 	

@@ -67,11 +67,21 @@ public class BarChart03View extends TouchView implements Runnable{
 		
 	}
 	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  
+	
+	
 	private void chartRender()
 	{
 		try {
 			
 			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());		
 			if(chart.isVerticalScreen())
 			{
@@ -79,6 +89,8 @@ public class BarChart03View extends TouchView implements Runnable{
 			}else{
 				chart.setPadding(20, 20, 10, 8);
 			}
+			*/
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 					
 			//标题
 			chart.setTitle("小小熊 - 期末考试成绩");

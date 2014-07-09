@@ -56,24 +56,36 @@ public class CircleChart01View extends TouchView {
 		setPercentage(0);	
 		chartRender();
 	}
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  		
+	
 			
 	public void chartRender()
 	{
 		try {						
 			
-			//图所占范围大小			
+			//图所占范围大小		
+			/*
 			if(getScreenWidth() < this.getScreenHeight())
 			{
 				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenWidth());
 			}else{
 				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
 			}
+			
+			//图的内间距
+			chart.setPadding(20, 20, 15, 15);	
+			*/
 						
 		
 			//设置附加信息
 			chart.setAttributeInfo(mDataInfo); 	
-			//图的内间距
-			chart.setPadding(20, 20, 15, 15);		
+				
 			
 			//半圆方式显示
 			chart.setCircleType(XEnum.CircleType.HALF);	

@@ -63,11 +63,21 @@ public class BarChart3D01View extends TouchView {
 		chartRender();
 	}
 		
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  
+	
+	
 	private void chartRender()
 	{
 		try {						
 			
 			//柱形图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			//Plot的内边距比例		
 			if(chart.isVerticalScreen())
@@ -76,6 +86,9 @@ public class BarChart3D01View extends TouchView {
 			}else{
 				chart.setPadding(25, 20, 18, 5);
 			}
+			*/
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
 			
 			//数据源			
 			chart.setDataSource(BarDataset);

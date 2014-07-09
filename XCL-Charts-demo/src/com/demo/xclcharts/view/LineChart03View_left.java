@@ -71,10 +71,12 @@ public class LineChart03View_left extends GraphicalView {
 			//数据轴刻度间隔
 			chart.getDataAxis().setAxisSteps(10);
 			
-		
+			
+		//chart.getCategoryAxis().setHorizontalTickAlign(align)
 			chart.getCategoryAxis().setVisible(false);		
 			chart.setTopAxisVisible(false);
 			chart.setRightAxisVisible(false);
+			
 			
 			
 		} catch (Exception e) {

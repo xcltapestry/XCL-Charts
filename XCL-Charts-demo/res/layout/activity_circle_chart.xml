@@ -8,17 +8,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".CircleChartActivity" >
 
+    <!--   android:layout_width="300dip"  
+			         android:layout_height="400dip"   -->
  
    				 <com.demo.xclcharts.view.CircleChart03View
 			         android:id="@+id/chartview"
-			         android:layout_width="300dip"  
-			         android:layout_height="400dip"  
+			         android:layout_width="wrap_content"  
+			         android:layout_height="wrap_content"  
 			         android:layout_centerInParent="true"/>   	
 			         					            				    				    				 	    				 						       
 			        <SeekBar
 			        android:id="@+id/seekBar1"
 			        android:layout_below="@id/chartview" 
-			        android:layout_width="400dip"  
+			        android:layout_width="wrap_content"  
                		android:layout_height="50dip"  
 			        android:layout_marginBottom="136dp" />
 			        

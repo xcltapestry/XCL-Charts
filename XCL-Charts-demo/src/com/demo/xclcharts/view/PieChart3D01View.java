@@ -58,14 +58,26 @@ public class PieChart3D01View extends TouchView implements Runnable{
 		new Thread(this).start();
 	}
 	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  		
+	
+	
 	private void chartRender()
 	{
 		try {						
 			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			
 			//图的内边距
 			chart.setPadding(10, 20, 15, 15);
+			*/
+			
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 			
 			//设定数据源
 			//chart.setDataSource(chartData);		
@@ -138,7 +150,10 @@ public class PieChart3D01View extends TouchView implements Runnable{
 			  for(int i=10;i>0;i--)
 			  {
 				  Thread.sleep(100);
-				  chart.setChartRange(0.0f, 0.0f,getScreenWidth()/i,getScreenHeight()/i);
+				 // chart.setChartRange(0.0f, 0.0f,getScreenWidth()/i,getScreenHeight()/i);
+				  
+				  chart.setChartRange(0.0f, 0.0f,this.getWidth()/i,this.getHeight()/i);
+				  
 				  
 				  if(1 == i)
 				  {
@@ -146,7 +161,7 @@ public class PieChart3D01View extends TouchView implements Runnable{
 						chart.setTitle("个人专业技能分布");
 						chart.addSubtitle("(XCL-Charts Demo)");
 						chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
-						chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+						chart.setChartRange(0.0f, 0.0f,getWidth(),getHeight());
 				  }
 				  postInvalidate(); 
 			  }

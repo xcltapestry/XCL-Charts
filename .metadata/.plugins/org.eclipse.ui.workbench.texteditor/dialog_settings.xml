@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="setPadding" key="selection"/>
+		<item value="MeasureSpec" key="selection"/>
 		<list key="findhistory">
+			<item value="MeasureSpec"/>
+			<item value="content"/>
 			<item value="setPadding"/>
 			<item value="百分比"/>
 			<item value="chartAxis"/>
 			<item value="mPaintLabel"/>
 			<item value="chartRender"/>
 			<item value="OUTSIDE"/>
-			<item value="mLabelPosition"/>
-			<item value="mLabelLocation"/>
 		</list>
 		<list key="replacehistory">
 			<item value="mLabelPosition"/>

@@ -1,23 +1,23 @@
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.ViewGroup;
 
 public class CircleChart03View extends GraphicalView {
 
-	private String TAG = "CircleChart01View";
+	private String TAG = "CircleChart03View";
 	private CircleChart chart = new CircleChart();	
 	
 	private List<PieData> mlPieData = new LinkedList<PieData>();		
@@ -56,7 +56,7 @@ public class CircleChart03View extends GraphicalView {
 			//设置附加信息
 			chart.setAttributeInfo(mDataInfo); 	
 			//图的内间距
-			chart.setPadding(20, 20, 15, 15);		
+			//chart.setPadding(20, 20, 15, 15);		
 			
 			//半圆方式显示
 			chart.setCircleType(XEnum.CircleType.HALF);	
@@ -97,13 +97,47 @@ public class CircleChart03View extends GraphicalView {
     public void render(Canvas canvas) {
         try{
         	canvas.drawColor(Color.GRAY);
-        	
+        	/*
         	 //设置图表大小
 	        chart.setChartRange(10f, 10f,  
 	        		this.getLayoutParams().width - 10,
 	        		 this.getLayoutParams().height - 10);
+	        
+	       
+	        
+	       
 	        //设置绘图区内边距
 	        chart.setPadding(120, 180, 100, 100);	        
+	        */
+        	
+        	float mScrWidth = 0.0f,mScrHeight = 0.0f;
+        	ViewGroup vg=(ViewGroup)getParent();
+    		if(vg!=null){ 
+    			//mScrWidth =	vg.getLayoutParams().width/2;
+    			//mScrHeight = vg.getLayoutParams().height/2;
+    			mScrWidth =  this.getWidth();
+    			mScrHeight = this.getHeight();
+    		}else{
+    			DisplayMetrics dm = getResources().getDisplayMetrics();
+    			mScrWidth = dm.widthPixels;
+    			mScrHeight = dm.heightPixels;					
+    		}
+    		
+    		
+    		chart.setChartRange( mScrWidth , mScrHeight);
+	        
+	        //chart.setChartRange(this.getWidth(), this.getHeight());
+	        
+	        if(this.getWidth() == 0 ||  this.getHeight() == 0)
+	        {
+	        	// chart.setChartRange(getLayoutParams().width - 10,getLayoutParams().height  - 10);
+	        	 
+	        	 //chart.setChartRange( this.getMeasuredWidth(),this.getMeasuredHeight());
+	        }
+	        
+	       
+	        
+	       // chart.setPadding(100, 100, 100, 100);	   
 	        
             chart.render(canvas);
         } catch (Exception e){

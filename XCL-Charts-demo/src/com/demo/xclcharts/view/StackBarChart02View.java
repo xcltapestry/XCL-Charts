@@ -60,21 +60,36 @@ public class StackBarChart02View extends TouchView {
 		chartRender();
 	}
 	
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  				
+	
+	
 	private void chartRender()
 	{
 		try {		
 			
 			//柱形图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			//指定显示为横向柱形
-			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
+			
+			
 			if(chart.isVerticalScreen())
 			{
 				chart.setPadding(15, 20, 10, 5);
 			}else{
 				chart.setPadding(25, 20, 18, 5);
 			}
+			*/
 			
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
+			//指定显示为横向柱形
+			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
 			//数据源		
 			chart.setCategories(chartLabels);	
 			chart.setDataSource(BarDataSet);
@@ -163,6 +178,9 @@ public class StackBarChart02View extends TouchView {
 	@Override
     public void render(Canvas canvas) {
         try{
+        	//chart.setChartRange(this.getMeasuredWidth(), this.getMeasuredHeight());
+        	
+        	//chart.setChartRange(this.getWidth(), this.getHeight());
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());

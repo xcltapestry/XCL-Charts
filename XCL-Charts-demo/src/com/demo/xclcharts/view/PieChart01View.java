@@ -55,6 +55,14 @@ public class PieChart01View extends TouchView implements Runnable{
 		new Thread(this).start();
 	}
 	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  	
+	
+	
 	private void chartRender()
 	{
 		try {					

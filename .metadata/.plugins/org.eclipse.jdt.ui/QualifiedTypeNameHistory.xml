@@ -14,12 +14,17 @@
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="android.util.AttributeSet"/>
 <fullyQualifiedTypeName name="android.widget.HorizontalScrollView"/>
-<fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
-<fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Position"/>
 <fullyQualifiedTypeName name="android.view.ViewGroup"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="android.widget.LinearLayout"/>
+<fullyQualifiedTypeName name="android.content.Context"/>
+<fullyQualifiedTypeName name="android.widget.FrameLayout.LayoutParams"/>
+<fullyQualifiedTypeName name="android.widget.RelativeLayout"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.view.View.MeasureSpec"/>
 </qualifiedTypeNameHistroy>
