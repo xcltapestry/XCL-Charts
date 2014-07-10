@@ -79,27 +79,32 @@ public class MainActivity extends Activity {
 				 Intent intent = new Intent();  	
 				 bundleSimple.putString("title", chartsTitleCurr[position]); 		
 				 
-				 int id_desc_1_2_3 = chartsTitleCurr.length - 3;
-				 int id_desc_4_5 = chartsTitleCurr.length - 5;
+				
+				 int id_desc_3_4 = chartsTitleCurr.length - 4;
 				
 				 
-				 if(position >= id_desc_1_2_3) //倒数1,2,3 seekbar图
+				 if(position == chartsTitleCurr.length - 1) //倒数1 仪表盘
 				 {
-					 position = chartsTitleCurr.length - 1 - position;
-					 intent.setClass(MainActivity.this,SeekBarActivity.class);	
-				 }else if(position >= id_desc_4_5) //倒数4,5 同源汇总图
+					 intent.setClass(MainActivity.this,GaugeChartActivity.class);	
+					 					 
+				 }else if(position == chartsTitleCurr.length - 2) //倒数2  圆/半圆图
+				 {					
+					 intent.setClass(MainActivity.this,CircleChartActivity.class);	
+				 //}else if(position >= id_desc_1_2_3) //倒数1,2,3 seekbar图
+				 //{
+				//	 position = chartsTitleCurr.length - 1 - position;
+				//	 intent.setClass(MainActivity.this,SeekBarActivity.class);	
+				 }else if(position >= id_desc_3_4) //倒数3,4 同源汇总图
 				 {
-					 position = chartsTitleCurr.length - 4 - position;
+					 position = chartsTitleCurr.length - 3 - position;
 					 intent.setClass(MainActivity.this,SpinnerActivity.class);		
-				 }else if(position >= chartsTitleCurr.length - 6) //倒数6  scroll view line
+				 }else if(position >= chartsTitleCurr.length - 5) //倒数5  scroll view line
 				 {
 					 intent.setClass(MainActivity.this,HLNScrollActivity.class);		
-				 }else if(position >= chartsTitleCurr.length - 7) //倒数7  scroll view bar
+				 }else if(position >= chartsTitleCurr.length - 6) //倒数6  scroll view bar
 				 {
 					 intent.setClass(MainActivity.this,HBARScrollActivity.class);		
-				 }else if(position >= chartsTitleCurr.length - 8) //倒数8  自定义view放入xml中 (circle chart)
-				 {
-					 intent.setClass(MainActivity.this,CircleChartActivity.class);		
+				
 				 }else{
 					 intent.setClass(MainActivity.this,ChartsActivity.class);	
 				 }

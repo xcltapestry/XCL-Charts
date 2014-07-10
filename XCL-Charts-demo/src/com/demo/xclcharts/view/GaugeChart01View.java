@@ -26,10 +26,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.chart.GaugeChart;
+import org.xclcharts.common.DensityUtil;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 import android.util.Pair;
 
@@ -51,11 +53,46 @@ public class GaugeChart01View  extends GraphicalView {
 	public GaugeChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		initView();
+		//new Thread(this).start();
+	}
+	
+	
+	public GaugeChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public GaugeChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
 		chartLabels();
 		chartDataSet();	
 		chartRender();
-		//new Thread(this).start();
-	}
+	 }
+	 
+	 @Override  
+     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        //xml中的设置:  android:layout_width="300dip"   
+        //			   android:layout_height="300dip"       
+    
+        chart.setChartRange(w ,h );
+        
+        //绘图区范围
+        //左右各缩进10%
+        int offsetX = DensityUtil.dip2px(getContext(), (float) (300 * 0.1)); 
+        //偏移高度的25%下来
+        int offsetY = DensityUtil.dip2px(getContext(), (float) (300 * 0.25));        
+        chart.setPadding(offsetY, 0, offsetX,  offsetX);
+     
+     }  
+	 
 	
 	//从seekbar传入的值
 	public void setAgent(float currentAgent)
@@ -67,9 +104,9 @@ public class GaugeChart01View  extends GraphicalView {
 	{
 		try {								
 			//图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth() - 100,getScreenHeight());
+			//chart.setChartRange(0.0f, 0.0f,getScreenWidth() - 100,getScreenHeight());
 										
-			chart.setPadding(25, 20, 10, 10);
+			//chart.setPadding(25, 20, 10, 10);
 				
 			//设置标题
 			chart.setTitle("仪表盘 ");
@@ -140,6 +177,7 @@ public class GaugeChart01View  extends GraphicalView {
 	@Override
     public void render(Canvas canvas) {
         try{
+        	
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());

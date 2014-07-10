@@ -20,7 +20,7 @@ public class SpinnerPieChart01View extends GraphicalView {
 
 	private PieChart mChart = null;
 	private int mChartStyle = 0;
-	private int mMoveHeight = 0;
+	private int mOffsetHeight = 0;
 	
 	private LinkedList<PieData> chartData = new LinkedList<PieData>();
 
@@ -28,7 +28,7 @@ public class SpinnerPieChart01View extends GraphicalView {
 		super(context);
 		// TODO Auto-generated constructor stub
 		mChartStyle = chartStyle;
-		mMoveHeight = moveHeight;
+		mOffsetHeight = moveHeight;
 		chartDataSet();	
 		chartRender();
 	}
@@ -69,7 +69,7 @@ public class SpinnerPieChart01View extends GraphicalView {
      protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
          super.onSizeChanged(w, h, oldw, oldh);  
         //图所占范围大小
-       //  mChart.setChartRange(w,h);
+         mChart.setChartRange(w,h);
      }  		
      
      private void chartRender()
@@ -77,15 +77,16 @@ public class SpinnerPieChart01View extends GraphicalView {
  		try {					
  			initChart(mChartStyle);
  		
+ 			/*
  			//图所占范围大小 		
- 			mChart.setChartRange( 0.0f,mMoveHeight,
+ 			mChart.setChartRange( 0.0f,mOffsetHeight,
  									getScreenWidth(),
- 									getScreenHeight() - mMoveHeight);
+ 									getScreenHeight() - mOffsetHeight);
  			
  			//图的内边距
  			mChart.setPadding(5, 35, 15, 20);
  			
- 			
+ 			*/
  			//mChart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
  			
  			//设定数据源
@@ -118,6 +119,9 @@ public class SpinnerPieChart01View extends GraphicalView {
         try{
         	
         	//mChart.setChartRange(this.getMeasuredWidth(), this.getMeasuredHeight());
+        	
+        	//mChart.setChartRange(0.0f, mOffsetHeight, this.getWidth(),this.getHeight() - mOffsetHeight);
+    		
         	
         	mChart.render(canvas);
         } catch (Exception e){

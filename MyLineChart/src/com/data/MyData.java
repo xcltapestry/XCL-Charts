@@ -1,10 +1,19 @@
 package com.data;
-/**
- * @author Seven
- */
+
 public class MyData {
+	/**
+	 * 数据名称
+	 */
 	private String name;
+	
+	/**
+	 * 数据内容
+	 */
 	private int[] data;
+	
+	/**
+	 * 数据颜色
+	 */
 	private int color;
 	
 	

@@ -28,12 +28,14 @@ import java.util.List;
 
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -42,7 +44,7 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class CircleChart01View extends TouchView {
+public class CircleChart01View extends GraphicalView {
 
 	private String TAG = "CircleChart01View";
 	private CircleChart chart = new CircleChart();	
@@ -57,21 +59,36 @@ public class CircleChart01View extends TouchView {
 		chartRender();
 	}
 	
+	public CircleChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        setPercentage(0);	
+		chartRender();
+	 }
+	 
+	 public CircleChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			setPercentage(0);	
+			chartRender();
+	 }
+	 
+	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
-       //图所占范围大小
-        chart.setChartRange(w,h);
+        //图所占范围大小
+        //xml中的设置: android:layout_height="200dip"  
+        int chartHeight = DensityUtil.dip2px(getContext(), 200 / 2); //100dip
+        chart.setChartRange(w ,h + chartHeight); 
     }  		
 	
 			
 	public void chartRender()
 	{
-		try {						
+		try {			
+			/*
 			
 			//图所占范围大小		
-			/*
-			if(getScreenWidth() < this.getScreenHeight())
+						if(getScreenWidth() < this.getScreenHeight())
 			{
 				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenWidth());
 			}else{
@@ -80,7 +97,7 @@ public class CircleChart01View extends TouchView {
 			
 			//图的内间距
 			chart.setPadding(20, 20, 15, 15);	
-			*/
+		*/
 						
 		
 			//设置附加信息
@@ -105,10 +122,17 @@ public class CircleChart01View extends TouchView {
 		if(per < 50)
 		{
 			mDataInfo = "轻松搞定";
+			chart.getLabelPaint().setColor(Color.WHITE);
+			chart.getPaintDataInfo().setColor(Color.WHITE);
+			
 		}else if(per < 70){
 			mDataInfo = "充满活力";
+			chart.getLabelPaint().setColor((int)Color.rgb(72, 201, 176));
+			chart.getPaintDataInfo().setColor(Color.WHITE);
 		}else{
 			mDataInfo = "不堪重负";
+			chart.getLabelPaint().setColor(Color.RED);
+			chart.getPaintDataInfo().setColor(Color.RED);
 		}
 		//PieData(标签，百分比，在饼图中对应的颜色)
 		mlPieData.clear();		
@@ -124,6 +148,7 @@ public class CircleChart01View extends TouchView {
         }
     }
 
+	/*
 	@Override
 	public List<XChart> bindChart() {
 		// TODO Auto-generated method stub		
@@ -131,4 +156,5 @@ public class CircleChart01View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	*/
 }

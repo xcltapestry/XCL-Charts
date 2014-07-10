@@ -1,12 +1,13 @@
 package com.demo.xclcharts;
 
-import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.HorizontalScrollView;
-import android.widget.RelativeLayout;
 
+@SuppressLint("NewApi")
 public class HLNScrollActivity extends Activity {
 
 	HorizontalScrollView horiView;
@@ -15,21 +16,12 @@ public class HLNScrollActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_hlnscroll);
+			
+		horiView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
+		horiView.setPadding(70, 0, 0, 0);
 		
-		//计算horizontalScrollvView需要隔左边多远距离，可能我计算式有误
-				//int paddingLeft = Math.round(800 / 100 * 10);
-				
-				/*
-				horiView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
-				RelativeLayout.LayoutParams param = (RelativeLayout.LayoutParams) horiView.getLayoutParams();
-				param.setMargins(paddingLeft, param.topMargin, param.rightMargin, param.bottomMargin);
-				horiView.setLayoutParams(param);
-				*/
-				
-				//设置horizontalScrollvView拉到头和尾的时候没有阴影颜色
-				//horiView.setOverScrollMode(View.OVER_SCROLL_NEVER);
-				
-				
+		//设置horizontalScrollvView拉到头和尾的时候没有阴影颜色
+		horiView.setOverScrollMode(View.OVER_SCROLL_NEVER);
 	}
 
 	@Override

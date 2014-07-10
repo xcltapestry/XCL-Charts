@@ -104,7 +104,7 @@ public class SpinnerBarChart01View extends GraphicalView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-       // mChart.setChartRange(w,h);
+        //mChart.setChartRange(w,h);
     }  		
 	
 	public void chartRender()
@@ -114,16 +114,19 @@ public class SpinnerBarChart01View extends GraphicalView {
 			initChart(mChartStyle);
 			
 			//图所占范围大小
-			mChart.setChartRange(0.0f, mOffsetHeight, getScreenWidth(),getScreenHeight() - mOffsetHeight);
+			//mChart.setChartRange(0.0f, mOffsetHeight, getScreenWidth(),getScreenHeight() - mOffsetHeight);
 		
 			
+			/*
 			if(mChart.isVerticalScreen())
 			{
 				mChart.setPadding(5, 40, 10, 15);
 			}else{
 				mChart.setPadding(10, 45, 15, 15);
 			}
-				
+			*/
+			mChart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+ 				
 			
 			//数据源
 			mChart.setDataSource(chartData);
@@ -201,6 +204,9 @@ public class SpinnerBarChart01View extends GraphicalView {
 	@Override
     public void render(Canvas canvas) {
         try{
+        	
+        	mChart.setChartRange(0.0f, mOffsetHeight, this.getWidth(),this.getHeight() - mOffsetHeight);
+    		
         	
         	//mChart.setChartRange(this.getMeasuredWidth(), this.getMeasuredHeight());
         	mChart.render(canvas);

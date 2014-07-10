@@ -37,6 +37,7 @@ import org.xclcharts.renderer.XChart;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -70,17 +71,42 @@ public class BarChart06View extends TouchView implements Runnable{
 	public BarChart06View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();
-		chartRender();
-		
-		new Thread(this).start();
+		initView();
 	}
+	
+	public BarChart06View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public BarChart06View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartLabels();
+			chartDataSet();
+			chartRender();
+			
+			new Thread(this).start();
+	 }
+	 
+	 
+	 @Override  
+	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+	        super.onSizeChanged(w, h, oldw, oldh);  
+	    
+	       //图所占范围大小
+	        chart.setChartRange(w,h);
+	    }  
 	
 	private void chartRender()
 	{
 		try {			
 			//图所占范围大小
+			/*
 			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());			
 			if(chart.isVerticalScreen())
 			{
@@ -88,7 +114,10 @@ public class BarChart06View extends TouchView implements Runnable{
 			}else{
 				chart.setPadding(20, 20, 18, 5);
 			}
-					
+					*/
+			
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
 			//标题
 			chart.setTitle("柱形渐显动画演示");
 			chart.addSubtitle("(XCL-Charts Demo)");	

@@ -1,21 +1,20 @@
 package com.view;
 
-
 import com.data.Common;
 import com.data.MyData;
 import com.example.mylinechart.R;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
 import android.view.View;
+
 /**
- * @author Seven
+ * 标题及图例等
+ * @author ZLL
  */
+@SuppressLint("DrawAllocation")
 public class TitleView extends View {
 
     public TitleView(Context context) {

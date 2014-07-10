@@ -4,5 +4,3 @@ INDEX VERSION 1.126+E:\GitHub\GitHub\XCL-Charts\.metadata\.plugins\org.eclipse.j
 3667133413.index
 764411934.index
 3634385755.index
-3273866169.index
-2914941958.index

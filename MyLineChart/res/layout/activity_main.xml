@@ -11,26 +11,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dip"
 	    android:orientation="vertical"
         >
     </LinearLayout>
             
-    <HorizontalScrollView 
-        android:id="@+id/horizontal_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-	    android:layout_alignBottom="@id/axisY"
-	    android:scrollbars="none"
-        >
-	    <LinearLayout
-	        android:id="@+id/thrend_line"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
-	    </LinearLayout>
-	</HorizontalScrollView>
-
+    
+	<LinearLayout
+	    android:id="@+id/thrend_line"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+        android:layout_alignParentBottom="true"
+	    android:orientation="vertical">
+	</LinearLayout>
+	
+	<LinearLayout
+	    android:id="@+id/axisX"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+	    android:orientation="vertical">
+	</LinearLayout>
+	
     <LinearLayout 
         android:id="@+id/titleView"
         android:layout_width="fill_parent"

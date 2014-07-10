@@ -1,29 +1,20 @@
 package com.view;
 
-import java.util.HashMap;
-import java.util.Map.Entry;
-
-
-
-
-
-
 import com.data.Common;
 import com.data.MyData;
 import com.example.mylinechart.R;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Rect;
-import android.util.AttributeSet;
 import android.view.View;
+
 /**
- * @author Seven
+ * 图区
+ * @author ZLL
  */
+@SuppressLint("DrawAllocation")
 public class StatisticsOneView extends View {
 	private float xPoint = 0;// 原点X坐标
     private float yPoint = 0;// 原点Y坐标
@@ -31,32 +22,13 @@ public class StatisticsOneView extends View {
     private float yLengh = 320;// Y轴长度
     private float xScale = 5;// X轴一个刻度长度
     private int widthBorder = 5;// 内边缘宽度，为了统计图不靠在屏幕的边缘上，向边缘缩进距离。最好大于30。
-    private String[] xLableArray;// X轴标签
     private int[] yLableArray;// Y轴标签,用于计算
-    private String levelName[];// 污染级别
-    private Bitmap bitmap[] = null;
-    private int count = 1;
     private boolean mp=false;
     
     private float[] begins;//Y轴刻度的y坐标
     private float each;//均分后刻度之间的长度
     public StatisticsOneView(Context context) {
         super(context);
-        init();
-    }
-
-    private void init() {
-    	if(Common.screenWidth<540)
-    		widthBorder = 5;
-        
-        getResources().getIntArray(R.array.aqi_choice_color);
-        levelName = getResources().getStringArray(R.array.aqi_level);
-        getResources().getStringArray(R.array.aqi_data_view);
-        bitmap = new Bitmap[levelName.length];
-        for (int i = 0; i < levelName.length; i++) {
-            bitmap[i] = BitmapFactory.decodeResource(getResources(),
-                    R.drawable.l_1 + i);
-        }
     }
 
     /**
@@ -70,19 +42,12 @@ public class StatisticsOneView extends View {
      */
     public void initValue(int Width, int Height, boolean mp) {
         xPoint = widthBorder;
-        yPoint = Height - 20;
+        yPoint = Height ;
         xLengh = Width - widthBorder * 2 ;
         yLengh = Height ;
         xScale = getScale(Common.xScaleArray.length - 1, xLengh);
-        xLableArray = Common.xScaleArray;
         yLableArray = Common.yScaleArray;
         this.mp=mp;
-
-        if (xLableArray.length <= 10) {
-            count = 2;
-        } else {
-            count = 4;
-        }
 
         help2getPoint();
     }
@@ -109,7 +74,7 @@ public class StatisticsOneView extends View {
         linepaint.setTextSize(16);// 设置字体
         linepaint.setStrokeWidth(3);
         // 画X轴轴线
-        canvas.drawLine(xPoint, yPoint, xPoint + xLengh, yPoint, linepaint);
+//        canvas.drawLine(xPoint, yPoint, xPoint + xLengh, yPoint, linepaint);
 
 //        for (int i = 1; yLableArray != null && i < yLableArray.length-2; i++) {
 //            int j = i;
@@ -117,16 +82,16 @@ public class StatisticsOneView extends View {
 //            canvas.drawLine(xPoint, yPoint - yScale * i, xPoint +xLengh, yPoint
 //                    - yScale * i, mypaint);
 //        }
-        for (int i = 0; xLableArray != null && i < xLableArray.length; i++) {
-            // 画X轴刻度
-        	if(i%count == 0 && i != 0){
-        		canvas.drawLine(xPoint+xScale*i, yPoint, xPoint+xScale*i, yPoint - 8, linepaint);
-        		canvas.drawText(xLableArray[i]+"", xPoint+xScale*i-5, yPoint+20, linepaint);
-        	}
-        	else 
-        		canvas.drawLine(xPoint+xScale*i, yPoint, xPoint+xScale*i, yPoint - 4, linepaint);
-            
-        }
+//        for (int i = 0; xLableArray != null && i < xLableArray.length; i++) {
+//            // 画X轴刻度
+//        	if(i%count == 0 ){
+//        		canvas.drawLine(xPoint+xScale*i, yPoint, xPoint+xScale*i, yPoint - 8, linepaint);
+//        		canvas.drawText(xLableArray[i]+"", xPoint+xScale*i-5, yPoint+20, linepaint);
+//        	}
+//        	else 
+//        		canvas.drawLine(xPoint+xScale*i, yPoint, xPoint+xScale*i, yPoint - 4, linepaint);
+//            
+//        }
         // 画折线
         drawCurve(canvas);
     }
@@ -247,6 +212,6 @@ public class StatisticsOneView extends View {
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-		setMeasuredDimension((int)xLengh, (int)Common.screenHeight);  
+		setMeasuredDimension((int)xLengh, (int)yLengh);  
 	}
 }

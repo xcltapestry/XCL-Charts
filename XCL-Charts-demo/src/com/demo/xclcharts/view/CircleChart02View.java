@@ -33,13 +33,14 @@ import org.xclcharts.renderer.XChart;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 /**
  * @ClassName CircleChart02View
  * @Description  图形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class CircleChart02View extends TouchView {
+public class CircleChart02View extends GraphicalView {
 	
 	private String TAG = "CircleChart02View";
 	private CircleChart chart = new CircleChart();
@@ -55,11 +56,33 @@ public class CircleChart02View extends TouchView {
 		chartRender();
 	}
 	
+	public CircleChart02View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        setPercentage(0);
+		chartRender();
+	 }
+	 
+	 public CircleChart02View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			setPercentage(0);
+			chartRender();
+	 }
+	
+	 
+	 @Override  
+	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+	        super.onSizeChanged(w, h, oldw, oldh);  
+	       //图所占范围大小
+	        chart.setChartRange(w,h);
+	    }  
+	 
+	 
 	public void chartRender()
 	{
 		try {
 			
 			//图所占范围大小
+			/*
 			if(getScreenWidth() < this.getScreenHeight())
 			{
 				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenWidth());
@@ -67,7 +90,8 @@ public class CircleChart02View extends TouchView {
 				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
 			}
 			
-			chart.setPadding(10, 10, 10, 15);				
+			chart.setPadding(10, 10, 10, 15);		
+			*/
 							
 			//设置信息			
 			chart.setAttributeInfo(mDataInfo); 	
@@ -115,6 +139,7 @@ public class CircleChart02View extends TouchView {
         }
     }
 
+	/*
 	@Override
 	public List<XChart> bindChart() {
 		// TODO Auto-generated method stub		
@@ -122,4 +147,5 @@ public class CircleChart02View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	*/
 }

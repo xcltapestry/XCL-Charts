@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring accessors="true" comment="Delete element from project &apos;XCL-Charts-demo&apos;&#x0D;&#x0A;- Original project: &apos;XCL-Charts-demo&apos;&#x0D;&#x0A;- Original element: &apos;com.demo.xclcharts.view.CircleChart03View.java&apos;" description="Delete element" element1="/src&lt;com.demo.xclcharts.view{CircleChart03View.java" elements="1" flags="589830" id="org.eclipse.jdt.ui.delete" resources="0" stamp="1405000874300" subPackages="false" version="1.0"/>
+</session>

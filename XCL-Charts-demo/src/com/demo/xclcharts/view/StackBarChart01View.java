@@ -39,6 +39,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.util.AttributeSet;
 import android.util.Log;
 /**
  * @ClassName StackBarChart01View
@@ -56,10 +57,26 @@ public class StackBarChart01View extends TouchView {
 	public StackBarChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();	
-		chartRender();
+		initView();
 	}
+	
+	public StackBarChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public StackBarChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 chartLabels();
+		 chartDataSet();	
+		 chartRender();
+	 }
+	 
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
@@ -85,7 +102,11 @@ public class StackBarChart01View extends TouchView {
 			}
 			*/
 			
+			//chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
+			//设置绘图区默认缩进px值
 			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
 			
 			chart.setChartDirection(XEnum.Direction.VERTICAL);
 			//数据源		
@@ -188,7 +209,7 @@ public class StackBarChart01View extends TouchView {
     public void render(Canvas canvas) {
         try{
         	
-        	chart.setChartRange(this.getMeasuredWidth(), this.getMeasuredHeight());
+        	//chart.setChartRange(this.getMeasuredWidth(), this.getMeasuredHeight());
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());

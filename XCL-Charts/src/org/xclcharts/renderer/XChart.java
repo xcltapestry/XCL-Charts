@@ -123,6 +123,10 @@ public class XChart implements IRender {
 		if (right > 0)
 			mPaddingRight = right;
 	}
+	
+
+	
+	
 
 	/**
 	 * 返回主图表区基类

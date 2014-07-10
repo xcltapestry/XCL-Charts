@@ -16,7 +16,7 @@ import android.view.View.MeasureSpec;
 
 public class LineChart03View_left extends GraphicalView {
 	
-	private String TAG = "LineChart01View";
+	private String TAG = "LineChart03View_left";
 	private LineChart chart = new LineChart();
 	
 	//标签集合
@@ -37,6 +37,14 @@ public class LineChart03View_left extends GraphicalView {
 			chartDataSet();	
 			chartRender();
 	 }
+	 
+		 
+		 public LineChart03View_left(Context context, AttributeSet attrs, int defStyle) {
+				super(context, attrs, defStyle);
+				 chartLabels();
+					chartDataSet();	
+					chartRender();
+		 }		 
 	 
 
 	private void chartRender()
@@ -133,21 +141,28 @@ public class LineChart03View_left extends GraphicalView {
 		labels.add("2014");
 	}
 	
-	public static int dip2px(Context context, float dipValue){ 
-        final float scale = context.getResources().getDisplayMetrics().density; 
-        return (int)(dipValue * scale + 0.5f); 
-	} 
+
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  
+	
+	
 	
 	@Override
     public void render(Canvas canvas) {
         try{
         	
         	 //设置图表大小
-	        chart.setChartRange(10f, 10f,  
+	        chart.setChartRange(0,0, //10f, 10f,  
 	        		this.getLayoutParams().width - 10,
 	        		 this.getLayoutParams().height - 10);
 	        
 	        chart.setPadding(120, 180, 70, 0);	//70是轴所点总宽度，在右边轴绘图时，偏移这个宽度就对好了
+        	
         	
             chart.render(canvas);
         } catch (Exception e){
@@ -163,72 +178,5 @@ public class LineChart03View_left extends GraphicalView {
 	        
 	 }
 	
-	
-	//自定义view的宽高
-	@Override
-	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-	
-		 int measuredHeight = measureHeight(heightMeasureSpec);		 
-		 int measuredWidth = measureWidth(widthMeasureSpec);		 
-		// setMeasuredDimension(measuredHeight, measuredWidth);	
-		 
-		 //setMeasuredDimension(80,600 );
-		 setMeasuredDimension(measuredWidth,measuredHeight);	
-		 
-		// setMeasuredDimension(800,600 );
-		 
-		 //setMeasuredDimension(80,600 );
-	}
-	
-
-	private int measureHeight(int measureSpec) {
-		 
-	    int specMode = MeasureSpec.getMode(measureSpec);
-	    int specSize = MeasureSpec.getSize(measureSpec);
-	 
-	    // Default size if no limits are specified.
-	 
-	    int result = 500;
-	    if (specMode == MeasureSpec.AT_MOST) {
-	 
-	        // Calculate the ideal size of your
-	        // control within this maximum size.
-	        // If your control fills the available
-	        // space return the outer bound.
-	 
-	        result = specSize;
-	    } else if (specMode == MeasureSpec.EXACTLY) {
-	 
-	        // If your control can fit within these bounds return that
-	        // value.
-	        result = specSize;
-	    }
-	 
-	    return result;
-	}
-	 
-	private int measureWidth(int measureSpec) {
-	    int specMode = MeasureSpec.getMode(measureSpec);
-	    int specSize = MeasureSpec.getSize(measureSpec);
-	 
-	    // Default size if no limits are specified.
-	    int result = 500;
-	    if (specMode == MeasureSpec.AT_MOST) {
-	        // Calculate the ideal size of your control
-	        // within this maximum size.
-	        // If your control fills the available space
-	        // return the outer bound.
-	        result = specSize;
-	    }
-	 
-	    else if (specMode == MeasureSpec.EXACTLY) {
-	        // If your control can fit within these bounds return that
-	        // value.
-	 
-	        result = specSize;
-	    }
-	 
-	    return result;
-	}
-	
+		
 }

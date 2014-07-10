@@ -34,6 +34,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -51,9 +52,25 @@ public class DountChart01View extends TouchView {
 	public DountChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartDataSet();	
-		chartRender();
+		initView();
 	}
+	
+	public DountChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public DountChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartDataSet();	
+			chartRender();
+	 }
+	 
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
@@ -72,6 +89,7 @@ public class DountChart01View extends TouchView {
 			chart.setPadding(20, 30, 15, 15);
 			*/
 			
+			//设置绘图区默认缩进px值
 			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 							
 			//设置起始偏移角度

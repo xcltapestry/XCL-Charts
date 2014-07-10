@@ -36,6 +36,7 @@ import org.xclcharts.renderer.XChart;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -59,18 +60,30 @@ public class BarChart01View extends TouchView implements Runnable{
 	public BarChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();
-		chartRender();
-		new Thread(this).start();
-		
-		
+		initView();				
 	}
+	
+	public BarChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public BarChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartLabels();
+			chartDataSet();
+			chartRender();
+			new Thread(this).start();
+	 }
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
-       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
        //图所占范围大小
         chart.setChartRange(w,h);
     }  
@@ -192,10 +205,7 @@ public class BarChart01View extends TouchView implements Runnable{
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
-    }
-	
-	
-	
+    }			
 
 	@Override
 	public List<XChart> bindChart() {

@@ -37,6 +37,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 /**
  * @ClassName StackBarChart02View
@@ -55,11 +56,26 @@ public class StackBarChart02View extends TouchView {
 	public StackBarChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();
-		chartRender();
+		initView();
 	}
 	
+	public StackBarChart02View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public StackBarChart02View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 chartLabels();
+		 chartDataSet();	
+		 chartRender();
+	 }
+	 
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  

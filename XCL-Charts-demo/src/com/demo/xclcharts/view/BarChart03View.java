@@ -38,6 +38,7 @@ import org.xclcharts.renderer.XEnum.LabelAlign;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -58,14 +59,30 @@ public class BarChart03View extends TouchView implements Runnable{
 	public BarChart03View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();
-		chartCustomLines();
-		chartRender();
-		
-		new Thread(this).start();
+		initView();
 		
 	}
+	
+	public BarChart03View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public BarChart03View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 chartLabels();
+			chartDataSet();
+			chartCustomLines();
+			chartRender();
+			
+			new Thread(this).start();
+	 }
+	 
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  

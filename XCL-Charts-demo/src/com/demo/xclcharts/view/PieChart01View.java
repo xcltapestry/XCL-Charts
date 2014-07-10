@@ -34,6 +34,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -50,11 +51,26 @@ public class PieChart01View extends TouchView implements Runnable{
 	public PieChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartDataSet();	
-		chartRender();
-		new Thread(this).start();
+		initView();
 	}
 	
+	public PieChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public PieChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartDataSet();	
+			chartRender();
+			new Thread(this).start();
+	 }
+	 	 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
@@ -68,13 +84,18 @@ public class PieChart01View extends TouchView implements Runnable{
 		try {					
 			
 			//图所占范围大小
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+			//chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
 			
 			//图的内边距
-			chart.setPadding(10, 20, 15, 15);
+			//chart.setPadding(10, 20, 15, 15);
 			
 			//设定数据源
-			//chart.setDataSource(chartData);			
+			//chart.setDataSource(chartData);		
+			
+			
+			//设置绘图区默认缩进px值
+			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			
 			
 			//设置起始偏移角度(即第一个扇区从哪个角度开始绘制)
 			chart.setInitialAngle(90);	

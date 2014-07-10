@@ -58,6 +58,10 @@
             android:name="com.demo.xclcharts.CircleChartActivity"
             android:label="@string/title_activity_circle_chart" >
         </activity>
+        <activity
+            android:name="com.demo.xclcharts.GaugeChartActivity"
+            android:label="@string/title_activity_gauge_chart" >
+        </activity>
     </application>
 
 </manifest>

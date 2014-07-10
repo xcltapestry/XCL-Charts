@@ -53,16 +53,27 @@ public class PieChart02View extends TouchView {
 	
 	public PieChart02View(Context context) {
 		super(context);
-		chartDataSet();	
-		chartRender();
+		initView();
 	}
 	
 	
-	public PieChart02View(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		chartDataSet();	
-		chartRender();
-	}
+	public PieChart02View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public PieChart02View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 chartDataSet();	
+			chartRender();
+	 }
+	 	
+	 
 	
 	
 	@Override  

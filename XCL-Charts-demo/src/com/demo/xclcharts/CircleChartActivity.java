@@ -10,33 +10,39 @@ import android.widget.TextView;
 
 public class CircleChartActivity extends Activity {
 	
-	com.demo.xclcharts.view.CircleChart03View chart = null;
-	TextView  mDesc = null;
+	//半圆
+	com.demo.xclcharts.view.CircleChart01View halfchart = null;
+	//圆
+	com.demo.xclcharts.view.CircleChart02View chart = null;
+	//进度/状态
+	TextView  process = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_circle_chart);
+			
+		this.setTitle("圆/半圆图(Circle Chart)");
 		
-	
-		
-		chart = (com.demo.xclcharts.view.CircleChart03View)findViewById(R.id.chartview); 
+		init();
+		 
+	}
 
-		/*
-		RelativeLayout.LayoutParams layoutParams= 
-	         //   new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT); 		
-				new RelativeLayout.LayoutParams(400, 400);
-	            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT); 
-	            
-	           // layoutParams.setMargins(280, 0, 0, 0); 
-	            layoutParams.setMargins(0, 0, 200, 0);	            
-	            chart.setLayoutParams(layoutParams); 
-	            */
-	            
-		
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.circle_chart, menu);
+		return true;
+	}
+	
+	
+	private void init()
+	{
+		halfchart = (com.demo.xclcharts.view.CircleChart01View)findViewById(R.id.halfcircle_view); 
+		chart = (com.demo.xclcharts.view.CircleChart02View)findViewById(R.id.circle_view); 
+		process = (TextView)findViewById(R.id.tv_process);          		
 		SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar1);	
-		mDesc=(TextView)findViewById(R.id.tv_process);
-		
+				
 		 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
 	         
 	            @Override
@@ -51,21 +57,17 @@ public class CircleChartActivity extends Activity {
 	            public void onProgressChanged(SeekBar seekBar, int progress,
 	                    boolean fromUser) {
 	            	
-	            	mDesc.setText(Integer.toString(progress));	            
-	            	chart.setPercentage(progress);
+	            	process.setText(Integer.toString(progress));	            
+	            		       			
+	       			halfchart.setPercentage(progress);
+	       			halfchart.chartRender();
+	       			halfchart.invalidate();	     
+	       				       			
+	       			chart.setPercentage(progress);
 	       			chart.chartRender();
 	       			chart.invalidate();
-	               
 	            }
 	        });
-		 
-	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.circle_chart, menu);
-		return true;
 	}
 
 }

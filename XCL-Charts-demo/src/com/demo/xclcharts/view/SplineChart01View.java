@@ -37,6 +37,7 @@ import org.xclcharts.renderer.plot.PlotGrid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 /**
  * @ClassName SplineChart01View
@@ -54,11 +55,27 @@ public class SplineChart01View extends TouchView {
 	public SplineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();	
-		chartRender();
+		initView();
 	}
 	
+	public SplineChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public SplineChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+			chartLabels();
+			chartDataSet();	
+			chartRender();
+	 }
+	 
+	 
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
@@ -76,7 +93,7 @@ public class SplineChart01View extends TouchView {
 			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());		
 			chart.setPadding(15, 20, 13, 5);
 			*/
-			
+			//设置绘图区默认缩进px值
 			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 			
 			//数据源	

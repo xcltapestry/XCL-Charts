@@ -38,6 +38,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -58,11 +59,27 @@ public class BarChart3D01View extends TouchView {
 	public BarChart3D01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub				
-		chartLabels();
-		chartDataSet();	
-		chartRender();
+		initView();
 	}
 		
+	
+	public BarChart3D01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public BarChart3D01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartLabels();
+			chartDataSet();	
+			chartRender();
+	 }
+	 
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  

@@ -10,11 +10,12 @@
     <string name="title_activity_spinner">SpinnerActivity</string>
     <string name="helpurl">http://blog.csdn.net/xcl168/article/details/29675613</string>
     <string name="spinner_label">换一换:</string>
-    <string name="seekbar_label">滑动它:</string>
+    <string name="seekbar_label">-->滑动</string>
     <string name="title_activity_multi_touch">MultiTouchActivity</string>
     <string name="title_activity_gradient">GradientActivity</string>
     <string name="title_activity_hbarscroll">HBARScrollActivity</string>
     <string name="title_activity_hlnscroll">HLNScrollActivity</string>
     <string name="title_activity_circle_chart">CircleChartActivity</string>
+    <string name="title_activity_gauge_chart">GaugeChartActivity</string>
 
 </resources>

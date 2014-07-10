@@ -35,6 +35,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.AttributeSet;
 import android.util.Log;
 
 /**
@@ -54,10 +55,26 @@ public class LineChart01View extends TouchView {
 	public LineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();	
-		chartRender();
+		initView();
 	}
+	
+	public LineChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public LineChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 chartLabels();
+			chartDataSet();	
+			chartRender();
+	 }
+	 
 
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
