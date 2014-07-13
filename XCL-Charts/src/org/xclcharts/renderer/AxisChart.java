@@ -22,16 +22,15 @@
 package org.xclcharts.renderer;
 
 
-import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
-import org.xclcharts.renderer.plot.Legend;
-import org.xclcharts.renderer.plot.LegendRender;
-import org.xclcharts.renderer.plot.PlotKey;
-import org.xclcharts.renderer.plot.PlotKeyRender;
+import org.xclcharts.renderer.plot.AxisTitle;
+import org.xclcharts.renderer.plot.AxisTitleRender;
+import org.xclcharts.renderer.plot.PlotLegend;
+import org.xclcharts.renderer.plot.PlotLegendRender;
 
 import android.graphics.Canvas;
 
@@ -48,10 +47,10 @@ public class AxisChart extends XChart {
 	protected DataAxisRender dataAxis  = null;
 	//标签轴
 	protected CategoryAxisRender categoryAxis  = null;	
+	//轴标题类
+	protected AxisTitleRender axisTitle = null;
 	//图例类
-	protected LegendRender legend = null;
-	//图的Key基类
-	protected PlotKeyRender plotKey = null;
+	protected PlotLegendRender plotLegend = null;
 	
 	//格式化柱形顶上或线交叉点的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
@@ -75,21 +74,20 @@ public class AxisChart extends XChart {
 		dataAxis  = new DataAxisRender();
 		//标签轴
 		categoryAxis  = new CategoryAxisRender();				
+		//轴标题
+		axisTitle = new AxisTitleRender();		
 		//图例
-		legend = new LegendRender();
-		
-		//key值
-		plotKey = new PlotKeyRender(this);
+		plotLegend = new PlotLegendRender(this);
 	}
 	
 	
 	/**
-	 * 开放图的key基类
+	 * 开放图例基类
 	 * @return	基类
 	 */
-	public PlotKey getPlotKey()
+	public PlotLegend getPlotLegend()
 	{
-		return plotKey;
+		return plotLegend;
 	}		
 
 	 /**
@@ -109,83 +107,13 @@ public class AxisChart extends XChart {
 	}
 
 	/**
-	 * 开放图例绘制类
+	 * 开放轴标题绘制类
 	 * @return 图例绘制类
 	 */
-	public Legend getLegend() {
-		return legend;
+	public AxisTitle getAxisTitle() {
+		return axisTitle;
 	}
-		
-	
-	/**
-	 * 计算主图表区范围内,这个还不完善, 如3D底座厚度...., 
-	 *  本意是依标题之类，灵活计算高度，但发现在多图表混合时，不太好用.
-	 */
-	@Override
-	protected void calcPlotRange()
-	{				
-		super.calcPlotRange();
-		
-		//对于把view放入xml的情况，下面的代码暂时没有用了.
-		
-		/*
-				
-		//图的内边距属性
-		float perLeft = getPaddingLeft();
-		float perRight = getPaddingRight();
-		//float perTop = mPaddingPercentTop;
-		float perBottom =  getPaddingBottom();	
-		
-		float width = getWidth();
-		float height = getHeight();		
 
-		// 要依长宽比，区分横竖屏间的比例 [应当依长宽比设置对应的横竖比]
-		if(width > height) //横屏
-		{
-			float scrPer = height / width;			
-			//perTop += scrPer;
-			perBottom += scrPer;
-			perLeft -= scrPer;
-			perRight -= scrPer;		
-		}			
-		
-		if(perLeft > 0)
-		{
-			float rederLeft = Math.round( height / 100 * perLeft);		
-			if(this.getLegend().getLeftLegend().length() > 0)
-			{	
-				float legendLength = DrawHelper.getInstance().getPaintFontHeight(getLegend().getLeftLegendPaint());
-				if(legendLength > rederLeft) rederLeft = legendLength;
-			}
-			plotArea.setLeft( getLeft() + rederLeft);
-		}
-		
-		if(perRight > 0 )
-		{
-			float rederRight =  Math.round( width / 100 * perRight);
-			if(this.getLegend().getRightLegend().length() > 0)
-			{	
-				float legendLength = DrawHelper.getInstance().getPaintFontHeight(
-												getLegend().getRightLegendPaint());	
-				if(legendLength > rederRight ) rederRight = legendLength;
-			}
-			plotArea.setRight(this.getRight() - rederRight);	
-		}
-		
-		if(perBottom > 0 )
-		{
-			float rederBottom = Math.round( height / 100 * perBottom );
-			if(this.getLegend().getLowerLegend().length() > 0)
-			{			
-				float legendHeight = DrawHelper.getInstance().getPaintFontHeight(
-													getLegend().getLowerLegendPaint());	
-				if(legendHeight > rederBottom ) rederBottom = legendHeight;
-			}
-			plotArea.setBottom(this.getBottom() - rederBottom);	
-		}*/
-	}
-	
-	
 	/**
 	 * 轴所占的屏幕宽度
 	 * @return  屏幕宽度
@@ -232,22 +160,26 @@ public class AxisChart extends XChart {
 		return itemLabel;
 	}
 	
+	
+	@Override
 	protected boolean postRender(Canvas canvas) throws Exception
 	{
 		try {
+			super.postRender(canvas);
+			
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
 			 plotArea.render(canvas);
 			//画奇偶行填充,横竖网格线			
 			// plotGrid.render(canvas);
-			//画图例Legend
+			//画图例axisTitle
 	
 			//绘制标题
 			renderTitle(canvas);
-			//绘制图例
-			legend.setRange(this);
-			legend.render(canvas);
+			//绘制轴标题
+			axisTitle.setRange(this);
+			axisTitle.render(canvas);
 		
 		}catch( Exception e){
 			 throw e;

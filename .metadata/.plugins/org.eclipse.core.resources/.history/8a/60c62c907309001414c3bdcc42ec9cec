@@ -1,0 +1,11 @@
+package org.xclcharts.renderer.plot;
+
+public class BorderRender extends Border {
+	
+	public BorderRender()
+	{
+		super();
+	}
+
+	
+}

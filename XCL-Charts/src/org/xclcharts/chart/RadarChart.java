@@ -82,7 +82,7 @@ public class RadarChart extends RdChart{
 		dataAxis = new DataAxisRender();
 		CategoryAxis = new CategoryAxisRender();
 		dataAxis.setHorizontalTickAlign(Align.LEFT);
-		dataAxis.getAxisTickLabelPaint().setTextAlign(Align.RIGHT);	
+		dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
 		dataAxis.setTickMarksVisible(false);	
 		
 		showKeyLabels();
@@ -289,13 +289,13 @@ public class RadarChart extends RdChart{
 		int dataAxisTickCount = getAxisTickCount();
 				
 		//扇形角度,依标签个数决定 				
-		float pAngle = 360 / labelsCount ; //   72f; 
+		float pAngle = MathHelper.getInstance().div(360f, labelsCount) ; //   72f; 
 		
 		//270为中轴线所处圆心角
-		float initOffsetAgent = 270f - pAngle;
+		float initOffsetAgent = MathHelper.getInstance().sub(270f, pAngle);
 		
 		//依标签总个数算出环数,依数据刻度数决定
-		float avgRadius = getRadius() / (dataAxisTickCount - 1);
+		float avgRadius = MathHelper.getInstance().div(getRadius() , (dataAxisTickCount - 1));
 		
 		//当前半径
 		float curRadius = 0.0f;
@@ -313,6 +313,7 @@ public class RadarChart extends RdChart{
 
 		int labelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
 		float labelRadius = this.getRadius() + labelHeight;
+		float currAgent = 0.0f;
 				
 		for(int i=0; i < dataAxisTickCount;i++) //数据轴
 		{
@@ -320,20 +321,20 @@ public class RadarChart extends RdChart{
 			
 			for(int j=0;j < labelsCount ;j++)
 			{				
-				offsetAgent = initOffsetAgent +   pAngle * j;
+				offsetAgent = MathHelper.getInstance().add(  initOffsetAgent ,   pAngle * j );				
+				currAgent = MathHelper.getInstance().add(offsetAgent , pAngle);
 				
 				//计算位置
-				MathHelper.getInstance().calcArcEndPointXY(
-							cirX,cirY,curRadius, offsetAgent + pAngle); 				    
+				MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,curRadius, currAgent); 				    
 		        //点的位置
 		        mArrayDotX[i][j] = MathHelper.getInstance().getPosX();
 		        mArrayDotY[i][j] = MathHelper.getInstance().getPosY();	
 		        
 		        //记下每个标签对应的圆心角
-		        if(0 == i) mArrayLabelAgent[j] =  offsetAgent + pAngle ;
+		        if(0 == i) mArrayLabelAgent[j] =  currAgent ;
 		        
 		        //外围标签位置
-		        MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,labelRadius, offsetAgent + pAngle); 	    
+		        MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,labelRadius, currAgent); 	    
 		        mArrayLabelX[i][j] = MathHelper.getInstance().getPosX();
 		        mArrayLabelY[i][j] = MathHelper.getInstance().getPosY();	
 		        
@@ -342,6 +343,9 @@ public class RadarChart extends RdChart{
 		} //end for datacount		
 				
 	}
+	
+	
+
 	
 	/**
 	 * 绘制数据区网络
@@ -360,7 +364,7 @@ public class RadarChart extends RdChart{
 			int dataSize = dataset.size();
 			if(dataSize < 3)
 			{
-				Log.e("ERROR-RadarChart", "这几个数据可不够，最少三个起步.");
+				Log.e(TAG, "这几个数据可不够，最少三个起步.");
 				continue;
 			}
 			
@@ -393,7 +397,7 @@ public class RadarChart extends RdChart{
 				renderDataLine(canvas,lineData,arrayDataX,arrayDataY);
 				break;
 			default:
-				Log.e("ERROR-RadarChart","这类型不认识.");
+				Log.e(TAG,"这类型不认识.");
 			}
 		}
         
@@ -539,12 +543,13 @@ public class RadarChart extends RdChart{
 				getKeyPaint().setColor(cData.getLineColor());							
 				if( !isVerticalScreen()) //横屏
 				{								
-					canvas.drawRect(currentX			 , currentY,
+					canvas.drawRect(currentX , currentY,
 										  currentX - rectWidth, currentY - textHeight, 
 										  getKeyPaint());					
 					
 					canvas.drawText(cData.getLineKey(),currentX - rectWidth, currentY, getKeyPaint());
-					currentY += textHeight;
+								
+					currentY = MathHelper.getInstance().add(currentY,textHeight);
 				
 				}else{ //竖屏			
 					int keyTextWidth = dw.getTextWidth(getKeyPaint(), cData.getLineKey());
@@ -556,11 +561,13 @@ public class RadarChart extends RdChart{
 						currentX = plotArea.getLeft();
 						totalTextWidth = 0;
 					}				
-					canvas.drawRect(currentX			   , currentY,
+					canvas.drawRect(currentX , currentY,
 									 currentX + rectWidth, currentY - textHeight, 
 									 getKeyPaint());						
 					canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY, getKeyPaint());
-					currentX += rectWidth + keyTextWidth + 5;
+					
+					currentX = MathHelper.getInstance().add(currentX, rectWidth + keyTextWidth + 5);
+				
 				}									
 			}	
 	}
@@ -605,3 +612,5 @@ public class RadarChart extends RdChart{
 	
 
 }
+
+

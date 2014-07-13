@@ -22,14 +22,12 @@
  */
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -84,25 +82,9 @@ public class CircleChart01View extends GraphicalView {
 			
 	public void chartRender()
 	{
-		try {			
-			/*
-			
-			//图所占范围大小		
-						if(getScreenWidth() < this.getScreenHeight())
-			{
-				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenWidth());
-			}else{
-				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
-			}
-			
-			//图的内间距
-			chart.setPadding(20, 20, 15, 15);	
-		*/
-						
-		
+		try {									
 			//设置附加信息
-			chart.setAttributeInfo(mDataInfo); 	
-				
+			chart.setAttributeInfo(mDataInfo); 					
 			
 			//半圆方式显示
 			chart.setCircleType(XEnum.CircleType.HALF);	

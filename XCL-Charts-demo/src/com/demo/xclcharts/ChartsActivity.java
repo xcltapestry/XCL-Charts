@@ -24,7 +24,6 @@ package com.demo.xclcharts;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -36,17 +35,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ZoomControls;
 
-import com.demo.xclcharts.view.BarChart06View;
 import com.demo.xclcharts.view.AreaChart01View;
 import com.demo.xclcharts.view.BarChart01View;
 import com.demo.xclcharts.view.BarChart02View;
 import com.demo.xclcharts.view.BarChart03View;
 import com.demo.xclcharts.view.BarChart04View;
 import com.demo.xclcharts.view.BarChart05View;
+import com.demo.xclcharts.view.BarChart06View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.DountChart01View;
@@ -54,6 +52,7 @@ import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
 import com.demo.xclcharts.view.MultiAxisChart02View;
+import com.demo.xclcharts.view.MultiBarChart01View;
 import com.demo.xclcharts.view.PieChart01View;
 import com.demo.xclcharts.view.PieChart02View;
 import com.demo.xclcharts.view.PieChart3D01View;
@@ -100,6 +99,7 @@ public class ChartsActivity extends Activity {
 				new AreaChart01View(this),
 				new MultiAxisChart01View(this),
 				new MultiAxisChart02View(this),
+				new MultiBarChart01View(this),
 				
 				new PieChart01View(this),
 				new PieChart02View(this),
@@ -108,8 +108,7 @@ public class ChartsActivity extends Activity {
 				new RoseChart01View(this),
 				new RadarChart01View(this),
 				new BarChart06View(this)}; 
-		
-		
+				
 		Bundle bunde = this.getIntent().getExtras();  
 		mSelected = bunde.getInt("selected");  
 		String title = bunde.getString("title"); 			
@@ -117,16 +116,7 @@ public class ChartsActivity extends Activity {
 		if(mSelected > mCharts.length - 1){									
 			setContentView(R.layout.activity_charts);
 			this.setTitle(Integer.toString(mSelected));
-		}else{
-			/*
-		    final LinearLayout layout = new LinearLayout(this);  					
-	        layout.setOrientation(LinearLayout.VERTICAL);  	        
-	        layout.setLayoutParams(new LinearLayout.LayoutParams(  
-	        	    LinearLayout.LayoutParams.MATCH_PARENT,  
-	        	    LinearLayout.LayoutParams.MATCH_PARENT));	   
-	        layout.addView(mCharts[mSelected]);  	   
-	        setContentView(layout); 	
-	        */
+		}else{			
 	        initActivity();
 			this.setTitle(title);
 		}
@@ -135,60 +125,53 @@ public class ChartsActivity extends Activity {
 	
 	private void initActivity()
 	{
+		   //图表的使用方法:
+		   //使用方式一:
+		   // 1.新增一个Activity
+		   // 2.新增一个View,继承Demo中的GraphicalView或TouchView都可，依Demo中View目录下例子绘制图表.
+		   // 3.将自定义的图表View放置入Activity对应的XML中，将指明其layout_width与layout_height大小.
+		   // 运行即可看到效果.
 		
-		//方法一:
+ 		  //使用方式二:
+		   //代码调用 方式有下面二种方法:
+		   //方法一:
 		   //在xml中的FrameLayout下增加图表和ZoomControls,这是利用了现有的xml文件.
+   		   // 1. 新增一个View，绘制图表.
+ 		   // 2. 通过下面的代码得到控件，addview即可
 	       //LayoutInflater factory = LayoutInflater.from(this);
 	       //View content = (View) factory.inflate(R.layout.activity_multi_touch, null);       
 			
 			//方法二:
 			//完全动态创建,无须XML文件.
-	       FrameLayout content = new FrameLayout(this);
+	       FrameLayout content = new FrameLayout(this);    
 	       
-	       /*
-			RelativeLayout.LayoutParams layoutParams= 
-		          // new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, 
-		          // RelativeLayout.LayoutParams.WRAP_CONTENT); 		
-					new RelativeLayout.LayoutParams(400, 400);
-		            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT); 		            		        
-		            layoutParams.setMargins(0, 0, 0, 0);	            
-		            chart.setLayoutParams(layoutParams); 
-		    */
-	    	      
-	      
-    
-	 
-		   FrameLayout.LayoutParams flp = new FrameLayout.LayoutParams(
+	       //缩放控件放置在FrameLayout的上层，用于放大缩小图表
+		   FrameLayout.LayoutParams frameParm = new FrameLayout.LayoutParams(
 		   FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);  
-		   flp.gravity = Gravity.BOTTOM|Gravity.RIGHT;  
-		   
-		   //缩放控件
+		   frameParm.gravity = Gravity.BOTTOM|Gravity.RIGHT;  
+		
+		  //缩放控件放置在FrameLayout的上层，用于放大缩小图表
 	       mZoomControls = new ZoomControls(this);
 	       mZoomControls.setIsZoomInEnabled(true);
 	       mZoomControls.setIsZoomOutEnabled(true);	  
-		   mZoomControls.setLayoutParams(flp);  
+		   mZoomControls.setLayoutParams(frameParm);  
 		   
-		   //图表
-		   DisplayMetrics dm = getResources().getDisplayMetrics();
-		   
-		   int scrWidth = (int) (dm.widthPixels * 0.8); 	
-		   int scrHeight = (int) (dm.heightPixels * 0.8); 	
-		   
-		   //int scrWidth = dm.widthPixels;
-		   //int scrHeight = dm.heightPixels;
-		
-	       RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(scrWidth, scrHeight);	     
-           layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);            
-           //mCharts[mSelected].setBackgroundColor(Color.CYAN);
-           
-           final RelativeLayout chartLayout2 = new RelativeLayout(this);  	
-           chartLayout2.addView( mCharts[mSelected], layoutParams);
+		   //图表显示范围在占屏幕大小的90%的区域内
+		   DisplayMetrics dm = getResources().getDisplayMetrics();		   
+		   int scrWidth = (int) (dm.widthPixels * 0.9); 	
+		   int scrHeight = (int) (dm.heightPixels * 0.9); 			   		
+	       RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+	    		   													scrWidth, scrHeight);	
+	       //居中显示
+           layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);   
+           //图表view放入布局中，也可直接将图表view放入Activity对应的xml文件中
+           final RelativeLayout chartLayout = new RelativeLayout(this);  	
+           chartLayout.addView( mCharts[mSelected], layoutParams);
                       		  
 	        //增加控件
-		   ((ViewGroup) content).addView(chartLayout2);		   
+		   ((ViewGroup) content).addView(chartLayout);		   
 		   ((ViewGroup) content).addView(mZoomControls);
-		    setContentView(content);
-		   	       
+		    setContentView(content);		   	       
 		    //放大监听
 		    mZoomControls.setOnZoomInClickListener(new OnZoomInClickListenerImpl());
 		    //缩小监听

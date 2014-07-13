@@ -16,7 +16,7 @@
              >                                               
                <com.demo.xclcharts.view.LineChart03View_left
 			         android:id="@+id/circle_view"
-			         android:layout_width="400dp"
+			         android:layout_width="300dp"
 					 android:layout_height="500dp" 	
 			         android:layout_gravity="left"
 			       />   	
@@ -24,7 +24,7 @@
                     <HorizontalScrollView
 				        android:id="@+id/horizontalScrollView1"
 				        android:layout_width="wrap_content"
-				        android:layout_height="500dp"
+				        android:layout_height="600dp"
 						android:scrollbars="none"
 	            		 android:fadingEdge="none"	            		 
 	            		  android:layout_marginLeft="0dp"
@@ -34,11 +34,14 @@
 				            android:id="@+id/line"
 				            android:layout_width="wrap_content"
 				        	android:layout_height="wrap_content" 
-				            android:orientation="horizontal" >				            				          
+				            android:orientation="horizontal" >			
+				            
+				            	                
 				             <com.demo.xclcharts.view.LineChart03View
 						         android:id="@+id/lineChartView_right"
 						         android:layout_width="400dp"
-						         android:layout_height="500dp" />				            
+						         android:layout_height="500dp" />	
+			         	            
 				        </LinearLayout>
 				    </HorizontalScrollView>
 	                    

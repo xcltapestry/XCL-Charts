@@ -77,17 +77,9 @@ public class SpinnerPieChart01View extends GraphicalView {
  		try {					
  			initChart(mChartStyle);
  		
- 			/*
- 			//图所占范围大小 		
- 			mChart.setChartRange( 0.0f,mOffsetHeight,
- 									getScreenWidth(),
- 									getScreenHeight() - mOffsetHeight);
- 			
- 			//图的内边距
- 			mChart.setPadding(5, 35, 15, 20);
- 			
- 			*/
- 			//mChart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+ 			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			mChart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
  			
  			//设定数据源
  			mChart.setDataSource(chartData);			
@@ -95,7 +87,7 @@ public class SpinnerPieChart01View extends GraphicalView {
  			//设置起始偏移角度(即第一个扇区从哪个角度开始绘制)
  			mChart.setInitialAngle(90);	
  			//显示Key值
- 			mChart.getPlotKey().showKeyLabels();
+ 			mChart.getPlotLegend().hideLegend();
  			
  		} catch (Exception e) {
  			// TODO Auto-generated catch block

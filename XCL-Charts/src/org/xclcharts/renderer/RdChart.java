@@ -92,9 +92,9 @@ public class RdChart extends XChart {
 		
 		if(isVerticalScreen())
 		{
-			this.mRadius = this.plotArea.getWidth() / 2;
+			this.mRadius = div(this.plotArea.getWidth(), 2f);
 		}else{
-			this.mRadius =  this.plotArea.getHeight() / 2;
+			this.mRadius = div(this.plotArea.getHeight(),2f);
 		}
 	}
 	
@@ -106,7 +106,7 @@ public class RdChart extends XChart {
 	{
 		if(radius < 0 )
 		{
-			Log.e(TAG, "半径不能小于0");
+			Log.e(TAG, "半径不能小于0.");
 		}else
 			mRadius = radius;
 	}

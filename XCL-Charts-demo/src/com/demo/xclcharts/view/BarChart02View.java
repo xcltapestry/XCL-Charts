@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -80,8 +81,7 @@ public class BarChart02View extends TouchView {
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
-        super.onSizeChanged(w, h, oldw, oldh);  
-       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
+        super.onSizeChanged(w, h, oldw, oldh);   
        //图所占范围大小
         chart.setChartRange(w,h);
     }  
@@ -90,19 +90,9 @@ public class BarChart02View extends TouchView {
 	private void chartRender()
 	{
 		try {
-						
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-						
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 12, 10);
-			}else{
-				chart.setPadding(25, 20, 10, 5);
-			}		
-			*/
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....	
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 50), ltrb[3]);
 			
 			chart.setTitle("每日收益情况");
 			chart.addSubtitle("(XCL-Charts Demo)");		
@@ -113,17 +103,17 @@ public class BarChart02View extends TouchView {
 			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
 			
-			//图例
-			chart.getLegend().setLeftLegend("所售商品");
-			chart.getLegend().setLowerLegend("纯利润(天)");
-			chart.getLegend().setRightLegend("生意兴隆通四海,财源茂盛达三江。");
+			//轴标题
+			chart.getAxisTitle().setLeftAxisTitle("所售商品");
+			chart.getAxisTitle().setLowerAxisTitle("纯利润(天)");
+			chart.getAxisTitle().setRightAxisTitle("生意兴隆通四海,财源茂盛达三江。");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(500);
 			chart.getDataAxis().setAxisMin(100);
 			chart.getDataAxis().setAxisSteps(100);
 			
-			chart.getDataAxis().getAxisTickLabelPaint().
+			chart.getDataAxis().getTickLabelPaint().
 									setColor((int)Color.rgb(199, 88, 122));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 

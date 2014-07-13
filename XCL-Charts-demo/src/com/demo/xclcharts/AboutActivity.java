@@ -54,8 +54,8 @@ public class AboutActivity extends Activity {
 	
 		TextView tv_title = (TextView) findViewById(R.id.tv_title);
 		String html = "<big><font color ='red'>XCL-Charts</font></big><br/>"			
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.0.1<br/>"
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-7-10<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.2<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-7-13<br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群: 374780627<br/>"
 					+ "<big><font color ='red'>License</font></big><br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;Apache v2 License开源协议。"
@@ -71,12 +71,12 @@ public class AboutActivity extends Activity {
 				+ " <br/><big>About the Author</big>"
 				+ " <br/><b>熊传亮</b>"
 				+ "   <br/>&nbsp;&nbsp;&nbsp;&nbsp;有Oracle 10g OCP 及IBM Certified Systems Expert认证，" +
-				"目前在深圳一家小公司是一名挂着DBA职位，写着C/C++的DBA。"
+				"目前在深圳一家小公司是一名挂着DBA职位，写着C/C++的DBA。 求工作，求介绍。"
 				+ " <b>^_^</b>"		
 				+ " <br/><br/>有什么改进或建议可发邮件联系或至博客留言。 "
 				+ " <br/><big>Blog:http://blog.csdn.net/xcl168</big> "
 				+ " <br/><big>Mail:xcl_168@aliyun.com</big> "
-				+ " <br/><br/>感谢 cubehead,dqu的代码提交与修正及其它网友的支持与热情反馈。"
+				+ " <br/><br/>感谢 cubehead的代码提交与修正及其它网友的支持与热情反馈。"
 				
 				+ "</body></html>";
 		CharSequence charSequenceInfo = Html.fromHtml(htmlInfo);

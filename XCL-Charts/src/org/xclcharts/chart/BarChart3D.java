@@ -25,6 +25,7 @@ package org.xclcharts.chart;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.Bar3D;
 
@@ -48,7 +49,7 @@ public class BarChart3D extends BarChart{
 	public BarChart3D()
 	{
 		super();	
-		plotKey.showKeyLabels();
+		plotLegend.showLegend();
 	}
 	
 	/**
@@ -154,20 +155,26 @@ public class BarChart3D extends BarChart{
 	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
 		// Y 轴
 		// 分类横向间距高度
-		float YSteps = (float)(getAxisScreenHeight()
-				/ (this.categoryAxis.getDataSet().size() + 1));
+		//float YSteps = (float)(getAxisScreenHeight()
+		//		/ (this.categoryAxis.getDataSet().size() + 1));		
+		float YSteps = div(getAxisScreenHeight(), (categoryAxis.getDataSet().size() + 1)  );						
 		float currentY = 0.0f;
 		
 		if(null == categoryAxis.getDataSet()) return;	
 		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
 			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
-			currentY = plotArea.getBottom() - (i + 1) * YSteps;
+			//currentY = plotArea.getBottom() - (i + 1) * YSteps;
+			currentY = sub(plotArea.getBottom(),mul( (i + 1) , YSteps ));
+									
 			// 横的grid线
 			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(),
-					currentY, plotArea.getRight(), currentY);
+												currentY, plotArea.getRight(), currentY);
 							
 			// 分类
-			float labelX = (float) (plotArea.getLeft() - mBar3D.getOffsetX() * 2); 
+			//float labelX = (float) (plotArea.getLeft() - mBar3D.getOffsetX() * 2); 			
+			float tfx = (float) (mBar3D.getOffsetX() * 2);
+			float labelX = sub(plotArea.getLeft() ,tfx); 
+			
 			this.categoryAxis.renderAxisHorizontalTick(this,canvas, labelX,
 													currentY, categoryAxis.getDataSet().get(i) );
 		}
@@ -197,7 +204,7 @@ public class BarChart3D extends BarChart{
 			if(null == chartDataSource) return;	
 			 
 			//依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度	
-			int barNumber = chartDataSource.size();
+			int barNumber = getDatasetSize(chartDataSource);  //chartDataSource.size();
 			int currNumber = 0;			
 			
 			List<Integer> ret = mBar3D.getBarHeightAndMargin(YSteps, barNumber);	
@@ -224,30 +231,35 @@ public class BarChart3D extends BarChart{
 					Double bv = barValues.get(j);					
 					setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
 					
-					float drawBarButtomY = plotArea.getBottom() - (j+1) * YSteps + labelBarUseHeight / 2;							
-					drawBarButtomY = drawBarButtomY - (barHeight + barInnerMargin ) * currNumber;					
+					//float drawBarButtomY = plotArea.getBottom() - (j+1) * YSteps + labelBarUseHeight / 2;							
+					float ty1 = mul((j+1) , YSteps);
+					float drawBarButtomY = add(sub(plotArea.getBottom(),ty1) ,labelBarUseHeight / 2 );					
+					drawBarButtomY = sub(drawBarButtomY , (barHeight + barInnerMargin ) * currNumber);					
 																				
                 	//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来
-                	float valuePostion = (float) ( 
-                			scrWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;               	
+                	//float valuePostion = (float) ( 
+                	//		scrWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;                         	
+                	float tlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());
+                	float valuePostion = mul(scrWidth, div(tlen,valueWidth) );
+                			
                             	        
                 	//画出柱形                	 	            
 	                mBar3D.renderHorizontal3DBar(plotArea.getLeft(), 
-	                							drawBarButtomY - barHeight, 
-						                		(float) (plotArea.getLeft()  +  valuePostion), 
+	                							sub(drawBarButtomY , barHeight), 
+						                		add(plotArea.getLeft() , valuePostion), 
 						                		drawBarButtomY, 
 	                							mBar3D.getBarPaint().getColor(), canvas);
 	                	             	
                 	                               	
                 	//在柱形的顶端显示上柱形的当前值	                
 	                mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
-	                		 (float) (plotArea.getLeft() + valuePostion)  , 
-	                		 (float) (drawBarButtomY - barHeight/2), canvas);
+	                		 add(plotArea.getLeft() , valuePostion)  , 
+	                		 sub(drawBarButtomY , barHeight/2), canvas);
                 }
 				currNumber ++;
 			}	
-			//画Key说明
-			plotKey.renderBarKey(canvas, this.getDataSource());
+			//画图例
+			plotLegend.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	
@@ -262,7 +274,7 @@ public class BarChart3D extends BarChart{
 
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度
-		float XSteps = (getAxisScreenWidth() / (dataSet.size() + 1)); //Math.ceil
+		float XSteps = div(getAxisScreenWidth() , (dataSet.size() + 1)); //Math.ceil
 		
 		//3D 偏移值		
 	    double baseTickness = mBar3D.getAxis3DBaseThickness();
@@ -271,26 +283,34 @@ public class BarChart3D extends BarChart{
 		double baseOffsetY = mBar3D.getOffsetY(baseTickness,baseAngle);	
 		
 		double labelHeight = DrawHelper.getInstance().getPaintFontHeight(
-								categoryAxis.getAxisTickLabelPaint());
+								categoryAxis.getTickLabelPaint());
 		
 		for (int i = 0; i < dataSet.size(); i++) {
 			// 依初超始X坐标与分类间距算出当前刻度的X坐标
-			currentX = (plotArea.getLeft() + (i + 1) * XSteps); //Math.round
-
+			//currentX = (plotArea.getLeft() + (i + 1) * XSteps); 			
+			currentX = add(plotArea.getLeft() , mul((i + 1) , XSteps));
+			
 			// 绘制横向网格线
 			if (plotGrid.isShowVerticalLines()) {
 				canvas.drawLine(currentX, plotArea.getBottom(),
-						currentX, plotArea.getTop(),
-						this.plotGrid.getVerticalLinePaint());
+								currentX, plotArea.getTop(),
+								this.plotGrid.getVerticalLinePaint());
 			}
 			// 画上分类/刻度线
-			float currentY = (float) (plotArea.getBottom() + baseOffsetY + baseTickness+labelHeight);
-			currentX = (float) (currentX - baseOffsetX);
+			float th = (float) MathHelper.getInstance().add(
+								MathHelper.getInstance().add(baseOffsetY, baseTickness) , labelHeight);			
+			float currentY = add(plotArea.getBottom(),th);
+			
+			//float currentY = (float) (plotArea.getBottom() + baseOffsetY + baseTickness+labelHeight);
+			//currentX = (float) (currentX - baseOffsetX);
+			currentX =  sub(currentX,(float) baseOffsetX);	
+			
 			categoryAxis.renderAxisVerticalTick(canvas, currentX,currentY, dataSet.get(i));
 		}
 	}
 		
 	
+
 	@Override
 	protected void renderVerticalBar(Canvas canvas)
 	{		
@@ -306,8 +326,9 @@ public class BarChart3D extends BarChart{
 		if(null == dataSet) return;	
 				
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
-		// 总宽度 / 分类个数 = 间距长度	
-		float XSteps = ( plotArea.getWidth()/ (dataSet.size() + 1 )); //(int) Math.ceil				 			 
+		// 总宽度 / 分类个数 = 间距长度					
+		float XSteps = div(plotArea.getWidth() , (dataSet.size() + 1 ) );		
+		
 	 	//X轴 线
 		mBar3D.render3DXAxis(plotArea.getLeft(), plotArea.getBottom(),
 							 plotArea.getRight(), plotArea.getBottom(), 
@@ -316,7 +337,7 @@ public class BarChart3D extends BarChart{
 		//得到数据源
 		List<BarData> chartDataSource = this.getDataSource();
 		if(null == chartDataSource) return;	
-		int barNumber = chartDataSource.size();
+		int barNumber = getDatasetSize(chartDataSource); //chartDataSource.size();
 		int currNumber = 0;			
 		
 		List<Integer> ret = mBar3D.getBarWidthAndMargin(XSteps, barNumber);
@@ -329,7 +350,7 @@ public class BarChart3D extends BarChart{
 		for(int i=0;i<barNumber;i++)
 		{
 		    //依初超始X坐标与分类间距算出当前刻度的X坐标
-			currentX = initX + (i+1) * XSteps; 
+			currentX = add(initX, mul((i+1), XSteps) );
 			
 			//得到分类对应的值数据集				
 			BarData bd = chartDataSource.get(i);
@@ -345,18 +366,29 @@ public class BarChart3D extends BarChart{
 			   Double bv = barValues.get(j);
 			   setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
 			   
-				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来					
-				float valuePostion = (float)( plotArea.getHeight() * 
-											( (bv - dataAxis.getAxisMin() ) / dataAxis.getAxisRange())) ;              																
-				float drawBarStartX = initX + (j + 1) * XSteps - labelBarUseWidth / 2;
+				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来								   
+				//float valuePostion = (float)( plotArea.getHeight() * 
+				//							( (bv - dataAxis.getAxisMin() ) / dataAxis.getAxisRange())) ;  
+			   
+				float tlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());	
+			    float valuePostion = div( tlen,dataAxis.getAxisRange());
+			    valuePostion =  mul( plotArea.getHeight() , valuePostion);     
+			    
+			    
+				//float drawBarStartX = initX + (j + 1) * XSteps - labelBarUseWidth / 2;
+				float drawBarStartX =  sub( add(initX, mul((j + 1) , XSteps) ) , labelBarUseWidth / 2);
+								
+				
 				//计算同分类多柱 形时，新柱形的起始X坐标
-				drawBarStartX = drawBarStartX + (barWidth + barInnerMargin ) * currNumber;
+				//drawBarStartX = drawBarStartX + (barWidth + barInnerMargin ) * currNumber;
+				drawBarStartX = add(drawBarStartX, (barWidth + barInnerMargin ) * currNumber);
+				
 				//计算同分类多柱 形时，新柱形的结束X坐标
-				float drawBarEndX = drawBarStartX + barWidth;	  					
+				float drawBarEndX = add(drawBarStartX , barWidth);	  					
 				
 				//画出柱形      
 				mBar3D.renderVertical3DBar(drawBarStartX, 
-           								(float)(plotArea.getBottom()  -  valuePostion) ,
+           								sub(plotArea.getBottom()  , valuePostion) ,
 				               			drawBarEndX, 
 				               			plotArea.getBottom(),
 				               			mBar3D.getBarPaint().getColor(), canvas);
@@ -364,16 +396,17 @@ public class BarChart3D extends BarChart{
 			
            		//在柱形的顶端显示上柱形的当前值
            		mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
-			                		 (float)(drawBarStartX + barWidth/2) ,	
-			                		 (float)(plotArea.getBottom()  -  valuePostion),  
+			                		 add(drawBarStartX , barWidth/2) ,	
+			                		 sub(plotArea.getBottom()  , valuePostion),  
 			                		 canvas);
            }	
 			currNumber ++;				
 		}
 	 
-		//绘制分类各柱形集的说明描述
-		plotKey.renderBarKey(canvas, this.getDataSource());
+		//绘制图例
+		plotLegend.renderBarKey(canvas, this.getDataSource());
 	}
+
 	
 	
 }

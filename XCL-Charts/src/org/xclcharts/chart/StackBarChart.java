@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 
@@ -75,14 +76,15 @@ public class StackBarChart  extends BarChart{
 		 
 		//步长
 		 float YSteps = getHorizontalYSteps();		
-		 int   barHeight = (int) Math.round(YSteps * 0.5); 		
+		 int   barHeight = (int) MathHelper.getInstance().round(mul(YSteps,0.5f),2);
+			
 		 
 		 if(null == categoryAxis.getDataSet()) return;		
 		//分类轴	
 		 for(int r=0;r<categoryAxis.getDataSet().size();r++)
 		 {				 
 			 	 float currentX = plotArea.getLeft();
-				 float currentY = plotArea.getBottom() - (r+1) * YSteps;				 
+				 float currentY = sub(plotArea.getBottom() , mul((r+1) , YSteps));				 
 				 double total = 0d;				 
 				 
 				//得到数据源
@@ -101,20 +103,26 @@ public class StackBarChart  extends BarChart{
 					float valuePostion = 0.0f;
 					if(i == 0 )
 					{					
-						valuePostion = (float) ( 
-	                			axisScreenWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;						
+						//valuePostion = (float) ( 
+	                	//		axisScreenWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;	
+						
+						float t = (float) MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );							
+						valuePostion = mul( axisScreenWidth,div(t,valueWidth) );																												
 					}else{						
-						valuePostion = (float)( axisScreenWidth * ( bv / valueWidth)) ;
+						//valuePostion = (float)( axisScreenWidth * ( bv / valueWidth)) ;						
+						float t2 =  (float) (bv / valueWidth) ; 
+						valuePostion =  mul( axisScreenWidth , t2);							
 					}
 					
 				   	//宽度                	
-				   flatBar.renderBar(currentX ,currentY - barHeight/2,
-						   			 currentX + valuePostion,currentY + barHeight/2,canvas);
+				   flatBar.renderBar(currentX ,sub(currentY , barHeight/2),
+						   			 add(currentX , valuePostion),add(currentY , barHeight/2),canvas);
 				    				    
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-												currentX + valuePostion/2, currentY , canvas);
-					currentX += valuePostion ;						 
+												add(currentX , valuePostion/2), currentY , canvas);
+					//currentX += valuePostion ;		
+					currentX = add(currentX,valuePostion);
 				 }
 				
 				 //合计		
@@ -134,7 +142,7 @@ public class StackBarChart  extends BarChart{
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
 								  plotArea.getRight(),  plotArea.getBottom());	
 		//画Key说明
-		plotKey.renderBarKey(canvas, this.getDataSource());
+		plotLegend.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	@Override
@@ -159,7 +167,8 @@ public class StackBarChart  extends BarChart{
 			
 			 for(int r=0;r<dataSet.size();r++) //轴上的每个标签
 			 {				 
-				 	 float currentX = plotArea.getLeft() + (r+1) * XSteps;	 	 			
+				 	// float currentX = plotArea.getLeft() + (r+1) * XSteps;	 
+				 	 float currentX = add(plotArea.getLeft() , mul( (r+1) , XSteps));				 	 
 					 float currentY = plotArea.getBottom();
 					 Double total = 0d;
 					 
@@ -177,20 +186,25 @@ public class StackBarChart  extends BarChart{
 					
 						float valuePostion = 0.0f;
 						if(i == 0 )
-						{						
-							 valuePostion = (float)( axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  							
-						}else{
-							valuePostion = (float) (axisScreenHeight * ( bv / axisDataHeight)) ;
+						{													
+							float t = (float) MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );							
+							valuePostion = mul( axisScreenHeight,div(t,axisDataHeight) );							
+							//valuePostion = (float)( axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  								 							 
+						}else{														
+							float t2 =  (float) (bv / axisDataHeight) ; 
+							valuePostion =  mul( axisScreenHeight , t2);							
+							//valuePostion = (float) (axisScreenHeight * ( bv / axisDataHeight)) ;
 							
 						}
-						flatBar.renderBar(currentX - barWidht/2, currentY - valuePostion, 
-										  currentX + barWidht/2, currentY, canvas);
+						flatBar.renderBar(sub(currentX , barWidht/2), sub(currentY , valuePostion), 
+										  add(currentX , barWidht/2), currentY, canvas);
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
-													currentX, currentY - valuePostion/2, canvas);
-						currentY -= valuePostion ;						 
+													currentX, sub(currentY , valuePostion/2), canvas);
+						//currentY -= valuePostion ;		
+						currentY = sub(currentY,valuePostion);
 					 }
-					 //合计					 
+					 //合计					 					 					 
 					 float totalPostion = (float) ( axisScreenHeight/axisDataHeight * (total- dataAxis.getAxisMin()) ); 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					currentX, plotArea.getBottom() - totalPostion, canvas);
@@ -201,7 +215,7 @@ public class StackBarChart  extends BarChart{
 		 			   			 plotArea.getRight(),  plotArea.getBottom());
 			 
 			 //key值说明
-			 plotKey.renderBarKey(canvas, this.getDataSource());
+			 plotLegend.renderBarKey(canvas, this.getDataSource());
 	}
 	
 	

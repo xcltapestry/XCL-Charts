@@ -50,14 +50,14 @@ public class RoseChart01View extends TouchView {
 	LinkedList<PieData> roseData = new LinkedList<PieData>();	
 	
 	public RoseChart01View(Context context) {
-		super(context);
-		// TODO Auto-generated constructor stub
-		initView();
+			super(context);
+			// TODO Auto-generated constructor stub
+			initView();
 	}
 	
 	public RoseChart01View(Context context, AttributeSet attrs){   
-        super(context, attrs);   
-        initView();
+        	super(context, attrs);   
+        	initView();
 	 }
 	 
 	 public RoseChart01View(Context context, AttributeSet attrs, int defStyle) {
@@ -67,7 +67,7 @@ public class RoseChart01View extends TouchView {
 	 
 	 private void initView()
 	 {
-		 chartDataSet();
+		 	chartDataSet();
 			chartRender();
 	 }
 	 
@@ -83,15 +83,10 @@ public class RoseChart01View extends TouchView {
 	{
 		try {						
 			
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			
-			chart.setPadding(20, 20, 15, 15);
-			*/
-			
 			//设置绘图区默认缩进px值
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			int [] ltrb = getPieDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			
 			//背景 
 			chart.setApplyBackgroundColor(true);
 			chart.setBackgroundColor(Color.BLACK);

@@ -24,6 +24,8 @@ package org.xclcharts.renderer;
 
 import java.util.List;
 
+import org.xclcharts.common.MathHelper;
+
 import android.graphics.Canvas;
 
 /**
@@ -49,7 +51,7 @@ public class LnChart extends AxisChart {
 
 	private void initChart() {
 		//默认显示Key
-		plotKey.showKeyLabels();
+		plotLegend.showLegend();
 	}
 
 
@@ -58,7 +60,7 @@ public class LnChart extends AxisChart {
 	 * 
 	 * @return Y轴步长
 	 */
-	private float getVerticalYSteps(double tickCount) {
+	private float getVerticalYSteps(int tickCount) {
 		float YSteps = (float) (getAxisScreenHeight() / tickCount);
 		return YSteps;
 	}
@@ -99,7 +101,7 @@ public class LnChart extends AxisChart {
 	 */
 	protected void renderVerticalDataAxis(Canvas canvas) {
 		// 数据轴数据刻度总个数
-		double tickCount = dataAxis.getAixTickCount();
+		int tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
 
@@ -108,7 +110,7 @@ public class LnChart extends AxisChart {
 		float plotRight = plotArea.getRight();
 		float plotBottom = plotArea.getBottom();
 		float currentY = plotBottom;
-		float currentTickLabel = 0.0f;
+		double currentTickLabel = 0d;
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
@@ -116,20 +118,22 @@ public class LnChart extends AxisChart {
 			//将当前为第几个tick传递轴，用以区分是否为主明tick
 			dataAxis.setAxisTickCurrentID(i);
 			
-			// 依起始数据坐标与数据刻度间距算出上移高度
-			// currentY = (float) Math.rint(plotBottom - i * YSteps);
-			currentY = (float) (plotBottom - i * YSteps);
+			// 依起始数据坐标与数据刻度间距算出上移高度			
+			currentY =  MathHelper.getInstance().sub(plotBottom, i * YSteps);
+			
 			// 标签
-			currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
-					.getAxisSteps()));
+			currentTickLabel = MathHelper.getInstance().add(
+								dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());
 
 			if (i > 0) {
 				// 从左到右的横向网格线
 				if (i % 2 != 0) {
-					plotGrid.renderOddRowsFill(canvas,plotLeft, currentY + YSteps,
+					plotGrid.renderOddRowsFill(canvas,plotLeft, 
+							MathHelper.getInstance().add(currentY , YSteps),
 							plotRight, currentY);
 				} else {
-					plotGrid.renderEvenRowsFill(canvas,plotLeft, currentY + YSteps,
+					plotGrid.renderEvenRowsFill(canvas,plotLeft, 
+							MathHelper.getInstance().add(currentY , YSteps),
 							plotRight, currentY);
 				}
 
@@ -140,7 +144,7 @@ public class LnChart extends AxisChart {
 				}
 			}
 			dataAxis.renderAxisHorizontalTick(this,canvas,plotLeft, currentY,
-					Float.toString(currentTickLabel));
+					Double.toString(currentTickLabel));
 
 		}
 
@@ -170,12 +174,13 @@ public class LnChart extends AxisChart {
 	 */
 	protected void renderVerticalDataAxisRight(Canvas canvas) {
 		// 数据轴数据刻度总个数
-		double tickCount = dataAxis.getAixTickCount();
+		int tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
 		float currentY = plotArea.getBottom();
 
-		float markHeight = dataAxis.getTickMarksPaint().getStrokeWidth() / 2;
+		float markHeight = MathHelper.getInstance().div(
+				  dataAxis.getTickMarksPaint().getStrokeWidth() , 2f);
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
@@ -183,26 +188,27 @@ public class LnChart extends AxisChart {
 				continue;
 			
 			//将当前为第几个tick传递轴，用以区分是否为主明tick
-			dataAxis.setAxisTickCurrentID(i);
+			dataAxis.setAxisTickCurrentID(i);					
+			currentY = MathHelper.getInstance().sub(plotArea.getBottom() , i * YSteps);
 			
-			currentY = Math.round(plotArea.getBottom() - i * YSteps);
 			// 标签
-			float currentTickLabel = (float) (dataAxis.getAxisMin() + (i * dataAxis
-					.getAxisSteps()));
+			Double currentTickLabel = MathHelper.getInstance().add(
+								dataAxis.getAxisMin() , (i * dataAxis.getAxisSteps()));
 
 			if (i == tickCount) {
 				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
-						plotArea.getTop(), Float.toString(currentTickLabel));
+						plotArea.getTop(), Double.toString(currentTickLabel));
 			} else {
 				this.dataAxis
 						.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
-								currentY + markHeight,
-								Float.toString(currentTickLabel));
+								MathHelper.getInstance().add(currentY , markHeight),
+								Double.toString(currentTickLabel));
 			}
 			// 右边轴默认不显示网格,所以在此忽略不作处理
 		}
 		// 轴 线
-		float paintWidth = dataAxis.getAxisPaint().getStrokeWidth() / 2;
+		float paintWidth = MathHelper.getInstance().div(
+				  		    dataAxis.getAxisPaint().getStrokeWidth() , 2f);
 		dataAxis.renderAxis(canvas,plotArea.getRight() + paintWidth,
 				plotArea.getBottom(), plotArea.getRight() + paintWidth,
 				plotArea.getTop());
@@ -223,7 +229,7 @@ public class LnChart extends AxisChart {
 		for (int i = 0; i < dataSet.size(); i++) {
 
 			// 依初超始X坐标与标签间距算出当前刻度的X坐标
-			currentX = Math.round(plotArea.getLeft() + (i) * XSteps); 
+			currentX =MathHelper.getInstance().add(plotArea.getLeft() , (i) * XSteps); 
 			
 			// 绘制竖向网格线
 			if (plotGrid.isShowVerticalLines()) {

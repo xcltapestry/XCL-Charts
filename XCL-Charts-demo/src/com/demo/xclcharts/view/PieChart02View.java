@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -37,7 +38,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View;
 
 /**
  * @ClassName PieChart02View
@@ -47,34 +47,30 @@ import android.view.View;
 
 public class PieChart02View extends TouchView {
 
-	private String TAG = "PieChart02View";
-	private PieChart chart = new PieChart();	
-	private LinkedList<PieData> chartData = new LinkedList<PieData>();
+	 private String TAG = "PieChart02View";
+	 private PieChart chart = new PieChart();	
+	 private LinkedList<PieData> chartData = new LinkedList<PieData>();
 	
-	public PieChart02View(Context context) {
+	 public PieChart02View(Context context) {
 		super(context);
 		initView();
-	}
+	 }	
 	
-	
-	public PieChart02View(Context context, AttributeSet attrs){   
+	 public PieChart02View(Context context, AttributeSet attrs){   
         super(context, attrs);   
         initView();
 	 }
 	 
 	 public PieChart02View(Context context, AttributeSet attrs, int defStyle) {
-			super(context, attrs, defStyle);
-			initView();
+		super(context, attrs, defStyle);
+		initView();
 	 }
 	 
 	 private void initView()
 	 {
 		 chartDataSet();	
-			chartRender();
-	 }
-	 	
-	 
-	
+		 chartRender();
+	 }	 		 	
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
@@ -86,25 +82,22 @@ public class PieChart02View extends TouchView {
 
 	private void chartRender()
 	{
-		try {					
-			
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+		try {										
+			//标签显示(隐藏，显示在中间，显示在扇区外面,折线注释方式)
+			chart.setLabelPosition(XEnum.SliceLabelPosition.LINE);			
 			
 			//图的内边距
-			chart.setPadding(30, 30, 30, 30);
-			*/
-			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//注释折线较长，缩进要多些
+			int [] ltrb = new int[4];
+			ltrb[0] = DensityUtil.dip2px(getContext(), 55); //top	
+			ltrb[1] = DensityUtil.dip2px(getContext(), 50); //bottom	
+			ltrb[2] = DensityUtil.dip2px(getContext(), 60); //left		
+			ltrb[3] = DensityUtil.dip2px(getContext(), 60); //right				
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
 			//设定数据源
-			chart.setDataSource(chartData);			
-									
+			chart.setDataSource(chartData);												
 		
-			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLabelPosition(XEnum.SliceLabelPosition.LINE);
-			
 			//标题
 			chart.setTitle("擂茶配方比");
 			chart.addSubtitle("(XCL-Charts Demo)");
@@ -112,7 +105,8 @@ public class PieChart02View extends TouchView {
 				
 			//隐藏渲染效果
 			chart.hideGradient();
-			
+			//显示边框
+			//chart.showRoundBorder();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -123,7 +117,7 @@ public class PieChart02View extends TouchView {
 	{
 		//设置图表数据源		
 		chartData.add(new PieData("芝麻","芝麻-15%",15,(int)Color.rgb(77, 83, 97)));
-		chartData.add(new PieData("花生","花生-35%",35,(int)Color.rgb(148, 159, 181),false));
+		chartData.add(new PieData("花生","花生-35%",35,(int)Color.rgb(148, 159, 181)));
 		chartData.add(new PieData("茶叶","茶叶(25%)",25,(int)Color.rgb(253, 180, 90)));
 		//将此比例块突出显示
 		chartData.add(new PieData("其它","其它(炒米，炒花生之类)",25,(int)Color.rgb(180, 205, 230),true));

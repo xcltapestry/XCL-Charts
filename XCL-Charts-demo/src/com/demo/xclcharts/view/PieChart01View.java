@@ -55,8 +55,8 @@ public class PieChart01View extends TouchView implements Runnable{
 	}
 	
 	public PieChart01View(Context context, AttributeSet attrs){   
-        super(context, attrs);   
-        initView();
+        	super(context, attrs);   
+        	initView();
 	 }
 	 
 	 public PieChart01View(Context context, AttributeSet attrs, int defStyle) {
@@ -83,22 +83,12 @@ public class PieChart01View extends TouchView implements Runnable{
 	{
 		try {					
 			
-			//图所占范围大小
-			//chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			
-			//图的内边距
-			//chart.setPadding(10, 20, 15, 15);
-			
-			//设定数据源
-			//chart.setDataSource(chartData);		
-			
-			
 			//设置绘图区默认缩进px值
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
-			
+			int [] ltrb = getPieDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);			
 			
 			//设置起始偏移角度(即第一个扇区从哪个角度开始绘制)
-			chart.setInitialAngle(90);	
+			//chart.setInitialAngle(90);	
 			
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
 			chart.setLabelPosition(XEnum.SliceLabelPosition.INNER);
@@ -110,7 +100,7 @@ public class PieChart01View extends TouchView implements Runnable{
 			chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
 			
 			//显示key值
-			chart.getPlotKey().showKeyLabels();
+			chart.getPlotLegend().showLegend();
 			
 			//隐藏渲染效果
 			//chart.hideGradient();
@@ -121,16 +111,37 @@ public class PieChart01View extends TouchView implements Runnable{
 		}
 	}
 	
+	/*
+	private String percent(double dle){
+		NumberFormat nf=NumberFormat.getPercentInstance();
+		nf.setMinimumFractionDigits(0);
+		return nf.format(dle);
+	}
+	private double towDigits(double dle){
+		BigDecimal bg = new BigDecimal(dle);
+		return bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
+
+	}
+	*/
+	
+	
 	private void chartDataSet()
 	{
-		
+		/*
 		//设置图表数据源		
 		chartData.add(new PieData("HP","20%",20,(int)Color.rgb(155, 187, 90)));
 		chartData.add(new PieData("IBM","30%",30,(int)Color.rgb(191, 79, 75),false));
 		chartData.add(new PieData("DELL","10%",10,(int)Color.rgb(242, 167, 69)));
 		//将此比例块突出显示
-		chartData.add(new PieData("EMC","40%",40,(int)Color.rgb(60, 173, 213),true));
-		
+		chartData.add(new PieData("EMC","40%",40,(int)Color.rgb(60, 173, 213),false));
+		*/
+
+		chartData.add(new PieData("closed","9%" ,   (0.09*100),(int)Color.rgb(155, 187, 90)));
+		chartData.add(new PieData("inspect","3%" ,   (0.03*100),(int)Color.rgb(191, 79, 75)));
+		chartData.add(new PieData("open","76%" ,  (0.76*100),(int)Color.rgb(242, 167, 69)));
+		chartData.add(new PieData("workdone","6%" , (0.06*100),(int)Color.rgb(60, 173, 213)));
+		chartData.add(new PieData("dispute","6%" ,  (0.06*100),(int)Color.rgb(90, 79, 88)));
+	
 	}
 
 	@Override

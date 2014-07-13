@@ -23,37 +23,29 @@
 package com.demo.xclcharts.view;
 
 
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.SysinfoHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 /**
  * @ClassName GraphicalView
  * @Description  展示XCL-Charts图表的View基类
- * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com) QQ群: 374780627
  */
 
 @SuppressLint("NewApi")
 public abstract class GraphicalView extends View {
 
-	private String TAG = "GraphicalView";
-	
+	private String TAG = "GraphicalView";	
 	protected int mScrWidth = 0;
 	protected int mScrHeight = 0;
-	
-	//chart.setPadding(200, 200, 100, 10);	
-	
 	
 	public GraphicalView(Context context) {
 		super(context);	
@@ -75,21 +67,20 @@ public abstract class GraphicalView extends View {
 	  public void onDraw(Canvas canvas)
 	  {		 
 		  try {	
-			  
+			 
+			/*
 			//绘制出view所占范围
-		         RectF rect = new RectF();
-		         rect.left = 1f;
-		        // rect.right = getLayoutParams().width -1 ;
-		         rect.right = getMeasuredWidth() -1 ;
-		         rect.top = 1f;
-		        // rect.bottom = getLayoutParams().height - 1;	  
-		         rect.bottom = this.getMeasuredHeight() - 1;	  
-		        
-		         Paint paint2 = new Paint();
-			     paint2.setColor(Color.BLUE);
-			     paint2.setStyle(Style.STROKE);		       
-		         canvas.drawRect(rect, paint2);
-		         
+	         RectF rect = new RectF();
+	         rect.left = 1f;
+	         rect.right = getMeasuredWidth() -1 ;
+	         rect.top = 1f;  
+	         rect.bottom = this.getMeasuredHeight() - 1;	  
+	        
+	         Paint paint = new Paint();
+		     paint.setColor(Color.BLUE);
+		     paint.setStyle(Style.STROKE);		       
+	         canvas.drawRect(rect, paint);
+		     */ 
 			 
 			  render(canvas);	    	 		
 		  } catch (Exception e) {
@@ -106,9 +97,6 @@ public abstract class GraphicalView extends View {
 			getScreenInfo();
 	  }
 	  
-	  
-	  
-	
 	/**
 	 * 禁用硬件加速.
 	 * 原因:android自3.0引入了硬件加速，即使用GPU进行绘图,但它并不能完善的支持所有的绘图，
@@ -131,24 +119,9 @@ public abstract class GraphicalView extends View {
 	 */	
 	private void getScreenInfo()
 	{				
-		/*
-		ViewGroup vg=(ViewGroup)getParent();
-		if(vg!=null){ 
-			mScrWidth =  this.getWidth();
-			mScrHeight = this.getHeight();
-		}else{
-			DisplayMetrics dm = getResources().getDisplayMetrics();
-			mScrWidth = dm.widthPixels;
-			mScrHeight = dm.heightPixels;					
-		}	
-		*/
-		
 		DisplayMetrics dm = getResources().getDisplayMetrics();
 		mScrWidth = dm.widthPixels;
 		mScrHeight = dm.heightPixels;
-		
-		//mScrWidth =  this.getWidth();
-		//mScrHeight = this.getHeight();
 	}
 
 	public int getScreenWidth() {
@@ -159,29 +132,27 @@ public abstract class GraphicalView extends View {
 		return mScrHeight;
 	}
 	
-	public float getChartTop()
+	//Demo中bar chart所使用的默认偏移值。
+	//偏移出来的空间用于显示tick,axistitle....
+	protected int[] getBarLnDefaultSpadding()
 	{
-		return 200f;
+		int [] ltrb = new int[4];
+		ltrb[0] = DensityUtil.dip2px(getContext(), 55); //top	
+		ltrb[1] = DensityUtil.dip2px(getContext(), 40); //bottom	
+		ltrb[2] = DensityUtil.dip2px(getContext(), 30); //left		
+		ltrb[3] = DensityUtil.dip2px(getContext(), 20); //right		
+		return ltrb;
 	}
 	
-	public float getChartBottom()
+	protected int[] getPieDefaultSpadding()
 	{
-		return 200f;
+		int [] ltrb = new int[4];
+		ltrb[0] = DensityUtil.dip2px(getContext(), 55); //top	
+		ltrb[1] = DensityUtil.dip2px(getContext(), 20); //bottom	
+		ltrb[2] = DensityUtil.dip2px(getContext(), 20); //left		
+		ltrb[3] = DensityUtil.dip2px(getContext(), 20); //right		
+		return ltrb;
 	}
-	
-	
-	public float getChartLeft()
-	{
-		return 100f;
-	}
-	
-	
-	public float getChartRight()
-	{
-		return 10f;
-	}
-	
-	
 	
 	
 	@Override

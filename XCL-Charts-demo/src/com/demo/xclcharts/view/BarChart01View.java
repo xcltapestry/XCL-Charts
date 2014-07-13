@@ -32,6 +32,7 @@ import org.xclcharts.chart.BarData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -92,15 +93,10 @@ public class BarChart01View extends TouchView implements Runnable{
 	private void chartRender()
 	{
 		try {								
-			//图所占范围大小
-			//chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());			
-			if(chart.isVerticalScreen())
-			{
-			//	chart.setPadding(15, 20, 10, 5);
-			}else{
-				//chart.setPadding(20, 20, 18, 5);
-			}
-			chart.setPadding(200, 200, 100, 10);	
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);			
+			
 			
 			//标题
 			chart.setTitle("主要数据库分布情况");
@@ -111,9 +107,9 @@ public class BarChart01View extends TouchView implements Runnable{
 			//chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
 			
-			//图例
-			chart.getLegend().setLeftLegend("数据库个数");
-			chart.getLegend().setLowerLegend("分布位置");
+			//轴标题
+			chart.getAxisTitle().setLeftAxisTitle("数据库个数");
+			chart.getAxisTitle().setLowerAxisTitle("分布位置");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(100);
@@ -149,8 +145,17 @@ public class BarChart01View extends TouchView implements Runnable{
 			
 			 //让柱子间没空白
 			 //chart.getBar().setBarInnerMargin(0d);
+		
 			
-			chart.getPlotKey().hideKeyLabels();
+			//轴颜色
+			int axisColor = Color.BLUE; // Color.rgb(222, 136, 166);			
+			chart.getDataAxis().getAxisPaint().setColor(axisColor);
+			chart.getCategoryAxis().getAxisPaint().setColor(axisColor);			
+			chart.getDataAxis().getTickMarksPaint().setColor(axisColor);
+			chart.getCategoryAxis().getTickMarksPaint().setColor(axisColor);
+			
+			//指隔多少个轴刻度(即细刻度)后为主刻度
+			chart.getDataAxis().setDetailModeSteps(5);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -193,15 +198,8 @@ public class BarChart01View extends TouchView implements Runnable{
 		
 	@Override
     public void render(Canvas canvas) {
-        try{        	  
-      
-        //float mScrWidth =  this.getWidth();
-		//	float  mScrHeight = this.getHeight();
-		//	chart.setChartRange( mScrWidth,mScrHeight);
-		//chart.setChartRange( this.getMeasuredWidth(),this.getMeasuredHeight());	        	
-        	
-			
-            chart.render(canvas);
+        try{        	            
+            chart.render(canvas);         
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
@@ -245,8 +243,8 @@ public class BarChart01View extends TouchView implements Runnable{
           			}
                 }             		
           		if(chartData.size() - 1  == i)
-          		{
-          			chart.getPlotKey().showKeyLabels();
+          		{          			
+          			chart.getPlotLegend().showLegend();
           		}          		
           		chart.setDataSource(animationData);          		
           		postInvalidate();            		

@@ -1,0 +1,346 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.0
+ */
+package org.xclcharts.chart;
+
+import java.util.List;
+
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.CirChart;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RadialGradient;
+import android.graphics.RectF;
+import android.graphics.Shader;
+import android.util.Log;
+
+/**
+ * @ClassName PieChart
+ * @Description  饼图基类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
+public class PieChart extends CirChart{
+	
+	private static final String TAG = "PieChart";
+			
+	//是否使用渲染来突出效果
+	private boolean mGradient = true;
+	//选中区偏移长度
+	private static final float SELECTED_OFFSET = 10.0f;
+
+	//数据源
+	private List<PieData> mDataset;
+
+	public PieChart()
+	{
+		super();
+	}
+
+
+	/**
+	 * 设置图表的数据源
+	 * @param piedata 来源数据集
+	 */
+	public void setDataSource(List<PieData> piedata)
+	{
+		if(null != mDataset)mDataset.clear();
+		this.mDataset = piedata;
+	}
+	
+	/**
+	 * 返回数据轴的数据源
+	 * @return 数据源
+	 */
+	public List<PieData> getDataSource()
+	{
+		return mDataset;
+	}
+	
+	/**
+	 * 显示渲染效果(此函数对3D饼图无效)
+	 */
+	public void showGradient()
+	{
+		mGradient = true;
+	}
+	
+	/**
+	 * 隐藏渲染效果(此函数对3D饼图无效)
+	 */
+	public void hideGradient()
+	{
+		mGradient = false;
+	}
+	
+	/**
+	 * 确认是否可使用渲染效果(此函数对3D饼图无效)
+	 * @return 是否使用渲染
+	 */
+	public boolean getGradient()
+	{
+		return mGradient;
+	}
+	  
+	/**
+	 * 给画笔设置渲染颜色和效果
+	 * @param paintArc	画笔
+	 * @param cirX		中心点X坐标
+	 * @param cirY		中心点Y坐标
+	 * @param radius	半径
+	 * @return	返回渲染效果类
+	 */
+	private RadialGradient renderRadialGradient(Paint paintArc,
+												final float cirX,
+												final float cirY,
+												final float radius)
+	{				
+		float radialRadius = (float) (radius * 0.8f);				
+		int color = paintArc.getColor();		
+		int darkerColor = DrawHelper.getInstance().getDarkerColor(color);
+	
+		RadialGradient radialGradient = new RadialGradient(cirX, cirY, radialRadius,
+				darkerColor,color,
+				Shader.TileMode.MIRROR); 
+		
+		//返回环形渐变  
+		return radialGradient;
+	}
+		
+	/**
+	 * 绘制指定角度扇区
+	 * @param paintArc 画笔
+	 * @param arcRF0   范围
+	 * @param cData  数据集
+	 * @param cirX   中心点X坐标
+	 * @param cirY   中心点Y坐标
+	 * @param radius  半径
+	 * @param offsetAgent 偏移角度
+	 * @param curretAgent 当前绘制角度
+	 * @throws Exception  例外处理
+	 */
+	protected void drawSlice(Canvas canvas, Paint paintArc,RectF arcRF0,
+							PieData cData,
+							final float cirX,
+							final float cirY,
+							final float radius,
+							final float offsetAgent,
+							final float curretAgent) throws Exception
+	{
+		try{
+			if(0.0f >= curretAgent)
+			{
+				Log.e(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(curretAgent));
+				return;
+			}
+			
+			// 绘制环形渐变
+			if(getGradient())
+				paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
+	        
+			//在饼图中显示所占比例  
+        	canvas.drawArc(arcRF0, (float)offsetAgent, (float)curretAgent, true, paintArc);
+         
+            //标签 
+        	renderLabel(canvas,cData.getLabel(),cirX, cirY,
+	        			radius,offsetAgent,curretAgent);          
+		}catch( Exception e){
+			throw e;
+		}
+	}
+		
+	
+	/**
+	 * 绘制指定角度扇区
+	 * @param paintArc 画笔
+	 * @param cData 数据集
+	 * @param cirX  中心点X坐标
+	 * @param cirY  中心点Y坐标
+	 * @param radius 半径
+	 * @param offsetAgent 偏移角度
+	 * @param curretAgent 当前绘制角度
+	 * @throws Exception  例外处理
+	 */
+	protected void drawSelectedSlice(Canvas canvas, Paint paintArc,
+									PieData cData,
+									final float cirX,
+									final float cirY,
+									final float radius,
+									final float offsetAgent,
+									final float curretAgent) throws Exception
+	{
+		try{
+			if(0.0f >= curretAgent)
+			{
+				Log.e(TAG, "选中扇区圆心角小于等于0度.");
+				return;
+			}
+			
+			//偏移圆心点位置(默认偏移半径的1/10)
+	    	float newRadius = radius / SELECTED_OFFSET;
+	    	 //计算百分比标签
+	    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
+	    							newRadius,
+	    							MathHelper.getInstance().add(offsetAgent , curretAgent/2f)); 	
+	        
+	        float arcLeft = MathHelper.getInstance().sub(
+	        					MathHelper.getInstance().getPosX() , radius);  
+	        float arcTop  = MathHelper.getInstance().sub(
+	        					MathHelper.getInstance().getPosY() , radius); 
+	        float arcRight = MathHelper.getInstance().add(
+	        					MathHelper.getInstance().getPosX() , radius); 
+	        float arcBottom = MathHelper.getInstance().add(
+	        					MathHelper.getInstance().getPosY() , radius); 
+	        RectF arcRF1 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
+	        
+	        //绘制环形渐变  
+	        if(getGradient())
+	        	paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
+	        
+	        //在饼图中显示所占比例  
+	        canvas.drawArc(arcRF1, (float)offsetAgent, (float)curretAgent, true, paintArc);
+	        	        
+	        //标签
+	        renderLabel(canvas,cData.getLabel(),
+			        			MathHelper.getInstance().getPosX(), 
+			        			MathHelper.getInstance().getPosY(),
+			        			radius,offsetAgent,curretAgent);	   
+	        
+		}catch( Exception e){
+			 throw e;
+		}
+	}
+	
+	/**
+	 * 绘制图
+	 */
+	protected void renderPlot(Canvas canvas)
+	{
+		try{	
+			if(null == mDataset)return;
+			//中心点坐标
+			float cirX = plotArea.getCenterX();
+		    float cirY = plotArea.getCenterY();		     
+	        float radius = getRadius();
+	              
+	        //确定去饼图范围
+	        float arcLeft = MathHelper.getInstance().sub(cirX , radius);  
+	        float arcTop  = MathHelper.getInstance().sub(cirY , radius) ;  
+	        float arcRight = MathHelper.getInstance().add(cirX , radius) ;  
+	        float arcBottom = MathHelper.getInstance().add(cirY , radius) ;  
+	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
+	        	     
+		     
+	        //画笔初始化
+			Paint paintArc = new Paint();  
+			paintArc.setAntiAlias(true);	
+			
+			//用于存放当前百分比的圆心角度
+			float currentAgent = 0.0f;		
+	        //float totalAgent = 0.0f;
+			
+			for(PieData cData : mDataset)
+			{
+				paintArc.setColor(cData.getSliceColor());				
+				currentAgent = cData.getSliceAgent();		
+				if(Float.compare(currentAgent,0.0f) == 0 
+						|| Float.compare(currentAgent,0.0f) == -1 )continue;				
+								
+			    if(cData.getSelected()) //指定突出哪个块
+	            {			    	            		            	
+	            	drawSelectedSlice(canvas,paintArc,cData,
+	            			cirX,cirY,radius,
+	            			mOffsetAgent,currentAgent);			    		            		            		            
+	            }else{
+	            	drawSlice(canvas,paintArc,arcRF0,cData,
+	            			cirX,cirY,radius,
+	            			mOffsetAgent,(float) currentAgent);	            	
+	            }
+	          //下次的起始角度  
+	            mOffsetAgent = MathHelper.getInstance().add(mOffsetAgent, currentAgent);
+			}					
+			
+			//图KEY
+			PlotLegend.renderPieKey(canvas,this.mDataset);
+		
+		 }catch( Exception e){
+			 Log.e(TAG,e.toString());
+		 }
+		
+	}
+	
+	/**
+	 * 检验传入参数,累加不能超过360度
+	 * @return 是否通过效验
+	 */
+	protected boolean validateParams()
+	{		
+		if(null == mDataset)return false;
+		float totalAgent = 0.0f;	
+				
+		for(PieData cData : mDataset)
+		{			
+			float currentValue = cData.getSliceAgent();			
+			totalAgent = MathHelper.getInstance().add(totalAgent,currentValue);					
+			if( Float.compare(totalAgent,0.0f) == -1)
+			{
+				Log.e(TAG,"传入参数不合理，圆心角总计小于等于0度. 现有圆心角合计:"
+						+Float.toString(totalAgent)
+						+" 当前圆心角:"+Float.toString( currentValue )
+						+" 当前百分比:"+Float.toString( cData.getPercentage() ));
+				return false;
+			}else if( Float.compare(totalAgent, 360f) == 1) 
+			{
+				//圆心角总计大于360度
+				Log.e(TAG,"传入参数不合理，圆心角总计大于360度. 现有圆心角合计:"
+							+Float.toString(
+									totalAgent
+									));
+				return false;
+			}
+		}
+		
+		
+		return true;
+	}
+
+	
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{	
+		try {
+			super.postRender(canvas);
+			
+			//检查值是否合理
+	        if(false == validateParams())return false;
+			
+			//绘制图表
+			renderPlot(canvas);
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+	
+}

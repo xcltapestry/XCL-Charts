@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotCustomLine;
@@ -50,8 +51,12 @@ public class SplineChart extends LnChart{
 	private List<SplineData> mDataset;
 	
 	//分类轴的最大，最小值
-	private float mMaxValue = 0.0f;
-	private float mMinValue = 0.0f;
+	//private float mMaxValue = 0.0f;
+	//private float mMinValue = 0.0f;
+	
+	private double mMaxValue = 0d;
+	private double mMinValue = 0d;
+	
 	
 	// 用于格式化标签的回调接口
 	private IFormatterTextCallBack mLabelFormatter;
@@ -95,7 +100,7 @@ public class SplineChart extends LnChart{
 	 *  显示数据的数据轴最大值
 	 * @param value 数据轴最大值
 	 */
-	public void setCategoryAxisMax(float value)
+	public void setCategoryAxisMax(double value)
 	{
 		mMaxValue = value;
 	}	
@@ -104,7 +109,7 @@ public class SplineChart extends LnChart{
 	 * 设置分类轴最小值
 	 * @param value 最小值
 	 */
-	public void setCategoryAxisMin(float value)
+	public void setCategoryAxisMin(double value)
 	{
 		mMinValue = value;
 	}	
@@ -172,26 +177,38 @@ public class SplineChart extends LnChart{
 			    Entry  entry=(Entry)iter.next();
 			
 			    Double xValue =(Double) entry.getKey();
-			    Double yValue =(Double) entry.getValue();			
-								
+			    Double yValue =(Double) entry.getValue();	
+			    			    
 			    //对应的Y坐标
+			    /*
+			    float ylen = (float) MathHelper.getInstance().sub(yValue, dataAxis.getAxisMin());			    
+			    float YvaluePostion =  mul(axisScreenHeight, div(ylen,axisDataHeight));
+			    YvaluePostion = MathHelper.getInstance().round(YvaluePostion, 2);
+			    			*/								   
             	float YvaluePostion = (float) Math.round( 
 						axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
             	
-            	//对应的X坐标	                	
+            	//对应的X坐标	      
+			    /*
+			    float tpostion = (float) MathHelper.getInstance().div(  
+			    										  MathHelper.getInstance().sub(xValue, mMinValue) 
+			    		    							, MathHelper.getInstance().sub(mMaxValue, mMinValue) ,2);
+			    float XvaluePostion = mul(axisScreenWidth , tpostion);  
+			    XvaluePostion = MathHelper.getInstance().round(XvaluePostion, 2);
+			    		*/
             	float XvaluePostion = (float) Math.round( 
             			axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
             
             	if(j == 0 )
 				{	                		
-            		lineStartX = initX + XvaluePostion;
-					lineStartY = initY - YvaluePostion;
+            		lineStartX = add(initX , XvaluePostion);
+					lineStartY = sub(initY , YvaluePostion);
 					
 					lineEndX = lineStartX ;
 					lineEndY = lineStartY;														
 				}else{
-					lineEndX =  initX + XvaluePostion;  
-					lineEndY = initY - YvaluePostion;
+					lineEndX =  add(initX , XvaluePostion);  
+					lineEndY =  sub(initY , YvaluePostion);
 				}
             	            	
             	PlotLine pLine = bd.getPlotLine();             
@@ -204,7 +221,7 @@ public class SplineChart extends LnChart{
                 	{
                 		float rendEndX = lineEndX;                		
                 		PlotDot pDot = pLine.getPlotDot();	                
-                		rendEndX  = lineEndX  + pDot.getDotRadius();               		
+                		rendEndX  = add(lineEndX , pDot.getDotRadius());               		
             			
                 		PlotDotRender.getInstance().renderDot(canvas,pDot,
                 				lineStartX ,lineStartY ,
@@ -217,8 +234,9 @@ public class SplineChart extends LnChart{
                 	{            			
                 		//请自行在回调函数中处理显示格式
                         canvas.drawText(
-                        		getFormatterDotLabel(Double.toString(xValue)+","+ Double.toString(yValue)),
-    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
+                        		getFormatterDotLabel(
+                        				Double.toString(xValue)+","+ Double.toString(yValue)),
+                        				lineEndX, lineEndY,  pLine.getDotLabelPaint());
                 	}
             	}else{
             		return ;
@@ -253,7 +271,7 @@ public class SplineChart extends LnChart{
 			lstKey.add(mDataset.get(i));
 		}	
 		//key
-		plotKey.renderLineKey(canvas,lstKey);
+		plotLegend.renderLineKey(canvas,lstKey);
 	}
 	
 	@Override

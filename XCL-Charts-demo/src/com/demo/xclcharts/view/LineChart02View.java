@@ -96,13 +96,10 @@ public class LineChart02View extends TouchView implements Runnable{
 	{
 		try {				
 						
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 		
-			chart.setPadding(10, 20, 10, 15);
-			*/
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
 			
 			//设定数据源
 			chart.setCategories(labels);								

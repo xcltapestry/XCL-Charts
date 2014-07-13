@@ -1,0 +1,59 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.common.DrawHelper;
+
+import android.graphics.Canvas;
+import android.graphics.RectF;
+
+public class BorderRender extends Border {
+	
+	public BorderRender()
+	{
+		super();
+	}
+	
+	
+
+	/**
+	 * 绘制边
+	 * @param canvas
+	 * @param left
+	 * @param top
+	 * @param right
+	 * @param bottom
+	 */
+	public void renderBorder(Canvas canvas,
+							 float left,float top,float right,float bottom)
+	{
+		RectF rect = new RectF();
+		rect.left = left;
+		rect.top = top;
+		rect.right = right;
+		rect.bottom = bottom;				
+		//canvas.drawRect(rect, mBorderLinePaint);		
+		
+		//paint.setPathEffect(getDotLineStyle());  
+		
+		switch(getBorderLineStyle())
+		{
+		case SOLID:		
+			
+			break;
+		case DOT:			
+			getLinePaint().setPathEffect(DrawHelper.getInstance().getDotLineStyle());
+			
+			break;
+		case DASH:		
+			//虚实线 	
+			DrawHelper.getInstance().getDashLineStyle();
+			break;
+		}	
+		
+		
+		canvas.drawRoundRect(rect, rx, ry, mBorderLinePaint);
+		
+	}
+	
+	
+	
+}

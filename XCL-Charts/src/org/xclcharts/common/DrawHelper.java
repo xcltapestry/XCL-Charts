@@ -232,6 +232,21 @@ public class DrawHelper {
 	        canvas.drawPath(path,paint);		 		 
 	}
 	
+	
+	public PathEffect getDotLineStyle()
+	{
+		PathEffect effects = new DashPathEffect(new float[] { 2, 2, 2, 2}, 1);  
+		return effects;
+	}
+	
+	public PathEffect getDashLineStyle()
+	{
+		//虚实线
+		PathEffect effects = new DashPathEffect(new float[] { 4, 8, 5, 10}, 1);
+		return effects;
+	}
+	
+	
 	/**
 	 * 绘制点
 	 * @param startX	起始点X坐标
@@ -246,8 +261,8 @@ public class DrawHelper {
 			 Canvas canvas,
 			 Paint paint)
 	{
-		PathEffect effects = new DashPathEffect(new float[] { 2, 2, 2, 2}, 1);  
-		paint.setPathEffect(effects);  
+		//PathEffect effects = new DashPathEffect(new float[] { 2, 2, 2, 2}, 1);  
+		paint.setPathEffect(getDotLineStyle());  
 		canvas.drawLine(startX, startY, stopX, stopY, paint); 
 	}
 	
@@ -266,8 +281,8 @@ public class DrawHelper {
 							 Paint paint)
 	{
 		//虚实线
-		PathEffect effects = new DashPathEffect(new float[] { 4, 8, 5, 10}, 1);  
-		paint.setPathEffect(effects);  
+		//PathEffect effects = new DashPathEffect(new float[] { 4, 8, 5, 10}, 1);  
+		paint.setPathEffect(getDashLineStyle());  
 		canvas.drawLine(startX, startY, stopX, stopY, paint);  		
 	}
 	

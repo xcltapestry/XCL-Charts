@@ -40,6 +40,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
 /**
  * @ClassName RadarChart01View
@@ -53,8 +54,8 @@ public class RadarChart01View extends TouchView {
 	
 	
 	//标签集合
-		private List<String> labels = new LinkedList<String>();
-		private List<RadarData> chartData = new LinkedList<RadarData>();
+	private List<String> labels = new LinkedList<String>();
+	private List<RadarData> chartData = new LinkedList<RadarData>();
 	
 	
 	public RadarChart01View(Context context) {
@@ -92,15 +93,9 @@ public class RadarChart01View extends TouchView {
 	private void chartRender()
 	{
 		try{				
-						 
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			
-			chart.setPadding(15, 30, 10, 5);
-			*/
-			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
 			chart.setTitle("雷达图-Radar Chart");
 			chart.addSubtitle("(XCL-Charts Demo)");
@@ -218,6 +213,11 @@ public class RadarChart01View extends TouchView {
 		List<XChart> lst = new ArrayList<XChart>();
 		lst.add(chart);		
 		return lst;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		return false;
 	}
 
 }

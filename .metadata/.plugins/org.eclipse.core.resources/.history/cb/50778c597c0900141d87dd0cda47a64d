@@ -1,0 +1,203 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.0
+ */
+package org.xclcharts.renderer.plot;
+
+
+import org.xclcharts.renderer.IRender;
+import org.xclcharts.renderer.XChart;
+import org.xclcharts.common.DrawHelper;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+
+/**
+ * @ClassName AxisTitle
+ * @Description  图例(AxisTitle)绘制类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * 
+ */
+
+public class AxisTitleRender extends AxisTitle implements IRender{
+			
+	private XChart mChart = null;
+	 	 	
+	public AxisTitleRender()
+	{
+		super();
+		
+		getLeftAxisTitlePaint().setTextSize(26);
+		getLeftAxisTitlePaint().setColor((int)Color.rgb(255, 153, 204));
+		
+		getLowerAxisTitlePaint().setTextSize(26);
+		getLowerAxisTitlePaint().setColor((int)Color.rgb(58, 65, 83));
+		
+		getRightAxisTitlePaint().setTextSize(26);
+		getRightAxisTitlePaint().setColor((int)Color.rgb(51, 204, 204));		
+	}
+	
+	/**
+	 * 传入chart给图例类
+	 * @param chart 图基类
+	 */
+	public void setRange(XChart chart)
+	{
+		mChart = chart;
+	}
+
+
+	@Override
+	public boolean render(Canvas canvas) {
+		// TODO Auto-generated method stub
+		
+		if(null == mChart) return false;
+		
+		if(this.getLeftAxisTitle().length() > 0)
+		{
+			drawLeftAxisTitle(canvas,getLeftAxisTitle(),mChart.getLeft(),mChart.getTop(),
+										mChart.getRight(),mChart.getBottom());
+		}
+		
+		if(this.getLowerAxisTitle().length() > 0)
+		{						
+			drawAxisTitleLower(canvas,getLowerAxisTitle(),mChart.getLeft(),mChart.getTop(),
+					mChart.getRight(),mChart.getBottom());
+		}
+		
+		if(this.getRightAxisTitle().length() > 0)
+		{
+			drawRightAxisTitle(canvas,getRightAxisTitle(),mChart.getLeft(),mChart.getTop(),
+					mChart.getRight(),mChart.getBottom());
+		}
+		
+		return true;
+	}
+	
+			
+	 /**
+	  * 绘制左边图例
+	  * @param AxisTitle	内容
+	  * @param left		左边X坐标
+	  * @param top		上方Y坐标
+	  * @param right	右边X坐标
+	  * @param bottom	下方Y坐标
+	  */
+	public void drawLeftAxisTitle(Canvas canvas, String AxisTitle,double left,double top,
+											 double right,double bottom) //,Canvas canvas)
+	{							
+		if(null == canvas) return ;
+		
+		//是否需要绘制图例
+		if( 0 == AxisTitle.length() || "" == AxisTitle)return;
+		
+		 //计算图列宽度		 
+		 double AxisTitleTextHeight = DrawHelper.getInstance().getTextWidth(
+				 										mPaintLeftAxisTitle,AxisTitle);
+         
+		 //画布与图表1/3的地方显示
+		 float AxisTitleTextStartX = (float) Math.round(left + mPaintLeftAxisTitle.getTextSize()) ; 		 
+		 
+         //图例Y坐标
+		 float AxisTitleTextStartY = Math.round(top + (bottom - top ) /2 + AxisTitleTextHeight/2);
+         
+         //得到单个图例文字高度     		
+         double AxisTitleCharHeight =0d;
+         
+         for(int i= 0; i< AxisTitle.length();i++)
+         {        	 
+        	 AxisTitleCharHeight = DrawHelper.getInstance().getTextWidth(
+        			 						mPaintLeftAxisTitle,AxisTitle.substring(i, i+1));        	 
+        	 //绘制文字，旋转-90得到横向效果
+        	 DrawHelper.getInstance().drawRotateText(AxisTitle.substring(i, i+1),
+					        			 AxisTitleTextStartX,AxisTitleTextStartY,
+					        			 -90,
+					        			 canvas, mPaintLeftAxisTitle );
+        	 AxisTitleTextStartY -= AxisTitleCharHeight;
+         }
+	}
+	
+	/**
+	 * 绘制底部图例
+	 * @param AxisTitle	内容
+	 * @param left		左边X坐标
+	 * @param top		上方Y坐标
+	 * @param right		右边X坐标
+	 * @param bottom	下方Y坐标
+	 */
+	public void drawAxisTitleLower(Canvas canvas, String AxisTitle,
+								double left,double top,double right,double bottom)
+	{         
+         if(null == canvas) return ;
+ 		 //是否需要绘制图例
+ 		 if( 0 == AxisTitle.length() )return;
+ 	
+ 		 //计算图列宽度		 
+ 		 double AxisTitleTextHeight = DrawHelper.getInstance().getPaintFontHeight(
+ 				 												getLowerAxisTitlePaint());          
+ 		 //画布与图表1/3的地方显示
+ 		 float AxisTitleTextStartX =  (float) Math.round(left +  (right - left) / 2) ; 		  
+ 		 float plotBottom =  mChart.getPlotArea().getBottom();
+ 		 float AxisTitleY =(float) Math.abs(
+ 				plotBottom +
+ 				 ((bottom - plotBottom) / 2 - (AxisTitleTextHeight/2)) ); 		 		
+ 		DrawHelper.getInstance().drawRotateText(AxisTitle,
+       		 AxisTitleTextStartX,AxisTitleY,0,canvas, getLowerAxisTitlePaint());
+	}
+	
+	/**
+	 * 绘制右边图例
+	 * @param AxisTitle	内容
+	 * @param left		左边X坐标
+	 * @param top		上方Y坐标
+	 * @param right		右边X坐标
+	 * @param bottom	下方Y坐标
+	 */
+	public void drawRightAxisTitle(Canvas canvas,String AxisTitle,
+								double left,double top,double right,double bottom)
+	{			
+		if(null == canvas) return ;
+		
+		//是否需要绘制图例
+		if( 0 == AxisTitle.length() || "" == AxisTitle)return;
+		
+		//计算图列高度，超过最大高度要用...表示,这个后面再加		 
+		 int AxisTitleTextHeight = DrawHelper.getInstance().getTextWidth(
+				 										mPaintRightAxisTitle,AxisTitle);         
+		 //画布与图表1/3的地方显示
+		 float AxisTitleTextStartX =  (float) Math.round(right - mPaintRightAxisTitle.getTextSize()) ;         
+         //图例Y坐标
+		 float AxisTitleTextStartY = (float) Math.round(top + (bottom - top -  AxisTitleTextHeight) /2 );	          
+         //得到单个图例文字高度     		
+ 		 int AxisTitleCharHeight = 0 ;
+         for(int i= 0; i< AxisTitle.length();i++)
+         {        	 
+        	 AxisTitleCharHeight = DrawHelper.getInstance().getTextWidth(
+        			 						mPaintRightAxisTitle,AxisTitle.substring(i, i+1));        	 
+        	 //绘制文字，旋转-90得到横向效果
+        	 DrawHelper.getInstance().drawRotateText(AxisTitle.substring(i, i+1),
+        			 AxisTitleTextStartX,AxisTitleTextStartY,90,canvas, mPaintRightAxisTitle );
+        	 AxisTitleTextStartY += AxisTitleCharHeight;
+         }
+	
+	}
+
+
+}

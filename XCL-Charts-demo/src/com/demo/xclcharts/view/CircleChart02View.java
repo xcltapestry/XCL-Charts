@@ -22,13 +22,10 @@
  */
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
-import org.xclcharts.renderer.XChart;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -79,20 +76,7 @@ public class CircleChart02View extends GraphicalView {
 	 
 	public void chartRender()
 	{
-		try {
-			
-			//图所占范围大小
-			/*
-			if(getScreenWidth() < this.getScreenHeight())
-			{
-				chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenWidth());
-			}else{
-				chart.setChartRange(0.0f, 0.0f,getScreenHeight(),getScreenHeight());
-			}
-			
-			chart.setPadding(10, 10, 10, 15);		
-			*/
-							
+		try {							
 			//设置信息			
 			chart.setAttributeInfo(mDataInfo); 	
 			//数据源
@@ -104,6 +88,9 @@ public class CircleChart02View extends GraphicalView {
 			chart.getPaintFillCircle().setColor((int)Color.rgb(77, 180, 123));
 			//信息颜色
 			chart.getPaintDataInfo().setColor((int)Color.rgb(243, 75, 125));
+			//显示边框
+			chart.showRoundBorder();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

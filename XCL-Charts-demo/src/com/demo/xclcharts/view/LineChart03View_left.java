@@ -9,10 +9,8 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.View.MeasureSpec;
 
 public class LineChart03View_left extends GraphicalView {
 	
@@ -24,11 +22,11 @@ public class LineChart03View_left extends GraphicalView {
 	private LinkedList<LineData> chartData = new LinkedList<LineData>();
 
 	public LineChart03View_left(Context context) {
-		super(context);
-		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();	
-		chartRender();
+			super(context);
+			// TODO Auto-generated constructor stub
+			chartLabels();
+			chartDataSet();	
+			chartRender();
 	}
 	
 	 public LineChart03View_left(Context context, AttributeSet attrs){   
@@ -38,33 +36,18 @@ public class LineChart03View_left extends GraphicalView {
 			chartRender();
 	 }
 	 
-		 
-		 public LineChart03View_left(Context context, AttributeSet attrs, int defStyle) {
-				super(context, attrs, defStyle);
-				 chartLabels();
-					chartDataSet();	
-					chartRender();
-		 }		 
+	 
+	 public LineChart03View_left(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		 	chartLabels();
+			chartDataSet();	
+			chartRender();
+	 }		 
 	 
 
 	private void chartRender()
 	{
 		try {				
-			
-			
-			//图所占范围大小
-			//chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-
-			
-			//方法一
-			//调整x轴起始坐标位置
-			//chart.setChartRange(38f, 0.0f,800f,600f); //50.0f
-			//chart.setPadding(20, 20, 10, 5);
-			
-			//方法二
-			//chart.setChartRange(0.0f, 0.0f,800f,600f);						
-			//chart.setPadding(20, 20, 12, 5); //主要是12,即左边从原点x坐标，偏移12%,让轴可以显示在屏幕中,手机屏幕不同，不一定是合适比例			
-			//你可以依y轴比例( 80 * 0.12) 得到宽度。再用代码把xml中的layout_marginLeft 为这个宽度.即右边scrollview偏移这个宽度。
 			
 			chart.setTitle("折线图 (scroll view)");
 			chart.addSubtitle("(XCL-Charts Demo)");

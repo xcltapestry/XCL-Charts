@@ -34,7 +34,7 @@ public class DataAxis extends XYAxis {
 	//轴数据来源
 	 private double mDataAxisMin = 0d;
 	 private double mDataAxisMax = 0d;
-	 private double mDataAxisSteps = 0d;	
+	 private double mDataAxisSteps = 0d;
 	 private double mDetailModeSteps = 0d;
 	 
 
@@ -117,7 +117,7 @@ public class DataAxis extends XYAxis {
 	 */
 	public boolean isDetailMode()
 	{		
-		return((0d == mDetailModeSteps)?false:true); 
+		return((Double.compare(mDetailModeSteps, 0d) == 0)?false:true); 
 	}
 	
 	

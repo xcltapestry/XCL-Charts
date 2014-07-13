@@ -21,6 +21,8 @@
  */
 package org.xclcharts.chart;
 
+import org.xclcharts.common.MathHelper;
+
 import android.util.Log;
 
 /**
@@ -30,12 +32,14 @@ import android.util.Log;
  *  
  */
 public class PieData {
+	
+	private final String TAG ="PieData";
 
 	private String mPieKey = "";
 	private String mPieLabel = "";
-	private double mPieValue = 0.0d;
+	private double mPieValue = 0.0f;
 	private int mPieColor = 0 ;
-	private float mSliceAgent = 0;
+	//private int mSliceAgent = 0;
 	
 	//是否突出饼图
 	private boolean mSelected = false;
@@ -199,14 +203,23 @@ public class PieData {
 	 * @return 圆心角度
 	 */
 	public float getSliceAgent() 
-	{							
-		
-		if(mPieValue > 100 || mPieValue < 0)
+	{			
+		float agent = 0.0f;
+		try{
+			float currentValue = (float) this.getPercentage();
+			if(currentValue >= 101f || currentValue < 0.0f)
+			{
+				Log.e(TAG,"输入的百分比不合规范.须在0~100之间.");			
+			}else{		
+				//agent = (float) Math.rint( 360f *  (currentValue / 100f) );
+				agent =  MathHelper.getInstance().round(360f *  (currentValue / 100f),2) ;
+			}
+		}catch(Exception ex)
 		{
-			Log.e("ERROR-PieData","输入的百分比不合规范.");
-			return 0.0f;
+			agent = -1f;
+		}finally{
+			
 		}
-		mSliceAgent =  (float) (360 *  (mPieValue / 100)) ;
-		return mSliceAgent;
+		return  agent;
 	}
 }

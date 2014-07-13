@@ -1,0 +1,91 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.RectF;
+
+public class Border {
+	
+	//线的基类画笔	
+	private Paint mBorderLinePaint = new Paint();
+	
+	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
+	private XEnum.RectType mRectType = XEnum.RectType.ROUNDRECT;	
+	private int mRaidus = 15;
+	private static final int mBorderSpadding = 5;
+
+	public Border()
+	{							
+		mBorderLinePaint = new Paint();
+		mBorderLinePaint.setAntiAlias(true);
+		mBorderLinePaint.setColor((int)Color.rgb(26, 59, 105));
+		mBorderLinePaint.setStyle(Style.STROKE);  		
+		mBorderLinePaint.setStrokeWidth(2);
+	}
+	
+	/**
+	 * 开放线的画笔
+	 * @return 画笔
+	 */
+	public Paint getLinePaint()
+	{
+		return mBorderLinePaint;
+	}
+	
+	/**
+	 * 设置线的颜色	
+	 * @param color 线的颜色
+	 */
+	public void setBorderLineColor(int color) 
+	{				
+		mBorderLinePaint.setColor(color );
+	}
+	
+	/**
+	 * 
+	 * @param style
+	 */
+	public void setBorderLineStyle(XEnum.LineStyle style) 
+	{				
+		mLineStyle = style;
+	}	
+	
+	public void setBorderRectType(XEnum.RectType type) 
+	{				
+		mRectType = type;
+	}
+				
+	public XEnum.LineStyle getBorderLineStyle()
+	{
+		return mLineStyle;		
+	}
+	
+	public XEnum.RectType getBorderRectType()
+	{
+		return mRectType;
+	}
+	
+	public void setRoundRadius(int radius)
+	{
+		mRaidus = radius;
+	}
+	
+	public int getRoundRadius()
+	{		
+		return mRaidus;		
+	}
+	
+	public int getBorderWidth()
+	{
+		int width = mBorderSpadding;		
+		if(getBorderRectType() == XEnum.RectType.ROUNDRECT)
+		{
+			width += getRoundRadius();
+		}		
+		return width;
+	}
+}

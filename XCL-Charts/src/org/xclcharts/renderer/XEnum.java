@@ -106,6 +106,23 @@ public class XEnum {
 			SOLID,DOT,DASH
 		}
 		
+		/**
+		 * rect的类型
+		 * @author XCL
+		 *
+		 */
+		public enum RectType {
+			RECT,ROUNDRECT
+		}
+		
+		/**
+		 * 用于设定柱形的风格，仅对flatbar有效
+		 * @author XCL
+		 *
+		 */
+		public enum BarStyle {
+			GRADIENT,FILL,STROKE,OUTLINE
+		}
 		
 		/**
 		 * 横向或竖向网格线

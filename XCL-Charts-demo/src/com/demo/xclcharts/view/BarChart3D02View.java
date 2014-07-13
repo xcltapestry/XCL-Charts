@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart3D;
 import org.xclcharts.chart.BarData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -73,7 +74,7 @@ public class BarChart3D02View extends TouchView {
 	 
 	 private void initView()
 	 {
-		 chartLabels();
+		 	chartLabels();
 			chartDataSet();	
 			chartRender();
 	 }
@@ -88,21 +89,10 @@ public class BarChart3D02View extends TouchView {
 	
 	private void chartRender()
 	{
-		try {			
-			
-			//柱形图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			//Plot的内边距比例
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 10, 5);
-			}else{
-				chart.setPadding(25, 20, 18, 5);
-			}
-			*/
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
-			
+		try {					
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....	
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 40), ltrb[3]);			
 			
 			//指定显示为横向3D柱形
 			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
@@ -121,9 +111,9 @@ public class BarChart3D02View extends TouchView {
 			chart.setTitle("本月原料进货情况");
 			chart.addSubtitle("(XCL-Charts Demo)");		
 			
-			//图例
-			chart.getLegend().setLeftLegend("原料");
-			chart.getLegend().setLowerLegend("进货量");
+			//轴标题
+			chart.getAxisTitle().setLeftAxisTitle("原料");
+			chart.getAxisTitle().setLowerAxisTitle("进货量");
 			
 			//背景网格
 			chart.getPlotGrid().showHorizontalLines();

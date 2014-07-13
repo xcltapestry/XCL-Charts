@@ -86,15 +86,9 @@ public class PieChart3D01View extends TouchView implements Runnable{
 	private void chartRender()
 	{
 		try {						
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			
-			//图的内边距
-			chart.setPadding(10, 20, 15, 15);
-			*/
-			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
 			//设定数据源
 			//chart.setDataSource(chartData);		
@@ -105,7 +99,7 @@ public class PieChart3D01View extends TouchView implements Runnable{
 			//chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
 			
 			//不显示key
-			chart.getPlotKey().hideKeyLabels();
+			chart.getPlotLegend().hideLegend();
 			//标签文本显示为白色
 			chart.getLabelPaint().setColor(Color.WHITE);
 		
@@ -117,7 +111,8 @@ public class PieChart3D01View extends TouchView implements Runnable{
 	private void chartDataSet()
 	{
 		//设置图表数据源			
-		//PieData(标签，百分比，在饼图中对应的颜色)		
+		//PieData(标签，百分比，在饼图中对应的颜色)
+		
 		chartData.add(new PieData("PHP(15%)",15,
 								(int)Color.rgb(1, 170, 255)));
 		chartData.add(new PieData("Other",10,
@@ -128,6 +123,8 @@ public class PieChart3D01View extends TouchView implements Runnable{
 		//将此比例块突出显示
 		chartData.add(new PieData("C++(20%)",20,
 								(int)Color.rgb(164, 233, 0),true));
+	
+		
 	}
 	
 	@Override
@@ -167,10 +164,8 @@ public class PieChart3D01View extends TouchView implements Runnable{
 			  for(int i=10;i>0;i--)
 			  {
 				  Thread.sleep(100);
-				 // chart.setChartRange(0.0f, 0.0f,getScreenWidth()/i,getScreenHeight()/i);
-				  
-				  chart.setChartRange(0.0f, 0.0f,this.getWidth()/i,this.getHeight()/i);
-				  
+				 // chart.setChartRange(0.0f, 0.0f,getScreenWidth()/i,getScreenHeight()/i);				  
+				  chart.setChartRange(0.0f, 0.0f,this.getWidth()/i,this.getHeight()/i);				  
 				  
 				  if(1 == i)
 				  {

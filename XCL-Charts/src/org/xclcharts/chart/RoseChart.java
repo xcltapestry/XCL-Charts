@@ -73,7 +73,7 @@ public class RoseChart extends PieChart{
 	}
 	
 	@Override 
-	protected boolean checkInput()
+	protected boolean validateParams()
 	{
 		return true;
 	}

@@ -90,22 +90,12 @@ public class StackBarChart01View extends TouchView {
 	{
 		try {
 			
-			//柱形图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 10, 5);
-			}else{
-				chart.setPadding(25, 30, 18, 5);
-			}
-			*/
-			
-			//chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
-			
-			//设置绘图区默认缩进px值
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//显示边框
+			chart.showRoundBorder();
 			
 			
 			chart.setChartDirection(XEnum.Direction.VERTICAL);
@@ -119,7 +109,7 @@ public class StackBarChart01View extends TouchView {
 			chart.getDataAxis().setAxisSteps(64);
 			//指定数据轴标签旋转-45度显示
 			chart.getCategoryAxis().setTickLabelRotateAgent(-45f);	
-			Paint labelPaint = chart.getCategoryAxis().getAxisTickLabelPaint();			
+			Paint labelPaint = chart.getCategoryAxis().getTickLabelPaint();			
 			labelPaint.setTextAlign(Align.RIGHT);
 			labelPaint.setColor((int)Color.rgb(0, 75, 106));
 			
@@ -129,8 +119,8 @@ public class StackBarChart01View extends TouchView {
 			chart.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
 			chart.setTitlePosition(XEnum.Position.CENTER);
 			
-			//图例
-			chart.getLegend().setLeftLegend("单位(TB)");
+			//轴标题
+			chart.getAxisTitle().setLeftAxisTitle("单位(TB)");
 			//chart.getLegend().setLowerLegend("文件服务器");
 			//chart.getLegend().setRightLegend("右边图例");
 			

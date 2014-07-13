@@ -105,18 +105,12 @@ public class BarChart06View extends TouchView implements Runnable{
 	private void chartRender()
 	{
 		try {			
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());			
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 10, 5);
-			}else{
-				chart.setPadding(20, 20, 18, 5);
-			}
-					*/
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//显示边框
+			chart.showRoundBorder();
 			
 			//标题
 			chart.setTitle("柱形渐显动画演示");
@@ -159,7 +153,7 @@ public class BarChart06View extends TouchView implements Runnable{
 			 chart.getBar().setBarInnerMargin(0d);
 			
 			//隐藏Key
-			 chart.getPlotKey().hideKeyLabels();
+			 chart.getPlotLegend().hideLegend();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

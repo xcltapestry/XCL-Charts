@@ -30,6 +30,7 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart3D;
 import org.xclcharts.chart.BarData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -93,18 +94,12 @@ public class BarChart3D01View extends TouchView {
 	{
 		try {						
 			
-			//柱形图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-			//Plot的内边距比例		
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 10, 5);
-			}else{
-				chart.setPadding(25, 20, 18, 5);
-			}
-			*/
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....	
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 50), ltrb[3]);
+			
+			//显示边框
+			chart.showRoundBorder();
 			
 			
 			//数据源			

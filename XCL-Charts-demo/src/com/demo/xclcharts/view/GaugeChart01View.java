@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.chart.GaugeChart;
-import org.xclcharts.common.DensityUtil;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -53,19 +52,17 @@ public class GaugeChart01View  extends GraphicalView {
 	public GaugeChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		initView();
-		//new Thread(this).start();
+		initView();	
 	}
-	
-	
+		
 	public GaugeChart01View(Context context, AttributeSet attrs){   
         super(context, attrs);   
         initView();
 	 }
 	 
 	 public GaugeChart01View(Context context, AttributeSet attrs, int defStyle) {
-			super(context, attrs, defStyle);
-			initView();
+		super(context, attrs, defStyle);
+		initView();
 	 }
 	 
 	 private void initView()
@@ -80,16 +77,14 @@ public class GaugeChart01View  extends GraphicalView {
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
         //xml中的设置:  android:layout_width="300dip"   
-        //			   android:layout_height="300dip"       
-    
-        chart.setChartRange(w ,h );
-        
+        //			   android:layout_height="300dip"           
+        chart.setChartRange(w ,h );        
         //绘图区范围
         //左右各缩进10%
-        int offsetX = DensityUtil.dip2px(getContext(), (float) (300 * 0.1)); 
+        //int offsetX = DensityUtil.dip2px(getContext(), (float) (300 * 0.1)); 
         //偏移高度的25%下来
-        int offsetY = DensityUtil.dip2px(getContext(), (float) (300 * 0.25));        
-        chart.setPadding(offsetY, 0, offsetX,  offsetX);
+        //int offsetY = DensityUtil.dip2px(getContext(), (float) (300 * 0.25));        
+       // chart.setPadding(offsetY, 0, 0,  0);
      
      }  
 	 
@@ -103,13 +98,9 @@ public class GaugeChart01View  extends GraphicalView {
 	public void chartRender()
 	{
 		try {								
-			//图所占范围大小
-			//chart.setChartRange(0.0f, 0.0f,getScreenWidth() - 100,getScreenHeight());
-										
-			//chart.setPadding(25, 20, 10, 10);
-				
+						
 			//设置标题
-			chart.setTitle("仪表盘 ");
+			//chart.setTitle("仪表盘 ");
 								
 			//刻度步长
 			chart.setTickSteps(10d);
@@ -122,6 +113,8 @@ public class GaugeChart01View  extends GraphicalView {
 			//设置当前指向角度(0-180).
 			//chart.setCurrentAgent(90f);
 			chart.setCurrentAgent(mAgent);
+			//绘制边框
+			chart.showRoundBorder();
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -149,30 +142,6 @@ public class GaugeChart01View  extends GraphicalView {
 		mLabels.add("终止");
 	}
 
-	/*
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-		
-		
-		while(!Thread.currentThread().isInterrupted()) {
-            try {
-                Thread.sleep(100);
-                agent +=5f;
-                if(agent > 180) agent = 10;
-                //chartRender();
-               // chart.setCurrentAgent(agent);
-                //chart.render();
-            }
-            catch(Exception e) {
-                Thread.currentThread().interrupt();
-            }
-            //postInvalidate();
-            invalidate();
-        }
-	}
-	*/
 	
 	@Override
     public void render(Canvas canvas) {

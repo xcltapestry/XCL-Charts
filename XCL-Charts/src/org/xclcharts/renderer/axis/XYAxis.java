@@ -136,7 +136,7 @@ public class XYAxis extends Axis {
 		// 下次要补充的地方: 当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
 		if (getTickLabelVisible()) {			
 			float textHeight = DrawHelper.getInstance().getPaintFontHeight(
-														getAxisTickLabelPaint());
+														getTickLabelPaint());
 			textHeight /=4;
 							
 			
@@ -155,7 +155,7 @@ public class XYAxis extends Axis {
 				DrawHelper.getInstance().drawRotateText(
 						getFormatterLabel(text), labelStartX, labelStartY + textHeight,
 						getTickLabelRotateAgent(), canvas,
-						getAxisTickLabelPaint());
+						getTickLabelPaint());
 			}
 			
 		}
@@ -187,7 +187,7 @@ public class XYAxis extends Axis {
 				labelsStartY = marksStartY
 						- getTickLabelMargin()
 						- DrawHelper.getInstance()
-								.getPaintFontHeight(getAxisTickLabelPaint());
+								.getPaintFontHeight(getTickLabelPaint());
 			}
 			
 			break;
@@ -211,7 +211,7 @@ public class XYAxis extends Axis {
 				labelsStartY = marksStopY
 						+ getTickLabelMargin()
 						+ DrawHelper.getInstance()
-								.getPaintFontHeight(getAxisTickLabelPaint())
+								.getPaintFontHeight(getTickLabelPaint())
 						/ 3;
 			}
 			break;
@@ -233,7 +233,7 @@ public class XYAxis extends Axis {
 			DrawHelper.getInstance().drawRotateText(getFormatterLabel(text),
 					centerX, labelsStartY,
 					getTickLabelRotateAgent(), canvas,
-					getAxisTickLabelPaint());
+					getTickLabelPaint());
 		}
 		
 	}
@@ -249,14 +249,14 @@ public class XYAxis extends Axis {
 		 String label =  getFormatterLabel(text);
 		
 		//横向找宽度，竖向找高度，竖向的就不处理了。只搞横向多行的
-		double txtLength = DrawHelper.getInstance().getTextWidth(getAxisTickLabelPaint(), label);
+		double txtLength = DrawHelper.getInstance().getTextWidth(getTickLabelPaint(), label);
 		if(txtLength <= width) 
 		{
 			//标签绘制在一行中
      	   DrawHelper.getInstance().drawRotateText(label,centerX, centerY,
-								getTickLabelRotateAgent(), canvas,getAxisTickLabelPaint());
+								getTickLabelRotateAgent(), canvas,getTickLabelPaint());
 		}else{	//Multi line			
-			 double txtHeight = DrawHelper.getInstance().getPaintFontHeight(getAxisTickLabelPaint());						
+			 double txtHeight = DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint());						
 	         double charWidth =0d,totalWidth = 0.0f;
 	         float renderY = centerY;
 	         String lnString = "";
@@ -264,13 +264,13 @@ public class XYAxis extends Axis {
 	         for(int i= 0; i< label.length();i++)
 	         {        	 	        	 
 	        	 charWidth = DrawHelper.getInstance().getTextWidth(
-	        			 						getAxisTickLabelPaint(),label.substring(i, i+1));    
+	        			 						getTickLabelPaint(),label.substring(i, i+1));    
 	        			 						        	
 	        	 totalWidth += charWidth;	        	
 	      		 if(totalWidth > width )
 	      		 {
 		        	   DrawHelper.getInstance().drawRotateText(lnString,centerX, renderY,
-							getTickLabelRotateAgent(), canvas,getAxisTickLabelPaint());
+							getTickLabelRotateAgent(), canvas,getTickLabelPaint());
 		        	   
 		        		totalWidth = charWidth;
 		      		 			   	           		      		 
@@ -285,7 +285,7 @@ public class XYAxis extends Axis {
 	         if(lnString.length() > 0 )
 	         {
 	        	 DrawHelper.getInstance().drawRotateText(lnString,centerX, renderY,
-	        			 		getTickLabelRotateAgent(), canvas,getAxisTickLabelPaint());
+	        			 		getTickLabelRotateAgent(), canvas,getTickLabelPaint());
 	         }
 	         	         
 		} //end width if

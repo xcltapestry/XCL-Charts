@@ -25,10 +25,14 @@ package org.xclcharts.renderer.bar;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
+import android.graphics.Paint.Style;
 import android.graphics.Shader;
+import android.graphics.Typeface;
+import android.util.Log;
 
 /**
  * @ClassName FlatBar
@@ -38,6 +42,8 @@ import android.graphics.Shader;
  */
 
 public class FlatBar extends Bar{
+	
+	private static final String TAG = "FlatBar";
 	
 	//柱形填充色透明度
 	private int mFillAlpha = 255;
@@ -91,12 +97,10 @@ public class FlatBar extends Bar{
 	 * @param right	右边X坐标
 	 * @param bottom	底部Y坐标
 	 */
-	private void setBarTo2D(float left,float top,float right ,float bottom)
+	private void setBarGradient(float left,float top,float right ,float bottom)
 	{
-		int barColor = getBarPaint().getColor();				
-		
+		int barColor = getBarPaint().getColor();						
 		int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
-		
 		float width = Math.abs(right - left);
 		float height = Math.abs(bottom - top);
 		
@@ -113,7 +117,7 @@ public class FlatBar extends Bar{
 			           new int[]{lightColor,barColor},  
 			           null,tm);  		   			
 		}
-		getBarPaint().setShader(linearGradient);
+		getBarPaint().setShader(linearGradient);		
 	}
 	
 	/**
@@ -125,9 +129,43 @@ public class FlatBar extends Bar{
 	 * @param canvas	画布
 	 */
 	public void renderBar(float left,float top,float right ,float bottom,Canvas canvas)
-	{
-		setBarTo2D(left,top, right ,bottom);		 
-		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());
+	{				
+		if( XEnum.BarStyle.OUTLINE == getBarStyle())
+		{
+			int barColor = getBarPaint().getColor();						
+			int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
+			
+			getBarPaint().setStyle(Style.FILL);
+			getBarPaint().setColor(lightColor);
+			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());
+			
+			getBarPaint().setStyle(Style.STROKE);			
+			//getBarPaint().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+			getBarPaint().setColor(barColor);
+			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());			
+			return ;
+		}
+		
+		//GRADIENT,FILL,STROKE
+		switch(getBarStyle())
+		{
+		case GRADIENT:
+			setBarGradient(left,top,right,bottom);
+			break;
+		case FILL:
+			getBarPaint().setStyle(Style.FILL);
+			break;
+		case STROKE:			
+			
+			if(Float.compare(1f,  getBarPaint().getStrokeWidth() ) == 0)
+										getBarPaint().setStrokeWidth(2);
+			getBarPaint().setStyle(Style.STROKE);
+			break;
+		default:
+			Log.e(TAG,"不认识的柱形风格参数.");
+			return ;
+		} 
+		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());			
 	}
 	
 	/**

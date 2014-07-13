@@ -14,20 +14,14 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
-import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 
 public class BarChart07View  extends GraphicalView {
 	
-	private String TAG = "BarChart04View";
-	
+	private String TAG = "BarChart07View";	
 	private BarChart chart = new BarChart();
 	
-	//private BarChart chart = new BarChart();
-	//private BarChart3D chart = new BarChart3D();
 	//轴数据源
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
@@ -60,48 +54,18 @@ public class BarChart07View  extends GraphicalView {
 				chartRender();
 		 }
 		 
-		 @Override  
-		    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
-		        super.onSizeChanged(w, h, oldw, oldh);  
-		    
-		       //图所占范围大小
-		        chart.setChartRange(w,h);
-		    }  
-		 
+	
 		 
 		private void chartRender()
 		{
 			try {
-				
-				//图所占范围大小
-				/*
-				chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());		
-				if(chart.isVerticalScreen())
-				{
-					chart.setPadding(15, 20, 8, 10);
-				}else{
-					chart.setPadding(20, 20, 10, 8);
-				}
-				*/
-				
-				chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
-						
-				//标题
-				chart.setTitle("BMI自测");
-				chart.addSubtitle("(XCL-Charts Demo)");	
+			
 				//数据源
 				chart.setDataSource(chartData);
 				chart.setCategories(chartLabels);	
 				chart.setCustomLines(mCustomLineDataset);
 				
-				//图例
-				chart.getLegend().setLeftLegend("参考成年男性标准值");
-				chart.getLegend().setLowerLegend("(请不要忽视您的健康)");
-				chart.getLegend().setRightLegend("右边Legend");
-				
-				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor(Color.GRAY);
-				
+							
 				//数据轴
 				chart.getDataAxis().setAxisMax(40);
 				chart.getDataAxis().setAxisMin(0);
@@ -126,9 +90,8 @@ public class BarChart07View  extends GraphicalView {
 					
 				});
 				
-				//标签旋转45度
-				chart.getCategoryAxis().setTickLabelRotateAgent(45f);
-				chart.getCategoryAxis().getAxisTickLabelPaint().setTextSize(15);
+				//标签
+				chart.getCategoryAxis().getTickLabelPaint().setTextSize(15);
 				
 				//在柱形顶部显示值
 				chart.getBar().setItemLabelVisible(true);
@@ -143,10 +106,13 @@ public class BarChart07View  extends GraphicalView {
 					}});
 				
 				//隐藏Key
-				chart.getPlotKey().hideKeyLabels();
+				chart.getPlotLegend().hideLegend();
 				
 				 //让柱子间没空白
 				 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
+				 
+				 chart.getDataAxis().setVisible(false);
+			
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -163,7 +129,7 @@ public class BarChart07View  extends GraphicalView {
 			int max = 35;
 		    int min = 15;
 		        
-			for(int i=1;i<5;i++)
+			for(int i=1;i<35;i++)
 			{
 				Random random = new Random();
 				int v = random.nextInt(max)%(max-min+1) + min;			 
@@ -189,9 +155,13 @@ public class BarChart07View  extends GraphicalView {
 		
 		private void chartLabels()
 		{		
-			for(Integer i=1;i<5;i++)
+			for(Integer i=1;i<35;i++)
 			{
-				chartLabels.add(Integer.toString(i));
+				if(i%5 == 0)
+				{
+					chartLabels.add(Integer.toString(i));
+				}else
+					chartLabels.add("");
 			}
 		}	
 		
@@ -207,13 +177,24 @@ public class BarChart07View  extends GraphicalView {
 									
 		}
 		
+		@Override  
+	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+	        super.onSizeChanged(w, h, oldw, oldh);  
+	       //图所占范围大小
+	       // chart.setChartRange(w,h);
+	    }  
+		
 	
 	@Override
     public void render(Canvas canvas) {
-        try{
-         
-        	
-        	
+        try{        	
+        	//设置图表大小
+	        chart.setChartRange(0,0,
+	        		this.getLayoutParams().width - 10,
+	        		 this.getLayoutParams().height - 10);
+	        //设置绘图区内边距	(px),left,top,bottom保持与左边图要一致 
+	        chart.setPadding(120, 180, 0, 100);	
+	        
             chart.render(canvas);
             
         } catch (Exception e){
@@ -224,92 +205,11 @@ public class BarChart07View  extends GraphicalView {
 	
 	
 	@Override
-	 public void onDraw(Canvas canvas){   	         
-	        //canvas.drawColor(Color.BLACK);
-	   
-			if(getLayoutParams() == null) return;
-			
-			 //绘制出view所占范围
-	         RectF rect = new RectF();
-	         rect.left = 1f;
-	         rect.right = getLayoutParams().width ;
-	         rect.top = 1f;
-	         rect.bottom = getLayoutParams().height - 1;	  
-	        
-	         Paint paint2 = new Paint();
-		     paint2.setColor(Color.BLUE);
-		     paint2.setStyle(Style.STROKE);		       
-	         canvas.drawRect(rect, paint2);
-	        
-	         //设置图表大小
-	        chart.setChartRange(10f, 10f,  
-	        		this.getLayoutParams().width - 10,
-	        		 this.getLayoutParams().height - 10);
-	        //设置绘图区内边距
-	        chart.setPadding(120, 180, 100, 100);
-	        
+	 public void onDraw(Canvas canvas){  
 	        //绘制
 	        super.onDraw(canvas); 
 	 }
 	
-		//自定义view的宽高
-		@Override
-		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-			
-			 int measuredHeight = measureHeight(heightMeasureSpec);
-			 int measuredWidth = measureWidth(widthMeasureSpec);
-			 setMeasuredDimension(measuredWidth,measuredHeight);
-		}
-		
-		
-		private int measureHeight(int measureSpec) {
-			 
-		    int specMode = MeasureSpec.getMode(measureSpec);
-		    int specSize = MeasureSpec.getSize(measureSpec);
-		 
-		    // Default size if no limits are specified.
-		 
-		    int result = 400;
-		    if (specMode == MeasureSpec.AT_MOST) {
-		 
-		        // Calculate the ideal size of your
-		        // control within this maximum size.
-		        // If your control fills the available
-		        // space return the outer bound.
-		 
-		        result = specSize;
-		    } else if (specMode == MeasureSpec.EXACTLY) {
-		 
-		        // If your control can fit within these bounds return that
-		        // value.
-		        result = specSize;
-		    }
-		 
-		    return result;
-		}
-		 
-		private int measureWidth(int measureSpec) {
-		    int specMode = MeasureSpec.getMode(measureSpec);
-		    int specSize = MeasureSpec.getSize(measureSpec);
-		 
-		    // Default size if no limits are specified.
-		    int result = 400;
-		    if (specMode == MeasureSpec.AT_MOST) {
-		        // Calculate the ideal size of your control
-		        // within this maximum size.
-		        // If your control fills the available space
-		        // return the outer bound.
-		        result = specSize;
-		    }
-		 
-		    else if (specMode == MeasureSpec.EXACTLY) {
-		        // If your control can fit within these bounds return that
-		        // value.
-		 
-		        result = specSize;
-		    }
-		 
-		    return result;
-		}
+
 		
 }

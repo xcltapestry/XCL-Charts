@@ -20,6 +20,13 @@
  * @version 1.0
  */
 
+/**
+ *  version	 	date
+ *  0.1 		2014-06-12
+ *  1.0 		2014-07-04
+ *  1.2			2014-07-13
+ */
+
 package org.xclcharts.renderer;
 
 /**
@@ -29,7 +36,9 @@ package org.xclcharts.renderer;
  * 
  */
 
-import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.plot.Border;
+import org.xclcharts.renderer.plot.BorderRender;
 import org.xclcharts.renderer.plot.PlotArea;
 import org.xclcharts.renderer.plot.PlotAreaRender;
 import org.xclcharts.renderer.plot.PlotGrid;
@@ -72,7 +81,11 @@ public class XChart implements IRender {
 	//坐标系原点坐标
 	private float[] mTranslateXY = new float[2];		
 		
-
+	//是否显示边框
+	private boolean mShowBorder = false;
+	private BorderRender mBorder = null;
+	
+		
 	public XChart() {
 		initChart();
 	}
@@ -88,7 +101,7 @@ public class XChart implements IRender {
 		plotTitle = new PlotTitleRender();
 		plotTitle.setTitlePosition(XEnum.Position.CENTER);
 		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
-
+		
 		initPaint();
 	}
 
@@ -102,16 +115,16 @@ public class XChart implements IRender {
 	// 图的内边距属性
 	//设置内边距百分比,即绘图区与图边距相隔距离的百分比,不允许负值
 	/**
-	 * 用于指定绘图区与图范围的内边距。单位为PX值.
+	 * 用于指定绘图区与图范围的内边距。单位为PX值. 即用于确定plotArea范围
 	 * 
 	 * @param top
-	 *            绘图区与图顶部的保留距离，用于显示标题及key之类
+	 *            绘图区与图顶部的保留距离，用于显示标题及图例之类
 	 * @param bottom
-	 *            绘图区与图底部的保留距离，用于显示底轴及底部的图例之类
+	 *            绘图区与图底部的保留距离，用于显示底轴及轴标题之类
 	 * @param left
-	 *            绘图区与图左边的保留宽度，用于显示左边图例与轴之类
+	 *            绘图区与图左边的保留宽度，用于显示左边轴及轴标题之类
 	 * @param right
-	 *            绘图区与图右边的保留宽度，用于显示右边图例及右轴之类
+	 *            绘图区与图右边的保留宽度，用于显示右边轴及轴标题之类
 	 */
 	public void setPadding(float top, float bottom, float left, float right) {
 		if (top > 0)
@@ -123,10 +136,7 @@ public class XChart implements IRender {
 		if (right > 0)
 			mPaddingRight = right;
 	}
-	
-
-	
-	
+			
 
 	/**
 	 * 返回主图表区基类
@@ -187,13 +197,11 @@ public class XChart implements IRender {
 		if (startY > 0)
 			mTop = startY;
 				
-		mRight = startX + width;
-		mBottom = startY + height;
+		mRight = add(startX , width);
+		mBottom = add(startY , height);
 
-		if (width > 0)
-			mWidth = width;
-		if (height > 0)
-			mHeight = height;
+		if (Float.compare(width, 0.0f) > 0)mWidth = width;
+		if (Float.compare(height, 0.0f) > 0)mHeight = height;
 	}
 
 	/**
@@ -230,11 +238,7 @@ public class XChart implements IRender {
 	 * @return 是否为竖屏
 	 */
 	public boolean isVerticalScreen() {
-		if (mWidth < mHeight) {
-			return true;
-		} else {
-			return false;
-		}
+		return( (Float.compare(mWidth , mHeight) == -1)?true:false);
 	}
 
 	/**
@@ -279,13 +283,14 @@ public class XChart implements IRender {
 	public void setTitleAlign(XEnum.ChartTitleAlign align) {
 		plotTitle.setTitleAlign(align);
 	}
+	
 
 	/**
 	 * 返回图表左边X坐标
 	 * 
 	 * @return 左边X坐标
 	 */
-	public float getLeft() {
+	public float getLeft() {		
 		return mLeft;
 	}
 
@@ -322,6 +327,7 @@ public class XChart implements IRender {
 	 * @return 宽度
 	 */
 	public float getWidth() {
+		
 		return mWidth;
 	}
 
@@ -377,8 +383,8 @@ public class XChart implements IRender {
 	public double[] getCenterXY()
 	{
 		double [] xy = new double[2];
-		xy[0] = this.getLeft() + this.getWidth() / 2 ;
-		xy[1] = this.getTop() + this.getHeight() / 2 ;		
+		xy[0] = this.getLeft() + div(this.getWidth() , 2f) ;
+		xy[1] = this.getTop() + div(this.getHeight() , 2f) ;		
 		return xy;
 	}
 	
@@ -419,7 +425,7 @@ public class XChart implements IRender {
 	 * @param color   背景色
 	 */
 	public void setBackgroundColor(int color) {
-		//mBackgroundColorVisible = visible;
+		
 		getBackgroundPaint().setColor(color);
 		getPlotArea().getBackgroundPaint().setColor(color);
 	}
@@ -429,70 +435,24 @@ public class XChart implements IRender {
 	 */
 	protected void renderChartBackground(Canvas canvas) {
 		if (mBackgroundColorVisible)
-			canvas.drawRect(mLeft, mTop, mRight,
-					mBottom, mChartBackgroundPaint);
+			canvas.drawRect(this.getLeft(), this.getTop(), this.getRight(),
+					this.getBottom(), mChartBackgroundPaint);
+			
 	}
 
 	
 	/**
 	 * 计算图的显示范围,依屏幕px值来计算.
 	 */
-	protected void calcPlotRange() {		
-		plotArea.setBottom(this.mBottom - mPaddingBottom );
-		plotArea.setLeft(this.mLeft + mPaddingLeft);
-		plotArea.setRight(this.mRight - mPaddingRight);		
-		plotArea.setTop(this.mTop + mPaddingTop);
+	protected void calcPlotRange() {	
+		
+		int borderWidth = getBorderWidth();		
+		plotArea.setBottom(sub(this.getBottom() - borderWidth/2 , mPaddingBottom) );
+		plotArea.setLeft(add(this.getLeft() + borderWidth/2 , mPaddingLeft));
+		plotArea.setRight(sub(this.getRight() - borderWidth/2 , mPaddingRight));		
+		plotArea.setTop(add(this.getTop() + borderWidth/2 , mPaddingTop));
 	}
 	
-	/**
-	 * 计算图的显示范围,依百分比来计算
-	 */
-	protected void calcPlotRange2() {
-		
-		//对于把view放入xml的情况，下面的代码暂时没有用了.
-		/*
-		//图的内边距属性，默认按竖屏算
-		float perLeft = mPaddingLeft;
-		float perRight = mPaddingRight;
-		float perTop = mPaddingTop;
-		float perBottom = mPaddingBottom;
-
-		// 要依长宽比，区分横竖屏间的比例
-		if (mWidth > this.mHeight) // 当前状态为横屏
-		{
-			float scrPer = mHeight / mWidth;
-			perTop += scrPer;
-			perBottom += scrPer;
-			perLeft -= scrPer;
-			perRight -= scrPer;
-		}
-		plotArea.setBottom(this.mBottom
-				- Math.round(this.mHeight / 100 * perBottom));
-		plotArea.setLeft(this.mLeft
-				+ Math.round(this.mWidth / 100 * perLeft));
-		plotArea.setRight(this.mRight
-				- Math.round(this.mWidth / 100 * perRight));
-
-		float renderTop = 0.0f;
-		float titleHeight = 0.0f;
-		float subtitleHeight = 0.0f;
-		
-		if (plotTitle.getTitle().length() > 0) {
-			titleHeight = DrawHelper.getInstance().getPaintFontHeight(
-												plotTitle.getTitlePaint());
-		}
-		if (plotTitle.getSubtitle().length() > 0) {
-			subtitleHeight = DrawHelper.getInstance().getPaintFontHeight(plotTitle
-					.getTitlePaint());
-		}
-		renderTop = Math.round(this.mHeight / 100 * perTop);
-
-		if (renderTop < titleHeight + subtitleHeight) {
-			renderTop = titleHeight + subtitleHeight;
-		}
-		plotArea.setTop(this.mTop + renderTop);
-*/
-	}
 
 	// 导出成文件,待实现
 	// public void exportAsBmpfile(String fileName)
@@ -503,9 +463,91 @@ public class XChart implements IRender {
 	/**
 	 * 绘制标题
 	 */
-	protected void renderTitle(Canvas canvas) {
-		this.plotTitle.renderTitle(mLeft, mRight, mTop,
+	protected void renderTitle(Canvas canvas) {				
+		int borderWidth = getBorderWidth();
+		this.plotTitle.renderTitle(
+				mLeft + borderWidth, mRight - borderWidth, mTop + borderWidth,
 				mWidth, this.plotArea.getTop(), canvas);
+	}
+	
+	
+	/**
+	 * 显示矩形边框
+	 */
+	public void showBorder()
+	{
+		 mShowBorder = true;
+		 if(null == mBorder)mBorder = new BorderRender();
+		 mBorder.setBorderRectType(XEnum.RectType.RECT);
+	}
+	
+	/**
+	 * 显示圆矩形边框
+	 */
+	public void showRoundBorder()
+	{
+		mShowBorder = true;
+		if(null == mBorder)mBorder = new BorderRender();
+		mBorder.setBorderRectType(XEnum.RectType.ROUNDRECT);
+	}
+	
+	/**
+	 * 开放边框绘制类
+	 * @return 边框绘制类
+	 */
+	public Border getBorder()
+	{
+		if(null == mBorder)mBorder = new BorderRender();
+		return mBorder; 
+	}
+	
+	/**
+	 * 是否显示边框
+	 * @return 是否显示
+	 */
+	public boolean isShowBorder()
+	{
+		return mShowBorder;
+	}
+	
+	/**
+	 * 得到边框宽度
+	 * @return 边框宽度
+	 */
+	public int getBorderWidth()
+	{
+		int borderWidth = 5;
+		if(mShowBorder)
+		{
+			 if(null == mBorder)mBorder = new BorderRender();
+			 borderWidth += mBorder.getBorderWidth();
+		}
+		return borderWidth;
+	}
+	
+	/**
+	 * 设置边框宽度
+	 * @param width 边框宽度
+	 */
+	public void setBorderWidth(int width)
+	{
+		 if(0 >= width) return;
+		 if(null == mBorder)mBorder = new BorderRender();
+		 mBorder.setRoundRadius(width);
+	}
+	
+	/**
+	 * 绘制边框
+	 * @param canvas
+	 */
+	private void renderBorder(Canvas canvas)
+	{
+		if(mShowBorder)
+		{
+			if(null == mBorder) mBorder = new BorderRender();				
+			mBorder.renderBorder(canvas, 
+				mLeft  , mTop  , mRight , mBottom  ); 
+		}
 	}
 	
 
@@ -519,7 +561,7 @@ public class XChart implements IRender {
 	{
 		try{
 			// 绘制图背景
-			renderChartBackground(canvas);
+			renderChartBackground(canvas);						
 		} catch (Exception e) {
 			throw e;
 		}
@@ -533,12 +575,15 @@ public class XChart implements IRender {
 		try {
 				if (null == canvas)
 						return false;
-			
+				
 				canvas.save();
 				//设置原点位置
 				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
 				//绘制图表							
 				ret = postRender(canvas);					
+				//绘制边框
+				renderBorder(canvas);
+				//还原								
 				canvas.restore();
 		} catch (Exception e) {
 			throw e;
@@ -546,4 +591,50 @@ public class XChart implements IRender {
 		return ret;
 	}
 
+	
+	//math计算类函数
+	/**
+	 * 加法运算
+	 * @param v1 参数1
+	 * @param v2 参数2
+	 * @return
+	 */
+	 protected float add(float v1, float v2) 
+	 {
+		 return MathHelper.getInstance().add(v1, v2);
+	 }
+		 
+	 /**
+	  * 减法运算
+	  * @param v1 参数1
+	  * @param v2 参数2
+	  * @return 运算结果
+	  */
+	 protected float sub(float v1, float v2) 
+	 {
+		 return MathHelper.getInstance().sub(v1, v2);
+	 }
+		 
+	 /**
+	  * 乘法运算
+	  * @param v1 参数1
+	  * @param v2 参数2
+	  * @return 运算结果
+	  */
+	 protected float mul(float v1, float v2) 
+	 {
+		return MathHelper.getInstance().mul(v1, v2);
+	 }
+		 
+	 /**
+	  * 除法运算,当除不尽时，精确到小数点后2位
+	  * @param v1 参数1
+	  * @param v2 参数2
+	  * @return 运算结果
+	  */
+	 protected float div(float v1, float v2)
+	 {
+		 return MathHelper.getInstance().div(v1, v2);
+	 }
+	
 }

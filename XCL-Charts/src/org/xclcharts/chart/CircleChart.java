@@ -31,6 +31,7 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -160,10 +161,10 @@ public class CircleChart extends CirChart {
                                final float offsetAgent,
                                final float curretAgent) throws Exception {
         try {
-            float arcLeft = cirX - radius;
-            float arcTop = cirY - radius;
-            float arcRight = cirX + radius;
-            float arcBottom = cirY + radius;
+            float arcLeft = sub(cirX , radius);
+            float arcTop = sub(cirY , radius);
+            float arcRight = add(cirX , radius);
+            float arcBottom = add(cirY , radius);
             RectF arcRF0 = new RectF(arcLeft, arcTop, arcRight, arcBottom);
             //在饼图中显示所占比例
             canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
@@ -185,10 +186,10 @@ public class CircleChart extends CirChart {
             float radius = getRadius();
 
             //确定去饼图范围
-            float arcLeft = cirX - radius;
-            float arcTop = cirY - radius;
-            float arcRight = cirX + radius;
-            float arcBottom = cirY + radius;
+            float arcLeft = sub(cirX , radius);
+            float arcTop =  sub(cirY , radius);
+            float arcRight = add(cirX , radius);
+            float arcBottom = add(cirY , radius);
             RectF arcRF0 = new RectF(arcLeft, arcTop, arcRight, arcBottom);
 
             //画笔初始化
@@ -197,7 +198,6 @@ public class CircleChart extends CirChart {
 
             //用于存放当前百分比的圆心角度
             float currentAgent = 0.0f;
-
 
             int infoHeight = DrawHelper.getInstance().getPaintFontHeight(mPaintDataInfo);
             int LabelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
@@ -209,29 +209,43 @@ public class CircleChart extends CirChart {
                     setInitialAngle(180);
 
                     drawPercent(canvas, mPaintBgCircle, cirX, cirY, radius, 180f, 180f);
-                    drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.9)), 180f, 180);
+                    //drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.9f)), 180f, 180f);                    
+                    drawPercent(canvas, mPaintFillCircle, cirX, cirY, 
+                    		MathHelper.getInstance().round(mul(radius , 0.9f),2), 180f, 180f);
+                    
 
-                    currentAgent = (int) Math.round(180 * (cData.getPercentage() / 100));
-                    drawPercent(canvas, paintArc, cirX, cirY, radius, 180f, currentAgent);
-                    drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.8)), 180f, 180);
+                   // currentAgent = (int) Math.round(180 * (cData.getPercentage() / 100f));                      
+                    float per = (float) cData.getPercentage();                    
+                    currentAgent = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);
+                    
+                                        
+                    drawPercent(canvas, paintArc, cirX, cirY, radius, 180f,  currentAgent);
+                   // drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.8f)), 180f, 180f);
+                    drawPercent(canvas, mPaintFillCircle, cirX, cirY,
+                    						MathHelper.getInstance().round( mul(radius , 0.8f),2), 180f, 180f);
+                    
                     canvas.drawText(cData.getLabel(), cirX, cirY - textHeight, getLabelPaint());
                     canvas.drawText(mDataInfo, cirX, cirY - infoHeight, mPaintDataInfo);
 
                 } else {
                     currentAgent = cData.getSliceAgent();
                     canvas.drawCircle(cirX, cirY, radius, mPaintBgCircle);
-                    canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.9)), mPaintFillCircle);
+                   // canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.9f)), mPaintFillCircle);
+                    canvas.drawCircle(cirX, cirY, 
+                    					MathHelper.getInstance().round(mul(radius , 0.9f),2), mPaintFillCircle);
+                    
 
                     canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);
-                    canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.8)), mPaintFillCircle);
+                   // canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.8f)), mPaintFillCircle);
+                    canvas.drawCircle(cirX, cirY, 
+                    					MathHelper.getInstance().round(mul(radius , 0.8f),2), mPaintFillCircle);
+                    
                     canvas.drawText(cData.getLabel(), cirX, cirY, getLabelPaint());
 
                     if (mDataInfo.length() > 0)
-                        canvas.drawText(mDataInfo, cirX, cirY + LabelHeight, mPaintDataInfo);
+                        canvas.drawText(mDataInfo, cirX, add(cirY , LabelHeight), mPaintDataInfo);
                 }
 
-                //下次的起始角度
-                // mOffsetAgent += currentAgent;
                 break;
             }
 

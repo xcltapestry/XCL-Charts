@@ -23,8 +23,10 @@
 package org.xclcharts.renderer.plot;
 
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Paint.Style;
 
 /**
@@ -155,4 +157,12 @@ public class PlotArea {
 		return mHeight;
 	}
 		
+	/*
+	public void showRoundRect(Canvas canvas)
+	{
+		BorderRender border = new BorderRender();
+		border.renderBorder(canvas, mLeft  , mTop  , mRight , mBottom  ); 
+	}
+	*/
+	
 }

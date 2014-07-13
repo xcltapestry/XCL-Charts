@@ -25,13 +25,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
-import org.xclcharts.renderer.plot.PlotKeyRender;
+import org.xclcharts.renderer.plot.PlotLegendRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
@@ -93,7 +94,7 @@ public class LineChart extends LnChart{
 			dataAxis.setHorizontalTickAlign(Align.LEFT);	
 		}else{		
 			dataAxis.setHorizontalTickAlign(Align.RIGHT);
-			dataAxis.getAxisTickLabelPaint().setTextAlign(Align.LEFT);			
+			dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);			
 		}	
 	}
 	 
@@ -158,8 +159,12 @@ public class LineChart extends LnChart{
 			for(Double bv : chartValues)
             {																	
 				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
-            	float valuePostion = (float) Math.round( 
-						axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
+            	//float valuePostion = (float) Math.round( 
+				//		axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;              	
+            	float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
+				float fvper = div( vaxlen,axisDataHeight );
+				float valuePostion = mul(axisScreenHeight, fvper);
+			    
             		                	
             	if(j == 0 )
 				{
@@ -169,7 +174,7 @@ public class LineChart extends LnChart{
 					lineEndX = lineStartX;
 					lineEndY = lineStartY;
 				}else{
-					lineEndX =  initX + (j) * XSteps;
+					lineEndX = initX + (j) * XSteps;
 					lineEndY = initY - valuePostion;
 				}            	            	            	           	
             
@@ -243,8 +248,8 @@ public class LineChart extends LnChart{
 					lstKey.add(mDataSet.get(i));
 			}			
 			
-			if(null == plotKey) plotKey = new PlotKeyRender(this);
-					plotKey.renderLineKey(canvas, lstKey);
+			if(null == plotLegend) plotLegend = new PlotLegendRender(this);
+					plotLegend.renderLineKey(canvas, lstKey);
 		}	
 		 
 		

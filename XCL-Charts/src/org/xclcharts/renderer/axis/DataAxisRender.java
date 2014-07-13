@@ -48,9 +48,9 @@ public class DataAxisRender extends DataAxis {
 	 * 返回轴值的范围(即最大-最小值).
 	 * @return 轴值范围
 	 */
-	public double getAxisRange()
+	public int getAxisRange()
 	{
-		return Math.abs(getAxisMax() - getAxisMin());		
+		return (int) Math.abs(getAxisMax() - getAxisMin());		
 	}
 	
 	
@@ -58,9 +58,9 @@ public class DataAxisRender extends DataAxis {
 	 * 数据轴值范围(最大与最小之间的范围)  /  传的的步长  = 显示的Tick总数
 	 * @return 显示的刻度标记总数
 	 */
-	public double getAixTickCount()
+	public int getAixTickCount()
 	{
-		double tickCount = Math.ceil( getAxisRange() / getAxisSteps() ) ;		
+		int tickCount = (int) Math.ceil( getAxisRange() / getAxisSteps() ) ;		
 		return tickCount;
 	}
 	

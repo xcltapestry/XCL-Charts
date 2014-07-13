@@ -36,21 +36,10 @@ import android.util.Log;
 import android.view.MotionEvent;
 
 /**
- * 计划中
- * public class TZoomChatViewListener implements View.OnTouchListener {
- * 
- * public class TZoomAxisViewListener implements View.OnTouchListener {
- * 
- * public class TZoomDataViewListener implements View.OnTouchListener {
- * 
- * public class TCustomChartViewListener implements View.OnTouchListener {
- * 
- * public  class TClickViewListener implements View.OnClickListener
- * 
- * @author XCL
- *
+ * @ClassName TouchView
+ * @Description 可继承这个类用来放大缩小及手势移动图表
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com) QQ群: 374780627
  */
-
 
 public abstract class TouchView  extends GraphicalView implements IChartZoom {
 	
@@ -185,8 +174,6 @@ public abstract class TouchView  extends GraphicalView implements IChartZoom {
 			mChartTouch[i].handleTouch(event);		
 		} 	
 		
-		//附注，如果你只想手势只有在图范围内才做处理时，
-		//可以依当前坐标与图的left,top之类比较来做限制。
 		
 		return true;
 	}

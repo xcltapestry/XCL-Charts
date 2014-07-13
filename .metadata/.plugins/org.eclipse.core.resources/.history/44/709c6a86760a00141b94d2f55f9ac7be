@@ -1,0 +1,603 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.0
+ */
+
+package org.xclcharts.chart;
+
+import java.util.List;
+
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.AxisChart;
+import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.bar.Bar;
+import org.xclcharts.renderer.bar.FlatBar;
+import org.xclcharts.renderer.line.PlotCustomLine;
+
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.util.Log;
+
+/**
+ * @ClassName BarChart
+ * @Description  柱形图的基类,包含横向和竖向柱形图
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
+
+public class BarChart extends AxisChart {
+	
+	private String TAG = "BarChart";
+
+	// 柱形基类
+	private FlatBar mFlatBar = new FlatBar();
+	// 数据源
+	private List<BarData> mDataSet;
+	// 确定是竖向柱形图(默认)还是横向
+	private XEnum.Direction mDirection = XEnum.Direction.VERTICAL;
+
+	//用于绘制定制线(分界线)
+	private PlotCustomLine mCustomLine = null;	
+
+	public BarChart() {
+		super();
+			
+		//定制线
+		mCustomLine = new PlotCustomLine();
+		
+		// 默认显示Key		
+		plotLegend.showLegend();
+		
+		//默认为竖向设置
+		defaultAxisSetting();	
+	}
+
+	/**
+	 * 开放柱形绘制类
+	 * @return 柱形绘制类
+	 */
+	public Bar getBar() {
+		return mFlatBar;
+	}
+	
+
+	/**
+	 * 设置定制线值
+	 * @param customLineDataSet 定制线数据集合
+	 */
+	public void setCustomLines(List<CustomLineData> customLineDataSet)
+	{
+		mCustomLine.setCustomLines(customLineDataSet);
+	}
+
+	/**
+	 * 分类轴的数据源
+	 * 
+	 * @param categories
+	 *            分类集
+	 */
+	public void setCategories(List<String> categories) {
+		categoryAxis.setDataBuilding(categories);
+	}
+
+	/**
+	 * 设置数据轴的数据源
+	 * 
+	 * @param dataSeries
+	 *            数据源
+	 */
+	public void setDataSource(List<BarData> dataSeries) {
+		this.mDataSet = dataSeries;
+	}
+
+	/**
+	 * 返回数据库的数据源
+	 * @return 数据源
+	 */
+	public List<BarData> getDataSource() {
+		return mDataSet;
+	}
+
+	/**
+	 * 设置图的显示方向,即横向还是竖向显示柱形
+	 * @param direction 横向/竖向
+	 */
+	public void setChartDirection(XEnum.Direction direction) {
+		mDirection = direction;
+		
+		defaultAxisSetting();		
+	}
+	
+	/**
+	 * 返回图的显示方向,即横向还是竖向显示柱形
+	 * @return 横向/竖向
+	 */
+	public XEnum.Direction getChartDirection()
+	{
+		return mDirection;
+	}
+	
+	/**
+	 * 图为横向或竖向时，轴和Bar的默认显示风格
+	 */
+	protected void defaultAxisSetting()
+	{
+		try{
+			switch (mDirection) {
+				case HORIZONTAL: {
+					categoryAxis.setHorizontalTickAlign(Align.LEFT);		
+					categoryAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);					
+					dataAxis.setHorizontalTickAlign(Align.CENTER);
+					dataAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
+					getBar().getItemLabelPaint().setTextAlign(Align.LEFT);																
+					break;
+				}
+				case VERTICAL: {					
+					dataAxis.setHorizontalTickAlign(Align.LEFT);
+					dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);					
+									
+					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
+					categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
+					categoryAxis.setVerticalTickPosition(XEnum.Position.LOWER);					
+					break;
+				}
+			}
+		}catch(Exception ex){
+			Log.e(TAG, ex.toString());
+		}
+	}
+
+
+	/**
+	 * 比较传入的各个数据集，找出最大数据个数
+	 * @return 最大数据个数
+	 */
+	protected int getDataAxisDetailSetMaxSize() {
+		// 得到最大size个数
+		int dsetMaxSize = 0;
+		for (int i = 0; i < mDataSet.size(); i++) {
+			if (dsetMaxSize < mDataSet.get(i).getDataSet().size())
+				dsetMaxSize = mDataSet.get(i).getDataSet().size();
+		}
+		return dsetMaxSize;
+	}
+
+	/**
+	 * 	竖向柱形图
+	 *  Y轴的屏幕高度/数据轴的刻度标记总数 = 步长
+	 * @return Y轴步长
+	 */
+	private float getVerticalYSteps(int tickCount) {		
+		return (div(getAxisScreenHeight(),tickCount));
+	}
+
+	/**
+	 * 竖向柱形图
+	 * 得到X轴的步长
+	 * X轴的屏幕宽度 / 刻度标记总数  = 步长
+	 * @param num 刻度标记总数 
+	 * @return X轴步长
+	 */
+	protected float getVerticalXSteps(int num) {
+		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)
+		float XSteps = (float) Math.ceil(getAxisScreenWidth() / num);
+		return XSteps;
+	}
+
+	
+	/**
+	 * 横向柱形图,Y轴显示分类
+	 * Y轴的屏幕高度/(分类轴的刻度标记总数+1) = 步长
+	 * @return Y轴步长
+	 */
+	protected float getHorizontalYSteps() {
+		
+		float YSteps = (float) Math.ceil((getAxisScreenHeight())
+				/ (this.categoryAxis.getDataSet().size() + 1));
+		return YSteps;
+	}
+	
+	
+
+	/**
+	 * 绘制左边竖轴，及上面的刻度线和分类
+	 */
+	protected void renderVerticalBarDataAxis(Canvas canvas) {
+		// 数据轴数据刻度总个数
+		int tickCount = dataAxis.getAixTickCount();
+		// 数据轴高度步长
+		float YSteps = getVerticalYSteps(tickCount);
+		float currentY = plotArea.getBottom();
+
+		// 数据轴(Y 轴)
+		for (int i = 0; i <= tickCount; i++) {
+			if (i == 0)
+				continue;
+			
+			//将当前为第几个tick传递轴，用以区分是否为主明tick
+			dataAxis.setAxisTickCurrentID(i);
+			
+			// 依起始数据坐标与数据刻度间距算出上移高度
+			currentY = sub(plotArea.getBottom(), mul(i,YSteps));
+			
+			// 分类		
+			double slen = i * dataAxis.getAxisSteps();			
+			double currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);									
+						
+			// 从左到右的横向网格线		
+			if ( i % 2 != 0) {
+				plotGrid.renderOddRowsFill(canvas, plotArea.getLeft(),
+						add(currentY,YSteps), plotArea.getRight(), currentY);
+			} else {
+				plotGrid.renderEvenRowsFill(canvas, plotArea.getLeft(),
+						add(currentY,YSteps), plotArea.getRight(), currentY);
+			}
+			
+			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
+			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(), currentY,
+											   plotArea.getRight(), currentY);			
+					
+			if(i == tickCount)
+			{
+				dataAxis.renderAxisHorizontalTick(this,canvas, plotArea.getLeft(),
+												  plotArea.getTop() , 
+												  Double.toString(currentTickLabel));
+			}else{
+				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
+												currentY, Double.toString(currentTickLabel));
+			}
+			
+		}
+		// 轴 线
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
+				plotArea.getLeft(), plotArea.getTop());
+	}
+
+	/**
+	 * 绘制竖向柱形图中的底部分类轴
+	 */
+	protected void renderVerticalBarCategoryAxis(Canvas canvas) {
+		// 分类轴(X 轴)
+		float currentX = plotArea.getLeft();
+
+		// 得到分类轴数据集
+		List<String> dataSet = categoryAxis.getDataSet();
+		if(null == dataSet) return ;
+
+		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
+		// 总宽度 / 分类个数 = 间距长度  
+		float XSteps = div(getAxisScreenWidth() , (dataSet.size() + 1)); 
+
+		for (int i = 0; i < dataSet.size(); i++) {
+			// 依初超始X坐标与分类间距算出当前刻度的X坐标
+			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
+
+			// 绘制横向网格线
+			if (plotGrid.isShowVerticalLines()) {
+				canvas.drawLine(currentX, plotArea.getBottom(),
+								currentX, plotArea.getTop(),
+								plotGrid.getVerticalLinePaint());
+			}
+			// 画上分类/刻度线
+			categoryAxis.renderAxisVerticalTick(canvas,currentX,
+							plotArea.getBottom(), dataSet.get(i));
+		}
+	}
+
+	/**
+	 * 绘制横向柱形图中的数据轴
+	 */
+	protected void renderHorizontalBarDataAxis(Canvas canvas) {
+		// 依数据轴最大刻度值与数据间的间距 算出要画多少个数据刻度
+		int tickCount = dataAxis.getAixTickCount();		
+		// 得到数据分类刻度间距
+		float XSteps = div(this.getAxisScreenWidth() , tickCount); // Math.ceil
+
+		// x 轴
+		float currentX = this.plotArea.getLeft();
+		for (int i = 0; i <= tickCount; i++) {				
+			if (i == 0)continue;
+			
+			//将当前为第几个tick传递轴，用以区分是否为主明tick
+			dataAxis.setAxisTickCurrentID(i);
+						
+			// 依起始数据坐标与数据刻度间距算出上移高度
+			currentX = add(plotArea.getLeft() , mul(i , XSteps));
+												
+			//标签
+			double currentTickLabel =  MathHelper.getInstance().add(
+										dataAxis.getAxisMin(), i *  dataAxis.getAxisSteps());
+									
+			//绘制tick
+			this.dataAxis.renderAxisVerticalTick(canvas,currentX,
+											plotArea.getBottom(), 
+											Double.toString(currentTickLabel));
+		
+			// 从底到上的竖向网格线
+			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
+			if (i % 2 != 0) {
+				plotGrid.renderOddRowsFill(canvas,currentX, plotArea.getTop(),
+								sub(currentX , XSteps), plotArea.getBottom());
+			} else {
+				plotGrid.renderEvenRowsFill(canvas,currentX, plotArea.getTop(),
+								sub(currentX , XSteps), plotArea.getBottom());
+			}
+			
+			plotGrid.renderGridLinesVertical(canvas,currentX,
+								plotArea.getBottom(), currentX, plotArea.getTop());
+		}
+	}
+
+	/**
+	 * 绘制横向柱形图中的分类轴
+	 */
+	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
+		// Y 轴
+		// 分类横向间距高度
+		float YSteps = div(getAxisScreenHeight()
+								, (categoryAxis.getDataSet().size() + 1)); // Math.ceil
+		float currentY = 0.0f;
+		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
+			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
+			currentY = sub(plotArea.getBottom(), mul((i + 1) , YSteps));
+			
+			// 横的grid线
+			plotGrid.renderGridLinesHorizontal(canvas,plotArea.getLeft(),
+												currentY, plotArea.getRight(), currentY);
+			// 分类
+			this.categoryAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
+												currentY, categoryAxis.getDataSet().get(i));
+		}
+	}
+
+	/**
+	 * 绘制横向柱形图
+	 * @throws InterruptedException 
+	 */
+	protected void renderHorizontalBar(Canvas canvas) {
+		//坐标系
+		renderHorizontalBarDataAxis(canvas);
+		renderHorizontalBarLabelAxis(canvas);		
+		if(null == mDataSet) return;
+
+		// 得到Y 轴分类横向间距高度
+		float YSteps = getHorizontalYSteps();
+
+		// 画柱形
+		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度
+		int barNumber = getDatasetSize(mDataSet); //mDataSet.size();
+		int currNumber = 0;
+		List<Integer> ret = mFlatBar.getBarHeightAndMargin(YSteps, barNumber);
+		int barHeight = ret.get(0);
+		int barInnerMargin = ret.get(1);
+		int labelBarUseHeight = barNumber * barHeight + (barNumber - 1)
+				* barInnerMargin;
+
+		float scrWidth = getAxisScreenWidth();
+		float valueWidth = (float) dataAxis.getAxisRange();
+
+		for (int i = 0; i < barNumber; i++) {
+			// 得到分类对应的值数据集
+			BarData bd = mDataSet.get(i);
+			List<Double> barValues = bd.getDataSet();
+			if(null == barValues) continue ;
+			
+			List<Integer> barDataColor = bd.getDataColor();
+			// 设置成对应的颜色
+			int barDefualtColor = bd.getColor();
+			mFlatBar.getBarPaint().setColor(barDefualtColor);
+
+			// 画同分类下的所有柱形
+			for (int j = 0; j < barValues.size(); j++) {
+				Double bv = barValues.get(j);
+								
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
+								
+				float currLableY = sub(plotArea.getBottom() , mul((j + 1) , YSteps));			
+				float drawBarButtomY = add(currLableY,labelBarUseHeight / 2);				
+				drawBarButtomY = sub(drawBarButtomY, (barHeight + barInnerMargin) * currNumber);			
+				float drawBarTopY = sub(drawBarButtomY,barHeight);
+
+				// 宽度				
+				float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
+				float fvper =  div(vaxlen ,valueWidth);
+				float valuePostion = mul(scrWidth,fvper);
+				
+																
+				// 画出柱形
+				mFlatBar.renderBar(plotArea.getLeft(), drawBarButtomY,
+						add(plotArea.getLeft() , valuePostion), drawBarTopY,
+						canvas);
+			
+				// 柱形顶端标识
+				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
+						add(plotArea.getLeft() , valuePostion),
+						sub(drawBarButtomY , barHeight / 2),canvas);
+			}
+			currNumber++;
+		}
+
+		// Y轴线
+		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+									plotArea.getLeft(), plotArea.getTop());
+
+		// X轴 线
+		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+										plotArea.getRight(), plotArea.getBottom());
+		// 画Key说明
+		plotLegend.renderBarKey(canvas, this.mDataSet);
+		//画横向柱形图，竖向的定制线
+		mCustomLine.setHorizontalPlot(dataAxis, plotArea, this.getAxisScreenWidth());
+		mCustomLine.renderHorizontalCustomlinesDataAxis(canvas);
+	}
+
+	/**
+	 * 绘制竖向柱形图
+	 */
+	protected void renderVerticalBar(Canvas canvas) {
+		renderVerticalBarDataAxis(canvas);
+		renderVerticalBarCategoryAxis(canvas);
+		if(null == mDataSet) return;
+
+		float axisScreenHeight = getAxisScreenHeight();
+		float axisDataHeight = (float) dataAxis.getAxisRange();
+
+		// 得到分类轴数据集
+		List<String> dataSet = categoryAxis.getDataSet();
+		float XSteps = getVerticalXSteps(dataSet.size() + 1);
+
+		int barNumber = getDatasetSize(); 
+		int currNumber = 0;
+		List<Integer> ret = mFlatBar.getBarWidthAndMargin(XSteps, barNumber);
+		int barWidth = ret.get(0);
+		int barInnerMargin = ret.get(1);
+		int labelBarUseWidth = barNumber * barWidth + (barNumber - 1)
+				* barInnerMargin;
+
+		// X 轴 即分类轴
+		for (int i = 0; i < mDataSet.size(); i++) {
+			// 得到分类对应的值数据集
+			BarData bd = mDataSet.get(i);	
+			
+			List<Double> barValues = bd.getDataSet();
+			if(null == barValues) continue ;
+			
+			//用于处理单独针对某些柱子指定颜色的情况
+			List<Integer> barDataColor = bd.getDataColor();			
+			// 设成对应的颜色
+			int barDefualtColor = bd.getColor();
+			mFlatBar.getBarPaint().setColor(barDefualtColor);
+						
+			// 画出分类对应的所有柱形
+			for (int j = 0; j < barValues.size(); j++) {
+				Double bv = barValues.get(j);
+										
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
+							
+				float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
+				float fvper = div( vaxlen,axisDataHeight );
+				float valuePostion = mul(axisScreenHeight, fvper);
+						
+				float currLableX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
+				float drawBarStartX = sub(currLableX , labelBarUseWidth / 2);
+
+				// 计算同分类多柱 形时，新柱形的起始X坐标
+				drawBarStartX = add(drawBarStartX , (barWidth + barInnerMargin)
+																		* currNumber);
+				// 计算同分类多柱 形时，新柱形的结束X坐标
+				float drawBarEndX = add(drawBarStartX , barWidth);
+
+				// 画出柱形
+				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),
+						drawBarEndX, sub(plotArea.getBottom() , valuePostion),
+						canvas);
+
+				// 在柱形的顶端显示上柱形的当前值
+				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
+						add(drawBarStartX , barWidth / 2),
+						sub(plotArea.getBottom() , valuePostion), canvas);
+			}
+			currNumber++;
+		}
+
+		// 轴 线
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
+				plotArea.getRight(), plotArea.getBottom());
+
+		// 绘制分类各柱形集的说明描述
+		plotLegend.renderBarKey(canvas, this.mDataSet);
+		//画竖向柱形图的定制线		
+		mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+		mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+	}
+	
+	
+	protected int getDatasetSize(List<BarData> chartDataSource)
+	{		
+		 if(null == chartDataSource) return 0;
+		 
+		 int ret = chartDataSource.size();
+		// X 轴 即分类轴
+		for (int i = 0; i < chartDataSource.size(); i++) 
+		{			
+			BarData bd = chartDataSource.get(i);	
+			List<Double> barValues = bd.getDataSet();
+			
+			if(barValues.size() == 1)
+			{
+				if( Double.compare( barValues.get(0) , dataAxis.getAxisMin()) == 0 )
+					ret--;
+			}
+		}
+		return ret;
+	}
+	
+	
+	
+	
+	/**
+	 * 对于有为单个柱形设置颜色的情况，以这个函数来为画笔设置相应的颜色
+	 * @param paint			柱形画笔
+	 * @param lstDataColor	数据颜色集
+	 * @param currNumber	当前序号
+	 * @param defaultColor	默认的柱形颜色
+	 */
+	protected void setBarDataColor(  Paint paint,
+								   List<Integer> lstDataColor,
+								   int currNumber,								  
+								   int defaultColor)
+	{		
+		if(null != lstDataColor)
+		{
+			if( lstDataColor.size() > currNumber)
+			{
+				paint.setColor( lstDataColor.get(currNumber));	
+			}else{
+				paint.setColor( defaultColor);
+			}					
+		}
+		
+	}
+
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{
+		// 绘制图表
+		try {
+			super.postRender(canvas);
+			
+			switch (mDirection) {
+				case HORIZONTAL: {
+					renderHorizontalBar(canvas);
+					break;
+				}
+				case VERTICAL: {
+					renderVerticalBar(canvas);
+					break;
+				}
+			}
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+
+}

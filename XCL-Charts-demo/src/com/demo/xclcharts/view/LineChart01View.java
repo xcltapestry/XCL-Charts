@@ -87,14 +87,12 @@ public class LineChart01View extends TouchView {
 	{
 		try {				
 			
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
-		
-			chart.setPadding(20, 20, 10, 5);
-			*/
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//显示边框
+			chart.showRoundBorder();
 			
 			//设定数据源
 			chart.setCategories(labels);								
@@ -121,7 +119,7 @@ public class LineChart01View extends TouchView {
 			chart.setTitle("折线图(Line Chart)");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
-			chart.getLegend().setLowerLegend("(年份)");			
+			chart.getAxisTitle().setLowerAxisTitle("(年份)");			
 		
 			
 			/*

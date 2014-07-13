@@ -24,8 +24,8 @@ package org.xclcharts.renderer;
 
 import android.graphics.Canvas;
 import org.xclcharts.common.MathHelper;
-import org.xclcharts.renderer.plot.PlotKey;
-import org.xclcharts.renderer.plot.PlotKeyRender;
+import org.xclcharts.renderer.plot.PlotLegend;
+import org.xclcharts.renderer.plot.PlotLegendRender;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -55,10 +55,10 @@ public class CirChart extends XChart{
 	private Paint mPaintLabelLine = null;
 	
 	//初始偏移角度
-	protected int mOffsetAgent = 0;//180;
+	protected float mOffsetAgent = 0.0f;//180;
 	
 	//图的Key基类
-	protected PlotKeyRender plotKey = null;
+	protected PlotLegendRender PlotLegend = null;
 	
 	//标签与点的转折线长度
 	private int mLabelBrokenLineLength = 10;
@@ -73,10 +73,9 @@ public class CirChart extends XChart{
 	{
 		//标签显示位置
 		mLabelPosition = XEnum.SliceLabelPosition.INNER;
-		
-		
+				
 		//key值
-		plotKey = new PlotKeyRender(this);
+		PlotLegend = new PlotLegendRender(this);
 		
 		mPaintLabel = new Paint();
 		mPaintLabel.setColor(Color.BLACK);
@@ -84,7 +83,7 @@ public class CirChart extends XChart{
 		mPaintLabel.setAntiAlias(true);
 		mPaintLabel.setTextAlign(Align.CENTER);	
 		
-		mPaintLabelLine  = new Paint();
+		mPaintLabelLine = new Paint();
 		mPaintLabelLine.setColor(Color.BLACK);
 		mPaintLabelLine.setAntiAlias(true);
 		mPaintLabelLine.setStrokeWidth(2);
@@ -94,23 +93,19 @@ public class CirChart extends XChart{
 	@Override
 	protected void calcPlotRange()
 	{
-		super.calcPlotRange();
+		super.calcPlotRange();		
 		
-		if(isVerticalScreen())
-		{
-			this.mRadius = this.plotArea.getWidth() / 2;
-		}else{
-			this.mRadius =  this.plotArea.getHeight() / 2;
-		}
+		this.mRadius = Math.min( div(this.plotArea.getWidth() ,2f) , 
+				 				 div(this.plotArea.getHeight(),2f) );	
 	}
 	
 	/**
-	 * 开放图的key基类
+	 * 开放图例基类
 	 * @return	基类
 	 */
-	public PlotKey getPlotKey()
+	public PlotLegend getPlotLegend()
 	{
-		return plotKey;
+		return PlotLegend;
 	}	
 
 	
@@ -118,10 +113,10 @@ public class CirChart extends XChart{
 	 * 设置饼图(pie chart)的半径
 	 * @param radius 饼图的半径
 	 */
-	public void setRadius(final float radius)
-	{
-		mRadius = radius;
-	}
+	//public void setRadius(final float radius)
+	//{
+	//	mRadius = radius;
+	//}
 	
 	/**
 	 * 返回半径
@@ -145,7 +140,7 @@ public class CirChart extends XChart{
 	 * 返回图的起始偏移角度
 	 * @return 偏移角度
 	 */
-	public int getInitialAngle()
+	public float getInitialAngle()
 	{
 		return mOffsetAgent;
 	}
@@ -169,11 +164,8 @@ public class CirChart extends XChart{
 			break;
 		case LINE :
 			break;
-		default:
-			
-		}
-		
-		
+		default:			
+		}				
 	}
 	
 	/**
@@ -208,18 +200,19 @@ public class CirChart extends XChart{
 			final float cirX,
 			final float cirY,
 			final float radius,		
-			final float offsetAgent,
-			final float curretAgentt)
+			final double offsetAgent,
+			final double curretAgentt)
 	{
 		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return;		
 		if(""==text||text.length()==0)return;
 		
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
-		
-		
-		calcAgent = offsetAgent + curretAgentt/2;
-		if(calcAgent == 0 ){
+				
+		calcAgent =  (float) MathHelper.getInstance().add(offsetAgent , curretAgentt/2);
+		if(Float.compare(calcAgent,0.0f) == 0 
+				|| Float.compare(calcAgent,0.0f) == -1 )
+		{
 			Log.e(TAG,"计算出来的圆心角等于0.");
 			return ;
 		}
@@ -227,7 +220,7 @@ public class CirChart extends XChart{
 		if(XEnum.SliceLabelPosition.INNER == mLabelPosition)
 		{			 
 				//显示在扇形的中心
-				calcRadius = radius - radius/2;
+				calcRadius = MathHelper.getInstance().sub(radius , radius/2f);
 				
 				//计算百分比标签
 				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 						 
@@ -236,7 +229,7 @@ public class CirChart extends XChart{
 						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);
 		}else if(XEnum.SliceLabelPosition.OUTSIDE == mLabelPosition){
 				//显示在扇形的外部
-				calcRadius = radius  + radius/10;
+				calcRadius = MathHelper.getInstance().add(radius  , radius/10f);
 				//计算百分比标签
 				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
 					 
@@ -247,13 +240,13 @@ public class CirChart extends XChart{
 		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){						
 			//显示在扇形的外部
 			//1/4处为起始点
-			calcRadius = radius  - radius / 4;
+			calcRadius = MathHelper.getInstance().sub(radius  , radius / 4f);
 			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent);			
 			float startX = MathHelper.getInstance().getPosX();
 		    float startY = MathHelper.getInstance().getPosY();
 		    
 		    //延长原来半径的一半在外面
-		    calcRadius =  radius / 2;		
+		    calcRadius =  radius / 2f;		
 			MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAgent);
 			
 			float stopX = MathHelper.getInstance().getPosX();
@@ -304,20 +297,7 @@ public class CirChart extends XChart{
 			return;
 		}		 
 	}
-	
-	
-	protected void renderPlot()
-	{
-		try {
-			
-			
-		}catch( Exception e){
-			// throw e;
 		
-		}
-	}
-
-	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
 	{	

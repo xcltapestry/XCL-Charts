@@ -24,11 +24,11 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
-import android.graphics.Canvas;
-
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -93,7 +93,7 @@ public class GaugeChart extends CirChart{
 		mPaintPointerLine.setStyle(Style.FILL);
 		mPaintPointerLine.setAntiAlias(true);	
 		mPaintPointerLine.setColor(Color.BLACK);
-		mPaintPointerLine.setStrokeWidth(8);
+		mPaintPointerLine.setStrokeWidth(3);
 		
 		mPaintPinterCircle = new Paint();
 		mPaintPinterCircle.setStyle(Style.FILL);
@@ -177,10 +177,10 @@ public class GaugeChart extends CirChart{
 			final float curretAgent) throws Exception
 	{
 		try{		
-			float arcLeft = cirX - radius;  
-	        float arcTop  = cirY - radius ;  
-	        float arcRight = cirX + radius ;  
-	        float arcBottom = cirY + radius ;  
+			float arcLeft = sub(cirX , radius);  
+	        float arcTop  = sub(cirY , radius) ;  
+	        float arcRight = add(cirX , radius) ;  
+	        float arcBottom = add(cirY , radius) ;  
 	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
 			
 			//在饼图中显示所占比例  
@@ -233,7 +233,8 @@ public class GaugeChart extends CirChart{
 	private void renderLabels(Canvas canvas)
 	{		
 		float stepsAgent = Math.round(180/(mLabels.size() - 1 ));
-		float calcRadius = this.getRadius()  + getRadius()/10;		
+		//float calcRadius = this.getRadius()  + getRadius()/10f;				
+		float calcRadius =  add(this.getRadius(), div(getRadius(),10f) );
 				 
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
@@ -252,7 +253,7 @@ public class GaugeChart extends CirChart{
 			}else{				
 				//计算百分比标签
 				MathHelper.getInstance().calcArcEndPointXY(
-								cirX, cirY, calcRadius, 180 + i *stepsAgent); 
+								cirX, cirY, calcRadius, 180f + i *stepsAgent); 
 				//标识
                 canvas.drawText(label,
                 		MathHelper.getInstance().getPosX(), 
@@ -269,15 +270,16 @@ public class GaugeChart extends CirChart{
 	private void renderTicks(Canvas canvas)
 	{
 		//步长角度
-		double stepsAgent = Math.round(180/mTickSteps);		
+		double stepsAgent = Math.round(180d/mTickSteps);		
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
-		float tickRadius = Math.round(this.getRadius() * 0.9);
+		float tickRadius = Math.round(this.getRadius() * 0.9f);
 				
 		for(int i=0;i<mTickSteps;i++)
 		{
 			if(0 == i)continue;			
-			float agent =  (float) (180 + i *stepsAgent) ;				
+			//float agent =  (float) (180d + i *stepsAgent) ;					
+			float agent = (float) MathHelper.getInstance().add(180d, i *stepsAgent);						
 			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, getRadius(), agent); 			
 			
 			float startX = MathHelper.getInstance().getPosX();
@@ -294,20 +296,26 @@ public class GaugeChart extends CirChart{
 	 */
 	private void renderPointerLine(Canvas canvas)
 	{		
-		if(mPointerAgent > 180) //爆表了 
+		float currentRadius = Math.round(this.getRadius() * 0.9f);
+		float cirX = plotArea.getCenterX();
+		float cirY = plotArea.getCenterY();
+						
+		if(Float.compare(mPointerAgent, 180f) == 0 
+				|| Float.compare(mPointerAgent, 180f) == 1 ) //爆表了 
 		{
-			Log.e(TAG,"爆表了 !!!");
-		}else if(mPointerAgent < 0){
-			Log.e(TAG,"负角度???!!!");
-		}else{
-			float currentRadius = Math.round(this.getRadius() * 0.9);
-			float calcAgent =  Math.round( mPointerAgent + mStartAgent );
-			float cirX = plotArea.getCenterX();
-			float cirY = plotArea.getCenterY();
-					
-			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);
-            canvas.drawLine(cirX, cirY, MathHelper.getInstance().getPosX(),
-            							MathHelper.getInstance().getPosY(), mPaintPointerLine);
+			 //Log.e(TAG,"爆表了 !!!");
+			 canvas.drawLine(cirX, cirY, cirX + currentRadius,cirY , mPaintPointerLine);			 			 					
+		}else if(Float.compare(mPointerAgent, 0.0f) == 0 
+				|| Float.compare(mPointerAgent, 0.0f) == -1){
+			//Log.e(TAG,"负角度???!!!");
+			canvas.drawLine(cirX, cirY, cirX - currentRadius,cirY , mPaintPointerLine);
+		}else{				
+			float calcAgent =  add( mPointerAgent , mStartAgent );									
+			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, currentRadius, calcAgent);							
+			float endX = MathHelper.getInstance().getPosX();
+			float endY = MathHelper.getInstance().getPosY();				
+			if(Float.compare( endY, cirY ) == 1 ) endY = cirY;
+            canvas.drawLine(cirX, cirY, endX,endY, mPaintPointerLine);	          						
 		}		
 	}
 	
@@ -318,7 +326,7 @@ public class GaugeChart extends CirChart{
 	{
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
-		canvas.drawCircle(cirX, cirY, Math.round(this.getRadius() * 0.05), mPaintPinterCircle);
+		canvas.drawCircle(cirX, cirY, Math.round(this.getRadius() * 0.05f), mPaintPinterCircle);
 	}
 	
 		
@@ -329,13 +337,13 @@ public class GaugeChart extends CirChart{
 	private void renderPartitionFill(Canvas canvas) throws Exception
 	{		
 		Integer totalAgent = 0;		
-		 float newRadius = Math.round(getRadius() * 0.8);
+		 float newRadius = Math.round(getRadius() * 0.8f);
 						 
 	     RectF rect =new RectF();
-	     rect.left  = plotArea.getCenterX() - newRadius;
-	     rect.top   = plotArea.getCenterY() - newRadius;
-	     rect.right = plotArea.getCenterX() + newRadius;
-	     rect.bottom= plotArea.getCenterY() + newRadius;  
+	     rect.left  = sub(plotArea.getCenterX() , newRadius);
+	     rect.top   = sub(plotArea.getCenterY() , newRadius);
+	     rect.right = add(plotArea.getCenterX() , newRadius);
+	     rect.bottom= add(plotArea.getCenterY() , newRadius);  
 	     
 	     if(null == mPartitionDataset) return ;
 		 for(Pair pr : mPartitionDataset)
@@ -345,7 +353,7 @@ public class GaugeChart extends CirChart{
 					Log.e(TAG,"负角度???!!!");
 			 }else if((totalAgent + agentValue) > 180)
 		     {
-		    	 Log.e(TAG,"输入的角度总计大于mStartAgent度");
+		    	 Log.e(TAG,"输入的角度总计大于180度");
 		    	 return ;
 		     }			 			 
 			 mPaintPartitionFill.setColor((Integer) pr.second);				 
@@ -353,6 +361,24 @@ public class GaugeChart extends CirChart{
 		     totalAgent += agentValue;
 		 }
 				 
+	}
+	
+	@Override
+	public float getRadius()
+	{
+		float r = super.getRadius();
+		
+		//找第一和最后一个标签
+		if(null != mLabels && mLabels.size() > 0)
+		{
+			int e = mLabels.size() - 1;		
+			float left = DrawHelper.getInstance().getTextWidth(getLabelPaint(), mLabels.get(0) );
+			float right = DrawHelper.getInstance().getTextWidth(getLabelPaint(), mLabels.get(e) );							
+			float spadding = Math.max(left, right);			
+			r = sub(r, spadding);						
+			r = sub(r, this.getBorderWidth()/2);			
+		}				
+		return r;
 	}
 
 	/**
@@ -363,6 +389,7 @@ public class GaugeChart extends CirChart{
 	{		
 		 drawPercent(canvas, mPaintDount,plotArea.getCenterX(),plotArea.getCenterY(),
 				 			getRadius(),180, 180);
+		 		 
 	}
 	
 	/**

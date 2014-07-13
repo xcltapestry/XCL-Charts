@@ -52,7 +52,6 @@ public class BarChart04View extends TouchView {
 	
 	private String TAG = "BarChart04View";
 	private BarChart chart = new BarChart();
-	//private BarChart3D chart = new BarChart3D();
 	//轴数据源
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
@@ -95,18 +94,12 @@ public class BarChart04View extends TouchView {
 	{
 		try {
 			
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());		
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 8, 10);
-			}else{
-				chart.setPadding(20, 20, 10, 8);
-			}
-			*/
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//显示边框
+			chart.showRoundBorder();
 					
 			//标题
 			chart.setTitle("BMI自测");
@@ -117,8 +110,8 @@ public class BarChart04View extends TouchView {
 			chart.setCustomLines(mCustomLineDataset);
 			
 			//图例
-			chart.getLegend().setLeftLegend("参考成年男性标准值");
-			chart.getLegend().setLowerLegend("(请不要忽视您的健康)");
+			chart.getAxisTitle().setLeftAxisTitle("参考成年男性标准值");
+			chart.getAxisTitle().setLowerAxisTitle("(请不要忽视您的健康)");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(40);
@@ -146,7 +139,7 @@ public class BarChart04View extends TouchView {
 			
 			//标签旋转45度
 			chart.getCategoryAxis().setTickLabelRotateAgent(45f);
-			chart.getCategoryAxis().getAxisTickLabelPaint().setTextSize(15);
+			chart.getCategoryAxis().getTickLabelPaint().setTextSize(15);
 			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
@@ -161,11 +154,12 @@ public class BarChart04View extends TouchView {
 				}});
 			
 			//隐藏Key
-			chart.getPlotKey().hideKeyLabels();
+			chart.getPlotLegend().hideLegend();
 			
 			 //让柱子间没空白
 			 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
 			
+			// chart.showRoundBorder();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

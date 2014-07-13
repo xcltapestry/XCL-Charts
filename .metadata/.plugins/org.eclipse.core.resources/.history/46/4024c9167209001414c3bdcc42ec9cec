@@ -1,0 +1,71 @@
+package org.xclcharts.renderer.plot;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.RectF;
+
+public class Border {
+	
+	//线的基类画笔	
+	private Paint mBorderLinePaint = new Paint();
+	
+	private int mRectStyle = 0; //0 为rect,1为roundrect
+	
+	private static final float rx = 5f;
+	private static final float ry = 5f;
+	
+
+	public Border()
+	{							
+		mBorderLinePaint = new Paint();
+		mBorderLinePaint.setAntiAlias(true);
+		mBorderLinePaint.setColor(Color.BLACK);
+		mBorderLinePaint.setStyle(Style.STROKE);  
+		mBorderLinePaint.setStrokeWidth(1);
+	}
+	
+	/**
+	 * 开放线的画笔
+	 * @return 画笔
+	 */
+	public Paint getLinePaint()
+	{
+		return mBorderLinePaint;
+	}
+	
+	/**
+	 * 设置线的颜色	
+	 * @param color 线的颜色
+	 */
+	public void setBorderLineColor(int color) 
+	{				
+		mBorderLinePaint.setColor(color );
+	}
+	
+	
+	/**
+	 * 绘制边
+	 * @param canvas
+	 * @param left
+	 * @param top
+	 * @param right
+	 * @param bottom
+	 */
+	public void renderBorder(Canvas canvas,
+							 float left,float top,float right,float bottom)
+	{
+		RectF rect = new RectF();
+		rect.left = left;
+		rect.top = top;
+		rect.right = right;
+		rect.bottom = bottom;				
+		//canvas.drawRect(rect, mBorderLinePaint);		
+		
+		
+		
+		canvas.drawRoundRect(rect, rx, ry, mBorderLinePaint);
+		
+	}
+}

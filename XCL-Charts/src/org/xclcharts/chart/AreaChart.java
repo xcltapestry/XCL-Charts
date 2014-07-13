@@ -220,7 +220,7 @@ public class AreaChart extends LnChart{
 			lstKey.add(mDataset.get(i));
 		}
 			
-		plotKey.renderLineKey(canvas, lstKey);
+		plotLegend.renderLineKey(canvas, lstKey);
 	}
 	
 

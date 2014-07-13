@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -89,20 +90,12 @@ public class StackBarChart02View extends TouchView {
 	{
 		try {		
 			
-			//柱形图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 50), ltrb[3]);	
 			
-			
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(15, 20, 10, 5);
-			}else{
-				chart.setPadding(25, 20, 18, 5);
-			}
-			*/
-			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//显示边框
+			chart.showRoundBorder();
 			
 			//指定显示为横向柱形
 			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
@@ -123,7 +116,7 @@ public class StackBarChart02View extends TouchView {
 			chart.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
 			
 			//图例
-			chart.getLegend().setLowerLegend("单位为(W)");
+			chart.getAxisTitle().setLowerAxisTitle("单位为(W)");
 			
 			//背景网格
 			chart.getPlotGrid().showVerticalLines();
@@ -148,7 +141,7 @@ public class StackBarChart02View extends TouchView {
 			});
 			
 			//定义标签轴标签显示颜色
-			chart.getCategoryAxis().getAxisTickLabelPaint().
+			chart.getCategoryAxis().getTickLabelPaint().
 				setColor((int)Color.rgb(1, 188, 242));
 					
 			//定义柱形上标签显示格式

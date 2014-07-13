@@ -31,6 +31,7 @@ import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -98,20 +99,9 @@ public class MultiAxisChart02View extends TouchView {
 	{
 		try {
 						
-			//柱形图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());
-			
-			
-			if(chart.isVerticalScreen())
-			{
-				chart.setPadding(20, 10, 10, 10);
-			}else{
-				chart.setPadding(20, 30, 18, 10);
-			}
-			*/
-			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
 			chart.setChartDirection(XEnum.Direction.VERTICAL);	
 			//标题
@@ -120,8 +110,8 @@ public class MultiAxisChart02View extends TouchView {
 			//因为太长缩小标题字体
 			//chart.getPlotTitle().getChartTitlePaint().setTextSize(20);
 			//图例
-			chart.getLegend().setLeftLegend("Orders Per Minute (OPM)");
-			chart.getLegend().setRightLegend("Average Response Time (RT)");			
+			chart.getAxisTitle().setLeftAxisTitle("Orders Per Minute (OPM)");
+			chart.getAxisTitle().setRightAxisTitle("Average Response Time (RT)");			
 			
 			//标签轴
 			chart.setCategories(chartLabels);				
@@ -147,8 +137,8 @@ public class MultiAxisChart02View extends TouchView {
 			//定制标签轴标签的标签格式
 			CategoryAxis categoryAxis = chart.getCategoryAxis();
 			categoryAxis.setTickLabelRotateAgent(-15f);			
-			categoryAxis.getAxisTickLabelPaint().setTextSize(15);
-			categoryAxis.getAxisTickLabelPaint().setTextAlign(Align.CENTER);
+			categoryAxis.getTickLabelPaint().setTextSize(15);
+			categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);
 			
 			categoryAxis.setLabelFormatter(new IFormatterTextCallBack(){
 	
@@ -177,7 +167,7 @@ public class MultiAxisChart02View extends TouchView {
 			chart.getPlotGrid().showOddRowBgColor();
 			//隐藏Key值
 			//chart.setPlotKeyVisible(false);	
-			chart.getPlotKey().hideKeyLabels();
+			chart.getPlotLegend().hideLegend();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());			
@@ -251,6 +241,7 @@ public class MultiAxisChart02View extends TouchView {
 		
 	}
 	
+	
 	private void chartLnLabels()
 	{
 		chartLabelsLn.add(" "); 
@@ -262,23 +253,13 @@ public class MultiAxisChart02View extends TouchView {
 	private void chartLnRender()
 	{
 		try {
-			
-			//柱形图所占范围大小
-			/*
-			lnChart.setChartRange(0.0f, 0.0f, getScreenWidth(),getScreenHeight());					
-			if(lnChart.isVerticalScreen())
-			{
-				lnChart.setPadding(20, 10, 10, 10);
-			}else{
-				lnChart.setPadding(20, 30, 18, 10);
-			}
-			*/
-			lnChart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
-			
-			
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			lnChart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+					
 			renderLnAxis();			
-			//lnChart.setPlotKeyVisible(true);
-			lnChart.getPlotKey().showKeyLabels();
+		
+			lnChart.getPlotLegend().showLegend();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -318,6 +299,17 @@ public class MultiAxisChart02View extends TouchView {
 			}
 			
 		});		
+	}
+	
+	@Override
+	protected int[] getBarLnDefaultSpadding()
+	{
+		int [] ltrb = new int[4];
+		ltrb[0] = DensityUtil.dip2px(getContext(), 55); //top	
+		ltrb[1] = DensityUtil.dip2px(getContext(), 36); //bottom	
+		ltrb[2] = DensityUtil.dip2px(getContext(), 40); //left		
+		ltrb[3] = DensityUtil.dip2px(getContext(), 40); //right		
+		return ltrb;
 	}
 	
 	@Override

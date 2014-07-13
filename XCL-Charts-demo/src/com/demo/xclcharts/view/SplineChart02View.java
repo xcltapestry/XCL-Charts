@@ -91,13 +91,12 @@ public class SplineChart02View extends TouchView {
 	{
 		try {
 						
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());		
-			chart.setPadding(15, 20, 13, 5);
-			*/
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//显示边框
+			chart.showRoundBorder();
 			
 			//数据源	
 			chart.setCategories(labels);
@@ -108,7 +107,7 @@ public class SplineChart02View extends TouchView {
 			chart.getDataAxis().setAxisMax(1);
 			chart.getDataAxis().setAxisMin(-1);
 			//数据轴刻度间隔
-			chart.getDataAxis().setAxisSteps(0.5);
+			chart.getDataAxis().setAxisSteps(0.5f);
 			
 			//标签轴最大值
 			chart.setCategoryAxisMax(360);	

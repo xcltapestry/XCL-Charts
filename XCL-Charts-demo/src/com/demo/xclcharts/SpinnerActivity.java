@@ -21,6 +21,8 @@
  */
 package com.demo.xclcharts;
 
+import org.xclcharts.common.DensityUtil;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -130,7 +132,9 @@ public class SpinnerActivity extends Activity {
 	private void renderChart(int position)
 	{
 		
-		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(500, 650);
+		int width = DensityUtil.dip2px(getApplicationContext(), 300); 
+		int height = DensityUtil.dip2px(getApplicationContext(), 400); 		
+		RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
         layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT); 
 				
 				

@@ -4,7 +4,6 @@ import java.util.LinkedList;
 
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
-import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -26,9 +25,9 @@ public class LineChart03View  extends GraphicalView {
 	public LineChart03View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
-		chartLabels();
-		chartDataSet();	
-		chartRender();
+			chartLabels();
+			chartDataSet();	
+			chartRender();
 	}
 	
 	 public LineChart03View(Context context, AttributeSet attrs){   
@@ -40,18 +39,15 @@ public class LineChart03View  extends GraphicalView {
 	 
 	 public LineChart03View(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
-			  chartLabels();
-				chartDataSet();	
-				chartRender();
+			chartLabels();
+			chartDataSet();	
+			chartRender();
 	 }		
 
 	private void chartRender()
 	{
 		try {				
-			
-			//设置绘图区默认缩进px值
-			//chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
-			
+
 			//设定数据源
 			chart.setCategories(labels);								
 			chart.setDataSource(chartData);
@@ -64,16 +60,16 @@ public class LineChart03View  extends GraphicalView {
 			//chart.getDataAxis().setAxisLineVisible(false);
 			chart.getDataAxis().setVisible(false);
 			
-			chart.getCategoryAxis().getAxisTickLabelPaint().setTextAlign(Align.LEFT);
+			chart.getCategoryAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 			chart.getCategoryAxis().setTickLabelRotateAgent(90);
 			
 			
-			chart.getLegend().setLowerLegend("(年份)");	
+			chart.getAxisTitle().setLowerAxisTitle("(年份)");	
 			
 			chart.setRightAxisVisible(false);
 			chart.setTopAxisVisible(false);
 			
-			chart.getPlotKey().hideKeyLabels();			
+			chart.getPlotLegend().hideLegend();			
 			
 			
 		} catch (Exception e) {
@@ -160,10 +156,7 @@ public class LineChart03View  extends GraphicalView {
 	@Override
     public void render(Canvas canvas) {
         try{
-        	
-        	//this.getBackground().setAlpha(100);
-        	
-        	
+        	        
         	//设置图表大小
 	        chart.setChartRange(0,0,
 	        		this.getLayoutParams().width - 10,
@@ -178,9 +171,7 @@ public class LineChart03View  extends GraphicalView {
     }
 
 	@Override
-	 public void onDraw(Canvas canvas){   
-		
-		 //canvas.drawColor(Color.GREEN);
+	 public void onDraw(Canvas canvas){   				
 	        super.onDraw(canvas);  
 	        
 	 }

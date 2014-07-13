@@ -44,7 +44,7 @@ public class CategoryAxisRender extends CategoryAxis {
 	public CategoryAxisRender()
 	{
 		super();
-		getAxisTickLabelPaint().setTextAlign(Align.CENTER);		
+		getTickLabelPaint().setTextAlign(Align.CENTER);		
 		setVerticalTickPosition(XEnum.Position.LOWER);
 	}
 	

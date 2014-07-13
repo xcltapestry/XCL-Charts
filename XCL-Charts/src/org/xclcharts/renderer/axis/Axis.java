@@ -44,7 +44,7 @@ public class Axis {
 	
 	//数据轴刻度线与边上的标注画笔
 	private Paint mPaintTickMarks = null;
-	private Paint mPaintAxisTickLabel = null;	 
+	private Paint mPaintTickLabel = null;	 
 	 
 	//数据轴刻度线与边上的标注是否显示
 	private boolean mTickMarksVisible = true;
@@ -81,7 +81,7 @@ public class Axis {
 	{
 		mPaintAxis = new Paint();
 		mPaintTickMarks = new Paint();
-		mPaintAxisTickLabel = new Paint();		
+		mPaintTickLabel = new Paint();		
 		
 		mPaintAxis.setColor(Color.BLACK);		
 		mPaintAxis.setStrokeWidth(mAxisLineWidth);
@@ -89,10 +89,10 @@ public class Axis {
 		mPaintTickMarks.setColor(Color.BLACK);	
 		mPaintTickMarks.setStrokeWidth(3);
 		
-		mPaintAxisTickLabel.setColor(Color.BLACK);	
-		mPaintAxisTickLabel.setTextAlign(Align.RIGHT);
-		mPaintAxisTickLabel.setTextSize(18);
-		mPaintAxisTickLabel.setAntiAlias(true);		
+		mPaintTickLabel.setColor(Color.BLACK);	
+		mPaintTickLabel.setTextAlign(Align.RIGHT);
+		mPaintTickLabel.setTextSize(18);
+		mPaintTickLabel.setAntiAlias(true);		
 	}
 	
 	/**
@@ -152,8 +152,8 @@ public class Axis {
 	 * 开放轴标签画笔
 	 * @return	画笔
 	 */
-	public Paint getAxisTickLabelPaint() {
-		return mPaintAxisTickLabel;
+	public Paint getTickLabelPaint() {
+		return mPaintTickLabel;
 	}
 
 	/**

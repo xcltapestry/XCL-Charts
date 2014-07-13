@@ -88,13 +88,12 @@ public class SplineChart01View extends TouchView {
 	{
 		try {
 						
-			//图所占范围大小
-			/*
-			chart.setChartRange(0.0f, 0.0f,getScreenWidth(),getScreenHeight());		
-			chart.setPadding(15, 20, 13, 5);
-			*/
-			//设置绘图区默认缩进px值
-			chart.setPadding(getChartTop(), getChartBottom(), getChartLeft(), getChartRight());
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			
+			//显示边框
+			chart.showRoundBorder();
 			
 			//数据源	
 			chart.setCategories(labels);
