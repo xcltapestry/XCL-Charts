@@ -153,7 +153,9 @@ public class StackBarChart02View extends TouchView {
 					DecimalFormat df=new DecimalFormat("#0.00");					 
 					String label = df.format(value).toString();
 					return label;
-				}});	        
+				}});	 
+			//定义柱形上标签显示颜色
+			chart.getBar().getItemLabelPaint().setColor(Color.rgb(225, 43, 44));
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

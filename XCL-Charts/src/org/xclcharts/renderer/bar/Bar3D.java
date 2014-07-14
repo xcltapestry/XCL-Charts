@@ -25,6 +25,7 @@ package org.xclcharts.renderer.bar;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -117,7 +118,7 @@ public class Bar3D extends Bar{
 	 * @param barNumber  柱形个数
 	 * @return 返回单个柱形的高度及间距
 	 */
-	public List<Integer> getBarHeightAndMargin(float YSteps,int barNumber)
+	public List<Float> getBarHeightAndMargin(float YSteps,int barNumber)
 	{
 		return calcBarHeightAndMargin( YSteps, barNumber);
 	}
@@ -128,7 +129,7 @@ public class Bar3D extends Bar{
 	 * @param barNumber 柱形个数
 	 * @return 返回单个柱形的宽度及间距
 	 */
-	public List<Integer> getBarWidthAndMargin(float XSteps,int barNumber)
+	public List<Float> getBarWidthAndMargin(float XSteps,int barNumber)
 	{
 		return calcBarWidthAndMargin(XSteps,barNumber);
 	}
@@ -233,15 +234,17 @@ public class Bar3D extends Bar{
 		mPaintBase3D.setColor(baseLightColor);
 		
 		//水平偏移量
-		double offsetX = getOffsetX();
+		float offsetX = (float) getOffsetX();
 		//垂直偏移量
-		double offsetY= getOffsetY();
+		float offsetY= (float) getOffsetY();
 		
 		//Shadow
-		float baseLeft2 = Math.round(baseLeft -offsetX);
-		float baseTop2 = Math.round(baseTop + offsetY);
-		float baseRight2 = Math.round(baseRight - offsetX) ;
-		float baseBottom2 = Math.round(baseBottom + offsetY) ;
+		float baseLeft2 = MathHelper.getInstance().sub(baseLeft ,offsetX);
+		float baseTop2 = MathHelper.getInstance().add(baseTop , offsetY);
+		float baseRight2 = MathHelper.getInstance().sub(baseRight , offsetX) ;
+		float baseBottom2 = MathHelper.getInstance().add(baseBottom , offsetY) ;
+		
+	
 		
 		//顶 用浅色
 		Path pBase2D = new Path();	
@@ -308,15 +311,15 @@ public class Bar3D extends Bar{
 		mPaint3D.setColor(lightColor);
 		
 		//水平偏移量
-		double offsetX = getOffsetX();
+		float offsetX = (float) getOffsetX();
 		//垂直偏移量
-		double offsetY= getOffsetY();
+		float offsetY= (float) getOffsetY();
 		
 		//Shadow
-		float barLeft2 = Math.round(barLeft - offsetX);
-		float barTop2 = Math.round(barTop + offsetY);
-		float barRight2 = Math.round(barRight - offsetX) ;
-		float barBottom2 = Math.round(barBottom + offsetY) ;	
+		float barLeft2 = MathHelper.getInstance().sub(barLeft , offsetX);
+		float barTop2 = MathHelper.getInstance().add(barTop , offsetY);
+		float barRight2 = MathHelper.getInstance().sub(barRight , offsetX) ;
+		float barBottom2 = MathHelper.getInstance().add(barBottom, offsetY) ;	
 		
 		//右侧边 浅色
 		Path pRectangle2D = new Path();
@@ -367,15 +370,15 @@ public class Bar3D extends Bar{
 		mPaintBase3D.setColor(baseLightColor);
 		
 		//水平偏移量
-		double offsetX = getOffsetX();
+		float offsetX = (float) getOffsetX();
 		//垂直偏移量
-		double offsetY= getOffsetY() ;		
+		float offsetY= (float) getOffsetY() ;		
 	
 		//Shadow
-		float baseLeft2 = Math.round(baseLeft - offsetX);
-		float baseTop2 = Math.round(baseTop + offsetY);
+		float baseLeft2 = MathHelper.getInstance().sub(baseLeft , offsetX);
+		float baseTop2 = MathHelper.getInstance().add(baseTop , offsetY);
 		//float baseRight2 = Math.round(baseRight - offsetX) ;
-		float baseBottom2 = Math.round(baseBottom + offsetY) ;			
+		float baseBottom2 = MathHelper.getInstance().add(baseBottom , offsetY) ;			
 		
 		//左侧面
 		Path pBase2D = new Path();	

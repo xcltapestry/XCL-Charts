@@ -28,16 +28,16 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
 <fullyQualifiedTypeName name="android.graphics.Canvas"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.view.MotionEvent"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
-<fullyQualifiedTypeName name="android.graphics.Typeface"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.MultiBarChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BarChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DensityUtil"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
+<fullyQualifiedTypeName name="android.graphics.Typeface"/>
 </qualifiedTypeNameHistroy>

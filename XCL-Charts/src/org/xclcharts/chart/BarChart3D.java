@@ -154,24 +154,20 @@ public class BarChart3D extends BarChart{
 	@Override
 	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
 		// Y 轴
-		// 分类横向间距高度
-		//float YSteps = (float)(getAxisScreenHeight()
-		//		/ (this.categoryAxis.getDataSet().size() + 1));		
+		// 分类横向间距高度	
 		float YSteps = div(getAxisScreenHeight(), (categoryAxis.getDataSet().size() + 1)  );						
 		float currentY = 0.0f;
 		
 		if(null == categoryAxis.getDataSet()) return;	
 		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
 			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
-			//currentY = plotArea.getBottom() - (i + 1) * YSteps;
 			currentY = sub(plotArea.getBottom(),mul( (i + 1) , YSteps ));
 									
 			// 横的grid线
 			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(),
 												currentY, plotArea.getRight(), currentY);
 							
-			// 分类
-			//float labelX = (float) (plotArea.getLeft() - mBar3D.getOffsetX() * 2); 			
+			// 分类			
 			float tfx = (float) (mBar3D.getOffsetX() * 2);
 			float labelX = sub(plotArea.getLeft() ,tfx); 
 			
@@ -204,13 +200,14 @@ public class BarChart3D extends BarChart{
 			if(null == chartDataSource) return;	
 			 
 			//依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度	
-			int barNumber = getDatasetSize(chartDataSource);  //chartDataSource.size();
+			int barNumber = getDatasetSize(chartDataSource);  
 			int currNumber = 0;			
 			
-			List<Integer> ret = mBar3D.getBarHeightAndMargin(YSteps, barNumber);	
-			int barHeight = ret.get(0);
-			int barInnerMargin = ret.get(1);			
-			int labelBarUseHeight = barNumber * barHeight + (barNumber - 1) * barInnerMargin;	
+			List<Float> ret = mBar3D.getBarHeightAndMargin(YSteps, barNumber);	
+			float barHeight = ret.get(0);
+			float barInnerMargin = ret.get(1);			
+			float labelBarUseHeight = add(mul(barNumber ,barHeight) ,
+										  mul((barNumber - 1) , barInnerMargin));	
 			
 			float scrWidth = plotArea.getWidth();
 			float valueWidth = (float) dataAxis.getAxisRange();
@@ -231,14 +228,11 @@ public class BarChart3D extends BarChart{
 					Double bv = barValues.get(j);					
 					setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
 					
-					//float drawBarButtomY = plotArea.getBottom() - (j+1) * YSteps + labelBarUseHeight / 2;							
 					float ty1 = mul((j+1) , YSteps);
 					float drawBarButtomY = add(sub(plotArea.getBottom(),ty1) ,labelBarUseHeight / 2 );					
 					drawBarButtomY = sub(drawBarButtomY , (barHeight + barInnerMargin ) * currNumber);					
 																				
                 	//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来
-                	//float valuePostion = (float) ( 
-                	//		scrWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;                         	
                 	float tlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());
                 	float valuePostion = mul(scrWidth, div(tlen,valueWidth) );
                 			
@@ -274,7 +268,7 @@ public class BarChart3D extends BarChart{
 
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度
-		float XSteps = div(getAxisScreenWidth() , (dataSet.size() + 1)); //Math.ceil
+		float XSteps = div(getAxisScreenWidth() , (dataSet.size() + 1)); 
 		
 		//3D 偏移值		
 	    double baseTickness = mBar3D.getAxis3DBaseThickness();
@@ -286,8 +280,7 @@ public class BarChart3D extends BarChart{
 								categoryAxis.getTickLabelPaint());
 		
 		for (int i = 0; i < dataSet.size(); i++) {
-			// 依初超始X坐标与分类间距算出当前刻度的X坐标
-			//currentX = (plotArea.getLeft() + (i + 1) * XSteps); 			
+			// 依初超始X坐标与分类间距算出当前刻度的X坐标			
 			currentX = add(plotArea.getLeft() , mul((i + 1) , XSteps));
 			
 			// 绘制横向网格线
@@ -300,10 +293,7 @@ public class BarChart3D extends BarChart{
 			float th = (float) MathHelper.getInstance().add(
 								MathHelper.getInstance().add(baseOffsetY, baseTickness) , labelHeight);			
 			float currentY = add(plotArea.getBottom(),th);
-			
-			//float currentY = (float) (plotArea.getBottom() + baseOffsetY + baseTickness+labelHeight);
-			//currentX = (float) (currentX - baseOffsetX);
-			currentX =  sub(currentX,(float) baseOffsetX);	
+				  currentX =  sub(currentX,(float) baseOffsetX);	
 			
 			categoryAxis.renderAxisVerticalTick(canvas, currentX,currentY, dataSet.get(i));
 		}
@@ -337,14 +327,14 @@ public class BarChart3D extends BarChart{
 		//得到数据源
 		List<BarData> chartDataSource = this.getDataSource();
 		if(null == chartDataSource) return;	
-		int barNumber = getDatasetSize(chartDataSource); //chartDataSource.size();
+		int barNumber = getDatasetSize(chartDataSource);
 		int currNumber = 0;			
-		
-		List<Integer> ret = mBar3D.getBarWidthAndMargin(XSteps, barNumber);
-		int barWidth = ret.get(0);
-		int barInnerMargin = ret.get(1);
-		int labelBarUseWidth = barNumber * barWidth + (barNumber - 1) * barInnerMargin;		
-	
+
+		List<Float> ret = mBar3D.getBarWidthAndMargin(XSteps, barNumber);
+		float barWidth = ret.get(0);
+		float barInnerMargin = ret.get(1);
+		float labelBarUseWidth = add(mul(barNumber , barWidth) ,
+									  mul((barNumber - 1) , barInnerMargin));	
 		 
 		//开始处 X 轴 即分类轴                  
 		for(int i=0;i<barNumber;i++)
@@ -367,20 +357,13 @@ public class BarChart3D extends BarChart{
 			   setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
 			   
 				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来								   
-				//float valuePostion = (float)( plotArea.getHeight() * 
-				//							( (bv - dataAxis.getAxisMin() ) / dataAxis.getAxisRange())) ;  
-			   
 				float tlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());	
 			    float valuePostion = div( tlen,dataAxis.getAxisRange());
 			    valuePostion =  mul( plotArea.getHeight() , valuePostion);     
-			    
-			    
-				//float drawBarStartX = initX + (j + 1) * XSteps - labelBarUseWidth / 2;
-				float drawBarStartX =  sub( add(initX, mul((j + 1) , XSteps) ) , labelBarUseWidth / 2);
-								
+			   					
 				
 				//计算同分类多柱 形时，新柱形的起始X坐标
-				//drawBarStartX = drawBarStartX + (barWidth + barInnerMargin ) * currNumber;
+			    float drawBarStartX =  sub( add(initX, mul((j + 1) , XSteps) ) , labelBarUseWidth / 2);				
 				drawBarStartX = add(drawBarStartX, (barWidth + barInnerMargin ) * currNumber);
 				
 				//计算同分类多柱 形时，新柱形的结束X坐标

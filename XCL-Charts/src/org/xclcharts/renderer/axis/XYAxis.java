@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -95,29 +96,31 @@ public class XYAxis extends Axis {
 		switch (getHorizontalTickAlign()) {
 		case LEFT: {
 			if (getTickMarksVisible()) {
-				marksStartX = Math.round(centerX - getTickMarksLength());
+			//   Math.round(centerX - getTickMarksLength());
+				marksStartX = MathHelper.getInstance().sub(centerX,getTickMarksLength()); 
 				markeStopX = centerX;				
 			}
 			
 			if(this.getTickLabelVisible())
-				labelStartX = marksStartX - getTickLabelMargin();
+				labelStartX = MathHelper.getInstance().sub(marksStartX , getTickLabelMargin());
+				//labelStartX = marksStartX - getTickLabelMargin();
 												
 			break;
 		}
 		case CENTER: {
 			if (getTickMarksVisible()) {
-				marksStartX = Math.round(centerX - getTickMarksLength() / 2);
-				markeStopX = Math.round(centerX + getTickMarksLength() / 2);
+				marksStartX = MathHelper.getInstance().sub(centerX , getTickMarksLength() / 2);
+				markeStopX = MathHelper.getInstance().add(centerX , getTickMarksLength() / 2);
 			}
 			break;
 		}
 		case RIGHT:
 			if (getTickMarksVisible()) {
 				marksStartX = centerX;
-				markeStopX = Math.round(centerX + getTickMarksLength());				
+				markeStopX = MathHelper.getInstance().add(centerX , getTickMarksLength());				
 			}
 			if(this.getTickLabelVisible())
-				labelStartX = markeStopX + getTickLabelMargin();
+				labelStartX = MathHelper.getInstance().add(markeStopX , getTickLabelMargin());
 			
 			break;
 		default:
@@ -126,8 +129,9 @@ public class XYAxis extends Axis {
 
 		//横轴刻度线
 		if (getTickMarksVisible()) {
-			canvas.drawLine(marksStartX, centerY, markeStopX
-					+ this.getAxisPaint().getStrokeWidth() / 2, centerY,
+			canvas.drawLine(marksStartX, centerY, 
+					MathHelper.getInstance().add(markeStopX, this.getAxisPaint().getStrokeWidth() / 2),
+					centerY,
 					getTickMarksPaint());
 
 		}
@@ -135,7 +139,7 @@ public class XYAxis extends Axis {
 		//标签
 		// 下次要补充的地方: 当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
 		if (getTickLabelVisible()) {			
-			float textHeight = DrawHelper.getInstance().getPaintFontHeight(
+			int textHeight = DrawHelper.getInstance().getPaintFontHeight(
 														getTickLabelPaint());
 			textHeight /=4;
 							
@@ -146,7 +150,9 @@ public class XYAxis extends Axis {
 				if (getTickMarksVisible()) {
 					width = markeStopX - xchart.getLeft();
 				}else{
-					width = xchart.getPlotArea().getLeft() - xchart.getLeft();
+					//width = xchart.getPlotArea().getLeft() - xchart.getLeft();					
+					width = MathHelper.getInstance().sub(
+							xchart.getPlotArea().getLeft() , xchart.getLeft());					
 				}
 				//renderLeftAxisTickMaskLabel(canvas,centerX,centerY,text,width );
 				renderLeftAxisTickMaskLabel(canvas,labelStartX, labelStartY + textHeight,text,width );
@@ -178,24 +184,33 @@ public class XYAxis extends Axis {
 		switch (getVerticalTickPosition()) {
 		case UP: {
 			if (getTickMarksVisible()) {
-				marksStartY = Math.round(centerY - getTickMarksLength());
+				//marksStartY = Math.round(centerY - getTickMarksLength());
+				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
 				marksStopY = centerY;				
 			}
 			
 			if(this.getTickLabelVisible())
 			{
-				labelsStartY = marksStartY
-						- getTickLabelMargin()
-						- DrawHelper.getInstance()
-								.getPaintFontHeight(getTickLabelPaint());
+				//labelsStartY = marksStartY
+				//		- getTickLabelMargin()
+				//		- DrawHelper.getInstance()
+				//				.getPaintFontHeight(getTickLabelPaint());
+				
+				labelsStartY = MathHelper.getInstance().sub(marksStartY,  
+						getTickLabelMargin() + 
+						DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint())); 
 			}
 			
 			break;
 		}
 		case CENTER: {
 			if (getTickMarksVisible()) {
-				marksStartY = Math.round(centerY - getTickMarksLength() / 2);
-				marksStopY = Math.round(centerY + getTickMarksLength() / 2);
+				//marksStartY = Math.round(centerY - getTickMarksLength() / 2);
+				//marksStopY = Math.round(centerY + getTickMarksLength() / 2);
+				
+				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength() / 2);
+				marksStopY = MathHelper.getInstance().add(centerY , getTickMarksLength() / 2);
+				
 			}
 			break;
 		}
@@ -203,7 +218,8 @@ public class XYAxis extends Axis {
 
 			if (getTickMarksVisible()) {
 				marksStartY = centerY;
-				marksStopY = Math.round(centerY + getTickMarksLength());				
+				//marksStopY = Math.round(centerY + getTickMarksLength());		
+				marksStopY =  MathHelper.getInstance().add(centerY , getTickMarksLength());
 			}
 			
 			if(this.getTickLabelVisible())
@@ -221,8 +237,10 @@ public class XYAxis extends Axis {
 
 		
 		if (getTickMarksVisible()) {
-			canvas.drawLine(centerX, marksStartY
-					- this.getAxisPaint().getStrokeWidth() / 2, centerX,
+			canvas.drawLine(centerX,					
+					MathHelper.getInstance().sub(marksStartY,  getAxisPaint().getStrokeWidth() /2 ),
+				//	marksStartY - this.getAxisPaint().getStrokeWidth() / 2,					
+					centerX,
 					marksStopY, getTickMarksPaint());
 		}
 		
@@ -256,8 +274,8 @@ public class XYAxis extends Axis {
      	   DrawHelper.getInstance().drawRotateText(label,centerX, centerY,
 								getTickLabelRotateAgent(), canvas,getTickLabelPaint());
 		}else{	//Multi line			
-			 double txtHeight = DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint());						
-	         double charWidth =0d,totalWidth = 0.0f;
+			 float txtHeight = DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint());						
+	         float charWidth =0.0f,totalWidth = 0.0f;
 	         float renderY = centerY;
 	         String lnString = "";
 	         
@@ -265,16 +283,16 @@ public class XYAxis extends Axis {
 	         {        	 	        	 
 	        	 charWidth = DrawHelper.getInstance().getTextWidth(
 	        			 						getTickLabelPaint(),label.substring(i, i+1));    
-	        			 						        	
-	        	 totalWidth += charWidth;	        	
-	      		 if(totalWidth > width )
+	        			 						
+	        	 totalWidth = MathHelper.getInstance().add(totalWidth,charWidth);
+	        	 //totalWidth += charWidth;	        	
+	      		 if( Float.compare(totalWidth , width) == 1 )
 	      		 {
 		        	   DrawHelper.getInstance().drawRotateText(lnString,centerX, renderY,
 							getTickLabelRotateAgent(), canvas,getTickLabelPaint());
 		        	   
-		        		totalWidth = charWidth;
-		      		 			   	           		      		 
-		      		 	renderY += txtHeight;		      		 	
+		        		totalWidth = charWidth;		      		 			   	           	
+		        		renderY = MathHelper.getInstance().add(renderY,txtHeight);		      		 		      		 
 		      		 	lnString = label.substring(i, i+1) ; 
 	      		 }else{
 	      			 lnString +=  label.substring(i, i+1) ; 

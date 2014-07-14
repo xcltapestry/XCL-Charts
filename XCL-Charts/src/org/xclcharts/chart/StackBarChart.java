@@ -98,14 +98,14 @@ public class StackBarChart  extends BarChart{
 					 if(bd.getDataSet().size() < r+1) continue; 						 
 					 
 					//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来	
-					Double bv = bd.getDataSet().get(r);						
-					total += bv;				
+					Double bv = bd.getDataSet().get(r);											
+					total = MathHelper.getInstance().add(total, bv);
+					
 					float valuePostion = 0.0f;
 					if(i == 0 )
 					{					
 						//valuePostion = (float) ( 
-	                	//		axisScreenWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;	
-						
+	                	//		axisScreenWidth * ( (bv - dataAxis.getAxisMin() ) / valueWidth)) ;							
 						float t = (float) MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );							
 						valuePostion = mul( axisScreenWidth,div(t,valueWidth) );																												
 					}else{						
@@ -120,8 +120,7 @@ public class StackBarChart  extends BarChart{
 				    				    
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-												add(currentX , valuePostion/2), currentY , canvas);
-					//currentX += valuePostion ;		
+												add(currentX , valuePostion/2), currentY , canvas);							
 					currentX = add(currentX,valuePostion);
 				 }
 				
@@ -158,8 +157,8 @@ public class StackBarChart  extends BarChart{
 			
 			float XSteps = getVerticalXSteps(dataSet.size() + 1 );			 
 			float axisScreenHeight  =  getAxisScreenHeight(); 
-			float axisDataHeight =  (float) dataAxis.getAxisRange(); 
-			int   barWidht =  (int) Math.round(XSteps * 0.5); 		
+			float axisDataHeight =  (float) dataAxis.getAxisRange(); 			
+			float barWidht = mul(XSteps,0.5f);	
 			
 			//得到数据源
 			List<BarData> chartDataSource = this.getDataSource();
@@ -182,7 +181,8 @@ public class StackBarChart  extends BarChart{
 						 
 						//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来	
 						Double bv = bd.getDataSet().get(r);						
-						total += bv;
+						//total += bv;
+						total = MathHelper.getInstance().add(total, bv);
 					
 						float valuePostion = 0.0f;
 						if(i == 0 )
@@ -200,12 +200,13 @@ public class StackBarChart  extends BarChart{
 										  add(currentX , barWidht/2), currentY, canvas);
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
-													currentX, sub(currentY , valuePostion/2), canvas);
-						//currentY -= valuePostion ;		
+													currentX, sub(currentY , valuePostion/2), canvas);							
 						currentY = sub(currentY,valuePostion);
 					 }
 					 //合计					 					 					 
-					 float totalPostion = (float) ( axisScreenHeight/axisDataHeight * (total- dataAxis.getAxisMin()) ); 
+					 //float totalPostion = (float) ( axisScreenHeight/axisDataHeight * (total- dataAxis.getAxisMin()) ); 					 
+					 float per =  (float) MathHelper.getInstance().sub(total , dataAxis.getAxisMin());					 
+					 float totalPostion =  MathHelper.getInstance().mul(div(axisScreenHeight,axisDataHeight) , per);					 					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					currentX, plotArea.getBottom() - totalPostion, canvas);
 			 }			 

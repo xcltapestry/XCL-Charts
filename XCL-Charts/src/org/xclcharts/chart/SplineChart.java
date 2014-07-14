@@ -164,7 +164,7 @@ public class SplineChart extends LnChart{
     	
     	float axisScreenWidth = getAxisScreenWidth(); 
     	float axisScreenHeight = getAxisScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange(); //getAxisDataRange();		
+		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
 		
 		//得到标签对应的值数据集		
 		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();	
@@ -180,24 +180,22 @@ public class SplineChart extends LnChart{
 			    Double yValue =(Double) entry.getValue();	
 			    			    
 			    //对应的Y坐标
-			    /*
-			    float ylen = (float) MathHelper.getInstance().sub(yValue, dataAxis.getAxisMin());			    
-			    float YvaluePostion =  mul(axisScreenHeight, div(ylen,axisDataHeight));
-			    YvaluePostion = MathHelper.getInstance().round(YvaluePostion, 2);
-			    			*/								   
-            	float YvaluePostion = (float) Math.round( 
-						axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
+			    
+			   // float ylen = (float) MathHelper.getInstance().sub(yValue, dataAxis.getAxisMin());			    
+			    //float YvaluePostion =  mul(axisScreenHeight, div(ylen,axisDataHeight));
+			   // YvaluePostion = MathHelper.getInstance().round(YvaluePostion, 2);							    			    			    
+			  float YvaluePostion = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
+			    
             	
             	//对应的X坐标	      
-			    /*
+			   /*
 			    float tpostion = (float) MathHelper.getInstance().div(  
 			    										  MathHelper.getInstance().sub(xValue, mMinValue) 
 			    		    							, MathHelper.getInstance().sub(mMaxValue, mMinValue) ,2);
 			    float XvaluePostion = mul(axisScreenWidth , tpostion);  
-			    XvaluePostion = MathHelper.getInstance().round(XvaluePostion, 2);
-			    		*/
-            	float XvaluePostion = (float) Math.round( 
-            			axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
+			    XvaluePostion = MathHelper.getInstance().round(XvaluePostion, 2);			    		
+            	*/			  
+			  float XvaluePostion = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
             
             	if(j == 0 )
 				{	                		

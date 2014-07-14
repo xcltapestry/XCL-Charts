@@ -105,14 +105,19 @@ public class BarChart07View  extends GraphicalView {
 						return label;
 					}});
 				
-				//隐藏Key
+				//隐藏图例
 				chart.getPlotLegend().hideLegend();
 				
-				 //让柱子间没空白
+				 //让柱子间近似没空白
 				 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
 				 
-				 chart.getDataAxis().setVisible(false);
-			
+				 //chart.getDataAxis().setVisible(false);
+				 //chart.getCategoryAxis().setVisible(true);
+				 
+				 //背景网格颜色
+				chart.getPlotGrid().showEvenRowBgColor();
+				chart.getPlotGrid().getEvenRowsBgColorPaint().setColor((int)Color.rgb(225, 230, 246));
+				 
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

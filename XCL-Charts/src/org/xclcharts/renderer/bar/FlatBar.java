@@ -25,6 +25,7 @@ package org.xclcharts.renderer.bar;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
@@ -75,7 +76,7 @@ public class FlatBar extends Bar{
 	 * @param barNumber  柱形个数
 	 * @return 返回单个柱形的高度及间距
 	 */
-	public List<Integer> getBarHeightAndMargin(float YSteps,int barNumber)
+	public List<Float> getBarHeightAndMargin(float YSteps,int barNumber)
 	{
 		return calcBarHeightAndMargin( YSteps, barNumber);
 	}
@@ -85,7 +86,7 @@ public class FlatBar extends Bar{
 	 * @param barNumber 柱形个数
 	 * @return 返回单个柱形的宽度及间距
 	 */
-	public List<Integer> getBarWidthAndMargin(float XSteps,int barNumber)
+	public List<Float> getBarWidthAndMargin(float XSteps,int barNumber)
 	{
 		return calcBarWidthAndMargin(XSteps,barNumber);
 	}
@@ -101,8 +102,11 @@ public class FlatBar extends Bar{
 	{
 		int barColor = getBarPaint().getColor();						
 		int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
-		float width = Math.abs(right - left);
-		float height = Math.abs(bottom - top);
+		//float width = Math.abs(right - left);
+		//float height = Math.abs(bottom - top);
+		
+		float width = MathHelper.getInstance().sub(right , left);
+		float height = MathHelper.getInstance().sub(bottom , top);
 		
 		LinearGradient linearGradient = null;
 		Shader.TileMode tm = Shader.TileMode.MIRROR;

@@ -40,6 +40,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
 
 /**
@@ -223,5 +224,8 @@ public class SplineChart02View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	
+
+	
 	
 }

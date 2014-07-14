@@ -26,6 +26,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
@@ -63,7 +64,7 @@ public class Bar {
 	private boolean mShowItemLabel = false;		
 	
 	//柱形间距所占比例
-	private double mBarInnerMargin = 0.2;
+	private double mBarInnerMargin = 0.2f;
 	
 	//FlatBar类的有效，3D柱形无效
 	private XEnum.BarStyle mBarStyle = XEnum.BarStyle.GRADIENT;
@@ -198,15 +199,25 @@ public class Bar {
 	 * @param barNumber  柱形个数
 	 * @return 返回单个柱形的高度及间距
 	 */	
-	protected List<Integer> calcBarHeightAndMargin(float YSteps,int barNumber)
+	protected List<Float> calcBarHeightAndMargin(float YSteps,int barNumber)
 	{
-								
+					/*			
 			int labelBarTotalHeight = (int) Math.round(YSteps * 0.9);
 			int barTotalInnerMargin = (int) Math.round(labelBarTotalHeight * mBarInnerMargin); 
 			int barInnerMargin = barTotalInnerMargin / barNumber;
 			int barHeight = (labelBarTotalHeight - barTotalInnerMargin) / barNumber;
+			*/
 			
-			List<Integer> ret = new LinkedList<Integer>();
+			float labelBarTotalHeight = MathHelper.getInstance().mul(YSteps , 0.9f);						
+			float barTotalInnerMargin = MathHelper.getInstance().mul(
+											labelBarTotalHeight , (float) mBarInnerMargin); 
+			float barInnerMargin = MathHelper.getInstance().div(barTotalInnerMargin , barNumber);
+			float barHeight = MathHelper.getInstance().div( 
+								MathHelper.getInstance().sub(labelBarTotalHeight , barTotalInnerMargin) 
+								, barNumber);
+			
+			
+			List<Float> ret = new LinkedList<Float>();
 			ret.add(barHeight);
 			ret.add(barInnerMargin);
 			return ret;
@@ -219,18 +230,30 @@ public class Bar {
 	 * @param barNumber 柱形个数
 	 * @return 返回单个柱形的宽度及间距
 	 */
-	protected List<Integer> calcBarWidthAndMargin(float XSteps,int barNumber)
+	protected List<Float> calcBarWidthAndMargin(float XSteps,int barNumber)
 	{
 			
+		/*
 			int labelBarTotalWidth = (int) Math.round(XSteps * 0.9); 				
 			int barTotalInnerMargin = (int) Math.round(labelBarTotalWidth * mBarInnerMargin);
 			
 			int barTotalWidth = labelBarTotalWidth - barTotalInnerMargin;	   	
 			
 			int barInnerMargin = barTotalInnerMargin / barNumber;
-			int barWidth = barTotalWidth / barNumber;				
+			int barWidth = barTotalWidth / barNumber;		
 			
-			List<Integer> ret = new LinkedList<Integer>();
+			*/
+		
+			float labelBarTotalWidth = MathHelper.getInstance().mul(XSteps , 0.9f); 				
+			float barTotalInnerMargin = MathHelper.getInstance().mul(labelBarTotalWidth , (float) mBarInnerMargin);
+			
+			float barTotalWidth = MathHelper.getInstance().sub(labelBarTotalWidth , barTotalInnerMargin);	   	
+			
+			float barInnerMargin = MathHelper.getInstance().div(barTotalInnerMargin , barNumber);
+			float barWidth = MathHelper.getInstance().div(barTotalWidth , barNumber);		
+			
+			
+			List<Float> ret = new LinkedList<Float>();
 			ret.add(barWidth);
 			ret.add(barInnerMargin);
 			return ret;

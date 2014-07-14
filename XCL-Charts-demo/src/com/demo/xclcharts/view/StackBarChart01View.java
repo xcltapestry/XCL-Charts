@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.StackBarChart;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -39,6 +40,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 /**
@@ -92,11 +94,10 @@ public class StackBarChart01View extends TouchView {
 			
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			chart.setPadding(ltrb[0], DensityUtil.dip2px(getContext(), 55), ltrb[2], ltrb[3]);	
 			
 			//显示边框
-			chart.showRoundBorder();
-			
+			chart.showRoundBorder();			
 			
 			chart.setChartDirection(XEnum.Direction.VERTICAL);
 			//数据源		
@@ -121,8 +122,6 @@ public class StackBarChart01View extends TouchView {
 			
 			//轴标题
 			chart.getAxisTitle().setLeftAxisTitle("单位(TB)");
-			//chart.getLegend().setLowerLegend("文件服务器");
-			//chart.getLegend().setRightLegend("右边图例");
 			
 			//背景网格
 			chart.getPlotGrid().showEvenRowBgColor();
@@ -164,7 +163,11 @@ public class StackBarChart01View extends TouchView {
 					DecimalFormat df=new DecimalFormat("#0.00");					 
 					String label = df.format(value).toString();
 					return label;
-				}});	        
+				}});	     
+			
+			//定义柱形上标签显示颜色
+			chart.getBar().getItemLabelPaint().setColor(Color.rgb(77, 184, 73));
+			chart.getBar().getItemLabelPaint().setTypeface(Typeface.DEFAULT_BOLD);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

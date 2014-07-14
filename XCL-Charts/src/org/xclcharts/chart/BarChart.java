@@ -197,9 +197,8 @@ public class BarChart extends AxisChart {
 	 * @return X轴步长
 	 */
 	protected float getVerticalXSteps(int num) {
-		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)
-		float XSteps = (float) Math.ceil(getAxisScreenWidth() / num);
-		return XSteps;
+		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)			
+		return  div(getAxisScreenWidth() ,num);
 	}
 
 	
@@ -209,13 +208,9 @@ public class BarChart extends AxisChart {
 	 * @return Y轴步长
 	 */
 	protected float getHorizontalYSteps() {
-		
-		float YSteps = (float) Math.ceil((getAxisScreenHeight())
-				/ (this.categoryAxis.getDataSet().size() + 1));
-		return YSteps;
-	}
-	
-	
+		int count = categoryAxis.getDataSet().size() + 1;		
+		return div(getAxisScreenHeight() , count );		
+	}	
 
 	/**
 	 * 绘制左边竖轴，及上面的刻度线和分类
@@ -240,8 +235,8 @@ public class BarChart extends AxisChart {
 			
 			// 分类		
 			double slen = i * dataAxis.getAxisSteps();			
-			double currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);									
-						
+			double currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);
+					
 			// 从左到右的横向网格线		
 			if ( i % 2 != 0) {
 				plotGrid.renderOddRowsFill(canvas, plotArea.getLeft(),
@@ -309,7 +304,7 @@ public class BarChart extends AxisChart {
 		// 依数据轴最大刻度值与数据间的间距 算出要画多少个数据刻度
 		int tickCount = dataAxis.getAixTickCount();		
 		// 得到数据分类刻度间距
-		float XSteps = div(this.getAxisScreenWidth() , tickCount); // Math.ceil
+		float XSteps = div(this.getAxisScreenWidth() , tickCount); 
 
 		// x 轴
 		float currentX = this.plotArea.getLeft();
@@ -333,6 +328,7 @@ public class BarChart extends AxisChart {
 		
 			// 从底到上的竖向网格线
 			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
+			
 			if (i % 2 != 0) {
 				plotGrid.renderOddRowsFill(canvas,currentX, plotArea.getTop(),
 								sub(currentX , XSteps), plotArea.getBottom());
@@ -340,7 +336,7 @@ public class BarChart extends AxisChart {
 				plotGrid.renderEvenRowsFill(canvas,currentX, plotArea.getTop(),
 								sub(currentX , XSteps), plotArea.getBottom());
 			}
-			
+		
 			plotGrid.renderGridLinesVertical(canvas,currentX,
 								plotArea.getBottom(), currentX, plotArea.getTop());
 		}
@@ -353,7 +349,8 @@ public class BarChart extends AxisChart {
 		// Y 轴
 		// 分类横向间距高度
 		float YSteps = div(getAxisScreenHeight()
-								, (categoryAxis.getDataSet().size() + 1)); // Math.ceil
+								, (categoryAxis.getDataSet().size() + 1));
+		
 		float currentY = 0.0f;
 		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
 			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
@@ -383,13 +380,13 @@ public class BarChart extends AxisChart {
 
 		// 画柱形
 		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度
-		int barNumber = getDatasetSize(mDataSet); //mDataSet.size();
+		int barNumber = getDatasetSize(mDataSet); 
 		int currNumber = 0;
-		List<Integer> ret = mFlatBar.getBarHeightAndMargin(YSteps, barNumber);
-		int barHeight = ret.get(0);
-		int barInnerMargin = ret.get(1);
-		int labelBarUseHeight = barNumber * barHeight + (barNumber - 1)
-				* barInnerMargin;
+		List<Float> ret = mFlatBar.getBarHeightAndMargin(YSteps, barNumber);
+		float barHeight = ret.get(0);
+		float barInnerMargin = ret.get(1);
+		float labelBarUseHeight = add(mul(barNumber , barHeight) ,
+									  mul(sub(barNumber , 1) , barInnerMargin));		
 
 		float scrWidth = getAxisScreenWidth();
 		float valueWidth = (float) dataAxis.getAxisRange();
@@ -410,17 +407,19 @@ public class BarChart extends AxisChart {
 				Double bv = barValues.get(j);
 								
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
-								
+							
+				
 				float currLableY = sub(plotArea.getBottom() , mul((j + 1) , YSteps));			
 				float drawBarButtomY = add(currLableY,labelBarUseHeight / 2);				
 				drawBarButtomY = sub(drawBarButtomY, (barHeight + barInnerMargin) * currNumber);			
 				float drawBarTopY = sub(drawBarButtomY,barHeight);
+			
 
-				// 宽度				
+				// 宽度								
 				float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
 				float fvper =  div(vaxlen ,valueWidth);
 				float valuePostion = mul(scrWidth,fvper);
-				
+			
 																
 				// 画出柱形
 				mFlatBar.renderBar(plotArea.getLeft(), drawBarButtomY,
@@ -466,11 +465,12 @@ public class BarChart extends AxisChart {
 
 		int barNumber = getDatasetSize(mDataSet); 
 		int currNumber = 0;
-		List<Integer> ret = mFlatBar.getBarWidthAndMargin(XSteps, barNumber);
-		int barWidth = ret.get(0);
-		int barInnerMargin = ret.get(1);
-		int labelBarUseWidth = barNumber * barWidth + (barNumber - 1)
-				* barInnerMargin;
+		List<Float> ret = mFlatBar.getBarWidthAndMargin(XSteps, barNumber);
+		float barWidth = ret.get(0);
+		float barInnerMargin = ret.get(1);
+		float labelBarUseWidth = add(mul(barNumber , barWidth) , 
+									 mul(sub(barNumber , 1) , barInnerMargin));
+		
 
 		// X 轴 即分类轴
 		for (int i = 0; i < mDataSet.size(); i++) {
@@ -491,20 +491,22 @@ public class BarChart extends AxisChart {
 				Double bv = barValues.get(j);
 										
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
-							
+			
 				float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
 				float fvper = div( vaxlen,axisDataHeight );
 				float valuePostion = mul(axisScreenHeight, fvper);
 						
 				float currLableX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
 				float drawBarStartX = sub(currLableX , labelBarUseWidth / 2);
+				
 
 				// 计算同分类多柱 形时，新柱形的起始X坐标
 				drawBarStartX = add(drawBarStartX , (barWidth + barInnerMargin)
-																		* currNumber);
+																		* currNumber);		
+				
 				// 计算同分类多柱 形时，新柱形的结束X坐标
 				float drawBarEndX = add(drawBarStartX , barWidth);
-
+				
 				// 画出柱形
 				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),
 						drawBarEndX, sub(plotArea.getBottom() , valuePostion),
@@ -513,7 +515,7 @@ public class BarChart extends AxisChart {
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 						add(drawBarStartX , barWidth / 2),
-						sub(plotArea.getBottom() , valuePostion), canvas);
+						sub(plotArea.getBottom() , valuePostion), canvas);				
 			}
 			currNumber++;
 		}
