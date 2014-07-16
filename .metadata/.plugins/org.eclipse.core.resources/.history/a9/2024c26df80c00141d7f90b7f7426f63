@@ -91,7 +91,6 @@ public class PlotDotRender {
 			paintFill.setColor(Color.WHITE);
 			paintFill.setStyle(Style.FILL);
             canvas.drawCircle(cX, bottom,ringRadius, paintFill);
-            
 
 			break;
 		case TRIANGLE: // 等腰三角形

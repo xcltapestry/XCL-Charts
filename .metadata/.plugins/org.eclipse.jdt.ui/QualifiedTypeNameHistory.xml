@@ -32,7 +32,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.MultiBarChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BarChart"/>
@@ -40,4 +39,6 @@
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Typeface"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 </qualifiedTypeNameHistroy>

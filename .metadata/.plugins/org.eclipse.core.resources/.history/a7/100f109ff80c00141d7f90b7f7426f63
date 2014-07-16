@@ -99,7 +99,7 @@ public class LineChart01View extends TouchView {
 			chart.setDataSource(chartData);
 			
 			//数据轴最大值
-			chart.getDataAxis().setAxisMax(100); 
+			chart.getDataAxis().setAxisMax(500); //100
 			//数据轴刻度间隔
 			chart.getDataAxis().setAxisSteps(10);
 			

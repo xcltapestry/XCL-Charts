@@ -76,11 +76,28 @@ public class RdChart extends XChart {
 	@Override
 	protected void calcPlotRange()
 	{
-		super.calcPlotRange();		
-		this.mRadius = Math.min( div(this.plotArea.getWidth() ,2f) , 
-				 				 div(this.plotArea.getHeight(),2f) );	
+		super.calcPlotRange();
+		
+		if(isVerticalScreen())
+		{
+			this.mRadius = div(this.plotArea.getWidth(), 2f);
+		}else{
+			this.mRadius = div(this.plotArea.getHeight(),2f);
+		}
 	}
 	
+	/**
+	 * 设置饼图(pie chart)的半径
+	 * @param radius 饼图的半径
+	 */
+	public void setRadius(final float radius)
+	{
+		if(Float.compare(radius , 0 ) == 0 || Float.compare(radius , 0 ) == -1)
+		{
+			Log.e(TAG, "半径不能小于0.");
+		}else
+			mRadius = radius;
+	}
 	
 	/**
 	 * 返回半径

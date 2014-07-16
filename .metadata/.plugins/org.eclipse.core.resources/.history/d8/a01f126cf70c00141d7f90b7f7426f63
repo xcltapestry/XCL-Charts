@@ -59,6 +59,13 @@ public class RdChart extends XChart {
 	}
 	
 	private void initChart() {
+		/*mPaintKey = new Paint();
+		mPaintKey.setColor(Color.BLACK);
+		mPaintKey.setTextSize(18);
+		mPaintKey.setStyle(Style.FILL);	
+		mPaintKey.setAntiAlias(true);
+		*/
+			
 		mPaintLabel = new Paint();
 		mPaintLabel.setColor(Color.BLACK);
 		mPaintLabel.setTextSize(18);
@@ -76,11 +83,28 @@ public class RdChart extends XChart {
 	@Override
 	protected void calcPlotRange()
 	{
-		super.calcPlotRange();		
-		this.mRadius = Math.min( div(this.plotArea.getWidth() ,2f) , 
-				 				 div(this.plotArea.getHeight(),2f) );	
+		super.calcPlotRange();
+		
+		if(isVerticalScreen())
+		{
+			this.mRadius = div(this.plotArea.getWidth(), 2f);
+		}else{
+			this.mRadius = div(this.plotArea.getHeight(),2f);
+		}
 	}
 	
+	/**
+	 * 设置饼图(pie chart)的半径
+	 * @param radius 饼图的半径
+	 */
+	public void setRadius(final float radius)
+	{
+		if(Float.compare(radius , 0 ) == 0 || Float.compare(radius , 0 ) == -1)
+		{
+			Log.e(TAG, "半径不能小于0.");
+		}else
+			mRadius = radius;
+	}
 	
 	/**
 	 * 返回半径
@@ -142,7 +166,48 @@ public class RdChart extends XChart {
 		}
 		return itemLabel;
 	}
-		
+	
+	
+	/**
+	 * 开放Key画笔
+	 * @return 画笔
+	 */
+	/*public Paint getKeyPaint()
+	{
+		return mPaintKey;
+	}
+	*/
+
+	/**
+	 * 是否绘制Key
+	 * @return Key值
+	 */
+	/*public boolean getKeyVisible()
+	{
+		return mKeyVisible;
+	}
+	*/
+	
+	/**
+	 * 在图的上方显示键值(key)的标签说明
+	 * 
+	 */
+	/*public void showKeyLabels()
+	{
+		mKeyVisible = true;
+	}
+	*/
+	
+	/**
+	 * 在图的上方不显示键值(key)的标签说明
+	 */
+	/*public void hideKeyLabels()
+	{
+		mKeyVisible = false;
+	}
+	*/
+	
+	
 	/**
 	 * 开放标签画笔
 	 * @return 画笔

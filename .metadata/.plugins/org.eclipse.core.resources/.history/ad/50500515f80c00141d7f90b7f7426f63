@@ -22,7 +22,6 @@
 package org.xclcharts.renderer.line;
 
 import org.xclcharts.common.MathHelper;
-import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -69,29 +68,27 @@ public class PlotDotRender {
 
 		float radius = pDot.getDotRadius();
 		float halfRadius = MathHelper.getInstance().div(radius , 2f);
-		
-		float cX = 0.0f;
-		if(XEnum.DotStyle.DOT == pDot.getDotStyle() ||
-				XEnum.DotStyle.RING == pDot.getDotStyle()	)
-		{
-			//left + Math.abs(right - left)
-			cX = MathHelper.getInstance().add(left,
-							MathHelper.getInstance().sub(right, left));	
-		}
 
 		switch (pDot.getDotStyle()) {
-		case DOT:										
-			canvas.drawCircle(cX, bottom,radius, paint);
+		case DOT:				
+			//left + Math.abs(right - left)
+			float cX = MathHelper.getInstance().add(left,
+							MathHelper.getInstance().sub(right, left));	
+			
+			canvas.drawCircle(cX, bottom,
+					radius, paint);
 			break;
-		case RING:		
-			float ringRadius = MathHelper.getInstance().mul(radius, 0.7f);		
-            canvas.drawCircle(cX, bottom, radius, paint);
+		case RING:
+			//int ringRadius = (int) Math.round(radius * 0.7);
+			float ringRadius =  MathHelper.getInstance().mul(radius, 0.7f);
+            canvas.drawCircle(left + Math.abs(right - left), bottom,
+					radius, paint);
 
 			Paint paintFill = new Paint();
 			paintFill.setColor(Color.WHITE);
 			paintFill.setStyle(Style.FILL);
-            canvas.drawCircle(cX, bottom,ringRadius, paintFill);
-            
+            canvas.drawCircle(left + Math.abs(right - left), bottom,
+					ringRadius, paintFill);
 
 			break;
 		case TRIANGLE: // 等腰三角形

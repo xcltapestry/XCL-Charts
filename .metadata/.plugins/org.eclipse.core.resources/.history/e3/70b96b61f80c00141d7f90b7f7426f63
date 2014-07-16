@@ -83,15 +83,17 @@ public class PlotDotRender {
 		case DOT:										
 			canvas.drawCircle(cX, bottom,radius, paint);
 			break;
-		case RING:		
-			float ringRadius = MathHelper.getInstance().mul(radius, 0.7f);		
-            canvas.drawCircle(cX, bottom, radius, paint);
+		case RING:
+			//int ringRadius = (int) Math.round(radius * 0.7);
+			float ringRadius =  MathHelper.getInstance().mul(radius, 0.7f);		
+            canvas.drawCircle(cX, bottom,
+								radius, paint);
 
 			Paint paintFill = new Paint();
 			paintFill.setColor(Color.WHITE);
 			paintFill.setStyle(Style.FILL);
-            canvas.drawCircle(cX, bottom,ringRadius, paintFill);
-            
+            canvas.drawCircle(left + Math.abs(right - left), bottom,
+					ringRadius, paintFill);
 
 			break;
 		case TRIANGLE: // 等腰三角形

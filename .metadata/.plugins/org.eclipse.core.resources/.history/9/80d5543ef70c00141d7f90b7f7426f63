@@ -85,7 +85,7 @@ public class RadarChart extends RdChart{
 		dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
 		dataAxis.setTickMarksVisible(false);	
 		
-		this.plotLegend.showLegend();
+		showKeyLabels();
 	}
 	
 	
