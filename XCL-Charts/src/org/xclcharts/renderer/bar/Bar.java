@@ -164,10 +164,12 @@ public class Bar {
 	 */
 	public void setBarInnerMargin(double percentage)
 	{
-		if(percentage < 0d)
+		
+		if(Double.compare(percentage, 0d) == -1)
 		{
 			Log.e(TAG, "此比例不能为负数噢!");
-		}if(percentage >= 0.9d){
+		}if( Double.compare(percentage, 0.9d) ==  1 
+				|| Double.compare(percentage, 0.9d) ==  0 ){  
 			Log.e(TAG, "此比例不能大于等于0.9,要给柱形留下点显示空间!");
 		}else{
 			this.mBarInnerMargin = percentage;

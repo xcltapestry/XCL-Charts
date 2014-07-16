@@ -102,11 +102,8 @@ public class FlatBar extends Bar{
 	{
 		int barColor = getBarPaint().getColor();						
 		int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
-		//float width = Math.abs(right - left);
-		//float height = Math.abs(bottom - top);
-		
-		float width = MathHelper.getInstance().sub(right , left);
-		float height = MathHelper.getInstance().sub(bottom , top);
+		float width = Math.abs(right - left);
+		float height = Math.abs(bottom - top);
 		
 		LinearGradient linearGradient = null;
 		Shader.TileMode tm = Shader.TileMode.MIRROR;
@@ -134,6 +131,7 @@ public class FlatBar extends Bar{
 	 */
 	public void renderBar(float left,float top,float right ,float bottom,Canvas canvas)
 	{				
+		
 		if( XEnum.BarStyle.OUTLINE == getBarStyle())
 		{
 			int barColor = getBarPaint().getColor();						
@@ -159,8 +157,7 @@ public class FlatBar extends Bar{
 		case FILL:
 			getBarPaint().setStyle(Style.FILL);
 			break;
-		case STROKE:			
-			
+		case STROKE:						
 			if(Float.compare(1f,  getBarPaint().getStrokeWidth() ) == 0)
 										getBarPaint().setStrokeWidth(2);
 			getBarPaint().setStyle(Style.STROKE);
@@ -169,6 +166,8 @@ public class FlatBar extends Bar{
 			Log.e(TAG,"不认识的柱形风格参数.");
 			return ;
 		} 
+		
+		setBarGradient(left,top,right,bottom);
 		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());			
 	}
 	

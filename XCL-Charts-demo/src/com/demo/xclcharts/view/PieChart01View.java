@@ -97,13 +97,12 @@ public class PieChart01View extends TouchView implements Runnable{
 			//标题
 			chart.setTitle("饼图-Pie Chart");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
+			chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);				
 			
-			//显示key值
+			//显示图例
 			chart.getPlotLegend().showLegend();
-			
-			//隐藏渲染效果
-			//chart.hideGradient();
+			//chart.getPlotLegend().getLegendLabelPaint().setTextSize(22);
+			//chart.showBorder();				
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

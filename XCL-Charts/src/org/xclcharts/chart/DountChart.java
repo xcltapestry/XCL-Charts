@@ -26,6 +26,7 @@ import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 
 /**
  * @ClassName DountChart
@@ -37,12 +38,15 @@ import android.graphics.Paint;
 public class DountChart  extends PieChart{	
 
 	//内环半径
-	private int mFillRadius = 0;
-	
+	private int mFillRadius = 0;	
 	private float mInnerSize = 0.8f;
 	
 	//内环填充颜色
-	private Paint mPaintFill;
+	private Paint mPaintFill = null;
+	
+	private Paint mPaintCenterText;
+	private String mCenterText = "";
+	
 
 	public DountChart()
 	{
@@ -57,6 +61,11 @@ public class DountChart  extends PieChart{
 		mPaintFill = new Paint();
 		mPaintFill.setColor(fillColor); 
 		mPaintFill.setAntiAlias(true);
+		
+		mPaintCenterText = new Paint();
+		mPaintCenterText.setAntiAlias(true);
+		mPaintCenterText.setTextSize(28);
+		mPaintCenterText.setTextAlign(Align.CENTER);
 		
 		this.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
 	}
@@ -88,9 +97,38 @@ public class DountChart  extends PieChart{
 		mFillRadius = (int) Math.round(getRadius() * mInnerSize);
 		return mFillRadius;
 	}
+	
+	/**
+	 * 开放绘制中心文字的画笔 
+	 * @return 画笔 
+	 */
+	public Paint getCenterTextPaint()
+	{
+		return mPaintCenterText;
+	}
+	
+	/**
+	 * 设置中心点文字
+	 * @param text 文字
+	 */
+	public void setCenterText(String text)
+	{
+		mCenterText = text;
+	}
+	
+	/**
+	 * 绘制中心点
+	 * @param canvas 画布
+	 */
+	private void renderCenterText(Canvas canvas)
+	{		
+		if(mCenterText.length() > 0 )
+			canvas.drawText(mCenterText, 
+				plotArea.getCenterX(), plotArea.getCenterY(), mPaintCenterText);
+	}
 
 	/**
-	 * 绘制图
+	 * 绘制图 -- 环形图的标签处理待改进 ***
 	 */
 	@Override
 	protected void renderPlot(Canvas canvas)
@@ -101,7 +139,8 @@ public class DountChart  extends PieChart{
 	     float cirY = plotArea.getCenterY();
 	     
 	     calcInnerRadius();
-	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);		 			
+	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);     
+	     renderCenterText(canvas);
 	}	
 
 }

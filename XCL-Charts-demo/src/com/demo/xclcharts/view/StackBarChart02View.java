@@ -118,9 +118,11 @@ public class StackBarChart02View extends TouchView {
 			//图例
 			chart.getAxisTitle().setLowerAxisTitle("单位为(W)");
 			
-			//背景网格
+			//背景网格			
 			chart.getPlotGrid().showVerticalLines();
 			chart.getPlotGrid().setVerticalLineStyle(XEnum.LineStyle.DOT);
+					
+			
 			//chart.getPlotGrid().setVerticalLinesVisible(true);
 			//chart.getPlotGrid().setEvenRowsFillVisible(true);
 			//chart.getPlotGrid().getEvenFillPaint().setColor((int)Color.rgb(225, 230, 246)); 

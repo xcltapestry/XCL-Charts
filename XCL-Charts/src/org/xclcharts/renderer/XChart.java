@@ -43,13 +43,13 @@ import org.xclcharts.renderer.plot.PlotArea;
 import org.xclcharts.renderer.plot.PlotAreaRender;
 import org.xclcharts.renderer.plot.PlotGrid;
 import org.xclcharts.renderer.plot.PlotGridRender;
+import org.xclcharts.renderer.plot.PlotLegend;
+import org.xclcharts.renderer.plot.PlotLegendRender;
 import org.xclcharts.renderer.plot.PlotTitle;
 import org.xclcharts.renderer.plot.PlotTitleRender;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 
 public class XChart implements IRender {
 
@@ -73,8 +73,6 @@ public class XChart implements IRender {
 	private float mPaddingBottom = 0f;
 	private float mPaddingLeft = 0f;
 	private float mPaddingRight = 0f;
-	// 图表背景色
-	private Paint mChartBackgroundPaint = null;
 	// 是否画背景色
 	private boolean mBackgroundColorVisible = false;
 	
@@ -84,6 +82,9 @@ public class XChart implements IRender {
 	//是否显示边框
 	private boolean mShowBorder = false;
 	private BorderRender mBorder = null;
+	
+	//图例类
+	protected PlotLegendRender plotLegend = null;
 	
 		
 	public XChart() {
@@ -95,22 +96,26 @@ public class XChart implements IRender {
 		mTranslateXY[0] = 0.0f;
 		mTranslateXY[1] = 0.0f;
 		
+		//图例
+		plotLegend = new PlotLegendRender(this);				
+		
 		// 图表
 		plotArea = new PlotAreaRender();
 		plotGrid = new PlotGridRender();		
 		plotTitle = new PlotTitleRender();
 		plotTitle.setTitlePosition(XEnum.Position.CENTER);
-		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
-		
-		initPaint();
+		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.CENTER);		
 	}
-
-	private void initPaint() {
-		// 背景画笔
-		mChartBackgroundPaint = new Paint();
-		mChartBackgroundPaint.setStyle(Style.FILL);
-		mChartBackgroundPaint.setColor(Color.WHITE);
-	}
+	
+	/**
+	 * 开放图例基类
+	 * @return	基类
+	 */
+	public PlotLegend getPlotLegend()
+	{
+		return plotLegend;
+	}	
+	
 
 	// 图的内边距属性
 	//设置内边距百分比,即绘图区与图边距相隔距离的百分比,不允许负值
@@ -241,14 +246,6 @@ public class XChart implements IRender {
 		return( (Float.compare(mWidth , mHeight) == -1)?true:false);
 	}
 
-	/**
-	 * 开放背景画笔
-	 * 
-	 * @return 画笔
-	 */
-	public Paint getBackgroundPaint() {
-		return mChartBackgroundPaint;
-	}
 
 	/**
 	 * 设置标题
@@ -270,6 +267,7 @@ public class XChart implements IRender {
 
 	/**
 	 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
+	 * @param position 显示位置
 	 */
 	public void setTitlePosition(XEnum.Position position) {
 		plotTitle.setTitlePosition(position);
@@ -408,39 +406,7 @@ public class XChart implements IRender {
 	{
 		return mTranslateXY;
 	}
-	
-
-	/**
-	 * 设置是否绘制背景
-	 * 
-	 * @param visible 是否绘制背景
-	 */
-	public void setApplyBackgroundColor(boolean visible) {
-		mBackgroundColorVisible = visible;
-	}
-
-	/**
-	 * 设置图的背景色
-	 * 
-	 * @param color   背景色
-	 */
-	public void setBackgroundColor(int color) {
 		
-		getBackgroundPaint().setColor(color);
-		getPlotArea().getBackgroundPaint().setColor(color);
-	}
-
-	/**
-	 * 绘制图的背景
-	 */
-	protected void renderChartBackground(Canvas canvas) {
-		if (mBackgroundColorVisible)
-			canvas.drawRect(this.getLeft(), this.getTop(), this.getRight(),
-					this.getBottom(), mChartBackgroundPaint);
-			
-	}
-
-	
 	/**
 	 * 计算图的显示范围,依屏幕px值来计算.
 	 */
@@ -470,6 +436,40 @@ public class XChart implements IRender {
 				mWidth, this.plotArea.getTop(), canvas);
 	}
 	
+	
+	/**
+	 * 设置是否绘制背景
+	 * 
+	 * @param visible 是否绘制背景
+	 */
+	public void setApplyBackgroundColor(boolean visible) {
+		mBackgroundColorVisible = visible;
+	}
+
+	/**
+	 * 设置图的背景色
+	 * 
+	 * @param color   背景色
+	 */
+	public void setBackgroundColor(int color) {
+		
+		getBackgroundPaint().setColor(color);
+		getPlotArea().getBackgroundPaint().setColor(color);
+		
+		//?? 
+		if(null == mBorder)mBorder = new BorderRender();
+		mBorder.getChartBackgroundPaint().setColor(color);		
+	}
+	
+	/**
+	 * 开放背景画笔
+	 * 
+	 * @return 画笔
+	 */
+	public Paint getBackgroundPaint() {
+		if(null == mBorder)mBorder = new BorderRender();
+		return mBorder.getChartBackgroundPaint();			
+	}
 	
 	/**
 	 * 显示矩形边框
@@ -511,16 +511,16 @@ public class XChart implements IRender {
 	}
 	
 	/**
-	 * 得到边框宽度
+	 * 得到边框宽度,默认为5px
 	 * @return 边框宽度
 	 */
 	public int getBorderWidth()
 	{
-		int borderWidth = 5;
+		int borderWidth = 0;
 		if(mShowBorder)
 		{
 			 if(null == mBorder)mBorder = new BorderRender();
-			 borderWidth += mBorder.getBorderWidth();
+			 borderWidth = mBorder.getBorderWidth();
 		}
 		return borderWidth;
 	}
@@ -545,10 +545,32 @@ public class XChart implements IRender {
 		if(mShowBorder)
 		{
 			if(null == mBorder) mBorder = new BorderRender();				
-			mBorder.renderBorder(canvas, 
-				mLeft  , mTop  , mRight , mBottom  ); 
+			mBorder.renderBorder("BORDER",canvas, 
+								 mLeft  , mTop  , mRight , mBottom  ); 
 		}
 	}
+	
+	/**
+	 * 绘制图的背景
+	 */
+	protected void renderChartBackground(Canvas canvas) {
+		
+		if(this.mBackgroundColorVisible)
+		{		
+			if(null == mBorder) mBorder = new BorderRender();				
+			if(mShowBorder)
+			{
+				mBorder.renderBorder("CHART",canvas, 
+									 mLeft  , mTop  , mRight , mBottom  ); 		
+			}else{ //要清掉 border的默认间距				
+				int borderSpadding = mBorder.getBorderSpadding();				 
+				mBorder.renderBorder("CHART",canvas, 
+						mLeft - borderSpadding , mTop - borderSpadding , 
+						mRight + borderSpadding, mBottom + borderSpadding  ); 
+			}
+		}
+	}
+	
 	
 
 	/**
@@ -592,7 +614,7 @@ public class XChart implements IRender {
 	}
 
 	
-	//math计算类函数
+	//math计算类函数 ----------------------------------------------------------------
 	/**
 	 * 加法运算
 	 * @param v1 参数1
@@ -636,5 +658,6 @@ public class XChart implements IRender {
 	 {
 		 return MathHelper.getInstance().div(v1, v2);
 	 }
-	
+	//math计算类函数 ----------------------------------------------------------------
+	 
 }

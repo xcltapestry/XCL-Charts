@@ -70,7 +70,7 @@ public class LineChart01View extends TouchView {
 	 
 	 private void initView()
 	 {
-		 chartLabels();
+		 	chartLabels();
 			chartDataSet();	
 			chartRender();
 	 }

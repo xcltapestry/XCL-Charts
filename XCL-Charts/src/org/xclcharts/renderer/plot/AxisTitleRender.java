@@ -187,14 +187,14 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 		if( 0 == axisTitle.length() || "" == axisTitle)return;
 		
 		//计算图列高度，超过最大高度要用...表示,这个后面再加		 
-		 int axisTitleTextHeight = DrawHelper.getInstance().getTextWidth(
+		 float axisTitleTextHeight = DrawHelper.getInstance().getTextWidth(
 				 										mPaintRightAxisTitle,axisTitle);         
 		 //画布与图表1/3的地方显示
 		 float axisTitleTextStartX =  (float) Math.round(right - mPaintRightAxisTitle.getTextSize()) ;         
          //轴标题Y坐标
 		 float axisTitleTextStartY = (float) Math.round(top + (bottom - top -  axisTitleTextHeight) /2 );	          
          //得到单个轴标题文字高度     		
- 		 int axisTitleCharHeight = 0 ;
+ 		 float axisTitleCharHeight = 0.0f ;
          for(int i= 0; i< axisTitle.length();i++)
          {        	 
         	 axisTitleCharHeight = DrawHelper.getInstance().getTextWidth(

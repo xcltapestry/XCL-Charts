@@ -24,7 +24,10 @@ package org.xclcharts.renderer.plot;
 import org.xclcharts.common.DrawHelper;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Paint.Style;
 /**
  * @ClassName BorderRender
  * @Description  图边框绘制类
@@ -39,6 +42,27 @@ public class BorderRender extends Border {
 		super();
 	}
 	
+	/**
+	 * 边框默认内边距
+	 * @return 内边距
+	 */
+	public int getBorderSpadding()
+	{
+		return mBorderSpadding;
+	}
+	
+	/**
+	 * 图的背景画笔
+	 * @return 画笔
+	 */
+	public Paint getChartBackgroundPaint()
+	{
+		// 背景画笔
+		mPaintChartBackground = new Paint();
+		mPaintChartBackground.setStyle(Style.FILL);
+		mPaintChartBackground.setColor(Color.WHITE);
+		return mPaintChartBackground;
+	}	
 
 	/**
 	 * 绘制边
@@ -48,14 +72,15 @@ public class BorderRender extends Border {
 	 * @param right
 	 * @param bottom
 	 */
-	public void renderBorder(Canvas canvas,
+	public void renderBorder(String type ,Canvas canvas,
 							 float left,float top,float right,float bottom)
 	{
 		RectF rect = new RectF();
 		rect.left = left + mBorderSpadding;
 		rect.top = top + mBorderSpadding;
 		rect.right = right - mBorderSpadding;
-		rect.bottom = bottom - mBorderSpadding;				
+		rect.bottom = bottom - mBorderSpadding;		
+		
 	
 		switch(getBorderLineStyle())
 		{
@@ -73,10 +98,23 @@ public class BorderRender extends Border {
 		switch(getBorderRectType())
 		{
 		case RECT:				
-			canvas.drawRect(rect, getLinePaint());		
+			if(type.equals("CHART"))
+			{
+				if(null != mPaintChartBackground) 
+					canvas.drawRect(rect, mPaintChartBackground);		
+			}else{ //BORDER
+				canvas.drawRect(rect, getLinePaint());
+			}
 			break;
-		case ROUNDRECT:			
-			canvas.drawRoundRect(rect, getRoundRadius(), getRoundRadius(), getLinePaint());		
+		case ROUNDRECT:		
+			if(type.equals("CHART"))
+			{
+				if(null != mPaintChartBackground)
+					canvas.drawRoundRect(rect, getRoundRadius(), 
+							getRoundRadius(), mPaintChartBackground);	
+			}else{ //BORDER
+				canvas.drawRoundRect(rect, getRoundRadius(), getRoundRadius(), getLinePaint());		
+			}
 			break;
 		}
 	}

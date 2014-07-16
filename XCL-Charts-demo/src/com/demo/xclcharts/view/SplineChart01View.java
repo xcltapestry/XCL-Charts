@@ -178,6 +178,7 @@ public class SplineChart01View extends TouchView {
 		linePoint1.put(62d, 45d);
 		SplineData dataSeries1 = new SplineData("青菜萝卜够吃",linePoint1,
 				(int)Color.rgb(54, 141, 238) );
+		
 		//线2的数据集
 		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
 		linePoint2.put(40d, 50d);
@@ -193,7 +194,8 @@ public class SplineChart01View extends TouchView {
 		dataSeries2.setLabelVisible(true);		
 		dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
 		dataSeries2.getDotLabelPaint().setColor(Color.RED);
-						
+			
+			
 		//设定数据源		
 		chartData.add(dataSeries1);				
 		chartData.add(dataSeries2);	

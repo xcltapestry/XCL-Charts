@@ -224,7 +224,13 @@ public class LnChart extends AxisChart {
 		// 得到标签轴数据集
 		List<String> dataSet = categoryAxis.getDataSet();
 		// 与柱形图不同，无须多弄一个
-		float XSteps = getVerticalXSteps(dataSet.size() - 1);
+		float XSteps = 0.0f;
+		if (dataSet.size() == 1)  //label仅一个时右移
+		{
+			XSteps = div( getAxisScreenWidth(),(dataSet.size()));
+		}else{
+			XSteps = div( getAxisScreenWidth(),(dataSet.size() - 1));
+		}		
 
 		for (int i = 0; i < dataSet.size(); i++) {
 

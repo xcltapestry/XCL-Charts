@@ -126,6 +126,22 @@ public class PieChart extends CirChart{
 		//返回环形渐变  
 		return radialGradient;
 	}
+	
+	/**
+	 * 检查角度的合法性
+	 * @param agent 角度
+	 * @return 是否正常
+	 */
+	private boolean validateAgent(float agent)
+	{
+		if(Float.compare(agent, 0.0f) == 0 
+				|| Float.compare(agent, 0.0f) == -1)
+		{
+			Log.e(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(agent));
+			return false;
+		}
+		return true;
+	}
 		
 	/**
 	 * 绘制指定角度扇区
@@ -148,11 +164,7 @@ public class PieChart extends CirChart{
 							final float curretAgent) throws Exception
 	{
 		try{
-			if(0.0f >= curretAgent)
-			{
-				Log.e(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(curretAgent));
-				return;
-			}
+			if(!validateAgent(curretAgent))return ;
 			
 			// 绘制环形渐变
 			if(getGradient())
@@ -189,15 +201,11 @@ public class PieChart extends CirChart{
 									final float offsetAgent,
 									final float curretAgent) throws Exception
 	{
-		try{
-			if(0.0f >= curretAgent)
-			{
-				Log.e(TAG, "选中扇区圆心角小于等于0度.");
-				return;
-			}
+		try{			
+			if(!validateAgent(curretAgent))return ;
 			
 			//偏移圆心点位置(默认偏移半径的1/10)
-	    	float newRadius = radius / SELECTED_OFFSET;
+	    	float newRadius = div(radius , SELECTED_OFFSET);
 	    	 //计算百分比标签
 	    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
 	    							newRadius,
@@ -276,7 +284,7 @@ public class PieChart extends CirChart{
 			}					
 			
 			//图KEY
-			PlotLegend.renderPieKey(canvas,this.mDataset);
+			plotLegend.renderPieKey(canvas,this.mDataset);
 		
 		 }catch( Exception e){
 			 Log.e(TAG,e.toString());

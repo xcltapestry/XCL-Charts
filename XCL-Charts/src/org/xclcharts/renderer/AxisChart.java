@@ -29,8 +29,6 @@ import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.plot.AxisTitle;
 import org.xclcharts.renderer.plot.AxisTitleRender;
-import org.xclcharts.renderer.plot.PlotLegend;
-import org.xclcharts.renderer.plot.PlotLegendRender;
 
 import android.graphics.Canvas;
 
@@ -49,8 +47,7 @@ public class AxisChart extends XChart {
 	protected CategoryAxisRender categoryAxis  = null;	
 	//轴标题类
 	protected AxisTitleRender axisTitle = null;
-	//图例类
-	protected PlotLegendRender plotLegend = null;
+	
 	
 	//格式化柱形顶上或线交叉点的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
@@ -66,29 +63,15 @@ public class AxisChart extends XChart {
 	 * 初始化设置
 	 */
 	private void initChart()
-	{		
-		//为坐标系设置一个默认间距
-		//this.setPaddingPercent(15f, 15f, 20f, 5f);
-		
+	{				
 		//数据轴
 		dataAxis  = new DataAxisRender();
 		//标签轴
 		categoryAxis  = new CategoryAxisRender();				
 		//轴标题
-		axisTitle = new AxisTitleRender();		
-		//图例
-		plotLegend = new PlotLegendRender(this);
+		axisTitle = new AxisTitleRender();			
 	}
-	
-	
-	/**
-	 * 开放图例基类
-	 * @return	基类
-	 */
-	public PlotLegend getPlotLegend()
-	{
-		return plotLegend;
-	}		
+		
 
 	 /**
 	  * 开放数据轴绘制类
@@ -170,11 +153,7 @@ public class AxisChart extends XChart {
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
-			 plotArea.render(canvas);
-			//画奇偶行填充,横竖网格线			
-			// plotGrid.render(canvas);
-			//画图例axisTitle
-	
+			 plotArea.render(canvas);	
 			//绘制标题
 			renderTitle(canvas);
 			//绘制轴标题

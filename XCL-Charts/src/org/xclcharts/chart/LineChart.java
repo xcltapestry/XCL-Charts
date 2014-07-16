@@ -32,10 +32,10 @@ import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
-import org.xclcharts.renderer.plot.PlotLegendRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName LineChart
@@ -44,6 +44,8 @@ import android.graphics.Paint.Align;
  *  
  */
 public class LineChart extends LnChart{
+	
+	private static final String TAG ="LineChart";
 	
 	//数据源
 	protected List<LineData> mDataSet;
@@ -105,7 +107,11 @@ public class LineChart extends LnChart{
 		 */
 		public void setCategories(List<String> categories)
 		{
-			categoryAxis.setDataBuilding(categories);
+			if(null == categories || categories.size() == 0)
+			{
+				Log.e(TAG,"分类轴不能为空.");
+			}else							
+				categoryAxis.setDataBuilding(categories);
 		}
 		
 		/**
@@ -114,8 +120,12 @@ public class LineChart extends LnChart{
 		 */
 		public void setDataSource(LinkedList<LineData> dataSet)
 		{
-			this.mDataSet = dataSet;		
-		}						
+			if(null == dataSet || dataSet.size() == 0)
+			{
+				Log.e(TAG,"数据轴不能为空.");				
+			}else					
+				this.mDataSet = dataSet;		
+		}			
 						
 		/**
 		 * 设置定制线值
@@ -132,7 +142,7 @@ public class LineChart extends LnChart{
 		 * @param bd		数据类
 		 * @param type		处理类型
 		 */
-		private void renderLine(Canvas canvas, LineData bd,String type)
+		private boolean renderLine(Canvas canvas, LineData bd,String type)
 		{
 			float initX =  plotArea.getLeft();
             float initY =  plotArea.getBottom();
@@ -141,20 +151,34 @@ public class LineChart extends LnChart{
             float lineStartY = initY;
             float lineEndX = 0.0f;
             float lineEndY = 0.0f;
-            						
-			float axisScreenHeight = getAxisScreenHeight();
-			float axisDataHeight = (float) dataAxis.getAxisRange();		
-			
+            													
 			//得到分类轴数据集
 			List<String> dataSet =  categoryAxis.getDataSet();
-			if(null == dataSet) return ;
-			//步长
-			float XSteps = div( getAxisScreenWidth(),(dataSet.size() - 1));
-			
+			if(null == dataSet){
+				Log.e(TAG,"分类轴数据为空.");
+				return false;
+			}		
+			//数据序列
 			List<Double> chartValues = bd.getLinePoint();	
-			if(null == chartValues) return ;
+			if(null == chartValues)
+			{
+				Log.e(TAG,"线的数据序列为空.");
+				return false;			
+			}			
+				
+			//步长
+			float axisScreenHeight = getAxisScreenHeight();
+			float axisDataHeight = (float) dataAxis.getAxisRange();	
+			float XSteps = 0.0f;	
 			int j = 0;	
-						
+			if (dataSet.size() == 1) //label仅一个时右移
+			{
+				XSteps = div( getAxisScreenWidth(),(dataSet.size() ));
+				j = 1;
+			}else{
+				XSteps = div( getAxisScreenWidth(),(dataSet.size() - 1));
+			}
+					
 		    //画线
 			for(Double bv : chartValues)
             {																	
@@ -177,8 +201,7 @@ public class LineChart extends LnChart{
             
             	//如果值与最小值相等，即到了轴上，则忽略掉
 				if(bv != dataAxis.getAxisMin())
-				{
-				
+				{				
 	            	PlotLine pLine = bd.getPlotLine();           
 	            	if(type.equalsIgnoreCase("LINE"))
 	            	{
@@ -200,14 +223,14 @@ public class LineChart extends LnChart{
 	            			lineEndX = rendEndX;
 	                	}
 	            		
-	            		if(bd.getLabelVisible())
-	                	{
-	                		//fromatter	            			
+	            		if(bd.getLabelVisible()) //标签
+	                	{	                		       		
 	                		canvas.drawText(this.getFormatterItemLabel(bv), 
 	    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
 	                	}
 	            	}else{
-	            		return ;
+	            		Log.e(TAG,"未知的参数标识。"); //我不认识你，我不认识你。
+	            		return false;
 	            	}      
 				} //if(bv != dataAxis.getAxisMin())
             	
@@ -216,15 +239,14 @@ public class LineChart extends LnChart{
 
 				j++;
             } 				
-			
+			return true;
 		}
 		
 		/**
 		 * 绘制图表
 		 */
-		private void renderVerticalPlot(Canvas canvas)
-		{			
-								
+		private boolean renderVerticalPlot(Canvas canvas)
+		{											
 			if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
 			{
 				renderVerticalDataAxis(canvas);
@@ -232,21 +254,28 @@ public class LineChart extends LnChart{
 				renderVerticalDataAxisRight(canvas);
 			}						
 			renderVerticalCategoryAxis(canvas);
-			if(null == mDataSet) return ;
+			if(null == mDataSet) 
+			{
+				Log.e(TAG,"数据轴数据为空.");
+				return false;
+			}
 			
-			List<LnData> lstKey = new ArrayList<LnData>();								
+			List<LnData> lstKey = new ArrayList<LnData>();	
+			String key = "";
 			//开始处 X 轴 即分类轴                  
 			for(int i=0;i<mDataSet.size();i++)
 			{								
-				renderLine(canvas,mDataSet.get(i),"LINE");
-				renderLine(canvas,mDataSet.get(i),"DOT2LABEL");
-				String key = mDataSet.get(i).getLineKey();				
-				if("" != key)
+				if(renderLine(canvas,mDataSet.get(i),"LINE") == false) 
+					return false;;
+				if(renderLine(canvas,mDataSet.get(i),"DOT2LABEL") == false) 
+					return false;;
+				key = mDataSet.get(i).getLineKey();				
+				if("" != key && key.length() > 0)
 					lstKey.add(mDataSet.get(i));
 			}			
-			
-			if(null == plotLegend) plotLegend = new PlotLegendRender(this);
-					plotLegend.renderLineKey(canvas, lstKey);
+			//图例
+			plotLegend.renderLineKey(canvas, lstKey);
+			return true;
 		}	
 		 
 		
@@ -257,12 +286,13 @@ public class LineChart extends LnChart{
 			boolean ret = true;
 			try{
 				super.postRender(canvas);	
-				renderVerticalPlot(canvas);
-				
-				//画线形图，横向的定制线
-				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-				ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
-				
+				//画线形图
+				if((ret = renderVerticalPlot(canvas)) == true)
+				{				
+					//画横向定制线
+					mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+					ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+				}
 			} catch (Exception e) {
 				throw e;
 			}

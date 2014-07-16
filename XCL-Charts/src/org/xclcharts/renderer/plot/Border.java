@@ -37,7 +37,9 @@ import android.graphics.Paint.Style;
 public class Border {
 	
 	//线的基类画笔	
-	private Paint mBorderLinePaint = new Paint();
+	private Paint mPaintBorderLine = null;
+	//图背景画笔
+	protected Paint mPaintChartBackground = null;
 	
 	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
 	private XEnum.RectType mRectType = XEnum.RectType.ROUNDRECT;	
@@ -46,11 +48,11 @@ public class Border {
 
 	public Border()
 	{							
-		mBorderLinePaint = new Paint();
-		mBorderLinePaint.setAntiAlias(true);
-		mBorderLinePaint.setColor((int)Color.rgb(26, 59, 105));
-		mBorderLinePaint.setStyle(Style.STROKE);  		
-		mBorderLinePaint.setStrokeWidth(2);
+		mPaintBorderLine = new Paint();
+		mPaintBorderLine.setAntiAlias(true);
+		mPaintBorderLine.setColor((int)Color.rgb(26, 59, 105));
+		mPaintBorderLine.setStyle(Style.STROKE);  		
+		mPaintBorderLine.setStrokeWidth(2);								
 	}
 	
 	/**
@@ -59,52 +61,76 @@ public class Border {
 	 */
 	public Paint getLinePaint()
 	{
-		return mBorderLinePaint;
+		return mPaintBorderLine;
 	}
-	
+		
 	/**
 	 * 设置线的颜色	
 	 * @param color 线的颜色
 	 */
 	public void setBorderLineColor(int color) 
 	{				
-		mBorderLinePaint.setColor(color );
+		mPaintBorderLine.setColor(color );
 	}
 	
 	/**
-	 * 
-	 * @param style
+	 * 设置边框线类型
+	 * @param style 线类型
 	 */
 	public void setBorderLineStyle(XEnum.LineStyle style) 
 	{				
 		mLineStyle = style;
 	}	
 	
+	/**
+	 * 设置边框类型
+	 * @param type 框类型
+	 */
 	public void setBorderRectType(XEnum.RectType type) 
 	{				
 		mRectType = type;
 	}
 				
+	/**
+	 * 返回边框线类型
+	 * @return 边框线类型
+	 */
 	public XEnum.LineStyle getBorderLineStyle()
 	{
 		return mLineStyle;		
 	}
 	
+	/**
+	 * 返回边框类型
+	 * @return 边框类型
+	 */
 	public XEnum.RectType getBorderRectType()
 	{
 		return mRectType;
 	}
 	
+	/**
+	 * 设置角圆弧半径
+	 * @param radius 半径
+	 */
 	public void setRoundRadius(int radius)
 	{
 		mRaidus = radius;
 	}
 	
+	/**
+	 * 返回角圆弧半径
+	 * @return 半径
+	 */
 	public int getRoundRadius()
 	{		
 		return mRaidus;		
 	}
 	
+	/**
+	 * 返回边框所占宽度
+	 * @return 边框所占宽度
+	 */
 	public int getBorderWidth()
 	{
 		int width = mBorderSpadding;		

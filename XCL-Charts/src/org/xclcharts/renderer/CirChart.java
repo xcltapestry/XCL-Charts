@@ -56,9 +56,7 @@ public class CirChart extends XChart{
 	
 	//初始偏移角度
 	protected float mOffsetAgent = 0.0f;//180;
-	
-	//图的Key基类
-	protected PlotLegendRender PlotLegend = null;
+
 	
 	//标签与点的转折线长度
 	private int mLabelBrokenLineLength = 10;
@@ -74,9 +72,6 @@ public class CirChart extends XChart{
 		//标签显示位置
 		mLabelPosition = XEnum.SliceLabelPosition.INNER;
 				
-		//key值
-		PlotLegend = new PlotLegendRender(this);
-		
 		mPaintLabel = new Paint();
 		mPaintLabel.setColor(Color.BLACK);
 		mPaintLabel.setTextSize(18);
@@ -99,24 +94,6 @@ public class CirChart extends XChart{
 				 				 div(this.plotArea.getHeight(),2f) );	
 	}
 	
-	/**
-	 * 开放图例基类
-	 * @return	基类
-	 */
-	public PlotLegend getPlotLegend()
-	{
-		return PlotLegend;
-	}	
-
-	
-	/**
-	 * 设置饼图(pie chart)的半径
-	 * @param radius 饼图的半径
-	 */
-	//public void setRadius(final float radius)
-	//{
-	//	mRadius = radius;
-	//}
 	
 	/**
 	 * 返回半径

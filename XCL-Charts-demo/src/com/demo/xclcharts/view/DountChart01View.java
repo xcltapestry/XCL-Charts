@@ -92,17 +92,24 @@ public class DountChart01View extends TouchView {
 			
 			//数据源
 			chart.setDataSource(lPieData);
+			chart.setCenterText("UNIX系统");
 						
-			//标签显示(隐藏，显示在中间，显示在扇区外面)
+			//标签显示(隐藏，显示在中间，显示在扇区外面) 
 			chart.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
+			chart.getLabelPaint().setColor(Color.BLUE);
 			
 			//标题
 			chart.setTitle("Dount Chart");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			//显示key
-			chart.getPlotLegend().showLegend();
-			//显示边框
-			chart.showRoundBorder();
+			chart.getPlotLegend().showLegend();		
+									
+			//图背景色
+			chart.setApplyBackgroundColor(true);
+			chart.setBackgroundColor(Color.rgb(19, 163, 224));		
+			 
+			//内环背景色
+			chart.getInnerPaint().setColor(Color.rgb(180, 205, 230));
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -136,11 +143,13 @@ public class DountChart01View extends TouchView {
 		return lst;
 	}
 	
+	/*
 	//重载掉，让其不能移动,实际应用时，可直接继承GraphicalView即可.
 	//此处是例子的权宜之计
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return false;
 	}
+	*/
 
 }

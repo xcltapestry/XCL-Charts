@@ -115,11 +115,11 @@ public class DrawHelper {
 	 * @param str 字符串
 	 * @return 宽度
 	 */
-	public int getTextWidth(Paint paint,String str)
+	public float getTextWidth(Paint paint,String str)
 	{
-		if(str.length() == 0) return 0;
-		 int width = (int) Math.abs(paint.measureText(str, 0, str.length()));		 
-		 return width;
+		if(str.length() == 0) return 0.0f;
+		//float width = Math.abs(paint.measureText(str, 0, str.length()));		 
+		return paint.measureText(str, 0, str.length());
 	}
 	
 	/**

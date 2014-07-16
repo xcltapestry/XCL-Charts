@@ -29,6 +29,7 @@ import java.util.List;
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.common.DensityUtil;
+import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -123,7 +124,8 @@ public class MultiBarChart01View extends TouchView {
 			 chart.getBar().setBarStyle(XEnum.BarStyle.FILL);
 			 
 			 chart.setApplyBackgroundColor(true);
-			 chart.setBackgroundColor(Color.rgb(19, 163, 224));			 			 			 
+			 chart.setBackgroundColor(Color.rgb(19, 163, 224));						 
+			 chart.showRoundBorder();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -175,10 +177,23 @@ public class MultiBarChart01View extends TouchView {
 					return (label);
 				}
 				
-			});					
+			});				
+			
+			//在柱形顶部显示值
+			chart2.getBar().setItemLabelVisible(true);
+			//设定格式
+			chart2.setItemLabelFormatter(new IFormatterDoubleCallBack() {
+				@Override
+				public String doubleFormatter(Double value) {
+					// TODO Auto-generated method stub
+					DecimalFormat df=new DecimalFormat("#0");					 
+					String label = df.format(value).toString();
+					return label;
+				}});
 			
 			 //让柱子间没空白
 			 chart2.getBar().setBarInnerMargin(0d);
+			 chart2.getBar().setBarStyle(XEnum.BarStyle.FILL);
 					
 			//轴颜色					
 			chart2.getDataAxis().getAxisPaint().setColor(axisColor);
@@ -193,7 +208,8 @@ public class MultiBarChart01View extends TouchView {
 			chart2.getAxisTitle().getLowerAxisTitlePaint().setColor(axisColor);
 			
 			//隐藏图例
-			chart2.getPlotLegend().hideLegend();
+			chart2.getPlotLegend().hideLegend();			
+			chart2.showRoundBorder();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

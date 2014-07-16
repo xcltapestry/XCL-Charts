@@ -30,6 +30,7 @@ import java.util.List;
 import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -98,7 +99,7 @@ public class LineChart02View extends TouchView implements Runnable{
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 45), ltrb[3]);	
 		
 			
 			//设定数据源

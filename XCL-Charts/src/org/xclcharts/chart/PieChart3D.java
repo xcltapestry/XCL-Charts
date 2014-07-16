@@ -148,7 +148,7 @@ public class PieChart3D extends PieChart{
 		    mOffsetAgent = add(mOffsetAgent,currentAgent);
 		}			
 		//图KEY
-		PlotLegend.renderPieKey(canvas,this.getDataSource());
+		plotLegend.renderPieKey(canvas,this.getDataSource());
 	}
 
 }

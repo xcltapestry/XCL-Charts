@@ -507,70 +507,9 @@ public class RadarChart extends RdChart{
 			canvas.drawText(getFormatterDotLabel(lineData.getLinePoint().get(listID) ),
 							currentX, currentY, 
 							lineData.getPlotLine().getDotLabelPaint());
-		}
-		
+		}		
 	}
 
-	
-	
-	/**
-	 * 绘制key
-	 */
-	protected void renderKey(Canvas canvas)
-	{
-		 if(!getKeyVisible())return ;
-		    
-			DrawHelper dw = new DrawHelper();
-			float textHeight = dw.getPaintFontHeight(getKeyPaint());
-			float rectWidth = 2 *textHeight;		
-			float currentX = 0.0f; 				
-			float currentY = 0.0f;
-			
-			if(!isVerticalScreen()) //横屏
-			{
-				getKeyPaint().setTextAlign(Align.RIGHT);
-				currentX = plotArea.getRight();
-				currentY = this.plotArea.getTop() + textHeight;			
-			}else{
-				getKeyPaint().setTextAlign(Align.LEFT);
-				currentX = plotArea.getLeft();
-				currentY = this.plotArea.getBottom();			
-			}			
-			
-			int totalTextWidth = 0;
-			for(RadarData cData : mDataSet)
-			{
-				getKeyPaint().setColor(cData.getLineColor());							
-				if( !isVerticalScreen()) //横屏
-				{								
-					canvas.drawRect(currentX , currentY,
-										  currentX - rectWidth, currentY - textHeight, 
-										  getKeyPaint());					
-					
-					canvas.drawText(cData.getLineKey(),currentX - rectWidth, currentY, getKeyPaint());
-								
-					currentY = MathHelper.getInstance().add(currentY,textHeight);
-				
-				}else{ //竖屏			
-					int keyTextWidth = dw.getTextWidth(getKeyPaint(), cData.getLineKey());
-					totalTextWidth += keyTextWidth;
-					
-					if(totalTextWidth > plotArea.getWidth())
-					{
-						currentY += textHeight;
-						currentX = plotArea.getLeft();
-						totalTextWidth = 0;
-					}				
-					canvas.drawRect(currentX , currentY,
-									 currentX + rectWidth, currentY - textHeight, 
-									 getKeyPaint());						
-					canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY, getKeyPaint());
-					
-					currentX = MathHelper.getInstance().add(currentX, rectWidth + keyTextWidth + 5);
-				
-				}									
-			}	
-	}
 	
 	/**
 	 * 绘制图
@@ -582,8 +521,9 @@ public class RadarChart extends RdChart{
 		renderGridLines(canvas);
 		renderAxisLines(canvas);
 		renderDataArea(canvas);
-		renderAxisLabels(canvas);		
-		renderKey(canvas);
+		renderAxisLabels(canvas);	
+		//图例
+		plotLegend.renderRdKey(canvas,mDataSet);		
 	}
 
 	@Override
