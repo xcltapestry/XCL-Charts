@@ -535,10 +535,7 @@ public class RadarChart extends RdChart{
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
-			 plotArea.render(canvas);			 
-			//画奇偶行填充,横竖网格线			
-			// plotGrid.render();			
-			 
+			 plotArea.render(canvas);	
 			//绘制标题
 			renderTitle(canvas);
 			

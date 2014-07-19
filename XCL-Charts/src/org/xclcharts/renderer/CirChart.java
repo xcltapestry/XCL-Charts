@@ -171,15 +171,15 @@ public class CirChart extends XChart{
 	 * @param offsetAgent	偏移角度
 	 * @param curretAgentt	当前角度
 	 */
-	protected void renderLabel(Canvas canvas, String text,
+	protected boolean renderLabel(Canvas canvas, String text,
 			final float cirX,
 			final float cirY,
 			final float radius,		
 			final double offsetAgent,
 			final double curretAgentt)
 	{
-		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return;		
-		if(""==text||text.length()==0)return;
+		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return true;		
+		if(""==text||text.length()==0)return true;
 		
 		float calcRadius = 0.0f;
 		float calcAgent = 0.0f;
@@ -189,7 +189,7 @@ public class CirChart extends XChart{
 				|| Float.compare(calcAgent,0.0f) == -1 )
 		{
 			Log.e(TAG,"计算出来的圆心角等于0.");
-			return ;
+			return false;
 		}
 				
 		if(XEnum.SliceLabelPosition.INNER == mLabelPosition)
@@ -229,31 +229,31 @@ public class CirChart extends XChart{
 		    //连接线
 		    canvas.drawLine(startX, startY, stopX, stopY, mPaintLabelLine);		    		    
 		    		    
-		    float endX = 0.0f;				    		    		    
-		    if(stopX == cirX){ //位于中间竖线上		    			    			    	
-		    	if( stopY > cirY ) //中点上方,左折线
+		    float endX = 0.0f;			    
+		    if(Float.compare(stopX, cirX) == 0){ //位于中间竖线上				    			    	
+		    	if(Float.compare(stopY, cirY) == 1 ) //中点上方,左折线
 		    	{
 		    		mPaintLabel.setTextAlign(Align.LEFT);
 		    		endX = stopX + mLabelBrokenLineLength;	
-		    	}else{ //中点下方,右折线
-		    		
+		    	}else{ //中点下方,右折线		    		
 		    		endX = stopX - mLabelBrokenLineLength;	
 		    		mPaintLabel.setTextAlign(Align.RIGHT);
 		    	}
-		    }else if(stopY == cirY){ //中线横向两端
+		    }else if(Float.compare(stopY, cirY) == 0 ){ //中线横向两端
 		    	
-		    	if(stopX <= cirX) //左边
+		    	if(Float.compare(stopX, cirX) == 0 ||
+		    			Float.compare(stopX, cirX) == -1) //左边
 		    	{
 		    		mPaintLabel.setTextAlign(Align.RIGHT);
 		    	}else{
 		    		mPaintLabel.setTextAlign(Align.LEFT);
 		    	}		    	
 		    	endX = stopX;		    
-		    }else if(stopX + mLabelBrokenLineLength > cirX) //右边
+		    }else if(Float.compare(stopX + mLabelBrokenLineLength, cirX) == 1 ) //右边
 		    {
 		    	mPaintLabel.setTextAlign(Align.LEFT);
 		    	endX = stopX + mLabelBrokenLineLength;		    		    	
-		    }else if(stopX - mLabelBrokenLineLength < cirX) //左边
+		    }else if(Float.compare(stopX - mLabelBrokenLineLength,cirX) == -1  ) //左边
 		    {
 		    	mPaintLabel.setTextAlign(Align.RIGHT);
 		    	endX = stopX - mLabelBrokenLineLength;		    			    	    
@@ -265,12 +265,13 @@ public class CirChart extends XChart{
 		    //转折线
 		    canvas.drawLine(stopX, stopY, endX, stopY, mPaintLabelLine);
 		    //标签
-		    canvas.drawText(text,endX, stopY,mPaintLabel);          	
+		    canvas.drawText(text,endX, stopY,mPaintLabel);     	
 				
 		}else{
 			Log.e(TAG,"未知的标签处理类型.");
-			return;
-		}		 
+			return false;
+		}		
+		return true;
 	}
 		
 	@Override
@@ -282,10 +283,7 @@ public class CirChart extends XChart{
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
-			 plotArea.render(canvas);
-			//画奇偶行填充,横竖网格线			
-			// plotGrid.render(canvas);
-			 
+			 plotArea.render(canvas);			 
 			//绘制标题
 			renderTitle(canvas);
 		} catch (Exception e) {

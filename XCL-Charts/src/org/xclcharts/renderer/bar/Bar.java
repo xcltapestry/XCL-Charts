@@ -22,9 +22,6 @@
 
 package org.xclcharts.renderer.bar;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
@@ -54,7 +51,7 @@ public class Bar {
 	protected Paint mPaintBar = null;
 	
 	//文字画笔
-	private Paint mPaintItemLabel = new Paint();		
+	private Paint mPaintItemLabel = null;		
 	
 	//柱形顶上文字偏移量
 	private int mItemLabelAnchorOffset = 10;
@@ -81,6 +78,7 @@ public class Bar {
 		mPaintBar.setStyle(Style.FILL);
 		
 		//柱形顶上的文字标签		
+		mPaintItemLabel = new Paint();
 		mPaintItemLabel.setTextSize(12);
 		mPaintItemLabel.setColor(Color.BLACK);
 		mPaintItemLabel.setTextAlign(Align.CENTER);
@@ -162,18 +160,20 @@ public class Bar {
 	 * 设置柱形间空白所占的百分比
 	 * @param percentage 百分比
 	 */
-	public void setBarInnerMargin(double percentage)
-	{
-		
+	public boolean setBarInnerMargin(double percentage)
+	{		
 		if(Double.compare(percentage, 0d) == -1)
 		{
 			Log.e(TAG, "此比例不能为负数噢!");
+			return false;
 		}if( Double.compare(percentage, 0.9d) ==  1 
 				|| Double.compare(percentage, 0.9d) ==  0 ){  
 			Log.e(TAG, "此比例不能大于等于0.9,要给柱形留下点显示空间!");
+			return false;
 		}else{
 			this.mBarInnerMargin = percentage;
 		}
+		return true;
 	}
 	
 	/**
@@ -201,27 +201,26 @@ public class Bar {
 	 * @param barNumber  柱形个数
 	 * @return 返回单个柱形的高度及间距
 	 */	
-	protected List<Float> calcBarHeightAndMargin(float YSteps,int barNumber)
-	{
-					/*			
-			int labelBarTotalHeight = (int) Math.round(YSteps * 0.9);
-			int barTotalInnerMargin = (int) Math.round(labelBarTotalHeight * mBarInnerMargin); 
-			int barInnerMargin = barTotalInnerMargin / barNumber;
-			int barHeight = (labelBarTotalHeight - barTotalInnerMargin) / barNumber;
-			*/
-			
+	protected  float[] calcBarHeightAndMargin(float YSteps,int barNumber)
+	{			
+			if(0 == barNumber)
+			{
+				Log.e(TAG,"柱形个数为零.");
+				return null;		
+			}					
 			float labelBarTotalHeight = MathHelper.getInstance().mul(YSteps , 0.9f);						
 			float barTotalInnerMargin = MathHelper.getInstance().mul(
-											labelBarTotalHeight , (float) mBarInnerMargin); 
+											labelBarTotalHeight ,
+											MathHelper.getInstance().dtof(mBarInnerMargin) ); 
 			float barInnerMargin = MathHelper.getInstance().div(barTotalInnerMargin , barNumber);
 			float barHeight = MathHelper.getInstance().div( 
-								MathHelper.getInstance().sub(labelBarTotalHeight , barTotalInnerMargin) 
-								, barNumber);
+									MathHelper.getInstance().sub(labelBarTotalHeight ,
+																 barTotalInnerMargin) , 
+									barNumber);			
+			float[] ret = new float[2];
+			ret[0] = barHeight;
+			ret[1] = barInnerMargin;
 			
-			
-			List<Float> ret = new LinkedList<Float>();
-			ret.add(barHeight);
-			ret.add(barInnerMargin);
 			return ret;
 	}
 	
@@ -232,32 +231,24 @@ public class Bar {
 	 * @param barNumber 柱形个数
 	 * @return 返回单个柱形的宽度及间距
 	 */
-	protected List<Float> calcBarWidthAndMargin(float XSteps,int barNumber)
-	{
-			
-		/*
-			int labelBarTotalWidth = (int) Math.round(XSteps * 0.9); 				
-			int barTotalInnerMargin = (int) Math.round(labelBarTotalWidth * mBarInnerMargin);
-			
-			int barTotalWidth = labelBarTotalWidth - barTotalInnerMargin;	   	
-			
-			int barInnerMargin = barTotalInnerMargin / barNumber;
-			int barWidth = barTotalWidth / barNumber;		
-			
-			*/
-		
+	protected float[] calcBarWidthAndMargin(float XSteps,int barNumber)
+	{			
+			if(0 == barNumber)
+			{
+				Log.e(TAG,"柱形个数为零.");
+				return null;		
+			}
 			float labelBarTotalWidth = MathHelper.getInstance().mul(XSteps , 0.9f); 				
-			float barTotalInnerMargin = MathHelper.getInstance().mul(labelBarTotalWidth , (float) mBarInnerMargin);
+			float barTotalInnerMargin = MathHelper.getInstance().mul(labelBarTotalWidth , 
+					 							MathHelper.getInstance().dtof(mBarInnerMargin));
 			
-			float barTotalWidth = MathHelper.getInstance().sub(labelBarTotalWidth , barTotalInnerMargin);	   	
-			
+			float barTotalWidth = MathHelper.getInstance().sub(labelBarTotalWidth , barTotalInnerMargin);			
 			float barInnerMargin = MathHelper.getInstance().div(barTotalInnerMargin , barNumber);
 			float barWidth = MathHelper.getInstance().div(barTotalWidth , barNumber);		
 			
-			
-			List<Float> ret = new LinkedList<Float>();
-			ret.add(barWidth);
-			ret.add(barInnerMargin);
+			float[] ret = new float[2];
+			ret[0] = barWidth;
+			ret[1] = barInnerMargin;			
 			return ret;
 	}
 	

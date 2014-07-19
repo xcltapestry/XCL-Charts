@@ -27,7 +27,6 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
-import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
@@ -82,7 +81,8 @@ public class XYAxis extends Axis {
 	 * @param centerY 轴上中点X坐标
 	 * @param text    标签文本
 	 */
-	protected void renderHorizontalTick(XChart xchart,Canvas canvas, float centerX, float centerY,
+	protected void renderHorizontalTick(XChart xchart,Canvas canvas, 
+											float centerX, float centerY,
 			String text) {
 		if (false == getVisible())
 			return;
@@ -96,14 +96,13 @@ public class XYAxis extends Axis {
 		switch (getHorizontalTickAlign()) {
 		case LEFT: {
 			if (getTickMarksVisible()) {
-			//   Math.round(centerX - getTickMarksLength());
 				marksStartX = MathHelper.getInstance().sub(centerX,getTickMarksLength()); 
 				markeStopX = centerX;				
 			}
 			
 			if(this.getTickLabelVisible())
 				labelStartX = MathHelper.getInstance().sub(marksStartX , getTickLabelMargin());
-				//labelStartX = marksStartX - getTickLabelMargin();
+				
 												
 			break;
 		}
@@ -137,7 +136,7 @@ public class XYAxis extends Axis {
 		}
 
 		//标签
-		// 下次要补充的地方: 当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
+		//  当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
 		if (getTickLabelVisible()) {			
 			int textHeight = DrawHelper.getInstance().getPaintFontHeight(
 														getTickLabelPaint());
@@ -183,19 +182,14 @@ public class XYAxis extends Axis {
 
 		switch (getVerticalTickPosition()) {
 		case UP: {
-			if (getTickMarksVisible()) {
-				//marksStartY = Math.round(centerY - getTickMarksLength());
+			if (getTickMarksVisible()) 
+			{
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
 				marksStopY = centerY;				
 			}
 			
 			if(this.getTickLabelVisible())
 			{
-				//labelsStartY = marksStartY
-				//		- getTickLabelMargin()
-				//		- DrawHelper.getInstance()
-				//				.getPaintFontHeight(getTickLabelPaint());
-				
 				labelsStartY = MathHelper.getInstance().sub(marksStartY,  
 						getTickLabelMargin() + 
 						DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint())); 
@@ -205,12 +199,8 @@ public class XYAxis extends Axis {
 		}
 		case CENTER: {
 			if (getTickMarksVisible()) {
-				//marksStartY = Math.round(centerY - getTickMarksLength() / 2);
-				//marksStopY = Math.round(centerY + getTickMarksLength() / 2);
-				
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength() / 2);
-				marksStopY = MathHelper.getInstance().add(centerY , getTickMarksLength() / 2);
-				
+				marksStopY = MathHelper.getInstance().add(centerY , getTickMarksLength() / 2);				
 			}
 			break;
 		}
@@ -284,8 +274,7 @@ public class XYAxis extends Axis {
 	        	 charWidth = DrawHelper.getInstance().getTextWidth(
 	        			 						getTickLabelPaint(),label.substring(i, i+1));    
 	        			 						
-	        	 totalWidth = MathHelper.getInstance().add(totalWidth,charWidth);
-	        	 //totalWidth += charWidth;	        	
+	        	 totalWidth = MathHelper.getInstance().add(totalWidth,charWidth);	        	        
 	      		 if( Float.compare(totalWidth , width) == 1 )
 	      		 {
 		        	   DrawHelper.getInstance().drawRotateText(lnString,centerX, renderY,

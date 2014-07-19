@@ -394,7 +394,7 @@ public class PlotLegendRender extends PlotLegend{
 					//totalTextWidth += keyTextWidth;					
 					totalTextWidth =  MathHelper.getInstance().add(totalTextWidth,keyTextWidth);
 					
-					if(totalTextWidth > mPlotArea.getWidth())
+					if(Float.compare(totalTextWidth, mPlotArea.getWidth()) == 1)
 					{
 						currentY += textHeight;
 						currentX = mPlotArea.getLeft();

@@ -22,8 +22,6 @@
 
 package org.xclcharts.renderer.bar;
 
-import java.util.List;
-
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 
@@ -118,7 +116,7 @@ public class Bar3D extends Bar{
 	 * @param barNumber  柱形个数
 	 * @return 返回单个柱形的高度及间距
 	 */
-	public List<Float> getBarHeightAndMargin(float YSteps,int barNumber)
+	public float[] getBarHeightAndMargin(float YSteps,int barNumber)
 	{
 		return calcBarHeightAndMargin( YSteps, barNumber);
 	}
@@ -129,7 +127,7 @@ public class Bar3D extends Bar{
 	 * @param barNumber 柱形个数
 	 * @return 返回单个柱形的宽度及间距
 	 */
-	public List<Float> getBarWidthAndMargin(float XSteps,int barNumber)
+	public float[] getBarWidthAndMargin(float XSteps,int barNumber)
 	{
 		return calcBarWidthAndMargin(XSteps,barNumber);
 	}
@@ -281,13 +279,13 @@ public class Bar3D extends Bar{
 		pBase2D.reset();
 		pBase2D.moveTo(baseRight2, baseBottom2); 				
 		pBase2D.lineTo(baseRight, baseBottom); 
-		pBase2D.lineTo(baseRight,(float) ( baseBottom + mAxisBaseThickness)); 
+		pBase2D.lineTo(baseRight,MathHelper.getInstance().add( baseBottom , mAxisBaseThickness)); 
 		pBase2D.lineTo(baseRight2, baseBottom2 + mAxisBaseThickness);   
 		pBase2D.close();				
 		canvas.drawPath(pBase2D,paint); 				
 		paint.setColor(baseLightColor);
 		canvas.drawRect(baseLeft2, baseBottom2, baseRight2, 
-						Math.round(baseBottom2 + mAxisBaseThickness), paint);		
+						baseBottom2 + mAxisBaseThickness, paint);		
 	}
 	 
 	 /**
@@ -370,14 +368,13 @@ public class Bar3D extends Bar{
 		mPaintBase3D.setColor(baseLightColor);
 		
 		//水平偏移量
-		float offsetX = (float) getOffsetX();
+		float offsetX = MathHelper.getInstance().dtof(getOffsetX());
 		//垂直偏移量
-		float offsetY= (float) getOffsetY() ;		
+		float offsetY= MathHelper.getInstance().dtof(getOffsetY()) ;		
 	
 		//Shadow
 		float baseLeft2 = MathHelper.getInstance().sub(baseLeft , offsetX);
 		float baseTop2 = MathHelper.getInstance().add(baseTop , offsetY);
-		//float baseRight2 = Math.round(baseRight - offsetX) ;
 		float baseBottom2 = MathHelper.getInstance().add(baseBottom , offsetY) ;			
 		
 		//左侧面
@@ -391,14 +388,14 @@ public class Bar3D extends Bar{
 		
 		//正面
 		canvas.drawRect(baseLeft2, baseTop2, 
-						Math.round(baseLeft2 - offsetX), baseBottom2, mPaintBase3D);
+				MathHelper.getInstance().sub(baseLeft2 , offsetX), baseBottom2, mPaintBase3D);
 				
 		//侧面顶		
 		pBase2D.reset();	
 		pBase2D.moveTo(baseLeft, baseTop); 
 		pBase2D.lineTo(baseLeft2, baseTop2); 
-		pBase2D.lineTo(Math.round(baseLeft2 - offsetX),baseTop2); 
-		pBase2D.lineTo(Math.round(baseLeft - offsetX),baseTop); 
+		pBase2D.lineTo(MathHelper.getInstance().sub(baseLeft2 ,offsetX),baseTop2); 
+		pBase2D.lineTo(MathHelper.getInstance().sub(baseLeft ,offsetX),baseTop); 
 		pBase2D.close();
 		canvas.drawPath(pBase2D,mPaintBase3D); 			
 	}

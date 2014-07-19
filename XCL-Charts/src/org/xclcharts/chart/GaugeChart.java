@@ -184,9 +184,7 @@ public class GaugeChart extends CirChart{
 	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
 			
 			//在饼图中显示所占比例  
-			canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
-		  
-		
+			canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);		
 		}catch( Exception e){
 			throw e;
 		}
@@ -269,11 +267,12 @@ public class GaugeChart extends CirChart{
 	 */
 	private void renderTicks(Canvas canvas)
 	{
-		//步长角度
-		double stepsAgent = Math.round(180d/mTickSteps);		
+		//步长角度		
+		Double fd = new Double(mTickSteps);
+		float stepsAgent = div(180.0f,fd.floatValue());	
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
-		float tickRadius = Math.round(this.getRadius() * 0.9f);
+		float tickRadius = mul(getRadius(),0.9f); 
 				
 		for(int i=0;i<mTickSteps;i++)
 		{
@@ -296,7 +295,7 @@ public class GaugeChart extends CirChart{
 	 */
 	private void renderPointerLine(Canvas canvas)
 	{		
-		float currentRadius = Math.round(this.getRadius() * 0.9f);
+		float currentRadius = mul(getRadius() , 0.9f); 
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
 						
@@ -326,7 +325,7 @@ public class GaugeChart extends CirChart{
 	{
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
-		canvas.drawCircle(cirX, cirY, Math.round(this.getRadius() * 0.05f), mPaintPinterCircle);
+		canvas.drawCircle(cirX, cirY, mul(this.getRadius() ,0.05f), mPaintPinterCircle);
 	}
 	
 		
@@ -334,10 +333,10 @@ public class GaugeChart extends CirChart{
 	 * 绘制内部颜色分区填充
 	 * @throws Exception
 	 */
-	private void renderPartitionFill(Canvas canvas) throws Exception
+	private boolean renderPartitionFill(Canvas canvas) throws Exception
 	{		
-		Integer totalAgent = 0;		
-		 float newRadius = Math.round(getRadius() * 0.8f);
+		 float totalAgent = 0.0f;		
+		 float newRadius = mul(getRadius() , 0.8f);
 						 
 	     RectF rect =new RectF();
 	     rect.left  = sub(plotArea.getCenterX() , newRadius);
@@ -345,22 +344,28 @@ public class GaugeChart extends CirChart{
 	     rect.right = add(plotArea.getCenterX() , newRadius);
 	     rect.bottom= add(plotArea.getCenterY() , newRadius);  
 	     
-	     if(null == mPartitionDataset) return ;
+	     if(null == mPartitionDataset||mPartitionDataset.size() == 0)
+	     {
+	    	 Log.e(TAG,"数据源为空.");
+	    	 return false;
+	     }
 		 for(Pair pr : mPartitionDataset)
 		 {			
-			 Integer agentValue = (Integer) pr.first;					 
-			 if(agentValue < 0){
+			 Float agentValue = (Float) pr.first;	
+			 float total = add(totalAgent , agentValue);			 
+			 
+			 if(Float.compare(agentValue, 0.0f) < 0){
 					Log.e(TAG,"负角度???!!!");
-			 }else if((totalAgent + agentValue) > 180)
+			 }else if(Float.compare(total, 180.0f) == 1)   //(totalAgent + agentValue) > 180)
 		     {
 		    	 Log.e(TAG,"输入的角度总计大于180度");
-		    	 return ;
+		    	 return false;
 		     }			 			 
 			 mPaintPartitionFill.setColor((Integer) pr.second);				 
-			 canvas.drawArc(rect, totalAgent + 180, agentValue, true, mPaintPartitionFill);
-		     totalAgent += agentValue;
+			 canvas.drawArc(rect, add(totalAgent,180.0f), agentValue, true, mPaintPartitionFill);		     
+		     totalAgent = add(totalAgent,agentValue);
 		 }
-				 
+		 return false;		 
 	}
 	
 	@Override

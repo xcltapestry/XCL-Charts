@@ -22,6 +22,7 @@
 
 package org.xclcharts.chart;
 
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
@@ -94,7 +95,7 @@ public class DountChart  extends PieChart{
 	 */
 	public float calcInnerRadius()
 	{
-		mFillRadius = (int) Math.round(getRadius() * mInnerSize);
+		mFillRadius =  (int) MathHelper.getInstance().round( mul(getRadius(),mInnerSize), 2);
 		return mFillRadius;
 	}
 	
@@ -131,7 +132,7 @@ public class DountChart  extends PieChart{
 	 * 绘制图 -- 环形图的标签处理待改进 ***
 	 */
 	@Override
-	protected void renderPlot(Canvas canvas)
+	protected boolean renderPlot(Canvas canvas)
 	{
 		 super.renderPlot(canvas);
 		//中心点坐标
@@ -141,6 +142,7 @@ public class DountChart  extends PieChart{
 	     calcInnerRadius();
 	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);     
 	     renderCenterText(canvas);
+	     return true;
 	}	
 
 }

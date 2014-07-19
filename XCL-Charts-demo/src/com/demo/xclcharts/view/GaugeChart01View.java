@@ -46,7 +46,7 @@ public class GaugeChart01View  extends GraphicalView {
 	
 	private List<String> mLabels = new ArrayList<String>();
 	private List<Pair> mPartitionSet = new ArrayList<Pair>();		
-	private float mAgent = 0f;
+	private float mAgent = 0.0f;
 
 	
 	public GaugeChart01View(Context context) {
@@ -127,9 +127,9 @@ public class GaugeChart01View  extends GraphicalView {
 	private void chartDataSet()
 	{
 		int agent = 180/3;
-		mPartitionSet.add(new Pair<Integer,Integer>(agent, (int)Color.rgb(73, 172, 72)));
-		mPartitionSet.add(new Pair<Integer,Integer>(agent, (int)Color.rgb(247, 156, 27)));
-		mPartitionSet.add(new Pair<Integer,Integer>(agent, (int)Color.rgb(224, 62, 54)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)agent, (int)Color.rgb(73, 172, 72)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)agent, (int)Color.rgb(247, 156, 27)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)agent, (int)Color.rgb(224, 62, 54)));
 	}
 	
 	private void chartLabels()

@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.axis.DataAxisRender;
 import org.xclcharts.renderer.plot.PlotAreaRender;
 
@@ -110,17 +111,23 @@ public class PlotCustomLine {
 			Log.e(TAG, "轴的屏幕高度值没有传过来。");
 			return false;
 		}		
-		double axisHeight = mDataAxis.getAxisMax() - mDataAxis.getAxisMin();
+		double axisHeight = MathHelper.getInstance().sub( mDataAxis.getAxisMax(), mDataAxis.getAxisMin());
 		
 		for(CustomLineData line : mCustomLineDataset)
 		{			
 			line.getCustomLinePaint().setColor(line.getColor());
-			line.getCustomLinePaint().setStrokeWidth(line.getLineStroke());
+			line.getCustomLinePaint().setStrokeWidth(line.getLineStroke());		
 			
-			double  postion = mAxisScreenHeight * ( 
-								(line.getValue() - mDataAxis.getAxisMin()) /axisHeight  );
+			//double  postion = mAxisScreenHeight * ( 
+			//					(line.getValue() - mDataAxis.getAxisMin()) /axisHeight  );
+			double per =  MathHelper.getInstance().div(
+								MathHelper.getInstance().sub( line.getValue() , mDataAxis.getAxisMin()),
+								axisHeight  );			
+			float  postion = MathHelper.getInstance().mul(mAxisScreenHeight ,  
+															MathHelper.getInstance().dtof(per)); 		
 			
-			float currentY = (float) (mPlotArea.getBottom() - postion); 
+			//float currentY = (float) (mPlotArea.getBottom() - postion); 			
+			float currentY =  MathHelper.getInstance().sub(mPlotArea.getBottom(),postion);
 			
 			//绘制线
 			if(line.isShowLine())
@@ -141,7 +148,7 @@ public class PlotCustomLine {
 	 * @param chartPostion	位置
 	 */
 	private void renderCapLabelVerticalPlot(Canvas canvas,
-										CustomLineData line,double chartPostion )
+										CustomLineData line,float chartPostion )
 	{
 		
 		if(line.getLabel().length()  > 0)
@@ -150,25 +157,34 @@ public class PlotCustomLine {
 			float capX = 0.0f;
 			
 			//显示在哪个高度位置
-			currentY = (float) (mPlotArea.getBottom() - chartPostion); 		
+			currentY =  MathHelper.getInstance().sub(mPlotArea.getBottom() , chartPostion); 		
 		
 			switch (line.getLabelHorizontalPostion())
 			{
 			case LEFT:
-				currentX =  mPlotArea.getLeft() -  line.getLabelOffset();	
+				currentX =  MathHelper.getInstance().sub(mPlotArea.getLeft() ,  line.getLabelOffset());	
 				line.getLineLabelPaint().setTextAlign(Align.RIGHT);
 				
 				capX =  mPlotArea.getRight();	
 				break;
 			case CENTER:				
-				currentX = mPlotArea.getLeft() + 
-							(mPlotArea.getRight() -  mPlotArea.getLeft() ) /2  - line.getLabelOffset();									
+				//currentX = mPlotArea.getLeft() + 
+				//			(mPlotArea.getRight() -  mPlotArea.getLeft() ) /2  - line.getLabelOffset();		
+								
+				float w = MathHelper.getInstance().div(
+										MathHelper.getInstance().sub(mPlotArea.getRight(),mPlotArea.getLeft()),2);
+				currentX = MathHelper.getInstance().add(mPlotArea.getLeft() , w);
+				currentX = MathHelper.getInstance().sub(currentX ,line.getLabelOffset());										
 				line.getLineLabelPaint().setTextAlign(Align.CENTER);
 									
-				capX = mPlotArea.getLeft() + (mPlotArea.getRight() -  mPlotArea.getLeft() ) /2;					
+				//capX = mPlotArea.getLeft() + (mPlotArea.getRight() -  mPlotArea.getLeft() ) /2;						
+				float w2 = MathHelper.getInstance().div(
+							MathHelper.getInstance().sub(mPlotArea.getRight(), mPlotArea.getLeft()),2);
+				capX =  MathHelper.getInstance().add(mPlotArea.getLeft(),w2);
+				
 				break;
 			case RIGHT:
-				currentX =  mPlotArea.getRight() + line.getLabelOffset();	
+				currentX =  MathHelper.getInstance().add(mPlotArea.getRight() , line.getLabelOffset());	
 				line.getLineLabelPaint().setTextAlign(Align.LEFT);		
 				
 				capX =  mPlotArea.getLeft() ;
@@ -235,6 +251,10 @@ public class PlotCustomLine {
 					(line.getValue() - mDataAxis.getAxisMin()) /axisHeight  );
 			
 			float currentX = (float) (mPlotArea.getLeft() + postion); 
+			
+			
+			
+			
 			//绘制线	
 			if(line.isShowLine())
 				DrawHelper.getInstance().drawLine(line.getLineStyle(), 

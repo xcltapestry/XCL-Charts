@@ -38,6 +38,7 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName SplineChart
@@ -46,6 +47,8 @@ import android.graphics.Paint.Align;
  *  
  */
 public class SplineChart extends LnChart{
+	
+	private static final String TAG="SplineChart";
 	
 	//数据源
 	private List<SplineData> mDataset;
@@ -250,15 +253,22 @@ public class SplineChart extends LnChart{
 	/**
 	 * 绘制图
 	 */
-	private void renderVerticalPlot(Canvas canvas)
+	private boolean renderVerticalPlot(Canvas canvas)
 	{
 		//检查是否有设置分类轴的最大最小值		
-		if(mMaxValue == mMinValue && 0 == mMaxValue) return ;
-		if(null == mDataset) return ;
-						
+		if(mMaxValue == mMinValue && 0 == mMaxValue)
+		{
+			Log.e(TAG,"请检查是否有设置分类轴的最大最小值。");
+			return false;
+		}
+		if(null == mDataset)
+		{
+			Log.e(TAG,"数据源为空.");
+			return false;
+		}
+					
 		renderVerticalDataAxis(canvas);
-		renderVerticalCategoryAxis(canvas);
-		
+		renderVerticalCategoryAxis(canvas);		
 		
 		//开始处 X 轴 即分类轴              
 		List<LnData> lstKey = new ArrayList<LnData>();		
@@ -270,6 +280,7 @@ public class SplineChart extends LnChart{
 		}	
 		//key
 		plotLegend.renderLineKey(canvas,lstKey);
+		return true;
 	}
 	
 	@Override
@@ -280,11 +291,12 @@ public class SplineChart extends LnChart{
 			super.postRender(canvas);
 						
 			//绘制图表
-			renderVerticalPlot(canvas);
-			
-			//画曲线图，横向的定制线
-			mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-			ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+			if( (ret = renderVerticalPlot(canvas)) == true)
+			{			
+				//画曲线图，横向的定制线
+				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+			}
 			
 		}catch( Exception e){
 			 throw e;

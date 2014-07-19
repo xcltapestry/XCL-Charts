@@ -285,7 +285,8 @@ public class LineChart extends LnChart{
 		{			
 			boolean ret = true;
 			try{
-				super.postRender(canvas);	
+				super.postRender(canvas);				
+				
 				//画线形图
 				if((ret = renderVerticalPlot(canvas)) == true)
 				{				

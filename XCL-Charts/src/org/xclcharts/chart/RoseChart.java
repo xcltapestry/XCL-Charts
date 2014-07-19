@@ -31,6 +31,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
+import android.util.Log;
 
 /**
  * @ClassName RoseChart
@@ -39,6 +40,8 @@ import android.graphics.RectF;
  *  
  */
 public class RoseChart extends PieChart{
+	
+	private static final String TAG="PieChart";
 	
 	private Paint mPaintInner = new Paint();
 
@@ -81,7 +84,7 @@ public class RoseChart extends PieChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot(Canvas canvas)
+	protected boolean renderPlot(Canvas canvas)
 	{			 							
 			//计算中心点坐标
 			float cirX = plotArea.getCenterX();
@@ -101,25 +104,34 @@ public class RoseChart extends PieChart{
 	 		
 	 		//数据源
 	 		List<PieData> chartDataSource = this.getDataSource();
+	 		if(null == chartDataSource || chartDataSource.size() == 0)
+	 		{
+	 			Log.e(TAG,"数据源为空.");
+	 			return false;
+	 		}
 			
 			//依参数个数，算出总个要算多少个扇区的角度
 			percentage = 360 / chartDataSource.size();
-			percentage = (float)(Math.round(percentage *100))/100; 
+			//percentage = (float)(Math.round(percentage *100))/100; 		
+			percentage = div(mul(percentage,100),100);
 			
-	        
 	        for(PieData cData : chartDataSource)
 			{
 				paintArc.setColor(cData.getSliceColor());	
 				
 				//将百分比转换为新扇区的半径    
-				newRaidus = (float) (radius * (cData.getPercentage()/ 100));  
-	            newRaidus = (float)(Math.round(newRaidus *100))/100;    
+				double p = cData.getPercentage()/ 100;					
+				newRaidus = mul(radius,dtof(p));				
+				newRaidus = div(mul(newRaidus,100),100);
+				
+				//newRaidus = (float) (radius * (cData.getPercentage()/ 100));  
+	            //newRaidus = (float)(Math.round(newRaidus *100))/100;    
 	            
 	            //在饼图中显示所占比例  
-	            float nLeft = cirX - newRaidus;  
-	            float nTop  = cirY - newRaidus ;  
-	            float nRight = cirX + newRaidus ;  
-	            float nBottom = cirY + newRaidus ;  
+	            float nLeft = sub(cirX , newRaidus);  
+	            float nTop  = sub(cirY , newRaidus) ;  
+	            float nRight = add(cirX , newRaidus) ;  
+	            float nBottom = add(cirY , newRaidus) ;  
 	            RectF nRF = new RectF(nLeft ,nTop,nRight,nBottom);  
 	            canvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
 				
@@ -130,9 +142,9 @@ public class RoseChart extends PieChart{
 	            canvas.drawText(cData.getLabel(),MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,getLabelPaint());             
 	         
 	          //下次的起始角度  
-	            mOffsetAgent += percentage;  
+	            mOffsetAgent = add(mOffsetAgent,percentage);
 			}			
-	        
+	        return true;
 	}
 		
 

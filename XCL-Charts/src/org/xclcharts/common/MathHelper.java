@@ -40,7 +40,7 @@ public class MathHelper {
 	private float posY = 0.0f;
 	
 	//除法运算精度
-	private static final int DEFAULT_DIV_SCALE = 2;
+	private static final int DEFAULT_DIV_SCALE = 10;
 		
 	public MathHelper()
 	{	
@@ -161,7 +161,7 @@ public class MathHelper {
 	 }
 		 
 	 /**
-	  * 除法运算,当除不尽时，精确到小数点后2位
+	  * 除法运算,当除不尽时，精确到小数点后10位
 	  * @param v1
 	  * @param v2
 	  * @return 运算结果
@@ -211,9 +211,10 @@ public class MathHelper {
 	  */
 	public double ftod(float f)
 	{
-		BigDecimal b = new BigDecimal(String.valueOf(f));
-		double d = b.doubleValue();
-		return d;
+		//BigDecimal b = new BigDecimal(String.valueOf(f));
+		//double d = b.doubleValue();		
+		Float t = new Float(f);
+		return t.doubleValue();
 	}
 	
 	/**
@@ -223,9 +224,10 @@ public class MathHelper {
 	 */
 	public float dtof(double d)
 	{
-		BigDecimal b = new BigDecimal(String.valueOf(d));
-		float f = b.floatValue();
-		return f;
+		//BigDecimal b = new BigDecimal(String.valueOf(d));
+		//float f = b.floatValue();		
+		Double bd = new Double(d);	
+		return bd.floatValue();
 	}
 	
 	 public double add(double v1, double v2) 
@@ -240,6 +242,11 @@ public class MathHelper {
 		 BigDecimal b1 = new BigDecimal(Double.toString(v1));
 		 BigDecimal b2 = new BigDecimal(Double.toString(v2));
 		 return b1.subtract(b2).doubleValue();
+	 }
+	 
+	 public double div(double v1, double v2) 
+	 {
+		 return div(v1,v2,DEFAULT_DIV_SCALE);
 	 }
 	 
 	 public double div(double v1, double v2, int scale) 

@@ -29,6 +29,7 @@ import org.xclcharts.common.MathHelper;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.util.Log;
 
 /**
  * @ClassName Pie3DChart
@@ -37,6 +38,8 @@ import android.graphics.RectF;
  *  
  */
 public class PieChart3D extends PieChart{
+	
+	private static final String TAG="PieChart3D";
 	
 	//渲染层数
 	private final int mRender3DLevel = 15; 
@@ -47,8 +50,16 @@ public class PieChart3D extends PieChart{
 	}
 
 	@Override 
-	protected void renderPlot(Canvas canvas)
+	protected boolean renderPlot(Canvas canvas)
 	{		
+		//数据源
+ 		List<PieData> chartDataSource = this.getDataSource();
+ 		if(null == chartDataSource)
+		{
+ 			Log.e(TAG,"数据源为空.");
+ 			return false;
+		}
+ 		
 		//计算中心点坐标		
 		float cirX = plotArea.getCenterX();
 	    float cirY = plotArea.getCenterY();	     
@@ -63,16 +74,11 @@ public class PieChart3D extends PieChart{
         	       
         //画笔初始化
 		Paint paintArc = new Paint();  
-		paintArc.setAntiAlias(true);	
-				
-		//数据源
- 		List<PieData> chartDataSource = this.getDataSource();
- 		if(null == chartDataSource)return;
- 		float initOffsetAgent = mOffsetAgent;
+		paintArc.setAntiAlias(true);					
 		
+ 		float initOffsetAgent = mOffsetAgent;		
 		//3D
-        float currentAgent = 0.0f;	     
-        
+        float currentAgent = 0.0f;	             
      
 		for(int i=0;i < mRender3DLevel;i++)
 		{
@@ -83,6 +89,8 @@ public class PieChart3D extends PieChart{
 			    PieData cData =  chartDataSource.get(j);			  
 				paintArc.setColor(cData.getSliceColor());				
 				currentAgent = cData.getSliceAgent();
+				if(Float.compare(currentAgent,0.0f) == 0 
+						|| Float.compare(currentAgent,0.0f) == -1 )continue;	
 				
 			    if(cData.getSelected()) //指定突出哪个块
 	            {				    			    	
@@ -149,6 +157,7 @@ public class PieChart3D extends PieChart{
 		}			
 		//图KEY
 		plotLegend.renderPieKey(canvas,this.getDataSource());
+		return true;
 	}
 
 }

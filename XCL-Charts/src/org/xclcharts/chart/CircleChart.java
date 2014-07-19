@@ -177,7 +177,7 @@ public class CircleChart extends CirChart {
     /**
      * 绘制图
      */
-    protected void renderPlot(Canvas canvas) {
+    protected boolean renderPlot(Canvas canvas) {
         try {
 
             //中心点坐标
@@ -213,14 +213,12 @@ public class CircleChart extends CirChart {
                     drawPercent(canvas, mPaintFillCircle, cirX, cirY, 
                     		MathHelper.getInstance().round(mul(radius , 0.9f),2), 180f, 180f);
                     
-
-                   // currentAgent = (int) Math.round(180 * (cData.getPercentage() / 100f));                      
+                    
                     float per = (float) cData.getPercentage();                    
                     currentAgent = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);
                     
                                         
                     drawPercent(canvas, paintArc, cirX, cirY, radius, 180f,  currentAgent);
-                   // drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.8f)), 180f, 180f);
                     drawPercent(canvas, mPaintFillCircle, cirX, cirY,
                     						MathHelper.getInstance().round( mul(radius , 0.8f),2), 180f, 180f);
                     
@@ -236,7 +234,6 @@ public class CircleChart extends CirChart {
                     
 
                     canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);
-                   // canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.8f)), mPaintFillCircle);
                     canvas.drawCircle(cirX, cirY, 
                     					MathHelper.getInstance().round(mul(radius , 0.8f),2), mPaintFillCircle);
                     
@@ -252,6 +249,7 @@ public class CircleChart extends CirChart {
         } catch (Exception e) {
         	Log.e(TAG,e.toString());
         }
+        return true;
     }
 
     @Override
@@ -261,11 +259,11 @@ public class CircleChart extends CirChart {
 		try {
 			super.postRender(canvas);
 			
-			renderPlot(canvas);
+			return renderPlot(canvas);
 		} catch (Exception e) {
 			throw e;
 		}
-		return true;
+		
 	}
     
 

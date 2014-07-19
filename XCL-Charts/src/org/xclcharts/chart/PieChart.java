@@ -155,7 +155,7 @@ public class PieChart extends CirChart{
 	 * @param curretAgent 当前绘制角度
 	 * @throws Exception  例外处理
 	 */
-	protected void drawSlice(Canvas canvas, Paint paintArc,RectF arcRF0,
+	protected boolean drawSlice(Canvas canvas, Paint paintArc,RectF arcRF0,
 							PieData cData,
 							final float cirX,
 							final float cirY,
@@ -164,7 +164,7 @@ public class PieChart extends CirChart{
 							final float curretAgent) throws Exception
 	{
 		try{
-			if(!validateAgent(curretAgent))return ;
+			if(!validateAgent(curretAgent))return false;
 			
 			// 绘制环形渐变
 			if(getGradient())
@@ -175,7 +175,8 @@ public class PieChart extends CirChart{
          
             //标签 
         	renderLabel(canvas,cData.getLabel(),cirX, cirY,
-	        			radius,offsetAgent,curretAgent);          
+	        			radius,offsetAgent,curretAgent);  
+        	return true;
 		}catch( Exception e){
 			throw e;
 		}
@@ -193,7 +194,7 @@ public class PieChart extends CirChart{
 	 * @param curretAgent 当前绘制角度
 	 * @throws Exception  例外处理
 	 */
-	protected void drawSelectedSlice(Canvas canvas, Paint paintArc,
+	protected boolean drawSelectedSlice(Canvas canvas, Paint paintArc,
 									PieData cData,
 									final float cirX,
 									final float cirY,
@@ -202,7 +203,7 @@ public class PieChart extends CirChart{
 									final float curretAgent) throws Exception
 	{
 		try{			
-			if(!validateAgent(curretAgent))return ;
+			if(!validateAgent(curretAgent))return false;
 			
 			//偏移圆心点位置(默认偏移半径的1/10)
 	    	float newRadius = div(radius , SELECTED_OFFSET);
@@ -228,8 +229,9 @@ public class PieChart extends CirChart{
 	        renderLabel(canvas,cData.getLabel(),
 			        			MathHelper.getInstance().getPosX(), 
 			        			MathHelper.getInstance().getPosY(),
-			        			radius,offsetAgent,curretAgent);	   
+			        			radius,offsetAgent,curretAgent);	
 	        
+	        return true;	        
 		}catch( Exception e){
 			 throw e;
 		}
@@ -238,11 +240,15 @@ public class PieChart extends CirChart{
 	/**
 	 * 绘制图
 	 */
-	protected void renderPlot(Canvas canvas)
+	protected boolean renderPlot(Canvas canvas)
 	{
 	
-		try{	
-			if(null == mDataset)return;
+		try{				
+			if(null == mDataset)
+			{
+	 			Log.e(TAG,"数据源为空.");
+	 			return false;
+			}
 			//中心点坐标
 			float cirX = plotArea.getCenterX();
 		    float cirY = plotArea.getCenterY();		     
@@ -271,13 +277,13 @@ public class PieChart extends CirChart{
 								
 			    if(cData.getSelected()) //指定突出哪个块
 	            {			    	            		            	
-	            	drawSelectedSlice(canvas,paintArc,cData,
+	            	if(!drawSelectedSlice(canvas,paintArc,cData,
 	            			cirX,cirY,radius,
-	            			mOffsetAgent,currentAgent);			    		            		            		            
+	            			mOffsetAgent,currentAgent))return false;			    		            		            		            
 	            }else{
-	            	drawSlice(canvas,paintArc,arcRF0,cData,
+	            	if(!drawSlice(canvas,paintArc,arcRF0,cData,
 	            			cirX,cirY,radius,
-	            			mOffsetAgent,(float) currentAgent);	            	
+	            			mOffsetAgent,(float) currentAgent))return false;	            	
 	            }
 	          //下次的起始角度  
 	            mOffsetAgent = add(mOffsetAgent, currentAgent);
@@ -288,8 +294,9 @@ public class PieChart extends CirChart{
 		
 		 }catch( Exception e){
 			 Log.e(TAG,e.toString());
+			 return false;
 		 }
-		
+		 return true;
 	}
 	
 	/**
@@ -334,11 +341,10 @@ public class PieChart extends CirChart{
 	        if(false == validateParams())return false;
 			
 			//绘制图表
-			renderPlot(canvas);
+			return renderPlot(canvas);
 		} catch (Exception e) {
 			throw e;
 		}
-		return true;
 	}
 	
 }

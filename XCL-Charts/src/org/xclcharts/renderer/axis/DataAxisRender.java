@@ -30,6 +30,7 @@ package org.xclcharts.renderer.axis;
  *  
  */
 
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
 
 import android.graphics.Canvas;
@@ -48,9 +49,10 @@ public class DataAxisRender extends DataAxis {
 	 * 返回轴值的范围(即最大-最小值).
 	 * @return 轴值范围
 	 */
-	public int getAxisRange()
+	public double getAxisRange()
 	{
-		return (int) Math.abs(getAxisMax() - getAxisMin());		
+		//return (int) Math.abs(getAxisMax() - getAxisMin());		
+		return MathHelper.getInstance().sub(getAxisMax(), getAxisMin());
 	}
 	
 	

@@ -22,17 +22,13 @@
 
 package org.xclcharts.renderer.bar;
 
-import java.util.List;
-
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint.Style;
 import android.graphics.Shader;
-import android.graphics.Typeface;
 import android.util.Log;
 
 /**
@@ -76,7 +72,7 @@ public class FlatBar extends Bar{
 	 * @param barNumber  柱形个数
 	 * @return 返回单个柱形的高度及间距
 	 */
-	public List<Float> getBarHeightAndMargin(float YSteps,int barNumber)
+	public float[] getBarHeightAndMargin(float YSteps,int barNumber)
 	{
 		return calcBarHeightAndMargin( YSteps, barNumber);
 	}
@@ -86,7 +82,7 @@ public class FlatBar extends Bar{
 	 * @param barNumber 柱形个数
 	 * @return 返回单个柱形的宽度及间距
 	 */
-	public List<Float> getBarWidthAndMargin(float XSteps,int barNumber)
+	public float[] getBarWidthAndMargin(float XSteps,int barNumber)
 	{
 		return calcBarWidthAndMargin(XSteps,barNumber);
 	}
@@ -129,7 +125,7 @@ public class FlatBar extends Bar{
 	 * @param bottom	底部Y坐标
 	 * @param canvas	画布
 	 */
-	public void renderBar(float left,float top,float right ,float bottom,Canvas canvas)
+	public boolean renderBar(float left,float top,float right ,float bottom,Canvas canvas)
 	{				
 		
 		if( XEnum.BarStyle.OUTLINE == getBarStyle())
@@ -145,7 +141,7 @@ public class FlatBar extends Bar{
 			//getBarPaint().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 			getBarPaint().setColor(barColor);
 			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());			
-			return ;
+			return true;
 		}
 		
 		//GRADIENT,FILL,STROKE
@@ -164,11 +160,12 @@ public class FlatBar extends Bar{
 			break;
 		default:
 			Log.e(TAG,"不认识的柱形风格参数.");
-			return ;
+			return false;
 		} 
 		
 		setBarGradient(left,top,right,bottom);
-		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());			
+		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
+		return true;
 	}
 	
 	/**

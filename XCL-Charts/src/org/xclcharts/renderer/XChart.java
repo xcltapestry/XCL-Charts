@@ -649,7 +649,7 @@ public class XChart implements IRender {
 	 }
 		 
 	 /**
-	  * 除法运算,当除不尽时，精确到小数点后2位
+	  * 除法运算,当除不尽时，精确到小数点后10位
 	  * @param v1 参数1
 	  * @param v2 参数2
 	  * @return 运算结果
@@ -658,6 +658,17 @@ public class XChart implements IRender {
 	 {
 		 return MathHelper.getInstance().div(v1, v2);
 	 }
+	 
+	 /**
+	  * double转float
+	  * @param d double参数
+	  * @return float
+	  */
+	 protected float dtof(double d)
+	 {
+		 return MathHelper.getInstance().dtof(d);
+	 }
+	 
 	//math计算类函数 ----------------------------------------------------------------
 	 
 }

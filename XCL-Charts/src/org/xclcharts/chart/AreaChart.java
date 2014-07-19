@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.graphics.Canvas;
+
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -37,6 +39,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.util.Log;
 
 
 /**
@@ -46,6 +49,8 @@ import android.graphics.Path;
  */
 
 public class AreaChart extends LnChart{	
+	
+	private static final String TAG="AreaChart";
 	
 	//画点分类的画笔
   	protected Paint mPaintAreaFill =  null; 
@@ -76,6 +81,7 @@ public class AreaChart extends LnChart{
 	 */
 	public void setCategories(List<String> categories)
 	{
+		if(null == categories) return;
 		categoryAxis.setDataBuilding(categories);
 	}
 	
@@ -85,6 +91,7 @@ public class AreaChart extends LnChart{
 	 */
 	public void setDataSource(List<AreaData> dataset)
 	{
+		if(null == dataset) return;
 		this.mDataset = dataset;		
 	}
 	
@@ -103,8 +110,16 @@ public class AreaChart extends LnChart{
 	 * @param type	绘制类型
 	 * @param alpha 透明度
 	 */
-	private void renderLine(Canvas canvas, AreaData bd,String type,int alpha)
+	private boolean renderLine(Canvas canvas, AreaData bd,String type,int alpha)
 	{
+		//数据源
+		List<Double> chartValues = bd.getLinePoint();
+		if(null == chartValues)
+		{
+			Log.e(TAG,"线数据集合为空.");
+			return false;
+		}				
+				
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
          
@@ -115,12 +130,8 @@ public class AreaChart extends LnChart{
         						
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
-		float currLablesSteps = this.getAxisScreenWidth() / (categoryAxis.getDataSet().size() -1) ;  	
-		
-		//数据源
-		List<Double> chartValues = bd.getLinePoint();
-		if(null == chartValues) return ;
-		
+		float currLablesSteps = div(getAxisScreenWidth(), (categoryAxis.getDataSet().size() -1));
+					
 		 //用于画折线   
         Path pathArea = new Path();  
         pathArea.moveTo(initX,initY);   
@@ -131,23 +142,26 @@ public class AreaChart extends LnChart{
         //设置当前填充色
         mPaintAreaFill.setColor(bd.getAreaFillColor());
             
+        double dper = 0d;
 		int j = 0;					 
 		for(Double bv : chartValues)
         {								
 			//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
-        	float valuePosition = (float) Math.round(
-					axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ; 
+        	//float valuePosition = (float) Math.round(
+			//		axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;        	            
+        	dper = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());
+        	float valuePosition = mul(axisScreenHeight, div(dtof(dper),axisDataHeight) );
         	
         	if(j == 0 )
 			{
 				lineStartX = initX;
-				lineStartY = initY - valuePosition;
+				lineStartY = sub(initY , valuePosition);
 				
 				lineEndX = lineStartX;
 				lineEndY = lineStartY;
 			}else{
-				lineEndX =  initX + (j) * currLablesSteps;
-				lineEndY = initY - valuePosition;
+				lineEndX = add(initX , (j) * currLablesSteps);
+				lineEndY = sub(initY , valuePosition);
 			}
         	        	 
         	if(j == chartValues.size() - 1)    //收尾，将path连接一气  
@@ -167,7 +181,7 @@ public class AreaChart extends LnChart{
         		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
             	{            	
             		PlotDot pDot = pLine.getPlotDot();	              
-            		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
+            		float rendEndX  = add(lineEndX  , pDot.getDotRadius());               		
         			
             		PlotDotRender.getInstance().renderDot(canvas,pDot,
             				lineStartX ,lineStartY ,
@@ -182,7 +196,8 @@ public class AreaChart extends LnChart{
 							lineEndX, lineEndY,  pLine.getDotLabelPaint());
             	}
         	}else{
-        		return ;
+        		Log.e(TAG,"未知的处理参数.");
+        		return false;
         	}      
         	////////////////////
         	
@@ -196,31 +211,36 @@ public class AreaChart extends LnChart{
 		pathArea.lineTo(lineStartX ,initY);  
 		pathArea.close(); 
 		if(type.equalsIgnoreCase("LINE"))
-    	{
 			canvas.drawPath(pathArea, mPaintAreaFill);
-    	}
+    
+		return true;
 	}
 	
 	
-	private void renderVerticalPlot(Canvas canvas)
-	{				
+	private boolean renderVerticalPlot(Canvas canvas)
+	{								
+		if(null == mDataset)
+		{
+			Log.e(TAG,"数据源为空.");
+			return false;
+		}
+		
 		renderVerticalDataAxis(canvas);
 		renderVerticalCategoryAxis(canvas);
-		
-		if(null == mDataset) return ;
 		
 		List<LnData> lstKey = new ArrayList<LnData>();		
 		//开始处 X 轴 即分类轴                  
 		for(int i=0;i<mDataset.size();i++)
 		{								
-			this.renderLine(canvas, mDataset.get(i),"LINE",
-						(int)Math.round(mDataset.size() *i));
-			this.renderLine(canvas, mDataset.get(i),"DOT2LABEL",
-						(int)Math.round(mDataset.size() *i));
+			if(!this.renderLine(canvas, mDataset.get(i),"LINE",
+						(int)Math.round(mDataset.size() *i)) )return false;
+			if(!this.renderLine(canvas, mDataset.get(i),"DOT2LABEL",
+						(int)Math.round(mDataset.size() *i)) )return false;
 			lstKey.add(mDataset.get(i));
 		}
 			
 		plotLegend.renderLineKey(canvas, lstKey);
+		return true;
 	}
 	
 
@@ -233,11 +253,10 @@ public class AreaChart extends LnChart{
 			super.postRender(canvas);
 			
 			//绘制图表
-			renderVerticalPlot(canvas);
+			return renderVerticalPlot(canvas);
 		} catch (Exception e) {
 			throw e;
 		}
-		return true;
 	}
 	 
 }

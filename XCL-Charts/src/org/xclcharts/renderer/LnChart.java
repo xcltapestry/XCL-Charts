@@ -61,7 +61,6 @@ public class LnChart extends AxisChart {
 	 * @return Y轴步长
 	 */
 	private float getVerticalYSteps(int tickCount) {
-		//float YSteps = (float) (getAxisScreenHeight() / tickCount);	
 		return MathHelper.getInstance().div(getAxisScreenHeight() , tickCount);
 	}
 

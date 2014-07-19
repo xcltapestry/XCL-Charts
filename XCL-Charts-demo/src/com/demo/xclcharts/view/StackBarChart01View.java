@@ -178,14 +178,14 @@ public class StackBarChart01View extends TouchView {
 	{
 		//标签1对应的柱形数据集
 		List<Double> dataSeriesA= new LinkedList<Double>();	
-		dataSeriesA.add((double)200);
-		dataSeriesA.add((double)250);
-		dataSeriesA.add((double)400); 
+		dataSeriesA.add((double)212);
+		dataSeriesA.add((double)234);
+		dataSeriesA.add((double)400.123); 
 
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add((double)300);
 		dataSeriesB.add((double)150); 
-		dataSeriesB.add((double)450); 
+		dataSeriesB.add((double)450.456); 
 
 		
 		BarDataSet.add(new BarData("已用空间",dataSeriesA,(int)Color.rgb(0, 0,255)));
