@@ -50,6 +50,7 @@ import org.xclcharts.renderer.plot.PlotTitleRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PointF;
 
 public class XChart implements IRender {
 
@@ -117,21 +118,20 @@ public class XChart implements IRender {
 	}	
 	
 
-	// 图的内边距属性
-	//设置内边距百分比,即绘图区与图边距相隔距离的百分比,不允许负值
+
 	/**
 	 * 用于指定绘图区与图范围的内边距。单位为PX值. 即用于确定plotArea范围
 	 * 
-	 * @param top
-	 *            绘图区与图顶部的保留距离，用于显示标题及图例之类
-	 * @param bottom
-	 *            绘图区与图底部的保留距离，用于显示底轴及轴标题之类
 	 * @param left
 	 *            绘图区与图左边的保留宽度，用于显示左边轴及轴标题之类
+	 * @param top
+	 *            绘图区与图顶部的保留距离，用于显示标题及图例之类
 	 * @param right
 	 *            绘图区与图右边的保留宽度，用于显示右边轴及轴标题之类
+	 * @param bottom
+	 *            绘图区与图底部的保留距离，用于显示底轴及轴标题之类	
 	 */
-	public void setPadding(float top, float bottom, float left, float right) {
+	public void setPadding(float left, float top, float right,float bottom  ) {
 		if (top > 0)
 			mPaddingTop = top;
 		if (bottom > 0)
@@ -377,13 +377,13 @@ public class XChart implements IRender {
 	/**
 	 * 返回图中心点坐标
 	 * @return 坐标
-	 */
-	public double[] getCenterXY()
+	 */	
+	public PointF getCenterXY()
 	{
-		double [] xy = new double[2];
-		xy[0] = this.getLeft() + div(this.getWidth() , 2f) ;
-		xy[1] = this.getTop() + div(this.getHeight() , 2f) ;		
-		return xy;
+		PointF point = new PointF();
+		point.x = this.getLeft() + div(this.getWidth() , 2f) ;
+		point.y = this.getTop() + div(this.getHeight() , 2f) ;		
+		return point;
 	}
 	
 	
@@ -425,6 +425,8 @@ public class XChart implements IRender {
 	// {
 
 	// }
+	
+
 
 	/**
 	 * 绘制标题

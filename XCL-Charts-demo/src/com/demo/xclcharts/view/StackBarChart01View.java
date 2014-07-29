@@ -32,6 +32,7 @@ import org.xclcharts.chart.StackBarChart;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -43,6 +44,8 @@ import android.graphics.Paint.Align;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 /**
  * @ClassName StackBarChart01View
  * @Description  堆叠图 的例子
@@ -94,7 +97,7 @@ public class StackBarChart01View extends TouchView {
 			
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], DensityUtil.dip2px(getContext(), 55), ltrb[2], ltrb[3]);	
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], DensityUtil.dip2px(getContext(), 55));	
 			
 			//显示边框
 			chart.showRoundBorder();			
@@ -168,6 +171,9 @@ public class StackBarChart01View extends TouchView {
 			//定义柱形上标签显示颜色
 			chart.getBar().getItemLabelPaint().setColor(Color.rgb(77, 184, 73));
 			chart.getBar().getItemLabelPaint().setTypeface(Typeface.DEFAULT_BOLD);
+			
+			//激活点击监听
+			chart.ActiveListenItemClick();
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -216,4 +222,34 @@ public class StackBarChart01View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{		
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		
+		BarPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		BarData bData = BarDataSet.get(record.getDataID());					
+		Double bValue = bData.getDataSet().get(record.getDataChildID());			
+
+		Toast.makeText(this.getContext(),
+				"info:" + record.getBarInfo() +
+				" Key:" + bData.getKey() + 							
+				" Current Value:" + Double.toString(bValue), 
+				Toast.LENGTH_SHORT).show();				
+	}
+	
 }

@@ -27,8 +27,8 @@ public class BarChart07View  extends GraphicalView {
 	private List<BarData> chartData = new LinkedList<BarData>();
 	private List<CustomLineData> mCustomLineDataset = new LinkedList<CustomLineData>();
 	
-	private float mChartX = 0.0f;
-	private float mChartY = 0.0f;
+	//private float mChartX = 0.0f;
+	//private float mChartY = 0.0f;
 	
 	public BarChart07View(Context context) {
 		super(context);
@@ -198,7 +198,7 @@ public class BarChart07View  extends GraphicalView {
 	        		this.getLayoutParams().width - 10,
 	        		 this.getLayoutParams().height - 10);
 	        //设置绘图区内边距	(px),left,top,bottom保持与左边图要一致 
-	        chart.setPadding(120, 180, 0, 100);	
+	        chart.setPadding( 0,120, 100,180 );	
 	        
             chart.render(canvas);
             

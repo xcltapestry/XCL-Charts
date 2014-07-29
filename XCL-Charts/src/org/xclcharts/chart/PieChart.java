@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.CirChart;
 
 import android.graphics.Canvas;
@@ -65,7 +66,7 @@ public class PieChart extends CirChart{
 	public void setDataSource(List<PieData> piedata)
 	{
 		if(null != mDataset)mDataset.clear();
-		this.mDataset = piedata;
+		this.mDataset = piedata; 
 	}
 	
 	/**
@@ -254,7 +255,7 @@ public class PieChart extends CirChart{
 		    float cirY = plotArea.getCenterY();		     
 	        float radius = getRadius();
 	              
-	        //确定去饼图范围
+	        //确定饼图范围
 	        float arcLeft = sub(cirX , radius);  
 	        float arcTop  = sub(cirY , radius) ;  
 	        float arcRight = add(cirX , radius) ;  
@@ -267,6 +268,8 @@ public class PieChart extends CirChart{
 			
 			//用于存放当前百分比的圆心角度
 			float currentAgent = 0.0f;		
+			int i = 0;
+			float offsetAgent = mOffsetAgent;
 			
 			for(PieData cData : mDataset)
 			{
@@ -279,14 +282,19 @@ public class PieChart extends CirChart{
 	            {			    	            		            	
 	            	if(!drawSelectedSlice(canvas,paintArc,cData,
 	            			cirX,cirY,radius,
-	            			mOffsetAgent,currentAgent))return false;			    		            		            		            
+	            			offsetAgent,currentAgent))return false;			    		            		            		            
 	            }else{
 	            	if(!drawSlice(canvas,paintArc,arcRF0,cData,
 	            			cirX,cirY,radius,
-	            			mOffsetAgent,(float) currentAgent))return false;	            	
+	            			offsetAgent,(float) currentAgent))return false;	            	
 	            }
+			    
+			    //保存角度
+			    saveArcRecord(i,cirX,cirY,radius,offsetAgent,currentAgent);
+			    
 	          //下次的起始角度  
-	            mOffsetAgent = add(mOffsetAgent, currentAgent);
+			    offsetAgent = add(offsetAgent, currentAgent);
+	            i++;
 			}					
 			
 			//图KEY
@@ -330,6 +338,16 @@ public class PieChart extends CirChart{
 		return true;
 	}
 
+	/**
+	 * 返回当前点击点的信息
+	 * @param x 点击点X坐标
+	 * @param y	点击点Y坐标
+	 * @return 返回对应的位置记录
+	 */
+	public ArcPosition getPositionRecord(float x,float y)
+	{		
+		return getArcRecord(x,y);
+	}		
 	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 

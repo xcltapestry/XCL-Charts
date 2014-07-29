@@ -1,0 +1,31 @@
+package org.xclcharts.event.click;
+
+import android.graphics.PointF;
+
+
+
+public class PointPosition extends RectPosition {
+		
+	protected PointF mPoint = null;		
+	
+	public PointPosition()
+	{	
+	}
+	
+	protected void savePosition(float x,float y)
+	{
+		mPoint = new PointF();
+		
+		mPoint.x =  x;
+		mPoint.y =  y;				
+	}
+	
+	
+	public String getPointInfo()
+	{	
+		if(null == mPoint)return "";
+		String info = "x:"+Float.toString(mPoint.x)+" y:"+Float.toString(mPoint.y);
+		return info;
+	}
+	
+}

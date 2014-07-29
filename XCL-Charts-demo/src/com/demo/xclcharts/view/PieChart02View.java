@@ -30,6 +30,7 @@ import java.util.List;
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
+import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -38,6 +39,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName PieChart02View
@@ -89,10 +92,11 @@ public class PieChart02View extends TouchView {
 			//图的内边距
 			//注释折线较长，缩进要多些
 			int [] ltrb = new int[4];
-			ltrb[0] = DensityUtil.dip2px(getContext(), 55); //top	
-			ltrb[1] = DensityUtil.dip2px(getContext(), 50); //bottom	
-			ltrb[2] = DensityUtil.dip2px(getContext(), 60); //left		
-			ltrb[3] = DensityUtil.dip2px(getContext(), 60); //right				
+			ltrb[0] = DensityUtil.dip2px(getContext(), 60); //left	
+			ltrb[1] = DensityUtil.dip2px(getContext(), 55); //top	
+			ltrb[2] = DensityUtil.dip2px(getContext(), 60); //right
+			ltrb[3] = DensityUtil.dip2px(getContext(), 50); //bottom	
+											
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
 			//设定数据源
@@ -107,6 +111,10 @@ public class PieChart02View extends TouchView {
 			chart.hideGradient();
 			//显示边框
 			//chart.showRoundBorder();
+			
+			//激活点击监听
+			chart.ActiveListenItemClick();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -141,6 +149,31 @@ public class PieChart02View extends TouchView {
 		return lst;
 	}
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		//super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{						
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
 
+	//触发监听
+	private void triggerClick(float x,float y)
+	{		
+		
+		ArcPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		PieData pData = chartData.get(record.getDataID());											
+		Toast.makeText(this.getContext(),								
+				" key:" +  pData.getKey() +
+				" Label:" + pData.getLabel() ,
+				Toast.LENGTH_SHORT).show();	
+		
+	}
 	 
 }

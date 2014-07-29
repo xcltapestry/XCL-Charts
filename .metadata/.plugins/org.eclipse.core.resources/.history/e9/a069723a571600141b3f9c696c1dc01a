@@ -1,0 +1,44 @@
+package org.xclcharts.event.click;
+
+import org.xclcharts.common.MathHelper;
+
+public class ArcPosition extends PositionRecord {
+	
+	protected float mOffsetAgent = 0.0f;
+	protected float mCurrentAgent = 0.0f;	
+	protected float mRadius = 0.0f;
+	
+	protected PointF mPointCenterXY = null;
+	
+
+	public ArcPosition()
+	{	
+	}
+	
+	
+	public float getAgent()
+	{
+		return mOffsetAgent + mCurrentAgent;
+	}
+	
+	
+	public  boolean compareF(float x, float y) 
+	{
+		// TODO Auto-generated method stub
+		
+		if(null == mPoint)return false;								
+		return compareRadius( x,  y) ;
+	}			
+	
+	private boolean compareRadius(float x, float y) 
+	{		
+		double distance =  MathHelper.getInstance().getDistance(mPoint.x, mPoint.y, x,y);		
+		if(distance <= mRadius)
+		{				
+			return true;
+		}		
+		return false;
+	}
+	
+	
+}

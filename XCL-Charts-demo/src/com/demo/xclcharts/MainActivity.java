@@ -105,6 +105,11 @@ public class MainActivity extends Activity {
 				 {
 					 intent.setClass(MainActivity.this,HBARScrollActivity.class);		
 				
+				 }else if(position >= chartsTitleCurr.length - 7) //倒数6  scroll view bar
+				 {
+					 position = chartsTitleCurr.length - 7 - position;
+					 intent.setClass(MainActivity.this,ClickChartsActivity.class);		
+				
 				 }else{
 					 intent.setClass(MainActivity.this,ChartsActivity.class);	
 				 }

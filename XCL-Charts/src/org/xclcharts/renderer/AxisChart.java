@@ -39,7 +39,7 @@ import android.graphics.Canvas;
  *  
  */
 
-public class AxisChart extends XChart {
+public class AxisChart extends EventChart {
 		
 	//数据轴
 	protected DataAxisRender dataAxis  = null;
@@ -47,7 +47,6 @@ public class AxisChart extends XChart {
 	protected CategoryAxisRender categoryAxis  = null;	
 	//轴标题类
 	protected AxisTitleRender axisTitle = null;
-	
 	
 	//格式化柱形顶上或线交叉点的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
@@ -142,8 +141,7 @@ public class AxisChart extends XChart {
 		}
 		return itemLabel;
 	}
-	
-	
+		
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception
 	{

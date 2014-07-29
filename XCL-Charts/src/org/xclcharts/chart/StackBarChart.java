@@ -111,9 +111,14 @@ public class StackBarChart  extends BarChart{
 					}
 					
 				   	//宽度                	
-				    flatBar.renderBar(currentX ,sub(currentY , barHeight/2),
-						   			 add(currentX , valuePostion),add(currentY , barHeight/2),canvas);
+					float topY = sub(currentY , barHeight/2);
+					float rightX = add(currentX , valuePostion);
+					float bottomY = add(currentY , barHeight/2);
+				    flatBar.renderBar(currentX ,topY,rightX,bottomY,canvas);
 				    				    
+				    //保存位置
+				    saveBarRectFRecord(i,r,currentX, topY,rightX, bottomY); 
+					
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 												add(currentX , valuePostion/2), currentY , canvas);							
@@ -189,8 +194,15 @@ public class StackBarChart  extends BarChart{
 							double t2 =  MathHelper.getInstance().div(bv, axisDataHeight) ; 							
 							valuePostion =  mul( axisScreenHeight , dtof(t2));		
 						}
-						flatBar.renderBar(sub(currentX , barWidht/2), sub(currentY , valuePostion), 
-										  add(currentX , barWidht/2), currentY, canvas);
+						
+						//柱形
+						float leftX = sub(currentX , barWidht/2);
+						float topY =  sub(currentY , valuePostion);
+						float rightX = add(currentX , barWidht/2);						
+						flatBar.renderBar(leftX, topY, rightX, currentY, canvas);
+						//保存位置
+						saveBarRectFRecord(i,r,leftX, topY,rightX, currentY); 
+						
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
 													currentX, sub(currentY , valuePostion/2), canvas);							

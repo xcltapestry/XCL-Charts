@@ -24,9 +24,9 @@ package com.demo.xclcharts.view;
 
 import java.util.List;
 
-import org.xclcharts.common.ChartTouch;
-import org.xclcharts.common.ChartZoom;
-import org.xclcharts.common.IChartZoom;
+import org.xclcharts.event.touch.ChartTouch;
+import org.xclcharts.event.zoom.ChartZoom;
+import org.xclcharts.event.zoom.IChartZoom;
 import org.xclcharts.renderer.XChart;
 
 import android.content.Context;

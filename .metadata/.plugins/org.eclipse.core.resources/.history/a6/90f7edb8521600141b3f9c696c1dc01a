@@ -1,0 +1,10 @@
+package org.xclcharts.event.click;
+
+public class PlotArcPosition extends ArcPosition{
+	
+	public ArcPosition()
+	{	
+	}
+	
+
+}

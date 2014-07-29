@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="102" key="DIALOG_Y_ORIGIN"/>
-		<item value="989" key="DIALOG_X_ORIGIN"/>
+		<item value="185" key="DIALOG_Y_ORIGIN"/>
+		<item value="860" key="DIALOG_X_ORIGIN"/>
 		<item value="411" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -12,27 +12,27 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
-		<item value="true" key="wholeword"/>
-		<item value="double" key="selection"/>
+		<item value="false" key="wholeword"/>
+		<item value="showClikedFocus" key="selection"/>
 		<list key="findhistory">
-			<item value="Double"/>
-			<item value="getBarWidthAndMargin"/>
-			<item value="mTranslateXY"/>
-			<item value="mDataSet"/>
-			<item value="renderPlot"/>
-			<item value="Steps"/>
-			<item value="getCategoryAxis"/>
-			<item value="math"/>
+			<item value="showClikedFocus"/>
+			<item value="getRec"/>
+			<item value="getR"/>
+			<item value="saveBarRecord"/>
+			<item value="saveRectF"/>
+			<item value="PointF"/>
+			<item value="getCent"/>
+			<item value="Cent"/>
 		</list>
 		<list key="replacehistory">
-			<item value="getTickLabelPaint"/>
-			<item value="mPaintTickLabel"/>
-			<item value="chartDataSet2"/>
-			<item value="chartDataSet"/>
-			<item value="chartRender"/>
-			<item value="setChartRange"/>
-			<item value="XChart"/>
-			<item value="BarChart"/>
+			<item value="extPointClickRange"/>
+			<item value="mRecordset"/>
+			<item value="mClickRangeExtValue"/>
+			<item value="mExtValue"/>
+			<item value="CategoryID"/>
+			<item value="DataID"/>
+			<item value="DataChildID"/>
+			<item value="DataNum"/>
 		</list>
 	</section>
 </section>

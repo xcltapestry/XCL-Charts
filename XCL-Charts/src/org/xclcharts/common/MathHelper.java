@@ -23,6 +23,8 @@ package org.xclcharts.common;
 
 import java.math.BigDecimal;
 
+import android.graphics.PointF;
+
 
 /**
  * @ClassName MathHelper
@@ -56,7 +58,7 @@ public class MathHelper {
 	}
 	
 	//依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标	
-	public void calcArcEndPointXY(float cirX, float cirY, float mRadius, float cirAngle)
+	public void calcArcEndPointXY(float cirX, float cirY, float radius, float cirAngle)
 	{	
 		
 		if(Float.compare(cirAngle, 0.0f) == -1 || Float.compare(cirAngle, 0.0f) == 0 )
@@ -68,43 +70,43 @@ public class MathHelper {
 	    
 	    if (Float.compare(cirAngle , 90.0f) == -1)
 	    {	    		    
-	    	posX = add(cirX , (float)Math.cos(arcAngle) * mRadius);
-	        posY = add(cirY , (float)Math.sin(arcAngle) * mRadius) ;
+	    	posX = add(cirX , (float)Math.cos(arcAngle) * radius);
+	        posY = add(cirY , (float)Math.sin(arcAngle) * radius) ;
 	    }
 	    else if (Float.compare(cirAngle,00.0f) == 0)
 	    {
 	        posX = cirX;
-	        posY = add(cirY , mRadius);
+	        posY = add(cirY , radius);
 	    }
 	    else if (Float.compare(cirAngle,90.0f) == 1 &&
 	    		 Float.compare(cirAngle,180.0f) == -1)
 	    {
 	    	arcAngle = (float) (Math.PI * (sub(180f , cirAngle)) / 180.0f);	 	    		    		    		    
-	        posX = sub(cirX , (float) (Math.cos(arcAngle) * mRadius));
-	        posY = add(cirY , (float) (Math.sin(arcAngle) * mRadius));
+	        posX = sub(cirX , (float) (Math.cos(arcAngle) * radius));
+	        posY = add(cirY , (float) (Math.sin(arcAngle) * radius));
 	    }
 	    else if (Float.compare(cirAngle,180.0f) == 0)
 	    {
-	        posX = (float) (cirX - mRadius);
+	        posX = (float) (cirX - radius);
 	        posY = cirY;
 	    }
 	    else if (Float.compare(cirAngle,180.0f) == 1 &&
 	    		 Float.compare(cirAngle,270.0f) == -1) 
 	    {
 	    	arcAngle = (float) (Math.PI * ( sub(cirAngle , 180.0f)) / 180.0f);
-	        posX = sub(cirX , (float) (Math.cos(arcAngle) * mRadius));
-	        posY = sub(cirY , (float) (Math.sin(arcAngle) * mRadius));
+	        posX = sub(cirX , (float) (Math.cos(arcAngle) * radius));
+	        posY = sub(cirY , (float) (Math.sin(arcAngle) * radius));
 	    }
 	    else if (Float.compare(cirAngle,270.0f) == 0)
 	    {
 	        posX = cirX;
-	        posY = sub (cirY , mRadius);
+	        posY = sub (cirY , radius);
 	    }
 	    else
 	    {
 	    	arcAngle = (float) (Math.PI * ( sub(360.0f , cirAngle )) / 180.0f);
-	        posX = add(cirX , (float) (Math.cos(arcAngle) * mRadius)) ;
-	        posY = sub(cirY , (float) (Math.sin(arcAngle) * mRadius));
+	        posX = add(cirX , (float) (Math.cos(arcAngle) * radius)) ;
+	        posY = sub(cirY , (float) (Math.sin(arcAngle) * radius));
 	    }
 				
 	}
@@ -116,10 +118,58 @@ public class MathHelper {
 	public float getPosY() {
 		return posY;
 	}	
-			
 	
+	//两点间的角度
+	public double getDegree(float sx, float sy, float tx, float ty) 
+    {
+        float nX = tx - sx;
+        float nY = ty - sy;
+        double angrad = 0d,angel = 0d,tpi = 0d;
+        float tan = 0.0f;
+        
+        if (Float.compare(nX ,0.0f) != 0) {
+            tan = Math.abs(nY / nX);
+            angel  = Math.atan(tan);
+            
+            if ( Float.compare(nX,0.0f) == 1 )
+            {
+            	if( Float.compare(nY,0.0f) == 1 || Float.compare(nY,0.0f) ==  0)
+            	{
+            		 angrad = angel;
+            	}else{
+            		 angrad = 2 * Math.PI - angel;
+            	}
+            }else{
+            	if( Float.compare(nY,0.0f) == 1 || Float.compare(nY,0.0f) ==  0)
+            	{
+            		angrad = Math.PI - angel;
+            	}else{
+            		angrad = Math.PI + angel;
+            	}
+            }                      
+
+        } else {
+        	tpi  = Math.PI / 2;        	
+        	if( Float.compare(nY,0.0f) == 1)
+        	{
+        		angrad = tpi;
+        	}else{
+        		angrad = -1 * tpi;
+        	}
+        }        
+        return  Math.toDegrees(angrad);
+    }
+		
+    //两点间的距离
+    public double getDistance(float sx,float sy,float tx,float ty)
+    {	 
+    	float nx = tx - sx;
+        float ny = ty - sy;	 
+        
+        return Math.sqrt(Math.hypot(nx, ny));         
+       // return Math.sqrt(nx * nx + ny * ny);
+    }
 	
-	 
 	 
 	/**
 	 * 加法运算

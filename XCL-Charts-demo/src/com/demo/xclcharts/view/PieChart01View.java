@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -36,6 +37,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName PieChart01View
@@ -102,7 +105,12 @@ public class PieChart01View extends TouchView implements Runnable{
 			//显示图例
 			chart.getPlotLegend().showLegend();
 			//chart.getPlotLegend().getLegendLabelPaint().setTextSize(22);
-			//chart.showBorder();				
+			//chart.showBorder();	
+			
+			//chart.setDataSource(chartData);
+			
+			//激活点击监听
+			//chart.ActiveListenItemClick();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -187,26 +195,28 @@ public class PieChart01View extends TouchView implements Runnable{
 	
 	private void chartAnimation()
 	{
-		  try {         			                           	            	
-		          	List<Double> dataSeries= new LinkedList<Double>();	
-		          	dataSeries.add(0d);       
-		          	for(int i=0;i< chartData.size() ;i++)
-		          	{
-		          		Thread.sleep(100);
-		          		LinkedList<PieData> animationData = new LinkedList<PieData>();
-		        
-		          		int sum = 0;
-		          		for(int j=0;j<=i;j++)
-		                  {            			            			
-		          			animationData.add(chartData.get(j));
-		          			sum += chartData.get(j).getPercentage();
-		                  }   		          		
-		          				          				          		
-		          		animationData.add(new PieData("","", 100 - sum,(int)Color.argb(1, 0, 0, 0)));		          		
-		          		chart.setDataSource(animationData);
-		          		postInvalidate();            		
-		          	          	
-		          }
+		  try {       
+			 
+	          	for(int i=0;i< chartData.size() ;i++)
+	          	{
+	          		Thread.sleep(100);
+	          		LinkedList<PieData> animationData = new LinkedList<PieData>();
+	        
+	          		int sum = 0;
+	          		for(int j=0;j<=i;j++)
+	          		{            			            			
+	          			animationData.add(chartData.get(j));
+	          			sum += chartData.get(j).getPercentage();
+	          		}   		          		
+	          				          				          		
+	          		animationData.add(new PieData("","", 100 - sum,(int)Color.argb(1, 0, 0, 0)));		          		
+	          		chart.setDataSource(animationData);
+	          		
+	          		//激活点击监听
+	    			if(chartData.size() - 1 == i)chart.ActiveListenItemClick();
+	    			
+	          		postInvalidate();            				          	          	
+	          }
 			  
           }
           catch(Exception e) {
@@ -214,5 +224,37 @@ public class PieChart01View extends TouchView implements Runnable{
           }       
 		  
 	}
+	
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{						
+			if(chart.isPlotClickArea(event.getX(),event.getY()))
+			{											
+				triggerClick(event.getX(),event.getY());					
+			}
+		}
+		return true;
+	}
+	
+
+	//触发监听
+	private void triggerClick(float x,float y)
+	{	
+		
+		ArcPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		PieData pData = chartData.get(record.getDataID());											
+		Toast.makeText(this.getContext(),								
+				" key:" +  pData.getKey() +
+				" Label:" + pData.getLabel() ,
+				Toast.LENGTH_SHORT).show();
+		
+	}
+	
 	
 }

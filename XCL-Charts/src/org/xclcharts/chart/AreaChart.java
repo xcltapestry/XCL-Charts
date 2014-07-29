@@ -36,6 +36,7 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
@@ -110,7 +111,7 @@ public class AreaChart extends LnChart{
 	 * @param type	绘制类型
 	 * @param alpha 透明度
 	 */
-	private boolean renderLine(Canvas canvas, AreaData bd,String type,int alpha)
+	private boolean renderLine(Canvas canvas, AreaData bd,String type,int alpha,int dataID)
 	{
 		//数据源
 		List<Double> chartValues = bd.getLinePoint();
@@ -143,7 +144,7 @@ public class AreaChart extends LnChart{
         mPaintAreaFill.setColor(bd.getAreaFillColor());
             
         double dper = 0d;
-		int j = 0;					 
+		int j = 0,childID = 0;				 
 		for(Double bv : chartValues)
         {								
 			//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
@@ -183,11 +184,13 @@ public class AreaChart extends LnChart{
             		PlotDot pDot = pLine.getPlotDot();	              
             		float rendEndX  = add(lineEndX  , pDot.getDotRadius());               		
         			
-            		PlotDotRender.getInstance().renderDot(canvas,pDot,
+            		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
             				lineStartX ,lineStartY ,
             				lineEndX ,lineEndY,
             				pLine.getDotPaint()); //标识图形            			                	
         			lineEndX = rendEndX;
+        			this.savePointRecord(dataID,childID,lineEndX, lineEndY,rect);  
+        			childID++;
             	}
         		
         		if(bd.getLabelVisible())
@@ -233,9 +236,9 @@ public class AreaChart extends LnChart{
 		for(int i=0;i<mDataset.size();i++)
 		{								
 			if(!this.renderLine(canvas, mDataset.get(i),"LINE",
-						(int)Math.round(mDataset.size() *i)) )return false;
+						(int)Math.round(mDataset.size() *i),i) )return false;
 			if(!this.renderLine(canvas, mDataset.get(i),"DOT2LABEL",
-						(int)Math.round(mDataset.size() *i)) )return false;
+						(int)Math.round(mDataset.size() *i),i) )return false;
 			lstKey.add(mDataset.get(i));
 		}
 			

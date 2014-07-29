@@ -1,0 +1,31 @@
+package org.xclcharts.event.click;
+
+import android.graphics.RectF;
+
+public class PointPosition extends PositionRecord {
+	
+	public PointPosition()
+	{	
+	}
+	
+	public String getPointInfo()
+	{	
+		if(null == mPoint)return "";
+		String info = "x:"+Float.toString(mPoint.x)+" y:"+Float.toString(mPoint.y);
+		return info;
+	}
+	
+	
+	
+	public void saveRectF(float left,float top,float right,float bottom)
+	{
+		if(null == mRectF)mRectF = new RectF();		
+		mRectF.set(left, top, right, bottom);
+	}
+	
+	public void saveRectF(RectF r)
+	{
+		mRectF = r;
+	}
+
+}

@@ -27,8 +27,9 @@ import org.xclcharts.renderer.XEnum;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.RectF;
 
 /**
  * @ClassName PlotDotRender
@@ -64,9 +65,11 @@ public class PlotDotRender {
 	 * @param bottom 右边Y坐标
 	 * @param paint	画笔
 	 */
-	public void renderDot(Canvas canvas, PlotDot pDot, 
+	public RectF renderDot(Canvas canvas, PlotDot pDot, 
 						  float left, float top, float right,float bottom, Paint paint) {
 
+		RectF rect = new RectF();
+		
 		float radius = pDot.getDotRadius();
 		float halfRadius = MathHelper.getInstance().div(radius , 2f);
 		
@@ -74,24 +77,30 @@ public class PlotDotRender {
 		if(XEnum.DotStyle.DOT == pDot.getDotStyle() ||
 				XEnum.DotStyle.RING == pDot.getDotStyle()	)
 		{
-			//left + Math.abs(right - left)
-			cX = MathHelper.getInstance().add(left,
-							MathHelper.getInstance().sub(right, left));	
+			//cX = MathHelper.getInstance().add(left,
+			//				MathHelper.getInstance().sub(right, left));				
+			cX =  left + Math.abs(right - left);
+			
+			rect.left =  (cX - radius);
+			rect.top =  (bottom + radius);
+			rect.right =  (cX + radius);
+			rect.bottom =  (bottom - radius);
 		}
+		
 
 		switch (pDot.getDotStyle()) {
 		case DOT:										
 			canvas.drawCircle(cX, bottom,radius, paint);
+			
 			break;
 		case RING:		
-			float ringRadius = MathHelper.getInstance().mul(radius, 0.7f);		
+			float ringRadius = radius * 0.7f; // MathHelper.getInstance().mul(radius, 0.7f);		
             canvas.drawCircle(cX, bottom, radius, paint);
 
 			Paint paintFill = new Paint();
 			paintFill.setColor(Color.WHITE);
 			paintFill.setStyle(Style.FILL);
-            canvas.drawCircle(cX, bottom,ringRadius, paintFill);
-            
+            canvas.drawCircle(cX, bottom,ringRadius, paintFill);            
 
 			break;
 		case TRIANGLE: // 等腰三角形
@@ -102,6 +111,12 @@ public class PlotDotRender {
 			path.lineTo(right + radius, bottom + halfRadius);
 			path.close();
             canvas.drawPath(path, paint);
+                        
+            rect.left =  (right - radius);
+			rect.top = ( bottom - triganaleHeight);
+			rect.right =  ( right + radius);
+			rect.bottom =  ( bottom + halfRadius);			
+			
 			break;
 		// Prismatic
 		case PRISMATIC: // 棱形 Prismatic
@@ -112,14 +127,35 @@ public class PlotDotRender {
 			pathPir.lineTo(left + (right - left), bottom + radius);
 			pathPir.close();
             canvas.drawPath(pathPir, paint);
+            
+        	rect.left = ( right -  radius  );
+			rect.top =  ( bottom - radius);
+			rect.right =  ( right + radius);
+			rect.bottom =  (bottom + radius);
+            
 			break;
 		case RECT:
 			paint.setStyle(Style.FILL);
-            canvas.drawRect(right - radius, bottom + radius, right + radius,
-					bottom - radius, paint);
+			
+			rect.left =  (right - radius);
+			rect.top =  (bottom + radius);
+			rect.right =  (right + radius);
+			rect.bottom =  (bottom - radius);
+			canvas.drawRect(rect,paint);
+			
 			break;
 		case HIDE:
 		default:
 		}
+		
+		/*
+		rect.left -=  50;
+		rect.top -=  50;
+		rect.right +=  50;
+		rect.bottom +=  50;
+		*/
+		
+		
+		return rect;
 	}
 }

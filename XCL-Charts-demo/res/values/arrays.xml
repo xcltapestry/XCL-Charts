@@ -35,6 +35,8 @@
         <item>雷达图</item> 
         <item>柱形渐显动画演示</item>     
         
+          <item>Click例子</item>    
+        
         <item>左右滑动柱形图</item> 
         <item>左右滑动折线图</item> 
         
@@ -75,6 +77,8 @@
       <!--  <item>Polar Chart</item>    -->
        <item>Radar Chart</item>           
        <item>Bar Chart - 柱形渐显动画效果</item>    
+       
+        <item>Activity调用点击的例子</item> 
        
         <item>左轴右ScrollView显示图表</item> 
         <item>左轴右ScrollView显示图表</item>       

@@ -1,0 +1,9 @@
+package org.xclcharts.event.click;
+
+public class PointPosition extends PositionRecord {
+	
+	public PointPosition()
+	{	
+	}
+
+}

@@ -99,7 +99,7 @@ public class LineChart02View extends TouchView implements Runnable{
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 45), ltrb[3]);	
+			chart.setPadding(DensityUtil.dip2px(getContext(), 45),ltrb[1], ltrb[2],  ltrb[3]);	
 		
 			
 			//设定数据源

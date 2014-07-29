@@ -1,0 +1,39 @@
+package org.xclcharts.event.click;
+
+import android.graphics.RectF;
+
+public class RectPosition extends PositionRecord {
+	
+	public RectPosition()
+	{	
+	}
+	
+	public String getBarInfo()
+	{	
+		if(null == mRectF)return "";
+		
+		float left = mRectF.left +  mExtValue;
+		float top = mRectF.top +  mExtValue;
+		float right = mRectF.right -  mExtValue;
+		float bottom = mRectF.bottom -  mExtValue;
+		
+		String info =" left:"+Float.toString(left)+" top:"+Float.toString(top) +
+				 	 " right:"+Float.toString(right)+" bottom:"+Float.toString(bottom);
+		return info;
+	}
+	
+	
+	public void saveRectF(float left,float top,float right,float bottom)
+	{
+		if(null == mRectF)mRectF = new RectF();		
+		mRectF.set(left, top, right, bottom);
+	}
+	
+	public void saveRectF(RectF r)
+	{
+		mRectF = r;
+	}
+	
+	
+
+}

@@ -27,12 +27,12 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-
 import org.xclcharts.chart.BarChart3D;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -41,6 +41,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName Bar3DChart01View
@@ -84,7 +86,6 @@ public class BarChart3D01View extends TouchView {
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
-       // Log.d("mDebug", "onSizeChanged,w="+w+",h="+h+",oldw="+oldw+",oldh="+oldh);  
        //图所占范围大小
         chart.setChartRange(w,h);
     }  
@@ -96,7 +97,7 @@ public class BarChart3D01View extends TouchView {
 			
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....	
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], DensityUtil.dip2px(getContext(), 50), ltrb[3]);
+			chart.setPadding( DensityUtil.dip2px(getContext(), 50),ltrb[1], ltrb[2], ltrb[3]);
 			
 			//显示边框
 			chart.showRoundBorder();
@@ -163,6 +164,9 @@ public class BarChart3D01View extends TouchView {
 					String label = df.format(value).toString();
 					return label;
 				}});	        
+			
+			//激活点击监听
+			chart.ActiveListenItemClick();
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -211,4 +215,34 @@ public class BarChart3D01View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	
+
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());	
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		BarPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		BarData bData = BarDataset.get(record.getDataID());					
+		Double bValue = bData.getDataSet().get(record.getDataChildID());			
+
+		Toast.makeText(this.getContext(),
+				"info:" + record.getBarInfo() +
+				" Key:" + bData.getKey() + 							
+				" Current Value:" + Double.toString(bValue), 
+				Toast.LENGTH_SHORT).show();			
+	}
+	
 }

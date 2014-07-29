@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map.Entry;
 
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotCustomLine;
@@ -38,6 +37,7 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.graphics.RectF;
 import android.util.Log;
 
 /**
@@ -54,9 +54,6 @@ public class SplineChart extends LnChart{
 	private List<SplineData> mDataset;
 	
 	//分类轴的最大，最小值
-	//private float mMaxValue = 0.0f;
-	//private float mMinValue = 0.0f;
-	
 	private double mMaxValue = 0d;
 	private double mMinValue = 0d;
 	
@@ -155,8 +152,8 @@ public class SplineChart extends LnChart{
 	 * 绘制线
 	 * @param bd	数据集
 	 * @param type	处理类型号
-	 */
-	private void renderLine(Canvas canvas, SplineData bd,String type)
+	 */	
+	private void renderLine(Canvas canvas, SplineData bd,String type,int dataID)
 	{
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
@@ -174,7 +171,7 @@ public class SplineChart extends LnChart{
 		if(null == chartValues) return ;
 															
 	    //画出数据集对应的线条				
-		int j = 0;	
+		int j = 0,childID = 0;
 		Iterator iter = chartValues.entrySet().iterator();
 		while(iter.hasNext()){
 			    Entry  entry=(Entry)iter.next();
@@ -224,11 +221,14 @@ public class SplineChart extends LnChart{
                 		PlotDot pDot = pLine.getPlotDot();	                
                 		rendEndX  = add(lineEndX , pDot.getDotRadius());               		
             			
-                		PlotDotRender.getInstance().renderDot(canvas,pDot,
+                		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
                 				lineStartX ,lineStartY ,
                 				lineEndX ,lineEndY,
                 				pLine.getDotPaint()); //标识图形            			                	
             			lineEndX = rendEndX;
+            			            			
+            			savePointRecord(dataID,childID,lineEndX, lineEndY,rect); 
+            			childID++;
                 	}
             		
             		if(bd.getLabelVisible())
@@ -249,6 +249,9 @@ public class SplineChart extends LnChart{
 		}							
 		
 	}
+	
+
+	
 	
 	/**
 	 * 绘制图
@@ -274,8 +277,8 @@ public class SplineChart extends LnChart{
 		List<LnData> lstKey = new ArrayList<LnData>();		
 		for(int i=0;i<mDataset.size();i++)
 		{										
-			renderLine(canvas, mDataset.get(i),"LINE");
-			renderLine(canvas, mDataset.get(i),"DOT2LABEL");
+			renderLine(canvas, mDataset.get(i),"LINE",i);
+			renderLine(canvas, mDataset.get(i),"DOT2LABEL",i);
 			lstKey.add(mDataset.get(i));
 		}	
 		//key

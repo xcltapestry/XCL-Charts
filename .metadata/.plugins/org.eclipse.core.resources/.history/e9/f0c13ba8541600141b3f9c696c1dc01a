@@ -1,0 +1,51 @@
+package org.xclcharts.event.click;
+
+import android.graphics.RectF;
+
+
+public class PointPosition extends PositionRecord {
+	
+	protected RectF mRectF = null;
+	
+	public PointPosition()
+	{	
+	}
+		
+	public  boolean compareF(float x, float y) 
+	{
+		// TODO Auto-generated method stub
+		
+		if(null == mRectF)return false;
+								
+		mRectF.left -=  mExtValue;
+		mRectF.top -=  mExtValue;
+		mRectF.right +=  mExtValue;
+		mRectF.bottom +=  mExtValue;			
+	
+		//contains 在范围比较小时很不好使.
+		if( mRectF.contains(x, y)) return true;
+		
+		//再加层手工检查
+		if( (Float.compare(x, mRectF.left) == 1 || Float.compare(x, mRectF.left) == 0 )
+				&& (Float.compare(x, mRectF.right) == -1 || Float.compare(x, mRectF.right) == 0 ) 
+			&& (Float.compare(y, mRectF.bottom) == 1 || Float.compare(y, mRectF.bottom) == 0 )
+			&& (Float.compare(y, mRectF.top) == -1 || Float.compare(y, mRectF.top) == 0 ) ) 
+			{
+				return true;
+			}			
+		return false;
+	}			
+	
+	public String getPointInfo()
+	{	
+		if(null == mPoint)return "";
+		String info = "x:"+Float.toString(mPoint.x)+" y:"+Float.toString(mPoint.y);
+		return info;
+	}
+	
+	public RectF getRectF()
+	{
+		return mRectF;
+	}	
+	
+}

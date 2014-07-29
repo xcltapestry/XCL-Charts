@@ -1,0 +1,97 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.0
+ */
+package org.xclcharts.event;
+
+import android.graphics.Point;
+import android.graphics.Rect;
+import android.graphics.RectF;
+import android.graphics.Region;
+import android.util.Log;
+
+/**
+ * @ClassName PlotDataRecord
+ * @Description  图的数据集
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ */
+
+public class PlotPositionRecord extends PositionRecord {	
+	
+	private static final String TAG = "PlotPositionRecord";
+	public PlotPositionRecord()
+	{	
+	}
+	
+	//当前记录在数据源中行号
+	public void saveDataRownum(int num)
+	{
+		mDataRownum = num;
+	}
+
+	//当前记录所属数据集的行号
+	public void saveDataChildRownum(int num)
+	{
+		mDataChildRownum = num;
+	}	
+	
+	//分类轴的行号
+	public void saveCategoryRownum(int num)
+	{
+		mCategoryRownum = num;
+	}
+	
+	public void savePosition(float lineEndX,float lineEndY)
+	{
+		mPoint = new Point();
+		
+		mPoint.x = (int) lineEndX;
+		mPoint.y = (int) lineEndY;				
+	}
+	
+	
+	
+	public void saveRegion(Region rg)
+	{		
+		mRegion = rg;
+	}
+	
+	public void saveRect(Rect r)
+	{		
+		if(null == mRegion)
+		{
+			mRegion = new Region(r);		
+		}else{
+			mRegion.set(r);
+		}		
+	}
+	
+	public void saveRectF(float left,float top,float right,float bottom)
+	{
+		if(null == mRectF)mRectF = new RectF();		
+		mRectF.set(left, top, right, bottom);
+	}
+	
+	public void saveRectF(RectF r)
+	{
+		mRectF = r;
+	}
+	
+}

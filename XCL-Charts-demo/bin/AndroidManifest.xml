@@ -62,6 +62,10 @@
             android:name="com.demo.xclcharts.GaugeChartActivity"
             android:label="@string/title_activity_gauge_chart" >
         </activity>
+        <activity
+            android:name="com.demo.xclcharts.ClickChartsActivity"
+            android:label="@string/title_activity_click_charts" >
+        </activity>
     </application>
 
 </manifest>

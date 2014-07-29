@@ -1,0 +1,74 @@
+package org.xclcharts.event.click;
+
+import org.xclcharts.common.MathHelper;
+
+import android.graphics.PointF;
+
+
+public class PlotArcPosition extends ArcPosition{
+	
+	public PlotArcPosition()
+	{	
+	}
+	
+	
+	public void saveAgent(float radius,float offsetAgent,float currentAgent)
+	{
+		mRadius = radius;
+		mOffsetAgent = offsetAgent;
+		mCurrentAgent = currentAgent;
+	}
+	
+	//当前记录在数据源中行号
+	public void savePlotDataID(int num)
+	{
+		saveDataID(num);
+	}
+
+	//当前记录所属数据集的行号
+	public void savePlotDataChildID(int num)
+	{
+		saveDataChildID(num);
+	}	
+		
+	
+	public void savePlotCirXY(float x,float y)
+	{
+		mCirXY = new PointF();
+		
+		mCirXY.x =  x;
+		mCirXY.y =  y;				
+	}
+	
+
+	protected  boolean compareRange(float x, float y) 
+	{
+		// TODO Auto-generated method stub
+		
+		super.compareRange(x, y);
+		
+		if(null == mCirXY)return false;								
+		return compareRadius( x,  y) ;
+	}			
+	
+
+	
+	private boolean compareRadius(float x, float y) 
+	{		
+		double distance =  MathHelper.getInstance().getDistance(mCirXY.x, mCirXY.y, x,y);		
+		if(distance <= mRadius)
+		{				
+			return true;
+		}		
+		return false;
+	}
+	
+	
+	public boolean compareF(float x, float y)
+	{
+		return compareRange(x,y);
+	}
+	
+	
+
+}

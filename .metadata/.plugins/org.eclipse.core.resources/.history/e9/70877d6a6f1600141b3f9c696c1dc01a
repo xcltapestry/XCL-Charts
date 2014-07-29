@@ -1,0 +1,53 @@
+package org.xclcharts.event.click;
+
+import org.xclcharts.common.MathHelper;
+
+import android.graphics.PointF;
+
+public class ArcPosition extends PositionRecord {
+	
+	protected float mOffsetAgent = 0.0f;
+	protected float mCurrentAgent = 0.0f;	
+	protected float mRadius = 0.0f;
+	
+	protected PointF mCirXY = null;
+	
+
+	public ArcPosition()
+	{	
+	}
+	
+	
+	public float getAgent()
+	{
+		return mOffsetAgent + mCurrentAgent;
+	}
+
+
+	@Override
+	protected boolean compareRange(float x, float y) {
+		// TODO Auto-generated method stub
+		if(null == mCirXY)return false;								
+		return compareRadius( x,  y) ;
+	}
+	
+	
+	private boolean compareRadius(float x, float y) 
+	{		
+		double distance =  MathHelper.getInstance().getDistance(mCirXY.x, mCirXY.y, x,y);		
+		if(distance <= mRadius)
+		{							
+			double agent1 = MathHelper.getInstance().getDegree(mCirXY.x, mCirXY.y, x,y);
+			if( getAgent() >=  agent1 )
+			{						
+				
+			}
+			
+			return true;
+		}		
+		return false;
+	}
+	
+
+	
+}

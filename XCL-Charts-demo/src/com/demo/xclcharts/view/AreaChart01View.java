@@ -31,6 +31,7 @@ import org.xclcharts.chart.AreaChart;
 import org.xclcharts.chart.AreaData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -40,6 +41,8 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 
 /**
@@ -126,10 +129,14 @@ public class AreaChart01View extends TouchView {
 				chart.getAxisTitle().setLowerAxisTitle("(年份)");
 				
 				//透明度
-				//chart.setAreaAlpha(200);
+				chart.setAreaAlpha(100);
 				//显示键值
 				chart.getPlotLegend().showLegend();
 				
+				//激活点击监听
+				chart.ActiveListenItemClick();
+				//为了让触发更灵敏，可以扩大5px的点击监听范围
+				chart.extPointClickRange(5);
 				
 				//定义数据轴标签显示格式
 				chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -228,7 +235,35 @@ public class AreaChart01View extends TouchView {
 	}
 
 
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{		
+		PointPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
 
+		AreaData lData = mDataset.get(record.getDataID());
+		Double lValue = lData.getLinePoint().get(record.getDataChildID());	
+		
+		Toast.makeText(this.getContext(), 
+				record.getPointInfo() +
+				" Key:"+lData.getLineKey() +
+				" Label:"+lData.getLabel() +								
+				" Current Value:"+Double.toString(lValue), 
+				Toast.LENGTH_SHORT).show();			
+	}
+	
 
 	
 }

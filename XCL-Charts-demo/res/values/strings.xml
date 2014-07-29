@@ -17,5 +17,6 @@
     <string name="title_activity_hlnscroll">HLNScrollActivity</string>
     <string name="title_activity_circle_chart">CircleChartActivity</string>
     <string name="title_activity_gauge_chart">GaugeChartActivity</string>
+    <string name="title_activity_click_charts">ClickChartsActivity</string>
 
 </resources>

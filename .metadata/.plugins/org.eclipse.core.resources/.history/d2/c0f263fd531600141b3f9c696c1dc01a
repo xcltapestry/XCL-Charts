@@ -1,0 +1,44 @@
+package org.xclcharts.event.click;
+
+import android.graphics.PointF;
+import android.graphics.RectF;
+
+public class PlotRectPosition extends RectPosition{
+	
+	public PlotRectPosition()
+	{	
+	}	
+	
+	//当前记录在数据源中行号
+	public void saveDataID(int num)
+	{
+		mDataID = num;
+	}
+
+	//当前记录所属数据集的行号
+	public void saveDataChildID(int num)
+	{
+		mDataChildID = num;
+	}	
+		
+	
+	public void savePosition(float x,float y)
+	{
+		mPoint = new PointF();
+		
+		mPoint.x =  x;
+		mPoint.y =  y;				
+	}
+	
+	public void saveRectF(float left,float top,float right,float bottom)
+	{
+		if(null == mRectF)mRectF = new RectF();		
+		mRectF.set(left, top, right, bottom);
+	}
+	
+	public void saveRectF(RectF r)
+	{
+		mRectF = r;
+	}
+
+}

@@ -62,27 +62,29 @@ public final class R {
         public static final int activity_about=0x7f030000;
         public static final int activity_charts=0x7f030001;
         public static final int activity_circle_chart=0x7f030002;
-        public static final int activity_gauge_chart=0x7f030003;
-        public static final int activity_gradient=0x7f030004;
-        public static final int activity_hbarscroll=0x7f030005;
-        public static final int activity_hlnscroll=0x7f030006;
-        public static final int activity_main=0x7f030007;
-        public static final int activity_multi_touch=0x7f030008;
-        public static final int activity_seek_bar=0x7f030009;
-        public static final int activity_spinner=0x7f03000a;
+        public static final int activity_click_charts=0x7f030003;
+        public static final int activity_gauge_chart=0x7f030004;
+        public static final int activity_gradient=0x7f030005;
+        public static final int activity_hbarscroll=0x7f030006;
+        public static final int activity_hlnscroll=0x7f030007;
+        public static final int activity_main=0x7f030008;
+        public static final int activity_multi_touch=0x7f030009;
+        public static final int activity_seek_bar=0x7f03000a;
+        public static final int activity_spinner=0x7f03000b;
     }
     public static final class menu {
         public static final int about=0x7f080000;
         public static final int charts=0x7f080001;
         public static final int circle_chart=0x7f080002;
-        public static final int gauge_chart=0x7f080003;
-        public static final int gradient=0x7f080004;
-        public static final int hbarscroll=0x7f080005;
-        public static final int hlnscroll=0x7f080006;
-        public static final int main=0x7f080007;
-        public static final int multi_touch=0x7f080008;
-        public static final int seek_bar=0x7f080009;
-        public static final int spinner=0x7f08000a;
+        public static final int click_charts=0x7f080003;
+        public static final int gauge_chart=0x7f080004;
+        public static final int gradient=0x7f080005;
+        public static final int hbarscroll=0x7f080006;
+        public static final int hlnscroll=0x7f080007;
+        public static final int main=0x7f080008;
+        public static final int multi_touch=0x7f080009;
+        public static final int seek_bar=0x7f08000a;
+        public static final int spinner=0x7f08000b;
     }
     public static final class string {
         public static final int action_settings=0x7f040001;
@@ -94,6 +96,7 @@ public final class R {
         public static final int title_activity_about=0x7f040004;
         public static final int title_activity_charts=0x7f040003;
         public static final int title_activity_circle_chart=0x7f04000e;
+        public static final int title_activity_click_charts=0x7f040010;
         public static final int title_activity_gauge_chart=0x7f04000f;
         public static final int title_activity_gradient=0x7f04000b;
         public static final int title_activity_hbarscroll=0x7f04000c;

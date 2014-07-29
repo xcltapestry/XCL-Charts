@@ -25,6 +25,7 @@ package org.xclcharts.chart;
 import java.util.List;
 
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.AxisChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
@@ -430,12 +431,14 @@ public class BarChart extends AxisChart {
 				double vaxlen = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
 				float fvper =  div(dtof(vaxlen) ,valueWidth);
 				float valuePostion = mul(scrWidth,fvper);
-			
-																
+																			
 				// 画出柱形
-				mFlatBar.renderBar(plotArea.getLeft(), drawBarButtomY,
-						add(plotArea.getLeft() , valuePostion), drawBarTopY,
-						canvas);
+				float rightX = add(plotArea.getLeft() , valuePostion);
+				mFlatBar.renderBar(plotArea.getLeft(),drawBarTopY  ,rightX, drawBarButtomY,
+									canvas);
+				
+				//保存位置
+				saveBarRectFRecord(i,j,plotArea.getLeft(),drawBarTopY ,rightX, drawBarButtomY); 
 			
 				// 柱形顶端标识
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
@@ -459,6 +462,8 @@ public class BarChart extends AxisChart {
 		mCustomLine.renderHorizontalCustomlinesDataAxis(canvas);
 		return true;
 	}
+
+	
 
 	/**
 	 * 绘制竖向柱形图
@@ -527,9 +532,11 @@ public class BarChart extends AxisChart {
 				float drawBarEndX = add(drawBarStartX , barWidth);
 				
 				// 画出柱形
-				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),
-						drawBarEndX, sub(plotArea.getBottom() , valuePostion),
-						canvas);
+				float topY = sub(plotArea.getBottom() , valuePostion);
+				mFlatBar.renderBar(drawBarStartX,plotArea.getBottom(),drawBarEndX, topY,
+									canvas);
+				//保存位置
+				saveBarRectFRecord(i,j,drawBarStartX,topY ,drawBarEndX,plotArea.getBottom()); 
 
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
@@ -573,6 +580,8 @@ public class BarChart extends AxisChart {
 	}
 	
 	
+	
+	
 	/**
 	 * 对于有为单个柱形设置颜色的情况，以这个函数来为画笔设置相应的颜色
 	 * @param paint			柱形画笔
@@ -596,6 +605,18 @@ public class BarChart extends AxisChart {
 		}
 		
 	}
+	
+	/**
+	 * 返回当前点击点的信息
+	 * @param x 点击点X坐标
+	 * @param y	点击点Y坐标
+	 * @return 返回对应的位置记录
+	 */
+	public BarPosition getPositionRecord(float x,float y)
+	{		
+		return getBarRecord(x,y);
+	}
+	
 
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 

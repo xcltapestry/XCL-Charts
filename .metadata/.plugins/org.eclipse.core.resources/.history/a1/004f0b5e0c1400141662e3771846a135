@@ -1,0 +1,5 @@
+package org.xclcharts.event;
+
+public class Point {
+
+}

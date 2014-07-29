@@ -116,7 +116,7 @@ public class SpinnerBarChart01View extends GraphicalView {
 			
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			mChart.setPadding(ltrb[0], ltrb[1],DensityUtil.dip2px(getContext(), 50), ltrb[3]);	
+			mChart.setPadding(DensityUtil.dip2px(getContext(), 50),ltrb[1], ltrb[2], ltrb[3]);	
  				
 			
 			//数据源

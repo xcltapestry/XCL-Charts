@@ -37,7 +37,7 @@ import android.util.Log;
  *  
  */
 
-public class CirChart extends XChart{
+public class CirChart extends EventChart{
 	
 	private static final String TAG = "CirChart";
 	

@@ -1,0 +1,7 @@
+package org.xclcharts.event.click;
+
+public interface positionListener {
+	
+	public void onClick(PointF point,PositionRecord positionRecord);
+
+}

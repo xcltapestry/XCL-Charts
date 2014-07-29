@@ -27,6 +27,7 @@ import java.util.List;
 
 import org.xclcharts.chart.PieChart3D;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -35,6 +36,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName Pie3DChart01View
@@ -102,6 +105,8 @@ public class PieChart3D01View extends TouchView implements Runnable{
 			chart.getPlotLegend().hideLegend();
 			//标签文本显示为白色
 			chart.getLabelPaint().setColor(Color.WHITE);
+			
+			
 		
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -159,7 +164,7 @@ public class PieChart3D01View extends TouchView implements Runnable{
 	{
 		  try {         
 			 //设置数据源
-			  chart.setDataSource(chartData);	
+			  chart.setDataSource(chartData);
 			  
 			  for(int i=10;i>0;i--)
 			  {
@@ -174,6 +179,9 @@ public class PieChart3D01View extends TouchView implements Runnable{
 						chart.addSubtitle("(XCL-Charts Demo)");
 						chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
 						chart.setChartRange(0.0f, 0.0f,getWidth(),getHeight());
+						
+						//激活点击监听
+						chart.ActiveListenItemClick();											
 				  }
 				  postInvalidate(); 
 			  }
@@ -181,6 +189,40 @@ public class PieChart3D01View extends TouchView implements Runnable{
           catch(Exception e) {
               Thread.currentThread().interrupt();
           }            
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		//super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{						
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
+
+	//触发监听
+	private void triggerClick(float x,float y)
+	{		
+		
+		ArcPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		PieData pData = chartData.get(record.getDataID());											
+		Toast.makeText(this.getContext(),								
+				" key:" +  pData.getKey() +
+				" Label:" + pData.getLabel() ,
+				Toast.LENGTH_SHORT).show();	
+		
+		/*
+		 int k	= chart.getDataSource().size();
+		 
+		 Toast.makeText(this.getContext(),								
+					" k:" +  Integer.toString(k) ,
+					Toast.LENGTH_SHORT).show();	
+		 */
 	}
 	
 }

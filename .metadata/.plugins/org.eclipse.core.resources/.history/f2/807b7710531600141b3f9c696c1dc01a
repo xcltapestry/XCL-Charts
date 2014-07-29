@@ -1,0 +1,10 @@
+package org.xclcharts.event.click;
+
+public class PlotPointPosition extends PointPosition{
+	
+	public PlotPointPosition()
+	{	
+	}
+	
+
+}

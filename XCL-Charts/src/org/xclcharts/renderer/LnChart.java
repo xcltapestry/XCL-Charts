@@ -25,6 +25,7 @@ package org.xclcharts.renderer;
 import java.util.List;
 
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.event.click.PointPosition;
 
 import android.graphics.Canvas;
 
@@ -38,11 +39,15 @@ import android.graphics.Canvas;
  */
 
 public class LnChart extends AxisChart {
+	
+	private static final String TAG="LnChart";
 
 	// 是否显示顶轴
 	private boolean mTopAxisVisible = true;
 	// 是否显示底轴
 	private boolean mRightAxisVisible = true;	
+	
+	
 
 	public LnChart() {
 		super();
@@ -53,7 +58,6 @@ public class LnChart extends AxisChart {
 		//默认显示Key
 		plotLegend.showLegend();
 	}
-
 
 	/**
 	 * 竖向柱形图 Y轴的屏幕高度/数据轴的刻度标记总数 = 步长
@@ -277,6 +281,31 @@ public class LnChart extends AxisChart {
 					plotArea.getBottom(), plotArea.getLeft(),plotArea.getTop());
 			
 		}
+	}
+	
+	
+	@Override
+	public boolean isPlotClickArea(float x,float y)
+	{				
+		if(!getListenItemClickStatus())return false;	
+		
+		if(Float.compare(x , getLeft()) == -1 ) return false;
+		if(Float.compare(x,  getRight() ) == 1 ) return false;	
+		
+		if(Float.compare( y , getPlotArea().getTop() ) == -1  ) return false;
+		if(Float.compare( y , getPlotArea().getBottom() ) == 1  ) return false;		
+		return true;
+	}
+	
+	/**
+	 * 返回当前点击点的信息
+	 * @param x 点击点X坐标
+	 * @param y	点击点Y坐标
+	 * @return 返回对应的位置记录
+	 */
+	public PointPosition getPositionRecord(float x,float y)
+	{		
+		return getPointRecord(x,y);
 	}
 
 }

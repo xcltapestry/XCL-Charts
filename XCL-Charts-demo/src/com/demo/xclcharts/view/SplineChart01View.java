@@ -23,13 +23,16 @@
 package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map.Entry;
 
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotGrid;
@@ -39,6 +42,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 /**
  * @ClassName SplineChart01View
  * @Description  曲线图 的例子
@@ -157,6 +162,12 @@ public class SplineChart01View extends TouchView {
 			//标题
 			chart.setTitle("Spline Chart");
 			chart.addSubtitle("(XCL-Charts Demo)");
+			
+			//激活点击监听
+			chart.ActiveListenItemClick();
+			//为了让触发更灵敏，可以扩大5px的点击监听范围
+			chart.extPointClickRange(5);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -177,7 +188,9 @@ public class SplineChart01View extends TouchView {
 		linePoint1.put(55d, 33d);
 		linePoint1.put(62d, 45d);
 		SplineData dataSeries1 = new SplineData("青菜萝卜够吃",linePoint1,
-				(int)Color.rgb(54, 141, 238) );
+				(int)Color.rgb(54, 141, 238) );	
+		//把线弄细点
+		dataSeries1.getLinePaint().setStrokeWidth(2);
 		
 		//线2的数据集
 		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
@@ -190,6 +203,8 @@ public class SplineChart01View extends TouchView {
 		linePoint2.put(85d, 68d);	
 		SplineData dataSeries2 = new SplineData("饭管够",linePoint2,
 				(int)Color.rgb(255, 165, 132) );
+		
+		
 		
 		dataSeries2.setLabelVisible(true);		
 		dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
@@ -228,5 +243,53 @@ public class SplineChart01View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		
+		super.onTouchEvent(event);
+				
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());	
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		PointPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+
+		SplineData lData = chartData.get(record.getDataID());
+		LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
+		int pos = record.getDataChildID();
+		int i = 0;
+		Iterator it = linePoint.entrySet().iterator();
+		while(it.hasNext())
+		{
+			Entry  entry=(Entry)it.next();	
+			
+			if(pos == i)
+			{							 						
+			     Double xValue =(Double) entry.getKey();
+			     Double yValue =(Double) entry.getValue();	
+			     
+			     Toast.makeText(this.getContext(), 
+							record.getPointInfo() +
+							" Key:"+lData.getLineKey() +								
+							" Current Value(key,value):"+
+							Double.toString(xValue)+","+Double.toString(yValue), 
+							Toast.LENGTH_SHORT).show();
+			     break;
+			}
+	        i++;
+		}//end while
+				
+	}
+	
 	
 }

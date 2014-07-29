@@ -162,7 +162,7 @@ public class LineChart03View  extends GraphicalView {
 	        		this.getLayoutParams().width - 10,
 	        		 this.getLayoutParams().height - 10);
 	        //设置绘图区内边距	  
-	        chart.setPadding(120, 180, 0, 100);	
+	        chart.setPadding( 0,120, 100,180 );	
 	        
             chart.render(canvas);
         } catch (Exception e){

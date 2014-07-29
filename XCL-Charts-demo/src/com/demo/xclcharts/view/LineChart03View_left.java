@@ -144,7 +144,7 @@ public class LineChart03View_left extends GraphicalView {
 	        		this.getLayoutParams().width - 10,
 	        		 this.getLayoutParams().height - 10);
 	        
-	        chart.setPadding(120, 180, 70, 0);	//70是轴所点总宽度，在右边轴绘图时，偏移这个宽度就对好了
+	        chart.setPadding(70,120,0, 180);	//70是轴所点总宽度，在右边轴绘图时，偏移这个宽度就对好了
         	
         	
             chart.render(canvas);

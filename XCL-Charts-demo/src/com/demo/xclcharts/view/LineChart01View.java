@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
+import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -37,6 +38,8 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName LineChart01View
@@ -119,7 +122,12 @@ public class LineChart01View extends TouchView {
 			chart.setTitle("折线图(Line Chart)");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
-			chart.getAxisTitle().setLowerAxisTitle("(年份)");			
+			chart.getAxisTitle().setLowerAxisTitle("(年份)");
+			
+			//激活点击监听
+			chart.ActiveListenItemClick();
+			//为了让触发更灵敏，可以扩大5px的点击监听范围
+			chart.extPointClickRange(5);
 		
 			
 			/*
@@ -193,6 +201,7 @@ public class LineChart01View extends TouchView {
 		valuesE.add(90d);
 		LineData lineData5 = new LineData("定制",valuesE,(int)Color.rgb(234, 142, 43));
 		lineData5.setDotRadius(15);
+		lineData5.setDotStyle(XEnum.DotStyle.TRIANGLE);
 		
 		chartData.add(lineData1);
 		chartData.add(lineData2);
@@ -226,5 +235,35 @@ public class LineChart01View extends TouchView {
 		lst.add(chart);		
 		return lst;
 	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+				
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		PointPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+
+		LineData lData = chartData.get(record.getDataID());
+		Double lValue = lData.getLinePoint().get(record.getDataChildID());
+							
+		Toast.makeText(this.getContext(), 
+				record.getPointInfo() +
+				" Key:"+lData.getLineKey() +
+				" Label:"+lData.getLabel() +								
+				" Current Value:"+Double.toString(lValue), 
+				Toast.LENGTH_SHORT).show();		
+	}
+	
 	
 }

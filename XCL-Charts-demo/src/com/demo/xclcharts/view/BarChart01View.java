@@ -31,14 +31,16 @@ import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
-import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName BarChart01View
@@ -157,6 +159,9 @@ public class BarChart01View extends TouchView implements Runnable{
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
 			
+			//激活点击监听
+			chart.ActiveListenItemClick();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -255,5 +260,35 @@ public class BarChart01View extends TouchView implements Runnable{
               Thread.currentThread().interrupt();
           }            
 	}
+	
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());			
+		}
+		return true;
+	}
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		BarPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		BarData bData = chartData.get(record.getDataID());					
+		Double bValue = bData.getDataSet().get(record.getDataChildID());			
+
+		Toast.makeText(this.getContext(),
+				"info:" + record.getBarInfo() +
+				" Key:" + bData.getKey() + 							
+				" Current Value:" + Double.toString(bValue), 
+				Toast.LENGTH_SHORT).show();		
+	}
+	
+
 	
 }
