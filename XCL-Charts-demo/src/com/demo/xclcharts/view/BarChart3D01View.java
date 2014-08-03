@@ -111,7 +111,7 @@ public class BarChart3D01View extends TouchView {
 			chart.getDataAxis().setAxisMax(500);
 			chart.getDataAxis().setAxisMin(100);
 			chart.getDataAxis().setAxisSteps(100);
-			//chart.getCategoryAxis().setAxisTickLabelsRotateAgent(-45f);
+			//chart.getCategoryAxis().setAxisTickLabelsRotateAngle(-45f);
 			
 			
 			//标题
@@ -128,7 +128,7 @@ public class BarChart3D01View extends TouchView {
 			
 			
 			//定义数据轴标签显示格式		
-			chart.getDataAxis().setTickLabelRotateAgent(-45);
+			chart.getDataAxis().setTickLabelRotateAngle(-45);
 			chart.getDataAxis().getTickMarksPaint().
 					setColor((int)Color.rgb(186, 20, 26));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){

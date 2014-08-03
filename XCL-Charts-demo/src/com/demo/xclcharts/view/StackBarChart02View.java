@@ -111,7 +111,7 @@ public class StackBarChart02View extends TouchView {
 			chart.getDataAxis().setAxisMin(100);
 			chart.getDataAxis().setAxisSteps(100);
 			//指定数据轴标签旋转-45度显示
-			chart.getCategoryAxis().setTickLabelRotateAgent(-45f);			
+			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);			
 			
 			//标题
 			chart.setTitle("费用预算与实际发生对比");

@@ -22,8 +22,6 @@
 
 package org.xclcharts.renderer.axis;
 
-import org.xclcharts.renderer.XEnum;
-
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -51,25 +49,13 @@ public class Axis {
 	private boolean mTickLabelVisible = true;
 	 
 	//刻度标记文字旋转角度
-	private float mTickLabelRotateAgent = 0.0f; //-45f;
+	private float mTickLabelRotateAngle = 0.0f; //-45f;
 		
 	//是否显示轴(包含轴线，刻度线和标签)
 	private boolean mAxisVisible = true;	
 	 
-	//设置轴线条粗细
-	private int mAxisLineWidth = 5;	
-	 
-	 //默认刻度线所占宽度
-	private int mTickMarksLength = 15;	
+
 	
-	//刻度标记与轴的间距
-	private int mTickLabelMargin = 10;	
-	
-	//标签显示位置，分别在轴的左边，中间，右边
-	private Align mTickMarksAlign  = Align.RIGHT;
-	
-	//标签显示位置，分别在轴的上面，中间，底下
-	private XEnum.Position mTickMarksPosition =  XEnum.Position.LOWER;
 	 
 
 	public Axis()
@@ -84,10 +70,12 @@ public class Axis {
 		mPaintTickLabel = new Paint();		
 		
 		mPaintAxis.setColor(Color.BLACK);		
-		mPaintAxis.setStrokeWidth(mAxisLineWidth);
+		//mPaintAxis.setStrokeWidth(mAxisLineWidth);
+		mPaintAxis.setAntiAlias(true);		
 		
 		mPaintTickMarks.setColor(Color.BLACK);	
 		mPaintTickMarks.setStrokeWidth(3);
+		mPaintTickMarks.setAntiAlias(true);		
 		
 		mPaintTickLabel.setColor(Color.BLACK);	
 		mPaintTickLabel.setTextAlign(Align.RIGHT);
@@ -193,78 +181,20 @@ public class Axis {
 	 * 返回轴标签文字旋转角度
 	 * @return 旋转角度
 	 */
-	public float getTickLabelRotateAgent() {
-		return mTickLabelRotateAgent;
+	public float getTickLabelRotateAngle() {
+		return mTickLabelRotateAngle;
 	}
 
 	/**
 	 * 设置轴标签文字旋转角度
-	 * @param rotateAgent 旋转角度
+	 * @param rotateAngle 旋转角度
 	 */
-	public void setTickLabelRotateAgent(float rotateAgent) {
-		this.mTickLabelRotateAgent = rotateAgent;
+	public void setTickLabelRotateAngle(float rotateAngle) {
+		this.mTickLabelRotateAngle = rotateAngle;
 	}
 		
-	/**
-	 * 返回轴刻度线长度
-	 * @return 刻度线长度
-	 */
-	public int getTickMarksLength()
-	{
-		return mTickMarksLength;
-	}
 	
 	
-	/**
-	 * 设置轴刻度线与标签间的间距
-	 * @param margin 间距
-	 */
-	public void setTickLabelMargin(int margin)
-	{
-		mTickLabelMargin = margin;
-	}
-
-	/**
-	 * 返回轴刻度线与标签间的间距
-	 * @return 间距
-	 */
-	public int getTickLabelMargin()
-	{
-		return mTickLabelMargin;
-	}
-	
-	/**
-	 *  设置时刻度显示在上，中，下哪个地方,针对横轴
-	 * @param position 上方，居中，下方
-	 */
-	public void setVerticalTickPosition(XEnum.Position position)
-	{
-		mTickMarksPosition = position;
-	}
-	
-	/**
-	 * 返回轴上刻度线显示的位置
-	 * @return 位置
-	 */
-	public XEnum.Position getVerticalTickPosition()
-	{
-		return mTickMarksPosition;
-	}
-	
-	
-	/**
-	 * 设置刻度靠左，中，右哪个位置显示,针对竖轴
-	 * @param align 靠左，居中，靠右
-	 */
-	public void setHorizontalTickAlign(Align align)
-	{
-		mTickMarksAlign = align;
-	}
-	
-	public Align getHorizontalTickAlign()
-	{
-		return mTickMarksAlign;
-	}
 	
 	
 	

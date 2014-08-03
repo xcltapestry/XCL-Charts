@@ -221,6 +221,24 @@ public class XEnum {
 			FILL,STROKE
 		}
 		
+		/**
+		 * 设置圆形轴的类型
+		 * @author XCL
+		 *
+		 */
+		//DialChart RoundAxis
+		public enum RoundAxisType {			
+			TICKAXIS,RINGAXIS,ARCLINEAXIS,FILLAXIS,CIRCLEAXIS
+		}
+		
 
+		/**
+		 * 附加信息位置
+		 * @author XCL
+		 *
+		 */
+		public enum AttributeInfoLoction {  
+			TOP,BOTTOM,LEFT, RIGHT
+		}
 	
 }

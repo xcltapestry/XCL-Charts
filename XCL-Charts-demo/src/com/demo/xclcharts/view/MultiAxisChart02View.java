@@ -136,7 +136,7 @@ public class MultiAxisChart02View extends TouchView {
 			
 			//定制标签轴标签的标签格式
 			CategoryAxis categoryAxis = chart.getCategoryAxis();
-			categoryAxis.setTickLabelRotateAgent(-15f);			
+			categoryAxis.setTickLabelRotateAngle(-15f);			
 			categoryAxis.getTickLabelPaint().setTextSize(15);
 			categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);
 			

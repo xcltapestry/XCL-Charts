@@ -140,7 +140,8 @@ public class ClickPieChart01View extends GraphicalView {
 				" Label:" + pData.getLabel() ,
 				Toast.LENGTH_SHORT).show();
 		
-		onClickListener.onClick(new PointF(x,y), record);	
+		if(null != onClickListener)
+				onClickListener.onClick(new PointF(x,y), record);	
 	}
 	
 	

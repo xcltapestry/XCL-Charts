@@ -99,7 +99,7 @@ public class SeekBarActivity extends Activity {
 	            	mDesc.setText(Integer.toString(progress));	            
 		            if(0 == mSelected )
 		       		{
-		                mGaChart.setAgent(progress);
+		                mGaChart.setAngle(progress);
 		        		mGaChart.chartRender();
 		        		mGaChart.invalidate();	            	
 		       		}else if(1 == mSelected ){

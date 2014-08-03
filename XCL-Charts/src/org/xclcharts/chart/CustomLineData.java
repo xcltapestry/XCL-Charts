@@ -42,7 +42,7 @@ public class CustomLineData {
 	private int mLineStroke = 0;
 	
 	//文字旋转角度
-	private float mLabelRotateAgent = 0.0f; //-45f;
+	private float mLabelRotateAngle = 0.0f; //-45f;
 	
 	//设置Label显示位置(左，中，右)
 	private XEnum.LabelAlign  mLabelAlign = XEnum.LabelAlign.RIGHT;
@@ -264,16 +264,16 @@ public class CustomLineData {
 	 * 返回轴标签文字旋转角度
 	 * @return 旋转角度
 	 */
-	public float getLabelRotateAgent() {
-		return mLabelRotateAgent;
+	public float getLabelRotateAngle() {
+		return mLabelRotateAngle;
 	}
 
 	/**
 	 * 设置轴标签文字旋转角度
-	 * @param rotateAgent 旋转角度
+	 * @param rotateAngle 旋转角度
 	 */
-	public void setLabelRotateAgent(float rotateAgent) {
-		this.mLabelRotateAgent = rotateAgent;
+	public void setLabelRotateAngle(float rotateAngle) {
+		this.mLabelRotateAngle = rotateAngle;
 	}
 	
 	/**

@@ -147,7 +147,7 @@ public class BarChart02View extends TouchView {
 			chart.getPlotGrid().showEvenRowBgColor();
 			
 			//标签轴文字旋转-45度
-			chart.getCategoryAxis().setTickLabelRotateAgent(-45f);
+			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);
 			//横向显示柱形
 			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
 			//在柱形顶部显示值

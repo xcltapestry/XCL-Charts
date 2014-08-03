@@ -27,6 +27,7 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
@@ -45,11 +46,62 @@ public class XYAxis extends Axis {
 
 	// 用于格式化标签的回调接口
 	private IFormatterTextCallBack mLabelFormatter;
+	
+	//标签显示位置，分别在轴的左边，中间，右边
+	private Align mTickMarksAlign  = Align.RIGHT;
+	
+	//标签显示位置，分别在轴的上面，中间，底下
+	private XEnum.Position mTickMarksPosition =  XEnum.Position.LOWER;
+	
+	//设置轴线条粗细
+	private int mAxisLineWidth = 5;	
+	 
+	 //默认刻度线所占宽度
+	private int mTickMarksLength = 15;	
+	
+	//刻度标记与轴的间距
+	private int mTickLabelMargin = 10;	
+	
 
 	public XYAxis() {
 		super();
 		
+		this.getAxisPaint().setStrokeWidth(mAxisLineWidth);
 	}
+	
+	/**
+	 *  设置时刻度显示在上，中，下哪个地方,针对横轴
+	 * @param position 上方，居中，下方
+	 */
+	public void setVerticalTickPosition(XEnum.Position position)
+	{
+		mTickMarksPosition = position;
+	}
+	
+	/**
+	 * 返回轴上刻度线显示的位置
+	 * @return 位置
+	 */
+	public XEnum.Position getVerticalTickPosition()
+	{
+		return mTickMarksPosition;
+	}
+	
+	
+	/**
+	 * 设置刻度靠左，中，右哪个位置显示,针对竖轴
+	 * @param align 靠左，居中，靠右
+	 */
+	public void setHorizontalTickAlign(Align align)
+	{
+		mTickMarksAlign = align;
+	}
+	
+	public Align getHorizontalTickAlign()
+	{
+		return mTickMarksAlign;
+	}
+	
 
 	/**
 	 * 设置标签的显示格式
@@ -159,7 +211,7 @@ public class XYAxis extends Axis {
 				//*/
 				DrawHelper.getInstance().drawRotateText(
 						getFormatterLabel(text), labelStartX, labelStartY + textHeight,
-						getTickLabelRotateAgent(), canvas,
+						getTickLabelRotateAngle(), canvas,
 						getTickLabelPaint());
 			}
 			
@@ -240,7 +292,7 @@ public class XYAxis extends Axis {
 			//定制化显示格式			
 			DrawHelper.getInstance().drawRotateText(getFormatterLabel(text),
 					centerX, labelsStartY,
-					getTickLabelRotateAgent(), canvas,
+					getTickLabelRotateAngle(), canvas,
 					getTickLabelPaint());
 		}
 		
@@ -262,7 +314,7 @@ public class XYAxis extends Axis {
 		{
 			//标签绘制在一行中
      	   DrawHelper.getInstance().drawRotateText(label,centerX, centerY,
-								getTickLabelRotateAgent(), canvas,getTickLabelPaint());
+								getTickLabelRotateAngle(), canvas,getTickLabelPaint());
 		}else{	//Multi line			
 			 float txtHeight = DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint());						
 	         float charWidth =0.0f,totalWidth = 0.0f;
@@ -278,7 +330,7 @@ public class XYAxis extends Axis {
 	      		 if( Float.compare(totalWidth , width) == 1 )
 	      		 {
 		        	   DrawHelper.getInstance().drawRotateText(lnString,centerX, renderY,
-							getTickLabelRotateAgent(), canvas,getTickLabelPaint());
+							getTickLabelRotateAngle(), canvas,getTickLabelPaint());
 		        	   
 		        		totalWidth = charWidth;		      		 			   	           	
 		        		renderY = MathHelper.getInstance().add(renderY,txtHeight);		      		 		      		 
@@ -292,11 +344,39 @@ public class XYAxis extends Axis {
 	         if(lnString.length() > 0 )
 	         {
 	        	 DrawHelper.getInstance().drawRotateText(lnString,centerX, renderY,
-	        			 		getTickLabelRotateAgent(), canvas,getTickLabelPaint());
+	        			 		getTickLabelRotateAngle(), canvas,getTickLabelPaint());
 	         }
 	         	         
 		} //end width if
 	}
 	
 
+	/**
+	 * 返回轴刻度线长度
+	 * @return 刻度线长度
+	 */
+	public int getTickMarksLength()
+	{
+		return mTickMarksLength;
+	}
+	
+	
+	/**
+	 * 设置轴刻度线与标签间的间距
+	 * @param margin 间距
+	 */
+	public void setTickLabelMargin(int margin)
+	{
+		mTickLabelMargin = margin;
+	}
+
+	/**
+	 * 返回轴刻度线与标签间的间距
+	 * @return 间距
+	 */
+	public int getTickLabelMargin()
+	{
+		return mTickLabelMargin;
+	}
+	
 }

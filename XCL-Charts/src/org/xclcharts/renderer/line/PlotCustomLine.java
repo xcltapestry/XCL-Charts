@@ -222,7 +222,7 @@ public class PlotCustomLine {
 		//绘制标签				
 		DrawHelper.getInstance().drawRotateText(line.getLabel(), 
 												currentX, currentY,
-												line.getLabelRotateAgent(), 
+												line.getLabelRotateAngle(), 
 												canvas,line.getLineLabelPaint());
 		
 	}
@@ -313,7 +313,7 @@ public class PlotCustomLine {
 		
 			DrawHelper.getInstance().drawRotateText(
 									line.getLabel(), currentX, currentY,
-									line.getLabelRotateAgent(),
+									line.getLabelRotateAngle(),
 									canvas,line.getLineLabelPaint());			
 		}
 	}

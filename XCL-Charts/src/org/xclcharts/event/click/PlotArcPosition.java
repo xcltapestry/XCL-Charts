@@ -31,11 +31,11 @@ public class PlotArcPosition extends ArcPosition{
 	}
 	
 	
-	public void saveAgent(float radius,float offsetAgent,float currentAgent)
+	public void saveAngle(float radius,float offsetAngle,float currentAngle)
 	{
 		mRadius = radius;
-		mOffsetAgent = offsetAgent;
-		mCurrentAgent = currentAgent;
+		mOffsetAngle = offsetAngle;
+		mCurrentAngle = currentAngle;
 	}
 	
 	//当前记录在数据源中行号

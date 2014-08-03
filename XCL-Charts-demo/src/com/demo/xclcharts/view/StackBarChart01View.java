@@ -112,7 +112,7 @@ public class StackBarChart01View extends TouchView {
 			chart.getDataAxis().setAxisMin(0);
 			chart.getDataAxis().setAxisSteps(64);
 			//指定数据轴标签旋转-45度显示
-			chart.getCategoryAxis().setTickLabelRotateAgent(-45f);	
+			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);	
 			Paint labelPaint = chart.getCategoryAxis().getTickLabelPaint();			
 			labelPaint.setTextAlign(Align.RIGHT);
 			labelPaint.setColor((int)Color.rgb(0, 75, 106));

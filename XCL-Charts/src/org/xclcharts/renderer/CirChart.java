@@ -53,7 +53,7 @@ public class CirChart extends EventChart{
 	private Paint mPaintLabelLine = null;
 	
 	//初始偏移角度
-	protected float mOffsetAgent = 0.0f;//180;
+	protected float mOffsetAngle = 0.0f;//180;
 
 	
 	//标签与点的转折线长度
@@ -104,11 +104,11 @@ public class CirChart extends EventChart{
 	
 	/**
 	 * 设置饼图(pie chart)起始偏移角度
-	 * @param agent 偏移角度
+	 * @param Angle 偏移角度
 	 */
-	public void setInitialAngle(final int agent)
+	public void setInitialAngle(final int Angle)
 	{
-		mOffsetAgent = agent;
+		mOffsetAngle = Angle;
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class CirChart extends EventChart{
 	 */
 	public float getInitialAngle()
 	{
-		return mOffsetAgent;
+		return mOffsetAngle;
 	}
 
 	/**
@@ -168,25 +168,25 @@ public class CirChart extends EventChart{
 	 * @param cirX	x坐标
 	 * @param cirY	y坐标
 	 * @param radius	半径
-	 * @param offsetAgent	偏移角度
-	 * @param curretAgentt	当前角度
+	 * @param offsetAngle	偏移角度
+	 * @param curretAnglet	当前角度
 	 */
 	protected boolean renderLabel(Canvas canvas, String text,
 			final float cirX,
 			final float cirY,
 			final float radius,		
-			final double offsetAgent,
-			final double curretAgentt)
+			final double offsetAngle,
+			final double curretAnglet)
 	{
 		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return true;		
 		if(""==text||text.length()==0)return true;
 		
 		float calcRadius = 0.0f;
-		float calcAgent = 0.0f;
+		float calcAngle = 0.0f;
 				
-		calcAgent =  (float) MathHelper.getInstance().add(offsetAgent , curretAgentt/2);
-		if(Float.compare(calcAgent,0.0f) == 0 
-				|| Float.compare(calcAgent,0.0f) == -1 )
+		calcAngle =  (float) MathHelper.getInstance().add(offsetAngle , curretAnglet/2);
+		if(Float.compare(calcAngle,0.0f) == 0 
+				|| Float.compare(calcAngle,0.0f) == -1 )
 		{
 			Log.e(TAG,"计算出来的圆心角等于0.");
 			return false;
@@ -198,7 +198,7 @@ public class CirChart extends EventChart{
 				calcRadius = MathHelper.getInstance().sub(radius , radius/2f);
 				
 				//计算百分比标签
-				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 						 
+				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAngle); 						 
 				//标识
 				canvas.drawText( text ,
 						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);
@@ -206,7 +206,7 @@ public class CirChart extends EventChart{
 				//显示在扇形的外部
 				calcRadius = MathHelper.getInstance().add(radius  , radius/10f);
 				//计算百分比标签
-				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent); 	
+				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAngle); 	
 					 
 				//标识
 				canvas.drawText(text,
@@ -216,13 +216,13 @@ public class CirChart extends EventChart{
 			//显示在扇形的外部
 			//1/4处为起始点
 			calcRadius = MathHelper.getInstance().sub(radius  , radius / 4f);
-			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAgent);			
+			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAngle);			
 			float startX = MathHelper.getInstance().getPosX();
 		    float startY = MathHelper.getInstance().getPosY();
 		    
 		    //延长原来半径的一半在外面
 		    calcRadius =  radius / 2f;		
-			MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAgent);
+			MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAngle);
 			
 			float stopX = MathHelper.getInstance().getPosX();
 		    float stopY = MathHelper.getInstance().getPosY();

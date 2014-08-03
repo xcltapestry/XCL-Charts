@@ -108,7 +108,7 @@ public class BarChart3D02View extends TouchView {
 			chart.getDataAxis().setAxisMax(50);
 			chart.getDataAxis().setAxisMin(10);
 			chart.getDataAxis().setAxisSteps(10);
-			chart.getCategoryAxis().setTickLabelRotateAgent(-45f);
+			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);
 			
 			//标题
 			chart.setTitle("本月原料进货情况");

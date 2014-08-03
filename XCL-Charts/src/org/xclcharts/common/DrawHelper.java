@@ -30,6 +30,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Path;
 import android.graphics.PathEffect;
@@ -310,5 +311,65 @@ public class DrawHelper {
 			break;
 		}		
 	}
+	
+	/**
+	 * 绘制图中显示所占比例 的扇区
+	 * @param paintArc	画笔
+	 * @param cirX	x坐标
+	 * @param cirY	y坐标
+	 * @param radius	半径
+	 * @param offsetAgent	偏移角度
+	 * @param curretAgent	当前角度
+	 * @throws Exception	例外
+	 */
+	public void drawPercent(Canvas canvas, Paint paintArc,
+			final float cirX,
+			final float cirY,
+			final float radius,
+			final float startAngle,
+			final float sweepAngle,boolean useCenter) throws Exception
+	{
+		try{		
+			float arcLeft =  cirX - radius;  
+	        float arcTop  =  cirY - radius ;  
+	        float arcRight = cirX  +  radius ;  
+	        float arcBottom = cirY +  radius ;  
+	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
+			
+			//在饼图中显示所占比例  
+			canvas.drawArc(arcRF0, startAngle, sweepAngle, useCenter, paintArc);		
+		}catch( Exception e){
+			throw e;
+		}
+	}
+	
+	public void drawPathArc(Canvas canvas, Paint paintArc,
+			final float cirX,
+			final float cirY,
+			final float radius,
+			final float startAngle,
+			final float sweepAngle) throws Exception
+	{
+		try{		
+			float arcLeft =  cirX - radius;  
+	        float arcTop  =  cirY - radius ;  
+	        float arcRight = cirX  +  radius ;  
+	        float arcBottom = cirY +  radius ;  
+	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
+			
+			//弧形
+			 Path path = new Path();
+			 path.addArc(arcRF0,startAngle, sweepAngle); 
+			 canvas.drawPath(path, paintArc);
+			 
+			 
+		}catch( Exception e){
+			throw e;
+		}
+	}
+	
+
+	 
+	 
 		
 }

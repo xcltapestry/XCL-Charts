@@ -1,0 +1,168 @@
+package org.xclcharts.renderer.axis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.util.Log;
+
+public class RoundAxis extends Axis{
+	
+	 private static final String TAG ="RoundAxis";
+	
+	 protected int mDetailModeSteps = 1;
+	 protected float mCirX = 0.0f;
+	 protected float mCirY = 0.0f;
+	 protected float mOrgRadius = 0.0f;
+	 protected float mRadius = 0.0f;
+	 
+	// 数据集
+	//protected List<String> mDataSet = null;
+ 
+	// 用于格式化标签的回调接口
+	private IFormatterTextCallBack mLabelFormatter;
+	
+	private	XEnum.RoundAxisType mAxisType = XEnum.RoundAxisType.ARCLINEAXIS;
+	
+	protected float mTotalAngle = 0.0f;
+	protected float mInitAngle = 0.0f;
+	
+	protected List<Float> mAngle = null;
+	protected List<Integer> mColor = null;
+	protected List<String> mLabels = null;
+	  
+	protected float mRadiusPercentage = 1f;
+	protected float mInnerRadiusPercentage = 0.9f;
+	  
+	private  Paint mPaintFillAxis = null;
+	 
+	 public RoundAxis()
+	 {
+		super();		
+	 }
+	 
+	 public void setRoundAxisType(XEnum.RoundAxisType axisType)
+	 {
+		 mAxisType = axisType;
+		// TICKAXIS,RINGAXIS,LENAXIS
+		 switch(mAxisType)
+		 {
+		 case TICKAXIS:
+			 getTickLabelPaint().setTextAlign(Align.CENTER);
+			 
+			 setTickLabelVisible(true);
+			 setTickMarksVisible(true);
+			 
+			 this.setAxisLineVisible(true);
+			 
+			 this.getAxisPaint().setStyle(Style.STROKE);
+			 
+			 break;
+		 case RINGAXIS:
+			 setTickLabelVisible(true);
+			 setTickMarksVisible(false);
+			 
+			 this.getAxisPaint().setStyle(Style.FILL);
+			 this.getAxisPaint().setColor(Color.BLUE);
+			 
+			 initFillAxisPaint();
+			 
+			 break;
+		 case ARCLINEAXIS:			 
+			 setTickLabelVisible(false);
+			 setTickMarksVisible(false);
+			 
+			 this.getAxisPaint().setStyle(Style.STROKE);
+			 
+			 break;
+		 default:
+			 break;
+		 }
+	 }
+	 
+	 
+	 /**
+	  * 设置后，会启用为明细模式，轴刻度线会分长短,背景线会分粗细
+	  * @param steps 步长
+	  */
+	 public void setDetailModeSteps(int steps)
+	 {
+		 mDetailModeSteps = steps;
+	 }
+	 
+	  public float getRadius()
+	  {
+		  return mRadius;
+	  }
+
+	  public void setRadiusPercentage(float percentage)
+	  {
+		  mRadiusPercentage = percentage;
+	  }
+	  
+	  public void setInnerRadiusPercentage(float percentage)
+	  {
+		  mInnerRadiusPercentage = percentage;
+	  }
+	 
+	  
+	  public Paint getFillAxisPaint()
+	  {
+		  initFillAxisPaint();
+		  return mPaintFillAxis;
+	  }
+	
+	  private void initFillAxisPaint()
+	  {
+		  if(null == mPaintFillAxis)
+		 {
+			 mPaintFillAxis = new Paint();
+			 mPaintFillAxis.setStyle(Style.FILL);
+			 mPaintFillAxis.setColor(Color.WHITE);
+		 }		
+	  }
+	  
+	  
+	  /**
+		 * 设置标签的显示格式
+		 * @param callBack 回调函数
+		 */
+		public void setLabelFormatter(IFormatterTextCallBack callBack) {
+			this.mLabelFormatter = callBack;
+		}
+		
+		/**
+		 * 返回标签显示格式
+		 * 
+		 * @param value 传入当前值
+		 * @return 显示格式
+		 */
+		protected String getFormatterLabel(String text) {
+			String itemLabel = "";
+			try {
+				itemLabel = mLabelFormatter.textFormatter(text);
+			} catch (Exception ex) {
+				itemLabel = text;
+			}
+			return itemLabel;
+		}
+	
+	 
+		
+		public XEnum.RoundAxisType getAxisType()
+		{
+			return mAxisType;
+		}
+
+	 
+	  
+}

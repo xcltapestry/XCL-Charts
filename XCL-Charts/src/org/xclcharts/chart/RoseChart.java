@@ -133,16 +133,16 @@ public class RoseChart extends PieChart{
 	            float nRight = add(cirX , newRaidus) ;  
 	            float nBottom = add(cirY , newRaidus) ;  
 	            RectF nRF = new RectF(nLeft ,nTop,nRight,nBottom);  
-	            canvas.drawArc(nRF, mOffsetAgent, percentage, true, paintArc);       
+	            canvas.drawArc(nRF, mOffsetAngle, percentage, true, paintArc);       
 				
 	          //计算百分比标签  
-	            MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAgent + percentage/2); 
+	            MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAngle + percentage/2); 
 	            
 	            //标识  
 	            canvas.drawText(cData.getLabel(),MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,getLabelPaint());             
 	         
 	          //下次的起始角度  
-	            mOffsetAgent = add(mOffsetAgent,percentage);
+	            mOffsetAngle = add(mOffsetAngle,percentage);
 			}			
 	        return true;
 	}

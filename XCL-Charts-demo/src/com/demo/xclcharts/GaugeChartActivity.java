@@ -85,7 +85,7 @@ public class GaugeChartActivity extends Activity {
 	            	
 	            	process.setText(Integer.toString(progress));
 	            		            	               	       				       		
-	       			chart.setAgent(progress);
+	       			chart.setAngle(progress);
 	       			chart.chartRender();
 	       			chart.invalidate();
 	            }

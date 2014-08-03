@@ -22,8 +22,12 @@
 package com.demo.xclcharts;
 
 
+import org.xclcharts.event.click.ArcPosition;
+import org.xclcharts.event.click.ChartArcListener;
+
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -36,6 +40,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.demo.xclcharts.view.AreaChart01View;
@@ -176,6 +181,9 @@ public class ChartsActivity extends Activity {
 		    mZoomControls.setOnZoomInClickListener(new OnZoomInClickListenerImpl());
 		    //缩小监听
 		    mZoomControls.setOnZoomOutClickListener(new OnZoomOutClickListenerImpl());  
+		    
+		    
+		    
 	}
 
 	@Override

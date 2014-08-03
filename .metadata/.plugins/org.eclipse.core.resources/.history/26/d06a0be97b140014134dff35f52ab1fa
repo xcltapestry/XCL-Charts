@@ -1,9 +1,0 @@
-package org.xclcharts.event;
-
-public interface IChartPosition {
-	
-	public boolean compare(int x,int y);
-	
-	public String getInfo();	
-
-}

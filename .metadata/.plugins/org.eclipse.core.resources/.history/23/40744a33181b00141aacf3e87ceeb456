@@ -1,0 +1,394 @@
+/**
+ * Copyright 2014  XCL-Charts
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version v0.1
+ */
+
+package org.xclcharts.renderer.axis;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
+
+import android.graphics.Canvas;
+import android.util.Log;
+
+/**
+ * @ClassName RoundAxisRender
+ * @Description  仪表盘绘制类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
+
+public class RoundAxisRender extends RoundAxis{
+	
+	private static final String TAG="RoundAxisRender";
+	
+	public RoundAxisRender()
+	{
+		super();
+	}
+	
+	public void setAxisPercentage(List<Float> angle)
+	  {
+		  if(null != mPercentage) mPercentage.clear();	
+		  if(null == mPercentage) mPercentage = new ArrayList<Float>();			  
+		 		  
+		  mPercentage = angle;
+	  }
+	  
+	  public void setAxisColor(List<Integer> color)
+	  {
+		  if(null != mColor) mColor.clear();
+		  if(null == mColor) mColor = new ArrayList<Integer>();
+		  
+		  mColor = color;
+	  }
+	  
+	  public void setAxisLabels(List<String> labels)
+	  {
+		  if(null != mLabels) mLabels.clear();
+		  if(null == mLabels) mLabels = new ArrayList<String>();
+		 
+		  mLabels = labels;
+	  }
+	
+	  /**
+	   * 绘制标签环形轴标签
+	   * @param canvas
+	   * @param labels
+	   * @return
+	   */
+	public boolean renderTicks(Canvas canvas,List<String> labels)
+	{
+		  
+		  	float cirX = mCirX;
+			float cirY = mCirY; 
+			float totalAngle = this.mTotalAngle;
+			float initAngle = this.mInitAngle;			
+			
+			int count = labels.size();				
+			float stepsAngle =  MathHelper.getInstance().div(totalAngle,count - 1 ) ;				
+			
+			float innerRadius1 = mRadius ; 
+			float tickRadius = mRadius * 0.9f; 
+			float detailsRadius = tickRadius; 
+			if(1 < mDetailModeSteps) detailsRadius = mRadius * 0.95f;  
+			
+			int steps = mDetailModeSteps;
+			float Angle = 0.0f;							
+			
+			for(int i=0;i<count;i++)
+			{					
+					if(0 == i)
+					{
+						Angle = initAngle;
+					}else{
+						Angle = (float) MathHelper.getInstance().add(initAngle, i *stepsAngle);													
+					}									
+					
+					MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, innerRadius1, Angle); 								
+					float startX = MathHelper.getInstance().getPosX();
+					float startY = MathHelper.getInstance().getPosY();
+					
+					float stopX = 0.0f,stopY = 0.0f;
+					float labelX = 0.0f,labelY = 0.0f;
+										
+					MathHelper.getInstance().calcArcEndPointXY(cirX, cirY,tickRadius, Angle); 	
+					labelX = MathHelper.getInstance().getPosX();
+					labelY = MathHelper.getInstance().getPosY();
+										
+					if(steps != mDetailModeSteps )
+					{
+						MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, detailsRadius , Angle); 	
+						stopX = MathHelper.getInstance().getPosX();
+						stopY = MathHelper.getInstance().getPosY();
+						
+						steps = 0;
+					}else{												
+						stopX = labelX;
+						stopY = labelY;						
+					}
+					
+					if (getTickMarksVisible()) {
+						canvas.drawLine(startX, startY, stopX, stopY, getTickMarksPaint());
+					}
+									
+					if (getTickLabelVisible()) 
+					{
+						 String label = getFormatterLabel(labels.get(i));						
+						 float labelWidth =DrawHelper.getInstance().getTextWidth(getTickLabelPaint(), label);
+						 
+						 if(Float.compare(totalAngle, Angle) == 0 ){
+							 labelY += DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint()) ;
+						 }else if( Float.compare(totalAngle, Angle) ==  1 )
+						 {
+							 labelX +=  labelWidth/2 ;
+						 }else{
+							 labelX -=  labelWidth/2 ;
+						 }	
+						 						
+						//定制化显示格式	 Angle* -2
+						DrawHelper.getInstance().drawRotateText(label,labelX , labelY,
+												getTickLabelRotateAngle(), canvas, getTickLabelPaint());
+						
+					}
+										
+					steps++;
+			} //end for
+			return true;
+		}	
+
+	 
+	 	//fillAxis
+	/**
+	 * 绘制填充环形轴
+	 * @param canvas
+	 * @return
+	 * @throws Exception
+	 */
+		public boolean renderFillAxis(Canvas canvas) throws Exception
+		{			
+			if(getVisible() && getAxisLineVisible())
+			{
+				if(null != mColor)
+					getFillAxisPaint().setColor(mColor.get(0));
+				
+				DrawHelper.getInstance().drawPercent(canvas, this.getFillAxisPaint(),
+								mCirX, mCirY, mRadius, mInitAngle, mTotalAngle, true);
+		
+			}
+			return true;
+		}
+			
+			
+	  
+	  //tickAxis
+		/**
+		 * 绘制标签环形轴
+		 * @param canvas
+		 * @return
+		 * @throws Exception
+		 */
+		public boolean renderTickAxis(Canvas canvas) throws Exception
+		{
+			
+			if(!getVisible()) return false;			
+			if(null == mLabels) return false;
+						
+			if(getAxisLineVisible())
+			{
+				DrawHelper.getInstance().drawPathArc(canvas, this.getAxisPaint(),
+								this.mCirX,this.mCirY,this.mRadius,this.mInitAngle, this.mTotalAngle);							
+			}
+			
+			return renderTicks(canvas,this.mLabels);
+		}
+		
+		//arcline
+		/**
+		 * 绘制弧形环形轴
+		 * @param canvas
+		 * @return
+		 * @throws Exception
+		 */
+		public boolean renderArcLineAxis(Canvas canvas) throws Exception
+		{			
+			if(getVisible() && getAxisLineVisible())
+			{
+				DrawHelper.getInstance().drawPathArc(canvas, this.getAxisPaint() 
+								,mCirX, mCirY, mRadius,this.mInitAngle, this.mTotalAngle);
+			}
+			return true;
+		}
+		
+		public boolean renderCircleAxis(Canvas canvas) throws Exception
+		{			
+			if(getVisible() && getAxisLineVisible())
+			{
+				 canvas.drawCircle(mCirX, mCirY, mRadius,  this.getAxisPaint());
+			}
+			return true;
+		}
+		
+		
+		
+		
+		//ringAxis
+		/**
+		 * 绘制颜色块环形轴
+		 * @param canvas
+		 * @return
+		 * @throws Exception
+		 */
+		public boolean renderRingAxis(Canvas canvas) throws Exception
+		{
+			if(!getVisible()|| !getAxisLineVisible()) return true;
+			
+			if(null == mPercentage) return false;
+									
+			int angleCount = 0;
+			int colorCount = 0;
+			int labelsCount = 0;
+						
+			 angleCount = this.mPercentage.size();
+			 if(null != mColor)colorCount = this.mColor.size();
+			 if(null != mLabels)labelsCount = this.mLabels.size();
+			
+			float offsetAngle = this.mInitAngle;
+			int currentColor = -1;
+			String currentLabel = "";
+								
+			for(int i=0;i<angleCount;i++)
+			{				
+				if(null != mColor && colorCount > i) currentColor = mColor.get(i);
+				if(null != mLabels && labelsCount > i)currentLabel = mLabels.get(i);				
+				float sweepAngle = MathHelper.getInstance().mul( mTotalAngle , mPercentage.get(i));				
+				
+				renderPartitions(canvas,offsetAngle,sweepAngle,currentColor,currentLabel) ;
+				offsetAngle = MathHelper.getInstance().add(offsetAngle, sweepAngle);
+				currentColor = -1;
+				currentLabel = "";
+			}
+			
+			if(Float.compare(getRingInnerRadiusPercentage() , 0.0f) != 0 
+					&& Float.compare(getRingInnerRadiusPercentage() , 0.0f) == 1)
+			{									
+				canvas.drawCircle(this.mCirX, mCirY, getRingInnerRadius(), this.getFillAxisPaint());
+			}
+			
+			
+			return true;
+		}
+		
+		
+		
+		
+		/**
+		 * 绘制颜色轴
+		 * @throws Exception
+		 */
+		private boolean renderPartitions(Canvas canvas,float startAngle,float sweepAngle,
+														int color,String label) throws Exception
+		{		
+				     
+			if(-1 != color) getAxisPaint().setColor(color);
+		   		     
+			
+			 if(Float.compare(sweepAngle, 0.0f) < 0){
+					Log.e(TAG,"负角度???!!!");
+					return false;
+			 }else if(Float.compare(sweepAngle, 0.0f) == 0){
+				 	Log.w(TAG,"零角度???!!!");
+					return true;
+			 }			 
+			 
+			 DrawHelper.getInstance().drawPercent(canvas, this.getAxisPaint(),
+					 						this.mCirX, this.mCirY,mRadius, startAngle, sweepAngle, true);
+			 
+			 
+			if (getTickLabelVisible() && ""!= label) 
+			{
+			 	float Angle = MathHelper.getInstance().add(startAngle , sweepAngle / 2) ; 
+			 	MathHelper.getInstance().calcArcEndPointXY(this.mCirX, this.mCirY, mRadius * 0.5f,Angle ); 	
+			 	
+			 	float labelX = MathHelper.getInstance().getPosX();
+			 	float labelY = MathHelper.getInstance().getPosY();					
+					 						
+				//定制化显示格式	 Angle* -2
+				DrawHelper.getInstance().drawRotateText(getFormatterLabel(label) ,labelX , labelY,
+										getTickLabelRotateAngle(), canvas, getTickLabelPaint());		
+			}
+			 
+			 return true;		 
+		}
+		
+		/**
+		 * 圆心坐标
+		 * @param x x坐标
+		 * @param y	y坐标
+		 */
+		public void setCenterXY(float x,float y)
+		{
+			mCirX = x;
+			mCirY = y;
+		}
+		 
+		/**
+		 * Ploat范围半径
+		 * @param radius
+		 */
+		public void setOrgRadius(float radius)
+		{
+			mOrgRadius = radius;
+		}
+	
+		/**
+		 * 指定角度及偏移  		  
+		 * @param totalAngle	总角度
+		 * @param initAngle		偏移
+		 */
+		public void setAngleInfo(float totalAngle,float initAngle)
+		{
+			mTotalAngle = totalAngle;
+			mInitAngle = initAngle;
+		}		  
+		 		  
+		
+		/**
+		 * 绘制图表
+		 * @param canvas	画布
+		 * @return	是否成功
+		 * @throws Exception	例外
+		 */
+		public boolean render(Canvas canvas) throws Exception
+		{
+				boolean ret = false;
+				
+				mRadius = getOuterRadius(); 
+				
+				// TICKAXIS,RINGAXIS,LENAXIS
+				 switch(getAxisType())
+				 {
+				 case TICKAXIS:					
+					 ret = renderTickAxis(canvas);
+					 break;
+				 case RINGAXIS:					
+					 ret = renderRingAxis(canvas);
+					 break;
+				 case ARCLINEAXIS:					 
+					 ret = renderArcLineAxis(canvas);					 
+					 break;
+				 case FILLAXIS:					 
+					 ret = renderFillAxis(canvas);					 
+					 break;				
+				 case CIRCLEAXIS:	
+					 ret = renderCircleAxis(canvas);	
+					 break;
+				 default:
+					 break;
+				 }
+			 return ret;
+		}
+	
+	
+
+}

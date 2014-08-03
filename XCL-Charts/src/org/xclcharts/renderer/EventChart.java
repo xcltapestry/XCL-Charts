@@ -172,7 +172,7 @@ public class EventChart extends XChart {
 	
 	//保存角度 (半径)
 	protected void saveArcRecord(int dataID,float centerX,float centerY,
-								 float radius,float offsetAgent,float agent)
+								 float radius,float offsetAngle,float Angle)
 	{
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotArcPosition>();	
 	
@@ -181,7 +181,7 @@ public class EventChart extends XChart {
 			PlotArcPosition pRecord = new PlotArcPosition();			
 			pRecord.savePlotDataID(dataID);		
 			pRecord.savePlotCirXY(centerX,centerY);
-			pRecord.saveAgent(radius,offsetAgent,agent);	
+			pRecord.saveAngle(radius,offsetAngle,Angle);	
 			mRecordset.add(pRecord);
 		}
 	}

@@ -77,10 +77,10 @@ public class PieChart3D extends PieChart{
 		Paint paintArc = new Paint();  
 		paintArc.setAntiAlias(true);					
 		
- 		float initOffsetAgent = mOffsetAgent;	
- 		float offsetAgent = initOffsetAgent;
+ 		float initOffsetAngle = mOffsetAngle;	
+ 		float offsetAngle = initOffsetAngle;
 		//3D
-        float currentAgent = 0.0f;	             
+        float currentAngle = 0.0f;	             
      
 		for(int i=0;i < mRender3DLevel;i++)
 		{
@@ -90,9 +90,9 @@ public class PieChart3D extends PieChart{
 		  {			  
 			    PieData cData =  chartDataSource.get(j);			  
 				paintArc.setColor(cData.getSliceColor());				
-				currentAgent = cData.getSliceAgent();
-				if(Float.compare(currentAgent,0.0f) == 0 
-						|| Float.compare(currentAgent,0.0f) == -1 )continue;	
+				currentAngle = cData.getSliceAngle();
+				if(Float.compare(currentAngle,0.0f) == 0 
+						|| Float.compare(currentAngle,0.0f) == -1 )continue;	
 				
 			    if(cData.getSelected()) //指定突出哪个块
 	            {				    			    	
@@ -100,7 +100,7 @@ public class PieChart3D extends PieChart{
 			    	float newRadius = div(radius , SELECTED_OFFSET);
 			    	 //计算百分比标签
 			    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,newRadius,
-			    											add(offsetAgent, div(currentAgent,2f))); 	
+			    											add(offsetAngle, div(currentAngle,2f))); 	
 			        
 			        float arcLeft2 = sub(MathHelper.getInstance().getPosX() , radius);  
 			        float arcTop2  = sub(MathHelper.getInstance().getPosY() , radius) ;  
@@ -108,27 +108,27 @@ public class PieChart3D extends PieChart{
 			        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  
 			        
 			        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
-                    canvas.drawArc(arcRF1, offsetAgent, currentAgent, true,paintArc);
+                    canvas.drawArc(arcRF1, offsetAngle, currentAngle, true,paintArc);
 	            }else{
-                    canvas.drawArc(arcRF0, offsetAgent, currentAgent, true,paintArc);
+                    canvas.drawArc(arcRF0, offsetAngle, currentAngle, true,paintArc);
 	            }			    			    
 	            //下次的起始角度  
-			    offsetAgent = add(offsetAgent,currentAgent);  	            
+			    offsetAngle = add(offsetAngle,currentAngle);  	            
 	            //k += 2;
 			}
             canvas.restore();
-            offsetAgent = initOffsetAgent;
+            offsetAngle = initOffsetAngle;
 		}
 	
 		
 		//平面		
-		currentAgent = 0.0f;	
-		offsetAgent = initOffsetAgent;
+		currentAngle = 0.0f;	
+		offsetAngle = initOffsetAngle;
 	
 		for(int j=0;j< chartDataSource.size();j++)
 		{
 		 	PieData cData =  chartDataSource.get(j);	
-		 	currentAgent = cData.getSliceAgent();
+		 	currentAngle = cData.getSliceAngle();
 		 	int darkColor =  DrawHelper.getInstance().getDarkerColor((int)cData.getSliceColor());			  
 		  	paintArc.setColor( darkColor); 						
 		  	
@@ -138,7 +138,7 @@ public class PieChart3D extends PieChart{
 		    	float newRadius = div(radius , SELECTED_OFFSET);
 		    	 //计算百分比标签
 		    	MathHelper.getInstance().calcArcEndPointXY(
-		    				cirX,cirY,newRadius,add(offsetAgent , div(currentAgent,2f))); 	
+		    				cirX,cirY,newRadius,add(offsetAngle , div(currentAngle,2f))); 	
 		        
 		        float arcLeft2 = sub(MathHelper.getInstance().getPosX() , radius);  
 		        float arcTop2  = sub(MathHelper.getInstance().getPosY() , radius );  
@@ -146,20 +146,20 @@ public class PieChart3D extends PieChart{
 		        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  
 		        
 		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
-                canvas.drawArc(arcRF1, offsetAgent, (float) currentAgent, true,paintArc);
+                canvas.drawArc(arcRF1, offsetAngle, (float) currentAngle, true,paintArc);
 		        renderLabel(canvas,cData.getLabel(),MathHelper.getInstance().getPosX(),
 		        									MathHelper.getInstance().getPosY(),
-		        			radius,offsetAgent,currentAgent);                
+		        			radius,offsetAngle,currentAngle);                
             }else{
-                canvas.drawArc(arcRF0, offsetAgent, (float) currentAgent, true, paintArc);
-     	        renderLabel(canvas,cData.getLabel(),cirX, cirY,radius,offsetAgent,currentAgent);
+                canvas.drawArc(arcRF0, offsetAngle, (float) currentAngle, true, paintArc);
+     	        renderLabel(canvas,cData.getLabel(),cirX, cirY,radius,offsetAngle,currentAngle);
      	    }		
 		    
 		    //保存角度
-		    saveArcRecord(j,cirX,cirY,radius,offsetAgent,currentAgent);
+		    saveArcRecord(j,cirX,cirY,radius,offsetAngle,currentAngle);
 		    
            //下次的起始角度  
-		    offsetAgent = add(offsetAgent,currentAgent);
+		    offsetAngle = add(offsetAngle,currentAngle);
 		}			
 		//图KEY
 		plotLegend.renderPieKey(canvas,this.getDataSource());

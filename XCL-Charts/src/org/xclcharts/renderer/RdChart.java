@@ -43,7 +43,7 @@ public class RdChart extends XChart {
 	//半径
 	private float mRadius=0.0f;	
 	//初始偏移角度
-	private int mOffsetAgent = 0;//180;		
+	private int mOffsetAngle = 0;//180;		
 					
 	//格式化线中点的标签显示
 	 private IFormatterDoubleCallBack mDotLabelFormatter;		
@@ -93,15 +93,15 @@ public class RdChart extends XChart {
 	
 	/**
 	 * 设置图起始偏移角度
-	 * @param agent 偏移角度
+	 * @param Angle 偏移角度
 	 */
-	public void setInitialAngle(final int agent)
+	public void setInitialAngle(final int Angle)
 	{
-		if(agent < 0 || agent > 360)
+		if(Angle < 0 || Angle > 360)
 		{
 			Log.e(TAG, "起始偏移角度不能小于0或大于360");
 		}else
-			mOffsetAgent = agent;
+			mOffsetAngle = Angle;
 	}
 	
 
@@ -111,7 +111,7 @@ public class RdChart extends XChart {
 	 */
 	public int getInitialAngle()
 	{
-		return mOffsetAgent;
+		return mOffsetAngle;
 	}
 	
 	

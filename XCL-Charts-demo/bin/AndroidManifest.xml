@@ -66,6 +66,18 @@
             android:name="com.demo.xclcharts.ClickChartsActivity"
             android:label="@string/title_activity_click_charts" >
         </activity>
+        <activity
+            android:name="com.demo.xclcharts.DialChartActivity"
+            android:label="@string/title_activity_dial_chart" >
+        </activity>
+        <activity
+            android:name="com.demo.xclcharts.DialChart2Activity"
+            android:label="@string/title_activity_dial_chart2" >
+        </activity>
+        <activity
+            android:name="com.demo.xclcharts.DialChart3Activity"
+            android:label="@string/title_activity_dial_chart3" >
+        </activity>
     </application>
 
 </manifest>

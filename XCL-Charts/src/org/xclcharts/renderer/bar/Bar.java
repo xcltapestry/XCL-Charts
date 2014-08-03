@@ -56,7 +56,7 @@ public class Bar {
 	//柱形顶上文字偏移量
 	private int mItemLabelAnchorOffset = 10;
 	//柱形顶上文字旋转角度
-	private float mItemLabelRotateAgent = 0.0f;	
+	private float mItemLabelRotateAngle = 0.0f;	
 	//是否显示柱形顶上文字标签
 	private boolean mShowItemLabel = false;		
 	
@@ -136,16 +136,16 @@ public class Bar {
 	 * 返回柱形顶部标签在显示时的旋转角度
 	 * @return 旋转角度
 	 */
-	public float getItemLabelRotateAgent() {
-		return mItemLabelRotateAgent;
+	public float getItemLabelRotateAngle() {
+		return mItemLabelRotateAngle;
 	}
 
 	/**
 	 * 设置柱形顶部标签在显示时的旋转角度
-	 * @param rotateAgent 旋转角度
+	 * @param rotateAngle 旋转角度
 	 */
-	public void setItemLabelRotateAgent(float rotateAgent) {
-		this.mItemLabelRotateAgent = rotateAgent;
+	public void setItemLabelRotateAngle(float rotateAngle) {
+		this.mItemLabelRotateAngle = rotateAngle;
 	}
 
 	/**
@@ -267,7 +267,7 @@ public class Bar {
 			DrawHelper.getInstance().drawRotateText(text,
 								x ,
 								y,
-	            			  getItemLabelRotateAgent(),
+	            			  getItemLabelRotateAngle(),
 	            			  canvas, 
 	            			  getItemLabelPaint());	
 		}

@@ -27,8 +27,8 @@ import android.graphics.PointF;
 
 public class ArcPosition extends PositionRecord {
 	
-	protected float mOffsetAgent = 0.0f;
-	protected float mCurrentAgent = 0.0f;	
+	protected float mOffsetAngle = 0.0f;
+	protected float mCurrentAngle = 0.0f;	
 	protected float mRadius = 0.0f;
 	
 	protected PointF mCirXY = null;
@@ -39,9 +39,9 @@ public class ArcPosition extends PositionRecord {
 	}
 	
 	
-	public float getAgent()
+	public float getAngle()
 	{
-		return mOffsetAgent + mCurrentAgent;
+		return mOffsetAngle + mCurrentAngle;
 	}
 
 
@@ -58,10 +58,10 @@ public class ArcPosition extends PositionRecord {
 		double distance =  MathHelper.getInstance().getDistance(mCirXY.x, mCirXY.y, x,y);		
 		if(Double.compare(distance, mRadius)  == 0 || Double.compare(distance, mRadius) == -1)
 		{							
-			float agent1 = (float) MathHelper.getInstance().getDegree(mCirXY.x, mCirXY.y, x,y);
-			float currAgent = getAgent();
+			float Angle1 = (float) MathHelper.getInstance().getDegree(mCirXY.x, mCirXY.y, x,y);
+			float currAngle = getAngle();
 						
-			if( Float.compare(currAgent, agent1) == 1 || Float.compare(currAgent, agent1) == 0  )
+			if( Float.compare(currAngle, Angle1) == 1 || Float.compare(currAngle, Angle1) == 0  )
 			{						
 				return true;
 			}						

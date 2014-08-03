@@ -150,16 +150,16 @@ public class CircleChart extends CirChart {
      * @param cirX        x坐标
      * @param cirY        y坐标
      * @param radius      半径
-     * @param offsetAgent 偏移
-     * @param curretAgent 当前值
+     * @param offsetAngle 偏移
+     * @param curretAngle 当前值
      * @throws Exception 例外
      */
     protected void drawPercent(Canvas canvas, Paint paintArc,
                                final float cirX,
                                final float cirY,
                                final float radius,
-                               final float offsetAgent,
-                               final float curretAgent) throws Exception {
+                               final float offsetAngle,
+                               final float curretAngle) throws Exception {
         try {
             float arcLeft = sub(cirX , radius);
             float arcTop = sub(cirY , radius);
@@ -167,7 +167,7 @@ public class CircleChart extends CirChart {
             float arcBottom = add(cirY , radius);
             RectF arcRF0 = new RectF(arcLeft, arcTop, arcRight, arcBottom);
             //在饼图中显示所占比例
-            canvas.drawArc(arcRF0, offsetAgent, curretAgent, true, paintArc);
+            canvas.drawArc(arcRF0, offsetAngle, curretAngle, true, paintArc);
         } catch (Exception e) {
             throw e;
         }
@@ -197,7 +197,7 @@ public class CircleChart extends CirChart {
             paintArc.setAntiAlias(true);
 
             //用于存放当前百分比的圆心角度
-            float currentAgent = 0.0f;
+            float currentAngle = 0.0f;
 
             int infoHeight = DrawHelper.getInstance().getPaintFontHeight(mPaintDataInfo);
             int LabelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
@@ -215,10 +215,10 @@ public class CircleChart extends CirChart {
                     
                     
                     float per = (float) cData.getPercentage();                    
-                    currentAgent = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);
+                    currentAngle = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);
                     
                                         
-                    drawPercent(canvas, paintArc, cirX, cirY, radius, 180f,  currentAgent);
+                    drawPercent(canvas, paintArc, cirX, cirY, radius, 180f,  currentAngle);
                     drawPercent(canvas, mPaintFillCircle, cirX, cirY,
                     						MathHelper.getInstance().round( mul(radius , 0.8f),2), 180f, 180f);
                     
@@ -226,14 +226,14 @@ public class CircleChart extends CirChart {
                     canvas.drawText(mDataInfo, cirX, cirY - infoHeight, mPaintDataInfo);
 
                 } else {
-                    currentAgent = cData.getSliceAgent();
+                    currentAngle = cData.getSliceAngle();
                     canvas.drawCircle(cirX, cirY, radius, mPaintBgCircle);
                    // canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.9f)), mPaintFillCircle);
                     canvas.drawCircle(cirX, cirY, 
                     					MathHelper.getInstance().round(mul(radius , 0.9f),2), mPaintFillCircle);
                     
 
-                    canvas.drawArc(arcRF0, mOffsetAgent, currentAgent, true, paintArc);
+                    canvas.drawArc(arcRF0, mOffsetAngle, currentAngle, true, paintArc);
                     canvas.drawCircle(cirX, cirY, 
                     					MathHelper.getInstance().round(mul(radius , 0.8f),2), mPaintFillCircle);
                     

@@ -1,0 +1,230 @@
+/**
+ * Copyright 2014  XCL-Charts
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version v0.1
+ */
+
+
+package com.demo.xclcharts.view;
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xclcharts.chart.DialChart;
+import org.xclcharts.common.DensityUtil;
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.axis.RoundAxis;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.util.Pair;
+
+public class DialChart01View extends GraphicalView {
+
+	private String TAG = "DialChart01View";	
+	
+	private DialChart chart = new DialChart();
+	
+	private List<String> mLabels = new ArrayList<String>();	
+	private float mPercentage = 0.9f;
+	
+	public DialChart01View(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		initView();
+	}
+	
+	public DialChart01View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public DialChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 
+	 private void initView()
+	 {
+		chartLabels();
+		chartRender();
+	 }
+	 
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+        chart.setChartRange(w ,h ); 
+    }  		
+	
+			
+	
+	public void chartRender()
+	{
+		try {								
+						
+			//设置标题
+			//chart.setTitle("仪表盘 ");
+								
+			//刻度步长
+			//chart.setTickSteps(10d);
+			
+			chart.setApplyBackgroundColor(true);
+			chart.setBackgroundColor(Color.WHITE);
+			
+		
+			
+			//设置当前指向角度(0-180).
+			//chart.setCurrentAngle(360.0f);
+			
+			// mPercentage = 270 * 0.5f;
+			chart.setCurrentPercentage(mPercentage);
+			
+			chart.setPointerRadiusPercentage(0.8f);
+			
+			//轴1
+			chart.addArcLineAxis(1);
+			
+			
+			//轴2
+			List<String> tickLabels = new ArrayList<String>();
+			tickLabels.add("2006");
+			tickLabels.add("");
+			tickLabels.add("2008");
+			tickLabels.add("");
+			tickLabels.add("2010");
+			tickLabels.add("");
+			tickLabels.add("2012");			
+			chart.addTicksAxis(0.95f, tickLabels);
+			
+			//轴3
+			List<Float> ringPercentage = new ArrayList<Float>();			
+			float rper = MathHelper.getInstance().div(1, 4); //相当于40%	//270, 4
+			ringPercentage.add(rper);
+			ringPercentage.add(rper);
+			ringPercentage.add(rper);
+			ringPercentage.add(rper);
+						
+			List<Integer> rcolor  = new ArrayList<Integer>();			
+			rcolor.add((int)Color.rgb(242, 110, 131));
+			rcolor.add((int)Color.rgb(238, 204, 71));
+			rcolor.add((int)Color.rgb(42, 231, 250));
+			rcolor.add((int)Color.rgb(140, 196, 27));
+						
+			List<String> rlabels  = new ArrayList<String>();
+			rlabels.add("a");
+			rlabels.add("b");
+			rlabels.add("c");
+			rlabels.add("d");
+			rlabels.add("e");	
+			rlabels.add("f");	
+			
+			//chart.addStrokeRingAxis(0.75f,0.6f, rangle, rcolor, rlabels);			
+			chart.addStrokeRingAxis(0.75f,0.6f, ringPercentage, rcolor);
+			
+			
+			chart.addTicksAxis(0.6f, rlabels);
+			
+			
+			
+			//轴4
+		 	chart.adFillAxis(0.5f,(int)Color.rgb(225, 230, 246)); 
+		 	
+		 	
+		 	//轴3
+			List<Float> rangle2 = new ArrayList<Float>();			
+			//float ragent2 = 90f; // MathHelper.getInstance().div(270, 4);	
+			rangle2.add(mPercentage);
+						
+			List<Integer> rcolor2  = new ArrayList<Integer>();			
+			rcolor2.add((int)Color.rgb(227, 64, 167));
+			chart.addFillRingAxis(0.5f,rangle2, rcolor2);
+			
+			
+			chart.getPlotAxis().get(0).getAxisPaint().setColor(Color.BLUE);
+			
+			Paint paint = new Paint();
+			paint.setColor(Color.GRAY);
+			paint.setTextAlign(Align.CENTER);
+			paint.setTextSize(22);
+			
+			chart.addAttributeInfo(XEnum.AttributeInfoLoction.TOP, "TOP info", 0.5f, paint);
+			
+			chart.addAttributeInfo(XEnum.AttributeInfoLoction.BOTTOM, "BOTTOM info", 0.5f, paint);
+			
+			Paint paint2 = new Paint();		
+			paint2.setTextAlign(Align.CENTER);
+			paint2.setTextSize(22);
+			paint2.setColor(Color.GREEN);
+			
+			chart.addAttributeInfo(XEnum.AttributeInfoLoction.LEFT, "LEFT info", 0.5f, paint2);
+			
+			chart.addAttributeInfo(XEnum.AttributeInfoLoction.RIGHT, "RIGHT info", 0.5f, paint2);
+			
+			Paint paintA = new Paint();		
+			paintA.setTextAlign(Align.CENTER);
+			paintA.setTextSize(22);
+			paintA.setColor((int)Color.rgb(56, 172, 240));
+			chart.addAttributeInfo(XEnum.AttributeInfoLoction.BOTTOM, "Angle:"+Float.toString(mPercentage), 0.3f, paint);
+			
+			
+			//绘制边框
+			chart.showRoundBorder();
+			
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, e.toString());
+		}
+		
+	}
+	
+
+	
+	private void chartLabels()
+	{
+		//标签		
+		mLabels.add("起始");
+		mLabels.add("安全");
+		mLabels.add("警惕");
+		mLabels.add("危险");
+		//mLabels.add("终止");
+	}
+
+
+	@Override
+	public void render(Canvas canvas) {
+		// TODO Auto-generated method stub
+		 try{
+	            chart.render(canvas);
+	        } catch (Exception e){
+	        	Log.e(TAG, e.toString());
+	        }
+	}
+	
+
+}

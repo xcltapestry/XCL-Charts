@@ -158,7 +158,7 @@ public class MultiAxisChart01View extends TouchView {
 			
 			Bar bar = chart.getBar();
 			bar.setItemLabelVisible(true);
-			bar.setItemLabelRotateAgent(-90);
+			bar.setItemLabelRotateAngle(-90);
 			bar.getItemLabelPaint().setFakeBoldText(true);
 			
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
@@ -200,7 +200,7 @@ public class MultiAxisChart01View extends TouchView {
 			
 			//定制标签轴标签的标签格式
 			CategoryAxis categoryAxis = chart.getCategoryAxis();
-			categoryAxis.setTickLabelRotateAgent(-15f);	
+			categoryAxis.setTickLabelRotateAngle(-15f);	
 			categoryAxis.getTickLabelPaint().setTextSize(15);
 			categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);
 			categoryAxis.setLabelFormatter(new IFormatterTextCallBack(){

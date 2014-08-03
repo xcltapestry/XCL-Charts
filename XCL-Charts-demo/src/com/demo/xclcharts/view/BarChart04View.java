@@ -138,7 +138,7 @@ public class BarChart04View extends TouchView {
 			});
 			
 			//标签旋转45度
-			chart.getCategoryAxis().setTickLabelRotateAgent(45f);
+			chart.getCategoryAxis().setTickLabelRotateAngle(45f);
 			chart.getCategoryAxis().getTickLabelPaint().setTextSize(15);
 			
 			//在柱形顶部显示值

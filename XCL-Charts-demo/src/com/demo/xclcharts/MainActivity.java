@@ -110,6 +110,20 @@ public class MainActivity extends Activity {
 					 position = chartsTitleCurr.length - 7 - position;
 					 intent.setClass(MainActivity.this,ClickChartsActivity.class);		
 				
+				 }else if(position >= chartsTitleCurr.length - 8) //倒数8  dial chart
+				 {
+					 position = chartsTitleCurr.length - 8 - position;
+					 intent.setClass(MainActivity.this,DialChartActivity.class);		
+				 }else if(position >= chartsTitleCurr.length - 9) //倒数9  dial chart
+				 {
+					 position = chartsTitleCurr.length - 9 - position;
+					 intent.setClass(MainActivity.this,DialChart2Activity.class);		
+				
+				 }else if(position >= chartsTitleCurr.length - 10) //倒数9  dial chart
+				 {
+					 position = chartsTitleCurr.length - 10 - position;
+					 intent.setClass(MainActivity.this,DialChart3Activity.class);		
+				
 				 }else{
 					 intent.setClass(MainActivity.this,ChartsActivity.class);	
 				 }

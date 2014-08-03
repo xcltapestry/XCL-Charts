@@ -46,7 +46,7 @@ public class GaugeChart01View  extends GraphicalView {
 	
 	private List<String> mLabels = new ArrayList<String>();
 	private List<Pair> mPartitionSet = new ArrayList<Pair>();		
-	private float mAgent = 0.0f;
+	private float mAngle = 0.0f;
 
 	
 	public GaugeChart01View(Context context) {
@@ -90,9 +90,9 @@ public class GaugeChart01View  extends GraphicalView {
 	 
 	
 	//从seekbar传入的值
-	public void setAgent(float currentAgent)
+	public void setAngle(float currentAngle)
 	{
-		mAgent = currentAgent;
+		mAngle = currentAngle;
 	}	
 		
 	public void chartRender()
@@ -100,7 +100,7 @@ public class GaugeChart01View  extends GraphicalView {
 		try {								
 						
 			//设置标题
-			//chart.setTitle("仪表盘 ");
+			//chart.setTitle("刻度盘 ");
 								
 			//刻度步长
 			chart.setTickSteps(10d);
@@ -111,8 +111,8 @@ public class GaugeChart01View  extends GraphicalView {
 			chart.setPartition(mPartitionSet);
 			
 			//设置当前指向角度(0-180).
-			//chart.setCurrentAgent(90f);
-			chart.setCurrentAgent(mAgent);
+			//chart.setCurrentAngle(90f);
+			chart.setCurrentAngle(mAngle);
 			//绘制边框
 			chart.showRoundBorder();
 		
@@ -123,13 +123,13 @@ public class GaugeChart01View  extends GraphicalView {
 		
 	}
 	
-	//分区[角度(0-mStartAgent)，颜色]		
+	//分区[角度(0-mStartAngle)，颜色]		
 	private void chartDataSet()
 	{
-		int agent = 180/3;
-		mPartitionSet.add(new Pair<Float,Integer>((float)agent, (int)Color.rgb(73, 172, 72)));
-		mPartitionSet.add(new Pair<Float,Integer>((float)agent, (int)Color.rgb(247, 156, 27)));
-		mPartitionSet.add(new Pair<Float,Integer>((float)agent, (int)Color.rgb(224, 62, 54)));
+		int Angle = 180/3;
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, (int)Color.rgb(73, 172, 72)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, (int)Color.rgb(247, 156, 27)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, (int)Color.rgb(224, 62, 54)));
 	}
 	
 	private void chartLabels()

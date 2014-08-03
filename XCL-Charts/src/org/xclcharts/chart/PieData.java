@@ -39,7 +39,7 @@ public class PieData {
 	private String mPieLabel = "";
 	private double mPieValue = 0.0f;
 	private int mPieColor = 0 ;
-	//private int mSliceAgent = 0;
+	//private int mSliceAngle = 0;
 	
 	//是否突出饼图
 	private boolean mSelected = false;
@@ -202,24 +202,24 @@ public class PieData {
 	 * 将百分比转换为饼图显示角度
 	 * @return 圆心角度
 	 */
-	public float getSliceAgent() 
+	public float getSliceAngle() 
 	{			
-		float agent = 0.0f;
+		float Angle = 0.0f;
 		try{
 			float currentValue = (float) this.getPercentage();
 			if(currentValue >= 101f || currentValue < 0.0f)
 			{
 				Log.e(TAG,"输入的百分比不合规范.须在0~100之间.");			
 			}else{		
-				//agent = (float) Math.rint( 360f *  (currentValue / 100f) );
-				agent =  MathHelper.getInstance().round(360f *  (currentValue / 100f),2) ;
+				//Angle = (float) Math.rint( 360f *  (currentValue / 100f) );
+				Angle =  MathHelper.getInstance().round(360f *  (currentValue / 100f),2) ;
 			}
 		}catch(Exception ex)
 		{
-			agent = -1f;
+			Angle = -1f;
 		}finally{
 			
 		}
-		return  agent;
+		return  Angle;
 	}
 }
