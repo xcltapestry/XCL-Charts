@@ -24,6 +24,12 @@ package org.xclcharts.event.click;
 import android.graphics.PointF;
 
 
+/**
+ * @ClassName PointPosition
+ * @Description  点位置记录信息基类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
 
 public class PointPosition extends RectPosition {
 		

@@ -36,26 +36,27 @@ public final class R {
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int BarChart07View=0x7f09000e;
-        public static final int action_settings=0x7f090015;
+        public static final int BarChart07View=0x7f09000f;
+        public static final int action_settings=0x7f090016;
         public static final int button1=0x7f090009;
-        public static final int chart_view=0x7f09000a;
+        public static final int chart_view=0x7f09000b;
         public static final int circle_view=0x7f090005;
+        public static final int circle_view2=0x7f09000a;
         public static final int halfcircle_view=0x7f090004;
-        public static final int horizontalScrollView1=0x7f09000c;
+        public static final int horizontalScrollView1=0x7f09000d;
         public static final int imageView1=0x7f090000;
-        public static final int lay_chart=0x7f09000b;
+        public static final int lay_chart=0x7f09000c;
         public static final int lay_sk=0x7f090006;
         public static final int lay_sp=0x7f090003;
-        public static final int line=0x7f09000d;
-        public static final int lineChartView_right=0x7f090010;
-        public static final int scroll=0x7f090012;
+        public static final int line=0x7f09000e;
+        public static final int lineChartView_right=0x7f090011;
+        public static final int scroll=0x7f090013;
         public static final int seekBar1=0x7f090007;
-        public static final int sk_process=0x7f090011;
-        public static final int spinner1=0x7f090014;
+        public static final int sk_process=0x7f090012;
+        public static final int spinner1=0x7f090015;
         public static final int tv_info=0x7f090002;
-        public static final int tv_label=0x7f090013;
-        public static final int tv_lowerAxistitle=0x7f09000f;
+        public static final int tv_label=0x7f090014;
+        public static final int tv_lowerAxistitle=0x7f090010;
         public static final int tv_process=0x7f090008;
         public static final int tv_title=0x7f090001;
     }
@@ -67,14 +68,15 @@ public final class R {
         public static final int activity_dial_chart=0x7f030004;
         public static final int activity_dial_chart2=0x7f030005;
         public static final int activity_dial_chart3=0x7f030006;
-        public static final int activity_gauge_chart=0x7f030007;
-        public static final int activity_gradient=0x7f030008;
-        public static final int activity_hbarscroll=0x7f030009;
-        public static final int activity_hlnscroll=0x7f03000a;
-        public static final int activity_main=0x7f03000b;
-        public static final int activity_multi_touch=0x7f03000c;
-        public static final int activity_seek_bar=0x7f03000d;
-        public static final int activity_spinner=0x7f03000e;
+        public static final int activity_dial_chart4=0x7f030007;
+        public static final int activity_gauge_chart=0x7f030008;
+        public static final int activity_gradient=0x7f030009;
+        public static final int activity_hbarscroll=0x7f03000a;
+        public static final int activity_hlnscroll=0x7f03000b;
+        public static final int activity_main=0x7f03000c;
+        public static final int activity_multi_touch=0x7f03000d;
+        public static final int activity_seek_bar=0x7f03000e;
+        public static final int activity_spinner=0x7f03000f;
     }
     public static final class menu {
         public static final int about=0x7f080000;
@@ -84,14 +86,15 @@ public final class R {
         public static final int dial_chart=0x7f080004;
         public static final int dial_chart2=0x7f080005;
         public static final int dial_chart3=0x7f080006;
-        public static final int gauge_chart=0x7f080007;
-        public static final int gradient=0x7f080008;
-        public static final int hbarscroll=0x7f080009;
-        public static final int hlnscroll=0x7f08000a;
-        public static final int main=0x7f08000b;
-        public static final int multi_touch=0x7f08000c;
-        public static final int seek_bar=0x7f08000d;
-        public static final int spinner=0x7f08000e;
+        public static final int dial_chart4=0x7f080007;
+        public static final int gauge_chart=0x7f080008;
+        public static final int gradient=0x7f080009;
+        public static final int hbarscroll=0x7f08000a;
+        public static final int hlnscroll=0x7f08000b;
+        public static final int main=0x7f08000c;
+        public static final int multi_touch=0x7f08000d;
+        public static final int seek_bar=0x7f08000e;
+        public static final int spinner=0x7f08000f;
     }
     public static final class string {
         public static final int action_settings=0x7f040001;
@@ -107,6 +110,7 @@ public final class R {
         public static final int title_activity_dial_chart=0x7f040011;
         public static final int title_activity_dial_chart2=0x7f040012;
         public static final int title_activity_dial_chart3=0x7f040013;
+        public static final int title_activity_dial_chart4=0x7f040014;
         public static final int title_activity_gauge_chart=0x7f04000f;
         public static final int title_activity_gradient=0x7f04000b;
         public static final int title_activity_hbarscroll=0x7f04000c;

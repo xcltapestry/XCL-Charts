@@ -111,7 +111,8 @@ public class AreaChart extends LnChart{
 	 * @param type	绘制类型
 	 * @param alpha 透明度
 	 */
-	private boolean renderLine(Canvas canvas, AreaData bd,String type,int alpha,int dataID)
+	private boolean renderLine(Canvas canvas, AreaData bd,
+									String type,int alpha,int dataID)
 	{
 		//数据源
 		List<Double> chartValues = bd.getLinePoint();
@@ -131,7 +132,8 @@ public class AreaChart extends LnChart{
         						
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
-		float currLablesSteps = div(getAxisScreenWidth(), (categoryAxis.getDataSet().size() -1));
+		float currLablesSteps = div(getAxisScreenWidth(), 
+										(categoryAxis.getDataSet().size() -1));
 					
 		 //用于画折线   
         Path pathArea = new Path();  

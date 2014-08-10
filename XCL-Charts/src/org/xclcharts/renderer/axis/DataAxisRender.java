@@ -118,7 +118,8 @@ public class DataAxisRender extends DataAxis {
 	 * @param centerY	中心点Y坐标
 	 * @param text		文本
 	 */
-	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, float centerX,float centerY,String text)
+	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
+								float centerX,float centerY,String text)
 	{		
 		if(getVisible()) renderHorizontalTick(xchart,canvas, centerX,centerY,text);
 	}

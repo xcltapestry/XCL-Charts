@@ -1,8 +1,0 @@
-package org.xclcharts.event.click;
-
-import android.graphics.PointF;
-
-public interface ChartArcListener {
-	public void onClick(PointF point,PositionRecord positionRecord);
-
-}

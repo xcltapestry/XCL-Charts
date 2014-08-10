@@ -45,8 +45,8 @@ public class PlotGrid {
 	 private boolean mGridLinesVerticalVisible = false;		
 		
 	 //图内部网格线的间隔色
-	 private int mGridLinesOddColor =  (int)Color.GREEN;	
-	 private int mGridLinesEvenColor = (int)Color.BLUE;
+	 private int mGridLinesOddColor =  Color.GREEN;	
+	 private int mGridLinesEvenColor = Color.BLUE;
 	 //是否显示奇数行填充色
 	 private boolean mOddRowBgColorVisible = false;
 	//是否显示偶数行填充色

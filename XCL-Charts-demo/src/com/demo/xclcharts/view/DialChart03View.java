@@ -28,12 +28,14 @@ import java.util.List;
 import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.Pointer;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -48,8 +50,6 @@ public class DialChart03View extends GraphicalView {
 	private String TAG = "DialChart03View";	
 	
 	private DialChart chart = new DialChart();
-	
-	private List<String> mLabels = new ArrayList<String>();	
 	private float mPercentage = 0.9f;
 	
 	public DialChart03View(Context context) {
@@ -91,14 +91,16 @@ public class DialChart03View extends GraphicalView {
 				chart.showRoundBorder();
 						
 				//设置当前百分比
-				chart.setCurrentPercentage(mPercentage);
+				chart.getPointer().setPercentage(mPercentage);
 				
 				//设置指针长度
-				chart.setPointerLength(0.5f);
+				chart.getPointer().setLength(0.75f);
 				
 				//增加轴承
 				addAxis();						
 				/////////////////////////////////////////////////////////////
+				//增加指针
+				addPointer();
 				//设置附加信息
 				addAttrInfo();
 				/////////////////////////////////////////////////////////////
@@ -112,9 +114,6 @@ public class DialChart03View extends GraphicalView {
 		
 		public void addAxis()
 		{
-			//mPercentage = 0.3f;
-			//chart.setCurrentPercentage(mPercentage);
-			
 			
 			List<Float> ringPercentage = new ArrayList<Float>();			
 			float rper = MathHelper.getInstance().div(1, 4); //相当于40%	//270, 4
@@ -128,7 +127,7 @@ public class DialChart03View extends GraphicalView {
 			rcolor.add((int)Color.rgb(238, 204, 71));
 			rcolor.add((int)Color.rgb(42, 231, 250));
 			rcolor.add((int)Color.rgb(140, 196, 27));						
-			chart.addStrokeRingAxis(0.75f,0.6f, ringPercentage, rcolor);
+			chart.addStrokeRingAxis(0.95f,0.8f, ringPercentage, rcolor);
 			
 			
 			List<String> rlabels  = new ArrayList<String>();
@@ -141,62 +140,78 @@ public class DialChart03View extends GraphicalView {
 			rlabels.add("60M");
 			rlabels.add("70M");
 			rlabels.add("80M");
-			chart.addTicksAxis(0.6f, rlabels);
+			chart.addInnerTicksAxis(0.8f, rlabels);
 			
-			chart.getPlotAxis().get(1).setDetailModeSteps(3);
-			
+						
 			chart.getPlotAxis().get(0).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
 			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
 			chart.getPlotAxis().get(1).getTickLabelPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(1).getTickMarksPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(1).setAxisLineVisible(false);
+			chart.getPlotAxis().get(1).setDetailModeSteps(3);
 			
+			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);
+			chart.getPointer().getPointerPaint().setColor((int)Color.rgb(217, 34, 34) );
+			chart.getPointer().getPointerPaint().setStrokeWidth(3);			
+			chart.getPointer().getPointerPaint().setStyle(Style.STROKE);			
+			chart.getPointer().hideBaseCircle();
 			
-			chart.getPinterCirclePaint().setColor(Color.WHITE );
-			chart.getPointerLinePaint().setColor((int)Color.rgb(226, 200, 79) );
-			chart.getPointerLinePaint().setStrokeWidth(5);
+		}
+		
+		//增加指针
+		public void addPointer()
+		{					
+			chart.addPointer();			
+			List<Pointer> mp = chart.getPlotPointer();	
+			mp.get(0).setPercentage( mPercentage);
+			//设置指针长度
+			mp.get(0).setLength(0.75f);	
+			mp.get(0).getPointerPaint().setColor(Color.WHITE);
+			mp.get(0).setPointerStyle(XEnum.PointerStyle.TRIANGLE);			
+			mp.get(0).hideBaseCircle();
 			
 		}
 		
 		
 		private void addAttrInfo()
 		{
-				/////////////////////////////////////////////////////////////
-				//设置附加信息
-				Paint paintTB = new Paint();
-				paintTB.setColor(Color.WHITE);
-				paintTB.setTextAlign(Align.CENTER);
-				paintTB.setTextSize(30);	
-				paintTB.setAntiAlias(true);	
-				chart.addAttributeInfo(XEnum.AttributeInfoLoction.TOP, "当前网速", 0.3f, paintTB);
-				
-				Paint paintBT = new Paint();
-				paintBT.setColor(Color.WHITE);
-				paintBT.setTextAlign(Align.CENTER);
-				paintBT.setTextSize(38);
-				paintBT.setFakeBoldText(true);
-				paintBT.setAntiAlias(true);	
-				chart.addAttributeInfo(XEnum.AttributeInfoLoction.BOTTOM, "12.5", 0.3f, paintBT);
-				
-				Paint paintBT2 = new Paint();
-				paintBT2.setColor(Color.WHITE);
-				paintBT2.setTextAlign(Align.CENTER);
-				paintBT2.setTextSize(30);
-				paintBT2.setFakeBoldText(true);
-				paintBT2.setAntiAlias(true);	
-				chart.addAttributeInfo(XEnum.AttributeInfoLoction.BOTTOM, "MB/S", 0.4f, paintBT2);
-				
+			/////////////////////////////////////////////////////////////
+			//设置附加信息
+			Paint paintTB = new Paint();
+			paintTB.setColor(Color.WHITE);
+			paintTB.setTextAlign(Align.CENTER);
+			paintTB.setTextSize(30);	
+			paintTB.setAntiAlias(true);	
+			chart.addAttributeInfo(XEnum.Location.TOP, "当前网速", 0.3f, paintTB);
+			
+			Paint paintBT = new Paint();
+			paintBT.setColor(Color.WHITE);
+			paintBT.setTextAlign(Align.CENTER);
+			paintBT.setTextSize(35);
+			paintBT.setFakeBoldText(true);
+			paintBT.setAntiAlias(true);	
+			chart.addAttributeInfo(XEnum.Location.BOTTOM, 
+					Float.toString(MathHelper.getInstance().round(mPercentage * 100,2)), 0.3f, paintBT);
+			
+			Paint paintBT2 = new Paint();
+			paintBT2.setColor(Color.WHITE);
+			paintBT2.setTextAlign(Align.CENTER);
+			paintBT2.setTextSize(30);
+			paintBT2.setFakeBoldText(true);
+			paintBT2.setAntiAlias(true);	
+			chart.addAttributeInfo(XEnum.Location.BOTTOM, "MB/S", 0.4f, paintBT2);				
 		}
 		
 		public void setCurrentStatus(float percentage)
-		{
-			//清理
-			chart.clearData();
-					
+		{								
 			mPercentage =  percentage;
+			chart.clearAll();
+			
 			//设置当前百分比
-			chart.setCurrentPercentage(mPercentage);
+			chart.getPointer().setPercentage(mPercentage);
 			addAxis();
+			//增加指针
+			addPointer();
 			addAttrInfo();
 		}
 

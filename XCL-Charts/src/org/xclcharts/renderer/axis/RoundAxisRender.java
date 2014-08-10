@@ -27,8 +27,11 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
+import android.graphics.Paint.Align;
+import android.graphics.PointF;
 import android.util.Log;
 
 /**
@@ -41,6 +44,13 @@ import android.util.Log;
 public class RoundAxisRender extends RoundAxis{
 	
 	private static final String TAG="RoundAxisRender";
+	
+	private XEnum.Location mLocation = XEnum.Location.BOTTOM;
+	//线的风格(点或线之类)
+	//private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
+	//设置线箭头 (三角，方形，棱形....)  
+	//private XEnum.DotStyle mLineCap = XEnum.DotStyle.HIDE;
+	
 	
 	public RoundAxisRender()
 	{
@@ -70,39 +80,61 @@ public class RoundAxisRender extends RoundAxis{
 		 
 		  mLabels = labels;
 	  }
-	
+	  	  
+	  public void setLineAxisLocation( XEnum.Location location)
+	  {
+		  mLocation = location;
+	  }	  	  
+	  	 	
 	  /**
 	   * 绘制标签环形轴标签
-	   * @param canvas
-	   * @param labels
-	   * @return
+	   * @param canvas	画布
+	   * @param labels	标签集合
+	   * @return	是否绘制成功
 	   */
 	public boolean renderTicks(Canvas canvas,List<String> labels)
-	{
-		  
+	{		  
 		  	float cirX = mCirX;
-			float cirY = mCirY; 
-			float totalAngle = this.mTotalAngle;
-			float initAngle = this.mInitAngle;			
-			
-			int count = labels.size();				
-			float stepsAngle =  MathHelper.getInstance().div(totalAngle,count - 1 ) ;				
-			
+			float cirY = mCirY; 					
+			int count = labels.size();		
+			float stepsAngle = 0;
+			if(Float.compare(mTotalAngle, 360f) == 0)
+			{
+				stepsAngle =  MathHelper.getInstance().div(mTotalAngle ,count  ) ;
+			}else{
+				stepsAngle =  MathHelper.getInstance().div(mTotalAngle ,count -1 ) ;
+			}
 			float innerRadius1 = mRadius ; 
-			float tickRadius = mRadius * 0.9f; 
-			float detailsRadius = tickRadius; 
-			if(1 < mDetailModeSteps) detailsRadius = mRadius * 0.95f;  
+			float tickRadius = 0.0f,detailRadius  = 0.0f;	
 			
+			if( XEnum.RoundTickAxisType.INNER_TICKAXIS == mRoundTickAxisType)
+			{
+				tickRadius = mRadius * 0.95f;
+				detailRadius = tickRadius;
+							
+				//有启用主明细步长设置 (inner)
+				if(1 < mDetailModeSteps)
+					tickRadius = tickRadius  - mRadius * 0.05f;
+				
+			}else{
+				tickRadius = mRadius + mRadius * 0.05f; 
+				detailRadius = tickRadius;
+				if(1 < mDetailModeSteps)
+					tickRadius = mRadius + mRadius * 0.08f; 
+			}
+						
 			int steps = mDetailModeSteps;
-			float Angle = 0.0f;							
+			float Angle = 0.0f;						
+			float tickMarkWidth = getTickMarksPaint().getStrokeWidth();
 			
 			for(int i=0;i<count;i++)
 			{					
 					if(0 == i)
 					{
-						Angle = initAngle;
+						Angle = mInitAngle;
 					}else{
-						Angle = (float) MathHelper.getInstance().add(initAngle, i *stepsAngle);													
+						//Angle =  MathHelper.getInstance().add(Angle,stepsAngle);
+						Angle = (float) MathHelper.getInstance().add(mInitAngle, i * stepsAngle);													
 					}									
 					
 					MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, innerRadius1, Angle); 								
@@ -116,48 +148,131 @@ public class RoundAxisRender extends RoundAxis{
 					labelX = MathHelper.getInstance().getPosX();
 					labelY = MathHelper.getInstance().getPosY();
 										
-					if(steps != mDetailModeSteps )
+					if(steps == mDetailModeSteps )
 					{
-						MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, detailsRadius , Angle); 	
+						stopX = labelX;
+						stopY = labelY;	
+						steps = 0;
+					}else{
+						MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, detailRadius , Angle); 	
 						stopX = MathHelper.getInstance().getPosX();
 						stopY = MathHelper.getInstance().getPosY();
-						
-						steps = 0;
-					}else{												
-						stopX = labelX;
-						stopY = labelY;						
+							
+						steps++;						
 					}
 					
-					if (getTickMarksVisible()) {
+					if (getTickMarksVisible()) 
+					{						
+						if(0 == steps && mLongTickfakeBold )
+						{
+							getTickMarksPaint().setStrokeWidth( tickMarkWidth + 1);
+						}else{
+							if(mLongTickfakeBold)getTickMarksPaint().setStrokeWidth(tickMarkWidth);
+						}								
 						canvas.drawLine(startX, startY, stopX, stopY, getTickMarksPaint());
 					}
 									
 					if (getTickLabelVisible()) 
 					{
-						 String label = getFormatterLabel(labels.get(i));						
-						 float labelWidth =DrawHelper.getInstance().getTextWidth(getTickLabelPaint(), label);
-						 
-						 if(Float.compare(totalAngle, Angle) == 0 ){
-							 labelY += DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint()) ;
-						 }else if( Float.compare(totalAngle, Angle) ==  1 )
-						 {
-							 labelX +=  labelWidth/2 ;
-						 }else{
-							 labelX -=  labelWidth/2 ;
-						 }	
+						//回调函数定制化标签显示格式
+						 String label = getFormatterLabel(labels.get(i));							 
+						 PointF pLabel = getLabelXY(label,labelX,labelY,cirX,cirY,mTotalAngle,Angle);
 						 						
-						//定制化显示格式	 Angle* -2
-						DrawHelper.getInstance().drawRotateText(label,labelX , labelY,
-												getTickLabelRotateAngle(), canvas, getTickLabelPaint());
-						
+						 //标签显示
+						 DrawHelper.getInstance().drawRotateText(label,pLabel.x , pLabel.y,
+												getTickLabelRotateAngle(), canvas, getTickLabelPaint());						
 					}
 										
-					steps++;
+					
 			} //end for
 			return true;
-		}	
+	 	}	
+	
+		 //得到标签显示位置
+		 private PointF getLabelXY(String label,float defLabelX,float defLabelY,
+				 					float cirX,float cirY,float totalAngle,float Angle)
+		 {		
+			 PointF pLabel = new PointF(defLabelX,defLabelY);
+			 float labelWidth =DrawHelper.getInstance().getTextWidth(getTickLabelPaint(), label);
+			 float labelHeight = DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint());
+			 
+			 getTickLabelPaint().setTextAlign(Align.CENTER);
+			 
+			 if( XEnum.RoundTickAxisType.INNER_TICKAXIS == mRoundTickAxisType)
+			 {							 
+				 if(Float.compare(pLabel.y, cirY) == 0)
+				 {
+					 if(Float.compare(pLabel.x , cirX) == -1 )
+					 {
+						 pLabel.x +=  labelWidth/2 ;
+					 }else{
+						 pLabel.x -=  labelWidth/2 ;
+					 }
+				 }else if(Float.compare(pLabel.x, cirX) == 0){
+					 if(Float.compare(pLabel.y , cirY) == -1 )
+					 {
+						 pLabel.y += labelHeight/2 ;
+					 }else{
+						 pLabel.y -=  labelHeight/2 ;
+					 }	
+						 
+				 }else if(Float.compare(totalAngle, Angle) == 0 ){
+					 pLabel.y += labelHeight ;								 								 
+				 }else if(Float.compare(pLabel.x, cirX) == 1 ){
+					 if(Float.compare(totalAngle, 360f) == 0)
+					 {
+						 getTickLabelPaint().setTextAlign(Align.RIGHT);
+					 }else{
+						 pLabel.x -=  labelWidth/2 ;
+					 }
+					 
+				 }else if(Float.compare(pLabel.x, cirX) == -1 ){
+					 if(Float.compare(totalAngle, 360f) == 0)
+					 {
+						 getTickLabelPaint().setTextAlign(Align.LEFT);
+					 }else{
+						 pLabel.x +=  labelWidth/2 ;
+					 }
+				 } 
+			 }else{			 					 
+				 if(Float.compare(pLabel.y, cirY) == 0)
+				 {
+					 if(Float.compare(pLabel.x , cirX) == -1 )
+					 {
+						 pLabel.x -=  labelWidth/2 ;
+					 }else{
+						 pLabel.x +=  labelWidth/2 ;
+					 }
+				 }else if(Float.compare(pLabel.x, cirX) == 0){
+					 if(Float.compare(pLabel.y , cirY) == -1 )
+					 {
+						 pLabel.y -= labelHeight/2 ;
+					 }else{
+						 pLabel.y +=  labelHeight/2 ;
+					 }						 
+				 }else if(Float.compare(totalAngle, Angle) == 0 ){
+					 pLabel.y -= labelHeight ;								 								 
+				 }else if(Float.compare(pLabel.x, cirX) == 1 ){
+					 if(Float.compare(totalAngle, 360f) == 0)
+					 {
+						 getTickLabelPaint().setTextAlign(Align.LEFT);
+					 }else{
+						 pLabel.x +=  labelWidth/2 ;
+					 }
+				 }else if(Float.compare(pLabel.x, cirX) == -1 ){
+					 if(Float.compare(totalAngle, 360f) == 0)
+					 {
+						 getTickLabelPaint().setTextAlign(Align.RIGHT);
+					 }else{
+						 pLabel.x -=  labelWidth/2 ;
+					 }
+				 } 
+				 
+			 }	
+			 return pLabel;		
+		}
 
-	 
+	
 	 	//fillAxis
 	/**
 	 * 绘制填充环形轴
@@ -173,15 +288,11 @@ public class RoundAxisRender extends RoundAxis{
 					getFillAxisPaint().setColor(mColor.get(0));
 				
 				DrawHelper.getInstance().drawPercent(canvas, this.getFillAxisPaint(),
-								mCirX, mCirY, mRadius, mInitAngle, mTotalAngle, true);
-		
+								mCirX, mCirY, mRadius, mInitAngle, mTotalAngle, true);		
 			}
 			return true;
 		}
-			
-			
-	  
-	  //tickAxis
+		
 		/**
 		 * 绘制标签环形轴
 		 * @param canvas
@@ -189,8 +300,7 @@ public class RoundAxisRender extends RoundAxis{
 		 * @throws Exception
 		 */
 		public boolean renderTickAxis(Canvas canvas) throws Exception
-		{
-			
+		{			
 			if(!getVisible()) return false;			
 			if(null == mLabels) return false;
 						
@@ -233,9 +343,6 @@ public class RoundAxisRender extends RoundAxis{
 		}
 		
 		
-		
-		
-		//ringAxis
 		/**
 		 * 绘制颜色块环形轴
 		 * @param canvas
@@ -248,10 +355,8 @@ public class RoundAxisRender extends RoundAxis{
 			
 			if(null == mPercentage) return false;
 									
-			int angleCount = 0;
-			int colorCount = 0;
-			int labelsCount = 0;
-						
+			int angleCount = 0,colorCount = 0,labelsCount = 0;	
+			
 			 angleCount = this.mPercentage.size();
 			 if(null != mColor)colorCount = this.mColor.size();
 			 if(null != mLabels)labelsCount = this.mLabels.size();
@@ -277,13 +382,10 @@ public class RoundAxisRender extends RoundAxis{
 			{									
 				canvas.drawCircle(this.mCirX, mCirY, getRingInnerRadius(), this.getFillAxisPaint());
 			}
-			
-			
+						
 			return true;
 		}
-		
-		
-		
+						
 		
 		/**
 		 * 绘制颜色轴
@@ -293,8 +395,7 @@ public class RoundAxisRender extends RoundAxis{
 														int color,String label) throws Exception
 		{		
 				     
-			if(-1 != color) getAxisPaint().setColor(color);
-		   		     
+			if(-1 != color) getAxisPaint().setColor(color);		   		     
 			
 			 if(Float.compare(sweepAngle, 0.0f) < 0){
 					Log.e(TAG,"负角度???!!!");
@@ -304,10 +405,10 @@ public class RoundAxisRender extends RoundAxis{
 					return true;
 			 }			 
 			 
-			 DrawHelper.getInstance().drawPercent(canvas, this.getAxisPaint(),
+			 
+			DrawHelper.getInstance().drawPercent(canvas, this.getAxisPaint(),
 					 						this.mCirX, this.mCirY,mRadius, startAngle, sweepAngle, true);
-			 
-			 
+			 			 
 			if (getTickLabelVisible() && ""!= label) 
 			{
 			 	float Angle = MathHelper.getInstance().add(startAngle , sweepAngle / 2) ; 
@@ -322,6 +423,52 @@ public class RoundAxisRender extends RoundAxis{
 			}
 			 
 			 return true;		 
+		}
+		
+		
+		/**
+		 * 设置线的风格(点或线之类)
+		 * @param style 线的风格
+		 */
+		/*
+		public void setLineStyle(XEnum.LineStyle  style)
+		{
+			mLineStyle = style;
+		}
+		
+		// 设置线箭头 (三角，方形，棱形....)  
+		public void setLineCap(XEnum.DotStyle style) {
+			this.mLineCap = style;
+		}
+		*/
+		
+		/**
+		 * 中心点的线轴
+		 * @param canvas
+		 * @return
+		 * @throws Exception
+		 */
+		public boolean renderLineAxis(Canvas canvas) throws Exception
+		{
+			 if(!getVisible()|| !getAxisLineVisible()) return true;		
+			 switch(mLocation)
+			 {
+			 case TOP:					 
+				 canvas.drawLine(mCirX, mCirY, mCirX, mCirY - mRadius , this.getAxisPaint());				 
+				 break;
+			 case BOTTOM:			
+				 canvas.drawLine(mCirX, mCirY, mCirX, mCirY + mRadius , this.getAxisPaint());
+				 break;
+			 case LEFT:		
+				 canvas.drawLine(mCirX, mCirY, mCirX  - mRadius , mCirY , this.getAxisPaint());
+				 break;
+			 case RIGHT:	
+				 canvas.drawLine(mCirX, mCirY, mCirX + mRadius , mCirY , this.getAxisPaint());
+				 break;
+			 default:
+				 return false;
+			 }
+			return true;
 		}
 		
 		/**
@@ -386,6 +533,9 @@ public class RoundAxisRender extends RoundAxis{
 				 case CIRCLEAXIS:	
 					 ret = renderCircleAxis(canvas);	
 					 break;
+				 case LINEAXIS:	
+					 ret = renderLineAxis(canvas);	
+					 break;	 
 				 default:
 					 break;
 				 }

@@ -24,6 +24,13 @@ package org.xclcharts.event.click;
 import android.graphics.PointF;
 
 
+/**
+ * @ClassName PlotArcPosition
+ * @Description  arc位置记录信息类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
+
 public class PlotArcPosition extends ArcPosition{
 	
 	public PlotArcPosition()

@@ -228,7 +228,7 @@ public class XEnum {
 		 */
 		//DialChart RoundAxis
 		public enum RoundAxisType {			
-			TICKAXIS,RINGAXIS,ARCLINEAXIS,FILLAXIS,CIRCLEAXIS
+			TICKAXIS,RINGAXIS,ARCLINEAXIS,FILLAXIS,CIRCLEAXIS,LINEAXIS
 		}
 		
 
@@ -237,8 +237,25 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum AttributeInfoLoction {  
-			TOP,BOTTOM,LEFT, RIGHT
+		public enum Location {  
+			TOP,BOTTOM,LEFT,RIGHT
 		}
-	
+		
+		/**
+		 * 指针类型
+		 * @author XCL
+		 *
+		 */
+		public enum PointerStyle {			
+			TRIANGLE,LINE
+		}
+		
+		/**
+		 * 设置圆形Tick轴的类型
+		 * @author XCL
+		 *
+		 */
+		public enum RoundTickAxisType {			
+			INNER_TICKAXIS,OUTER_TICKAXIS
+		}
 }

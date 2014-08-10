@@ -8,21 +8,37 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".DialChart2Activity" >
 
-    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:orientation="vertical" >
+        
+        
+         
   	<com.demo.xclcharts.view.DialChart02View
 	         android:id="@+id/circle_view"
-	         android:layout_width="400dip"  
-	         android:layout_height="400dip"  
-	         android:layout_gravity="center_vertical"
+	         android:layout_width="230dip"  
+	         android:layout_height="230dip"  
 	       /> 
 
  	<Button
  	    android:id="@+id/button1"
  	    android:layout_width="wrap_content"
- 	    android:layout_height="wrap_content"
- 	    android:layout_alignBottom="@+id/circle_view"
- 	    android:layout_centerHorizontal="true"
- 	    android:layout_marginBottom="19dp"
+ 	    android:layout_height="wrap_content" 
  	    android:text="Random" />
+ 	
+ 	<com.demo.xclcharts.view.DialChart04View
+	         android:id="@+id/circle_view2"
+	         android:layout_width="230dip"  
+	         android:layout_height="230dip"  
+	         android:layout_gravity="center_vertical"
+	       /> 
+        
+        
+    </LinearLayout>
 
 </RelativeLayout>

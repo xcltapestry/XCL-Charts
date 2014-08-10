@@ -223,8 +223,7 @@ public class PlotCustomLine {
 		DrawHelper.getInstance().drawRotateText(line.getLabel(), 
 												currentX, currentY,
 												line.getLabelRotateAngle(), 
-												canvas,line.getLineLabelPaint());
-		
+												canvas,line.getLineLabelPaint());		
 	}
 		
 	/**
@@ -251,10 +250,7 @@ public class PlotCustomLine {
 					(line.getValue() - mDataAxis.getAxisMin()) /axisHeight  );
 			
 			float currentX = (float) (mPlotArea.getLeft() + postion); 
-			
-			
-			
-			
+												
 			//绘制线	
 			if(line.isShowLine())
 				DrawHelper.getInstance().drawLine(line.getLineStyle(), 

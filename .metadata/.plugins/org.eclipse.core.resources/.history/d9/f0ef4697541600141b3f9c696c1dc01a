@@ -1,7 +1,0 @@
-package org.xclcharts.event.click;
-
-public class RectPosition extends PositionRecord{
-	
-	
-
-}

@@ -29,7 +29,7 @@ package org.xclcharts.event.click;
  *  
  */
 
-public abstract class PositionRecord { //implements IPositionCompare {
+public abstract class PositionRecord {
 	
 	private static final String TAG = "PositionRecord";
 		

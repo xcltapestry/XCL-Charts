@@ -123,6 +123,10 @@ public class MainActivity extends Activity {
 				 {
 					 position = chartsTitleCurr.length - 10 - position;
 					 intent.setClass(MainActivity.this,DialChart3Activity.class);		
+				 }else if(position >= chartsTitleCurr.length - 11) //倒数9  dial chart
+				 {
+					 position = chartsTitleCurr.length - 11 - position;
+					 intent.setClass(MainActivity.this,DialChart4Activity.class);		
 				
 				 }else{
 					 intent.setClass(MainActivity.this,ChartsActivity.class);	

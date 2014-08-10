@@ -6,7 +6,7 @@ XCL-Charts
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于原生的Canvas来绘制各种图表,在设计时，尽量在保证开发效率的同时，给使用者提供足够多的定制化能力。因此使用简便,同时具有相当灵活的定制能力。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>3D/非3D柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
  折线图(Line Chart)、曲线图(Spline Chart)、环形图(Dount Chart)、南丁格尔玫瑰图(Rose Chart)、仪表盘(Dial Chart)、刻度盘(Gauge Chart)、雷达图(Radar Chart)、圆形图(Circle Chart)等图表。<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括支持图表缩放、手势移动、动画显示效果、高密度柱形显示、图表分界定制线、多图表的混合显示及同数据源不同类型图表切换等。</b><br/> 
+ &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括支持图表缩放、手势移动、点击响应、动画显示、高密度柱形显示、图表分界定制线、多图表的混合显示及同数据源不同类型图表切换等。</b><br/> 
  
  <b>License</b><br/>
       采用Apache v2 License开源协议。<br/>
@@ -45,6 +45,13 @@ http://www.oschina.net/p/xcl-charts
 <img src="http://img.blog.csdn.net/20140701205807534" alt="横向定制线 柱形渐显动画" />
 <img src="http://img.blog.csdn.net/20140701205927890" alt="竖向定线 渐显动画" />
 
+ <br/>
+<img src="http://img.blog.csdn.net/20140810114004828" alt="dialchart2 动画" />
+<img src="http://img.blog.csdn.net/20140810114030796" alt="dialchart3 动画" />
+
+ <br/>
+<img src="http://img.blog.csdn.net/20140810114309276" alt="dialchart4 动画" />
+<img src="http://img.blog.csdn.net/20140810114121636?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="dialchart1 动画" />
 <br/>
 <p>
 <img src="http://img.blog.csdn.net/20140622203726093" alt="radar chart" />
@@ -86,8 +93,3 @@ http://www.oschina.net/p/xcl-charts
  <br/>
  <img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />  
   <img src="http://img.blog.csdn.net/20140716213635034" alt="piechart2d" />  
-<br/> 
- <img src="http://img.blog.csdn.net/20140803234857340?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="dial chart 1" />  
-  <img src="http://img.blog.csdn.net/20140803234729171?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="dial chart 2" />  
-  <img src="http://img.blog.csdn.net/20140803234807781?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="dial chart 3" />  
-<br/> 

@@ -25,6 +25,12 @@ import org.xclcharts.common.MathHelper;
 
 import android.graphics.PointF;
 
+/**
+ * @ClassName ArcPosition
+ * @Description  arc位置记录信息基类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
 public class ArcPosition extends PositionRecord {
 	
 	protected float mOffsetAngle = 0.0f;

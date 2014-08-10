@@ -24,6 +24,14 @@ package org.xclcharts.event.click;
 import android.graphics.PointF;
 import android.graphics.RectF;
 
+
+/**
+ * @ClassName PlotPointPosition
+ * @Description  点位置记录信息类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
+
 public class PlotPointPosition extends PointPosition{
 	
 	public PlotPointPosition()

@@ -251,7 +251,8 @@ public class MathHelper {
 		
 		  BigDecimal b = new BigDecimal(Float.toString(v));
 		  BigDecimal one = new BigDecimal("1");
-		  return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).floatValue();
+		  return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).floatValue();		  
+		 // return b.setScale(scale, BigDecimal.ROUND_HALF_UP).floatValue();
 	 }
 	
 	 /**

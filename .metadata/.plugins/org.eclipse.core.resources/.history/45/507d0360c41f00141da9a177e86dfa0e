@@ -1,0 +1,282 @@
+package com.demo.xclcharts.view;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xclcharts.chart.DialChart;
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.Pointer;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.util.AttributeSet;
+import android.util.Log;
+
+public class DialChart05View extends GraphicalView {
+	
+	private String TAG = "DialChart05View";	
+	private DialChart chart = new DialChart();
+	private float mPercentage = 0.1f;
+	
+	float mP1 = 0.0f;
+	float mP2 =  0.0f;
+	
+	public DialChart05View(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		initView();
+	}
+	
+	public DialChart05View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public DialChart05View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		chartRender();
+	 }
+	 
+	 @Override  
+	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+	        super.onSizeChanged(w, h, oldw, oldh);  
+	        chart.setChartRange(w ,h ); 
+	    }  		
+			
+	 public void chartRender()
+		{
+			try {								
+							
+				//设置标题背景			
+				chart.setApplyBackgroundColor(true);
+				chart.setBackgroundColor( (int)Color.rgb(28, 129, 243) );
+				//绘制边框
+				chart.showRoundBorder();
+						
+				//设置当前百分比
+				chart.getPointer().setPercentage(mPercentage);
+				
+				//设置指针长度
+				chart.getPointer().setLength(0.6f);
+				
+				//增加轴承
+				addAxis();						
+				/////////////////////////////////////////////////////////////
+				addPointer();
+				//设置附加信息
+				addAttrInfo();
+				/////////////////////////////////////////////////////////////
+												
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				Log.e(TAG, e.toString());
+			}
+			
+		}
+		
+		public void addAxis()
+		{
+		
+			List<String> rlabels  = new ArrayList<String>();
+			int j=0;
+			for(int i=0;i<=150;)
+			{
+				if(0 == i || j == 4)
+				{
+					rlabels.add(Integer.toString(i));
+					j = 0;
+				}else{
+					rlabels.add("");
+					j++;
+				}
+										
+				i+=5;
+			}
+			chart.addOuterTicksAxis(0.7f, rlabels);
+			
+			//轴3 --环形颜色轴
+			List<Float> ringPercentage = new ArrayList<Float>();	
+			float rper = MathHelper.getInstance().sub(1,mPercentage);
+			ringPercentage.add( 0.33f);
+			ringPercentage.add( 0.33f);
+			ringPercentage.add( 1 - 2 * 0.33f);
+			
+			List<Integer> rcolor  = new ArrayList<Integer>();				
+			rcolor.add((int)Color.rgb(133, 206, 130));
+			rcolor.add((int)Color.rgb(252, 210, 9));		
+			rcolor.add((int)Color.rgb(229, 63, 56));	
+			chart.addStrokeRingAxis(0.7f,0.6f, ringPercentage, rcolor);
+			
+			
+			 j=0;
+			 rlabels.clear();
+			for(int i=0;i<=10;i++)
+			{
+				//if(0 == i || j == 4)
+				//{
+					rlabels.add(Integer.toString(i));
+				//	j = 0;
+				//}else{
+				//	rlabels.add("");
+					j++;
+				//}
+										
+				//i+=5;
+			}
+			chart.addInnerTicksAxis(0.6f, rlabels);
+			
+		
+			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243) );
+			
+			chart.getPlotAxis().get(0).getTickMarksPaint().setColor(Color.YELLOW);
+			chart.getPlotAxis().get(2).getTickMarksPaint().setColor(Color.WHITE);
+		
+			
+			//chart.getPlotAxis().get(0).
+			
+			/*
+			
+			chart.getPlotAxis().get(0).setDetailModeSteps(4);
+			
+			//chart.getPlotAxis().get(0).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
+			//chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
+			chart.getPlotAxis().get(0).getTickLabelPaint().setColor(Color.WHITE);
+			chart.getPlotAxis().get(0).getTickMarksPaint().setColor(Color.WHITE);
+			chart.getPlotAxis().get(0).setAxisLineVisible(false);
+			
+			chart.getPlotAxis().get(0).setTickLabelVisible(true);
+			
+			
+			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);
+			chart.getPointer().setBaseRadius(15);
+			chart.getPointer().getPointerPaint().setStrokeWidth(7);
+			
+			//chart.getPlotAxis().get(0).setVisible(false);
+			
+			
+			chart.getPointer().getBaseCirclePaint().setColor(Color.WHITE );
+			
+			*/
+			
+			
+			
+			
+			/*
+			
+			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);
+			//chart.getPointer().getPaintBaseCircle().setColor((int)Color.rgb(226, 200, 79) );
+			//chart.getPointer().getPaintBaseCircle().setStrokeWidth(5);
+			
+			chart.getPointer().getPointerPaint().setColor((int)Color.rgb(226, 200, 79) );
+			chart.getPointer().getPointerPaint().setStrokeWidth(3);
+			
+			chart.getPointer().getPointerPaint().setStyle(Style.STROKE);
+			
+			chart.getPointer().hideBaseCircle();
+			*/
+			
+		}
+		
+		
+		private void addAttrInfo()
+		{
+			/////////////////////////////////////////////////////////////
+			/*
+			 * 
+			//设置附加信息
+			Paint paintTB = new Paint();
+			paintTB.setColor(Color.WHITE);
+			paintTB.setTextAlign(Align.CENTER);
+			paintTB.setTextSize(30);	
+			paintTB.setAntiAlias(true);	
+			chart.addAttributeInfo(XEnum.Location.TOP, Float.toString( 
+									MathHelper.getInstance().round(mPercentage * 100,2))+"%", 0.3f, paintTB);
+			
+			Paint paintBT = new Paint();
+			paintBT.setColor(Color.BLUE);
+			paintBT.setTextAlign(Align.CENTER);
+			paintBT.setTextSize(22);
+
+			paintBT.setAntiAlias(true);	
+			chart.addAttributeInfo(XEnum.Location.BOTTOM, "蓝:"+Float.toString(
+							MathHelper.getInstance().round(mP1 * 100,2))+"%", 0.4f, paintBT);
+			
+			Paint paintBT2 = new Paint();
+			paintBT2.setColor(Color.RED);
+			paintBT2.setTextAlign(Align.CENTER);
+			paintBT2.setTextSize(22);
+		
+			paintBT2.setAntiAlias(true);	
+			chart.addAttributeInfo(XEnum.Location.BOTTOM, "红:"+Float.toString(					
+					MathHelper.getInstance().round(mP2 * 100,2))+"%", 0.5f, paintBT2);
+			*/
+			
+			
+		}
+		
+		public void addPointer()
+		{				
+			/*
+			chart.clearPlotPointer();
+			
+			chart.addPointer();
+			chart.addPointer();
+			
+			List<Pointer> mp = chart.getPlotPointer();	
+									
+			mp.get(0).setLength(0.85f,0.3f);	
+			mp.get(0).getPointerPaint().setColor(Color.BLUE);
+			mP1 = MathHelper.getInstance().round(mPercentage * 0.3f ,2);
+			if(mP1 < 0 || mP1 > 1) mP1 = 0.0f;
+			mp.get(0).setPercentage(mP1 );
+			
+			
+			mp.get(1).setLength(0.8f);
+			//mp.get(1).setPointerStyle(XEnum.PointerStyle.TRIANGLE);		
+			mp.get(1).getPointerPaint().setColor(Color.RED);
+			mP2 = MathHelper.getInstance().round(mPercentage + 0.1f ,2);
+			if(mP2 < 0 || mP2 > 1) mP2 = 1f;			
+			mp.get(1).setPercentage( mP2);		
+			
+			
+			mp.get(0).setPointerStyle(XEnum.PointerStyle.TRIANGLE);
+			mp.get(0).setBaseRadius(15);
+			mp.get(1).setPointerStyle(XEnum.PointerStyle.TRIANGLE);
+			mp.get(1).setBaseRadius(15);
+			
+			*/
+		}
+		public void setCurrentStatus(float percentage)
+		{
+			//清理
+			chart.clearPlotAxis();
+					
+			mPercentage =  percentage;
+			//设置当前百分比
+			chart.getPointer().setPercentage(mPercentage);
+			addAxis();						
+			addPointer();
+			addAttrInfo();
+		}
+
+
+		@Override
+		public void render(Canvas canvas) {
+			// TODO Auto-generated method stub
+			 try{
+		            chart.render(canvas);
+		        } catch (Exception e){
+		        	Log.e(TAG, e.toString());
+		        }
+		}
+
+}

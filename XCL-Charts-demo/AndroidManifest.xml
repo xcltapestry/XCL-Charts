@@ -78,6 +78,10 @@
             android:name="com.demo.xclcharts.DialChart3Activity"
             android:label="@string/title_activity_dial_chart3" >
         </activity>
+        <activity
+            android:name="com.demo.xclcharts.DialChart4Activity"
+            android:label="@string/title_activity_dial_chart4" >
+        </activity>
     </application>
 
 </manifest>

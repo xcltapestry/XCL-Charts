@@ -23,6 +23,14 @@ package org.xclcharts.event.click;
 
 import android.graphics.RectF;
 
+/**
+ * @ClassName PlotBarPosition
+ * @Description  bar位置记录信息类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
+
+
 public class PlotBarPosition extends BarPosition{
 	
 	public PlotBarPosition()

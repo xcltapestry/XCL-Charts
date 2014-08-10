@@ -35,6 +35,7 @@
         <item>雷达图</item> 
         <item>柱形渐显动画演示</item>     
         
+        <item>仪表盘-混合图</item> 
          <item>仪表盘-测试网速</item> 
          <item>仪表盘-速率</item> 
           <item>仪表盘-功能演示</item> 
@@ -81,9 +82,10 @@
        <item>Radar Chart</item>           
        <item>Bar Chart - 柱形渐显动画效果</item>    
        
-        <item>Dial Chart - 270</item>  
-        <item>Dial Chart - 270</item>        
-        <item>Dial Chart - 270</item>     
+       <item>Dial Chart</item> 
+        <item>Dial Chart</item>  
+        <item>Dial Chart</item>        
+        <item>Dial Chart</item>     
         <item>Activity调用点击的例子</item> 
        
         <item>左轴右ScrollView显示图表</item> 

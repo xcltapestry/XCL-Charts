@@ -21,7 +21,12 @@
  */
 package org.xclcharts.event.click;
 
-
+/**
+ * @ClassName BarPosition
+ * @Description  bar位置记录信息基类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
 public class BarPosition extends RectPosition {
 	
 	public BarPosition()

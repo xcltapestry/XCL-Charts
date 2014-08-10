@@ -148,11 +148,6 @@ public class RadarChart extends RdChart{
 	
 	private boolean validateParams()
 	{
-		//if( avgAgent > 270) return false;
-		//if( avgAgent <=0 ) return false;
-		//if(labelsCount < 3) return false;
-		//if(dataCount < 3) return false;
-		
 		if(this.CategoryAxis.getDataSet().size() <= 0 )
 		{
 			Log.e(TAG,"标签数据源为空");

@@ -17,7 +17,7 @@
  * @Description Android图表基类库
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * @license http://www.apache.org/licenses/  Apache v2 License
- * @version v0.1
+ * @version v 1.3
  */
 
 
@@ -26,16 +26,16 @@ package org.xclcharts.chart;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.XEnum.Location;
 import org.xclcharts.renderer.axis.RoundAxis;
 import org.xclcharts.renderer.axis.RoundAxisRender;
+import org.xclcharts.renderer.plot.Pointer;
+import org.xclcharts.renderer.plot.PointerRender;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -50,51 +50,44 @@ import android.util.Log;
 public class DialChart  extends CirChart{
 	
 	private String TAG = "DialChart";
-	
-	//指针
-	private float mPointerAngle = 0.0f;		
-	private Paint mPaintPointerLine = null;
-	private Paint mPaintPinterCircle  = null;
-	
+			
 	private static final int INIT_ANGLE = 135;
-	private static final int FIX_TOTAL_ANGLE = 270;
+	private static final int FIX_TOTAL_ANGLE  = 270;
+	
+	private float mStartAngle = 0.0f;
+	private float mTotalAngle = 0.0f;
+	
 
 	List<RoundAxis> mRoundAxis =  new ArrayList<RoundAxis>();
-	 
-	private float mPointerRadiusPercentage = 0.9f;	
-	private List<XEnum.AttributeInfoLoction> mAttrInfoLocation = null;
+	 	
+	private List<Location> mAttrInfoLocation = null;
 	private List<String> mAttrInfo = null;
 	private List<Float> mAttrInfoPostion = null;	
 	private List<Paint> mAttrInfoPaint = null;
 	
-	private float mCurrentStatusPercentage = 0.0f;
-	
+	//指针[默认1个，其它add]
+	private PointerRender mPointer = null;
+	List<Pointer> mPointerSet = new ArrayList<Pointer>();
+		
 
 	public DialChart()
 	{
 		super();	
-		initPaint();
+		
+		mStartAngle	= INIT_ANGLE;
+		mTotalAngle = FIX_TOTAL_ANGLE;
 	}
 	
-	private void initPaint()
-	{
-		getLabelPaint().setTextSize(18);
-		getLabelPaint().setColor(Color.BLUE);		
-		getLabelPaint().setAntiAlias(true);	
-		
-
-		mPaintPointerLine = new Paint();
-		mPaintPointerLine.setStyle(Style.FILL);
-		mPaintPointerLine.setAntiAlias(true);	
-		mPaintPointerLine.setColor(Color.BLACK);
-		mPaintPointerLine.setStrokeWidth(3);
-		
-		mPaintPinterCircle = new Paint();
-		mPaintPinterCircle.setStyle(Style.FILL);
-		mPaintPinterCircle.setAntiAlias(true);	
-		mPaintPinterCircle.setColor(Color.BLACK);
-		mPaintPinterCircle.setStrokeWidth(8);
+	public void setStartAngle(float startAngle)
+	{	
+		mStartAngle = startAngle;
 	}
+	
+	public void setTotalAngle(float totalAngle)
+	{		
+		mTotalAngle = totalAngle;
+	}
+	
 	
 	/**
 	 * 返回图轴集合
@@ -106,10 +99,64 @@ public class DialChart  extends CirChart{
 	}
 	
 	/**
+	 * 返回额外的指针集合
+	 * @return
+	 */
+	public List<Pointer> getPlotPointer()
+	{
+		return mPointerSet;
+	}
+	
+	/**
+	 * 增加额外的指针
+	 */
+	 public void addPointer()
+	 {
+		 mPointerSet.add(new PointerRender());
+	 }
+	 	
+	 /**
+	  * 清掉指针信息
+	  */
+	 public void clearPlotPointer()
+	 {
+		 if(null != mPointerSet) mPointerSet.clear();
+	 }
+	 
+	/**
+	 * 清空当前所有轴数据集合
+	 */
+	 public void clearPlotAxis()
+	 {
+		if(null != mRoundAxis) mRoundAxis.clear();	
+	 }		
+	 
+	 /**
+	  * 清掉所有附加信息
+	  */
+	 public void clearPlotAttrInfo()
+	 {
+		if(null != mAttrInfoLocation) mAttrInfoLocation.clear();	
+		if(null != mAttrInfo) mAttrInfo.clear();	
+		if(null != mAttrInfoPostion) mAttrInfoPostion.clear();	
+		if(null != mAttrInfoPaint) mAttrInfoPaint.clear();	
+	 }		
+	
+	 /**
+	  * 清掉所有相关信息
+	  */
+	 public void clearAll()
+	 {
+		 clearPlotPointer();
+		 clearPlotAxis();
+		 clearPlotAttrInfo();
+	 }
+	 
+	/**
 	 * 返回附加信息方位集合
 	 * @return 集合
 	 */
-	public List<XEnum.AttributeInfoLoction>  getPlotAttrInfoLocation()
+	public List<Location>  getPlotAttrInfoLocation()
 	{
 		return mAttrInfoLocation;
 	}
@@ -140,66 +187,17 @@ public class DialChart  extends CirChart{
 	{
 		return mAttrInfoPaint;
 	}
-	
-	
-	
+		
 	/**
-	 * 开放指针画笔
-	 * @return 画笔
+	 * 返回指针绘制类
+	 * @return 指针绘制类
 	 */
-	public Paint getPinterCirclePaint()
+	public Pointer getPointer()
 	{
-		return mPaintPinterCircle;
-	}
-	
-	/**
-	 * 开放指针底部圆画笔
-	 * @return 画笔
-	 */
-	public Paint getPointerLinePaint()
-	{
-		return mPaintPointerLine;
+		if(null == mPointer) mPointer = new PointerRender();
+		return mPointer;
 	}
 
-	/**
-	 * 设置指针指向的角度
-	 * @param Angle 角度
-	 */
-	//public void setCurrentAngle(float Angle)
-	//{
-	//	mPointerAngle = Angle;
-	//}
-	
-	/**
-	 * 设置指针指向的值，即当前比例(0 - 1)
-	 * @param percentage 当前比例
-	 */
-	public void setCurrentPercentage(float percentage)
-	{
-		mPointerAngle = mul( FIX_TOTAL_ANGLE , percentage);
-		
-		mCurrentStatusPercentage = percentage;
-	}
-	 
-	/**
-	 * 设置指针长度
-	 * @param radiusPercentage  占总半径的比例
-	 */
-	 public void setPointerLength(float radiusPercentage )
-	 {		 
-		 mPointerRadiusPercentage = radiusPercentage; //0.9f
-	 }
-	 
-	 /**
-	  * 返回指针长度占总半径的比例
-	  * @return 比例
-	  */
-	 public float getPointerRadiusPercentage()
-	 {
-		 return mPointerRadiusPercentage;
-	 }	 	 
-	 
- 	
 	 /**
 	  * 增加附加信息
 	  * @param position		显示方位
@@ -207,10 +205,10 @@ public class DialChart  extends CirChart{
 	  * @param infoPosRadiusPercentage	信息显示在总半径指定比例所在位置
 	  * @param paint		用来绘制用的画笔
 	  */
-    public void addAttributeInfo(XEnum.AttributeInfoLoction  position ,String info,
+    public void addAttributeInfo(Location  position ,String info,
     		float infoPosRadiusPercentage  ,Paint paint) { 
     	
-    	if(null == mAttrInfoLocation) mAttrInfoLocation = new ArrayList<XEnum.AttributeInfoLoction> ();
+    	if(null == mAttrInfoLocation) mAttrInfoLocation = new ArrayList<Location> ();
     	if(null == mAttrInfo) mAttrInfo = new ArrayList<String>();
     	
     	if(null == mAttrInfoPostion) mAttrInfoPostion = new ArrayList<Float>();    	
@@ -228,25 +226,25 @@ public class DialChart  extends CirChart{
      * @param canvas	画布
      */
 	private void renderPointerLine(Canvas canvas)
-	{						
-		float currentRadius = mul(this.getRadius() ,mPointerRadiusPercentage); 
-		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
-		MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, currentRadius,add(mPointerAngle , INIT_ANGLE));	
-		float endX = MathHelper.getInstance().getPosX();
-		float endY = MathHelper.getInstance().getPosY();	
-        canvas.drawLine(cirX, cirY, endX,endY, mPaintPointerLine);     
-	}
-	
-	/**
-	 * 绘制指针底部的圆
-	 * @param canvas 画布
-	 */
-	private void renderPinterCircle(Canvas canvas)
-	{
-		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
-		canvas.drawCircle(cirX, cirY, mul(this.getRadius() ,0.05f), mPaintPinterCircle);
+	{											
+		if(null == mPointerSet) return;	
+		float radius = getRadius();
+		for(int i=0;i< mPointerSet.size();i++)
+		{
+			PointerRender pointer = (PointerRender) mPointerSet.get(i);
+			pointer.setParentRadius(radius);
+			pointer.setStartXY(plotArea.getCenterX(), plotArea.getCenterY());
+			pointer.setTotalAngle(mTotalAngle );
+			pointer.setStartAngle(mStartAngle);
+			pointer.render(canvas);
+		}
+		
+		if(null == mPointer) mPointer = new PointerRender();	
+		mPointer.setStartXY(plotArea.getCenterX(), plotArea.getCenterY());
+		mPointer.setTotalAngle(mTotalAngle );
+		mPointer.setStartAngle(mStartAngle);
+		mPointer.setParentRadius(getRadius());
+		mPointer.render(canvas);
 	}
 	
 
@@ -255,15 +253,33 @@ public class DialChart  extends CirChart{
 	 * @param radiusPercentage 显示在总半径的指定比例所在位置
 	 * @param labels 标签集合
 	 */
-	public void addTicksAxis(float radiusPercentage,List<String> labels)
+	public void addInnerTicksAxis(float radiusPercentage,List<String> labels)
+	{
+		 addTicksAxis(radiusPercentage,labels,XEnum.RoundTickAxisType.INNER_TICKAXIS);
+	}
+	
+	/**
+	 * 增加 标签环形轴
+	 * @param radiusPercentage 显示在总半径的指定比例所在位置
+	 * @param labels 标签集合
+	 */
+	public void addOuterTicksAxis(float radiusPercentage,List<String> labels)
+	{	
+		 addTicksAxis(radiusPercentage,labels,XEnum.RoundTickAxisType.OUTER_TICKAXIS);
+	}
+	
+	
+	private void addTicksAxis(float radiusPercentage,List<String> labels,XEnum.RoundTickAxisType type)
 	{
 		RoundAxisRender roundAxis = new RoundAxisRender();	
 		roundAxis.setRoundAxisType(XEnum.RoundAxisType.TICKAXIS);	
 		roundAxis.setRadiusPercentage(radiusPercentage);
 		roundAxis.setAxisLabels(labels);		
+		roundAxis.setRoundTickAxisType(type);
 		mRoundAxis.add(roundAxis);
 	}
 	
+		
 	/**
 	 * 增加空心环形轴集合
 	 * @param outerRadiusPercentage	外环显示在总半径的指定比例所在位置
@@ -386,21 +402,23 @@ public class DialChart  extends CirChart{
 	
 	
 	/**
-	 * 清空当前所有轴数据集合
+	 * 
+	 * @param location
+	 * @param radiusPercentage
 	 */
-	public void clearData()
-	{
-		if(null != mRoundAxis) mRoundAxis.clear();	
+	public void addLineAxis(Location  location ,float radiusPercentage)
+							//XEnum.LineStyle lineStyle,XEnum.DotStyle dotStyle) 
+	{ 
+		RoundAxisRender roundAxis = new RoundAxisRender();	
+		roundAxis.setRoundAxisType(XEnum.RoundAxisType.LINEAXIS);
+		roundAxis.setRadiusPercentage(radiusPercentage);		
+		roundAxis.setLineAxisLocation(location);
 		
-		if(null != mAttrInfoLocation) mAttrInfoLocation.clear();	
-		if(null != mAttrInfo) mAttrInfo.clear();	
-		if(null != mAttrInfoPostion) mAttrInfoPostion.clear();	
-		if(null != mAttrInfoPaint) mAttrInfoPaint.clear();	
-		
-
-		
-	}
-
+		//没心情搞了，不弄这个线类型及箭头啥的了
+		//roundAxis.setLineStyle(lineStyle);
+		//roundAxis.setLineCap(dotStyle);
+		mRoundAxis.add(roundAxis);		
+	}	
 	
 	private void renderAttrInfo(Canvas canvas)
 	{		
@@ -447,14 +465,15 @@ public class DialChart  extends CirChart{
 	 */
 	protected void renderPlot(Canvas canvas)
 	{
-		try{									
+		try{						
+			float radius = getRadius();
 			//画上各组环形轴
 			for(int i = 0; i < this.mRoundAxis.size(); i++)  
 	        {  				
 				RoundAxisRender roundAxis = (RoundAxisRender)mRoundAxis.get(i);
 				roundAxis.setCenterXY(plotArea.getCenterX(), plotArea.getCenterY());
-				roundAxis.setAngleInfo(FIX_TOTAL_ANGLE, INIT_ANGLE);	
-				roundAxis.setOrgRadius(this.getRadius());
+				roundAxis.setAngleInfo(mTotalAngle , mStartAngle);	
+				roundAxis.setOrgRadius(radius);
 				roundAxis.render(canvas);
 	        }  		
 			
@@ -463,9 +482,6 @@ public class DialChart  extends CirChart{
 			
 			//最后再画指针
 			 renderPointerLine(canvas);
-			 //画上指针尾部的白色圆心
-			 renderPinterCircle(canvas);			 
-			 
 		}catch( Exception e){
 			Log.e(TAG,e.toString());
 		}
@@ -486,8 +502,6 @@ public class DialChart  extends CirChart{
 		}
 		return true;
 	}
-	
-	
-	
+			
 
 }
