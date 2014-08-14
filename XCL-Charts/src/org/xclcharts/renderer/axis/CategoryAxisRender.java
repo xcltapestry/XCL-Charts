@@ -108,6 +108,7 @@ public class CategoryAxisRender extends CategoryAxis {
 	 */
 	public void setDataBuilding(List<String> dataSet)
 	{
+		if(null != mDataSet) mDataSet.clear();
 		 mDataSet = dataSet;
 	}
 	

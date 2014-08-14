@@ -127,6 +127,7 @@ public class LineChart extends LnChart{
 			{
 				Log.e(TAG,"数据轴不能为空.");				
 			}else					
+				if(null != mDataSet) mDataSet.clear();
 				this.mDataSet = dataSet;		
 		}			
 						

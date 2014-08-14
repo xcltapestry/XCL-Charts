@@ -25,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.graphics.Color;
+import android.util.Log;
 
 /**
  * @ClassName BarData
@@ -103,6 +104,7 @@ public class BarData {
 		 */
 		public void setDataColor(List<Integer> dataColor) 
 		{
+			if(null != mDataColor)mDataColor.clear();
 			mDataColor = dataColor;
 		}
 		
@@ -122,6 +124,7 @@ public class BarData {
 		 */
 		public void setDataSet(List<Double> dataSeries) 
 		{
+			if(null != mDataSet)mDataSet.clear();
 			mDataSet = dataSeries;
 		}
 		

@@ -25,6 +25,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
@@ -139,6 +140,7 @@ public class BarChart03View extends TouchView implements Runnable{
 			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
+			chart.getBar().setBarStyle(XEnum.BarStyle.OUTLINE);
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
 				@Override
@@ -164,10 +166,18 @@ public class BarChart03View extends TouchView implements Runnable{
 		dataSeriesA.add(100d); 
 		dataSeriesA.add(95d); 
 		dataSeriesA.add(100d); 
-		BarData BarDataA = new BarData("",dataSeriesA,(int)Color.rgb(53, 169, 239));
 		
-		
-		chartData.add(BarDataA);
+	
+		//依数据值确定对应的柱形颜色.
+		List<Integer> dataColorA= new LinkedList<Integer>();
+		dataColorA.add((int)Color.RED);	
+		dataColorA.add((int)Color.BLUE);	
+		dataColorA.add((int)Color.GREEN);	
+		dataColorA.add((int)Color.YELLOW);	
+				
+		//BarData BarDataA = new BarData("",dataSeriesA,dataColorA,(int)Color.rgb(53, 169, 239));
+		chartData.clear();
+		chartData.add(new BarData("",dataSeriesA,dataColorA,(int)Color.rgb(53, 169, 239)));
 	}
 	
 	private void chartLabels()
@@ -262,12 +272,14 @@ public class BarChart03View extends TouchView implements Runnable{
           			Thread.sleep(100);
           			List<BarData> animationData = new LinkedList<BarData>();
           			List<Double> dataSeries= new LinkedList<Double>();	
+          			List<Integer> dataColorA= new LinkedList<Integer>();
           			for(int k=0;k<=j;k++)
           			{          				
-          				dataSeries.add(barData.getDataSet().get(k));    
+          				dataSeries.add(barData.getDataSet().get(k));  
+          				dataColorA.add(barData.getDataColor().get(k));  
           			}
           			
-          			BarData animationBarData = new BarData("",dataSeries,(int)Color.rgb(53, 169, 239));
+          			BarData animationBarData = new BarData("",dataSeries,dataColorA,(int)Color.rgb(53, 169, 239));
           			animationData.add(animationBarData);
           			chart.setDataSource(animationData);
           			postInvalidate(); 

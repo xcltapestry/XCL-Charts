@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
 <fullyQualifiedTypeName name="android.view.MotionEvent"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.MultiBarChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BarChart"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="android.graphics.PointF"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 </qualifiedTypeNameHistroy>

@@ -89,8 +89,8 @@ public class ChartsActivity extends Activity {
 		
 				mCharts = new TouchView[]{new BarChart01View(this),
 				new BarChart02View(this),
-				new BarChart03View(this),
 				new BarChart05View(this),
+				new BarChart03View(this),
 				new BarChart04View(this),
 				
 				new BarChart3D01View(this),

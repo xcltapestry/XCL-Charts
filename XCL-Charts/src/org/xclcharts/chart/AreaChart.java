@@ -81,8 +81,7 @@ public class AreaChart extends LnChart{
 	 * @param categories 分类集
 	 */
 	public void setCategories(List<String> categories)
-	{
-		if(null == categories) return;
+	{		
 		categoryAxis.setDataBuilding(categories);
 	}
 	
@@ -91,8 +90,8 @@ public class AreaChart extends LnChart{
 	 * @param dataset 数据源
 	 */
 	public void setDataSource(List<AreaData> dataset)
-	{
-		if(null == dataset) return;
+	{		
+		if(null != mDataset) mDataset.clear();
 		this.mDataset = dataset;		
 	}
 	

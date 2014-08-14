@@ -95,7 +95,7 @@ public class BarChart extends AxisChart {
 	 * @param categories
 	 *            分类集
 	 */
-	public void setCategories(List<String> categories) {
+	public void setCategories(List<String> categories) {	
 		categoryAxis.setDataBuilding(categories);
 	}
 
@@ -106,6 +106,7 @@ public class BarChart extends AxisChart {
 	 *            数据源
 	 */
 	public void setDataSource(List<BarData> dataSeries) {
+		if(null != mDataSet) mDataSet.clear();		
 		this.mDataSet = dataSeries;
 	}
 
@@ -505,7 +506,8 @@ public class BarChart extends AxisChart {
 			if(null == barValues) continue ;
 			
 			//用于处理单独针对某些柱子指定颜色的情况
-			List<Integer> barDataColor = bd.getDataColor();			
+			List<Integer> barDataColor = bd.getDataColor();		
+			
 			// 设成对应的颜色
 			int barDefualtColor = bd.getColor();
 			mFlatBar.getBarPaint().setColor(barDefualtColor);
@@ -601,9 +603,8 @@ public class BarChart extends AxisChart {
 				paint.setColor( lstDataColor.get(currNumber));	
 			}else{
 				paint.setColor( defaultColor);
-			}					
-		}
-		
+			}		
+		}		
 	}
 	
 	/**
