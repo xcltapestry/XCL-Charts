@@ -76,7 +76,7 @@ public class RadarChart01View extends TouchView {
 	 
 	 private void initView()
 	 {
-		 chartLabels();
+		 	chartLabels();
 			chartDataSet();	
 			chartRender();
 	 }
@@ -180,7 +180,7 @@ public class RadarChart01View extends TouchView {
 		RadarData lineData3 = new RadarData("长期目标",dataSeriesC,
 					(int)Color.rgb(224, 53, 49),XEnum.RadarDataAreaStyle.STROKE);
 		lineData3.setLineStyle(XEnum.LineStyle.DASH);	
-		lineData3.getPlotLine().setDotStyle(XEnum.DotStyle.RECT);
+		lineData3.getPlotLine().setDotStyle(XEnum.DotStyle.RING);
 		
 		
 		chartData.add(lineData1);

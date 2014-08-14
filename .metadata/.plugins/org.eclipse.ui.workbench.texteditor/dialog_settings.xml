@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="totalAngle" key="selection"/>
+		<item value="getDetailModeSteps" key="selection"/>
 		<list key="findhistory">
+			<item value="getDetailModeSteps"/>
+			<item value="mDetailModeSteps"/>
+			<item value="renderDotAndLabel"/>
+			<item value="drawDataPath"/>
+			<item value="getLineAxisIntersectVisible"/>
 			<item value="totalAngle"/>
 			<item value="addAxis()"/>
 			<item value="mAttrInfo"/>
-			<item value="M"/>
-			<item value="DialChart4Activity"/>
-			<item value="length"/>
-			<item value="mPointerRadius"/>
-			<item value="mParentRadius"/>
 		</list>
 		<list key="replacehistory">
 			<item value="detailRadius"/>

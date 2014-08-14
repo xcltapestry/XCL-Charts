@@ -98,8 +98,9 @@ public class PlotDotRender {
             canvas.drawCircle(cX, bottom, radius, paint);
 
 			Paint paintFill = new Paint();
-			paintFill.setColor(Color.WHITE);
+			paintFill.setColor(Color.WHITE); 
 			paintFill.setStyle(Style.FILL);
+			paintFill.setAntiAlias(true);
             canvas.drawCircle(cX, bottom,ringRadius, paintFill);            
 
 			break;

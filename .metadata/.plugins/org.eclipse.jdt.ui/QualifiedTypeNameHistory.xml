@@ -7,7 +7,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BarChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DensityUtil"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Region"/>
 <fullyQualifiedTypeName name="org.xclcharts.event.PositionRecord"/>
 <fullyQualifiedTypeName name="org.xclcharts.event.PlotPositionRecord"/>
@@ -56,8 +55,9 @@
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart02View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart04View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart06View"/>
-<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart07View"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
 </qualifiedTypeNameHistroy>

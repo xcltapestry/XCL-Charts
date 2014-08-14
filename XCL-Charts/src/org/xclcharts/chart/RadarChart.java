@@ -38,6 +38,7 @@ import org.xclcharts.renderer.line.PlotLine;
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
+import android.graphics.PointF;
 import android.util.Log;
 
 
@@ -367,7 +368,8 @@ public class RadarChart extends RdChart{
 			Float[] arrayDataY = new Float[dataSize]; 
 											
 			int i = 0;
-			for(Double data : dataset){
+			for(Double data : dataset)
+			{
 			   Double per = (data - dataAxis.getAxisMin() ) / dataAxis.getAxisRange();
 			   float curRadius = (float) (getRadius() * per);
 						   
@@ -387,7 +389,7 @@ public class RadarChart extends RdChart{
 			{
 			case FILL:
 				drawDataPath(canvas,lineData,arrayDataX,arrayDataY);
-					break;
+				break;
 			case STROKE:
 				renderDataLine(canvas,lineData,arrayDataX,arrayDataY);
 				break;
@@ -405,6 +407,7 @@ public class RadarChart extends RdChart{
 	 * @param arrayDataX	x坐标
 	 * @param arrayDataY	y坐标
 	 */
+	
 	private void renderDataLine(Canvas canvas,
 								RadarData lineData,
 								Float[] arrayDataX,Float[] arrayDataY )
@@ -412,6 +415,7 @@ public class RadarChart extends RdChart{
 		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
 		
+		PointF[] array = new PointF[arrayDataX.length];
 		
 		for(int p=0;p< arrayDataX.length;p++)
 		{
@@ -422,21 +426,25 @@ public class RadarChart extends RdChart{
 				DrawHelper.getInstance().drawLine(lineData.getLineStyle(), startX, startY,
 						arrayDataX[p], arrayDataY[p],
 						canvas, lineData.getPlotLine().getLinePaint());
-				
-								
+												
 				startX = arrayDataX[p];
-				startY = arrayDataY[p];
-			
-			}
-			//绘制点及对应的标签
-			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);
-			
+				startY = arrayDataY[p];			
+			}							
 		}
 		//收尾
 		DrawHelper.getInstance().drawLine(lineData.getLineStyle(), startX, startY,
 						initX, initY,canvas, lineData.getPlotLine().getLinePaint());
 		
+	
+		//绘制点及对应的标签
+		for(int p=0;p< arrayDataX.length;p++)
+		{								
+			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);			
+		}		
+		
 	}
+	
+	
 	
 	/**
 	 * 绘制图网络线
@@ -453,7 +461,6 @@ public class RadarChart extends RdChart{
 		float initX = 0.0f,initY = 0.0f;
 		
 		Path pathArea = new Path();  
-
 		for(int p=0;p< arrayDataX.length;p++)
 		{
 			if(0 == p){
@@ -466,21 +473,25 @@ public class RadarChart extends RdChart{
 				startX = arrayDataX[p];
 				startY = arrayDataY[p];
 			} 
-			//绘制点及对应的标签
-			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);
 		}
 		//收尾
 		pathArea.lineTo(initX,initY);
-		pathArea.close(); 
-		
+		pathArea.close(); 				
+		int oldAlpha = lineData.getPlotLine().getLinePaint().getAlpha();
 		lineData.getPlotLine().getLinePaint().setAlpha(mAreaAlpha);
-		//lineData.getPlotLine().getLinePaint().setStyle(Style.STROKE);
 		canvas.drawPath(pathArea, lineData.getPlotLine().getLinePaint());
+						
+		//绘制点及对应的标签
+		lineData.getPlotLine().getLinePaint().setAlpha(oldAlpha);
+		for(int p=0;p< arrayDataX.length;p++)
+		{
+			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);
+		}
 	}
+
 	
 	private void renderDotAndLabel(Canvas canvas,
 			RadarData lineData,
-			//float previousX,float previousY,
 			float currentX,float currentY,
 			int listID)
 	{
@@ -489,7 +500,7 @@ public class RadarChart extends RdChart{
 		if(!plotLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
     	{                		       	
     		PlotDot pDot = plotLine.getPlotDot();	  
-    		          		
+    		              		
     		PlotDotRender.getInstance().renderDot(canvas,pDot,
     				currentX - pDot.getDotRadius() , currentY - pDot.getDotRadius(),
     				currentX , currentY,

@@ -201,9 +201,14 @@ public class BarChart04View extends TouchView {
 	
 	private void chartLabels()
 	{		
-		for(Integer i=1;i<31;i++)
+		for(int i=1;i<31;i++)
 		{
-			chartLabels.add(Integer.toString(i));
+			if(1 == i || i%5 == 0)
+			{
+				chartLabels.add(Integer.toString(i));
+			}else{
+				chartLabels.add("");
+			}
 		}
 	}	
 	

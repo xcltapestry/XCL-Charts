@@ -233,10 +233,13 @@ public class LineChart extends LnChart{
 	            	PlotLine pLine = bd.getPlotLine();           
 	            	if(type.equalsIgnoreCase("LINE"))
 	            	{
-	            		if( Float.compare(lineStartY, initY) != 0 )	            			
+	            		
+	            		if(getLineAxisIntersectVisible() == true ||
+	            					Float.compare(lineStartY, initY) != 0 )	
+	            		{
 	            			canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
 	            												pLine.getLinePaint()); 
-	            			            			            		
+	            		}
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
 	            		
 	            		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))

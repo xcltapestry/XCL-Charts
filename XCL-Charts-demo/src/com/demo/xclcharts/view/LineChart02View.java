@@ -136,6 +136,8 @@ public class LineChart02View extends TouchView implements Runnable{
 			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(2);
 			chart.getCategoryAxis().setTickMarksVisible(false);
 			
+			chart.setLineAxisIntersectVisible(true);
+			
 			
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
