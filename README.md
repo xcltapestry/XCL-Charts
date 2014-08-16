@@ -93,3 +93,4 @@ http://www.oschina.net/p/xcl-charts
  <br/>
  <img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />  
   <img src="http://img.blog.csdn.net/20140716213635034" alt="piechart2d" />  
+<img src="http://img.blog.csdn.net/20140816155314843" alt="bzsplinechart" />  

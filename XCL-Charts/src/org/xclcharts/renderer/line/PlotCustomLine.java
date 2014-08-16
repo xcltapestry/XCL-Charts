@@ -57,6 +57,9 @@ public class PlotCustomLine {
 	
 	//默认箭头大小
 	private static final int CAPSIZE = 10;
+	
+	private PlotDot mDot = null;
+	
 			
 	public PlotCustomLine()
 	{	
@@ -340,13 +343,18 @@ public class PlotCustomLine {
 	private void renderLineCap(Canvas canvas, CustomLineData line,
 								float left, float top, float right,float bottom)
 	{		
-		PlotDot pDot = new PlotDot();
-		pDot.setDotStyle(line.getCustomeLineCap());		
-		PlotDotRender.getInstance().renderDot(canvas,pDot,
+		initPlotDot();
+		mDot.setDotStyle(line.getCustomeLineCap());		
+		PlotDotRender.getInstance().renderDot(canvas,mDot,
 				left ,top ,
 				right ,bottom,
 				line.getCustomLinePaint()); //标识图形            			
 	} 
+	
+	private void initPlotDot()
+	{
+		if(null == mDot) mDot = new PlotDot();
+	}
 
 		
 	/**
@@ -355,6 +363,7 @@ public class PlotCustomLine {
 	 */
 	public void setCustomLines(List<CustomLineData> customLineDataSet)
 	{
+		if(null != mCustomLineDataset) mCustomLineDataset.clear();
 		mCustomLineDataset = customLineDataSet;
 	}
 	

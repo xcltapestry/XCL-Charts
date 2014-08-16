@@ -22,12 +22,21 @@
 
 package org.xclcharts.renderer;
 
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map.Entry;
 
+import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.PointPosition;
+import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.Paint.Style;
 
 /**
  * @ClassName XChart
@@ -46,6 +55,9 @@ public class LnChart extends AxisChart {
 	private boolean mTopAxisVisible = true;
 	// 是否显示底轴
 	private boolean mRightAxisVisible = true;	
+	
+	private PointF[] BezierControls ;
+	private Path BezierPath = null; //new Path();
 	
 	
 
@@ -307,5 +319,75 @@ public class LnChart extends AxisChart {
 	{		
 		return getPointRecord(x,y);
 	}
+		
+
+	protected void renderBezierCurve(Canvas canvas,
+			   LinkedHashMap<PlotLine,List<PointF>> mapPoints)
+	{	
+		Iterator iter = mapPoints.entrySet().iterator();
+		while(iter.hasNext()){
+			Entry  entry=(Entry)iter.next();
+			
+			PlotLine pLine = (PlotLine) entry.getKey();
+			List<PointF>   lstPoints =( List<PointF>) entry.getValue();	
+				    
+			renderBezierCurveLine(canvas,pLine.getLinePaint(),lstPoints); 
+		}		
+	}
+
+
+	private void renderBezierCurveLine(Canvas canvas,Paint paint ,List<PointF> lstPoints )
+	{		
+		if(null == BezierControls ) BezierControls = new PointF[2];				
+		paint.setStyle(Style.STROKE);
+		
+			for(int i = 0;i<lstPoints.size();i++)
+			{
+				if(i<3) continue;
+				
+				CurveHelper.curve3( lstPoints.get(i-2),  
+									lstPoints.get(i-1), 
+									lstPoints.get(i-3),
+									lstPoints.get(i), 
+									BezierControls);
+				renderBezierCurvePath(canvas,paint,
+								lstPoints.get(i-2), lstPoints.get(i -1 ), 
+								BezierControls );
+			}			
+		
+		
+			if(lstPoints.size()> 3)
+			{			
+				PointF stop  = lstPoints.get(lstPoints.size()-1);
+				PointF start = lstPoints.get(lstPoints.size()-2);						
+				CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
+											stop, 
+											lstPoints.get(lstPoints.size()-3),
+											stop, 
+											BezierControls);
+				renderBezierCurvePath(canvas,paint,
+								lstPoints.get(lstPoints.size()-2), 
+								lstPoints.get(lstPoints.size() -1 ), 
+								BezierControls );
+			}					
+	}
+
+
+	private void renderBezierCurvePath(Canvas canvas,Paint paint,
+					PointF start,PointF stop,PointF[] bezierControls)
+	{
+		
+		if(null == BezierPath)BezierPath = new Path();
+		
+		BezierPath.reset();
+		BezierPath.moveTo(start.x, start.y);
+		BezierPath.cubicTo( bezierControls[0].x, bezierControls[0].y, 
+				bezierControls[1].x, bezierControls[1].y, 
+				stop.x, stop.y);				
+		canvas.drawPath(BezierPath, paint);		
+	}
+
+	
+	
 
 }

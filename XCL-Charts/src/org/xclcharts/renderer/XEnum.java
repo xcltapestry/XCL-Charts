@@ -181,10 +181,10 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		//public enum LineType
-		//{
-		//	Default,BezierCurve
-		//}
+		public enum CrurveLineStyle
+		{			
+			NORMAL,BEZIERCURVE
+		}
 	
 		
 		

@@ -141,6 +141,7 @@ public class BarChart03View extends TouchView implements Runnable{
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
 			chart.getBar().setBarStyle(XEnum.BarStyle.OUTLINE);
+			
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
 				@Override

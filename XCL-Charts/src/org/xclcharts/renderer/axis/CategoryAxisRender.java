@@ -40,6 +40,7 @@ import android.graphics.Paint.Align;
 
 public class CategoryAxisRender extends CategoryAxis { 
 	
+	//private static int id = 0;
 	
 	public CategoryAxisRender()
 	{
@@ -70,8 +71,9 @@ public class CategoryAxisRender extends CategoryAxis {
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
 							float centerX,float centerY,String text)
 	{		
+		//id++;
 		if(getVisible())
-			renderHorizontalTick(xchart,canvas,centerX,centerY,text);
+			renderHorizontalTick(xchart,canvas,centerX,centerY,text);//+"-"+Integer.toString(id)
 	}
 	
 	

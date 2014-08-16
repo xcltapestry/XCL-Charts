@@ -27,7 +27,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotCustomLine;
@@ -36,6 +38,11 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.PointF;
 import android.graphics.Paint.Align;
 import android.graphics.RectF;
 import android.util.Log;
@@ -56,13 +63,18 @@ public class SplineChart extends LnChart{
 	//分类轴的最大，最小值
 	private double mMaxValue = 0d;
 	private double mMinValue = 0d;
-	
-	
-	// 用于格式化标签的回调接口
+		
+	//用于格式化标签的回调接口
 	private IFormatterTextCallBack mLabelFormatter;
 	
 	//用于绘制定制线(分界线)
 	private PlotCustomLine mCustomLine = null;
+	
+	//平滑曲线
+	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.NORMAL;
+	private List<PointF> mLstPoints = null;
+	private LinkedHashMap<PlotLine,List<PointF>> mMapPoints = null;
+	
 		
 	public SplineChart()
 	{
@@ -93,6 +105,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setDataSource(List<SplineData> dataSeries)
 	{
+		if(null != mDataset) mDataset.clear();
 		this.mDataset = dataSeries;		
 	}	
 	
@@ -149,6 +162,41 @@ public class SplineChart extends LnChart{
 	}
 	
 	/**
+	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
+	 * @param style
+	 */
+	public void setCrurveLineStyle(XEnum.CrurveLineStyle style)
+	{
+		mCrurveLineStyle = style;
+	}
+	
+	/**
+	 * 返回曲线显示风格
+	 * @return 显示风格
+	 */
+	public XEnum.CrurveLineStyle getCrurveLineStyle()
+	{
+		return mCrurveLineStyle;
+	}
+	
+	private void initLineMap()
+	{
+		if(null == mLstPoints){
+			mLstPoints = new ArrayList<PointF>();	
+		}else{
+			mLstPoints.clear();
+		}
+				
+		if(null == mMapPoints)
+		{
+			mMapPoints = new LinkedHashMap<PlotLine,List<PointF>>();
+		}else{
+			mMapPoints.clear();
+		}
+		
+	}
+	
+	/**
 	 * 绘制线
 	 * @param bd	数据集
 	 * @param type	处理类型号
@@ -169,6 +217,12 @@ public class SplineChart extends LnChart{
 		//得到标签对应的值数据集		
 		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();	
 		if(null == chartValues) return ;
+			
+		if(type.equalsIgnoreCase("LINE") 
+				&& getCrurveLineStyle() == XEnum.CrurveLineStyle.BEZIERCURVE)
+    	{		
+			initLineMap();
+    	}
 															
 	    //画出数据集对应的线条				
 		int j = 0,childID = 0;
@@ -180,21 +234,24 @@ public class SplineChart extends LnChart{
 			    Double yValue =(Double) entry.getValue();	
 			    			    
 			    //对应的Y坐标
-			    
-			   // float ylen = (float) MathHelper.getInstance().sub(yValue, dataAxis.getAxisMin());			    
-			    //float YvaluePostion =  mul(axisScreenHeight, div(ylen,axisDataHeight));
-			   // YvaluePostion = MathHelper.getInstance().round(YvaluePostion, 2);							    			    			    
-			  float YvaluePostion = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
+			    /*
+			     *精度较高
+			    float ylen = (float) MathHelper.getInstance().sub(yValue, dataAxis.getAxisMin());			    
+			    float YvaluePostion =  mul(axisScreenHeight, div(ylen,axisDataHeight));
+			    YvaluePostion = MathHelper.getInstance().round(YvaluePostion, 2);							    			    			    
+			  */
+			    float YvaluePostion = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
 			    
             	
             	//对应的X坐标	      
 			   /*
+			    *精度较高
 			    float tpostion = (float) MathHelper.getInstance().div(  
 			    										  MathHelper.getInstance().sub(xValue, mMinValue) 
 			    		    							, MathHelper.getInstance().sub(mMaxValue, mMinValue) ,2);
 			    float XvaluePostion = mul(axisScreenWidth , tpostion);  
 			    XvaluePostion = MathHelper.getInstance().round(XvaluePostion, 2);			    		
-            	*/			  
+            	*/	  
 			  float XvaluePostion = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
             
             	if(j == 0 )
@@ -212,7 +269,21 @@ public class SplineChart extends LnChart{
             	PlotLine pLine = bd.getPlotLine();             
             	if(type.equalsIgnoreCase("LINE"))
             	{
-                    canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,pLine.getLinePaint());
+                      
+            		if(getCrurveLineStyle() == XEnum.CrurveLineStyle.BEZIERCURVE)
+            		{
+	            		if(0 == j )
+	            		{
+	            			mLstPoints.add( new PointF(lineStartX,lineStartY));
+	            			mLstPoints.add( new PointF(lineEndX,lineEndY));
+	            		}else{        			
+	            			mLstPoints.add( new PointF(lineEndX,lineEndY));
+	            		}            		
+	            		mMapPoints.put(pLine, mLstPoints);
+            		}else{
+            			canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,pLine.getLinePaint());                        
+            		}
+        			        			
             	}else if(type.equalsIgnoreCase("DOT2LABEL")){
             		
             		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
@@ -246,13 +317,19 @@ public class SplineChart extends LnChart{
 				lineStartY = lineEndY;
 
 				j++;	              								
-		}							
+		}				
 		
+		
+		if(type.equalsIgnoreCase("LINE") 
+				&& getCrurveLineStyle() == XEnum.CrurveLineStyle.BEZIERCURVE)
+    	{			
+			renderBezierCurve(canvas,mMapPoints); 			
+			mMapPoints.clear();
+    	}						
 	}
 	
+	
 
-	
-	
 	/**
 	 * 绘制图
 	 */

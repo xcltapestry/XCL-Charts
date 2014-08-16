@@ -279,6 +279,10 @@ public class EventChart extends XChart {
 		return null;
 	}
 	
+	private void initPositionRecord()
+	{
+		if(null != mRecordset) mRecordset.clear();
+	}
 	
 	private boolean renderFocusShape(Canvas canvas)
 	{				
@@ -295,7 +299,7 @@ public class EventChart extends XChart {
 		// 绘制图表
 		try {
 			super.postRender(canvas);
-			if(null != mRecordset) mRecordset.clear();
+			initPositionRecord();
 			//绘制选中点
 			return renderFocusShape(canvas);
 		} catch (Exception e) {

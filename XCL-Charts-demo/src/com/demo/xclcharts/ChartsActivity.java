@@ -55,6 +55,7 @@ import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
+import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
 import com.demo.xclcharts.view.MultiAxisChart02View;
 import com.demo.xclcharts.view.MultiBarChart01View;
@@ -99,6 +100,7 @@ public class ChartsActivity extends Activity {
 				new StackBarChart02View(this),
 				new LineChart01View(this),
 				new LineChart02View(this),
+				new SplineChart03View(this),
 				new SplineChart01View(this),
 				new SplineChart02View(this),
 				new AreaChart01View(this),

@@ -1,0 +1,33 @@
+package org.xclcharts.common;
+
+public class CurveHelper {
+	
+	// 求A点到B点的三次贝塞尔曲线的两个控制点
+		public static void curve3(PointF a, PointF b, PointF l, PointF n, PointF[] controls) {
+			// 点a前一个点和点a的中点
+			PointF cLA = PointFHelper.center(l, a);
+			// 点a和点b的中点
+			PointF cAB = PointFHelper.center(a, b);
+			// 点b和点b后一个点的中点
+			PointF cBN = PointFHelper.center(b, n);
+
+			// 点a前一个点到点a的距离
+			float lenLA = PointFHelper.distance(l, a);
+			// 点a到点b的距离
+			float lenAB = PointFHelper.distance(a, b);
+			// 点b到点b后一个点的距离
+			float lenBN = PointFHelper.distance(b, n);
+
+			// cLA和cAB连线的比例点
+			PointF cLAB = PointFHelper.percent(cLA, cAB, lenLA / (lenLA + lenAB));
+			PointF cABN = PointFHelper.percent(cAB, cBN, lenAB / (lenAB + lenBN));
+
+			// 顶点a和顶点b的控制点1
+			controls[0] = PointFHelper.translate(cAB, a.x - cLAB.x, a.y - cLAB.y);
+			// 顶点a和顶点b的控制点2
+			controls[1] = PointFHelper.translate(cAB, b.x - cABN.x, b.y - cABN.y);
+			
+		}
+		
+
+}

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
-<fullyQualifiedTypeName name="android.view.MotionEvent"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.MultiBarChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BarChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DensityUtil"/>
@@ -34,30 +31,33 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.axis.RoundAxisRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AttributeInfoPosition"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AttributeInfoLoction"/>
-<fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.R.id"/>
 <fullyQualifiedTypeName name="android.widget.Button"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.graphics.Typeface"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart03View"/>
-<fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="android.graphics.Canvas"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.Pointer"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PointerRender"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Loction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart05View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart02View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart04View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart06View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart07View"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
-<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.view.LineChart03View"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.CurveHelper"/>
+<fullyQualifiedTypeName name="android.graphics.Path"/>
+<fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrurveLineStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 </qualifiedTypeNameHistroy>
