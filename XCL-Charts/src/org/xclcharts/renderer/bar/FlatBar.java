@@ -132,6 +132,7 @@ public class FlatBar extends Bar{
 		{
 			int barColor = getBarPaint().getColor();						
 			int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
+			float pWidth = getBarPaint().getStrokeWidth();
 			
 			getBarPaint().setStyle(Style.FILL);
 			getBarPaint().setColor(lightColor);
@@ -140,7 +141,9 @@ public class FlatBar extends Bar{
 			getBarPaint().setStyle(Style.STROKE);			
 			//getBarPaint().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 			getBarPaint().setColor(barColor);
-			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());			
+			getBarPaint().setStrokeWidth(5);
+			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
+			getBarPaint().setStrokeWidth(pWidth);
 			return true;
 		}
 		

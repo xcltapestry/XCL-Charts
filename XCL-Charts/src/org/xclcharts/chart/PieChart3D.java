@@ -105,10 +105,10 @@ public class PieChart3D extends PieChart{
 			        float arcLeft2 = sub(MathHelper.getInstance().getPosX() , radius);  
 			        float arcTop2  = sub(MathHelper.getInstance().getPosY() , radius) ;  
 			        float arcRight2 = add(MathHelper.getInstance().getPosX() , radius) ;  
-			        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  
+			        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  			        
+			        initRectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
 			        
-			        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
-                    canvas.drawArc(arcRF1, offsetAngle, currentAngle, true,paintArc);
+                    canvas.drawArc(mRectF, offsetAngle, currentAngle, true,paintArc);
 	            }else{
                     canvas.drawArc(arcRF0, offsetAngle, currentAngle, true,paintArc);
 	            }			    			    
@@ -143,10 +143,10 @@ public class PieChart3D extends PieChart{
 		        float arcLeft2 = sub(MathHelper.getInstance().getPosX() , radius);  
 		        float arcTop2  = sub(MathHelper.getInstance().getPosY() , radius );  
 		        float arcRight2 = add(MathHelper.getInstance().getPosX() , radius );  
-		        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  
+		        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  		        
+		        initRectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);   
 		        
-		        RectF arcRF1 = new RectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
-                canvas.drawArc(arcRF1, offsetAngle, (float) currentAngle, true,paintArc);
+                canvas.drawArc(mRectF, offsetAngle, (float) currentAngle, true,paintArc);
 		        renderLabel(canvas,cData.getLabel(),MathHelper.getInstance().getPosX(),
 		        									MathHelper.getInstance().getPosY(),
 		        			radius,offsetAngle,currentAngle);                

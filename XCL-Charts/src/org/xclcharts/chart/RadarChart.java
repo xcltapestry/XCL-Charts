@@ -70,7 +70,8 @@ public class RadarChart extends RdChart{
 	private Float[] mArrayLabelAgent = null;
 	
 	//透明度
-  	private int mAreaAlpha = 100;
+  	private int mAreaAlpha = 100;  	
+  	private Path mRdPath = new Path();  
 		
 	public RadarChart()
 	{
@@ -168,21 +169,21 @@ public class RadarChart extends RdChart{
 	 */
 	private void renderGridLines(Canvas canvas)
 	{				
-		Path lnPath = new Path();		
+		mRdPath.reset();	
 		for(int i=0; i < getAxisTickCount();i++)
 		{			
 			for(int j=0;j < getPlotAgentNumber();j++)
 			{
 				if(0 == j)
 				{
-					lnPath.moveTo( mArrayDotX[i][j], mArrayDotY[i][j]);
+					mRdPath.moveTo( mArrayDotX[i][j], mArrayDotY[i][j]);
 				}else{
-					lnPath.lineTo( mArrayDotX[i][j], mArrayDotY[i][j]);
+					mRdPath.lineTo( mArrayDotX[i][j], mArrayDotY[i][j]);
 				}
 			}
-			lnPath.close();
-			canvas.drawPath(lnPath, getLinePaint());
-			lnPath.reset();
+			mRdPath.close();
+			canvas.drawPath(mRdPath, getLinePaint());
+			mRdPath.reset();
 		}
 	}
 	
@@ -459,27 +460,27 @@ public class RadarChart extends RdChart{
 	{
 		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
-		
-		Path pathArea = new Path();  
+	
+		mRdPath.reset();
 		for(int p=0;p< arrayDataX.length;p++)
 		{
 			if(0 == p){
 				initX = startX = arrayDataX[p];
 				initY = startY = arrayDataY[p];
 				
-				pathArea.moveTo(initX,initY);
+				mRdPath.moveTo(initX,initY);
 			}else{
-				pathArea.lineTo(arrayDataX[p] , arrayDataY[p]);   
+				mRdPath.lineTo(arrayDataX[p] , arrayDataY[p]);   
 				startX = arrayDataX[p];
 				startY = arrayDataY[p];
 			} 
 		}
 		//收尾
-		pathArea.lineTo(initX,initY);
-		pathArea.close(); 				
+		mRdPath.lineTo(initX,initY);
+		mRdPath.close(); 				
 		int oldAlpha = lineData.getPlotLine().getLinePaint().getAlpha();
 		lineData.getPlotLine().getLinePaint().setAlpha(mAreaAlpha);
-		canvas.drawPath(pathArea, lineData.getPlotLine().getLinePaint());
+		canvas.drawPath(mRdPath, lineData.getPlotLine().getLinePaint());
 						
 		//绘制点及对应的标签
 		lineData.getPlotLine().getLinePaint().setAlpha(oldAlpha);

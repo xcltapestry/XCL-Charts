@@ -52,6 +52,8 @@ public class PieChart extends CirChart{
 
 	//数据源
 	private List<PieData> mDataset;
+	
+	protected RectF mRectF = null;
 
 	public PieChart()
 	{
@@ -182,6 +184,19 @@ public class PieChart extends CirChart{
 			throw e;
 		}
 	}
+	
+	protected void initRectF(float left,float top,float right,float bottom)
+	{
+		if(null == mRectF)
+        {
+        	mRectF = new RectF(left ,top,right,bottom);
+        }else{
+        	mRectF.left = left;
+        	mRectF.top = top; 
+        	mRectF.right = right;
+        	mRectF.bottom = bottom;
+        }
+	}
 		
 	
 	/**
@@ -217,14 +232,14 @@ public class PieChart extends CirChart{
 	        float arcTop  = sub(MathHelper.getInstance().getPosY() , radius); 
 	        float arcRight = add(MathHelper.getInstance().getPosX() , radius); 
 	        float arcBottom = add(MathHelper.getInstance().getPosY() , radius); 
-	        RectF arcRF1 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
+	        initRectF(arcLeft ,arcTop,arcRight,arcBottom);   	        
 	        
 	        //绘制环形渐变  
 	        if(getGradient())
 	        	paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
 	        
 	        //在饼图中显示所占比例  
-	        canvas.drawArc(arcRF1, offsetAngle, curretAngle, true, paintArc);
+	        canvas.drawArc(mRectF, offsetAngle, curretAngle, true, paintArc);
 	        	        
 	        //标签
 	        renderLabel(canvas,cData.getLabel(),

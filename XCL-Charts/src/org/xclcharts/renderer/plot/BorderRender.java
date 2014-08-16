@@ -36,6 +36,7 @@ import android.graphics.Paint.Style;
  */
 public class BorderRender extends Border {
 	
+	private RectF mRect = new RectF();	
 
 	public BorderRender()
 	{
@@ -58,7 +59,7 @@ public class BorderRender extends Border {
 	public Paint getChartBackgroundPaint()
 	{
 		// 背景画笔
-		mPaintChartBackground = new Paint();
+		if(null == mPaintChartBackground)mPaintChartBackground = new Paint();
 		mPaintChartBackground.setStyle(Style.FILL);
 		mPaintChartBackground.setColor(Color.WHITE);
 		return mPaintChartBackground;
@@ -75,11 +76,11 @@ public class BorderRender extends Border {
 	public void renderBorder(String type ,Canvas canvas,
 							 float left,float top,float right,float bottom)
 	{
-		RectF rect = new RectF();
-		rect.left = left + mBorderSpadding;
-		rect.top = top + mBorderSpadding;
-		rect.right = right - mBorderSpadding;
-		rect.bottom = bottom - mBorderSpadding;		
+		
+		mRect.left = left + mBorderSpadding;
+		mRect.top = top + mBorderSpadding;
+		mRect.right = right - mBorderSpadding;
+		mRect.bottom = bottom - mBorderSpadding;		
 		
 	
 		switch(getBorderLineStyle())
@@ -101,19 +102,19 @@ public class BorderRender extends Border {
 			if(type.equals("CHART"))
 			{
 				if(null != mPaintChartBackground) 
-					canvas.drawRect(rect, mPaintChartBackground);		
+					canvas.drawRect(mRect, mPaintChartBackground);		
 			}else{ //BORDER
-				canvas.drawRect(rect, getLinePaint());
+				canvas.drawRect(mRect, getLinePaint());
 			}
 			break;
 		case ROUNDRECT:		
 			if(type.equals("CHART"))
 			{
 				if(null != mPaintChartBackground)
-					canvas.drawRoundRect(rect, getRoundRadius(), 
+					canvas.drawRoundRect(mRect, getRoundRadius(), 
 							getRoundRadius(), mPaintChartBackground);	
 			}else{ //BORDER
-				canvas.drawRoundRect(rect, getRoundRadius(), getRoundRadius(), getLinePaint());		
+				canvas.drawRoundRect(mRect, getRoundRadius(), getRoundRadius(), getLinePaint());		
 			}
 			break;
 		}

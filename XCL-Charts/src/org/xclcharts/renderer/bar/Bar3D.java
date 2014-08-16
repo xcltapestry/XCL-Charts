@@ -58,6 +58,9 @@ public class Bar3D extends Bar{
 	//底盘颜色
 	private int mAxisBaseColor = (int)Color.rgb(73, 172, 72);
 	
+	private Path mPathRectangle2D = new Path();
+	private Paint mPaintLine = new Paint();
+	
 	
 	public Bar3D()
 	{
@@ -164,30 +167,30 @@ public class Bar3D extends Bar{
 		float barRight2 = Math.round(barRight - offsetX) ;
 		float barBottom2 = Math.round(barBottom + offsetY) ;
 		
-		//顶
-		Path pRectangle2D = new Path();
-		pRectangle2D.moveTo(barLeft, barTop); 
-		pRectangle2D.lineTo(barLeft2, barTop2);    			
-		pRectangle2D.lineTo(barRight2, barTop2); 
-		pRectangle2D.lineTo(barRight, barTop); 			
-		pRectangle2D.close();
-		canvas.drawPath(pRectangle2D,mPaintBar);
+		//顶		
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(barLeft, barTop); 
+		mPathRectangle2D.lineTo(barLeft2, barTop2);    			
+		mPathRectangle2D.lineTo(barRight2, barTop2); 
+		mPathRectangle2D.lineTo(barRight, barTop); 			
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBar);
 		
 		//右侧边
-		pRectangle2D.reset();
-		pRectangle2D.moveTo(barRight, barTop); 
-		pRectangle2D.lineTo(barRight2, barTop2); 
-		pRectangle2D.lineTo(barRight2, barBottom2); 
-		pRectangle2D.lineTo(barRight, barBottom); 
-		pRectangle2D.close();
-		canvas.drawPath(pRectangle2D,mPaintBar); 		
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(barRight, barTop); 
+		mPathRectangle2D.lineTo(barRight2, barTop2); 
+		mPathRectangle2D.lineTo(barRight2, barBottom2); 
+		mPathRectangle2D.lineTo(barRight, barBottom); 
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBar); 		
 		
-		pRectangle2D.reset();
-	    pRectangle2D.moveTo(barRight2, barTop2); 
-	    pRectangle2D.lineTo(barRight2, barBottom2); 
-	    pRectangle2D.lineTo(barLeft2, barBottom2); 
-	    pRectangle2D.lineTo(barLeft2, barTop2 );
-	    pRectangle2D.close();
+		mPathRectangle2D.reset();
+	    mPathRectangle2D.moveTo(barRight2, barTop2); 
+	    mPathRectangle2D.lineTo(barRight2, barBottom2); 
+	    mPathRectangle2D.lineTo(barLeft2, barBottom2); 
+	    mPathRectangle2D.lineTo(barLeft2, barTop2 );
+	    mPathRectangle2D.close();
 		
 		//正面 浅色	
 		 LinearGradient linearGradient = new LinearGradient(
@@ -196,21 +199,21 @@ public class Bar3D extends Bar{
 					 	null,Shader.TileMode.REPEAT);  		   
 		 mPaint3D.setShader(linearGradient);
 		 mPaint3D.setStyle(Style.FILL);		 
-		 canvas.drawPath(pRectangle2D,mPaint3D); 
+		 canvas.drawPath(mPathRectangle2D,mPaint3D); 
 	
 		//柱形顶上用白画一个RECT,强化3D效果		 
-		Paint paintTopStroke = new Paint();			
-		paintTopStroke.setStyle(Style.STROKE);
-		paintTopStroke.setColor(Color.WHITE); 
+		mPaintLine.reset();	
+		mPaintLine.setStyle(Style.STROKE);
+		mPaintLine.setColor(Color.WHITE); 
 			
-		pRectangle2D.reset();
-		pRectangle2D.moveTo(barLeft2, barTop2);    			
-		pRectangle2D.lineTo(barRight2, barTop2); 
-		pRectangle2D.lineTo(barRight, barTop); 			 	   
-		canvas.drawPath(pRectangle2D,paintTopStroke); 
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(barLeft2, barTop2);    			
+		mPathRectangle2D.lineTo(barRight2, barTop2); 
+		mPathRectangle2D.lineTo(barRight, barTop); 			 	   
+		canvas.drawPath(mPathRectangle2D,mPaintLine); 
 		
 		//柱形正面画一根白色竖线,强化3D效果
-		canvas.drawLine(barRight2, barTop2, barRight2, barBottom2, paintTopStroke);
+		canvas.drawLine(barRight2, barTop2, barRight2, barBottom2, mPaintLine);
 	}
 	
 	
@@ -241,51 +244,50 @@ public class Bar3D extends Bar{
 		float baseTop2 = MathHelper.getInstance().add(baseTop , offsetY);
 		float baseRight2 = MathHelper.getInstance().sub(baseRight , offsetX) ;
 		float baseBottom2 = MathHelper.getInstance().add(baseBottom , offsetY) ;
-		
-	
-		
+					
 		//顶 用浅色
-		Path pBase2D = new Path();	
-		pBase2D.moveTo(baseLeft, baseBottom); 
-		pBase2D.lineTo(baseLeft2, baseBottom2);      
-		pBase2D.lineTo(baseRight2, baseBottom2); 
-		pBase2D.lineTo(baseRight, baseBottom); 
-		pBase2D.close();
-		canvas.drawPath(pBase2D,mPaintBase3D); 	
+		mPathRectangle2D.reset();	
+		mPathRectangle2D.moveTo(baseLeft, baseBottom); 
+		mPathRectangle2D.lineTo(baseLeft2, baseBottom2);      
+		mPathRectangle2D.lineTo(baseRight2, baseBottom2); 
+		mPathRectangle2D.lineTo(baseRight, baseBottom); 
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBase3D); 	
 		
 		//右侧边 深色
-		pBase2D.reset();
-		pBase2D.moveTo(baseRight, baseTop); 
-		pBase2D.lineTo(baseRight2, baseTop2); 
-		pBase2D.lineTo(baseRight2, baseBottom2); 
-		pBase2D.lineTo(baseRight, baseBottom); 
-		pBase2D.close();
-		canvas.drawPath(pBase2D,mPaintBase); 
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(baseRight, baseTop); 
+		mPathRectangle2D.lineTo(baseRight2, baseTop2); 
+		mPathRectangle2D.lineTo(baseRight2, baseBottom2); 
+		mPathRectangle2D.lineTo(baseRight, baseBottom); 
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBase); 
 		
 		//正面 深色	 
-		pBase2D.reset();
-	    pBase2D.moveTo(baseRight2, baseTop2); 
-	    pBase2D.lineTo(baseRight2, baseBottom2); 
-	    pBase2D.lineTo(baseLeft2, baseBottom2); 
-	    pBase2D.lineTo(baseLeft2, baseTop2 );		   
-	    pBase2D.close();		
-		canvas.drawPath(pBase2D,mPaintBase); 				
+		mPathRectangle2D.reset();
+	    mPathRectangle2D.moveTo(baseRight2, baseTop2); 
+	    mPathRectangle2D.lineTo(baseRight2, baseBottom2); 
+	    mPathRectangle2D.lineTo(baseLeft2, baseBottom2); 
+	    mPathRectangle2D.lineTo(baseLeft2, baseTop2 );		   
+	    mPathRectangle2D.close();		
+		canvas.drawPath(mPathRectangle2D,mPaintBase); 				
 		
 		//水平偏移量		
-		Paint paint = new Paint();
-		paint.setColor(getAxis3DBaseColor());
-		paint.setStyle(Style.FILL);			
+		//Paint paint = new Paint();
+		mPaintLine.reset();
+		mPaintLine.setColor(getAxis3DBaseColor());
+		mPaintLine.setStyle(Style.FILL);			
 	
-		pBase2D.reset();
-		pBase2D.moveTo(baseRight2, baseBottom2); 				
-		pBase2D.lineTo(baseRight, baseBottom); 
-		pBase2D.lineTo(baseRight,MathHelper.getInstance().add( baseBottom , mAxisBaseThickness)); 
-		pBase2D.lineTo(baseRight2, baseBottom2 + mAxisBaseThickness);   
-		pBase2D.close();				
-		canvas.drawPath(pBase2D,paint); 				
-		paint.setColor(baseLightColor);
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(baseRight2, baseBottom2); 				
+		mPathRectangle2D.lineTo(baseRight, baseBottom); 
+		mPathRectangle2D.lineTo(baseRight,MathHelper.getInstance().add( baseBottom , mAxisBaseThickness)); 
+		mPathRectangle2D.lineTo(baseRight2, baseBottom2 + mAxisBaseThickness);   
+		mPathRectangle2D.close();				
+		canvas.drawPath(mPathRectangle2D,mPaintLine); 				
+		mPaintLine.setColor(baseLightColor);
 		canvas.drawRect(baseLeft2, baseBottom2, baseRight2, 
-						baseBottom2 + mAxisBaseThickness, paint);		
+						baseBottom2 + mAxisBaseThickness, mPaintLine);		
 	}
 	 
 	 /**
@@ -320,33 +322,33 @@ public class Bar3D extends Bar{
 		float barBottom2 = MathHelper.getInstance().add(barBottom, offsetY) ;	
 		
 		//右侧边 浅色
-		Path pRectangle2D = new Path();
-		pRectangle2D.moveTo(barRight, barTop); 
-		pRectangle2D.lineTo(barRight, barBottom); 
-		pRectangle2D.lineTo(barRight2, barBottom2); 
-		pRectangle2D.lineTo(barRight2, barTop2); 					
-		pRectangle2D.close();		
-		canvas.drawPath(pRectangle2D,mPaint3D); 	
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(barRight, barTop); 
+		mPathRectangle2D.lineTo(barRight, barBottom); 
+		mPathRectangle2D.lineTo(barRight2, barBottom2); 
+		mPathRectangle2D.lineTo(barRight2, barTop2); 					
+		mPathRectangle2D.close();		
+		canvas.drawPath(mPathRectangle2D,mPaint3D); 	
 		
 		//正面	
 		canvas.drawRect(barLeft2, barTop2, barRight2, barBottom2, mPaint3D);
 		
 		//顶
-		pRectangle2D.reset();		
-		pRectangle2D.moveTo(barLeft, barTop); 
-		pRectangle2D.lineTo(barLeft2, barTop2); 
-		pRectangle2D.lineTo(barRight2, barTop2 );
-		pRectangle2D.lineTo(barRight, barTop );
-		pRectangle2D.close();
-		canvas.drawPath(pRectangle2D,mPaintBar); 		
+		mPathRectangle2D.reset();		
+		mPathRectangle2D.moveTo(barLeft, barTop); 
+		mPathRectangle2D.lineTo(barLeft2, barTop2); 
+		mPathRectangle2D.lineTo(barRight2, barTop2 );
+		mPathRectangle2D.lineTo(barRight, barTop );
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBar); 		
 	
 		//轮廓线
-		Paint paintLine = new Paint();
-		paintLine.setColor(Color.WHITE);
-		paintLine.setStyle(Style.STROKE);		
-		canvas.drawLine( barLeft2,  barTop2, barRight2, barTop2, paintLine);
-		canvas.drawLine( barRight2, barTop2, barRight2, barBottom2,paintLine);		
-		canvas.drawLine( barRight, barTop, barRight2,barTop2,paintLine);   	
+		mPaintLine.reset();
+		mPaintLine.setColor(Color.WHITE);
+		mPaintLine.setStyle(Style.STROKE);		
+		canvas.drawLine( barLeft2,  barTop2, barRight2, barTop2, mPaintLine);
+		canvas.drawLine( barRight2, barTop2, barRight2, barBottom2,mPaintLine);		
+		canvas.drawLine( barRight, barTop, barRight2,barTop2,mPaintLine);   	
 	}
 	 
 
@@ -378,26 +380,26 @@ public class Bar3D extends Bar{
 		float baseBottom2 = MathHelper.getInstance().add(baseBottom , offsetY) ;			
 		
 		//左侧面
-		Path pBase2D = new Path();	
-		pBase2D.moveTo(baseLeft, baseTop); 
-		pBase2D.lineTo(baseLeft2, baseTop2); 
-		pBase2D.lineTo(baseLeft2, baseBottom2); 
-		pBase2D.lineTo(baseLeft, baseBottom); 
-		pBase2D.close();
-		canvas.drawPath(pBase2D,mPaintBase); 	
+		mPathRectangle2D.reset();
+		mPathRectangle2D.moveTo(baseLeft, baseTop); 
+		mPathRectangle2D.lineTo(baseLeft2, baseTop2); 
+		mPathRectangle2D.lineTo(baseLeft2, baseBottom2); 
+		mPathRectangle2D.lineTo(baseLeft, baseBottom); 
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBase); 	
 		
 		//正面
 		canvas.drawRect(baseLeft2, baseTop2, 
 				MathHelper.getInstance().sub(baseLeft2 , offsetX), baseBottom2, mPaintBase3D);
 				
 		//侧面顶		
-		pBase2D.reset();	
-		pBase2D.moveTo(baseLeft, baseTop); 
-		pBase2D.lineTo(baseLeft2, baseTop2); 
-		pBase2D.lineTo(MathHelper.getInstance().sub(baseLeft2 ,offsetX),baseTop2); 
-		pBase2D.lineTo(MathHelper.getInstance().sub(baseLeft ,offsetX),baseTop); 
-		pBase2D.close();
-		canvas.drawPath(pBase2D,mPaintBase3D); 			
+		mPathRectangle2D.reset();	
+		mPathRectangle2D.moveTo(baseLeft, baseTop); 
+		mPathRectangle2D.lineTo(baseLeft2, baseTop2); 
+		mPathRectangle2D.lineTo(MathHelper.getInstance().sub(baseLeft2 ,offsetX),baseTop2); 
+		mPathRectangle2D.lineTo(MathHelper.getInstance().sub(baseLeft ,offsetX),baseTop); 
+		mPathRectangle2D.close();
+		canvas.drawPath(mPathRectangle2D,mPaintBase3D); 			
 	}
 	 
 	 /**
