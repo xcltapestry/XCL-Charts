@@ -80,7 +80,7 @@ public class ClickPieChart01View extends GraphicalView {
 			//标题
 			chart.setTitle("擂茶配方比");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.getPlotTitle().setTitlePosition(XEnum.Position.CENTER);
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 				
 		
 			//显示边框

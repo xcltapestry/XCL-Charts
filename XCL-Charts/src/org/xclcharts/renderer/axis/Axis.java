@@ -53,10 +53,6 @@ public class Axis {
 		
 	//是否显示轴(包含轴线，刻度线和标签)
 	private boolean mAxisVisible = true;	
-	 
-
-	
-	 
 
 	public Axis()
 	{							
@@ -193,11 +189,6 @@ public class Axis {
 		this.mTickLabelRotateAngle = rotateAngle;
 	}
 		
-	
-	
-	
-	
-	
 	//轴结束方式,以Default还是箭头什么的,暂不实现
 	//public void setEndArrowType()
 	//{

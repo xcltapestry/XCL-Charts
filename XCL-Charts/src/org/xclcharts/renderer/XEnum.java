@@ -37,7 +37,7 @@ public class XEnum {
 		 *
 		 */
 		public enum ChartTitleAlign {  
-			LEFT, CENTER ,RIGHT
+			LEFT, MIDDLE ,RIGHT
 		}
 		
 		/**
@@ -46,7 +46,7 @@ public class XEnum {
 		 *
 		 */
 		public enum LabelAlign {  
-			LEFT, CENTER ,RIGHT
+			LEFT, MIDDLE ,RIGHT
 		}
 		
 		/**
@@ -166,15 +166,15 @@ public class XEnum {
 		
 		
 		/**
-		 * 坐标轴标签位置,上方，中间，底部
+		 * 坐标轴标签位置,上方，中间，底部   --Position
 		 * @author XCL
 		 *
 		 */
-		public enum Position
+		public enum VerticalAlign
 		{
-			UP,CENTER,LOWER
+			TOP,MIDDLE,BOTTOM
 		}
-		
+		//vertical-align
 		
 		/**
 		 * 线的类型，默认的直线还是贝塞尔曲线(Bézier curve)

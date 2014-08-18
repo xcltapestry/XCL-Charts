@@ -42,10 +42,10 @@ public class PlotTitle {
 	private Paint mTitlePaint = null;
 	private Paint mSubtitlePaint = null;	
 	//图表标题显示位置
-	private XEnum.ChartTitleAlign mChartTitleAlign = XEnum.ChartTitleAlign.CENTER;	
+	private XEnum.ChartTitleAlign mChartTitleAlign = XEnum.ChartTitleAlign.MIDDLE;	
 	//标题的显示位置(TOP,CENTER,BOTTOM)即是否靠最上面，
 	//还是Chart top与Plot top的中间位置，还是PLOT TOP的位置
-	private XEnum.Position mTitlePosition = XEnum.Position.CENTER;
+	private XEnum.VerticalAlign mTitlePosition = XEnum.VerticalAlign.MIDDLE;
 	
 	public PlotTitle()
 	{
@@ -148,7 +148,7 @@ public class PlotTitle {
 		 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
 		 * @param Position  上下显示位置
 		 */
-		public void setTitlePosition(XEnum.Position Position)
+		public void setVerticalAlign(XEnum.VerticalAlign Position)
 		{
 			mTitlePosition = Position;
 		}
@@ -157,7 +157,7 @@ public class PlotTitle {
 		 * 设置标题上下显示位置
 		 * @return 上下显示位置
 		 */
-		public XEnum.Position getTitlePosition()
+		public XEnum.VerticalAlign getVerticalAlign()
 		{
 			return mTitlePosition;
 		}

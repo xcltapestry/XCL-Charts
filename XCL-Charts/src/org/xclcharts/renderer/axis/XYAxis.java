@@ -51,7 +51,7 @@ public class XYAxis extends Axis {
 	private Align mTickMarksAlign  = Align.RIGHT;
 	
 	//标签显示位置，分别在轴的上面，中间，底下
-	private XEnum.Position mTickMarksPosition =  XEnum.Position.LOWER;
+	private XEnum.VerticalAlign mTickMarksPosition =  XEnum.VerticalAlign.BOTTOM;
 	
 	//设置轴线条粗细
 	private int mAxisLineWidth = 5;	
@@ -73,7 +73,7 @@ public class XYAxis extends Axis {
 	 *  设置时刻度显示在上，中，下哪个地方,针对横轴
 	 * @param position 上方，居中，下方
 	 */
-	public void setVerticalTickPosition(XEnum.Position position)
+	public void setVerticalTickPosition(XEnum.VerticalAlign position)
 	{
 		mTickMarksPosition = position;
 	}
@@ -82,7 +82,7 @@ public class XYAxis extends Axis {
 	 * 返回轴上刻度线显示的位置
 	 * @return 位置
 	 */
-	public XEnum.Position getVerticalTickPosition()
+	public XEnum.VerticalAlign getVerticalTickPosition()
 	{
 		return mTickMarksPosition;
 	}
@@ -232,8 +232,9 @@ public class XYAxis extends Axis {
 		float marksStopY = centerY;
 		float labelsStartY = centerY;
 
+		
 		switch (getVerticalTickPosition()) {
-		case UP: {
+		case TOP: {
 			if (getTickMarksVisible()) 
 			{
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
@@ -249,14 +250,14 @@ public class XYAxis extends Axis {
 			
 			break;
 		}
-		case CENTER: {
+		case MIDDLE: {
 			if (getTickMarksVisible()) {
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength() / 2);
 				marksStopY = MathHelper.getInstance().add(centerY , getTickMarksLength() / 2);				
 			}
 			break;
 		}
-		case LOWER:
+		case BOTTOM:
 
 			if (getTickMarksVisible()) {
 				marksStartY = centerY;

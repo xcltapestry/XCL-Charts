@@ -25,6 +25,7 @@ import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
 import android.graphics.Path;
+import android.graphics.PointF;
 
 
 /**
@@ -51,6 +52,8 @@ public class PointerRender extends Pointer{
 	
 	private float mTailX = 0.0f;
 	private float mTailY = 0.0f;
+	
+	private Path mPath = null;
 	
 
 	public PointerRender()
@@ -155,12 +158,19 @@ public class PointerRender extends Pointer{
         eX = MathHelper.getInstance().getPosX();
         eY = MathHelper.getInstance().getPosY();	
     
-        Path path = new Path();
-        path.moveTo(mEndX, mEndY);
-        path.lineTo(bX, bY);
-        path.lineTo(eX, eY);
-        path.close();
-        canvas.drawPath(path, getPointerPaint());	  	        	        
+     
+        if(null == mPath)
+        {
+        	mPath = new Path();
+        }else{
+        	mPath.reset();
+        }
+        mPath.moveTo(mEndX, mEndY);
+        mPath.lineTo(bX, bY);
+        mPath.lineTo(eX, eY);
+        mPath.close();
+        canvas.drawPath(mPath, getPointerPaint());	  	  
+      
 	}
 	
 	public void renderCircle(Canvas canvas)

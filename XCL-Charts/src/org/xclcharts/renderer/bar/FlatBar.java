@@ -45,6 +45,8 @@ public class FlatBar extends Bar{
 	//柱形填充色透明度
 	private int mFillAlpha = 255;
 	
+	private LinearGradient linearGradient = null;
+	
 	public FlatBar()
 	{
 		super();
@@ -100,8 +102,7 @@ public class FlatBar extends Bar{
 		int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
 		float width = Math.abs(right - left);
 		float height = Math.abs(bottom - top);
-		
-		LinearGradient linearGradient = null;
+			
 		Shader.TileMode tm = Shader.TileMode.MIRROR;
 		if(width > height) //横向柱形
 		{
@@ -112,7 +113,7 @@ public class FlatBar extends Bar{
 		}else{
 			  linearGradient = new LinearGradient(left,bottom, right ,bottom,  
 			           new int[]{lightColor,barColor},  
-			           null,tm);  		   			
+			           null,tm);  					  			  
 		}
 		getBarPaint().setShader(linearGradient);		
 	}
@@ -158,7 +159,7 @@ public class FlatBar extends Bar{
 			break;
 		case STROKE:						
 			if(Float.compare(1f,  getBarPaint().getStrokeWidth() ) == 0)
-										getBarPaint().setStrokeWidth(2);
+										getBarPaint().setStrokeWidth(3);
 			getBarPaint().setStyle(Style.STROKE);
 			break;
 		default:

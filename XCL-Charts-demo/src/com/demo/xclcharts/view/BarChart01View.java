@@ -132,7 +132,6 @@ public class BarChart01View extends TouchView implements Runnable{
 				
 			});
 			
-			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
 			//设定格式

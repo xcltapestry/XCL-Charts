@@ -226,7 +226,7 @@ public class RoundAxis extends Axis{
 	 
 		/**
 		 * 返回轴类型
-		 * @return
+		 * @return 轴类型
 		 */
 		public XEnum.RoundAxisType getAxisType()
 		{
@@ -255,7 +255,7 @@ public class RoundAxis extends Axis{
 		
 		/**
 		 * 外环半径长度
-		 * @return
+		 * @return	半径长度
 		 */
 		public float getOuterRadius()
 		{
@@ -264,7 +264,7 @@ public class RoundAxis extends Axis{
 		
 		/**
 		 * 内环半径长度
-		 * @return
+		 * @return	半径长度
 		 */
 		public float getRingInnerRadius()
 		{
@@ -279,8 +279,5 @@ public class RoundAxis extends Axis{
 		{
 			return(new PointF(mCirX,mCirY));
 		}
-	
-
-	
-		  
+	 
 }

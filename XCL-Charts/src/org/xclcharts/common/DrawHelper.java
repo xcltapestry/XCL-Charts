@@ -46,6 +46,10 @@ import android.graphics.PathEffect;
 public class DrawHelper {
 	
 	private static DrawHelper instance = null;
+	
+	private RectF mRectF = null;
+	private Path mPath = null;
+	private Paint mPaint = null;
 
 	public DrawHelper(){}
 
@@ -55,6 +59,31 @@ public class DrawHelper {
 			instance = new DrawHelper();
 		}
 		return instance;
+	}
+	
+	private void initRectF()
+	{
+		if(null == mRectF) mRectF = new RectF();
+	}
+	
+	private void initPath()
+	{
+		if(null == mPath)
+		{
+			mPath = new Path();
+		}else{
+			mPath.reset();
+		}
+	}
+	
+	private void initPaint()
+	{
+		if(null == mPaint)
+		{
+			mPaint = new Paint();
+		}else{
+			mPaint.reset();
+		}
 	}
 	
 	
@@ -78,10 +107,10 @@ public class DrawHelper {
 	 */
 	public int getLightColor(int color,int alpha)
 	{
-		Paint paint = new Paint();
-		paint.setColor(color);
-		paint.setAlpha(alpha);
-		return paint.getColor();
+		initPaint();
+		mPaint.setColor(color);
+		mPaint.setAlpha(alpha);
+		return mPaint.getColor();
 	}
 	
 	/**
@@ -180,42 +209,41 @@ public class DrawHelper {
 	{
 		 // 计算偏移量
 		   int offset = (int)(baseLine / 2 * Math.tan(60 * Math.PI / 180));
-		   
-		   Path path = new Path();
-		   
+		
+		   initPath();		   
 		   // 计算三角形3个顶点的坐标
 	        switch (direction)
 	        {
 	            case UP: //向上
 
-	                path.moveTo(baseLnCentX- baseLine / 2 , baseLnCentY);
-	                path.lineTo(baseLnCentX + baseLine / 2,baseLnCentY);
-	                path.lineTo(baseLnCentX,baseLnCentY - offset);
-	                path.close();
+	            	mPath.moveTo(baseLnCentX- baseLine / 2 , baseLnCentY);
+	            	mPath.lineTo(baseLnCentX + baseLine / 2,baseLnCentY);
+	            	mPath.lineTo(baseLnCentX,baseLnCentY - offset);
+	            	mPath.close();
 	                break;
 	            
 	            case DOWN: //向下
 
-	                path.moveTo( baseLnCentX - baseLine / 2 , baseLnCentY);
-	                path.lineTo(baseLnCentX + baseLine / 2,baseLnCentY);
-	                path.lineTo(baseLnCentX,baseLnCentY + offset);
-	                path.close();
+	            	mPath.moveTo( baseLnCentX - baseLine / 2 , baseLnCentY);
+	            	mPath.lineTo(baseLnCentX + baseLine / 2,baseLnCentY);
+	            	mPath.lineTo(baseLnCentX,baseLnCentY + offset);
+	            	mPath.close();
 
 	                break;
 	            case LEFT: //向左
 
-	                path.moveTo(baseLnCentX , baseLnCentY - baseLine / 2);
-	                path.lineTo(baseLnCentX , baseLnCentY + baseLine / 2);
-	                path.lineTo(baseLnCentX - offset ,baseLnCentY);
-	                path.close();
+	            	mPath.moveTo(baseLnCentX , baseLnCentY - baseLine / 2);
+	            	mPath.lineTo(baseLnCentX , baseLnCentY + baseLine / 2);
+	                mPath.lineTo(baseLnCentX - offset ,baseLnCentY);
+	                mPath.close();
 
 	                break;
 	            case RIGHT: //向右
 	        
-	                path.moveTo(baseLnCentX , baseLnCentY - baseLine / 2);
-	                path.lineTo(baseLnCentX , baseLnCentY + baseLine / 2);
-	                path.lineTo(baseLnCentX + offset ,baseLnCentY);
-	                path.close();
+	            	mPath.moveTo(baseLnCentX , baseLnCentY - baseLine / 2);
+	                mPath.lineTo(baseLnCentX , baseLnCentY + baseLine / 2);
+	                mPath.lineTo(baseLnCentX + offset ,baseLnCentY);
+	                mPath.close();
 	                break;
 	        }
 	  
@@ -230,21 +258,19 @@ public class DrawHelper {
 	               paint.setStyle(Paint.Style.FILL);  
 	               break;
 	        }
-	        canvas.drawPath(path,paint);		 		 
+	        canvas.drawPath(mPath,paint);		 		 
 	}
 	
 	
 	public PathEffect getDotLineStyle()
 	{
-		PathEffect effects = new DashPathEffect(new float[] { 2, 2, 2, 2}, 1);  
-		return effects;
+		return( new DashPathEffect(new float[] { 2, 2, 2, 2}, 1));  
 	}
 	
 	public PathEffect getDashLineStyle()
 	{
 		//虚实线
-		PathEffect effects = new DashPathEffect(new float[] { 4, 8, 5, 10}, 1);
-		return effects;
+		return(new DashPathEffect(new float[] { 4, 8, 5, 10}, 1));
 	}
 	
 	
@@ -329,15 +355,14 @@ public class DrawHelper {
 			final float startAngle,
 			final float sweepAngle,boolean useCenter) throws Exception
 	{
-		try{		
-			float arcLeft =  cirX - radius;  
-	        float arcTop  =  cirY - radius ;  
-	        float arcRight = cirX  +  radius ;  
-	        float arcBottom = cirY +  radius ;  
-	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
-			
+		try{				
+	        initRectF();
+	        mRectF.left =  cirX - radius;  
+	        mRectF.top =  cirY - radius ;  
+	        mRectF.right  = cirX  +  radius ;  
+	        mRectF.bottom  = cirY +  radius ;  	        			
 			//在饼图中显示所占比例  
-			canvas.drawArc(arcRF0, startAngle, sweepAngle, useCenter, paintArc);		
+			canvas.drawArc(mRectF, startAngle, sweepAngle, useCenter, paintArc);		
 		}catch( Exception e){
 			throw e;
 		}
@@ -351,25 +376,18 @@ public class DrawHelper {
 			final float sweepAngle) throws Exception
 	{
 		try{		
-			float arcLeft =  cirX - radius;  
-	        float arcTop  =  cirY - radius ;  
-	        float arcRight = cirX  +  radius ;  
-	        float arcBottom = cirY +  radius ;  
-	        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);    
-			
-			//弧形
-			 Path path = new Path();
-			 path.addArc(arcRF0,startAngle, sweepAngle); 
-			 canvas.drawPath(path, paintArc);
-			 
-			 
+	        initRectF();
+	        mRectF.left =  cirX - radius;  
+	        mRectF.top =  cirY - radius ;  
+	        mRectF.right  = cirX  +  radius ;  
+	        mRectF.bottom  = cirY +  radius ;  			
+			//弧形			 
+			 initPath();			 
+			 mPath.addArc(mRectF,startAngle, sweepAngle); 
+			 canvas.drawPath(mPath, paintArc);			 			 
 		}catch( Exception e){
 			throw e;
 		}
-	}
-	
-
-	 
-	 
+	}	
 		
 }

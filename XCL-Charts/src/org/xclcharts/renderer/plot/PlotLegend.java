@@ -32,13 +32,18 @@ import android.graphics.Paint;
  */
 public class PlotLegend {
 	
-	//数据集的说明描述与图这间的空白间距
+		//数据集的说明描述与图这间的空白间距
 		private float mDataKeyMargin  = 10f;	
 		//数据集的说明描述画笔
 		private Paint mDataKeyPaint = null;
 			
 		//是否显示图例
 		private boolean mKeyLabelVisible = false;
+		
+		//图例起始偏移多少距离
+		protected float mOffsetX = 0.0f;
+		protected float mOffsetY = 0.0f;
+		
 		
 		public PlotLegend() {
 			initChart();		
@@ -52,8 +57,7 @@ public class PlotLegend {
 			mDataKeyPaint.setColor(Color.BLACK);
 			mDataKeyPaint.setAntiAlias(true);			
 			mDataKeyPaint.setTextSize(15);
-			//mDataKeyPaint.setStyle(Style.FILL);
-			
+			//mDataKeyPaint.setStyle(Style.FILL);			
 		}
 
 		/**
@@ -108,6 +112,23 @@ public class PlotLegend {
 		 {
 			 return mDataKeyMargin;
 		 }
-
 		 
+		 /**
+		  * 图例起始向X方向偏移多少距离
+		  * @param offset 偏移值
+		  */
+		 public void setLegendOffsetX(float offset)
+		 {		 
+			 mOffsetX = offset;
+		 }
+		 
+		 /**
+		  * 图例起始向Y方向偏移多少距离
+		  * @param offset 偏移值
+		  */
+		 public void setLegendOffsetY(float offset)
+		 {		 
+			 mOffsetY = offset;
+		 }
+
 }

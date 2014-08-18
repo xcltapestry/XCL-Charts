@@ -100,7 +100,7 @@ public class PieChart01View extends TouchView implements Runnable{
 			//标题
 			chart.setTitle("饼图-Pie Chart");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);				
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);				
 			
 			//显示图例
 			chart.getPlotLegend().showLegend();

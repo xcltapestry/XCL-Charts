@@ -178,6 +178,8 @@ public class LineChart01View extends TouchView {
 		lineData2.setDotStyle(XEnum.DotStyle.RING);				
 		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);
 		lineData2.setLabelVisible(true);		
+		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
+		
 		//Line 3
 		LinkedList<Double> dataSeries3= new LinkedList<Double>();	
 		dataSeries3.add(65d);

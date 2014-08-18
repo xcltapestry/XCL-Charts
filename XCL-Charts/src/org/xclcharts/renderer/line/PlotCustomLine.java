@@ -170,7 +170,7 @@ public class PlotCustomLine {
 				
 				capX =  mPlotArea.getRight();	
 				break;
-			case CENTER:				
+			case MIDDLE:				
 				//currentX = mPlotArea.getLeft() + 
 				//			(mPlotArea.getRight() -  mPlotArea.getLeft() ) /2  - line.getLabelOffset();		
 								
@@ -212,7 +212,7 @@ public class PlotCustomLine {
 		case LEFT:				
 			currentY += txtHeight/3;
 			break;
-		case CENTER:				
+		case MIDDLE:				
 			if(line.isShowLine())
 				currentY -= DrawHelper.getInstance().getPaintFontHeight( line.getCustomLinePaint());
 															
@@ -283,21 +283,21 @@ public class PlotCustomLine {
 			float capY = 0.0f;
 			
 			currentX = (float) (mPlotArea.getLeft() + chartPostion); 						
-			switch (line.getLabelVerticalPostion())
+			switch (line.getLabelVerticalAlign())
 			{
-			case UP:
+			case TOP:
 				currentY =  mPlotArea.getTop() - line.getLabelOffset();	
 				
 				capY = mPlotArea.getBottom();
 				
 				break;
-			case CENTER:
+			case MIDDLE:
 				currentY =  mPlotArea.getBottom() - 
 							(mPlotArea.getBottom() - mPlotArea.getTop()) / 2 - line.getLabelOffset();
 				
 				capY = mPlotArea.getBottom() - (mPlotArea.getBottom() -  mPlotArea.getTop() ) / 2 ;
 				break;
-			case LOWER:				
+			case BOTTOM:				
 				currentY =  mPlotArea.getBottom() + line.getLabelOffset();		
 				
 				capY =  mPlotArea.getTop();

@@ -26,6 +26,7 @@ import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 
 /**
  * @ClassName PlotDot
@@ -36,6 +37,7 @@ import android.graphics.Paint;
 public class PlotDot {
 
 	private Paint mPaintDot = null;
+	private int mRingInnerColor = Color.WHITE;
 	
 	//Triangle 三角  	
 	//线上的点为圆或角
@@ -53,6 +55,24 @@ public class PlotDot {
 		mPaintDot = new Paint();
 		mPaintDot.setColor(Color.BLUE);
 		mPaintDot.setAntiAlias(true);
+	}
+	
+	/**
+	 * 设置点形状为环形时，内部所填充的颜色.仅对环形有效
+	 * @param color 内部填充颜色
+	 */
+	public void setRingInnerColor(int color)
+	{
+		mRingInnerColor = color;
+	}
+	
+	/**
+	 * 设置当前环形点内部填充颜色
+	 * @return 内部填充颜色
+	 */
+	public int getRingInnerColor()
+	{
+		return mRingInnerColor;
 	}
 	
 	/**

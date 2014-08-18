@@ -189,7 +189,7 @@ public class BarChart05View extends TouchView implements Runnable{
 	{				
 		CustomLineData line1 = new CustomLineData("及格线",60d,(int)Color.RED,3);
 		line1.setCustomLineCap(XEnum.DotStyle.TRIANGLE);
-		line1.setLabelVerticalPostion(XEnum.Position.LOWER);
+		line1.setLabelVerticalAlign(XEnum.VerticalAlign.BOTTOM);
 		line1.setLabelOffset(25);	
 		line1.getLineLabelPaint().setColor(Color.RED);
 		line1.setLineStyle(XEnum.LineStyle.DASH);
@@ -197,7 +197,7 @@ public class BarChart05View extends TouchView implements Runnable{
 		
 		CustomLineData line2 = new CustomLineData("良好",80d,(int)Color.rgb(35, 172, 57),5);	
 		line2.setCustomLineCap(XEnum.DotStyle.RECT);
-		line2.setLabelVerticalPostion(XEnum.Position.CENTER);
+		line2.setLabelVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 		
 		line2.setLineStyle(XEnum.LineStyle.DOT);
 		mCustomLineDataset.add(line2);

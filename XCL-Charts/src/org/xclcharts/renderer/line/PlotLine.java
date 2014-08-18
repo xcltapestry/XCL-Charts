@@ -40,6 +40,8 @@ public class PlotLine {
 	private Paint mPaintLabel = null;	
 	private PlotDot mPlotDot = null;
 	
+	
+	
 	public PlotLine()
 	{
 		init();
@@ -59,9 +61,10 @@ public class PlotLine {
 		mPaintLabel.setTextAlign(Align.CENTER);
 		mPaintLabel.setAntiAlias(true);
 		
-		mPlotDot = new PlotDot();
-		
+		mPlotDot = new PlotDot();		
 	}
+	
+	
 	
 	/**
 	 * 开放线画笔

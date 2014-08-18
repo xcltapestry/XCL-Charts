@@ -51,7 +51,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.LineChart03View"/>
-<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.CurveHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrurveLineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
 </qualifiedTypeNameHistroy>

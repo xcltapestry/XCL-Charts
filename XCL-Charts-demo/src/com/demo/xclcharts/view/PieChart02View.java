@@ -105,7 +105,7 @@ public class PieChart02View extends TouchView {
 			//标题
 			chart.setTitle("擂茶配方比");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.getPlotTitle().setTitlePosition(XEnum.Position.CENTER);
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 				
 			//隐藏渲染效果
 			chart.hideGradient();

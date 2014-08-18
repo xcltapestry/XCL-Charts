@@ -47,7 +47,7 @@ public class CustomLineData {
 	//设置Label显示位置(左，中，右)
 	private XEnum.LabelAlign  mLabelAlign = XEnum.LabelAlign.RIGHT;
 	//设置Label显示位置(上，中，下)
-	private XEnum.Position mLabelPostion = XEnum.Position.UP;
+	private XEnum.VerticalAlign mLabelPostion = XEnum.VerticalAlign.TOP;
 				
 	//线的风格(点或线之类)
 	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
@@ -226,7 +226,7 @@ public class CustomLineData {
 	 * 设置标签显示位置(上，中，下),适合于横向图，在竖向图下设置无效.
 	 * @param postion 显示位置
 	 */
-	public void setLabelVerticalPostion(XEnum.Position postion)
+	public void setLabelVerticalAlign(XEnum.VerticalAlign postion)
 	{
 		mLabelPostion = postion;
 	}
@@ -235,7 +235,7 @@ public class CustomLineData {
 	 * 返回标签显示在上，中，下哪个位置
 	 * @return 位置
 	 */
-	public XEnum.Position getLabelVerticalPostion()
+	public XEnum.VerticalAlign getLabelVerticalAlign()
 	{
 		return mLabelPostion;
 	}	

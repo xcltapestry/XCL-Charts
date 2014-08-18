@@ -38,12 +38,13 @@ public class MathHelper {
 	private static MathHelper instance = null;
 	
 	//Position位置
-	private float posX = 0.0f;
-	private float posY = 0.0f;
+	private float mPosX = 0.0f;
+	private float mPosY = 0.0f;
+	private PointF mPointF = new PointF();
 	
 	//除法运算精度
-	private static final int DEFAULT_DIV_SCALE = 10;
-		
+	private static final int DEFAULT_DIV_SCALE = 10;	
+
 	public MathHelper()
 	{	
 	}
@@ -56,68 +57,91 @@ public class MathHelper {
 		 }
 		 return instance;
 	}
+		
+	private void resetEndPointXY()
+	{
+		mPosX = mPosY = 0.0f;
+		mPointF.x = mPosX;
+		mPointF.y = mPosY;
+	}	
 	
 	//依圆心坐标，半径，扇形角度，计算出扇形终射线与圆弧交叉点的xy坐标	
-	public void calcArcEndPointXY(float cirX, float cirY, float radius, float cirAngle)
+	public PointF calcArcEndPointXY(float cirX, 
+									float cirY, 
+									float radius, 
+									float cirAngle)
 	{	
+		resetEndPointXY();		
+		if( Float.compare(cirAngle, 0.0f) == 0 || 
+			Float.compare(radius, 0.0f) == 0   )
+		{
+			 return mPointF;		
+		}
 		
-		if(Float.compare(cirAngle, 0.0f) == -1 || Float.compare(cirAngle, 0.0f) == 0 )
-			posX = posY = 0.0f;
 			
 		//将角度转换为弧度		
 	    float arcAngle = (float) (Math.PI *  div(cirAngle , 180.0f));
-	    if( Float.compare(arcAngle,0.0f) == -1)posX = posY = 0.0f;	
+	    if( Float.compare(arcAngle,0.0f) == -1)mPosX = mPosY = 0.0f;	
 	    
 	    if (Float.compare(cirAngle , 90.0f) == -1)
 	    {	    		    
-	    	posX = add(cirX , (float)Math.cos(arcAngle) * radius);
-	        posY = add(cirY , (float)Math.sin(arcAngle) * radius) ;
+	    	mPosX = add(cirX , (float)Math.cos(arcAngle) * radius);
+	        mPosY = add(cirY , (float)Math.sin(arcAngle) * radius) ;
 	    }
 	    else if (Float.compare(cirAngle,00.0f) == 0)
 	    {
-	        posX = cirX;
-	        posY = add(cirY , radius);
+	        mPosX = cirX;
+	        mPosY = add(cirY , radius);
 	    }
 	    else if (Float.compare(cirAngle,90.0f) == 1 &&
 	    		 Float.compare(cirAngle,180.0f) == -1)
 	    {
 	    	arcAngle = (float) (Math.PI * (sub(180f , cirAngle)) / 180.0f);	 	    		    		    		    
-	        posX = sub(cirX , (float) (Math.cos(arcAngle) * radius));
-	        posY = add(cirY , (float) (Math.sin(arcAngle) * radius));
+	        mPosX = sub(cirX , (float) (Math.cos(arcAngle) * radius));
+	        mPosY = add(cirY , (float) (Math.sin(arcAngle) * radius));
 	    }
 	    else if (Float.compare(cirAngle,180.0f) == 0)
 	    {
-	        posX = (float) (cirX - radius);
-	        posY = cirY;
+	        mPosX = (float) (cirX - radius);
+	        mPosY = cirY;
 	    }
 	    else if (Float.compare(cirAngle,180.0f) == 1 &&
 	    		 Float.compare(cirAngle,270.0f) == -1) 
 	    {
 	    	arcAngle = (float) (Math.PI * ( sub(cirAngle , 180.0f)) / 180.0f);
-	        posX = sub(cirX , (float) (Math.cos(arcAngle) * radius));
-	        posY = sub(cirY , (float) (Math.sin(arcAngle) * radius));
+	        mPosX = sub(cirX , (float) (Math.cos(arcAngle) * radius));
+	        mPosY = sub(cirY , (float) (Math.sin(arcAngle) * radius));
 	    }
 	    else if (Float.compare(cirAngle,270.0f) == 0)
 	    {
-	        posX = cirX;
-	        posY = sub (cirY , radius);
+	        mPosX = cirX;
+	        mPosY = sub (cirY , radius);
 	    }
 	    else
 	    {
 	    	arcAngle = (float) (Math.PI * ( sub(360.0f , cirAngle )) / 180.0f);
-	        posX = add(cirX , (float) (Math.cos(arcAngle) * radius)) ;
-	        posY = sub(cirY , (float) (Math.sin(arcAngle) * radius));
+	        mPosX = add(cirX , (float) (Math.cos(arcAngle) * radius)) ;
+	        mPosY = sub(cirY , (float) (Math.sin(arcAngle) * radius));
 	    }
-				
+	    	    
+	    mPointF.x = mPosX;
+	    mPointF.y = mPosY;	    
+	    return mPointF;				
 	}
-
+	
+	public PointF getArcEndPointF()
+	{		
+		return mPointF;
+	}
+	
 	public float getPosX() {
-		return posX;
+		return mPosX;
 	}
 		
 	public float getPosY() {
-		return posY;
+		return mPosY;
 	}	
+	
 	
 	//两点间的角度
 	public double getDegree(float sx, float sy, float tx, float ty) 
@@ -163,13 +187,11 @@ public class MathHelper {
     //两点间的距离
     public double getDistance(float sx,float sy,float tx,float ty)
     {	 
-    	float nx = tx - sx;
-        float ny = ty - sy;	 
-        
-        return Math.sqrt(Math.hypot(nx, ny));         
-       // return Math.sqrt(nx * nx + ny * ny);
-    }
-	
+    	float nx =  Math.abs(tx - sx);
+        float ny =  Math.abs(ty - sy);	         
+        return Math.sqrt(Math.hypot(nx, ny));      
+    }	
+
 	 
 	/**
 	 * 加法运算
@@ -179,9 +201,12 @@ public class MathHelper {
 	 */
 	 public float add(float v1, float v2) 
 	 {
-		  BigDecimal b1 = new BigDecimal(Float.toString(v1));
-		  BigDecimal b2 = new BigDecimal(Float.toString(v2));
-		  return b1.add(b2).floatValue();
+		 
+		 // BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		
+		 BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
+		  
+		 BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+		  return bgNum1.add(bgNum2).floatValue();
 	 }
 		 
 	 /**
@@ -192,9 +217,9 @@ public class MathHelper {
 	  */
 	 public float sub(float v1, float v2) 
 	 {
-		 BigDecimal b1 = new BigDecimal(Float.toString(v1));
-		 BigDecimal b2 = new BigDecimal(Float.toString(v2));
-		 return b1.subtract(b2).floatValue();
+		 BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		 		 
+		 BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+		 return bgNum1.subtract(bgNum2).floatValue();
 	 }
 		 
 	 /**
@@ -204,10 +229,10 @@ public class MathHelper {
 	  * @return 运算结果
 	  */
 	 public float mul(float v1, float v2) 
-	 {
-		  BigDecimal b1 = new BigDecimal(Float.toString(v1));
-		  BigDecimal b2 = new BigDecimal(Float.toString(v2));
-		  return b1.multiply(b2).floatValue();
+	 {		
+		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
+		  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+		  return bgNum1.multiply(bgNum2).floatValue();
 	 }
 		 
 	 /**
@@ -233,9 +258,10 @@ public class MathHelper {
 		  if (scale < 0) 
 		   throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
-		  BigDecimal b1 = new BigDecimal(Float.toString(v1));
-		  BigDecimal b2 = new BigDecimal(Float.toString(v2));
-		  return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
+		 
+		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
+		  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
 	 }
 		 
 	 /**
@@ -249,9 +275,10 @@ public class MathHelper {
 		  if (scale < 0) 
 			  throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
-		  BigDecimal b = new BigDecimal(Float.toString(v));
-		  BigDecimal one = new BigDecimal("1");
-		  return b.divide(one, scale, BigDecimal.ROUND_HALF_UP).floatValue();		  
+		
+		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v));
+		  BigDecimal bgNum2 = new BigDecimal("1");
+		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();		  
 		 // return b.setScale(scale, BigDecimal.ROUND_HALF_UP).floatValue();
 	 }
 	
@@ -262,10 +289,7 @@ public class MathHelper {
 	  */
 	public double ftod(float f)
 	{
-		//BigDecimal b = new BigDecimal(String.valueOf(f));
-		//double d = b.doubleValue();		
-		Float t = new Float(f);
-		return t.doubleValue();
+		return(new Float(f).doubleValue());
 	}
 	
 	/**
@@ -275,41 +299,52 @@ public class MathHelper {
 	 */
 	public float dtof(double d)
 	{
-		//BigDecimal b = new BigDecimal(String.valueOf(d));
-		//float f = b.floatValue();		
-		Double bd = new Double(d);	
-		return bd.floatValue();
+		return (new Double(d).floatValue());
 	}
 	
 	 public double add(double v1, double v2) 
 	 {
-		  BigDecimal b1 = new BigDecimal(Double.toString(v1));
-		  BigDecimal b2 = new BigDecimal(Double.toString(v2));
-		  return b1.add(b2).doubleValue();
+		 
+		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+		  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+		  return bgNum1.add(bgNum2).doubleValue();
 	 }
 	 
 	 public double sub(double v1, double v2) 
 	 {
-		 BigDecimal b1 = new BigDecimal(Double.toString(v1));
-		 BigDecimal b2 = new BigDecimal(Double.toString(v2));
-		 return b1.subtract(b2).doubleValue();
+		 
+		 BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+		 BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+		 return bgNum1.subtract(bgNum2).doubleValue();
 	 }
 	 
+	 
+	 /**
+	  * 除法计算,使用默认精度
+	  * @param v1
+	  * @param v2
+	  * @return
+	  */
 	 public double div(double v1, double v2) 
 	 {
 		 return div(v1,v2,DEFAULT_DIV_SCALE);
 	 }
 	 
+	 /**
+	  * 除法计算
+	  * @param v1
+	  * @param v2
+	  * @param scale	指定保留精度
+	  * @return
+	  */
 	 public double div(double v1, double v2, int scale) 
 	 {
 		  if (scale < 0) 
 		   throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
-		  BigDecimal b1 = new BigDecimal(Double.toString(v1));
-		  BigDecimal b2 = new BigDecimal(Double.toString(v2));
-		  return b1.divide(b2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
-	 }
-	 
-	 
-	
+		 
+		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+		  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+	 }	 	 	
 }

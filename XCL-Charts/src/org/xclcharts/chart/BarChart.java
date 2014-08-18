@@ -158,7 +158,7 @@ public class BarChart extends AxisChart {
 									
 					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
-					categoryAxis.setVerticalTickPosition(XEnum.Position.LOWER);					
+					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);					
 					break;
 				}
 			}

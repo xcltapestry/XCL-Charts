@@ -202,7 +202,7 @@ public class BarChart03View extends TouchView implements Runnable{
 		mCustomLineDataset.add(line1);
 		
 		CustomLineData line2 = new CustomLineData("没过打屁股",60d,(int)Color.RED,7);
-		line2.setLabelHorizontalPostion(XEnum.LabelAlign.CENTER);
+		line2.setLabelHorizontalPostion(XEnum.LabelAlign.MIDDLE);
 		line2.hideLine();
 		mCustomLineDataset.add(line2);
 		
@@ -222,7 +222,7 @@ public class BarChart03View extends TouchView implements Runnable{
 		int average =  calcAvg() ;
 		CustomLineData line6 = new CustomLineData("本次考试平均得分:"+Integer.toString(average),
 														(double)average,(int)Color.BLUE,5);
-		line6.setLabelHorizontalPostion(XEnum.LabelAlign.CENTER);
+		line6.setLabelHorizontalPostion(XEnum.LabelAlign.MIDDLE);
 		line6.setLineStyle(XEnum.LineStyle.DASH);
 		line6.getLineLabelPaint().setColor(Color.RED);
 		mCustomLineDataset.add(line6);							

@@ -120,8 +120,8 @@ public class StackBarChart01View extends TouchView {
 			//标题
 			chart.setTitle("文件服务器空间使用情况");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.setTitleAlign(XEnum.ChartTitleAlign.CENTER);
-			chart.setTitlePosition(XEnum.Position.CENTER);
+			chart.setTitleAlign(XEnum.ChartTitleAlign.MIDDLE);
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 			
 			//轴标题
 			chart.getAxisTitle().setLeftAxisTitle("单位(TB)");

@@ -41,9 +41,10 @@ public class PlotDotRender {
 	
 	private static PlotDotRender instance = null;
 	
-	private Paint mPaintFill = null;
+	protected Paint mPaintFill = null;
+	
 	private Path mPath = null;
-	private RectF rect = new RectF();
+	private RectF mRect = new RectF();
 
 	public PlotDotRender()
 	{
@@ -67,9 +68,9 @@ public class PlotDotRender {
 		}else{
 			mPath.reset();
 		}		
-	}
+	}	
 	
-	private void initPaintFill()
+	protected void initPaintFill()
 	{
 		if(null == mPaintFill)
 		{
@@ -78,6 +79,15 @@ public class PlotDotRender {
 			mPaintFill.setStyle(Style.FILL);
 			mPaintFill.setAntiAlias(true);
 		}
+	}
+	
+	/**
+	 * 开放填充内部环形的画笔
+	 */
+	public Paint getInnerFillPaint()
+	{
+		if(null == mPaintFill)initPaintFill();
+		return mPaintFill;
 	}
 	
 	/**
@@ -92,10 +102,16 @@ public class PlotDotRender {
 	 */
 	public RectF renderDot(Canvas canvas, PlotDot pDot, 
 						  float left, float top, float right,float bottom, Paint paint) {
-
-		
-		
+				
 		float radius = pDot.getDotRadius();
+		if(Float.compare(radius, 0.0f) == 0 
+				|| Float.compare(radius, 0.0f) == -1){
+			mRect.left =  0.0f;
+			mRect.top =  0.0f;
+			mRect.right =  0.0f;
+			mRect.bottom = 0.0f;
+			return mRect;
+		}						
 		float halfRadius = MathHelper.getInstance().div(radius , 2f);
 		
 		float cX = 0.0f;
@@ -106,10 +122,10 @@ public class PlotDotRender {
 			//				MathHelper.getInstance().sub(right, left));				
 			cX =  left + Math.abs(right - left);
 			
-			rect.left =  (cX - radius);
-			rect.top =  (bottom + radius);
-			rect.right =  (cX + radius);
-			rect.bottom =  (bottom - radius);
+			mRect.left =  (cX - radius);
+			mRect.top =  (bottom + radius);
+			mRect.right =  (cX + radius);
+			mRect.bottom =  (bottom - radius);
 		}
 		
 
@@ -122,7 +138,8 @@ public class PlotDotRender {
 			float ringRadius = radius * 0.7f; // MathHelper.getInstance().mul(radius, 0.7f);		
             canvas.drawCircle(cX, bottom, radius, paint);
 
-            initPaintFill();			
+            initPaintFill();	
+            mPaintFill.setColor(pDot.getRingInnerColor());
             canvas.drawCircle(cX, bottom,ringRadius, mPaintFill);            
 
 			break;
@@ -136,10 +153,10 @@ public class PlotDotRender {
 			mPath.close();
             canvas.drawPath(mPath, paint);
                         
-            rect.left =  (right - radius);
-			rect.top = ( bottom - triganaleHeight);
-			rect.right =  ( right + radius);
-			rect.bottom =  ( bottom + halfRadius);			
+            mRect.left =  (right - radius);
+			mRect.top = ( bottom - triganaleHeight);
+			mRect.right =  ( right + radius);
+			mRect.bottom =  ( bottom + halfRadius);			
 			
 			break;
 		// Prismatic
@@ -153,26 +170,26 @@ public class PlotDotRender {
 			mPath.close();
             canvas.drawPath(mPath, paint);
             
-        	rect.left = ( right -  radius  );
-			rect.top =  ( bottom - radius);
-			rect.right =  ( right + radius);
-			rect.bottom =  (bottom + radius);
+        	mRect.left = ( right -  radius  );
+			mRect.top =  ( bottom - radius);
+			mRect.right =  ( right + radius);
+			mRect.bottom =  (bottom + radius);
             
 			break;
 		case RECT:
-			paint.setStyle(Style.FILL);
+			paint.setStyle(Style.FILL);	
 			
-			rect.left =  (right - radius);
-			rect.top =  (bottom + radius);
-			rect.right =  (right + radius);
-			rect.bottom =  (bottom - radius);
-			canvas.drawRect(rect,paint);
+			mRect.left =  (right - radius);
+			mRect.top =  (bottom + radius);
+			mRect.right =  (right + radius);
+			mRect.bottom =  (bottom - radius);
+			canvas.drawRect(mRect,paint);
 			
 			break;
 		case HIDE:
 		default:
 		}
 		
-		return rect;
+		return mRect;
 	}
 }

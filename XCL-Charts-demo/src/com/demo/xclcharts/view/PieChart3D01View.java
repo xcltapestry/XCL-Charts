@@ -177,7 +177,7 @@ public class PieChart3D01View extends TouchView implements Runnable{
 					    //最末显示标题
 						chart.setTitle("个人专业技能分布");
 						chart.addSubtitle("(XCL-Charts Demo)");
-						chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
+						chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);
 						chart.setChartRange(0.0f, 0.0f,getWidth(),getHeight());
 						
 						//激活点击监听

@@ -81,15 +81,15 @@ public class PlotTitleRender extends PlotTitle{
 		float pcHeight = Math.abs(plotTop - chartTop) ;		
 		
 		//用来确定 titleY,需要Chart top的值
-		switch(this.getTitlePosition())
+		switch(this.getVerticalAlign())
 		{
-		case UP:			
+		case TOP:			
 			titleInitY = chartTop + titleHeight;
 			break;
-		case CENTER:			
+		case MIDDLE:			
 			titleInitY = Math.round(chartTop + pcHeight/2 - totalHeight/2);			
 			break;
-		case LOWER:
+		case BOTTOM:
 			titleInitY = plotTop - titleHeight;			
 			break;
 		}
@@ -107,7 +107,7 @@ public class PlotTitleRender extends PlotTitle{
 			getTitlePaint().setTextAlign(Align.LEFT);			
 			getSubtitlePaint().setTextAlign(Align.LEFT);			
 			break;
-		case CENTER:
+		case MIDDLE:
 			
 			titleX = (float)Math.round(chartLeft + chartWidth / 2);
 			titleY = titleInitY;

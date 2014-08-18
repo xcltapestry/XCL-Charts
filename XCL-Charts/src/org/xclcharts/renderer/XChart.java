@@ -104,8 +104,8 @@ public class XChart implements IRender {
 		plotArea = new PlotAreaRender();
 		plotGrid = new PlotGridRender();		
 		plotTitle = new PlotTitleRender();
-		plotTitle.setTitlePosition(XEnum.Position.CENTER);
-		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.CENTER);		
+		plotTitle.setVerticalAlign(XEnum.VerticalAlign.MIDDLE);
+		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.MIDDLE);		
 	}
 	
 	/**
@@ -269,8 +269,8 @@ public class XChart implements IRender {
 	 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
 	 * @param position 显示位置
 	 */
-	public void setTitlePosition(XEnum.Position position) {
-		plotTitle.setTitlePosition(position);
+	public void setTitleVerticalAlign(XEnum.VerticalAlign position) {
+		plotTitle.setVerticalAlign(position);
 	}
 
 	/**

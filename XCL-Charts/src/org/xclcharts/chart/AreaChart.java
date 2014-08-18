@@ -183,8 +183,8 @@ public class AreaChart extends LnChart{
         		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
             	{            	
             		PlotDot pDot = pLine.getPlotDot();	              
-            		float rendEndX  = add(lineEndX  , pDot.getDotRadius());               		
-        			
+            		float rendEndX  = add(lineEndX  , pDot.getDotRadius());    
+            		            	      
             		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
             				lineStartX ,lineStartY ,
             				lineEndX ,lineEndY,

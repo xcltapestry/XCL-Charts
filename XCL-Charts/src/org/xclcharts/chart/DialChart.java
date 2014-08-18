@@ -100,7 +100,7 @@ public class DialChart  extends CirChart{
 	
 	/**
 	 * 返回额外的指针集合
-	 * @return
+	 * @return	指针集合
 	 */
 	public List<Pointer> getPlotPointer()
 	{

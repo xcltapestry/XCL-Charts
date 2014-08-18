@@ -41,7 +41,7 @@ import android.util.Log;
 
 /**
  * @ClassName PlotLegendRender
- * @Description 用于绘制图表的图例 (这块代码可能还需要优化和丰富)
+ * @Description 用于绘制图表的图例 (这块代码还需要整合优化及丰富特性)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  *
  */
@@ -51,9 +51,14 @@ public class PlotLegendRender extends PlotLegend{
 	
 	private PlotArea mPlotArea = null;
 	private XChart mXChart = null;
+
+	private float mKeyLabelX = 0.0f;
+	private float mKeyLabelY = 0.0f;
 		
-	//柱形数据源
-	private List<BarData> mDataSet;	
+	private float mTextHeight = 0.0f;
+	private float mRectWidth = 0.0f;
+	private float mTextWidth = 0.0f;
+	private float mTotalTextWidth = 0.0f;
 
 	public PlotLegendRender()
 	{
@@ -83,6 +88,12 @@ public class PlotLegendRender extends PlotLegend{
 		return true;
 	}
 	
+	private void initEnv()
+	{
+		mKeyLabelX = mKeyLabelY = 0.0f;
+		mTextWidth = mTextHeight =  mRectWidth = mTotalTextWidth =0.0f;		
+	}
+	
 
 	/**
 	 * 绘制柱形图的图例
@@ -96,9 +107,7 @@ public class PlotLegendRender extends PlotLegend{
 	{
 		setXChart(xChart);
 		renderBarKey(canvas,dataSet);		
-	}
-		
-	
+	}			
 	
 	/**
 	 * 绘制柱形图的图例
@@ -110,18 +119,18 @@ public class PlotLegendRender extends PlotLegend{
 		if (!isShowLegend())return true;
 		
 	    if(null == dataSet) return false;		
-		if(!validateParams())return false;		
-		if(null == mDataSet)mDataSet = dataSet;
-		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
+		if(!validateParams())return false;										
+		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();		
+	
 
 		// 图表标题显示位置
 		switch ( mXChart.getPlotTitle().getTitleAlign() ) { 
-		case CENTER:
+		case MIDDLE:
 		case RIGHT:
-			renderBarKeyLeft(canvas);
+			renderBarKeyLeft(canvas,dataSet);
 			break;
 		case LEFT:
-			renderBarKeyRight(canvas);
+			renderBarKeyRight(canvas,dataSet);
 			break;
 		}
 	
@@ -133,43 +142,42 @@ public class PlotLegendRender extends PlotLegend{
 	 * 在左边绘制图例. <br/>单行可以显示多个图例y说明，当一行显示不下时，会自动转到新行
 	 * @param canvas 画布
 	 */
-	private void renderBarKeyLeft(Canvas canvas) {
-
-		float keyTextHeight = DrawHelper.getInstance().getPaintFontHeight(this
-				.getLegendLabelPaint());
-		float keyLabelsX = mPlotArea.getLeft();
-		float keyLabelsY = mPlotArea.getTop() - keyTextHeight;
-
-		// 宽度是个小约定，两倍文字高度即可
-		float rectWidth = 2 * keyTextHeight;
-		float rectHeight = keyTextHeight;
-		float rectOffset = getLegendLabelMargin();
+	private void renderBarKeyLeft(Canvas canvas,List<BarData> dataSet) {
 		
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();				
+		mKeyLabelX = mPlotArea.getLeft() + mOffsetX;
+		mKeyLabelY = mPlotArea.getTop() - mTextHeight - mOffsetY;		
+		
+		mRectWidth =  this.getRectWidth();
+		float rectOffset = getLegendLabelMargin();
+		float rectHeight = mTextHeight;
+		
+		String key = "";
 		getLegendLabelPaint().setTextAlign(Align.LEFT);
-		for (BarData cData : mDataSet) {
-			String key = cData.getKey();
+		for (BarData cData : dataSet) 
+		{
+			key = cData.getKey();
 			if("" == key) continue;
 			
 			getLegendLabelPaint().setColor(cData.getColor());
-			float strWidth = getLegendLabelPaint().measureText(key, 0,
-					key.length());
-
-			if (keyLabelsX + 2 * rectWidth + strWidth > mXChart.getRight()) {
-				keyLabelsX = mPlotArea.getLeft();
-				keyLabelsY = keyLabelsY + rectHeight * 2;
+			float strWidth = this.getLabelTextWidth(key);
+			
+			if (mKeyLabelX + 2 * mRectWidth + strWidth > mXChart.getRight()) {
+				mKeyLabelX = mPlotArea.getLeft();
+				mKeyLabelY = mKeyLabelY + rectHeight * 2;
 			}
 
-			canvas.drawRect(keyLabelsX, keyLabelsY, keyLabelsX + rectWidth,
-					keyLabelsY - rectHeight, getLegendLabelPaint());
+			canvas.drawRect(mKeyLabelX, mKeyLabelY, mKeyLabelX + mRectWidth,
+					mKeyLabelY - rectHeight, getLegendLabelPaint());
 
 			getLegendLabelPaint().setTextAlign(Align.LEFT);
 			DrawHelper.getInstance().drawRotateText(
-					key, keyLabelsX + rectWidth + rectOffset,
-					keyLabelsY, 0, canvas, getLegendLabelPaint());
+					key, mKeyLabelX + mRectWidth + rectOffset,
+					mKeyLabelY, 0, canvas, getLegendLabelPaint());
 
-			keyLabelsX += rectWidth + strWidth + 2 * rectOffset;
+			mKeyLabelX += mRectWidth + strWidth + 2 * rectOffset;
 		}
-
 	}
 
 
@@ -177,34 +185,34 @@ public class PlotLegendRender extends PlotLegend{
 	 *  在右边绘制图例. <br/>显示在右边时，采用单条说明占一行的方式显示
 	 * @param canvas
 	 */
-	private void renderBarKeyRight(Canvas canvas) {
+	private void renderBarKeyRight(Canvas canvas,List<BarData> dataSet) {
 		if (false == isShowLegend())
 			return;
 
-		float keyTextHeight = DrawHelper.getInstance().getPaintFontHeight(
-														getLegendLabelPaint());
-		float keyLablesX = mPlotArea.getRight();
-		float keyLablesY = (float) (mXChart.getTop() + keyTextHeight); 
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();
+		mRectWidth =  this.getRectWidth();
+		
+		mKeyLabelX = mPlotArea.getRight() - mOffsetX;
+		mKeyLabelY = (float) (mXChart.getTop() + mTextHeight + mOffsetY); 
 
 		// 宽度是个小约定，两倍文字高度即可
-		float rectWidth = 2 * keyTextHeight;
-		float rectHeight = keyTextHeight;
-		float rectOffset = getLegendLabelMargin();
-
+		float rectHeight = mTextHeight;
+	
 		getLegendLabelPaint().setTextAlign(Align.RIGHT);
-		for (BarData cData : mDataSet) {
+		for (BarData cData : dataSet) {
 			String key = cData.getKey();
 			if("" == key) continue;
 			getLegendLabelPaint().setColor(cData.getColor());
 
-			canvas.drawRect(keyLablesX, keyLablesY, keyLablesX - rectWidth,
-					keyLablesY + rectHeight, getLegendLabelPaint());
+			canvas.drawRect(mKeyLabelX, mKeyLabelY, mKeyLabelX - mRectWidth,
+					mKeyLabelY + rectHeight, getLegendLabelPaint());
 
 			DrawHelper.getInstance().drawRotateText(
-								key, keyLablesX - rectWidth - rectOffset,
-								keyLablesY + rectHeight, 0, canvas,
+								key, mKeyLabelX - mRectWidth - getLegendLabelMargin(),
+								mKeyLabelY + rectHeight, 0, canvas,
 								getLegendLabelPaint());
-			keyLablesY = MathHelper.getInstance().add(keyLablesY, keyTextHeight);
+			mKeyLabelY = MathHelper.getInstance().add(mKeyLabelY, mTextHeight);
 		}
 
 	}
@@ -221,55 +229,73 @@ public class PlotLegendRender extends PlotLegend{
 		if(null == dataSet) return ;
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
 		
-		float textHeight = DrawHelper.getInstance().getPaintFontHeight(
-													getLegendLabelPaint());
-		float rectWidth = 2 * textHeight;
-		float currentX = 0.0f;
-		float currentY = 0.0f;
-
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();
+		mRectWidth =  this.getRectWidth();
+		
+		mKeyLabelX = mPlotArea.getLeft() + mOffsetX;
+		mKeyLabelY = mPlotArea.getTop() - mOffsetY - 5 ;
 		getLegendLabelPaint().setTextAlign(Align.LEFT);
-		currentX = mPlotArea.getLeft();
-		currentY = mPlotArea.getTop() - 5;
 
-		float totalTextWidth = 0.0f;
+		String key = "";
 		for (LnData cData : dataSet) {
-			String key = cData.getLineKey();				
+			key = cData.getLineKey();				
 			if("" == key) continue;
 			//颜色	
 			getLegendLabelPaint().setColor(cData.getLineColor());
 
 			// 竖屏
-			float keyTextWidth = DrawHelper.getInstance().getTextWidth(
-													getLegendLabelPaint(), key);			
-			totalTextWidth = MathHelper.getInstance().add(totalTextWidth, keyTextWidth);
+			mTextWidth =  this.getLabelTextWidth(key);			
+			mTotalTextWidth = MathHelper.getInstance().add(mTotalTextWidth, mTextWidth);
 
-			if (totalTextWidth > mPlotArea.getWidth()) {
-				currentY -= textHeight;
-				currentX = mPlotArea.getLeft();
-				totalTextWidth = 0.0f;
+			if (mTotalTextWidth > mPlotArea.getWidth()) {
+				mKeyLabelY -= mTextHeight;
+				mKeyLabelX = mPlotArea.getLeft();
+				mTotalTextWidth = 0.0f;
 			}
 
-            canvas.drawLine(currentX, currentY - textHeight / 2, currentX
-					+ rectWidth, currentY - textHeight / 2, getLegendLabelPaint());
+            canvas.drawLine(mKeyLabelX, mKeyLabelY - mTextHeight / 2, mKeyLabelX
+					+ mRectWidth, mKeyLabelY - mTextHeight / 2, getLegendLabelPaint());
 
-            canvas.drawText(cData.getLineKey(), currentX + rectWidth, currentY
-					- textHeight / 3, getLegendLabelPaint());
+            canvas.drawText(cData.getLineKey(), mKeyLabelX + mRectWidth, mKeyLabelY
+					- mTextHeight / 3, getLegendLabelPaint());
 
-			float dotLeft = currentX + rectWidth / 4;
-			float dotRight = currentX + 2 * (rectWidth / 4);
+			float dotLeft = mKeyLabelX + mRectWidth / 4;
+			float dotRight = mKeyLabelX + 2 * (mRectWidth / 4);
 
 			PlotLine pLine = cData.getPlotLine();
 
 			if (!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE)) {
 				PlotDot pDot = pLine.getPlotDot();
 				PlotDotRender.getInstance().renderDot(canvas, pDot, 
-						dotLeft, currentY, dotRight, 
-						currentY - textHeight / 2, pLine.getDotPaint()); // 标识图形
+						dotLeft, mKeyLabelY, dotRight, 
+						mKeyLabelY - mTextHeight / 2, pLine.getDotPaint()); // 标识图形
 			}
 			
-			currentX = MathHelper.getInstance().add(currentX,rectWidth + 10);
-			currentX = MathHelper.getInstance().add(currentX,keyTextWidth);			
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX,mRectWidth + 10);
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX,mTextWidth);			
 		}
+	}
+	
+	private boolean initRoundChartKey()
+	{
+		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
+		    			
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();
+		mRectWidth =  this.getRectWidth();					
+		
+		if(!mXChart.isVerticalScreen()) //横屏
+		{
+			getLegendLabelPaint().setTextAlign(Align.RIGHT);
+			mKeyLabelX = mPlotArea.getRight() - mOffsetX;
+			mKeyLabelY = this.mPlotArea.getTop() + mTextHeight + mOffsetY;			
+		}else{
+			getLegendLabelPaint().setTextAlign(Align.LEFT);
+			mKeyLabelX = mPlotArea.getLeft() + mOffsetX;
+			mKeyLabelY = this.mPlotArea.getBottom() - mOffsetY;			
+		}									
+		return true;
 	}
 	
 	
@@ -279,139 +305,96 @@ public class PlotLegendRender extends PlotLegend{
 	 * @param dataset	数据集
 	 */
 	public void renderPieKey(Canvas canvas,List<PieData> dataset)
-	{
+{
 		if (isShowLegend() == false) return;		
 		if(null == dataset) return ;
-		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
-		    
-			
-			float textHeight = DrawHelper.getInstance().getPaintFontHeight(
-														getLegendLabelPaint());
-			float rectWidth = 2 *textHeight;		
-			float currentX = 0.0f; 				
-			float currentY = 0.0f;
-			
-			if(!mXChart.isVerticalScreen()) //横屏
-			{
-				getLegendLabelPaint().setTextAlign(Align.RIGHT);
-				currentX = mPlotArea.getRight();
-				currentY = this.mPlotArea.getTop() + textHeight;			
-			}else{
-				getLegendLabelPaint().setTextAlign(Align.LEFT);
-				currentX = mPlotArea.getLeft();
-				currentY = this.mPlotArea.getBottom();			
-			}			
-			
-			float totalTextWidth = 0.0f;
-			for(PieData cData : dataset)
-			{
-				getLegendLabelPaint().setColor(cData.getSliceColor());							
-				if( !this.mXChart.isVerticalScreen()) //横屏 [这个到时改成让用户选类型更合适些]
-				{								
-					canvas.drawRect(currentX , currentY,
-										  currentX - rectWidth, currentY - textHeight, 
-										  getLegendLabelPaint());					
-					
-					canvas.drawText(cData.getKey(),currentX - rectWidth,
-													currentY, getLegendLabelPaint());							
-					currentY = MathHelper.getInstance().add(currentY, textHeight);
-					
-					//到底了还显示不下，在左边接着显示
-					if(Float.compare(currentY, mPlotArea.getBottom()) == 1 
-							|| Float.compare(currentY, mPlotArea.getBottom()) == 0)
-					{
-						currentX = mPlotArea.getLeft();
-						currentX = mPlotArea.getTop() + textHeight;
-					}
-				
-				}else{ //竖屏			
-					float keyTextWidth = DrawHelper.getInstance().getTextWidth(
-													getLegendLabelPaint(), cData.getKey());					
-										
-					float tmpX =  MathHelper.getInstance().add(currentX,rectWidth);
-						  tmpX =  MathHelper.getInstance().add(currentX,keyTextWidth);
-					if( Float.compare(tmpX , mPlotArea.getRight()) == 1 ||
-									 Float.compare(tmpX, mPlotArea.getRight()) == 0 )	
-					{						
-						currentY = MathHelper.getInstance().add(currentY, textHeight);
-						currentX = mPlotArea.getLeft();
-						totalTextWidth = 0.0f;
-					}else{
-						totalTextWidth = MathHelper.getInstance().add(totalTextWidth, keyTextWidth);
-					}
-					canvas.drawRect(currentX , currentY,
-									 currentX + rectWidth, currentY - textHeight, 
-									 getLegendLabelPaint());						
-					canvas.drawText(cData.getKey(), currentX + rectWidth,
-														currentY, getLegendLabelPaint());				
-					currentX = MathHelper.getInstance().add(currentX, rectWidth);
-					currentX = MathHelper.getInstance().add(currentX, keyTextWidth + 5);					
-				}									
-			}							
+		
+		initRoundChartKey();
+		for(PieData cData : dataset)
+		{
+			renderCirChartKey(canvas,cData.getKey(),cData.getSliceColor());																
+		}				
 	}
-
+	
+	
 	/**
 	 * 绘制key
 	 */
 	public void renderRdKey(Canvas canvas,List<RadarData> dataset)
 	{
 		if (isShowLegend() == false) return;
-		    
-			DrawHelper dw = new DrawHelper();
-			float textHeight = dw.getPaintFontHeight(getLegendLabelPaint());
-			float rectWidth = 2 *textHeight;		
-			float currentX = 0.0f; 				
-			float currentY = 0.0f;
-			
-			if( !this.mXChart.isVerticalScreen())//横屏
-			{
-				getLegendLabelPaint().setTextAlign(Align.RIGHT);
-				currentX = mPlotArea.getRight();
-				currentY = mPlotArea.getTop() + textHeight;			
-			}else{
-				getLegendLabelPaint().setTextAlign(Align.LEFT);
-				currentX = mPlotArea.getLeft();
-				currentY = mPlotArea.getBottom();			
-			}			
-			
-			float totalTextWidth = 0.0f;
-			for(RadarData cData : dataset)
-			{
-				getLegendLabelPaint().setColor(cData.getLineColor());							
-				if( !mXChart.isVerticalScreen()) //横屏
-				{								
-					canvas.drawRect(currentX , currentY,
-										  currentX - rectWidth, currentY - textHeight, 
-										  getLegendLabelPaint());					
-					
-					canvas.drawText(cData.getLineKey(),currentX - rectWidth, 
-														currentY, getLegendLabelPaint());
-								
-					currentY = MathHelper.getInstance().add(currentY,textHeight);
-				
-				}else{ //竖屏			
-					float keyTextWidth = dw.getTextWidth(getLegendLabelPaint(), cData.getLineKey());
-					//totalTextWidth += keyTextWidth;					
-					totalTextWidth =  MathHelper.getInstance().add(totalTextWidth,keyTextWidth);
-					
-					if(Float.compare(totalTextWidth, mPlotArea.getWidth()) == 1)
-					{
-						currentY += textHeight;
-						currentX = mPlotArea.getLeft();
-						totalTextWidth = 0.0f;
-					}				
-					canvas.drawRect(currentX , currentY,
-									 currentX + rectWidth, currentY - textHeight, 
-									 getLegendLabelPaint());						
-					canvas.drawText(cData.getLineKey(), currentX + rectWidth,
-														currentY, getLegendLabelPaint());
-					
-					currentX = MathHelper.getInstance().add(currentX, rectWidth + keyTextWidth + 5);
-				
-				}									
-			}	
+		if(null == dataset) return ;
+		initRoundChartKey();
+		for(RadarData cData : dataset)
+		{				
+			renderCirChartKey(canvas,cData.getLineKey(), cData.getLineColor() );								
+		}	
 	}
 	
+	private void renderCirChartKey(Canvas canvas,String key,int textColor)
+	{
+		if(""==key)return;
+		
+		getLegendLabelPaint().setColor(textColor);	
+		if( !this.mXChart.isVerticalScreen()) //横屏 [这个到时改成让用户选类型更合适些]
+		{								
+			canvas.drawRect(mKeyLabelX , mKeyLabelY,
+								  mKeyLabelX - mRectWidth, mKeyLabelY - mTextHeight, 
+								  getLegendLabelPaint());					
+			
+			canvas.drawText(key,mKeyLabelX - mRectWidth,
+											mKeyLabelY, getLegendLabelPaint());							
+			mKeyLabelY = MathHelper.getInstance().add(mKeyLabelY, mTextHeight);
+			
+			//到底了还显示不下，在左边接着显示
+			if(Float.compare(mKeyLabelY, mPlotArea.getBottom()) == 1 
+					|| Float.compare(mKeyLabelY, mPlotArea.getBottom()) == 0)
+			{
+				mKeyLabelX = mPlotArea.getLeft();
+				mKeyLabelX = mPlotArea.getTop() + mTextHeight;
+			}								
+		}else{ //竖屏			
+			float keyTextWidth = this.getLabelTextWidth(key);					
+								
+			float tmpX =  MathHelper.getInstance().add(mKeyLabelX,mRectWidth);
+				  tmpX =  MathHelper.getInstance().add(mKeyLabelX,keyTextWidth);
+			if( Float.compare(tmpX , mPlotArea.getRight()) == 1 ||
+							 Float.compare(tmpX, mPlotArea.getRight()) == 0 )	
+			{						
+				mKeyLabelY = MathHelper.getInstance().add(mKeyLabelY, mTextHeight);
+				mKeyLabelX = mPlotArea.getLeft();
+				mTotalTextWidth = 0.0f;
+			}else{
+				mTotalTextWidth = MathHelper.getInstance().add(mTotalTextWidth, keyTextWidth);
+			}
+			canvas.drawRect( mKeyLabelX , mKeyLabelY,
+							 mKeyLabelX + mRectWidth, mKeyLabelY - mTextHeight, 
+							 getLegendLabelPaint());						
+			canvas.drawText(key, mKeyLabelX + mRectWidth,
+								 mKeyLabelY, getLegendLabelPaint());				
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX, mRectWidth);
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX, keyTextWidth + 5);					
+		}					
+	}
+
 	
 	
+	private float getLabelTextWidth(String key)
+	{
+		return  DrawHelper.getInstance().getTextWidth(getLegendLabelPaint(),key );
+	}
+	
+	private float getLabelTextHeight()
+	{
+		return DrawHelper.getInstance().getPaintFontHeight(getLegendLabelPaint());
+	}
+	
+	private float getRectWidth()
+	{
+		return  2 * getLabelTextHeight();
+	}
+
+
 }
+
+
