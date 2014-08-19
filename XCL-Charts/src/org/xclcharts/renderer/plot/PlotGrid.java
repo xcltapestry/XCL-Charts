@@ -63,37 +63,53 @@ public class PlotGrid {
 	
 	public PlotGrid()
 	{		
-		initPaint();
+		
 	}
-	
-	private void initPaint()
+		
+	private void initEvenBgColorPaint()
 	{
-		mPaintGridLineHorizontal = new Paint();
-		mPaintGridLineVertical = new Paint();
-		
-		mPaintGridLineHorizontal.setColor((int)Color.rgb(180, 205, 230));
-		mPaintGridLineVertical.setColor((int)Color.rgb(180, 205, 230));
-		
-		mPaintGridLineHorizontal.setStrokeWidth(1);
-		mPaintGridLineVertical.setStrokeWidth(1);
-		
-		mPaintOddBgColor = new Paint();
-		mPaintEvenBgColor = new Paint();
-		
-		mPaintOddBgColor.setStyle(Style.FILL);
-		mPaintEvenBgColor.setStyle(Style.FILL);
-		
-		mPaintOddBgColor.setColor(Color.WHITE);
-		mPaintEvenBgColor.setColor((int)Color.rgb(239, 239, 239)); 
-		
-		mPaintOddBgColor.setAntiAlias(true);
-		mPaintEvenBgColor.setAntiAlias(true);
-		
-		mPaintGridLineHorizontal.setAntiAlias(true);
-		mPaintGridLineVertical.setAntiAlias(true);
+		if(null == mPaintEvenBgColor)
+		{
+			mPaintEvenBgColor = new Paint();
+			mPaintEvenBgColor.setStyle(Style.FILL);						
+			mPaintEvenBgColor.setColor((int)Color.rgb(239, 239, 239)); 					
+			mPaintEvenBgColor.setAntiAlias(true);
+		}
 	}
 	
-
+	private void initOddBgColorPaint()
+	{
+		if(null == mPaintOddBgColor)
+		{
+			mPaintOddBgColor = new Paint();
+			mPaintOddBgColor.setStyle(Style.FILL);
+			mPaintOddBgColor.setColor(Color.WHITE);
+			mPaintOddBgColor.setAntiAlias(true);
+		}
+	}
+	
+	private void initHorizontalLinePaint()
+	{
+		if(null == mPaintGridLineHorizontal)
+		{
+			mPaintGridLineHorizontal = new Paint();
+			mPaintGridLineHorizontal.setAntiAlias(true);
+			mPaintGridLineHorizontal.setStrokeWidth(1);
+			mPaintGridLineHorizontal.setColor((int)Color.rgb(180, 205, 230));
+		}		
+	}
+	
+	private void initVerticalLinePaint()
+	{
+		if(null == mPaintGridLineVertical)
+		{
+			mPaintGridLineVertical = new Paint();	
+			mPaintGridLineVertical.setColor((int)Color.rgb(180, 205, 230));				
+			mPaintGridLineVertical.setStrokeWidth(1);
+			mPaintGridLineVertical.setAntiAlias(true);
+		}
+	}
+		
 	/**
 	 * 设置奇数行填充色
 	 * @param color 填充色
@@ -217,23 +233,24 @@ public class PlotGrid {
 	{
 		return mEvenRowBgColorVisible;
 	}
-		
-
+				
 	/**
 	 * 开放横向网格线画笔
 	 * @return 画笔
 	 */
 	public Paint getHorizontalLinePaint()
 	{
+		initHorizontalLinePaint();
 		return mPaintGridLineHorizontal;	
 	}
-	 
+			 
 	/**
 	 * 开放竖向网格线画笔
 	 * @return 画笔
 	 */
 	public Paint getVerticalLinePaint()
 	{
+		initVerticalLinePaint();
 		return mPaintGridLineVertical;	
 	}
 	
@@ -243,6 +260,7 @@ public class PlotGrid {
 	 */
 	public Paint getOddRowsBgColorPaint()
 	{
+		initOddBgColorPaint();
 		return mPaintOddBgColor;	
 	}
 	 
@@ -252,6 +270,7 @@ public class PlotGrid {
 	 */
 	public Paint getEvenRowsBgColorPaint()
 	{
+		initEvenBgColorPaint();
 		return mPaintEvenBgColor;	
 	}
 

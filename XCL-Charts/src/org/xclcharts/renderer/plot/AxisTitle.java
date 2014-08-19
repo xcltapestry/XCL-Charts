@@ -33,9 +33,9 @@ import android.graphics.Paint.Align;
 public class AxisTitle {
 	
 	//图例文字画笔
-	 protected Paint mPaintLeftAxisTitle = null;
-	 protected Paint mPaintLowerAxisTitle = null;
-	 protected Paint mPaintRightAxisTitle = null;
+	 private Paint mPaintLeftAxisTitle = null;
+	 private Paint mPaintLowerAxisTitle = null;
+	 private Paint mPaintRightAxisTitle = null;
 	//图例文字说明
 	 private String mLeftAxisTitle = "";
 	 private String mLowerAxisTitle = "";
@@ -43,33 +43,45 @@ public class AxisTitle {
 	
 	public AxisTitle()
 	{							
-		initPaint();
+		
 	}
-	
-	/**
-	 * 初始化画笔 
-	 */
-	private void initPaint()
+		
+	private void initLeftAxisTitlePaint()
 	{
+		if(null == mPaintLeftAxisTitle)
+		{
 		 mPaintLeftAxisTitle = new Paint();
-		 mPaintLowerAxisTitle = new Paint();
-		 mPaintRightAxisTitle = new Paint();
-		 
 		 mPaintLeftAxisTitle.setTextAlign(Align.CENTER);
-		 mPaintLowerAxisTitle.setTextAlign(Align.CENTER);
-		 mPaintRightAxisTitle.setTextAlign(Align.CENTER);	
-		 
 		 mPaintLeftAxisTitle.setAntiAlias(true);
-		 mPaintLowerAxisTitle.setAntiAlias(true);
-		 mPaintRightAxisTitle.setAntiAlias(true);
+		}
 	}
 	
+	private void initLowerAxisTitlePaint()
+	{
+		if(null == mPaintLowerAxisTitle)
+		{
+		 mPaintLowerAxisTitle = new Paint();
+		 mPaintLowerAxisTitle.setTextAlign(Align.CENTER);
+		 mPaintLowerAxisTitle.setAntiAlias(true);
+		}
+	}
+	
+	private void initRightAxisTitlePaint()
+	{
+		if(null == mPaintRightAxisTitle)
+		{
+		 mPaintRightAxisTitle = new Paint();
+		 mPaintRightAxisTitle.setTextAlign(Align.CENTER);
+		 mPaintRightAxisTitle.setAntiAlias(true);
+		}
+	}
 	
 	/**
 	 * 开放左边图例画笔
 	 * @return 画笔
 	 */
 	public Paint getLeftAxisTitlePaint() {
+		initLeftAxisTitlePaint();
 		return mPaintLeftAxisTitle;
 	}
 
@@ -78,6 +90,7 @@ public class AxisTitle {
 	 * @return 画笔
 	 */
 	public Paint getLowerAxisTitlePaint() {
+		initLowerAxisTitlePaint();
 		return mPaintLowerAxisTitle;
 	}
 
@@ -86,6 +99,7 @@ public class AxisTitle {
 	 * @return 画笔
 	 */
 	public Paint getRightAxisTitlePaint() {
+		initRightAxisTitlePaint();
 		return mPaintRightAxisTitle;
 	}
 

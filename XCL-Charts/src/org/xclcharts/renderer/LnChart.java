@@ -57,7 +57,7 @@ public class LnChart extends AxisChart {
 	private boolean mRightAxisVisible = true;	
 	
 	private PointF[] BezierControls ;
-	private Path BezierPath = null; //new Path();
+	private Path BezierPath = null;
 	
 	
 
@@ -377,9 +377,11 @@ public class LnChart extends AxisChart {
 					PointF start,PointF stop,PointF[] bezierControls)
 	{
 		
-		if(null == BezierPath)BezierPath = new Path();
-		
-		BezierPath.reset();
+		if(null == BezierPath)
+		{
+			BezierPath = new Path();
+		}
+		BezierPath.reset();					
 		BezierPath.moveTo(start.x, start.y);
 		BezierPath.cubicTo( bezierControls[0].x, bezierControls[0].y, 
 				bezierControls[1].x, bezierControls[1].y, 

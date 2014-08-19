@@ -55,28 +55,41 @@ public class Axis {
 	private boolean mAxisVisible = true;	
 
 	public Axis()
-	{							
-		initPaint();
+	{				
 	}
 	
-	private void initPaint()
+	private void initAxisPaint()
 	{
-		mPaintAxis = new Paint();
-		mPaintTickMarks = new Paint();
-		mPaintTickLabel = new Paint();		
-		
-		mPaintAxis.setColor(Color.BLACK);		
-		//mPaintAxis.setStrokeWidth(mAxisLineWidth);
-		mPaintAxis.setAntiAlias(true);		
-		
-		mPaintTickMarks.setColor(Color.BLACK);	
-		mPaintTickMarks.setStrokeWidth(3);
-		mPaintTickMarks.setAntiAlias(true);		
-		
-		mPaintTickLabel.setColor(Color.BLACK);	
-		mPaintTickLabel.setTextAlign(Align.RIGHT);
-		mPaintTickLabel.setTextSize(18);
-		mPaintTickLabel.setAntiAlias(true);		
+		if(null == mPaintAxis)
+		{
+			mPaintAxis = new Paint();
+			mPaintAxis.setColor(Color.BLACK);		
+			//mPaintAxis.setStrokeWidth(mAxisLineWidth);
+			mPaintAxis.setAntiAlias(true);	
+		}
+	}
+	
+	private void initTickMarksPaint()
+	{
+		if(null == mPaintTickMarks)
+		{
+			mPaintTickMarks = new Paint();
+			mPaintTickMarks.setColor(Color.BLACK);	
+			mPaintTickMarks.setStrokeWidth(3);
+			mPaintTickMarks.setAntiAlias(true);		
+		}
+	}
+	
+	private void initTickLabelPaint()
+	{
+		if(null == mPaintTickLabel)
+		{
+			mPaintTickLabel = new Paint();		
+			mPaintTickLabel.setColor(Color.BLACK);	
+			mPaintTickLabel.setTextAlign(Align.RIGHT);
+			mPaintTickLabel.setTextSize(18);
+			mPaintTickLabel.setAntiAlias(true);
+		}
 	}
 	
 	/**
@@ -121,6 +134,7 @@ public class Axis {
 	 * @return 画笔
 	 */
 	public Paint getAxisPaint() {
+		initAxisPaint();
 		return mPaintAxis;
 	}
 	
@@ -129,6 +143,7 @@ public class Axis {
 	 * @return 画笔
 	 */
 	public Paint getTickMarksPaint() {
+		initTickMarksPaint();
 		return mPaintTickMarks;
 	}
 
@@ -137,6 +152,7 @@ public class Axis {
 	 * @return	画笔
 	 */
 	public Paint getTickLabelPaint() {
+		initTickLabelPaint();
 		return mPaintTickLabel;
 	}
 

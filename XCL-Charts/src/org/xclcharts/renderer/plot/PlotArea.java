@@ -54,14 +54,17 @@ public class PlotArea {
 	
 	public PlotArea()
 	{
-		init();
+
 	}
 	
-	private void init()
+	private void initBackgroundPaint()
 	{
-		mBackgroundPaint = new Paint();
-		mBackgroundPaint.setStyle(Style.FILL);	
-		mBackgroundPaint.setColor(Color.WHITE);
+		if(null == mBackgroundPaint)
+		{
+			mBackgroundPaint = new Paint();
+			mBackgroundPaint.setStyle(Style.FILL);	
+			mBackgroundPaint.setColor(Color.WHITE);
+		}
 	}
 	
 	
@@ -71,6 +74,7 @@ public class PlotArea {
 	 */
 	 public Paint getBackgroundPaint()
 	 {
+		 initBackgroundPaint();
 		 return mBackgroundPaint;
 	 }
 	 

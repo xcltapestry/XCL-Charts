@@ -46,15 +46,17 @@ public class PlotDot {
 	private int mRadius = 10;
 	
 	public PlotDot()
-	{
-		init();
+	{		
 	}
 	
-	private void init()
+	private void initDotPaint()
 	{
-		mPaintDot = new Paint();
-		mPaintDot.setColor(Color.BLUE);
-		mPaintDot.setAntiAlias(true);
+		if(null == mPaintDot)
+		{
+			mPaintDot = new Paint();
+			mPaintDot.setColor(Color.BLUE);
+			mPaintDot.setAntiAlias(true);
+		}
 	}
 	
 	/**
@@ -81,6 +83,7 @@ public class PlotDot {
 	 */
 	public Paint getDotPaint()
 	{
+		initDotPaint();
 		return mPaintDot;
 	}
 	

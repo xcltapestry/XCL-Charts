@@ -22,7 +22,6 @@
 package org.xclcharts.chart;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -36,8 +35,6 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
-import android.graphics.Path;
-import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
 

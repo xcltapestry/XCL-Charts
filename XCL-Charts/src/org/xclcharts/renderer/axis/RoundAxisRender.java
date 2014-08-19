@@ -407,12 +407,14 @@ public class RoundAxisRender extends RoundAxis{
 			 
 			 
 			DrawHelper.getInstance().drawPercent(canvas, this.getAxisPaint(),
-					 						this.mCirX, this.mCirY,mRadius, startAngle, sweepAngle, true);
+					 						this.mCirX, this.mCirY,mRadius, 
+					 						startAngle, sweepAngle, true);
 			 			 
 			if (getTickLabelVisible() && ""!= label) 
 			{
 			 	float Angle = MathHelper.getInstance().add(startAngle , sweepAngle / 2) ; 
-			 	MathHelper.getInstance().calcArcEndPointXY(this.mCirX, this.mCirY, mRadius * 0.5f,Angle ); 	
+			 	MathHelper.getInstance().calcArcEndPointXY(this.mCirX, this.mCirY,
+			 														mRadius * 0.5f,Angle ); 	
 			 	
 			 	float labelX = MathHelper.getInstance().getPosX();
 			 	float labelY = MathHelper.getInstance().getPosY();					

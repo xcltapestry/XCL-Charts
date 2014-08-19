@@ -48,11 +48,19 @@ public class Border {
 
 	public Border()
 	{							
-		mPaintBorderLine = new Paint();
-		mPaintBorderLine.setAntiAlias(true);
-		mPaintBorderLine.setColor((int)Color.rgb(26, 59, 105));
-		mPaintBorderLine.setStyle(Style.STROKE);  		
-		mPaintBorderLine.setStrokeWidth(2);								
+									
+	}
+	
+	private void initBorderLinePaint()
+	{
+		if(null == mPaintBorderLine)
+		{
+			mPaintBorderLine = new Paint();
+			mPaintBorderLine.setAntiAlias(true);
+			mPaintBorderLine.setColor((int)Color.rgb(26, 59, 105));
+			mPaintBorderLine.setStyle(Style.STROKE);  		
+			mPaintBorderLine.setStrokeWidth(2);	
+		}
 	}
 	
 	/**
@@ -61,6 +69,7 @@ public class Border {
 	 */
 	public Paint getLinePaint()
 	{
+		initBorderLinePaint();
 		return mPaintBorderLine;
 	}
 		
@@ -69,7 +78,8 @@ public class Border {
 	 * @param color 线的颜色
 	 */
 	public void setBorderLineColor(int color) 
-	{				
+	{			
+		initBorderLinePaint();
 		mPaintBorderLine.setColor(color );
 	}
 	

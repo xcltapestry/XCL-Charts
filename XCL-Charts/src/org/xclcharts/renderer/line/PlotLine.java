@@ -39,32 +39,35 @@ public class PlotLine {
 	private Paint mPaintLine = null;
 	private Paint mPaintLabel = null;	
 	private PlotDot mPlotDot = null;
-	
-	
-	
+			
 	public PlotLine()
 	{
-		init();
-	}
-	
-	private void init()
-	{
-		mPaintLine = new Paint();
-		mPaintLine.setColor(Color.BLUE);
-		mPaintLine.setAntiAlias(true);
-		mPaintLine.setStrokeWidth(5);
-		
-		
-		mPaintLabel= new Paint();
-		mPaintLabel.setColor(Color.BLUE);
-		mPaintLabel.setTextSize(18);
-		mPaintLabel.setTextAlign(Align.CENTER);
-		mPaintLabel.setAntiAlias(true);
-		
 		mPlotDot = new PlotDot();		
 	}
 	
+	private void initLinePaint()
+	{
+		if(null == mPaintLine)
+		{
+			mPaintLine = new Paint();
+			mPaintLine.setColor(Color.BLUE);
+			mPaintLine.setAntiAlias(true);
+			mPaintLine.setStrokeWidth(5);
+		}
+	}
 	
+	private void initLabelPaint()
+	{
+		if(null == mPaintLabel)
+		{
+			mPaintLabel= new Paint();
+			mPaintLabel.setColor(Color.BLUE);
+			mPaintLabel.setTextSize(18);
+			mPaintLabel.setTextAlign(Align.CENTER);
+			mPaintLabel.setAntiAlias(true);
+		}
+	}
+		
 	
 	/**
 	 * 开放线画笔
@@ -72,6 +75,7 @@ public class PlotLine {
 	 */
 	public Paint getLinePaint()
 	{
+		initLinePaint();
 		return mPaintLine;
 	}
 	
@@ -81,6 +85,7 @@ public class PlotLine {
 	 */
 	public Paint getDotLabelPaint()
 	{
+		initLabelPaint();
 		return mPaintLabel;
 	}
 	

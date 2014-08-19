@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="170" key="DIALOG_Y_ORIGIN"/>
-		<item value="940" key="DIALOG_X_ORIGIN"/>
-		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="285" key="DIALOG_Y_ORIGIN"/>
+		<item value="368" key="DIALOG_HEIGHT"/>
+		<item value="993" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="bgNum2" key="selection"/>
+		<item value="mPaintAxis" key="selection"/>
 		<list key="findhistory">
-			<item value="mBgNum2"/>
-			<item value="mBgNum1"/>
-			<item value="reset"/>
-			<item value="splin"/>
-			<item value="getRingInnerColor"/>
-			<item value="pDot"/>
-			<item value="paint"/>
-			<item value="mKeyLabelX - rectWidth - rectOffset"/>
+			<item value="mPaintAxis"/>
+			<item value="BezierPath"/>
+			<item value="mPaintLine"/>
+			<item value="mPathRectangle2D"/>
+			<item value="mPaintDot"/>
+			<item value="mPaintGridLineHorizontal"/>
+			<item value="mPaintRightAxisTitle"/>
+			<item value="mPaintLeftAxisTitle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getRightAxisTitlePaint()"/>
+			<item value="getLeftAxisTitlePaint()"/>
 			<item value="bgNum2"/>
 			<item value="bgNum1"/>
 			<item value="renderCirChart"/>
 			<item value="getLabelTextWidth("/>
 			<item value="getLabelTextHeight()"/>
 			<item value="mRect"/>
-			<item value="mPosY"/>
-			<item value="mPosX"/>
 		</list>
 	</section>
 </section>
