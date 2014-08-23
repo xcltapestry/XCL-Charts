@@ -18,6 +18,8 @@
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * @license http://www.apache.org/licenses/  Apache v2 License
  * @version 1.0
+ * 
+ * v1.3 2014-8-23 xcl 增加圆形线及点击处理
  */
 package org.xclcharts.chart;
 
@@ -39,6 +41,7 @@ import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.graphics.RectF;
 import android.util.Log;
 
 
@@ -68,10 +71,17 @@ public class RadarChart extends RdChart{
 	
 	//依次存下每个标签节点归属的圆心角度
 	private Float[] mArrayLabelAgent = null;
+	//半径
+	private Float[] mArrayRadius = null;
+
+	//外围标签偏移距离
+	private int mLabelOffset = 0;
 	
 	//透明度
   	private int mAreaAlpha = 100;  	
   	private Path mRdPath = new Path();  
+  	
+  	private XEnum.RadarChartType mRadarChartType = XEnum.RadarChartType.RADAR;
 		
 	public RadarChart()
 	{
@@ -89,7 +99,16 @@ public class RadarChart extends RdChart{
 		
 		this.plotLegend.showLegend();
 	}
-	
+		 	
+ 	
+	/**
+	 * 设置雷达图显示类型(蛛网或圆形)
+	 * @param type 显示类型
+	 */
+	public void setChartType(XEnum.RadarChartType type)
+	{
+		mRadarChartType = type;
+	}
 	
 	/**
 	 * 返回数据轴
@@ -169,6 +188,21 @@ public class RadarChart extends RdChart{
 	 */
 	private void renderGridLines(Canvas canvas)
 	{				
+		switch(mRadarChartType)
+		{
+			case RADAR:
+				renderGridLinesRadar(canvas);
+				break;
+			case ROUND:
+				renderGridLinesRound(canvas);
+				break;
+			default:
+				break;
+		}			
+	}
+	
+	private void renderGridLinesRadar(Canvas canvas)
+	{
 		mRdPath.reset();	
 		for(int i=0; i < getAxisTickCount();i++)
 		{			
@@ -184,6 +218,15 @@ public class RadarChart extends RdChart{
 			mRdPath.close();
 			canvas.drawPath(mRdPath, getLinePaint());
 			mRdPath.reset();
+		}
+	}
+	
+	private void renderGridLinesRound(Canvas canvas)
+	{
+		for(int i=0;i<mArrayRadius.length;i++)
+		{			
+			canvas.drawCircle(plotArea.getCenterX(), plotArea.getCenterY(), 
+								mArrayRadius[i], getLinePaint());			
 		}
 	}
 	
@@ -273,6 +316,15 @@ public class RadarChart extends RdChart{
 	}
 	
 	/**
+	 * 设置外围标签位置的偏移距离
+	 * @param offset  偏移距离
+	 */
+	public void setlabelOffset(int offset)
+	{
+		mLabelOffset = offset;
+	}
+	
+	/**
 	 * 得到所有相关的交叉点坐标
 	 */
 	private void calcAllPoint()
@@ -295,26 +347,29 @@ public class RadarChart extends RdChart{
 		float avgRadius = MathHelper.getInstance().div(getRadius() , (dataAxisTickCount - 1));
 		
 		//当前半径
-		float curRadius = 0.0f;
+		//float curRadius = 0.0f;
 		//当前圆心角偏移量
 		float offsetAgent = 0.0f;
 		
 		//坐标与圆心角
-		mArrayDotX=new Float[dataAxisTickCount][labelsCount]; 
-		mArrayDotY=new Float[dataAxisTickCount][labelsCount]; 		
+		mArrayDotX = new Float[dataAxisTickCount][labelsCount]; 
+		mArrayDotY = new Float[dataAxisTickCount][labelsCount]; 		
 		mArrayLabelAgent = new Float[labelsCount];
 		
-		mArrayLabelX=new Float[dataAxisTickCount][labelsCount]; 
-		mArrayLabelY=new Float[dataAxisTickCount][labelsCount]; 
+		mArrayLabelX = new Float[dataAxisTickCount][labelsCount]; 
+		mArrayLabelY = new Float[dataAxisTickCount][labelsCount]; 
+		
+		mArrayRadius = new Float[dataAxisTickCount];
 		
 
 		int labelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
-		float labelRadius = this.getRadius() + labelHeight;
+		float labelRadius = this.getRadius() + labelHeight + mLabelOffset;
 		float currAgent = 0.0f;
 				
 		for(int i=0; i < dataAxisTickCount;i++) //数据轴
 		{
-			curRadius = avgRadius * i; //当前半径长度，依此算出各节点坐标	
+			//curRadius = avgRadius * i; //当前半径长度，依此算出各节点坐标	
+			mArrayRadius[i] = avgRadius * i;
 			
 			for(int j=0;j < labelsCount ;j++)
 			{				
@@ -322,11 +377,11 @@ public class RadarChart extends RdChart{
 				currAgent = MathHelper.getInstance().add(offsetAgent , pAngle);
 				
 				//计算位置
-				MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,curRadius, currAgent); 				    
+				MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,mArrayRadius[i], currAgent); 				    
 		        //点的位置
 		        mArrayDotX[i][j] = MathHelper.getInstance().getPosX();
 		        mArrayDotY[i][j] = MathHelper.getInstance().getPosY();	
-		        
+		        		        		        
 		        //记下每个标签对应的圆心角
 		        if(0 == i) mArrayLabelAgent[j] =  currAgent ;
 		        
@@ -353,6 +408,7 @@ public class RadarChart extends RdChart{
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
 			
+		int j = 0;
 		for(RadarData lineData : mDataSet)
 		{			
 			//画各自的网
@@ -389,14 +445,15 @@ public class RadarChart extends RdChart{
 			switch(lineData.getAreaStyle())
 			{
 			case FILL:
-				drawDataPath(canvas,lineData,arrayDataX,arrayDataY);
+				drawDataPath(canvas,lineData,arrayDataX,arrayDataY,j);
 				break;
 			case STROKE:
-				renderDataLine(canvas,lineData,arrayDataX,arrayDataY);
+				renderDataLine(canvas,lineData,arrayDataX,arrayDataY,j);
 				break;
 			default:
 				Log.e(TAG,"这类型不认识.");
 			}
+			j++;
 		}
         
 	}
@@ -411,7 +468,7 @@ public class RadarChart extends RdChart{
 	
 	private void renderDataLine(Canvas canvas,
 								RadarData lineData,
-								Float[] arrayDataX,Float[] arrayDataY )
+								Float[] arrayDataX,Float[] arrayDataY,int dataID )
 	{
 		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
@@ -440,7 +497,7 @@ public class RadarChart extends RdChart{
 		//绘制点及对应的标签
 		for(int p=0;p< arrayDataX.length;p++)
 		{								
-			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);			
+			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],dataID,p);			
 		}		
 		
 	}
@@ -456,7 +513,7 @@ public class RadarChart extends RdChart{
 	 */
 	private void drawDataPath(Canvas canvas,
 			RadarData lineData,
-			Float[] arrayDataX,Float[] arrayDataY )
+			Float[] arrayDataX,Float[] arrayDataY ,int dataID)
 	{
 		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
@@ -486,7 +543,7 @@ public class RadarChart extends RdChart{
 		lineData.getPlotLine().getLinePaint().setAlpha(oldAlpha);
 		for(int p=0;p< arrayDataX.length;p++)
 		{
-			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],p);
+			renderDotAndLabel(canvas,lineData,arrayDataX[p], arrayDataY[p],dataID,p);
 		}
 	}
 
@@ -494,24 +551,24 @@ public class RadarChart extends RdChart{
 	private void renderDotAndLabel(Canvas canvas,
 			RadarData lineData,
 			float currentX,float currentY,
-			int listID)
+			int dataID,int childID)
 	{
 		PlotLine plotLine = lineData.getPlotLine();
 		
 		if(!plotLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
     	{                		       	
-    		PlotDot pDot = plotLine.getPlotDot();	  
-    		              		
-    		PlotDotRender.getInstance().renderDot(canvas,pDot,
+    		PlotDot pDot = plotLine.getPlotDot();	      		              		
+    		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
     				currentX - pDot.getDotRadius() , currentY - pDot.getDotRadius(),
     				currentX , currentY,
     				lineData.getPlotLine().getDotPaint()); //标识图形            			                	
-			
+    		savePointRecord(dataID,childID,currentX, currentY,rect);    
+    		
     	}
 		//是否显示标签
 		if(lineData.getLabelVisible())
 		{			
-			canvas.drawText(getFormatterDotLabel(lineData.getLinePoint().get(listID) ),
+			canvas.drawText(getFormatterDotLabel(lineData.getLinePoint().get(childID) ),
 							currentX, currentY, 
 							lineData.getPlotLine().getDotLabelPaint());
 		}		

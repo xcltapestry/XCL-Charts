@@ -104,12 +104,18 @@ public class PlotDotRender {
 						  float left, float top, float right,float bottom, Paint paint) {
 				
 		float radius = pDot.getDotRadius();
+		
+		//mRect.setEmpty();
+		
+		mRect.left =  0.0f;
+		mRect.top =  0.0f;
+		mRect.right =  0.0f;
+		mRect.bottom = 0.0f;
+		
+		
 		if(Float.compare(radius, 0.0f) == 0 
 				|| Float.compare(radius, 0.0f) == -1){
-			mRect.left =  0.0f;
-			mRect.top =  0.0f;
-			mRect.right =  0.0f;
-			mRect.bottom = 0.0f;
+			
 			return mRect;
 		}						
 		float halfRadius = MathHelper.getInstance().div(radius , 2f);
@@ -123,9 +129,9 @@ public class PlotDotRender {
 			cX =  left + Math.abs(right - left);
 			
 			mRect.left =  (cX - radius);
-			mRect.top =  (bottom + radius);
+			mRect.top =   (bottom - radius);
 			mRect.right =  (cX + radius);
-			mRect.bottom =  (bottom - radius);
+			mRect.bottom =  (bottom + radius);			
 		}
 		
 
@@ -152,6 +158,7 @@ public class PlotDotRender {
 			mPath.lineTo(right + radius, bottom + halfRadius);
 			mPath.close();
             canvas.drawPath(mPath, paint);
+            mPath.reset();
                         
             mRect.left =  (right - radius);
 			mRect.top = ( bottom - triganaleHeight);
@@ -169,6 +176,7 @@ public class PlotDotRender {
 			mPath.lineTo(left + (right - left), bottom + radius);
 			mPath.close();
             canvas.drawPath(mPath, paint);
+            mPath.reset();
             
         	mRect.left = ( right -  radius  );
 			mRect.top =  ( bottom - radius);
@@ -180,15 +188,17 @@ public class PlotDotRender {
 			paint.setStyle(Style.FILL);	
 			
 			mRect.left =  (right - radius);
-			mRect.top =  (bottom + radius);
+			mRect.top =   (bottom - radius); 
 			mRect.right =  (right + radius);
-			mRect.bottom =  (bottom - radius);
+			mRect.bottom = (bottom + radius);
 			canvas.drawRect(mRect,paint);
 			
 			break;
 		case HIDE:
 		default:
 		}
+		
+		
 		
 		return mRect;
 	}

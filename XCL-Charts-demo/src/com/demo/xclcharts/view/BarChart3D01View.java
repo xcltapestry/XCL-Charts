@@ -239,7 +239,7 @@ public class BarChart3D01View extends TouchView {
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
 
 		Toast.makeText(this.getContext(),
-				"info:" + record.getBarInfo() +
+				"info:" + record.getRectInfo() +
 				" Key:" + bData.getKey() + 							
 				" Current Value:" + Double.toString(bValue), 
 				Toast.LENGTH_SHORT).show();			

@@ -281,10 +281,10 @@ public class BarChart01View extends TouchView implements Runnable{
 		BarData bData = chartData.get(record.getDataID());					
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
 
-		Toast.makeText(this.getContext(),
-				"info:" + record.getBarInfo() +
+		Toast.makeText(this.getContext(),				
 				" Key:" + bData.getKey() + 							
-				" Current Value:" + Double.toString(bValue), 
+				" Current Value:" + Double.toString(bValue) +
+				" info:" + record.getRectInfo() , 
 				Toast.LENGTH_SHORT).show();		
 	}
 	

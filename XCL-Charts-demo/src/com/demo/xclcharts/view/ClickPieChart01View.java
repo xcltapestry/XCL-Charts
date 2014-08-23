@@ -145,6 +145,10 @@ public class ClickPieChart01View extends GraphicalView {
 	}
 	
 	
+	//请注意:
+	// 此处是饼图所以监听为 ChartArcListener
+	// 如为柱图则监听为 ChartBarListener
+	// 如为线图或雷达图，则监听为ChartPointListener
 	public void setOnPlotClickListener(ChartArcListener chartListener) 
 	{
 	  this.onClickListener = chartListener;

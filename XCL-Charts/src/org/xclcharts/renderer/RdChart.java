@@ -22,6 +22,7 @@
 package org.xclcharts.renderer;
 
 import org.xclcharts.common.IFormatterDoubleCallBack;
+import org.xclcharts.event.click.PointPosition;
 
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -36,7 +37,7 @@ import android.util.Log;
  *  
  */
 
-public class RdChart extends XChart {
+public class RdChart extends EventChart {
 	
 	private String TAG = "RdChart";
 	
@@ -81,6 +82,17 @@ public class RdChart extends XChart {
 				 				 div(this.plotArea.getHeight(),2f) );	
 	}
 	
+	/**
+	 * 返回当前点击点的信息
+	 * @param x 点击点X坐标
+	 * @param y	点击点Y坐标
+	 * @return 返回对应的位置记录
+	 */
+	public PointPosition getPositionRecord(float x,float y)
+	{		
+		return getPointRecord(x,y);
+	}
+		
 	
 	/**
 	 * 返回半径

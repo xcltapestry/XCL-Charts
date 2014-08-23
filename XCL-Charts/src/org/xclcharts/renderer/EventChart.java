@@ -24,6 +24,7 @@ package org.xclcharts.renderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.event.click.BarPosition;
@@ -35,6 +36,7 @@ import org.xclcharts.event.click.PositionRecord;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
+import android.util.Log;
 
 /**
  * @ClassName EventChart
@@ -55,6 +57,7 @@ public class EventChart extends XChart {
 	public EventChart() {
 		// TODO Auto-generated constructor stub		
 		super();		
+		initPositionRecord();
 	}
 	
 	/**
@@ -88,7 +91,7 @@ public class EventChart extends XChart {
 	 */
 	public ArrayList<PositionRecord> getPositionRecordset()
 	{
-		return mRecordset;
+		return  mRecordset;
 	}
 	
 	/**
@@ -117,7 +120,7 @@ public class EventChart extends XChart {
 		mSelectID = recordID;
 	}
 	
-	protected void savePointRecord(int dataID,int childID,float x,float y,RectF r)
+	protected void savePointRecord(final int dataID,final int childID,final float x,final float y,final RectF r)
 	{
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotPointPosition>();
 	
@@ -125,15 +128,12 @@ public class EventChart extends XChart {
 		{
 			PlotPointPosition pRecord = new PlotPointPosition();			
 			pRecord.savePlotDataID(dataID);
-			pRecord.savePlotDataChildID(childID);
-			
-			pRecord.savePlotPosition(x, y);			
-			pRecord.savePlotRectF(r);
-			
-			pRecord.extPointClickRange(mClickRangeExtValue);
-			mRecordset.add(pRecord);
+			pRecord.savePlotDataChildID(childID);			
+			pRecord.savePlotPosition(x, y);							
+			pRecord.savePlotRectF(r.left,r.top,r.right,r.bottom);			
+			pRecord.extPointClickRange(mClickRangeExtValue);			
+			mRecordset.add(pRecord);				
 		}
-		 
 	}
 	
 	
@@ -149,7 +149,7 @@ public class EventChart extends XChart {
 				pRecord.savePlotDataChildID(childID);
 				pRecord.savePlotRectF(left, top, right, bottom);			
 				pRecord.extPointClickRange(mClickRangeExtValue);
-				mRecordset.add(pRecord);			
+				mRecordset.add(pRecord);															
 		}
 	}
 	
@@ -260,11 +260,11 @@ public class EventChart extends XChart {
 		return null;
 	}
 	
-	protected PointPosition getPointRecord(float x,float y)
-	{		
+	protected PointPosition getPointRecord(final float x,final float y)
+	{			
 		if(!isPlotClickArea(x,y))return null;		
 		if(null == mRecordset) return null;
-			
+						
 		Iterator it = mRecordset.iterator();
 		while(it.hasNext())
 		{		
@@ -274,7 +274,7 @@ public class EventChart extends XChart {
 				saveSelected(record.getRecordID());
 				return record;			
 			}
-		}		
+		}			
 		clearSelected();
 		return null;
 	}

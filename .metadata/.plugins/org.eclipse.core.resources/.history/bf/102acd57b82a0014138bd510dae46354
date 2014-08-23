@@ -1,0 +1,293 @@
+package com.demo.xclcharts.view;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.xclcharts.chart.PieData;
+import org.xclcharts.chart.RadarChart;
+import org.xclcharts.chart.RadarData;
+import org.xclcharts.chart.RoseChart;
+import org.xclcharts.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.PointPosition;
+import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint.Align;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.widget.Toast;
+
+public class RadarChart03View extends TouchView {
+
+	private String TAG = "RadarChart03View";
+	private RadarChart chart = new RadarChart();
+	
+	private RoseChart chartRose = new RoseChart();	
+	LinkedList<PieData> roseData = new LinkedList<PieData>();
+	
+	
+	//标签集合
+	private List<String> labels = new LinkedList<String>();
+	private List<RadarData> chartData = new LinkedList<RadarData>();
+	
+	
+	public RadarChart03View(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		 initView();
+	}
+	
+	public RadarChart03View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public RadarChart03View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartLabels();
+			chartDataSet();	
+			chartRender();
+	 }
+	 
+	 
+	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  	
+	
+	private void chartRender()
+	{
+		try{				
+			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
+			
+			chart.setTitle("雷达图-Radar Chart");
+			chart.addSubtitle("(XCL-Charts Demo)");
+			
+
+			//设定数据源
+			chart.setCategories(labels);								
+			chart.setDataSource(chartData);
+			//圆形雷达图
+			chart.setChartType(XEnum.RadarChartType.ROUND);
+			//点击事件处理
+			chart.ActiveListenItemClick();
+			chart.extPointClickRange(30);
+			
+			
+			//数据轴最大值
+			chart.getDataAxis().setAxisMax(100);
+			//数据轴刻度间隔
+			chart.getDataAxis().setAxisSteps(10);
+			//主轴标签偏移50，以便留出空间用于显示点和标签
+			chart.getDataAxis().setTickLabelMargin(50);
+			
+			chart.getLinePaint().setColor(Color.parseColor("#BFE154"));
+			chart.getLabelPaint().setColor(Color.parseColor("#E94D43"));
+			chart.getLabelPaint().setFakeBoldText(true);
+			
+			//定义数据轴标签显示格式
+			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
+	
+				@Override
+				public String textFormatter(String value) {
+					// TODO Auto-generated method stub		
+					Double tmp = Double.parseDouble(value);
+					DecimalFormat df=new DecimalFormat("#0");
+					String label = df.format(tmp).toString();				
+					return (label);
+				}
+				
+			});
+			
+			//定义数据点标签显示格式
+			chart.setDotLabelFormatter(new IFormatterDoubleCallBack() {
+				@Override
+				public String doubleFormatter(Double value) {
+					// TODO Auto-generated method stub
+					DecimalFormat df= new DecimalFormat("#0");					 
+					String label = "["+df.format(value).toString()+"]";
+					return label;
+				}});
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, e.toString());
+		}
+		
+	}
+	
+	private void chartDataSet()
+	{
+		LinkedList<Double> dataSeriesA= new LinkedList<Double>();	
+		dataSeriesA.add(0d); 
+		dataSeriesA.add(0d);
+		dataSeriesA.add(0d);
+		dataSeriesA.add(0d);
+		dataSeriesA.add(0d);
+		dataSeriesA.add(0d);
+		dataSeriesA.add(0d);
+		dataSeriesA.add(0d);
+		
+		RadarData lineData1 = new RadarData("笨蛋一号",dataSeriesA,
+					(int)Color.rgb(234, 83, 71),XEnum.RadarDataAreaStyle.FILL);
+		lineData1.setLabelVisible(true);	
+		lineData1.getPlotLine().getDotLabelPaint().setTextAlign(Align.LEFT);
+		
+		LinkedList<Double> dataSeriesB= new LinkedList<Double>();	
+		dataSeriesB.add(50d); 
+		dataSeriesB.add(60d); 
+		dataSeriesB.add(70d); 	
+		dataSeriesB.add(40d); 
+		dataSeriesB.add(80d); 
+		dataSeriesB.add(75d); 
+		dataSeriesB.add(60d); 
+		dataSeriesB.add(50d); 
+		
+		RadarData lineData2 = new RadarData("笨蛋二号",dataSeriesB,
+					(int)Color.rgb(75, 166, 51),XEnum.RadarDataAreaStyle.STROKE);
+		lineData2.setLineStyle(XEnum.LineStyle.SOLID);
+		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);			
+		lineData2.getPlotLine().setDotStyle(XEnum.DotStyle.RING);
+		lineData2.getPlotLine().getLinePaint().setColor(Color.rgb(31, 59, 123));			
+			
+		
+		LinkedList<Double> dataSeriesC= new LinkedList<Double>();	
+		dataSeriesC.add(40d); 
+		dataSeriesC.add(30d); 
+		dataSeriesC.add(40d); 
+		dataSeriesC.add(35d);
+		dataSeriesC.add(45d);
+		dataSeriesC.add(55d);
+		dataSeriesC.add(70d);
+		dataSeriesC.add(85d);
+		
+		RadarData lineData3 = new RadarData("笨蛋三号",dataSeriesC,
+					(int)Color.rgb(224, 53, 49),XEnum.RadarDataAreaStyle.STROKE);
+		lineData3.setLineStyle(XEnum.LineStyle.SOLID);	
+		lineData3.getPlotLine().setDotStyle(XEnum.DotStyle.PRISMATIC);
+	
+		
+		chartData.add(lineData1);
+		//chartData.add(lineData2);
+		//chartData.add(lineData3);
+		
+	}
+    
+	private void chartLabels()
+	{
+		labels.add("小");
+		labels.add("子");
+		labels.add("你");
+		labels.add("是");
+		labels.add("个");
+		labels.add("大");
+		labels.add("笨");
+		labels.add("蛋");
+	}
+	
+	
+	private void chartRender2()
+	{
+		try {						
+			
+			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			chartRose.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			
+			//背景 
+			//chart.setApplyBackgroundColor(true);
+			//chart.setBackgroundColor(Color.BLACK);
+			
+			//数据源
+			chartRose.setDataSource(roseData);							
+				
+			//设置标题
+			//chartRose.setTitle("南丁格尔玫瑰图");
+			//chartRose.addSubtitle("(XCL-Charts)");
+			//chart.getPlotTitle().getTitlePaint().setColor(Color.WHITE);
+			//chart.getPlotTitle().getSubtitlePaint().setColor(Color.WHITE);
+			
+			//设置标签显示位置,当前设置标签显示在扇区中间
+			chartRose.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, e.toString());
+		}
+	}
+	private void chartDataSet2()
+	{
+		//设置图表数据源
+							
+		//PieData(标签，百分比，在饼图中对应的颜色)
+		roseData.add(new PieData("PostgreSQL",40,(int)Color.rgb(77, 83, 97) ));
+		roseData.add(new PieData("Sybase"	 ,50,(int)Color.rgb(148, 159, 181)));
+		roseData.add(new PieData("DB2"		 ,60,(int)Color.rgb(253, 180, 90)));
+		roseData.add(new PieData("国产及其它"	 ,35,(int)Color.rgb(52, 194, 188)));
+		roseData.add(new PieData("SQL Server",70,(int)Color.rgb(39, 51, 72)));
+		roseData.add(new PieData("DB2"		 ,80,(int)Color.rgb(255, 135, 195)));
+		roseData.add(new PieData("Oracle"    ,90,(int)Color.rgb(215, 124, 124)));	
+	}
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
+
+	@Override
+	public List<XChart> bindChart() {
+		// TODO Auto-generated method stub		
+		List<XChart> lst = new ArrayList<XChart>();
+		lst.add(chart);		
+		return lst;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());			
+		}
+		return true;
+	}
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		PointPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+			
+		if(record.getDataID() < chartData.size())
+		{
+			RadarData lData = chartData.get(record.getDataID());
+			Double lValue = lData.getLinePoint().get(record.getDataChildID());
+			
+			Toast.makeText(this.getContext(), 					
+					" Current Value:"+Double.toString(lValue) +
+					" Point info:"+record.getPointInfo() , 
+					Toast.LENGTH_SHORT).show();			
+		}
+	}
+
+}

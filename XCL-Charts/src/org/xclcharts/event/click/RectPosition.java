@@ -32,6 +32,7 @@ import android.graphics.RectF;
 public class RectPosition extends PositionRecord{
 	
 	protected RectF mRectF = null;
+	protected RectF mRectFRange = null;
 	
 	//放大值
 	protected int mExtValue = 0;
@@ -47,11 +48,9 @@ public class RectPosition extends PositionRecord{
 	}	
 	
 	
-	
-	
 	protected void saveRectF(float left,float top,float right,float bottom)
 	{
-		if(null == mRectF)mRectF = new RectF();		
+		if(null == mRectF)mRectF = new RectF();			
 		mRectF.set(left, top, right, bottom);
 	}
 	
@@ -60,7 +59,7 @@ public class RectPosition extends PositionRecord{
 		mRectF = r;
 	}
 			
-	public String getBarInfo()
+	public String getRectInfo()
 	{	
 		if(null == mRectF)return "";
 		
@@ -83,24 +82,29 @@ public class RectPosition extends PositionRecord{
 	protected boolean compareRange(float x, float y) {
 		// TODO Auto-generated method stub
 		
-		if(null == mRectF)return false;
-		
-		mRectF.left -=  mExtValue;
-		mRectF.top -=  mExtValue;
-		mRectF.right +=  mExtValue;
-		mRectF.bottom +=  mExtValue;			
+		if(null == mRectF)return false;		
+		if(null == mRectFRange)  mRectFRange = new RectF();
 	
+		mRectFRange.setEmpty();
+		mRectFRange.set(mRectF);
+		
+		mRectFRange.left -=  mExtValue;
+		mRectFRange.top -=  mExtValue;
+		mRectFRange.right +=  mExtValue;
+		mRectFRange.bottom +=  mExtValue;			
+			
 		//contains 在范围比较小时很不好使.
-		if( mRectF.contains(x, y)) return true;
+		if( mRectFRange.contains(x, y)) return true;
 		
 		//再加层手工检查
-		if( (Float.compare(x, mRectF.left) == 1 || Float.compare(x, mRectF.left) == 0 )
-				&& (Float.compare(x, mRectF.right) == -1 || Float.compare(x, mRectF.right) == 0 ) 
-			&& (Float.compare(y, mRectF.bottom) == 1 || Float.compare(y, mRectF.bottom) == 0 )
-			&& (Float.compare(y, mRectF.top) == -1 || Float.compare(y, mRectF.top) == 0 ) ) 
+		if( (Float.compare(x, mRectFRange.left) == 1 || Float.compare(x, mRectFRange.left) == 0 )
+				&& (Float.compare(x, mRectFRange.right) == -1 || Float.compare(x, mRectFRange.right) == 0 ) 
+			&& (Float.compare(y, mRectFRange.bottom) == 1 || Float.compare(y, mRectFRange.bottom) == 0 )
+			&& (Float.compare(y, mRectFRange.top) == -1 || Float.compare(y, mRectFRange.top) == 0 ) ) 
 			{
 				return true;
-			}			
+			}
+
 		return false;
 	}	
 	

@@ -68,7 +68,7 @@ public class PlotPointPosition extends PointPosition{
 		saveRectF(left, top, right, bottom);
 	}
 	
-	public void savePlotRectF(RectF r)
+	public void savePlotRectF(final RectF r)
 	{
 		saveRectF(r);
 	}

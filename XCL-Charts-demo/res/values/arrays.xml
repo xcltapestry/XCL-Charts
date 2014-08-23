@@ -33,7 +33,9 @@
         
         <!--  
         <item>极性图</item> -->
-        <item>雷达图</item> 
+        <item>蜘蛛网雷达图</item> 
+        <item>圆形雷达图</item> 
+        <item>雷达玫瑰混合图</item> 
         <item>柱形渐显动画演示</item>     
         
         <item>仪表盘-混合图</item> 
@@ -83,6 +85,9 @@
       
       <!--  <item>Polar Chart</item>    -->
        <item>Radar Chart</item>           
+         <item>Radar Chart</item>      
+        <item>雷达玫瑰混合图</item> 
+        
        <item>Bar Chart - 柱形渐显动画效果</item>    
        
        <item>Dial Chart</item> 

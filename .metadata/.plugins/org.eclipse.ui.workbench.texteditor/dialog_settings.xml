@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="mPaintAxis" key="selection"/>
+		<item value="chart2" key="selection"/>
 		<list key="findhistory">
-			<item value="mPaintAxis"/>
-			<item value="BezierPath"/>
-			<item value="mPaintLine"/>
-			<item value="mPathRectangle2D"/>
-			<item value="mPaintDot"/>
-			<item value="mPaintGridLineHorizontal"/>
-			<item value="mPaintRightAxisTitle"/>
-			<item value="mPaintLeftAxisTitle"/>
+			<item value="chart2"/>
+			<item value="mRdPath"/>
+			<item value="getPositionRecord"/>
+			<item value="renderDataLine"/>
+			<item value="drawDataPath"/>
+			<item value="renderDotAndLabel"/>
+			<item value="mLabelOffset"/>
+			<item value="mArrayLabelX"/>
 		</list>
 		<list key="replacehistory">
 			<item value="getRightAxisTitlePaint()"/>

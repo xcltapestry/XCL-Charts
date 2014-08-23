@@ -27,10 +27,14 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.xclcharts.chart.BarData;
+import org.xclcharts.chart.LineData;
 import org.xclcharts.chart.RadarData;
 import org.xclcharts.chart.RadarChart;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.BarPosition;
+import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -41,10 +45,11 @@ import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.widget.Toast;
 
 /**
  * @ClassName RadarChart01View
- * @Description  雷达图例子
+ * @Description  蜘蛛雷达图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 public class RadarChart01View extends TouchView {
@@ -97,13 +102,17 @@ public class RadarChart01View extends TouchView {
 			int [] ltrb = getPieDefaultSpadding();
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
-			chart.setTitle("雷达图-Radar Chart");
+			chart.setTitle("蜘蛛雷达图");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
 
 			//设定数据源
 			chart.setCategories(labels);								
 			chart.setDataSource(chartData);
+			
+			//点击事件处理
+			chart.ActiveListenItemClick();
+			chart.extPointClickRange(50);
 			
 			
 			//数据轴最大值
@@ -217,7 +226,30 @@ public class RadarChart01View extends TouchView {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		return false;
+		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());			
+		}
+		return true;
+	}
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{
+		PointPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+			
+		if(record.getDataID() < chartData.size())
+		{
+			RadarData lData = chartData.get(record.getDataID());
+			Double lValue = lData.getLinePoint().get(record.getDataChildID());
+			
+			Toast.makeText(this.getContext(), 					
+					" Current Value:"+Double.toString(lValue) +
+					" Point info:"+record.getPointInfo() , 
+					Toast.LENGTH_SHORT).show();			
+		}
 	}
 
 }

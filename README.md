@@ -91,6 +91,13 @@ http://www.oschina.net/p/xcl-charts
  <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart 横向" />
   </p>
  <br/>
+  <p>
  <img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />  
   <img src="http://img.blog.csdn.net/20140716213635034" alt="piechart2d" />  
 <img src="http://img.blog.csdn.net/20140816155314843" alt="bzsplinechart" />  
+ </p>
+<br/>
+ <img src="http://img.blog.csdn.net/20140823203324712" alt="radarchart_round" />  
+  <img src="http://img.blog.csdn.net/20140823203347192" alt="radarchart_rose" />  
+  <br/>
+  

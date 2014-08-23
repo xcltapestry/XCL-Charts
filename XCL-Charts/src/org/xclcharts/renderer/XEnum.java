@@ -258,4 +258,13 @@ public class XEnum {
 		public enum RoundTickAxisType {			
 			INNER_TICKAXIS,OUTER_TICKAXIS
 		}
+		
+		/**
+		 * 雷达图显示类型(蛛网或圆形)
+		 * @author XCL
+		 *
+		 */
+		public enum RadarChartType{
+			RADAR,ROUND
+		}
 }

@@ -55,6 +55,8 @@ import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
+import com.demo.xclcharts.view.RadarChart02View;
+import com.demo.xclcharts.view.RadarChart03View;
 import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
 import com.demo.xclcharts.view.MultiAxisChart02View;
@@ -114,6 +116,8 @@ public class ChartsActivity extends Activity {
 				new DountChart01View(this),
 				new RoseChart01View(this),
 				new RadarChart01View(this),
+				new RadarChart02View(this),
+				new RadarChart03View(this),
 				new BarChart06View(this)}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  

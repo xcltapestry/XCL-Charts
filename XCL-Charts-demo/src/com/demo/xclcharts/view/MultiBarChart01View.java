@@ -144,7 +144,8 @@ public class MultiBarChart01View extends TouchView {
 			//显示边框
 			//chart2.showRoundBorder();		
 			
-			chart2.getBar().setBarStyle(XEnum.BarStyle.FILL);			
+			chart2.getBar().setBarStyle(XEnum.BarStyle.FILL);		
+			
 			
 			//标题
 			chart2.setTitle("负债率标准: 40%~60%");
@@ -193,7 +194,6 @@ public class MultiBarChart01View extends TouchView {
 			
 			 //让柱子间没空白
 			 chart2.getBar().setBarInnerMargin(0d);
-			 chart2.getBar().setBarStyle(XEnum.BarStyle.FILL);
 					
 			//轴颜色					
 			chart2.getDataAxis().getAxisPaint().setColor(axisColor);
@@ -209,7 +209,7 @@ public class MultiBarChart01View extends TouchView {
 			
 			//隐藏图例
 			chart2.getPlotLegend().hideLegend();			
-			chart2.showRoundBorder();
+			//chart2.showRoundBorder();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
