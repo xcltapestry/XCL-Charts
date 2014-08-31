@@ -18,8 +18,9 @@
 	   	
 	   	<item>平滑曲线图</item>	   	
 	    <item>普通曲线图</item>
-	    <item>三角函数曲线图</item>
+	    <item>三角函数曲线图</item>	   
 	    <item>区域图</item>
+	     <item>平滑区域图</item>
 	    
 	    <item>多轴混合图1</item>
 	    <item>多轴混合图2</item>
@@ -71,6 +72,7 @@
 	     	
 	  <item>Spline Chart </item>
 	  <item>Spline Chart </item>
+	  <item>Area Chart</item>  
 	  <item>Area Chart</item>  
 	  
 	   <item>MultiAxis Chart</item>

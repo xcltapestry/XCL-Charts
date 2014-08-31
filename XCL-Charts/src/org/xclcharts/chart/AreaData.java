@@ -26,9 +26,6 @@ import java.util.List;
 
 import org.xclcharts.renderer.XEnum;
 
-import android.graphics.Color;
-import android.graphics.Paint;
-
 /**
  * @ClassName AreaData
  * @Description  面积图数据传输类
@@ -37,7 +34,7 @@ import android.graphics.Paint;
  */
 public class AreaData extends LineData {
 	
-	private Paint mPaintOutline = null;
+	//private Paint mPaintOutline = null;
 	
 	private int mAreaFillColor = -999; // 255;
 	
@@ -94,8 +91,8 @@ public class AreaData extends LineData {
 	
 	private void init()
 	{
-		mPaintOutline = new Paint();
-		mPaintOutline.setColor(Color.BLACK);
+		//mPaintOutline = new Paint();
+		//mPaintOutline.setColor(Color.BLACK);
 	}
 	
 	/**

@@ -98,6 +98,8 @@ public class BarChart07View_left  extends GraphicalView {
 					}
 					
 				});
+				
+				chart.getDataAxis().setAxisLineVisible(false);
 			
 				//隐藏Key
 				chart.getPlotLegend().hideLegend();

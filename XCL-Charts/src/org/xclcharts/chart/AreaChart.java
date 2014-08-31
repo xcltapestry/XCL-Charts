@@ -18,6 +18,7 @@
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * @license http://www.apache.org/licenses/  Apache v2 License
  * @version 1.0
+ * v1.3 2014-8-30 xcl 增加平滑区域面积图
  */
 package org.xclcharts.chart;
 
@@ -25,8 +26,7 @@ package org.xclcharts.chart;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Canvas;
-
+import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
@@ -34,12 +34,14 @@ import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.RectF;
 import android.util.Log;
 
 
@@ -60,28 +62,48 @@ public class AreaChart extends LnChart{
   	protected List<AreaData> mDataset;
   	
   	//透明度
-  	private int mAreaAlpha = 100;
+  	private int mAreaAlpha = 100;  	
+  	
+  	//path area
+  	private List<PointF> mLstPathPoints =new ArrayList<PointF>(); 
+  	private Path mPathArea = null;
+  	private PointF[] mBezierControls = new PointF[2];
 	
+	//key
+  	private List<LnData> mLstKey = new ArrayList<LnData>();	
+	
+	//line
+  	private List<PointF> mLstPoints = new ArrayList<PointF>();	
+	
+	//dots
+  	private List<RectF> mLstDots =new ArrayList<RectF>();
+			  	
 	public AreaChart()
 	{
 		super();
-		
-		mPaintAreaFill = new Paint();
-		mPaintAreaFill.setStyle(Style.FILL);
-		mPaintAreaFill.setAntiAlias(true);
-		mPaintAreaFill.setColor((int)Color.rgb(73, 172, 72));		
-		
+	
 		categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		dataAxis.setHorizontalTickAlign(Align.LEFT);
-		
+		dataAxis.setHorizontalTickAlign(Align.LEFT);		
 	}
 	
+	private void initPaint()
+	{
+		if(null == mPaintAreaFill)
+		{
+			mPaintAreaFill = new Paint();
+			mPaintAreaFill.setStyle(Style.FILL);
+			mPaintAreaFill.setAntiAlias(true);
+			mPaintAreaFill.setColor((int)Color.rgb(73, 172, 72));	
+		}
+	}
+		
+				
 	 /**
 	 * 分类轴的数据源
 	 * @param categories 分类集
 	 */
 	public void setCategories(List<String> categories)
-	{		
+	{				
 		categoryAxis.setDataBuilding(categories);
 	}
 	
@@ -91,7 +113,7 @@ public class AreaChart extends LnChart{
 	 */
 	public void setDataSource(List<AreaData> dataset)
 	{		
-		if(null != mDataset) mDataset.clear();
+		if(null != mDataset) mDataset.clear();		
 		this.mDataset = dataset;		
 	}
 	
@@ -104,14 +126,10 @@ public class AreaChart extends LnChart{
 		mAreaAlpha = alpha;
 	}	
 
-	/**
-	 * 绘制区域
-	 * @param bd	数据序列
-	 * @param type	绘制类型
-	 * @param alpha 透明度
-	 */
-	private boolean renderLine(Canvas canvas, AreaData bd,
-									String type,int alpha,int dataID)
+	private boolean calcAllPoints(AreaData bd,
+			List<RectF> lstDots,
+			List<PointF> lstPoints,
+			List<PointF> lstPathPoints)
 	{
 		//数据源
 		List<Double> chartValues = bd.getLinePoint();
@@ -126,26 +144,19 @@ public class AreaChart extends LnChart{
          
 		float lineStartX = initX;
         float lineStartY = initY;
-        float lineEndX = 0.0f;
-        float lineEndY = 0.0f;
+        float lineStopX = 0.0f;   
+        float lineStopY = 0.0f;   
         						
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
 		float currLablesSteps = div(getAxisScreenWidth(), 
 										(categoryAxis.getDataSet().size() -1));
-					
-		 //用于画折线   
-        Path pathArea = new Path();  
-        pathArea.moveTo(initX,initY);   
-        
-        //透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
-        mPaintAreaFill.setAlpha( mAreaAlpha );            
-        PlotLine pLine = bd.getPlotLine(); 
-        //设置当前填充色
-        mPaintAreaFill.setColor(bd.getAreaFillColor());
-            
+				
+		//path area
+		lstPathPoints.add( new PointF(initX,initY));
+		            
         double dper = 0d;
-		int j = 0,childID = 0;				 
+		int j = 0;	 
 		for(Double bv : chartValues)
         {								
 			//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
@@ -159,68 +170,195 @@ public class AreaChart extends LnChart{
 				lineStartX = initX;
 				lineStartY = sub(initY , valuePosition);
 				
-				lineEndX = lineStartX;
-				lineEndY = lineStartY;
+				lineStopX = lineStartX ;
+				lineStopY = lineStartY;	
 			}else{
-				lineEndX = add(initX , (j) * currLablesSteps);
-				lineEndY = sub(initY , valuePosition);
-			}
-        	        	 
-        	if(j == chartValues.size() - 1)    //收尾，将path连接一气  
-            {  
-        		// p.lineTo(lineEndX ,initY);                
-        	}else{
-        		pathArea.lineTo(lineEndX ,lineEndY);   
-        	}
-       
-        	////////////////////
-        	if(type.equalsIgnoreCase("LINE"))
-        	{
-        		canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
-        												pLine.getLinePaint());            	
-        	}else if(type.equalsIgnoreCase("DOT2LABEL")){
-        		        		
-        		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
-            	{            	
-            		PlotDot pDot = pLine.getPlotDot();	              
-            		float rendEndX  = add(lineEndX  , pDot.getDotRadius());    
-            		            	      
-            		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
-            				lineStartX ,lineStartY ,
-            				lineEndX ,lineEndY,
-            				pLine.getDotPaint()); //标识图形            			                	
-        			lineEndX = rendEndX;
-        			this.savePointRecord(dataID,childID,lineEndX, lineEndY,rect);  
-        			childID++;
-            	}
-        		
-        		if(bd.getLabelVisible())
-            	{        			            		
-            		canvas.drawText(this.getFormatterItemLabel(bv) ,
-							lineEndX, lineEndY,  pLine.getDotLabelPaint());
-            	}
-        	}else{
-        		Log.e(TAG,"未知的处理参数.");
-        		return false;
-        	}      
-        	////////////////////
+				lineStopX = add(initX , (j) * currLablesSteps);
+				lineStopY = sub(initY , valuePosition);
+			}        
         	
-        	lineStartX = lineEndX;
-			lineStartY = lineEndY;
-
+        	if(0 == j )
+    		{
+        		//line
+        		lstPoints.add( new PointF(lineStartX,lineStartY));
+        		lstPoints.add( new PointF(lineStopX,lineStopY));
+    			
+        		//path area
+        		lstPathPoints.add( new PointF(lineStartX,lineStartY));
+        		lstPathPoints.add( new PointF(lineStopX,lineStopY));
+    		}else{     
+    			//line
+    			lstPoints.add( new PointF(lineStopX,lineStopY));
+    			//path area
+    			lstPathPoints.add( new PointF(lineStopX,lineStopY));
+    		}            		
+    
+        	//dot
+        	lstDots.add(new RectF(lineStartX,lineStartY,lineStopX,lineStopY));
+   	
+        	lineStartX = lineStopX;
+			lineStartY = lineStopY;
 			j++;
         }	
-                	
-		pathArea.lineTo(lineStartX ,lineStartY);  
-		pathArea.lineTo(lineStartX ,initY);  
-		pathArea.close(); 
-		if(type.equalsIgnoreCase("LINE"))
-			canvas.drawPath(pathArea, mPaintAreaFill);
-    
+		
+		//path area
+		lstPathPoints.add( new PointF(lineStartX ,lineStartY));
+		lstPathPoints.add( new PointF(lineStartX ,initY));
+		return true;        
+	}
+	
+	private boolean renderArea(Canvas canvas,Paint paintAreaFill,Path pathArea,
+								AreaData areaData,
+								List<PointF> lstPathPoints)
+	{		        		
+		for(int i = 0;i<lstPathPoints.size();i++)
+		{
+			PointF point = lstPathPoints.get(i);
+        	if(0 == i)
+        	{
+        		pathArea.moveTo(point.x ,point.y);  
+        	}else{
+        		pathArea.lineTo(point.x ,point.y);   
+        	}				
+		}							
+		pathArea.close();
+	
+        //设置当前填充色
+		paintAreaFill.setColor(areaData.getAreaFillColor());	
+		paintAreaFill.setAlpha(this.mAreaAlpha); 
+		//绘制area
+	    canvas.drawPath(pathArea, paintAreaFill);	      
+	    pathArea.reset();		
+		return true;
+	}
+	
+
+	private boolean renderBezierArea(Canvas canvas, Paint paintAreaFill,Path bezierPath,
+										AreaData areaData,
+										List<PointF> lstPathPoints)
+	{		        				
+		if(null == bezierPath)bezierPath = new Path();
+
+		//start point
+		bezierPath.moveTo(plotArea.getLeft(), plotArea.getBottom());		
+		
+		for(int i = 0;i<lstPathPoints.size();i++)
+		{
+			if(i<3) continue;
+			
+			CurveHelper.curve3( lstPathPoints.get(i-2),  
+					lstPathPoints.get(i-1), 
+					lstPathPoints.get(i-3),
+					lstPathPoints.get(i), 
+					mBezierControls);
+			
+			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+					mBezierControls[1].x, mBezierControls[1].y, 
+					lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
+		}			
+	
+	
+		if(lstPathPoints.size()> 3)
+		{			
+			PointF stop  = lstPathPoints.get(lstPathPoints.size()-1);
+			//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
+			CurveHelper.curve3(lstPathPoints.get(lstPathPoints.size()-2),  
+										stop, 
+										lstPathPoints.get(lstPathPoints.size()-3),
+										stop, 
+										mBezierControls);
+			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+					mBezierControls[1].x, mBezierControls[1].y, 
+					lstPathPoints.get(lstPathPoints.size() -1 ).x, 
+					lstPathPoints.get(lstPathPoints.size() -1 ).y);							
+		}							
+		bezierPath.close();
+		paintAreaFill.setColor(areaData.getAreaFillColor());	
+		
+		paintAreaFill.setAlpha(this.mAreaAlpha); 		
+	    canvas.drawPath(bezierPath, paintAreaFill);		
+	    bezierPath.reset();
 		return true;
 	}
 	
 	
+	private boolean renderLine(Canvas canvas, AreaData areaData,
+								List<PointF> lstPoints)
+	{		        
+		for(int i=0;i<lstPoints.size();i++)
+        {	        	
+        	if(0 == i)continue;
+        	PointF pointStart = lstPoints.get(i - 1);
+        	PointF pointStop = lstPoints.get(i);
+        	            
+  	        canvas.drawLine( pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
+  	    		  			areaData.getLinePaint()); 	
+        }
+		return true;
+	}
+	
+	
+	private boolean renderBezierCurveLine(Canvas canvas,Path bezierPath,
+											AreaData areaData,List<PointF> lstPoints)
+	{		        		
+		renderBezierCurveLine(canvas,areaData.getLinePaint(),bezierPath,lstPoints); 		 
+		return true;
+	}
+
+	/**
+	 * 绘制区域
+	 * @param bd	数据序列
+	 * @param type	绘制类型
+	 * @param alpha 透明度
+	 */
+	private boolean renderDotAndLabel(Canvas canvas, AreaData bd,int dataID,
+										List<RectF> lstDots)
+	{
+		
+		 PlotLine pLine = bd.getPlotLine();
+		 if(pLine.getDotStyle().equals(XEnum.DotStyle.HIDE) == true 
+				 					&&bd.getLabelVisible() == false )
+		 {
+    	   return true;
+		 }
+		 int childID = 0;
+
+		//数据源
+		List<Double> chartValues = bd.getLinePoint();
+		if(null == chartValues)
+		{
+			Log.e(TAG,"线数据集合为空.");
+			return false;
+		}	
+		
+		for(int i=0;i<lstDots.size();i++)
+		{
+			Double dv = chartValues.get(i);			
+			RectF  dot = lstDots.get(i);
+			
+			if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
+        	{            	
+        		PlotDot pDot = pLine.getPlotDot();	              
+        		float rendEndX  = add(dot.right  , pDot.getDotRadius());    
+        		            	      
+        		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
+        				dot.left ,dot.top ,
+        				dot.right ,dot.bottom,
+        				pLine.getDotPaint()); //标识图形            			                	
+        		dot.right = rendEndX;
+    			this.savePointRecord(dataID,childID,dot.right ,dot.bottom,rect);  
+    			childID++;
+        	}
+    		
+    		if(bd.getLabelVisible())
+        	{        			            		
+        		canvas.drawText(this.getFormatterItemLabel(dv) ,
+        				dot.right ,dot.bottom,  pLine.getDotLabelPaint());
+        	} 
+		}
+		return true;
+	}	
+						
 	private boolean renderVerticalPlot(Canvas canvas)
 	{								
 		if(null == mDataset)
@@ -232,27 +370,48 @@ public class AreaChart extends LnChart{
 		renderVerticalDataAxis(canvas);
 		renderVerticalCategoryAxis(canvas);
 		
-		List<LnData> lstKey = new ArrayList<LnData>();		
+		initPaint();
+		if(null == mPathArea) mPathArea = new Path();
+								
+		//透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
+		//mPaintAreaFill.setAlpha( mAreaAlpha );  
+						
 		//开始处 X 轴 即分类轴                  
 		for(int i=0;i<mDataset.size();i++)
-		{								
-			if(!this.renderLine(canvas, mDataset.get(i),"LINE",
-						(int)Math.round(mDataset.size() *i),i) )return false;
-			if(!this.renderLine(canvas, mDataset.get(i),"DOT2LABEL",
-						(int)Math.round(mDataset.size() *i),i) )return false;
-			lstKey.add(mDataset.get(i));
-		}
+		{					
+			AreaData areaData = mDataset.get(i);
 			
-		plotLegend.renderLineKey(canvas, lstKey);
+			calcAllPoints( areaData,mLstDots,mLstPoints,mLstPathPoints);					
+			
+			switch(getCrurveLineStyle())
+			{
+				case BEZIERCURVE:
+					renderBezierArea(canvas,mPaintAreaFill,mPathArea,areaData,mLstPathPoints);
+					renderBezierCurveLine(canvas,mPathArea,areaData,mLstPoints);
+					break;
+				case BEELINE:
+					renderArea(canvas,mPaintAreaFill,mPathArea,areaData,mLstPathPoints);	
+					renderLine(canvas,areaData,mLstPoints);	
+					break;
+				default:
+					Log.e(TAG,"未知的枚举类型.");
+					continue;				
+			}								
+			renderDotAndLabel(canvas,areaData,i,mLstDots);						
+			mLstKey.add(areaData);
+			
+			mLstDots.clear();
+			mLstPoints.clear();
+			mLstPathPoints.clear();
+		}							
+		plotLegend.renderLineKey(canvas, mLstKey);
+		mLstKey.clear();
 		return true;
 	}
-	
-
-	
+			
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
 	{
-		// 绘制图表
 		try {
 			super.postRender(canvas);
 			

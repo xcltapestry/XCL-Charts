@@ -66,7 +66,7 @@ public class CustomLineData {
 	
 	public CustomLineData()
 	{
-		init();
+
 	}
 		
 	/**
@@ -78,7 +78,7 @@ public class CustomLineData {
 				  Double value,
 				  int color) 
 	{		
-		init();
+	
 		setValue(value);
 		setColor(color);
 	}
@@ -94,29 +94,14 @@ public class CustomLineData {
 						  Double value,
 						  int color,
 						  int stroke) 
-	{
-		init();
+	{	
 		setLabel(label);
 		setValue(value);
 		setColor(color);
 		setLineStroke(stroke);
 	}
 
-	
-	private void init()
-	{
-		mPaintCustomLine = new Paint();
-		mPaintCustomLine.setAntiAlias(true);
-		mPaintCustomLine.setStrokeWidth(3);
-		mPaintCustomLine.setTextSize(18);
-		mPaintCustomLine.setTextAlign(Align.LEFT);
-		
-		mPaintLineLabel = new Paint();
-		mPaintLineLabel.setAntiAlias(true);
-		mPaintLineLabel.setStrokeWidth(3);
-		mPaintLineLabel.setTextSize(18);
-		mPaintLineLabel.setTextAlign(Align.LEFT);
-	}
+
 	
 	/**
 	 * 返回标签
@@ -300,6 +285,14 @@ public class CustomLineData {
 	 */
 	public Paint getCustomLinePaint()
 	{
+		if(null == mPaintCustomLine)
+		{
+			mPaintCustomLine = new Paint();
+			mPaintCustomLine.setAntiAlias(true);
+			mPaintCustomLine.setStrokeWidth(3);
+			mPaintCustomLine.setTextSize(18);
+			mPaintCustomLine.setTextAlign(Align.LEFT);
+		}
 		return mPaintCustomLine;
 	}
 	
@@ -309,7 +302,16 @@ public class CustomLineData {
 	 * @return 画笔
 	 */
 	public Paint getLineLabelPaint()
-	{
+	{		
+		if(null == mPaintLineLabel)
+		{
+			mPaintLineLabel = new Paint();
+			mPaintLineLabel.setAntiAlias(true);
+			mPaintLineLabel.setStrokeWidth(3);
+			mPaintLineLabel.setTextSize(18);
+			mPaintLineLabel.setTextAlign(Align.LEFT);
+		}
+		
 		return mPaintLineLabel;
 	}
 	

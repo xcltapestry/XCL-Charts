@@ -26,11 +26,14 @@ import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.event.click.ChartArcListener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PointF;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -39,25 +42,16 @@ import android.widget.Toast;
 import com.demo.xclcharts.view.ClickPieChart01View;
 
 public class ClickChartsActivity extends Activity {
-	
-	
+		
 	private ClickPieChart01View mCharts ;
-	
-	private int mSelected = 0;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		//setContentView(R.layout.activity_click_charts);
-		
-		
-		mCharts = new ClickPieChart01View(this);
-			
+		mCharts = new ClickPieChart01View(this);			
 		Bundle bunde = this.getIntent().getExtras();  
-		mSelected = bunde.getInt("selected");  
-		String title = bunde.getString("title"); 
 		initActivity();
-		setTitle("ClickChartsActivity");
+		setTitle("图表点击事件(View -> Activity)");
 	}
 
 	
@@ -81,16 +75,14 @@ public class ClickChartsActivity extends Activity {
 	       RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
 	    		   													scrWidth, scrHeight);	
 	       //居中显示
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);   
-        //图表view放入布局中，也可直接将图表view放入Activity对应的xml文件中
-        final RelativeLayout chartLayout = new RelativeLayout(this);  	
-   
-        
-        chartLayout.addView( mCharts, layoutParams);
+	        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);   
+	        //图表view放入布局中，也可直接将图表view放入Activity对应的xml文件中
+	        final RelativeLayout chartLayout = new RelativeLayout(this);  	
+	        
+	        chartLayout.addView( mCharts, layoutParams);
                    		  
 	        //增加控件
-		   ((ViewGroup) content).addView(chartLayout);		   
-		 //  ((ViewGroup) content).addView(mZoomControls);
+		   ((ViewGroup) content).addView(chartLayout);		
 		    setContentView(content);	
 		    
 		    
@@ -106,10 +98,12 @@ public class ClickChartsActivity extends Activity {
 							   /**
 							    * 附注，如果数据源是从Activity传给view的，
 							    * 则可在此通过 positionRecord.getDataID() 得到对应的id来取相关信息。
-							    * 同理，其它图形也可依此形式来做，但ArcPosition可替换为PointPosition或BarPosition类
+							    * 同理，其它图形也可依此形式来做，
+							    * 	如onClick的参数ArcPosition依图形类别,
+							    * 		可替换对应的PointPosition或BarPosition类
 							    */
 								Toast.makeText(ClickChartsActivity.this,									
-										"Activity Info ID:" + positionRecord.getDataID() ,
+										"[此处为Activity返回的信息] ID:" + positionRecord.getDataID() ,
 										Toast.LENGTH_SHORT).show();
 								
 						  }
@@ -121,9 +115,34 @@ public class ClickChartsActivity extends Activity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.click_charts, menu);
+		super.onCreateOptionsMenu(menu);
+        menu.add(Menu.NONE, Menu.FIRST + 1, 0, "帮助");  
+        menu.add(Menu.NONE, Menu.FIRST + 2, 0, "关于XCL-Charts"); 
 		return true;
 	}
+
+	 @Override
+	    public boolean onOptionsItemSelected(MenuItem item) {
+	        super.onOptionsItemSelected(item);
+	        switch(item.getItemId())
+	        {
+	        case Menu.FIRST+1: 
+	        	//String chartsHelp[] = getResources().getStringArray(R.array.chartsHelp);	        
+	        	//String URL = chartsHelp[mSelected]; 	        	
+	        	String URL =getResources().getString(R.string.helpurl);	        		        
+		        Uri uri = Uri.parse(URL);  
+		        Intent intent2 = new Intent(Intent.ACTION_VIEW, uri);  
+		        startActivity(intent2);  
+		        finish();
+	            break;
+	        case Menu.FIRST+2:
+		        Intent intent = new Intent();  
+	    		intent.setClass(ClickChartsActivity.this,AboutActivity.class);    				
+	    		startActivity(intent); 	        
+	            break;
+	        }
+	        return true;
+	    }
 	
 	
 

@@ -28,6 +28,7 @@ import java.util.List;
 import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
 import org.xclcharts.renderer.plot.Pointer;
 
 import android.content.Context;
@@ -176,13 +177,14 @@ public class DialChart03View extends GraphicalView {
 		private void addAttrInfo()
 		{
 			/////////////////////////////////////////////////////////////
+			PlotAttrInfo plotAttrInfo = chart.getPlotAttrInfo();
 			//设置附加信息
 			Paint paintTB = new Paint();
 			paintTB.setColor(Color.WHITE);
 			paintTB.setTextAlign(Align.CENTER);
 			paintTB.setTextSize(30);	
 			paintTB.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.TOP, "当前网速", 0.3f, paintTB);
+			plotAttrInfo.addAttributeInfo(XEnum.Location.TOP, "当前网速", 0.3f, paintTB);
 			
 			Paint paintBT = new Paint();
 			paintBT.setColor(Color.WHITE);
@@ -190,7 +192,7 @@ public class DialChart03View extends GraphicalView {
 			paintBT.setTextSize(35);
 			paintBT.setFakeBoldText(true);
 			paintBT.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, 
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, 
 					Float.toString(MathHelper.getInstance().round(mPercentage * 100,2)), 0.3f, paintBT);
 			
 			Paint paintBT2 = new Paint();
@@ -199,7 +201,7 @@ public class DialChart03View extends GraphicalView {
 			paintBT2.setTextSize(30);
 			paintBT2.setFakeBoldText(true);
 			paintBT2.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, "MB/S", 0.4f, paintBT2);				
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, "MB/S", 0.4f, paintBT2);				
 		}
 		
 		public void setCurrentStatus(float percentage)

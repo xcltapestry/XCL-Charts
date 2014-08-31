@@ -24,7 +24,6 @@ package org.xclcharts.renderer;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.event.click.BarPosition;
@@ -36,7 +35,6 @@ import org.xclcharts.event.click.PositionRecord;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
-import android.util.Log;
 
 /**
  * @ClassName EventChart

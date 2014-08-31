@@ -25,7 +25,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import android.graphics.Color;
-import android.util.Log;
 
 /**
  * @ClassName BarData

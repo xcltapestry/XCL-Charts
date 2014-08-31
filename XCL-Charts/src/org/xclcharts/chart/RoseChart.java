@@ -30,6 +30,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -41,7 +42,7 @@ import android.util.Log;
  */
 public class RoseChart extends PieChart{
 	
-	private static final String TAG="PieChart";
+	private  static final  String TAG="PieChart";
 	
 	private Paint mPaintInner = new Paint();
 
@@ -127,19 +128,17 @@ public class RoseChart extends PieChart{
 				//newRaidus = (float) (radius * (cData.getPercentage()/ 100));  
 	            //newRaidus = (float)(Math.round(newRaidus *100))/100;    
 	            
-	            //在饼图中显示所占比例  
-	            float nLeft = sub(cirX , newRaidus);  
-	            float nTop  = sub(cirY , newRaidus) ;  
-	            float nRight = add(cirX , newRaidus) ;  
-	            float nBottom = add(cirY , newRaidus) ;  
-	            RectF nRF = new RectF(nLeft ,nTop,nRight,nBottom);  
+	            //在饼图中显示所占比例   
+	            RectF nRF = new RectF(sub(cirX , newRaidus),sub(cirY , newRaidus),
+	            					  add(cirX , newRaidus),add(cirY , newRaidus));  
 	            canvas.drawArc(nRF, mOffsetAngle, percentage, true, paintArc);       
 				
 	          //计算百分比标签  
-	            MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, radius - radius/2/2, mOffsetAngle + percentage/2); 
+	            PointF point = MathHelper.getInstance().calcArcEndPointXY(
+	            			cirX, cirY, radius - radius/2/2, mOffsetAngle + percentage/2); 
 	            
 	            //标识  
-	            canvas.drawText(cData.getLabel(),MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,getLabelPaint());             
+	            canvas.drawText(cData.getLabel(),point.x, point.y ,getLabelPaint());             
 	         
 	          //下次的起始角度  
 	            mOffsetAngle = add(mOffsetAngle,percentage);

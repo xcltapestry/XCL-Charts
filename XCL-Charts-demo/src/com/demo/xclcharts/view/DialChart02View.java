@@ -28,6 +28,7 @@ import java.util.List;
 import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -166,22 +167,24 @@ public class DialChart02View extends GraphicalView {
 		
 		private void addAttrInfo()
 		{
-				/////////////////////////////////////////////////////////////
-				//设置附加信息
-				Paint paintTB = new Paint();
-				paintTB.setColor(Color.WHITE);
-				paintTB.setTextAlign(Align.CENTER);
-				paintTB.setTextSize(30);			
-				chart.addAttributeInfo( XEnum.Location.TOP, "100 K/s", 0.9f, paintTB);
-				
-				Paint paintBT = new Paint();
-				paintBT.setColor(Color.WHITE);
-				paintBT.setTextAlign(Align.CENTER);
-				paintBT.setTextSize(30);
-				
-				
-				chart.addAttributeInfo(XEnum.Location.BOTTOM, 
-						"平均速率: "+Float.toString( mPercentage * 100)+"K/s", 0.8f, paintBT);
+			/////////////////////////////////////////////////////////////
+			PlotAttrInfo plotAttrInfo = chart.getPlotAttrInfo();
+		
+			//设置附加信息
+			Paint paintTB = new Paint();
+			paintTB.setColor(Color.WHITE);
+			paintTB.setTextAlign(Align.CENTER);
+			paintTB.setTextSize(30);			
+			plotAttrInfo.addAttributeInfo( XEnum.Location.TOP, "100 K/s", 0.9f, paintTB);
+			
+			Paint paintBT = new Paint();
+			paintBT.setColor(Color.WHITE);
+			paintBT.setTextAlign(Align.CENTER);
+			paintBT.setTextSize(30);
+			
+			
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, 
+					"平均速率: "+Float.toString( mPercentage * 100)+"K/s", 0.8f, paintBT);
 		}
 		
 		public void setCurrentStatus(float percentage)

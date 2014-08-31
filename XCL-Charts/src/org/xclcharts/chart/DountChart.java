@@ -24,6 +24,8 @@ package org.xclcharts.chart;
 
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
+import org.xclcharts.renderer.plot.PlotAttrInfoRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -48,7 +50,9 @@ public class DountChart  extends PieChart{
 	private Paint mPaintCenterText;
 	private String mCenterText = "";
 	
-
+	//附加信息类
+	private PlotAttrInfoRender plotAttrInfoRender = null;
+	
 	public DountChart()
 	{
 		super();	
@@ -63,13 +67,31 @@ public class DountChart  extends PieChart{
 		mPaintFill.setColor(fillColor); 
 		mPaintFill.setAntiAlias(true);
 		
-		mPaintCenterText = new Paint();
-		mPaintCenterText.setAntiAlias(true);
-		mPaintCenterText.setTextSize(28);
-		mPaintCenterText.setTextAlign(Align.CENTER);
-		
+		plotAttrInfoRender = new PlotAttrInfoRender();
+			
 		this.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
 	}
+	
+	private void initCenterTextPaint()
+	{
+		if(null == mPaintCenterText)
+		{
+			mPaintCenterText = new Paint();
+			mPaintCenterText.setAntiAlias(true);
+			mPaintCenterText.setTextSize(28);
+			mPaintCenterText.setTextAlign(Align.CENTER);
+		}
+	}
+	
+	/**
+	 * 附加信息绘制处理类
+	 * @return 信息基类
+	 */
+	public PlotAttrInfo getPlotAttrInfo()
+	{
+		return plotAttrInfoRender; 
+	}
+	
 	
 	/**
 	 * 环内部填充画笔
@@ -105,6 +127,7 @@ public class DountChart  extends PieChart{
 	 */
 	public Paint getCenterTextPaint()
 	{
+		initCenterTextPaint();
 		return mPaintCenterText;
 	}
 	
@@ -116,7 +139,7 @@ public class DountChart  extends PieChart{
 	{
 		mCenterText = text;
 	}
-	
+			
 	/**
 	 * 绘制中心点
 	 * @param canvas 画布
@@ -124,8 +147,12 @@ public class DountChart  extends PieChart{
 	private void renderCenterText(Canvas canvas)
 	{		
 		if(mCenterText.length() > 0 )
+		{
+			if(null == mPaintCenterText)initCenterTextPaint();
+			
 			canvas.drawText(mCenterText, 
 				plotArea.getCenterX(), plotArea.getCenterY(), mPaintCenterText);
+		}
 	}
 
 	/**
@@ -140,7 +167,11 @@ public class DountChart  extends PieChart{
 	     float cirY = plotArea.getCenterY();
 	     
 	     calcInnerRadius();
-	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);     
+	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);   
+	     
+	     //绘制附加信息
+		 plotAttrInfoRender.renderAttrInfo(canvas, cirX, cirY, this.getRadius());
+		 //中心文本	
 	     renderCenterText(canvas);
 	     return true;
 	}	

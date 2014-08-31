@@ -1,0 +1,62 @@
+package org.xclcharts.renderer.plot;
+
+import android.graphics.Canvas;
+import android.graphics.PointF;
+
+public class PlotAttrInfoRender extends PlotAttrInfo{
+	
+	PointF mPosPintF = new PointF();
+	
+	
+	public PlotAttrInfoRender()
+	{
+		super();
+	}
+	
+	 
+	/**
+	 * 绘制附加信息
+	 * @param canvas		画布
+	 * @param plotArea		绘图区
+	 * @param plotRadius	当前半径
+	 */
+	public void renderAttrInfo(Canvas canvas,PlotAreaRender plotArea,float plotRadius)
+	{		
+		if(null == mAttrInfo) return ;
+		if(null == mAttrInfoLocation) return ;
+		float radius = 0.0f; 
+		String info = "";		
+		
+		for(int i=0;i<mAttrInfo.size();i++)
+		{
+			info = mAttrInfo.get(i);
+			if("" == info) continue;
+			
+			if(null == mAttrInfoPostion || mAttrInfoPostion.size() < i)continue;	
+			if(null == mAttrInfoPaint.get(i) || mAttrInfoPaint.size() < i) continue;
+			
+			mPosPintF.x =  plotArea.getCenterX();
+			mPosPintF.y =  plotArea.getCenterY();
+			
+			radius = plotRadius * mAttrInfoPostion.get(i);
+			switch(mAttrInfoLocation.get(i))
+			{
+				case TOP:
+					mPosPintF.y =  plotArea.getCenterY() - radius;
+					break;
+				case BOTTOM:
+					mPosPintF.y =  plotArea.getCenterY() + radius;
+					break;
+				case LEFT:
+					mPosPintF.x =  plotArea.getCenterX() - radius;
+					break;
+				case RIGHT:
+					mPosPintF.x =  plotArea.getCenterX() + radius;
+					break;
+			}	    							
+			canvas.drawText(info, mPosPintF.x, mPosPintF.y, mAttrInfoPaint.get(i));
+		}
+		
+	}
+
+}

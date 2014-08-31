@@ -22,12 +22,8 @@
 package com.demo.xclcharts;
 
 
-import org.xclcharts.event.click.ArcPosition;
-import org.xclcharts.event.click.ChartArcListener;
-
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.PointF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -40,10 +36,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 import android.widget.ZoomControls;
 
 import com.demo.xclcharts.view.AreaChart01View;
+import com.demo.xclcharts.view.AreaChart02View;
 import com.demo.xclcharts.view.BarChart01View;
 import com.demo.xclcharts.view.BarChart02View;
 import com.demo.xclcharts.view.BarChart03View;
@@ -55,9 +51,6 @@ import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
-import com.demo.xclcharts.view.RadarChart02View;
-import com.demo.xclcharts.view.RadarChart03View;
-import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
 import com.demo.xclcharts.view.MultiAxisChart02View;
 import com.demo.xclcharts.view.MultiBarChart01View;
@@ -65,9 +58,12 @@ import com.demo.xclcharts.view.PieChart01View;
 import com.demo.xclcharts.view.PieChart02View;
 import com.demo.xclcharts.view.PieChart3D01View;
 import com.demo.xclcharts.view.RadarChart01View;
+import com.demo.xclcharts.view.RadarChart02View;
+import com.demo.xclcharts.view.RadarChart03View;
 import com.demo.xclcharts.view.RoseChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.SplineChart02View;
+import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.StackBarChart01View;
 import com.demo.xclcharts.view.StackBarChart02View;
 import com.demo.xclcharts.view.TouchView;
@@ -106,6 +102,7 @@ public class ChartsActivity extends Activity {
 				new SplineChart01View(this),
 				new SplineChart02View(this),
 				new AreaChart01View(this),
+				new AreaChart02View(this),
 				new MultiAxisChart01View(this),
 				new MultiAxisChart02View(this),
 				new MultiBarChart01View(this),
@@ -150,7 +147,8 @@ public class ChartsActivity extends Activity {
    		   // 1. 新增一个View，绘制图表.
  		   // 2. 通过下面的代码得到控件，addview即可
 	       //LayoutInflater factory = LayoutInflater.from(this);
-	       //View content = (View) factory.inflate(R.layout.activity_multi_touch, null);       
+	       //View content = (View) factory.inflate(R.layout.activity_multi_touch, null);     
+	     
 			
 			//方法二:
 			//完全动态创建,无须XML文件.

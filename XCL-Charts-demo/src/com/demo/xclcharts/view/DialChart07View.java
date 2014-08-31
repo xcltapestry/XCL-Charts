@@ -149,7 +149,7 @@ public class DialChart07View extends GraphicalView {
 				paintTB.setTextAlign(Align.CENTER);
 				paintTB.setTextSize(22);	
 				paintTB.setAntiAlias(true);	
-				chart180.addAttributeInfo(XEnum.Location.BOTTOM, "180度仪表盘", 0.5f, paintTB);
+				chart180.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, "180度仪表盘", 0.5f, paintTB);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, e.toString());
@@ -182,7 +182,7 @@ public class DialChart07View extends GraphicalView {
 				paintTB.setTextAlign(Align.CENTER);
 				paintTB.setTextSize(22);	
 				paintTB.setAntiAlias(true);	
-				chart90.addAttributeInfo(XEnum.Location.BOTTOM, "90度仪表盘", 0.5f, paintTB);
+				chart90.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, "90度仪表盘", 0.5f, paintTB);
 				
 				
 			} catch (Exception e) {
@@ -243,7 +243,8 @@ public class DialChart07View extends GraphicalView {
 			paintTB.setTextAlign(Align.CENTER);
 			paintTB.setTextSize(22);	
 			paintTB.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, "270度仪表盘", 0.5f, paintTB);
+			chart.getPlotAttrInfo().addAttributeInfo(
+						XEnum.Location.BOTTOM, "270度仪表盘", 0.5f, paintTB);
 		}
 		
 		public void setCurrentStatus(float percentage)

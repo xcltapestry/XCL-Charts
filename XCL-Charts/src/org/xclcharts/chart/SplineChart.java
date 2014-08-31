@@ -55,7 +55,7 @@ import android.util.Log;
  */
 public class SplineChart extends LnChart{
 	
-	private static final String TAG="SplineChart";
+	private static  String TAG="SplineChart";
 	
 	//数据源
 	private List<SplineData> mDataset;
@@ -71,10 +71,15 @@ public class SplineChart extends LnChart{
 	private PlotCustomLine mCustomLine = null;
 	
 	//平滑曲线
-	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.NORMAL;
-	private List<PointF> mLstPoints = null;
-	private LinkedHashMap<PlotLine,List<PointF>> mMapPoints = null;
+	private List<PointF> mLstPoints = new ArrayList<PointF>(); 
+	private Path mBezierPath = new Path();
 	
+	//dots
+	private List<RectF> mLstDots =new ArrayList<RectF>();
+		
+	//key
+	private List<LnData> mLstKey = new ArrayList<LnData>();	
+
 		
 	public SplineChart()
 	{
@@ -94,7 +99,7 @@ public class SplineChart extends LnChart{
 	 * 分类轴的数据源
 	 * @param categories 标签集
 	 */
-	public void setCategories(List<String> categories)
+	public void setCategories( List<String> categories)
 	{
 		categoryAxis.setDataBuilding(categories);
 	}
@@ -103,7 +108,7 @@ public class SplineChart extends LnChart{
 	 *  设置数据轴的数据源
 	 * @param dataSeries 数据序列
 	 */
-	public void setDataSource(List<SplineData> dataSeries)
+	public void setDataSource( List<SplineData> dataSeries)
 	{
 		if(null != mDataset) mDataset.clear();
 		this.mDataset = dataSeries;		
@@ -113,7 +118,7 @@ public class SplineChart extends LnChart{
 	 *  显示数据的数据轴最大值
 	 * @param value 数据轴最大值
 	 */
-	public void setCategoryAxisMax(double value)
+	public void setCategoryAxisMax( double value)
 	{
 		mMaxValue = value;
 	}	
@@ -122,7 +127,7 @@ public class SplineChart extends LnChart{
 	 * 设置分类轴最小值
 	 * @param value 最小值
 	 */
-	public void setCategoryAxisMin(double value)
+	public void setCategoryAxisMin( double value)
 	{
 		mMinValue = value;
 	}	
@@ -156,59 +161,19 @@ public class SplineChart extends LnChart{
 	 * 设置定制线值
 	 * @param customLineDataset 定制线数据集合
 	 */
-	public void setCustomLines(List<CustomLineData> customLineDataset)
+	public void setCustomLines( List<CustomLineData> customLineDataset)
 	{
 		mCustomLine.setCustomLines(customLineDataset);
 	}
-	
-	/**
-	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
-	 * @param style
-	 */
-	public void setCrurveLineStyle(XEnum.CrurveLineStyle style)
-	{
-		mCrurveLineStyle = style;
-	}
-	
-	/**
-	 * 返回曲线显示风格
-	 * @return 显示风格
-	 */
-	public XEnum.CrurveLineStyle getCrurveLineStyle()
-	{
-		return mCrurveLineStyle;
-	}
-	
-	private void initLineMap()
-	{
-		if(null == mLstPoints){
-			mLstPoints = new ArrayList<PointF>();	
-		}else{
-			mLstPoints.clear();
-		}
 				
-		if(null == mMapPoints)
-		{
-			mMapPoints = new LinkedHashMap<PlotLine,List<PointF>>();
-		}else{
-			mMapPoints.clear();
-		}
-		
-	}
-	
-	/**
-	 * 绘制线
-	 * @param bd	数据集
-	 * @param type	处理类型号
-	 */	
-	private void renderLine(Canvas canvas, SplineData bd,String type,int dataID)
+	private void calcAllPoints( SplineData bd,List<RectF> lstDots,List<PointF> lstPoints)
 	{
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
 		float lineStartX = initX;
         float lineStartY = initY;
-        float lineEndX = 0.0f;
-        float lineEndY = 0.0f;        
+        float lineStopX = 0.0f;
+        float lineStopY = 0.0f;        
     	
     	float axisScreenWidth = getAxisScreenWidth(); 
     	float axisScreenHeight = getAxisScreenHeight();
@@ -217,15 +182,9 @@ public class SplineChart extends LnChart{
 		//得到标签对应的值数据集		
 		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();	
 		if(null == chartValues) return ;
-			
-		if(type.equalsIgnoreCase("LINE") 
-				&& getCrurveLineStyle() == XEnum.CrurveLineStyle.BEZIERCURVE)
-    	{		
-			initLineMap();
-    	}
 															
 	    //画出数据集对应的线条				
-		int j = 0,childID = 0;
+		int j = 0;
 		Iterator iter = chartValues.entrySet().iterator();
 		while(iter.hasNext()){
 			    Entry  entry=(Entry)iter.next();
@@ -259,76 +218,110 @@ public class SplineChart extends LnChart{
             		lineStartX = add(initX , XvaluePostion);
 					lineStartY = sub(initY , YvaluePostion);
 					
-					lineEndX = lineStartX ;
-					lineEndY = lineStartY;														
+					lineStopX = lineStartX ;
+					lineStopY = lineStartY;														
 				}else{
-					lineEndX =  add(initX , XvaluePostion);  
-					lineEndY =  sub(initY , YvaluePostion);
+					lineStopX =  add(initX , XvaluePostion);  
+					lineStopY =  sub(initY , YvaluePostion);
 				}
             	            	
-            	PlotLine pLine = bd.getPlotLine();             
-            	if(type.equalsIgnoreCase("LINE"))
-            	{
-                      
-            		if(getCrurveLineStyle() == XEnum.CrurveLineStyle.BEZIERCURVE)
-            		{
-	            		if(0 == j )
-	            		{
-	            			mLstPoints.add( new PointF(lineStartX,lineStartY));
-	            			mLstPoints.add( new PointF(lineEndX,lineEndY));
-	            		}else{        			
-	            			mLstPoints.add( new PointF(lineEndX,lineEndY));
-	            		}            		
-	            		mMapPoints.put(pLine, mLstPoints);
-            		}else{
-            			canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,pLine.getLinePaint());                        
-            		}
-        			        			
-            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
-            		
-            		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
-                	{
-                		float rendEndX = lineEndX;                		
-                		PlotDot pDot = pLine.getPlotDot();	                
-                		rendEndX  = add(lineEndX , pDot.getDotRadius());               		
-            			
-                		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
-                				lineStartX ,lineStartY ,
-                				lineEndX ,lineEndY,
-                				pLine.getDotPaint()); //标识图形            			                	
-            			lineEndX = rendEndX;
-            			            			
-            			savePointRecord(dataID,childID,lineEndX, lineEndY,rect); 
-            			childID++;
-                	}
-            		
-            		if(bd.getLabelVisible())
-                	{            			
-                		//请自行在回调函数中处理显示格式
-                        canvas.drawText(
-                        		getFormatterDotLabel(
-                        				Double.toString(xValue)+","+ Double.toString(yValue)),
-                        				lineEndX, lineEndY,  pLine.getDotLabelPaint());
-                	}
-            	}else{
-            		return ;
-            	}                  					
-				lineStartX = lineEndX;
-				lineStartY = lineEndY;
+            	if(0 == j )
+        		{
+            		//line
+            		lstPoints.add( new PointF(lineStartX,lineStartY));
+            		lstPoints.add( new PointF(lineStopX,lineStopY));        			
+        		}else{     
+        			//line
+        			lstPoints.add( new PointF(lineStopX,lineStopY));
+        		}            		
+        
+            	//dot
+            	lstDots.add(new RectF(lineStartX,lineStartY,lineStopX,lineStopY));
+                         					
+				lineStartX = lineStopX;
+				lineStartY = lineStopY;
 
 				j++;	              								
-		}				
-		
-		
-		if(type.equalsIgnoreCase("LINE") 
-				&& getCrurveLineStyle() == XEnum.CrurveLineStyle.BEZIERCURVE)
-    	{			
-			renderBezierCurve(canvas,mMapPoints); 			
-			mMapPoints.clear();
-    	}						
+		}								
 	}
 	
 	
+	private boolean renderLine(Canvas canvas, SplineData spData,
+												List<PointF> lstPoints)
+	{		        
+		for(int i=0;i<lstPoints.size();i++)
+		{	        	
+			if(0 == i)continue;
+			PointF pointStart = lstPoints.get(i - 1);
+			PointF pointStop = lstPoints.get(i);
+			    
+			canvas.drawLine( pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
+					spData.getLinePaint()); 	
+		}
+		return true;
+	}
+		
+	private boolean renderBezierCurveLine(Canvas canvas,Path bezierPath,
+			SplineData spData,List<PointF> lstPoints)
+	{		        		
+		renderBezierCurveLine(canvas,spData.getLinePaint(),bezierPath,lstPoints); 		 
+		return true;
+	}
+	
+	private boolean renderDotAndLabel(Canvas canvas, SplineData spData,int dataID,
+										List<RectF> lstDots)
+	{	
+		PlotLine pLine = spData.getPlotLine();
+		if(pLine.getDotStyle().equals(XEnum.DotStyle.HIDE) == true 
+					&& spData.getLabelVisible() == false )
+		{
+			return true;
+		}
+		int childID = 0;
+		
+		//得到标签对应的值数据集		
+		LinkedHashMap<Double,Double> chartValues = spData.getLineDataSet();	
+		if(null == chartValues) return false;
+		
+		int i = 0;
+		Iterator iter = chartValues.entrySet().iterator();
+		while(iter.hasNext()){
+			    Entry  entry=(Entry)iter.next();
+			
+			    Double xValue =(Double) entry.getKey();
+			    Double yValue =(Double) entry.getValue();	
+			    			    
+			    RectF  dot = lstDots.get(i);
+			    			    
+			    if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
+            	{
+            		float rendEndX = dot.right;                		
+            		PlotDot pDot = pLine.getPlotDot();	                
+            		rendEndX  = add(dot.right , pDot.getDotRadius());               		
+        			
+            		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
+            				dot.left ,dot.top ,
+    	    				dot.right ,dot.bottom,
+            				pLine.getDotPaint()); //标识图形            			                	
+            		dot.right = rendEndX;
+        			            			
+        			savePointRecord(dataID,childID,dot.right ,dot.bottom,rect); 
+        			childID++;
+            	}
+        		
+        		if(spData.getLabelVisible())
+            	{            			
+            		//请自行在回调函数中处理显示格式
+                    canvas.drawText(
+                    		getFormatterDotLabel(
+                    				Double.toString(xValue)+","+ Double.toString(yValue)),
+                    				dot.right ,dot.bottom,  pLine.getDotLabelPaint());
+            	}        	
+        		i++;
+		}	
+		return true;
+	}
+		
 
 	/**
 	 * 绘制图
@@ -350,16 +343,34 @@ public class SplineChart extends LnChart{
 		renderVerticalDataAxis(canvas);
 		renderVerticalCategoryAxis(canvas);		
 		
-		//开始处 X 轴 即分类轴              
-		List<LnData> lstKey = new ArrayList<LnData>();		
+		//开始处 X 轴 即分类轴              	
 		for(int i=0;i<mDataset.size();i++)
-		{										
-			renderLine(canvas, mDataset.get(i),"LINE",i);
-			renderLine(canvas, mDataset.get(i),"DOT2LABEL",i);
-			lstKey.add(mDataset.get(i));
+		{															
+			SplineData spData = mDataset.get(i);			
+			calcAllPoints( spData,mLstDots,mLstPoints);					
+			
+			switch(getCrurveLineStyle())
+			{
+				case BEZIERCURVE:								
+					renderBezierCurveLine(canvas,mBezierPath,spData,mLstPoints);
+					break;
+				case BEELINE:				
+					renderLine(canvas,spData,mLstPoints);	
+					break;
+				default:
+					Log.e(TAG,"未知的枚举类型.");
+					continue;				
+			}								
+			renderDotAndLabel(canvas,spData,i,mLstDots);								
+			mLstKey.add(mDataset.get(i));
+			
+			mLstPoints.clear();
+			mLstDots.clear();	
+			mBezierPath.reset();
 		}	
 		//key
-		plotLegend.renderLineKey(canvas,lstKey);
+		plotLegend.renderLineKey(canvas,mLstKey);
+		mLstKey.clear();
 		return true;
 	}
 	
@@ -383,5 +394,5 @@ public class SplineChart extends LnChart{
 		}
 		return ret;
 	}
-	
+					
 }

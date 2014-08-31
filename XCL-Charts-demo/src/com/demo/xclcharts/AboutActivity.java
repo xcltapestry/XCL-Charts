@@ -54,8 +54,8 @@ public class AboutActivity extends Activity {
 	
 		TextView tv_title = (TextView) findViewById(R.id.tv_title);
 		String html = "<big><font color ='red'>XCL-Charts</font></big><br/>"			
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.3<br/>"
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-8-23<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.5<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-8-30<br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群: 374780627<br/>"
 					+ "<big><font color ='red'>License</font></big><br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;Apache v2 License开源协议。"
@@ -71,7 +71,7 @@ public class AboutActivity extends Activity {
 				+ " <br/><big>About the Author</big>"
 				+ " <br/><b>熊传亮</b>"
 				+ "   <br/>&nbsp;&nbsp;&nbsp;&nbsp;有Oracle 10g OCP 及IBM Certified Systems Expert认证，" +
-				"目前在深圳一家公司是一名挂着DBA职位，写着C/C++的DBA。 "
+				"目前在深圳是一名挂着DBA职位，写着C/C++的DBA。 "
 				+ " <b>^_^</b>"		
 				+ " <br/><br/>有什么改进或建议可发邮件联系或至博客留言。 "
 				+ " <br/><big>Blog:http://blog.csdn.net/xcl168</big> "

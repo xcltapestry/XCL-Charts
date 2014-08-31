@@ -28,6 +28,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.PointF;
 import android.util.Log;
 
 /**
@@ -75,11 +76,18 @@ public class CirChart extends EventChart{
 		mPaintLabel.setTextSize(18);
 		mPaintLabel.setAntiAlias(true);
 		mPaintLabel.setTextAlign(Align.CENTER);	
-		
-		mPaintLabelLine = new Paint();
-		mPaintLabelLine.setColor(Color.BLACK);
-		mPaintLabelLine.setAntiAlias(true);
-		mPaintLabelLine.setStrokeWidth(2);
+	
+	}
+	
+	private void initLabelLinePaint()
+	{
+		if(null == mPaintLabelLine)
+		{
+			mPaintLabelLine = new Paint();
+			mPaintLabelLine.setColor(Color.BLACK);
+			mPaintLabelLine.setAntiAlias(true);
+			mPaintLabelLine.setStrokeWidth(2);
+		}
 	}
 	
 	
@@ -158,6 +166,7 @@ public class CirChart extends EventChart{
 	 */
 	public Paint getLabelLinePaint()
 	{
+		initLabelLinePaint();
 		return mPaintLabelLine;
 	}
 	
@@ -198,36 +207,40 @@ public class CirChart extends EventChart{
 				calcRadius = MathHelper.getInstance().sub(radius , radius/2f);
 				
 				//计算百分比标签
-				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAngle); 						 
+				PointF point = MathHelper.getInstance().calcArcEndPointXY(
+												cirX, cirY, calcRadius, calcAngle); 						 
 				//标识
-				canvas.drawText( text ,
-						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);
+				canvas.drawText( text ,point.x, point.y ,mPaintLabel);
 		}else if(XEnum.SliceLabelPosition.OUTSIDE == mLabelPosition){
 				//显示在扇形的外部
 				calcRadius = MathHelper.getInstance().add(radius  , radius/10f);
 				//计算百分比标签
-				MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAngle); 	
+				PointF point = MathHelper.getInstance().calcArcEndPointXY(
+												cirX, cirY, calcRadius, calcAngle); 	
 					 
 				//标识
-				canvas.drawText(text,
-						MathHelper.getInstance().getPosX(), MathHelper.getInstance().getPosY() ,mPaintLabel);          	
+				canvas.drawText(text,point.x, point.y,mPaintLabel);          	
 		
-		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){						
+		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){	
+			
+			initLabelLinePaint();
+			
 			//显示在扇形的外部
 			//1/4处为起始点
 			calcRadius = MathHelper.getInstance().sub(radius  , radius / 4f);
-			MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, calcRadius, calcAngle);			
+			MathHelper.getInstance().calcArcEndPointXY(
+											cirX, cirY, calcRadius, calcAngle);	
+			
 			float startX = MathHelper.getInstance().getPosX();
-		    float startY = MathHelper.getInstance().getPosY();
-		    
+			float startY = MathHelper.getInstance().getPosY();
+				    
 		    //延长原来半径的一半在外面
 		    calcRadius =  radius / 2f;		
-			MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAngle);
-			
+		    MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAngle);			
 			float stopX = MathHelper.getInstance().getPosX();
 		    float stopY = MathHelper.getInstance().getPosY();
 		    //连接线
-		    canvas.drawLine(startX, startY, stopX, stopY, mPaintLabelLine);		    		    
+		    canvas.drawLine(startX, startY,stopX, stopY, mPaintLabelLine);		    		    
 		    		    
 		    float endX = 0.0f;			    
 		    if(Float.compare(stopX, cirX) == 0){ //位于中间竖线上				    			    	

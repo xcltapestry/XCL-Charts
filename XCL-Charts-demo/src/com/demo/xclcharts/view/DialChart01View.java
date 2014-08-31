@@ -30,6 +30,7 @@ import java.util.List;
 import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
 import org.xclcharts.renderer.plot.Pointer;
 
 import android.content.Context;
@@ -202,26 +203,28 @@ public class DialChart01View extends GraphicalView {
 	private void addAttrInfo()
 	{
 		/////////////////////////////////////////////////////////////
+		PlotAttrInfo plotAttrInfo = chart.getPlotAttrInfo();
+		
 		//设置附加信息
 		Paint paintTB = new Paint();
 		paintTB.setColor(Color.GRAY);
 		paintTB.setTextAlign(Align.CENTER);
 		paintTB.setTextSize(22);			
-		chart.addAttributeInfo(XEnum.Location.TOP, "TOP info", 0.5f, paintTB);			
-		chart.addAttributeInfo(XEnum.Location.BOTTOM, "BOTTOM info", 0.5f, paintTB);
+		plotAttrInfo.addAttributeInfo(XEnum.Location.TOP, "TOP info", 0.5f, paintTB);			
+		plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, "BOTTOM info", 0.5f, paintTB);
 		
 		Paint paintLR = new Paint();		
 		paintLR.setTextAlign(Align.CENTER);
 		paintLR.setTextSize(22);
 		paintLR.setColor(Color.BLUE);			
-		chart.addAttributeInfo(XEnum.Location.LEFT, "LEFT info", 0.5f, paintLR);			
-		chart.addAttributeInfo(XEnum.Location.RIGHT, "RIGHT info", 0.5f, paintLR);
+		plotAttrInfo.addAttributeInfo(XEnum.Location.LEFT, "LEFT info", 0.5f, paintLR);			
+		plotAttrInfo.addAttributeInfo(XEnum.Location.RIGHT, "RIGHT info", 0.5f, paintLR);
 		
 		Paint paintBase = new Paint();		
 		paintBase.setTextAlign(Align.CENTER);
 		paintBase.setTextSize(22);
 		paintBase.setColor((int)Color.rgb(56, 172, 240));
-		chart.addAttributeInfo(XEnum.Location.BOTTOM, 
+		plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, 
 								"百分比:"+Float.toString(mPercentage * 100), 0.3f, paintBase);		
 		/////////////////////////////////////////////////////////////
 	}

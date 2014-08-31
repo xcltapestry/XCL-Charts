@@ -34,6 +34,8 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -110,11 +112,43 @@ public class DountChart01View extends TouchView {
 			//内环背景色
 			chart.getInnerPaint().setColor(Color.rgb(180, 205, 230));
 			
+			//设置附加信息
+			addAttrInfo();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
 		}
 	}
+	
+	private void addAttrInfo()
+	{
+		/////////////////////////////////////////////////////////////
+		//设置附加信息
+		Paint paintTB = new Paint();
+		paintTB.setColor(Color.GRAY);
+		paintTB.setTextAlign(Align.CENTER);
+		paintTB.setTextSize(22);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.TOP, "TOP info", 0.5f, paintTB);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, "BOTTOM info", 0.5f, paintTB);
+		
+		Paint paintLR = new Paint();		
+		paintLR.setTextAlign(Align.CENTER);
+		paintLR.setTextSize(22);
+		paintLR.setColor(Color.BLUE);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.LEFT, "LEFT info", 0.5f, paintLR);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.RIGHT, "RIGHT info", 0.5f, paintLR);
+		
+		Paint paintBase = new Paint();		
+		paintBase.setTextAlign(Align.CENTER);
+		paintBase.setTextSize(22);
+		paintBase.setColor((int)Color.rgb(56, 172, 240));
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, 
+								"Information", 0.3f, paintBase);		
+		/////////////////////////////////////////////////////////////
+	}
+	
+	
 	private void chartDataSet()
 	{
 		//设置图表数据源				

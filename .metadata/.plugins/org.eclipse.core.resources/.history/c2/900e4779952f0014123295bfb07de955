@@ -1,0 +1,20 @@
+package org.xclcharts.renderer.plot;
+
+public class PlotAttrInfoRender extends PlotAttrInfo{
+	
+	public PlotAttrInfoRender()
+	{
+		super();
+	}
+	
+	 public void clear()
+	 {
+	 	mAttrInfoLocation.clear();
+		mAttrInfo.clear();
+		mAttrInfoPostion.clear();
+		mAttrInfoPaint.clear();
+	 }
+	 
+	 
+
+}

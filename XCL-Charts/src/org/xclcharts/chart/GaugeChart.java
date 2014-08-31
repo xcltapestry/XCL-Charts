@@ -46,7 +46,7 @@ import android.util.Pair;
 
 public class GaugeChart extends CirChart{
 		
-	private String TAG = "GaugeChart";
+	private  static final String TAG = "GaugeChart";
 	//刻度步长
 	private double mTickSteps = 10d;
 	//标签

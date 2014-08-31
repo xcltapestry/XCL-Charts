@@ -37,8 +37,8 @@ import android.util.Log;
 
 /**
  * @ClassName PlotCustomLine   
- * @Description  处理定制线(分界线)的绘制 <br/>
- * 	 期望线(DesireLine)的作用已大大超出预期，改成 Custom Line更合理些 
+ * @Description  处理定制线(参考线/分界线)的绘制 <br/>
+ * 	
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  *  
  */

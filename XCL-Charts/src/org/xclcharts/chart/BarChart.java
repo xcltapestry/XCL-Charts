@@ -46,7 +46,7 @@ import android.util.Log;
 
 public class BarChart extends AxisChart {
 	
-	private String TAG = "BarChart";
+	private static final String TAG = "BarChart";
 
 	// 柱形基类
 	private FlatBar mFlatBar = new FlatBar();
@@ -84,7 +84,7 @@ public class BarChart extends AxisChart {
 	 * 设置定制线值
 	 * @param customLineDataSet 定制线数据集合
 	 */
-	public void setCustomLines(List<CustomLineData> customLineDataSet)
+	public void setCustomLines( List<CustomLineData> customLineDataSet)
 	{
 		mCustomLine.setCustomLines(customLineDataSet);
 	}
@@ -95,7 +95,7 @@ public class BarChart extends AxisChart {
 	 * @param categories
 	 *            分类集
 	 */
-	public void setCategories(List<String> categories) {	
+	public void setCategories( List<String> categories) {	
 		categoryAxis.setDataBuilding(categories);
 	}
 
@@ -105,7 +105,7 @@ public class BarChart extends AxisChart {
 	 * @param dataSeries
 	 *            数据源
 	 */
-	public void setDataSource(List<BarData> dataSeries) {
+	public void setDataSource( List<BarData> dataSeries) {
 		if(null != mDataSet) mDataSet.clear();		
 		this.mDataSet = dataSeries;
 	}
@@ -122,7 +122,7 @@ public class BarChart extends AxisChart {
 	 * 设置图的显示方向,即横向还是竖向显示柱形
 	 * @param direction 横向/竖向
 	 */
-	public void setChartDirection(XEnum.Direction direction) {
+	public void setChartDirection( XEnum.Direction direction) {
 		mDirection = direction;
 		
 		defaultAxisSetting();		

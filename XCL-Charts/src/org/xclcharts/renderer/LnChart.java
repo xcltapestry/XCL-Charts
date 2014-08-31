@@ -22,21 +22,17 @@
 
 package org.xclcharts.renderer;
 
-import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Paint.Style;
 
 /**
  * @ClassName XChart
@@ -49,7 +45,7 @@ import android.graphics.Paint.Style;
 
 public class LnChart extends AxisChart {
 	
-	private static final String TAG="LnChart";
+	//private static final String TAG="LnChart";
 
 	// 是否显示顶轴
 	private boolean mTopAxisVisible = true;
@@ -57,9 +53,9 @@ public class LnChart extends AxisChart {
 	private boolean mRightAxisVisible = true;	
 	
 	private PointF[] BezierControls ;
-	private Path BezierPath = null;
 	
-	
+	//平滑曲线
+  	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
 
 	public LnChart() {
 		super();
@@ -320,23 +316,28 @@ public class LnChart extends AxisChart {
 		return getPointRecord(x,y);
 	}
 		
-
-	protected void renderBezierCurve(Canvas canvas,
-			   LinkedHashMap<PlotLine,List<PointF>> mapPoints)
-	{	
-		Iterator iter = mapPoints.entrySet().iterator();
-		while(iter.hasNext()){
-			Entry  entry=(Entry)iter.next();
-			
-			PlotLine pLine = (PlotLine) entry.getKey();
-			List<PointF>   lstPoints =( List<PointF>) entry.getValue();	
-				    
-			renderBezierCurveLine(canvas,pLine.getLinePaint(),lstPoints); 
-		}		
+	
+	/**
+	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
+	 * @param style
+	 */
+	public void setCrurveLineStyle(XEnum.CrurveLineStyle style)
+	{
+		mCrurveLineStyle = style;
 	}
-
-
-	private void renderBezierCurveLine(Canvas canvas,Paint paint ,List<PointF> lstPoints )
+	
+	/**
+	 * 返回曲线显示风格
+	 * @return 显示风格
+	 */
+	public XEnum.CrurveLineStyle getCrurveLineStyle()
+	{
+		return mCrurveLineStyle;
+	}
+	
+	//遍历曲线
+	protected void renderBezierCurveLine(Canvas canvas,Paint paint,Path bezierPath ,
+										List<PointF> lstPoints )
 	{		
 		if(null == BezierControls ) BezierControls = new PointF[2];				
 		paint.setStyle(Style.STROKE);
@@ -350,7 +351,7 @@ public class LnChart extends AxisChart {
 									lstPoints.get(i-3),
 									lstPoints.get(i), 
 									BezierControls);
-				renderBezierCurvePath(canvas,paint,
+				renderBezierCurvePath(canvas,paint,bezierPath,
 								lstPoints.get(i-2), lstPoints.get(i -1 ), 
 								BezierControls );
 			}			
@@ -359,13 +360,13 @@ public class LnChart extends AxisChart {
 			if(lstPoints.size()> 3)
 			{			
 				PointF stop  = lstPoints.get(lstPoints.size()-1);
-				PointF start = lstPoints.get(lstPoints.size()-2);						
+				//PointF start = lstPoints.get(lstPoints.size()-2);						
 				CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
 											stop, 
 											lstPoints.get(lstPoints.size()-3),
 											stop, 
 											BezierControls);
-				renderBezierCurvePath(canvas,paint,
+				renderBezierCurvePath(canvas,paint,bezierPath,
 								lstPoints.get(lstPoints.size()-2), 
 								lstPoints.get(lstPoints.size() -1 ), 
 								BezierControls );
@@ -373,23 +374,20 @@ public class LnChart extends AxisChart {
 	}
 
 
-	private void renderBezierCurvePath(Canvas canvas,Paint paint,
+	//绘制曲线
+	private void renderBezierCurvePath(Canvas canvas,Paint paint,Path bezierPath,
 					PointF start,PointF stop,PointF[] bezierControls)
-	{
-		
-		if(null == BezierPath)
-		{
-			BezierPath = new Path();
-		}
-		BezierPath.reset();					
-		BezierPath.moveTo(start.x, start.y);
-		BezierPath.cubicTo( bezierControls[0].x, bezierControls[0].y, 
+	{		
+		if(null == bezierPath)bezierPath = new Path();
+		bezierPath.reset();					
+		bezierPath.moveTo(start.x, start.y);
+		bezierPath.cubicTo( bezierControls[0].x, bezierControls[0].y, 
 				bezierControls[1].x, bezierControls[1].y, 
-				stop.x, stop.y);				
-		canvas.drawPath(BezierPath, paint);		
+				stop.x, stop.y);	
+				
+		canvas.drawPath(bezierPath, paint);		
+		bezierPath.reset();
 	}
-
-	
 	
 
 }

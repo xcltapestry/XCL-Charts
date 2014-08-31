@@ -31,12 +31,12 @@ import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.XEnum.Location;
 import org.xclcharts.renderer.axis.RoundAxis;
 import org.xclcharts.renderer.axis.RoundAxisRender;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
+import org.xclcharts.renderer.plot.PlotAttrInfoRender;
 import org.xclcharts.renderer.plot.Pointer;
 import org.xclcharts.renderer.plot.PointerRender;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PointF;
 import android.util.Log;
 
 
@@ -49,7 +49,7 @@ import android.util.Log;
 
 public class DialChart  extends CirChart{
 	
-	private String TAG = "DialChart";
+	private static final String TAG = "DialChart";
 			
 	private static final int INIT_ANGLE = 135;
 	private static final int FIX_TOTAL_ANGLE  = 270;
@@ -57,17 +57,14 @@ public class DialChart  extends CirChart{
 	private float mStartAngle = 0.0f;
 	private float mTotalAngle = 0.0f;
 	
-
-	List<RoundAxis> mRoundAxis =  new ArrayList<RoundAxis>();
-	 	
-	private List<Location> mAttrInfoLocation = null;
-	private List<String> mAttrInfo = null;
-	private List<Float> mAttrInfoPostion = null;	
-	private List<Paint> mAttrInfoPaint = null;
+	private List<RoundAxis> mRoundAxis =  new ArrayList<RoundAxis>();
 	
 	//指针[默认1个，其它add]
 	private PointerRender mPointer = null;
 	List<Pointer> mPointerSet = new ArrayList<Pointer>();
+	
+	//附加信息类
+	private PlotAttrInfoRender plotAttrInfoRender = null;
 		
 
 	public DialChart()
@@ -76,6 +73,8 @@ public class DialChart  extends CirChart{
 		
 		mStartAngle	= INIT_ANGLE;
 		mTotalAngle = FIX_TOTAL_ANGLE;
+		
+		plotAttrInfoRender = new PlotAttrInfoRender();
 	}
 	
 	public void setStartAngle(float startAngle)
@@ -108,6 +107,16 @@ public class DialChart  extends CirChart{
 	}
 	
 	/**
+	 * 附加信息绘制处理类
+	 * @return 信息基类
+	 */
+	public PlotAttrInfo getPlotAttrInfo()
+	{
+		return plotAttrInfoRender; 
+	}
+	
+	
+	/**
 	 * 增加额外的指针
 	 */
 	 public void addPointer()
@@ -131,16 +140,6 @@ public class DialChart  extends CirChart{
 		if(null != mRoundAxis) mRoundAxis.clear();	
 	 }		
 	 
-	 /**
-	  * 清掉所有附加信息
-	  */
-	 public void clearPlotAttrInfo()
-	 {
-		if(null != mAttrInfoLocation) mAttrInfoLocation.clear();	
-		if(null != mAttrInfo) mAttrInfo.clear();	
-		if(null != mAttrInfoPostion) mAttrInfoPostion.clear();	
-		if(null != mAttrInfoPaint) mAttrInfoPaint.clear();	
-	 }		
 	
 	 /**
 	  * 清掉所有相关信息
@@ -149,44 +148,9 @@ public class DialChart  extends CirChart{
 	 {
 		 clearPlotPointer();
 		 clearPlotAxis();
-		 clearPlotAttrInfo();
+		 this.plotAttrInfoRender.clearPlotAttrInfo();
 	 }
 	 
-	/**
-	 * 返回附加信息方位集合
-	 * @return 集合
-	 */
-	public List<Location>  getPlotAttrInfoLocation()
-	{
-		return mAttrInfoLocation;
-	}
-	
-	/**
-	 * 返回附加信息集合
-	 * @return 集合
-	 */
-	public List<String> getPlotAttrInfo()
-	{
-		return mAttrInfo;
-	}
-	
-	/**
-	 * 返回附加信息位置集合
-	 * @return 集合
-	 */
-	public List<Float> getPlotAttrInfoPostion()
-	{
-		return mAttrInfoPostion;
-	}
-	
-	/**
-	 * 返回附加信息画笔集合
-	 * @return 集合
-	 */
-	public List<Paint> getPlotAttrInfoPaint()
-	{
-		return mAttrInfoPaint;
-	}
 		
 	/**
 	 * 返回指针绘制类
@@ -198,28 +162,6 @@ public class DialChart  extends CirChart{
 		return mPointer;
 	}
 
-	 /**
-	  * 增加附加信息
-	  * @param position		显示方位
-	  * @param info			附加信息
-	  * @param infoPosRadiusPercentage	信息显示在总半径指定比例所在位置
-	  * @param paint		用来绘制用的画笔
-	  */
-    public void addAttributeInfo(Location  position ,String info,
-    		float infoPosRadiusPercentage  ,Paint paint) { 
-    	
-    	if(null == mAttrInfoLocation) mAttrInfoLocation = new ArrayList<Location> ();
-    	if(null == mAttrInfo) mAttrInfo = new ArrayList<String>();
-    	
-    	if(null == mAttrInfoPostion) mAttrInfoPostion = new ArrayList<Float>();    	
-    	if(null == mAttrInfoPaint) mAttrInfoPaint = new ArrayList<Paint>();
-    	    	
-    	mAttrInfoLocation.add(position);
-    	mAttrInfo.add(info);
-    	mAttrInfoPostion.add(infoPosRadiusPercentage);
-    	mAttrInfoPaint.add(paint);    	
-    }
-	    
 	
     /**
      * 绘制指针
@@ -269,7 +211,8 @@ public class DialChart  extends CirChart{
 	}
 	
 	
-	private void addTicksAxis(float radiusPercentage,List<String> labels,XEnum.RoundTickAxisType type)
+	private void addTicksAxis(float radiusPercentage,
+								List<String> labels,XEnum.RoundTickAxisType type)
 	{
 		RoundAxisRender roundAxis = new RoundAxisRender();	
 		roundAxis.setRoundAxisType(XEnum.RoundAxisType.TICKAXIS);	
@@ -301,8 +244,11 @@ public class DialChart  extends CirChart{
 	 * @param color	产色
 	 * @param labels	标签集合
 	 */
-	public void addStrokeRingAxis(float outerRadiusPercentage,float innerRadiusPercentage,
-									List<Float> percentage,List<Integer> color,List<String> labels)
+	public void addStrokeRingAxis(float outerRadiusPercentage,
+									float innerRadiusPercentage,
+									List<Float> percentage,
+									List<Integer> color,
+									List<String> labels)
 	{		
 		addRingAxis(outerRadiusPercentage,innerRadiusPercentage,percentage,color,labels);		
 	} 
@@ -314,7 +260,8 @@ public class DialChart  extends CirChart{
 	 * @param percentage	百分比
 	 * @param color	颜色
 	 */
-	public void addFillRingAxis(float radiusPercentage,List<Float> percentage,List<Integer> color)
+	public void addFillRingAxis(final float radiusPercentage,
+								final List<Float> percentage,final List<Integer> color)
 	{
 		addRingAxis(radiusPercentage,0.0f,percentage,color,null);
 	}   
@@ -327,7 +274,8 @@ public class DialChart  extends CirChart{
 	 * @param labels	标签集合
 	 */
 	public void addFillRingAxis(float radiusPercentage,
-										List<Float> percentage,List<Integer> color,List<String> labels)
+										List<Float> percentage,
+										List<Integer> color,List<String> labels)
 	{
 		addRingAxis(radiusPercentage,0.0f,percentage,color,labels);
 	}   
@@ -342,7 +290,8 @@ public class DialChart  extends CirChart{
 	 * @param labels	标签集合
 	 */
 	public void addRingAxis(float outerRadiusPercentage,float innerRadiusPercentage,
-										List<Float> percentage,List<Integer> color,List<String> labels)
+										List<Float> percentage,
+										List<Integer> color,List<String> labels)
 	{						
 		RoundAxisRender roundAxis = new RoundAxisRender();	
 		roundAxis.setRoundAxisType(XEnum.RoundAxisType.RINGAXIS);
@@ -402,9 +351,9 @@ public class DialChart  extends CirChart{
 	
 	
 	/**
-	 * 
-	 * @param location
-	 * @param radiusPercentage
+	 * 增加线轴
+	 * @param location			位置
+	 * @param radiusPercentage  占总半径的指定比例
 	 */
 	public void addLineAxis(Location  location ,float radiusPercentage)
 							//XEnum.LineStyle lineStyle,XEnum.DotStyle dotStyle) 
@@ -419,46 +368,7 @@ public class DialChart  extends CirChart{
 		//roundAxis.setLineCap(dotStyle);
 		mRoundAxis.add(roundAxis);		
 	}	
-	
-	private void renderAttrInfo(Canvas canvas)
-	{		
-		if(null == mAttrInfo) return ;
-		if(null == mAttrInfoLocation) return ;
-		float radius = 0.0f; 
-		String info = "";				
-		PointF pos = new PointF();
-	
-		for(int i=0;i<mAttrInfo.size();i++)
-		{
-			info = mAttrInfo.get(i);
-			if("" == info) continue;
-			
-			if(null == mAttrInfoPostion || mAttrInfoPostion.size() < i)continue;	
-			if(null == mAttrInfoPaint.get(i) || mAttrInfoPaint.size() < i) continue;
-			
-			pos.x =  plotArea.getCenterX();
-			pos.y =  plotArea.getCenterY();
-			
-			radius = this.getRadius() * mAttrInfoPostion.get(i);
-			switch(mAttrInfoLocation.get(i))
-			{
-				case TOP:
-					pos.y =  plotArea.getCenterY() - radius;
-					break;
-				case BOTTOM:
-					pos.y =  plotArea.getCenterY() + radius;
-					break;
-				case LEFT:
-					pos.x =  plotArea.getCenterX() - radius;
-					break;
-				case RIGHT:
-					pos.x =  plotArea.getCenterX() + radius;
-					break;
-			}	    							
-			canvas.drawText(info, pos.x, pos.y, mAttrInfoPaint.get(i));
-		}
-	}
-	
+
 	
 	/**
 	 * 绘制图
@@ -478,16 +388,19 @@ public class DialChart  extends CirChart{
 	        }  		
 			
 			//绘制附加信息
-			renderAttrInfo(canvas);
+			 plotAttrInfoRender.renderAttrInfo(canvas, 
+					 plotArea.getCenterX(), plotArea.getCenterY(), this.getRadius());
 			
 			//最后再画指针
 			 renderPointerLine(canvas);
+			 			 
+			 mRoundAxis.clear();
+			 mPointerSet.clear();					 
+			 plotAttrInfoRender.clearPlotAttrInfo();
 		}catch( Exception e){
 			Log.e(TAG,e.toString());
-		}
-		
+		}		
 	}
-
 				
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 

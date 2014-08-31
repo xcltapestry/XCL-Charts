@@ -56,7 +56,7 @@ public class BarChart3D extends BarChart{
 	 * 设置坐标系底座厚度 
 	 * @param thickness 底座厚度 
 	 */
-	public void setAxis3DBaseThickness(int thickness)
+	public void setAxis3DBaseThickness(final int thickness)
 	{
 		mBar3D.setAxis3DBaseThickness(thickness);
 	}
@@ -74,7 +74,7 @@ public class BarChart3D extends BarChart{
 	 * 设置柱形3D厚度
 	 * @param thickness 厚度
 	 */
-	public void setBarThickness(int thickness)
+	public void setBarThickness(final int thickness)
 	{
 		mBar3D.setThickness(thickness);
 	}
@@ -91,7 +91,7 @@ public class BarChart3D extends BarChart{
 	 * 设置3D偏转角度
 	 * @param angle 角度
 	 */
-	public void setBarAngle(int angle)
+	public void setBarAngle(final int angle)
 	{
 		mBar3D.setAngle(angle);
 	}
@@ -108,7 +108,7 @@ public class BarChart3D extends BarChart{
 	 * 设透明度
 	 * @param alpha 透明度
 	 */
-	public void setBarAlpha(int alpha)
+	public void setBarAlpha(final int alpha)
 	{
 		mBar3D.setAlpha(alpha);
 	}
@@ -117,7 +117,7 @@ public class BarChart3D extends BarChart{
 	 *  坐标基座颜色
 	 * @param color 颜色
 	 */
-	public void setAxis3DBaseColor(int color)
+	public void setAxis3DBaseColor(final int color)
 	{
 		mBar3D.setAxis3DBaseColor(color);
 	}	

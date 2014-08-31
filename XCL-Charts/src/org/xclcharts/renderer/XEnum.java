@@ -183,7 +183,7 @@ public class XEnum {
 		 */
 		public enum CrurveLineStyle
 		{			
-			NORMAL,BEZIERCURVE
+			BEELINE,BEZIERCURVE
 		}
 	
 		

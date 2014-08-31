@@ -53,7 +53,7 @@ import android.util.Log;
  */
 public class RadarChart extends RdChart{
 	
-	private String TAG = "RadarChart";
+	private  static final String TAG = "RadarChart";
 	//数据轴
 	private DataAxisRender dataAxis  = null;
 	//分类轴
@@ -99,13 +99,29 @@ public class RadarChart extends RdChart{
 		
 		this.plotLegend.showLegend();
 	}
+	
+	
+	private void clearArray()
+	{
+		if(null != mArrayDotX) mArrayDotX = null;
+		if(null != mArrayDotY) mArrayDotY= null;
+		
+		if(null != mArrayLabelX) mArrayLabelX = null;
+		if(null != mArrayLabelY) mArrayLabelY= null;
+		
+		
+		//依次存下每个标签节点归属的圆心角度
+		if(null != mArrayLabelAgent) mArrayLabelAgent = null;
+		//半径
+		if(null != mArrayRadius) mArrayRadius = null;
+	}
 		 	
  	
 	/**
 	 * 设置雷达图显示类型(蛛网或圆形)
 	 * @param type 显示类型
 	 */
-	public void setChartType(XEnum.RadarChartType type)
+	public void setChartType( XEnum.RadarChartType type)
 	{
 		mRadarChartType = type;
 	}
@@ -135,7 +151,7 @@ public class RadarChart extends RdChart{
 	 * @param dataSeries
 	 *            标签集
 	 */
-	public void setCategories(List<String> dataSeries) {
+	public void setCategories( List<String> dataSeries) {
 		CategoryAxis.setDataBuilding(dataSeries);
 	}
 
@@ -145,7 +161,7 @@ public class RadarChart extends RdChart{
 	 * @param dataSeries
 	 *            数据源
 	 */
-	public void setDataSource(List<RadarData> dataSeries) {
+	public void setDataSource( List<RadarData> dataSeries) {
 		this.mDataSet = dataSeries;
 	}
 
@@ -161,7 +177,7 @@ public class RadarChart extends RdChart{
 	 * 设置透明度,默认为100
 	 * @param alpha 透明度
 	 */
-	public void setAreaAlpha(int alpha)
+	public void setAreaAlpha( int alpha)
 	{
 		mAreaAlpha = alpha;
 	}	
@@ -587,7 +603,9 @@ public class RadarChart extends RdChart{
 		renderDataArea(canvas);
 		renderAxisLabels(canvas);	
 		//图例
-		plotLegend.renderRdKey(canvas,mDataSet);		
+		plotLegend.renderRdKey(canvas,mDataSet);	
+		
+		clearArray();
 	}
 
 	@Override

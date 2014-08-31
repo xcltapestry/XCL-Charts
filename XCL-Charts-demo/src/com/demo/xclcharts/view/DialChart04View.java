@@ -6,6 +6,7 @@ import java.util.List;
 import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
 import org.xclcharts.renderer.plot.Pointer;
 
 import android.content.Context;
@@ -120,13 +121,15 @@ public class DialChart04View extends GraphicalView {
 		private void addAttrInfo()
 		{
 			/////////////////////////////////////////////////////////////
+			PlotAttrInfo plotAttrInfo = chart.getPlotAttrInfo();
+			
 			//设置附加信息
 			Paint paintTB = new Paint();
 			paintTB.setColor(Color.WHITE);
 			paintTB.setTextAlign(Align.CENTER);
 			paintTB.setTextSize(30);	
 			paintTB.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.TOP, Float.toString( 
+			plotAttrInfo.addAttributeInfo(XEnum.Location.TOP, Float.toString( 
 									MathHelper.getInstance().round(mPercentage * 100,2))+"%", 0.3f, paintTB);
 			
 			Paint paintBT = new Paint();
@@ -135,7 +138,7 @@ public class DialChart04View extends GraphicalView {
 			paintBT.setTextSize(22);
 
 			paintBT.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, "蓝:"+Float.toString(
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, "蓝:"+Float.toString(
 							MathHelper.getInstance().round(mP1 * 100,2))+"%", 0.4f, paintBT);
 			
 			Paint paintBT2 = new Paint();
@@ -144,7 +147,7 @@ public class DialChart04View extends GraphicalView {
 			paintBT2.setTextSize(22);
 		
 			paintBT2.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, "红:"+Float.toString(					
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, "红:"+Float.toString(					
 					MathHelper.getInstance().round(mP2 * 100,2))+"%", 0.5f, paintBT2);				
 		}
 		

@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.graphics.Region"/>
-<fullyQualifiedTypeName name="org.xclcharts.event.PositionRecord"/>
-<fullyQualifiedTypeName name="org.xclcharts.event.PlotPositionRecord"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.ClickLineChart01View"/>
-<fullyQualifiedTypeName name="org.xclcharts.event.Point"/>
 <fullyQualifiedTypeName name="android.graphics.Point"/>
 <fullyQualifiedTypeName name="android.graphics.Rect"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
@@ -22,7 +17,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.chart.DialChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.axis.RoundAxis"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RoundAxisType"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.axis.RoundAxisRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AttributeInfoPosition"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AttributeInfoLoction"/>
@@ -36,7 +30,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PointerRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Loction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart05View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart02View"/>
@@ -50,14 +43,21 @@
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrurveLineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
-<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RadarChartType"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.RadarChart02View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.RadarChart03View"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrurveLineStyle"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.view.AreaChart02View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotAttrInfoRender"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotAttrInfo"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
 </qualifiedTypeNameHistroy>

@@ -9,7 +9,6 @@ import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.IFormatterTextCallBack;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -76,22 +75,10 @@ public class BarChart07View  extends GraphicalView {
 				//背景网格
 				chart.getPlotGrid().showHorizontalLines();
 				
-				//定义数据轴标签显示格式
-				chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
-		
-					@Override
-					public String textFormatter(String value) {
-						// TODO Auto-generated method stub		
-						Double tmp = Double.parseDouble(value);
-						DecimalFormat df=new DecimalFormat("#0");
-						String label = df.format(tmp).toString();				
-						return (label);
-					}
-					
-				});
 				
 				//标签
 				chart.getCategoryAxis().getTickLabelPaint().setTextSize(15);
+		
 				
 				//在柱形顶部显示值
 				chart.getBar().setItemLabelVisible(true);
@@ -110,14 +97,16 @@ public class BarChart07View  extends GraphicalView {
 				
 				 //让柱子间近似没空白
 				 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
-				 
-				 //chart.getDataAxis().setVisible(false);
-				 //chart.getCategoryAxis().setVisible(true);
+		
 				 
 				 //背景网格颜色
 				chart.getPlotGrid().showEvenRowBgColor();
 				chart.getPlotGrid().getEvenRowsBgColorPaint().setColor((int)Color.rgb(225, 230, 246));
 				 
+				
+				chart.getDataAxis().setVisible(false);
+				chart.getCategoryAxis().setTickMarksVisible(false);
+				
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

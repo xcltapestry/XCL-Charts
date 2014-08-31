@@ -1,3 +1,25 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @Copyright Copyright (c) 2014 XCL-Charts (www.xclcharts.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.2
+ */
 package com.demo.xclcharts.view;
 
 import java.util.LinkedList;
@@ -20,6 +42,11 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
+/**
+ * @ClassName ClickPieChart01View
+ * @Description  演示点击事件效果的例子
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ */
 public class ClickPieChart01View extends GraphicalView {
 
 
@@ -62,29 +89,30 @@ public class ClickPieChart01View extends GraphicalView {
 	{
 		try {										
 			//标签显示(隐藏，显示在中间，显示在扇区外面,折线注释方式)
-			chart.setLabelPosition(XEnum.SliceLabelPosition.LINE);			
+			chart.setLabelPosition(XEnum.SliceLabelPosition.INNER);			
 			
 			//图的内边距
+			
 			//注释折线较长，缩进要多些
 			int [] ltrb = new int[4];
-			ltrb[0] = DensityUtil.dip2px(getContext(), 60); //left	
+			ltrb[0] = DensityUtil.dip2px(getContext(), 30); //left	
 			ltrb[1] = DensityUtil.dip2px(getContext(), 55); //top	
-			ltrb[2] = DensityUtil.dip2px(getContext(), 60); //right
-			ltrb[3] = DensityUtil.dip2px(getContext(), 50); //bottom				
-							
+			ltrb[2] = DensityUtil.dip2px(getContext(), 30); //right
+			ltrb[3] = DensityUtil.dip2px(getContext(), 30); //bottom											
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
+			
 			
 			//设定数据源
 			chart.setDataSource(chartData);												
 		
 			//标题
-			chart.setTitle("擂茶配方比");
+			chart.setTitle("图表点击演示");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
-				
-		
-			//显示边框
-			//chart.showRoundBorder();
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			
+			chart.getLabelPaint().setTextSize(30);
+			chart.getLabelPaint().setFakeBoldText(true);
+			chart.getLabelPaint().setColor(Color.WHITE);
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
@@ -98,11 +126,14 @@ public class ClickPieChart01View extends GraphicalView {
 	private void chartDataSet()
 	{
 		//设置图表数据源		
-		chartData.add(new PieData("芝麻","芝麻-15%",15,(int)Color.rgb(77, 83, 97)));
-		chartData.add(new PieData("花生","花生-35%",35,(int)Color.rgb(148, 159, 181)));
-		chartData.add(new PieData("茶叶","茶叶(25%)",25,(int)Color.rgb(253, 180, 90)));
+		
+		chartData.add(new PieData("48","48%",48,(int)Color.rgb(215, 124, 124)));
+		chartData.add(new PieData("15","15%",15,(int)Color.rgb(253, 180, 90)));
+		chartData.add(new PieData("3","3%",2,(int)Color.rgb(77, 83, 97)));
+		chartData.add(new PieData("10","10%",10,(int)Color.rgb(253, 180, 90)));
+		
 		//将此比例块突出显示
-		chartData.add(new PieData("其它","其它(炒米，炒花生之类)",25,(int)Color.rgb(180, 205, 230),true));
+		chartData.add(new PieData("其它","25%",25,(int)Color.rgb(52, 194, 188),true));
 	}
 	
 	@Override
@@ -136,7 +167,7 @@ public class ClickPieChart01View extends GraphicalView {
 		
 		PieData pData = chartData.get(record.getDataID());											
 		Toast.makeText(this.getContext(),								
-				"View Info key:" +  pData.getKey() +
+				"[此处为View返回的信息] key:" +  pData.getKey() +
 				" Label:" + pData.getLabel() ,
 				Toast.LENGTH_SHORT).show();
 		

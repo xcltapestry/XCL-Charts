@@ -31,7 +31,7 @@ package org.xclcharts.event.click;
 
 public abstract class PositionRecord {
 	
-	private static final String TAG = "PositionRecord";
+	//private static final String TAG = "PositionRecord";
 		
 	protected int mDataID = -1;
 	protected int mDataChildID = -1;

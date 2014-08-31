@@ -104,6 +104,8 @@ public class AreaChart01View extends TouchView {
 				chart.setCategories(mLabels);
 				//数据轴
 				chart.setDataSource(mDataset);
+				
+				chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEELINE);
 							
 				//数据轴最大值
 				chart.getDataAxis().setAxisMax(100);
@@ -125,12 +127,12 @@ public class AreaChart01View extends TouchView {
 				//标题
 				chart.setTitle("区域图(Area Chart)");
 				chart.addSubtitle("(XCL-Charts Demo)");	
-				//图例
+				//轴标题
 				chart.getAxisTitle().setLowerAxisTitle("(年份)");
 				
 				//透明度
 				chart.setAreaAlpha(100);
-				//显示键值
+				//显示图例
 				chart.getPlotLegend().showLegend();
 				
 				//激活点击监听

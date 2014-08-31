@@ -6,6 +6,7 @@ import java.util.List;
 import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotAttrInfo;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -141,14 +142,14 @@ public class DialChart06View extends GraphicalView {
 		private void addAttrInfo()
 		{
 			/////////////////////////////////////////////////////////////
-			
+			PlotAttrInfo plotAttrInfo = chart.getPlotAttrInfo();
 			//设置附加信息
 			Paint paintTB = new Paint();
 			paintTB.setColor(Color.WHITE);
 			paintTB.setTextAlign(Align.CENTER);
 			paintTB.setTextSize(30);	
 			paintTB.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.TOP, "当前网速", 0.3f, paintTB);
+			plotAttrInfo.addAttributeInfo(XEnum.Location.TOP, "当前网速", 0.3f, paintTB);
 			
 			Paint paintBT = new Paint();
 			paintBT.setColor(Color.WHITE);
@@ -156,7 +157,7 @@ public class DialChart06View extends GraphicalView {
 			paintBT.setTextSize(38);
 			paintBT.setFakeBoldText(true);
 			paintBT.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, 
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, 
 					Float.toString(MathHelper.getInstance().round(mPercentage * 100,2)), 0.3f, paintBT);
 			
 			Paint paintBT2 = new Paint();
@@ -165,7 +166,7 @@ public class DialChart06View extends GraphicalView {
 			paintBT2.setTextSize(30);
 			paintBT2.setFakeBoldText(true);
 			paintBT2.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, "MB/S", 0.4f, paintBT2);	
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, "MB/S", 0.4f, paintBT2);	
 			
 			Paint paintDesc = new Paint();
 			paintDesc.setColor(Color.WHITE);
@@ -173,10 +174,10 @@ public class DialChart06View extends GraphicalView {
 			paintDesc.setTextSize(22);
 			paintDesc.setFakeBoldText(true);
 			paintDesc.setAntiAlias(true);	
-			chart.addAttributeInfo(XEnum.Location.LEFT, "普通", 0.9f, paintDesc);	
-			chart.addAttributeInfo(XEnum.Location.TOP, "快速", 0.9f, paintDesc);	
-			chart.addAttributeInfo(XEnum.Location.RIGHT, "高速", 0.9f, paintDesc);	
-			chart.addAttributeInfo(XEnum.Location.BOTTOM, "超速", 0.9f, paintDesc);	
+			plotAttrInfo.addAttributeInfo(XEnum.Location.LEFT, "普通", 0.9f, paintDesc);	
+			plotAttrInfo.addAttributeInfo(XEnum.Location.TOP, "快速", 0.9f, paintDesc);	
+			plotAttrInfo.addAttributeInfo(XEnum.Location.RIGHT, "高速", 0.9f, paintDesc);	
+			plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, "超速", 0.9f, paintDesc);	
 			
 		}
 		

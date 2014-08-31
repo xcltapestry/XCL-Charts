@@ -46,7 +46,7 @@ import android.util.Log;
  */
 public class LineChart extends LnChart{
 	
-	private static final String TAG ="LineChart";
+	private  static final  String TAG ="LineChart";
 	
 	//数据源
 	protected List<LineData> mDataSet;
@@ -83,7 +83,7 @@ public class LineChart extends LnChart{
 	 * 设置数据轴显示在哪边,默认是左边
 	 * @param position 显示位置
 	 */
-	public void setDataAxisLocation(XEnum.LineDataAxisLocation position)
+	public void setDataAxisLocation( XEnum.LineDataAxisLocation position)
 	{
 		mDataAxisPosition = position;				
 		defaultAxisSetting();
@@ -108,7 +108,7 @@ public class LineChart extends LnChart{
 		 * 分类轴的数据源
 		 * @param categories 标签集
 		 */
-		public void setCategories(List<String> categories)
+		public void setCategories( List<String> categories)
 		{
 			if(null == categories || categories.size() == 0)
 			{
@@ -121,7 +121,7 @@ public class LineChart extends LnChart{
 		 *  设置数据轴的数据源
 		 * @param dataSet 数据源
 		 */
-		public void setDataSource(LinkedList<LineData> dataSet)
+		public void setDataSource( LinkedList<LineData> dataSet)
 		{
 			if(null == dataSet || dataSet.size() == 0)
 			{
@@ -135,7 +135,7 @@ public class LineChart extends LnChart{
 		 * 设置定制线值
 		 * @param customLineDataset 定制线数据集合
 		 */
-		public void setDesireLines(List<CustomLineData> customLineDataset)
+		public void setDesireLines( List<CustomLineData> customLineDataset)
 		{
 			mCustomLine.setCustomLines(customLineDataset);
 		}
@@ -145,7 +145,7 @@ public class LineChart extends LnChart{
 		 *  设置当值与底轴的最小值相等时，线是否与轴连结显示. 默认为False
 		 * @param visible 是否连接
 		 */
-		public void setLineAxisIntersectVisible(boolean visible)
+		public void setLineAxisIntersectVisible( boolean visible)
 		{
 			mLineAxisIntersectVisible = visible;
 		}

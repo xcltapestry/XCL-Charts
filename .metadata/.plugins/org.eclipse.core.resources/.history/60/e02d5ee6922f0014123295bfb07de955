@@ -1,0 +1,22 @@
+package org.xclcharts.chart;
+
+import java.util.List;
+
+import org.xclcharts.renderer.XEnum.Location;
+
+import android.graphics.Paint;
+
+public class AttrInfo {
+	
+	private List<Location> mAttrInfoLocation = null;
+	private List<String> mAttrInfo = null;
+	private List<Float> mAttrInfoPostion = null;	
+	private List<Paint> mAttrInfoPaint = null;
+	
+	
+	public AttrInfo()
+	{
+	}
+	
+
+}

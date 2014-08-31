@@ -27,8 +27,7 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.RectF;
+import android.graphics.PointF;
 import android.util.Log;
 
 /**
@@ -43,116 +42,95 @@ public class PieChart3D extends PieChart{
 	
 	//渲染层数
 	private final int mRender3DLevel = 15; 
+	
 		
 	public PieChart3D() {
 		// TODO Auto-generated constructor stub
-		super();	     
-	}
-
-	@Override 
-	protected boolean renderPlot(Canvas canvas)
-	{		
-		//数据源
- 		List<PieData> chartDataSource = this.getDataSource();
- 		if(null == chartDataSource)
-		{
- 			Log.e(TAG,"数据源为空.");
- 			return false;
-		}
- 	
- 		
-		//计算中心点坐标		
-		float cirX = plotArea.getCenterX();
-	    float cirY = plotArea.getCenterY();	     
-        float radius = getRadius();
-              
-        //确定去饼图范围
-        float arcLeft = sub(cirX , radius);  
-        float arcTop  = sub(cirY , radius);  
-        float arcRight = add(cirX , radius) ;  
-        float arcBottom = add(cirY , radius) ;  
-        RectF arcRF0 = new RectF(arcLeft ,arcTop,arcRight,arcBottom);   
-        	       
-        //画笔初始化
-		Paint paintArc = new Paint();  
-		paintArc.setAntiAlias(true);					
+		super();	 
 		
- 		float initOffsetAngle = mOffsetAngle;	
- 		float offsetAngle = initOffsetAngle;
-		//3D
-        float currentAngle = 0.0f;	             
+	}
+	
+	private boolean render3D(Canvas canvas,
+							float initOffsetAngle,
+							List<PieData> chartDataSource,
+							float cirX,float cirY,float radius)
+	{		
+ 		float offsetAngle = initOffsetAngle;		
+        float currentAngle = 0.0f;	              
+        float newRadius = 0.0f;	
      
 		for(int i=0;i < mRender3DLevel;i++)
 		{
-            canvas.save(Canvas.MATRIX_SAVE_FLAG);
-            canvas.translate(0,mRender3DLevel - i );
-		  for(int j=0;j< chartDataSource.size();j++)
-		  {			  
-			    PieData cData =  chartDataSource.get(j);			  
-				paintArc.setColor(cData.getSliceColor());				
-				currentAngle = cData.getSliceAngle();
-				if(Float.compare(currentAngle,0.0f) == 0 
-						|| Float.compare(currentAngle,0.0f) == -1 )continue;	
-				
-			    if(cData.getSelected()) //指定突出哪个块
-	            {				    			    	
-			    	//偏移圆心点位置(默认偏移半径的1/10)
-			    	float newRadius = div(radius , SELECTED_OFFSET);
-			    	 //计算百分比标签
-			    	MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,newRadius,
-			    											add(offsetAngle, div(currentAngle,2f))); 	
-			        
-			        float arcLeft2 = sub(MathHelper.getInstance().getPosX() , radius);  
-			        float arcTop2  = sub(MathHelper.getInstance().getPosY() , radius) ;  
-			        float arcRight2 = add(MathHelper.getInstance().getPosX() , radius) ;  
-			        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  			        
-			        initRectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);
-			        
-                    canvas.drawArc(mRectF, offsetAngle, currentAngle, true,paintArc);
-	            }else{
-                    canvas.drawArc(arcRF0, offsetAngle, currentAngle, true,paintArc);
-	            }			    			    
-	            //下次的起始角度  
-			    offsetAngle = add(offsetAngle,currentAngle);  	            
-	            //k += 2;
-			}
-            canvas.restore();
-            offsetAngle = initOffsetAngle;
+              canvas.save(Canvas.MATRIX_SAVE_FLAG);
+              canvas.translate(0,mRender3DLevel - i );
+			  for(int j=0;j< chartDataSource.size();j++)
+			  {			  
+				    PieData cData =  chartDataSource.get(j);			  								
+					currentAngle = cData.getSliceAngle();						
+					if(!validateAngle(currentAngle)) continue;
+					geArcPaint().setColor(cData.getSliceColor());	
+					
+				    if(cData.getSelected()) //指定突出哪个块
+		            {				    			    	
+				    	//偏移圆心点位置(默认偏移半径的1/10)
+				    	newRadius = div(radius , SELECTED_OFFSET);
+				    	 //计算百分比标签
+				    	PointF point = MathHelper.getInstance().calcArcEndPointXY(
+				    								cirX,cirY,newRadius,
+				    								add(offsetAngle, div(currentAngle,2f))); 	
+				        			        
+				        initRectF("mRectF",sub(point.x, radius) ,sub(point.y , radius),
+				        				   add(point.x , radius),add(point.y , radius));
+				        
+	                    canvas.drawArc(mRectF, offsetAngle, currentAngle, true,geArcPaint());
+		            }else{
+	                    canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true,geArcPaint());
+		            }			    			    
+		            //下次的起始角度  
+				    offsetAngle = add(offsetAngle,currentAngle);  	            		           
+				}
+	            canvas.restore();
+	            offsetAngle = initOffsetAngle;
 		}
+		return true;
+	}
 	
-		
-		//平面		
-		currentAngle = 0.0f;	
-		offsetAngle = initOffsetAngle;
-	
+	private boolean renderFlatArcAndLegend(Canvas canvas,
+										float initOffsetAngle,
+										List<PieData> chartDataSource,
+										float cirX,float cirY,float radius)
+	{
+ 		float offsetAngle = initOffsetAngle;				
+        float currentAngle = 0.0f;	              
+        float newRadius = 0.0f;	
+        PointF[] arrPoint = new PointF[chartDataSource.size()];
+					
 		for(int j=0;j< chartDataSource.size();j++)
 		{
-		 	PieData cData =  chartDataSource.get(j);	
+		 	PieData cData = chartDataSource.get(j);	
 		 	currentAngle = cData.getSliceAngle();
-		 	int darkColor =  DrawHelper.getInstance().getDarkerColor((int)cData.getSliceColor());			  
-		  	paintArc.setColor( darkColor); 						
+		 	if(!validateAngle(currentAngle)) continue;		  
+		 	geArcPaint().setColor( DrawHelper.getInstance().getDarkerColor(
+		 												(int)cData.getSliceColor()) ); 						
 		  	
 		    if(cData.getSelected()) //指定突出哪个块
             {					    					    	
 		    	//偏移圆心点位置(默认偏移半径的1/10)
-		    	float newRadius = div(radius , SELECTED_OFFSET);
+		    	newRadius = div(radius , SELECTED_OFFSET);
 		    	 //计算百分比标签
-		    	MathHelper.getInstance().calcArcEndPointXY(
-		    				cirX,cirY,newRadius,add(offsetAngle , div(currentAngle,2f))); 	
+		    	PointF point = MathHelper.getInstance().calcArcEndPointXY(
+		    					cirX,cirY,newRadius,add(offsetAngle , div(currentAngle,2f))); 	
+		          		        
+		        initRectF("mRectF",sub(point.x , radius) ,sub(point.y , radius ),
+		        				   add(point.x , radius ),add(point.y , radius));   
 		        
-		        float arcLeft2 = sub(MathHelper.getInstance().getPosX() , radius);  
-		        float arcTop2  = sub(MathHelper.getInstance().getPosY() , radius );  
-		        float arcRight2 = add(MathHelper.getInstance().getPosX() , radius );  
-		        float arcBottom2 = add(MathHelper.getInstance().getPosY() , radius) ;  		        
-		        initRectF(arcLeft2 ,arcTop2,arcRight2,arcBottom2);   
-		        
-                canvas.drawArc(mRectF, offsetAngle, (float) currentAngle, true,paintArc);
-		        renderLabel(canvas,cData.getLabel(),MathHelper.getInstance().getPosX(),
-		        									MathHelper.getInstance().getPosY(),
-		        			radius,offsetAngle,currentAngle);                
+                canvas.drawArc(mRectF, offsetAngle, currentAngle, true,geArcPaint());
+                
+		        arrPoint[j] = new PointF(point.x,point.y);
             }else{
-                canvas.drawArc(arcRF0, offsetAngle, (float) currentAngle, true, paintArc);
-     	        renderLabel(canvas,cData.getLabel(),cirX, cirY,radius,offsetAngle,currentAngle);
+                canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true, geArcPaint());
+                
+     	       arrPoint[j] = new PointF(cirX,cirY);
      	    }		
 		    
 		    //保存角度
@@ -160,10 +138,46 @@ public class PieChart3D extends PieChart{
 		    
            //下次的起始角度  
 		    offsetAngle = add(offsetAngle,currentAngle);
-		}			
-		//图KEY
-		plotLegend.renderPieKey(canvas,this.getDataSource());
+		}		
+		
+		//绘制Label
+		renderLabels(canvas,initOffsetAngle,radius,arrPoint);	
+				
+		//图例
+		plotLegend.renderPieKey(canvas,this.getDataSource());	
+		arrPoint = null;
 		return true;
+	}
+
+
+	@Override 
+	protected boolean renderPlot(Canvas canvas)
+	{				
+		//数据源
+ 		List<PieData> chartDataSource = this.getDataSource();
+ 		if(null == chartDataSource)
+		{
+ 			Log.e(TAG,"数据源为空.");
+ 			return false;
+		}
+ 	 		
+		//计算中心点坐标		
+		float cirX = plotArea.getCenterX();
+	    float cirY = plotArea.getCenterY();	     
+        float radius = getRadius();
+        
+        //确定饼图范围       
+        initRectF("mArcRF0",sub(cirX , radius) ,sub(cirY , radius),
+        					add(cirX , radius),add(cirY , radius)); 
+    
+				
+		if(render3D(canvas,mOffsetAngle,chartDataSource,cirX, cirY, radius))
+		{
+			return renderFlatArcAndLegend(canvas,mOffsetAngle,chartDataSource,
+											cirX, cirY, radius);
+		}else{
+			return false;
+		}
 	}
 
 }

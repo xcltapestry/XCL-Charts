@@ -43,10 +43,7 @@ public class PlotGrid {
 	 private boolean mGridLinesHorizontalVisible = false;
 	 //是否显示竖向网格线
 	 private boolean mGridLinesVerticalVisible = false;		
-		
-	 //图内部网格线的间隔色
-	 private int mGridLinesOddColor =  Color.GREEN;	
-	 private int mGridLinesEvenColor = Color.BLUE;
+
 	 //是否显示奇数行填充色
 	 private boolean mOddRowBgColorVisible = false;
 	//是否显示偶数行填充色
@@ -63,7 +60,7 @@ public class PlotGrid {
 	
 	public PlotGrid()
 	{		
-		
+
 	}
 		
 	private void initEvenBgColorPaint()
@@ -114,9 +111,8 @@ public class PlotGrid {
 	 * 设置奇数行填充色
 	 * @param color 填充色
 	 */
-	public void setOddRowBackgroundColor(int color) // OddRowsFillColor(int color)
+	public void setOddRowBackgroundColor(int color) 
 	{
-		mGridLinesOddColor = color;
 		mPaintOddBgColor.setColor(color);
 	}
 	/**
@@ -124,8 +120,7 @@ public class PlotGrid {
 	 * @param color 填充色
 	 */
 	public void setEvenRowBackgroundColor(int color)
-	{
-		mGridLinesEvenColor = color;		
+	{	
 		mPaintOddBgColor.setColor(color);
 	}
 	

@@ -34,10 +34,7 @@ import android.graphics.Canvas;
  */
 
 public class PlotAreaRender extends PlotArea implements IRender{
-	
-	private float mCenterX = 0.0f;
-	private float mCenterY = 0.0f;
-		
+
 	public PlotAreaRender()
 	{
 		super();
@@ -64,18 +61,16 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	 * 得到中心点X坐标
 	 * @return X坐标
 	 */
-	public float getCenterX() {		
-		mCenterX = ((float)Math.abs(mLeft + (mRight - mLeft)/2));		
-		return mCenterX;
+	public float getCenterX() {			
+		return (float)Math.abs(mLeft + (mRight - mLeft)/2);
 	}
 
 	/**
 	 * 得到中心点Y坐标
 	 * @return Y坐标
 	 */
-	public float getCenterY() {		
-		mCenterY = ((float)Math.abs(mBottom - (mBottom - mTop)/2));		
-		return mCenterY;
+	public float getCenterY() {				
+		return ((float)Math.abs(mBottom - (mBottom - mTop)/2));	
 	}
 	
 	public float getLeft() {
@@ -84,7 +79,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 
 	/**
 	 * 设置绘图区的左边X坐标
-	 * @param left
+	 * @param left	X坐标
 	 */
 	public void setLeft(float left) {
 		this.mLeft = left;
@@ -92,7 +87,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	
 	/**
 	 * 设置绘图区的上面Y坐标
-	 * @param top
+	 * @param top	Y坐标
 	 */
 	public void setTop(float top) {
 		this.mTop = top;
@@ -100,7 +95,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 
 	/**
 	 * 设置绘图区的右边X坐标
-	 * @param right
+	 * @param right	X坐标
 	 */
 	public void setRight(float right) {
 		this.mRight = right;
@@ -108,7 +103,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	
 	/**
 	 * 设置绘图区的底部Y坐标
-	 * @param bottom
+	 * @param bottom	Y坐标
 	 */
 	public void setBottom(float bottom) {
 		this.mBottom = bottom;
