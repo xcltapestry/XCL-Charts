@@ -55,13 +55,12 @@ public class AboutActivity extends Activity {
 		TextView tv_title = (TextView) findViewById(R.id.tv_title);
 		String html = "<big><font color ='red'>XCL-Charts</font></big><br/>"			
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.5<br/>"
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-8-30<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-8-31<br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群: 374780627<br/>"
 					+ "<big><font color ='red'>License</font></big><br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;Apache v2 License开源协议。"
 				+ "<br/><big><font color ='red'>代码托管地址</font></big><br/>"
-				+ "GitHub:https://github.com/xcltapestry/XCL-Charts" 
-				+ "<br/>OSChina:https://git.oschina.net/xclcharts/XCL-Charts";
+				+ "<br/>GitHub:https://github.com/xcltapestry/XCL-Charts" ;
 		CharSequence charSequence = Html.fromHtml(html);
 		tv_title.setText(charSequence);
 		tv_title.setMovementMethod(LinkMovementMethod.getInstance());

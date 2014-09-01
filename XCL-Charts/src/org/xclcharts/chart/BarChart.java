@@ -223,6 +223,9 @@ public class BarChart extends AxisChart {
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
 		float currentY = plotArea.getBottom();
+		
+		double slen = 0d;
+		double currentTickLabel =  0d;
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
@@ -236,8 +239,8 @@ public class BarChart extends AxisChart {
 			currentY = sub(plotArea.getBottom(), mul(i,YSteps));
 			
 			// 分类		
-			double slen = i * dataAxis.getAxisSteps();			
-			double currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);
+			slen = i * dataAxis.getAxisSteps();			
+			currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);
 					
 			// 从左到右的横向网格线		
 			if ( i % 2 != 0) {

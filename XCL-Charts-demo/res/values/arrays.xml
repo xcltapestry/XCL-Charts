@@ -38,6 +38,7 @@
         <item>圆形雷达图</item> 
         <item>雷达玫瑰混合图</item> 
         <item>柱形渐显动画演示</item>     
+        <item>弧线比较图</item>
         
         <item>仪表盘-混合图</item> 
          <item>仪表盘-测试网速</item> 
@@ -91,6 +92,7 @@
         <item>雷达玫瑰混合图</item> 
         
        <item>Bar Chart - 柱形渐显动画效果</item>    
+       <item>ArcLine Chart</item>
        
        <item>Dial Chart</item> 
         <item>Dial Chart</item>  

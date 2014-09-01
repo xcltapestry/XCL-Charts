@@ -77,11 +77,6 @@ public class Bar {
 		mPaintBar.setColor((int)Color.rgb(252, 210, 9));
 		mPaintBar.setStyle(Style.FILL);
 		
-		//柱形顶上的文字标签		
-		mPaintItemLabel = new Paint();
-		mPaintItemLabel.setTextSize(12);
-		mPaintItemLabel.setColor(Color.BLACK);
-		mPaintItemLabel.setTextAlign(Align.CENTER);
 	}
 		
 	/**
@@ -105,6 +100,13 @@ public class Bar {
 	 * @return 画笔
 	 */
 	public Paint getBarPaint() {
+		
+		if(null == mPaintBar)
+		{
+			mPaintBar  = new Paint();
+			mPaintBar.setColor((int)Color.rgb(252, 210, 9));
+			mPaintBar.setStyle(Style.FILL);
+		}				
 		return mPaintBar;
 	}
 	
@@ -113,6 +115,15 @@ public class Bar {
 	 * @return 画笔
 	 */
 	public Paint getItemLabelPaint() {
+		
+		//柱形顶上的文字标签	
+		if(null == mPaintItemLabel)
+		{
+			mPaintItemLabel = new Paint();
+			mPaintItemLabel.setTextSize(12);
+			mPaintItemLabel.setColor(Color.BLACK);
+			mPaintItemLabel.setTextAlign(Align.CENTER);
+		}		
 		return mPaintItemLabel;
 	}
 

@@ -127,6 +127,10 @@ public class RoundAxisRender extends RoundAxis{
 			float Angle = 0.0f;						
 			float tickMarkWidth = getTickMarksPaint().getStrokeWidth();
 			
+			float stopX = 0.0f,stopY = 0.0f;
+			float labelX = 0.0f,labelY = 0.0f;
+			float startX = 0.0f,startY = 0.0f;
+			
 			for(int i=0;i<count;i++)
 			{					
 					if(0 == i)
@@ -138,11 +142,11 @@ public class RoundAxisRender extends RoundAxis{
 					}									
 					
 					MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, innerRadius1, Angle); 								
-					float startX = MathHelper.getInstance().getPosX();
-					float startY = MathHelper.getInstance().getPosY();
+					startX = MathHelper.getInstance().getPosX();
+					startY = MathHelper.getInstance().getPosY();
 					
-					float stopX = 0.0f,stopY = 0.0f;
-					float labelX = 0.0f,labelY = 0.0f;
+					stopX = stopY = 0.0f;
+					labelX = labelY = 0.0f;
 										
 					MathHelper.getInstance().calcArcEndPointXY(cirX, cirY,tickRadius, Angle); 	
 					labelX = MathHelper.getInstance().getPosX();
@@ -364,12 +368,13 @@ public class RoundAxisRender extends RoundAxis{
 			float offsetAngle = this.mInitAngle;
 			int currentColor = -1;
 			String currentLabel = "";
-								
+			float sweepAngle = 0.0f;
+			
 			for(int i=0;i<angleCount;i++)
 			{				
 				if(null != mColor && colorCount > i) currentColor = mColor.get(i);
 				if(null != mLabels && labelsCount > i)currentLabel = mLabels.get(i);				
-				float sweepAngle = MathHelper.getInstance().mul( mTotalAngle , mPercentage.get(i));				
+				sweepAngle = MathHelper.getInstance().mul( mTotalAngle , mPercentage.get(i));				
 				
 				renderPartitions(canvas,offsetAngle,sweepAngle,currentColor,currentLabel) ;
 				offsetAngle = MathHelper.getInstance().add(offsetAngle, sweepAngle);

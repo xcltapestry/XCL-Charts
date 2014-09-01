@@ -59,19 +59,7 @@ public class RdChart extends EventChart {
 		initChart();
 	}
 	
-	private void initChart() {
-		mPaintLabel = new Paint();
-		mPaintLabel.setColor(Color.BLACK);
-		mPaintLabel.setTextSize(18);
-		mPaintLabel.setAntiAlias(true);
-		mPaintLabel.setTextAlign(Align.CENTER);
-		
-		mPaintLine = new Paint();
-		mPaintLine.setColor((int)Color.rgb(180, 205, 230));
-		mPaintLine.setAntiAlias(true);
-		mPaintLine.setStyle(Style.STROKE);
-		mPaintLine.setStrokeWidth(3);	
-		
+	private void initChart() {								
 	}
 	
 	@Override
@@ -161,6 +149,14 @@ public class RdChart extends EventChart {
 	 */
 	public Paint getLabelPaint()
 	{
+		if(null == mPaintLabel)
+		{
+			mPaintLabel = new Paint();
+			mPaintLabel.setColor(Color.BLACK);
+			mPaintLabel.setTextSize(18);
+			mPaintLabel.setAntiAlias(true);
+			mPaintLabel.setTextAlign(Align.CENTER);
+		}
 		return mPaintLabel;
 	}
 	
@@ -170,6 +166,14 @@ public class RdChart extends EventChart {
 	 */
 	public Paint getLinePaint()
 	{
+		if(null == mPaintLine)
+		{
+			mPaintLine = new Paint();
+			mPaintLine.setColor((int)Color.rgb(180, 205, 230));
+			mPaintLine.setAntiAlias(true);
+			mPaintLine.setStyle(Style.STROKE);
+			mPaintLine.setStrokeWidth(3);	
+		}		
 		return mPaintLine;
 	}
 	

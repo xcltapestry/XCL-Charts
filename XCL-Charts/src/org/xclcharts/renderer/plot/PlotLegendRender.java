@@ -27,6 +27,7 @@ import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.LnData;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RadarData;
+import org.xclcharts.chart.ArcLineData;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
@@ -300,12 +301,30 @@ public class PlotLegendRender extends PlotLegend{
 	
 	
 	/**
+	 * 绘制圆形柱形图的图例
+	 * @param canvas	画布
+	 * @param dataset	数据集
+	 */
+	public void renderRoundBarKey(Canvas canvas,List<ArcLineData> dataset)
+	{
+		if (isShowLegend() == false) return;		
+		if(null == dataset) return ;
+		
+		initRoundChartKey();
+		for(ArcLineData cData : dataset)
+		{
+			renderCirChartKey(canvas,cData.getKey(),cData.getBarColor());																
+		}				
+	}
+	
+	
+	/**
 	 * 绘制pie图的图例
 	 * @param canvas	画布
 	 * @param dataset	数据集
 	 */
 	public void renderPieKey(Canvas canvas,List<PieData> dataset)
-{
+	{
 		if (isShowLegend() == false) return;		
 		if(null == dataset) return ;
 		

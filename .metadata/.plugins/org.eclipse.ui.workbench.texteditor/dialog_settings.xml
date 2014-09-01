@@ -3,36 +3,36 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
 		<item value="153" key="DIALOG_Y_ORIGIN"/>
-		<item value="434" key="DIALOG_HEIGHT"/>
 		<item value="942" key="DIALOG_X_ORIGIN"/>
+		<item value="434" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
-		<item value="false" key="wholeword"/>
-		<item value="mPosPintF" key="selection"/>
+		<item value="true" key="wholeword"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="pos"/>
-			<item value="mPaintArc"/>
-			<item value="mArcRF0"/>
-			<item value="curretAngle"/>
-			<item value="getPlotAttrInfo"/>
-			<item value="addAttrInfo()"/>
-			<item value="mPaintCenterText"/>
-			<item value="renderAttrInfo"/>
+			<item value="mDataColor"/>
+			<item value="plotAttrInfoRender"/>
+			<item value="RoundBarData"/>
+			<item value="mPieColor"/>
+			<item value="mPieValue"/>
+			<item value="mPieLabel"/>
+			<item value="mPieKey"/>
+			<item value="mOffsetAngle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="ArcLineData"/>
+			<item value="mColor"/>
+			<item value="mValue"/>
+			<item value="mLabel"/>
+			<item value="mKey"/>
+			<item value="RoundBarData"/>
+			<item value="BarColor"/>
 			<item value="mPosPintF"/>
-			<item value="currentAngle"/>
-			<item value="mArcRF0"/>
-			<item value="mPaintArc"/>
-			<item value="m3DArcRF0"/>
-			<item value="mPaint3DArc"/>
-			<item value=""/>
-			<item value=" "/>
 		</list>
 	</section>
 </section>

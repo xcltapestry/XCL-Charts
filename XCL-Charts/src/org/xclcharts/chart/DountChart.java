@@ -42,12 +42,12 @@ public class DountChart  extends PieChart{
 
 	//内环半径
 	private int mFillRadius = 0;	
-	private float mInnerSize = 0.8f;
+	private float mInnerRadius = 0.8f;
 	
 	//内环填充颜色
 	private Paint mPaintFill = null;
 	
-	private Paint mPaintCenterText;
+	private Paint mPaintCenterText = null;
 	private String mCenterText = "";
 	
 	//附加信息类
@@ -106,9 +106,9 @@ public class DountChart  extends PieChart{
 	 * 设置环内部填充相对于环所占的比例
 	 * @param precentage 环所占比例
 	 */
-	public void setInnerSize(float precentage)
+	public void setInnerRadius(float precentage)
 	{
-		mInnerSize = precentage;
+		mInnerRadius = precentage;
 	}
 	
 	/**
@@ -117,7 +117,7 @@ public class DountChart  extends PieChart{
 	 */
 	public float calcInnerRadius()
 	{
-		mFillRadius =  (int) MathHelper.getInstance().round( mul(getRadius(),mInnerSize), 2);
+		mFillRadius = (int) MathHelper.getInstance().round( mul(getRadius(),mInnerRadius), 2);
 		return mFillRadius;
 	}
 	
@@ -147,11 +147,9 @@ public class DountChart  extends PieChart{
 	private void renderCenterText(Canvas canvas)
 	{		
 		if(mCenterText.length() > 0 )
-		{
-			if(null == mPaintCenterText)initCenterTextPaint();
-			
+		{			
 			canvas.drawText(mCenterText, 
-				plotArea.getCenterX(), plotArea.getCenterY(), mPaintCenterText);
+				plotArea.getCenterX(), plotArea.getCenterY(), getCenterTextPaint());
 		}
 	}
 

@@ -1,0 +1,149 @@
+package org.xclcharts.chart;
+
+import org.xclcharts.common.MathHelper;
+
+import android.util.Log;
+
+public class RoundBarData {
+
+	private final String TAG ="RoundBarData";
+
+	private String mPieKey = "";
+	private String mPieLabel = "";
+	private double mPieValue = 0.0f;
+	private int mPieColor = 0 ;
+	//private int mSliceAngle = 0;
+	//柱形间距所占比例
+	private double mBarInnerMargin = 0.2f;
+	
+	public RoundBarData() {
+		// TODO Auto-generated constructor stub
+		//super();
+	}
+		
+	/**
+	 * 
+	 * @param label		标签
+	 * @param percent	百分比
+	 * @param color		显示颜色
+	 */
+	public RoundBarData(String label,double percent,int color)
+	{
+		setLabel(label);
+		setPercentage(percent);
+		setBarColor(color);
+	}
+	
+	/**
+	 * 
+	 * @param key		键值
+	 * @param label		标签
+	 * @param percent	百分比
+	 * @param color		显示颜色
+	 */
+	public RoundBarData(String key,String label,double percent,int color)
+	{
+		setLabel(label);
+		setPercentage(percent);
+		setBarColor(color);
+		setKey(key);
+	}
+	
+	
+	/**
+	 * 设置Key值
+	 * @param key Key值
+	 */
+	public void setKey(String key)
+	{
+		mPieKey = key;
+	}	
+	
+	/**
+	 * 返回Key值
+	 * @return Key值
+	 */
+	public String getKey()
+	{
+		return mPieKey;
+	}
+	
+	/**
+	 * 设置标签
+	 * @param label 标签
+	 */
+	public void setLabel(String label)
+	{
+		mPieLabel = label;
+	}	
+		
+	/**
+	 * 设置百分比,绘制时，会将其转换为对应的圆心角
+	 * @param value 百分比
+	 */
+	public void setPercentage(double value)
+	{
+		mPieValue = value;
+	}
+	
+	/**
+	 * 设置扇区颜色
+	 * @param color 颜色
+	 */
+	public void setBarColor(int color)
+	{
+		mPieColor = color;
+	}
+	
+	/**
+	 * 返回标签
+	 * @return 标签
+	 */
+	public String getLabel()
+	{
+		return mPieLabel;
+	}
+	
+	/**
+	 * 返回当前百分比
+	 * @return 百分比
+	 */
+	public double getPercentage()
+	{
+		return mPieValue;
+	}
+	
+	/**
+	 * 返回扇区颜色
+	 * @return 颜色
+	 */
+	public int getBarColor()
+	{
+		return mPieColor;
+	}
+	
+	/**
+	 * 将百分比转换为饼图显示角度
+	 * @return 圆心角度
+	 */
+	public float getSliceAngle() 
+	{			
+		float Angle = 0.0f;
+		try{
+			float currentValue = (float) this.getPercentage();
+			if(currentValue >= 101f || currentValue < 0.0f)
+			{
+				Log.e(TAG,"输入的百分比不合规范.须在0~100之间.");			
+			}else{		
+				//Angle = (float) Math.rint( 360f *  (currentValue / 100f) );
+				Angle =  MathHelper.getInstance().round(360f *  (currentValue / 100f),2) ;
+			}
+		}catch(Exception ex)
+		{
+			Angle = -1f;
+		}finally{
+			
+		}
+		return  Angle;
+	}
+}

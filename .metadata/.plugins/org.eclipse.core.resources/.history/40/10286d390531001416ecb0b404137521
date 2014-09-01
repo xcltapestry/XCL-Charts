@@ -1,0 +1,122 @@
+package com.demo.xclcharts.view;
+
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.xclcharts.chart.ArcLineChart;
+import org.xclcharts.chart.ArcLineData;
+import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.util.AttributeSet;
+import android.util.Log;
+
+public class ArcLineChart01View extends TouchView {
+	
+	private String TAG = "RoundBarChart01View";
+	private ArcLineChart chart = new ArcLineChart();	
+	private LinkedList<ArcLineData> chartData = new LinkedList<ArcLineData>();
+
+	public ArcLineChart01View(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		initView();
+	}
+	
+	public ArcLineChart01View(Context context, AttributeSet attrs){   
+        	super(context, attrs);   
+        	initView();
+	 }
+	 
+	 public ArcLineChart01View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	chartDataSet();	
+			chartRender();
+	 }
+	 	 	
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  	
+	
+	
+	private void chartRender()
+	{
+		try {					
+			
+			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
+			
+			chart.setApplyBackgroundColor(true);
+			chart.setBackgroundColor(Color.WHITE);
+				
+			//标题
+			chart.setTitle("弧线比较图");
+			chart.addSubtitle("(XCL-Charts Demo)");
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);				
+			
+			//显示图例
+			chart.getPlotLegend().showLegend();
+			//chart.getPlotLegend().getLegendLabelPaint().setTextSize(22);
+			chart.getBorder().getLinePaint().setColor(Color.red(83, 178, 50));
+			chart.showBorder();	
+			
+			chart.setDataSource(chartData);
+			
+			chart.setLabelOffsetX(30f);
+			//chart.setInnerRadius(0.6f);						
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, e.toString());
+		}
+	}
+	
+
+	
+	private void chartDataSet()
+	{
+		
+		//设置图表数据源			
+		chartData.add(new ArcLineData("closed","29% - closed" ,   (0.29*100),(int)Color.rgb(155, 187, 90)));
+		chartData.add(new ArcLineData("inspect","53% - inspect" ,   (0.53*100),(int)Color.rgb(191, 79, 75)));
+		chartData.add(new ArcLineData("open","76%" ,  (0.76*100),(int)Color.rgb(242, 167, 69)));
+		chartData.add(new ArcLineData("workdone","86%" , (0.86*100),(int)Color.rgb(60, 173, 213)));
+		chartData.add(new ArcLineData("dispute","36%" ,  (0.36*100),(int)Color.rgb(90, 79, 88)));
+	
+	}
+
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
+
+	@Override
+	public List<XChart> bindChart() {
+		// TODO Auto-generated method stub		
+		List<XChart> lst = new ArrayList<XChart>();
+		lst.add(chart);		
+		return lst;
+	}
+
+
+	
+
+
+	
+}

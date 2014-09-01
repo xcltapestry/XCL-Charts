@@ -61,6 +61,7 @@ import com.demo.xclcharts.view.RadarChart01View;
 import com.demo.xclcharts.view.RadarChart02View;
 import com.demo.xclcharts.view.RadarChart03View;
 import com.demo.xclcharts.view.RoseChart01View;
+import com.demo.xclcharts.view.ArcLineChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.SplineChart02View;
 import com.demo.xclcharts.view.SplineChart03View;
@@ -115,7 +116,8 @@ public class ChartsActivity extends Activity {
 				new RadarChart01View(this),
 				new RadarChart02View(this),
 				new RadarChart03View(this),
-				new BarChart06View(this)}; 
+				new BarChart06View(this),
+				new ArcLineChart01View(this)}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  
 		mSelected = bunde.getInt("selected");  
@@ -138,7 +140,7 @@ public class ChartsActivity extends Activity {
 		   // 1.新增一个Activity
 		   // 2.新增一个View,继承Demo中的GraphicalView或TouchView都可，依Demo中View目录下例子绘制图表.
 		   // 3.将自定义的图表View放置入Activity对应的XML中，将指明其layout_width与layout_height大小.
-		   // 运行即可看到效果.
+		   // 运行即可看到效果. 可参考非ChartsActivity的那几个图的例子，都是这种方式。
 		
  		  //使用方式二:
 		   //代码调用 方式有下面二种方法:
