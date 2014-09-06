@@ -247,7 +247,7 @@ public class RadarChart03View extends TouchView {
 			chartRose3.setInitialAngle(270 + 72/2);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chartRose3.setLabelPosition(XEnum.SliceLabelPosition.INNER);
+			chartRose3.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
 			
 			chartRose3.getLabelPaint().setColor(Color.parseColor("#D92222"));
 			

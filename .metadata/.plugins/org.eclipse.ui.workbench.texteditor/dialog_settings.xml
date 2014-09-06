@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="153" key="DIALOG_Y_ORIGIN"/>
-		<item value="942" key="DIALOG_X_ORIGIN"/>
+		<item value="281" key="DIALOG_Y_ORIGIN"/>
 		<item value="434" key="DIALOG_HEIGHT"/>
+		<item value="994" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
-		<item value="true" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="false" key="wholeword"/>
+		<item value="ScatterData" key="selection"/>
 		<list key="findhistory">
-			<item value="mDataColor"/>
-			<item value="plotAttrInfoRender"/>
-			<item value="RoundBarData"/>
-			<item value="mPieColor"/>
-			<item value="mPieValue"/>
-			<item value="mPieLabel"/>
-			<item value="mPieKey"/>
-			<item value="mOffsetAngle"/>
+			<item value="ScatterData"/>
+			<item value="DotStyle"/>
+			<item value="line"/>
+			<item value="OUTS"/>
+			<item value="setLabelPosition"/>
+			<item value="renderVerticalBar"/>
+			<item value="mPlotArea"/>
+			<item value="plotLegend"/>
 		</list>
 		<list key="replacehistory">
-			<item value="ArcLineData"/>
-			<item value="mColor"/>
-			<item value="mValue"/>
-			<item value="mLabel"/>
-			<item value="mKey"/>
-			<item value="RoundBarData"/>
-			<item value="BarColor"/>
-			<item value="mPosPintF"/>
+			<item value="mapPoint"/>
+			<item value="BubbleData"/>
+			<item value="key"/>
+			<item value="ey"/>
+			<item value="mPointMap"/>
+			<item value="getKey"/>
+			<item value="setKey"/>
+			<item value="getDataSet"/>
 		</list>
 	</section>
 </section>

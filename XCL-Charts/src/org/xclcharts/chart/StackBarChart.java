@@ -77,9 +77,12 @@ public class StackBarChart  extends BarChart{
 		//步长
 		 float YSteps = getHorizontalYSteps();		
 		 int   barHeight = (int) MathHelper.getInstance().round(mul(YSteps,0.5f),2);		 
+		 
+		 int cateSize = categoryAxis.getDataSet().size();
+		 int dataSize = 0;
 				
 		//分类轴	
-		 for(int r=0;r<categoryAxis.getDataSet().size();r++)
+		 for(int r=0;r < cateSize ;r++)
 		 {				 
 			 	 float currentX = plotArea.getLeft();
 				 float currentY = sub(plotArea.getBottom() , mul((r+1) , YSteps));				 
@@ -88,8 +91,9 @@ public class StackBarChart  extends BarChart{
 				//得到数据源
 				List<BarData> chartDataSource = this.getDataSource();
 				if(null==chartDataSource||chartDataSource.size() == 0)continue;
-					
-				 for(int i=0;i<chartDataSource.size();i++) //轴上的每个标签各自所占的高度
+				
+				 dataSize = chartDataSource.size();					
+				 for(int i=0;i<dataSize;i++) //轴上的每个标签各自所占的高度
 				 {
 					 BarData bd = chartDataSource.get(i);
 					 if(null == bd.getDataSet()) continue ;
@@ -166,14 +170,19 @@ public class StackBarChart  extends BarChart{
 			float axisScreenHeight  =  getAxisScreenHeight(); 
 			float axisDataHeight =  (float) dataAxis.getAxisRange(); 			
 			float barWidht = mul(XSteps,0.5f);	
-								
-			 for(int r=0;r<dataSet.size();r++) //轴上的每个标签
+			
+			 float currentX = 0.0f,currentY = 0.0f;
+			
+			 int dataSize = dataSet.size();	
+			 int sourceSize = 0;
+			 for(int r=0;r<dataSize;r++) //轴上的每个标签
 			 {				 				 		
-				 	 float currentX = add(plotArea.getLeft() , mul( (r+1) , XSteps));				 	 
-					 float currentY = plotArea.getBottom();
+				 	 currentX = add(plotArea.getLeft() , mul( (r+1) , XSteps));				 	 
+					 currentY = plotArea.getBottom();
 					 Double total = 0d;
 					 
-					 for(int i=0; i < chartDataSource.size();i++) //各自所占的高度
+					 sourceSize = chartDataSource.size();
+					 for(int i=0; i < sourceSize;i++) //各自所占的高度
 					 {
 						 BarData bd = chartDataSource.get(i);						 
 						 if(null == bd.getDataSet()) continue ;

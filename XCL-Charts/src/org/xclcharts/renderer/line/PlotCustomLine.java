@@ -114,7 +114,8 @@ public class PlotCustomLine {
 			Log.e(TAG, "轴的屏幕高度值没有传过来。");
 			return false;
 		}		
-		double axisHeight = MathHelper.getInstance().sub( mDataAxis.getAxisMax(), mDataAxis.getAxisMin());
+		double axisHeight = MathHelper.getInstance().sub( 
+									mDataAxis.getAxisMax(), mDataAxis.getAxisMin());
 		
 		for(CustomLineData line : mCustomLineDataset)
 		{			
@@ -124,7 +125,8 @@ public class PlotCustomLine {
 			//double  postion = mAxisScreenHeight * ( 
 			//					(line.getValue() - mDataAxis.getAxisMin()) /axisHeight  );
 			double per =  MathHelper.getInstance().div(
-								MathHelper.getInstance().sub( line.getValue() , mDataAxis.getAxisMin()),
+								MathHelper.getInstance().sub( 
+										line.getValue() , mDataAxis.getAxisMin()),
 								axisHeight  );			
 			float  postion = MathHelper.getInstance().mul(mAxisScreenHeight ,  
 															MathHelper.getInstance().dtof(per)); 		
@@ -165,7 +167,7 @@ public class PlotCustomLine {
 			switch (line.getLabelHorizontalPostion())
 			{
 			case LEFT:
-				currentX =  MathHelper.getInstance().sub(mPlotArea.getLeft() ,  line.getLabelOffset());	
+				currentX =  MathHelper.getInstance().sub(mPlotArea.getLeft() ,line.getLabelOffset());	
 				line.getLineLabelPaint().setTextAlign(Align.RIGHT);
 				
 				capX =  mPlotArea.getRight();	
@@ -330,7 +332,8 @@ public class PlotCustomLine {
 	
 	
 	//绘制箭头
-	private void renderLineCapVerticalPlot(Canvas canvas, CustomLineData line, float currentX, float currentY)
+	private void renderLineCapVerticalPlot(Canvas canvas, 
+							CustomLineData line, float currentX, float currentY)
 	{
 		float left = currentX - CAPSIZE * 2;
 		float top   = currentY - CAPSIZE * 2;

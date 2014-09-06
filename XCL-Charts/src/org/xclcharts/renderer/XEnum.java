@@ -55,7 +55,7 @@ public class XEnum {
 		 *
 		 */
 		public enum SliceLabelPosition{		
-			HIDE,INNER,OUTSIDE,LINE
+			HIDE,INSIDE,OUTSIDE,LINE
 		}
 				
 		/**
@@ -199,7 +199,7 @@ public class XEnum {
 		 * @param PRISMATIC	棱形
 		 */
 		public enum DotStyle {		
-			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC
+			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC,X
 		}
 		
 		
@@ -267,4 +267,7 @@ public class XEnum {
 		public enum RadarChartType{
 			RADAR,ROUND
 		}
+		
+		
+		
 }

@@ -237,10 +237,9 @@ public class LineChart01View extends TouchView {
 	@Override
 	public List<XChart> bindChart() {
 		// TODO Auto-generated method stub		
-		//List<XChart> lst = new ArrayList<XChart>();
-		//lst.add(chart);		
-		//return lst;
-		return null;
+		List<XChart> lst = new ArrayList<XChart>();
+		lst.add(chart);		
+		return lst;
 	}
 	
 	@Override

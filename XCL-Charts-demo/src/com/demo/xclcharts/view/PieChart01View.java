@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -94,7 +95,7 @@ public class PieChart01View extends TouchView implements Runnable{
 			//chart.setInitialAngle(90);	
 			
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLabelPosition(XEnum.SliceLabelPosition.INNER);
+			chart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
 			chart.getLabelPaint().setColor(Color.WHITE);
 			
 			//标题
@@ -110,7 +111,7 @@ public class PieChart01View extends TouchView implements Runnable{
 			//chart.setDataSource(chartData);
 			
 			//激活点击监听
-			//chart.ActiveListenItemClick();
+			chart.ActiveListenItemClick();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -197,19 +198,24 @@ public class PieChart01View extends TouchView implements Runnable{
 	{
 		  try {       
 			 
+			  	float sum = 0.0f;
 	          	for(int i=0;i< chartData.size() ;i++)
 	          	{
 	          		Thread.sleep(100);
 	          		LinkedList<PieData> animationData = new LinkedList<PieData>();
 	        
-	          		int sum = 0;
+	          		sum = 0.0f;
 	          		for(int j=0;j<=i;j++)
 	          		{            			            			
 	          			animationData.add(chartData.get(j));
-	          			sum += chartData.get(j).getPercentage();
+	          			sum = (float) MathHelper.getInstance().add(
+	          									sum , chartData.get(j).getPercentage());	          			
 	          		}   		          		
+	          		
+	          		
 	          				          				          		
-	          		animationData.add(new PieData("","", 100 - sum,(int)Color.argb(1, 0, 0, 0)));		          		
+	          		animationData.add(new PieData("","",  MathHelper.getInstance().sub(100.0f , sum),
+	          											  (int)Color.argb(1, 0, 0, 0)));		          		
 	          		chart.setDataSource(animationData);
 	          		
 	          		//激活点击监听

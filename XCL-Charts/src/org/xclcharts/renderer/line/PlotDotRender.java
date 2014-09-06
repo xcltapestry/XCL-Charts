@@ -69,8 +69,12 @@ public class PlotDotRender {
 			mPath.reset();
 		}		
 	}	
+
 	
-	protected void initPaintFill()
+	/**
+	 * 开放填充内部环形的画笔
+	 */
+	public Paint getInnerFillPaint()
 	{
 		if(null == mPaintFill)
 		{
@@ -79,14 +83,6 @@ public class PlotDotRender {
 			mPaintFill.setStyle(Style.FILL);
 			mPaintFill.setAntiAlias(true);
 		}
-	}
-	
-	/**
-	 * 开放填充内部环形的画笔
-	 */
-	public Paint getInnerFillPaint()
-	{
-		if(null == mPaintFill)initPaintFill();
 		return mPaintFill;
 	}
 	
@@ -103,26 +99,22 @@ public class PlotDotRender {
 	public RectF renderDot(Canvas canvas, PlotDot pDot, 
 						  float left, float top, float right,float bottom, Paint paint) {
 				
-		float radius = pDot.getDotRadius();
-		
-		//mRect.setEmpty();
-		
+		float radius = pDot.getDotRadius();		
+		//mRect.setEmpty();		
 		mRect.left =  0.0f;
 		mRect.top =  0.0f;
 		mRect.right =  0.0f;
-		mRect.bottom = 0.0f;
-		
+		mRect.bottom = 0.0f;		
 		
 		if(Float.compare(radius, 0.0f) == 0 
-				|| Float.compare(radius, 0.0f) == -1){
-			
+				|| Float.compare(radius, 0.0f) == -1){			
 			return mRect;
 		}						
-		float halfRadius = MathHelper.getInstance().div(radius , 2f);
 		
 		float cX = 0.0f;
 		if(XEnum.DotStyle.DOT == pDot.getDotStyle() ||
-				XEnum.DotStyle.RING == pDot.getDotStyle()	)
+				XEnum.DotStyle.RING == pDot.getDotStyle() ||
+						XEnum.DotStyle.X == pDot.getDotStyle()	)
 		{
 			//cX = MathHelper.getInstance().add(left,
 			//				MathHelper.getInstance().sub(right, left));				
@@ -134,72 +126,100 @@ public class PlotDotRender {
 			mRect.bottom =  (bottom + radius);			
 		}
 		
-
 		switch (pDot.getDotStyle()) {
 		case DOT:										
-			canvas.drawCircle(cX, bottom,radius, paint);
-			
+			canvas.drawCircle(cX, bottom,radius, paint);			
 			break;
-		case RING:		
-			float ringRadius = radius * 0.7f; // MathHelper.getInstance().mul(radius, 0.7f);		
-            canvas.drawCircle(cX, bottom, radius, paint);
-
-            initPaintFill();	
-            mPaintFill.setColor(pDot.getRingInnerColor());
-            canvas.drawCircle(cX, bottom,ringRadius, mPaintFill);            
-
+		case RING:					
+			renderRing(canvas,paint,radius,pDot,cX ,bottom);
 			break;
 		case TRIANGLE: // 等腰三角形
-			float triganaleHeight = radius + radius / 2;
-			
-			initPath();
-			mPath.moveTo(right - radius, bottom + halfRadius);
-			mPath.lineTo(right, bottom - triganaleHeight);
-			mPath.lineTo(right + radius, bottom + halfRadius);
-			mPath.close();
-            canvas.drawPath(mPath, paint);
-            mPath.reset();
-                        
-            mRect.left =  (right - radius);
-			mRect.top = ( bottom - triganaleHeight);
-			mRect.right =  ( right + radius);
-			mRect.bottom =  ( bottom + halfRadius);			
-			
+			renderTriangle(canvas,paint,radius,right,bottom);			
 			break;
-		// Prismatic
-		case PRISMATIC: // 棱形 Prismatic
-			
-			initPath();
-			mPath.moveTo(right - radius, bottom);
-			mPath.lineTo(right, bottom - radius);
-			mPath.lineTo(right + radius, bottom);
-			mPath.lineTo(left + (right - left), bottom + radius);
-			mPath.close();
-            canvas.drawPath(mPath, paint);
-            mPath.reset();
-            
-        	mRect.left = ( right -  radius  );
-			mRect.top =  ( bottom - radius);
-			mRect.right =  ( right + radius);
-			mRect.bottom =  (bottom + radius);
-            
+		case PRISMATIC: // 棱形 Prismatic			
+			renderPrismatic(canvas,paint,radius,right,bottom,left );            
 			break;
 		case RECT:
-			paint.setStyle(Style.FILL);	
-			
-			mRect.left =  (right - radius);
-			mRect.top =   (bottom - radius); 
-			mRect.right =  (right + radius);
-			mRect.bottom = (bottom + radius);
-			canvas.drawRect(mRect,paint);
-			
+			renderRect(canvas,paint,radius,right,bottom );			
+			break;
+		case X:
+			renderX(canvas,paint);			    
 			break;
 		case HIDE:
 		default:
-		}
-		
-		
-		
+		}						
 		return mRect;
 	}
+	
+	
+	private void renderRing(Canvas canvas,Paint paint,float radius,PlotDot pDot,float cX ,float bottom)
+	{
+		float ringRadius = radius * 0.7f; // MathHelper.getInstance().mul(radius, 0.7f);		
+        canvas.drawCircle(cX, bottom, radius, paint);
+
+        getInnerFillPaint().setColor(pDot.getRingInnerColor());
+        canvas.drawCircle(cX, bottom,ringRadius, getInnerFillPaint()); 
+	}
+	
+	
+	private void renderTriangle(Canvas canvas,Paint paint,float radius,float right,float bottom)
+	{
+		
+		float halfRadius = MathHelper.getInstance().div(radius , 2f);		
+		float triganaleHeight = radius + radius / 2;
+		
+		initPath();
+		mPath.moveTo(right - radius, bottom + halfRadius);
+		mPath.lineTo(right, bottom - triganaleHeight);
+		mPath.lineTo(right + radius, bottom + halfRadius);
+		mPath.close();
+        canvas.drawPath(mPath, paint);
+        mPath.reset();
+                    
+        mRect.left =  (right - radius);
+		mRect.top = ( bottom - triganaleHeight);
+		mRect.right =  ( right + radius);
+		mRect.bottom =  ( bottom + halfRadius);	
+	}
+	
+	
+	private void renderPrismatic(Canvas canvas,Paint paint,float radius,float right,float bottom,
+								 float left )
+	{
+		initPath();
+		mPath.moveTo(right - radius, bottom);
+		mPath.lineTo(right, bottom - radius);
+		mPath.lineTo(right + radius, bottom);
+		mPath.lineTo(left + (right - left), bottom + radius);
+		mPath.close();
+        canvas.drawPath(mPath, paint);
+        mPath.reset();
+        
+    	mRect.left = ( right -  radius  );
+		mRect.top =  ( bottom - radius);
+		mRect.right =  ( right + radius);
+		mRect.bottom =  (bottom + radius);
+	}
+	
+	
+	private void renderRect(Canvas canvas,Paint paint,float radius,float right,float bottom )
+	{
+		paint.setStyle(Style.FILL);	
+		
+		mRect.left =  (right - radius);
+		mRect.top =   (bottom - radius); 
+		mRect.right =  (right + radius);
+		mRect.bottom = (bottom + radius);
+		canvas.drawRect(mRect,paint);
+	}
+	
+	private void renderX(Canvas canvas,Paint paint)
+	{
+		//float pWidth = paint.getStrokeWidth();
+		//paint.setStrokeWidth(2);
+		canvas.drawLine(mRect.left, mRect.top, mRect.right, mRect.bottom , paint);
+	    canvas.drawLine(mRect.left, mRect.bottom, mRect.right, mRect.top, paint);
+	    //paint.setStrokeWidth(pWidth);
+	}
+	
 }

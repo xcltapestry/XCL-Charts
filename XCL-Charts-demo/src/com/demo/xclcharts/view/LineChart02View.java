@@ -307,7 +307,7 @@ public class LineChart02View extends TouchView implements Runnable{
           	
           	for(int i=0;i< chartData.size() ;i++)
           	{
-          		Thread.sleep(100);
+          		Thread.sleep(150);
           		LinkedList<LineData> animationData = new LinkedList<LineData>();
           		for(int j=0;j<chartData.size();j++)
                   {            			            			

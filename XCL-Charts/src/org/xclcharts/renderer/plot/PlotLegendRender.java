@@ -24,10 +24,12 @@ package org.xclcharts.renderer.plot;
 import java.util.List;
 
 import org.xclcharts.chart.BarData;
+import org.xclcharts.chart.BubbleData;
 import org.xclcharts.chart.LnData;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RadarData;
 import org.xclcharts.chart.ArcLineData;
+import org.xclcharts.chart.ScatterData;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
@@ -38,6 +40,7 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.Log;
 
 /**
@@ -278,6 +281,126 @@ public class PlotLegendRender extends PlotLegend{
 		}
 	}
 	
+	
+	/**
+	 * 绘制线图的图例
+	 * @param canvas	画布
+	 * @param dataSet	数据集
+	 */
+	public void renderPointKey(Canvas canvas, List<ScatterData> dataSet) {
+		if (isShowLegend() == false)
+				return;		
+		if(null == dataSet) return ;
+		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
+		
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();
+		mRectWidth =  this.getRectWidth();
+		
+		mKeyLabelX = mPlotArea.getLeft() + mOffsetX;
+		mKeyLabelY = mPlotArea.getTop() - mOffsetY - 5 ;
+		getLegendLabelPaint().setTextAlign(Align.LEFT);
+
+		String key = "";
+		for (ScatterData cData : dataSet) {
+			key = cData.getKey();				
+			if("" == key) continue;
+			//颜色	
+			//getLegendLabelPaint().setColor(cData.getColor());
+
+			// 竖屏
+			mTextWidth =  this.getLabelTextWidth(key);			
+			mTotalTextWidth = MathHelper.getInstance().add(mTotalTextWidth, mTextWidth);
+
+			if (mTotalTextWidth > mPlotArea.getWidth()) {
+				mKeyLabelY -= mTextHeight;
+				mKeyLabelX = mPlotArea.getLeft();
+				mTotalTextWidth = 0.0f;
+			}
+
+			getLegendLabelPaint().setColor(cData.getPlotDot().getColor());
+			
+            canvas.drawText(cData.getKey(), mKeyLabelX + mRectWidth, mKeyLabelY
+					- mTextHeight / 3,getLegendLabelPaint());
+
+			float dotLeft = mKeyLabelX + mRectWidth / 4;
+			float dotRight = mKeyLabelX + 2 * (mRectWidth / 4);
+			
+			if (!cData.getDotStyle().equals(XEnum.DotStyle.HIDE)) {
+				PlotDot pDot = cData.getPlotDot();
+				PlotDotRender.getInstance().renderDot(canvas, pDot, 
+						dotLeft, mKeyLabelY, dotRight, 
+						mKeyLabelY - mTextHeight / 2,getLegendLabelPaint()); // 标识图形
+			}
+			
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX,mRectWidth + 10);
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX,mTextWidth);			
+		}
+	}
+	
+	
+	/**
+	 * 绘制线图的图例
+	 * @param canvas	画布
+	 * @param dataSet	数据集
+	 */
+	public void renderBubbleKey(Canvas canvas, List<BubbleData> dataSet) {
+		if (isShowLegend() == false)
+				return;		
+		if(null == dataSet) return ;
+		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
+		
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();
+		mRectWidth =  this.getRectWidth();
+		
+		mKeyLabelX = mPlotArea.getLeft() + mOffsetX;
+		mKeyLabelY = mPlotArea.getTop() - mOffsetY - 5 ;
+		getLegendLabelPaint().setTextAlign(Align.LEFT);
+		
+		PlotDot pDot = new PlotDot();
+		pDot.setDotStyle(XEnum.DotStyle.DOT);
+		
+		float dotLeft = 0.0f;
+		float dotRight = 0.0f;
+
+		String key = "";
+		for (BubbleData cData : dataSet) {
+			key = cData.getKey();				
+			if("" == key) continue;
+			//颜色	
+			//getLegendLabelPaint().setColor(cData.getColor());
+
+			// 竖屏
+			mTextWidth =  this.getLabelTextWidth(key);			
+			mTotalTextWidth = MathHelper.getInstance().add(mTotalTextWidth, mTextWidth);
+
+			if (mTotalTextWidth > mPlotArea.getWidth()) {
+				mKeyLabelY -= mTextHeight;
+				mKeyLabelX = mPlotArea.getLeft();
+				mTotalTextWidth = 0.0f;
+			}
+
+
+            canvas.drawText(cData.getKey(), mKeyLabelX + mRectWidth, mKeyLabelY
+					- mTextHeight / 3,getLegendLabelPaint());
+
+			dotLeft = mKeyLabelX + mRectWidth / 4;
+			dotRight = mKeyLabelX + 2 * (mRectWidth / 4);		
+		
+			getLegendLabelPaint().setColor(cData.getColor());
+			
+			PlotDotRender.getInstance().renderDot(canvas, pDot, 
+					dotLeft, mKeyLabelY, dotRight, 
+					mKeyLabelY - mTextHeight / 2, getLegendLabelPaint()); // 标识图形
+			
+			
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX,mRectWidth + 10);
+			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX,mTextWidth);			
+		}
+	}
+	
+	
 	private boolean initRoundChartKey()
 	{
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
@@ -395,9 +518,31 @@ public class PlotLegendRender extends PlotLegend{
 			mKeyLabelX = MathHelper.getInstance().add(mKeyLabelX, keyTextWidth + 5);					
 		}					
 	}
+	
+	
+	public void renderRangeBarKey(Canvas canvas,String key,int textColor)
+	{
+		if(""==key)return;
+		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();	
+				
+		initEnv();	
+		mTextHeight = this.getLabelTextHeight();
+		mRectWidth =  this.getRectWidth();
+		
+		mKeyLabelX = mPlotArea.getLeft() + mOffsetX + 10;
+		mKeyLabelY = mPlotArea.getTop() - mOffsetY - 5 ;
+		getLegendLabelPaint().setTextAlign(Align.LEFT);				
+		getLegendLabelPaint().setColor(textColor);	
+		getLegendLabelPaint().setStyle(Style.FILL);
+		
+		canvas.drawRect(mKeyLabelX , mKeyLabelY,
+						mKeyLabelX + mRectWidth, mKeyLabelY - mTextHeight, 
+						getLegendLabelPaint());					
 
-	
-	
+		canvas.drawText(key,mKeyLabelX + mRectWidth,
+							mKeyLabelY, getLegendLabelPaint());												
+	}
+		
 	private float getLabelTextWidth(String key)
 	{
 		return  DrawHelper.getInstance().getTextWidth(getLegendLabelPaint(),key );

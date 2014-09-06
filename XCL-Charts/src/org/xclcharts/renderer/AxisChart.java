@@ -23,6 +23,7 @@ package org.xclcharts.renderer;
 
 
 import org.xclcharts.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.axis.DataAxis;
@@ -141,6 +142,31 @@ public class AxisChart extends EventChart {
 		}
 		return itemLabel;
 	}
+	
+	
+	/**
+	 * 竖向柱形图 Y轴的屏幕高度/数据轴的刻度标记总数 = 步长
+	 * 
+	 * @return Y轴步长
+	 */
+	private float getVerticalYSteps(int tickCount) {
+		return MathHelper.getInstance().div(getAxisScreenHeight() , tickCount);
+	}
+
+	/**
+	 * 竖向图 得到X轴的步长 X轴的屏幕宽度 / 刻度标记总数 = 步长
+	 * 
+	 * @param num
+	 *            刻度标记总数
+	 * @return X轴步长
+	 */
+	protected float getVerticalXSteps(int num) {
+		//float XSteps = (float) Math.ceil(getAxisScreenWidth() / num);		
+		return MathHelper.getInstance().div(getAxisScreenWidth(),num);		
+	}
+	
+	
+	
 		
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception

@@ -58,12 +58,14 @@ public class PieChart3D extends PieChart{
  		float offsetAngle = initOffsetAngle;		
         float currentAngle = 0.0f;	              
         float newRadius = 0.0f;	
+        int size = 0;
      
 		for(int i=0;i < mRender3DLevel;i++)
 		{
               canvas.save(Canvas.MATRIX_SAVE_FLAG);
               canvas.translate(0,mRender3DLevel - i );
-			  for(int j=0;j< chartDataSource.size();j++)
+              size = chartDataSource.size();
+			  for(int j=0;j< size;j++)
 			  {			  
 				    PieData cData =  chartDataSource.get(j);			  								
 					currentAngle = cData.getSliceAngle();						
@@ -105,7 +107,8 @@ public class PieChart3D extends PieChart{
         float newRadius = 0.0f;	
         PointF[] arrPoint = new PointF[chartDataSource.size()];
 					
-		for(int j=0;j< chartDataSource.size();j++)
+        int size = chartDataSource.size();
+		for(int j=0;j< size;j++)
 		{
 		 	PieData cData = chartDataSource.get(j);	
 		 	currentAngle = cData.getSliceAngle();

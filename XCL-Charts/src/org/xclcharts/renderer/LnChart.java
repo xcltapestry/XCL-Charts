@@ -54,8 +54,7 @@ public class LnChart extends AxisChart {
 	
 	private PointF[] BezierControls ;
 	
-	//平滑曲线
-  	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
+	
 
 	public LnChart() {
 		super();
@@ -317,23 +316,7 @@ public class LnChart extends AxisChart {
 	}
 		
 	
-	/**
-	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
-	 * @param style
-	 */
-	public void setCrurveLineStyle(XEnum.CrurveLineStyle style)
-	{
-		mCrurveLineStyle = style;
-	}
 	
-	/**
-	 * 返回曲线显示风格
-	 * @return 显示风格
-	 */
-	public XEnum.CrurveLineStyle getCrurveLineStyle()
-	{
-		return mCrurveLineStyle;
-	}
 	
 	//遍历曲线
 	protected void renderBezierCurveLine(Canvas canvas,Paint paint,Path bezierPath ,

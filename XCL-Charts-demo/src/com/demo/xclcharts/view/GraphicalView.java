@@ -137,7 +137,7 @@ public abstract class GraphicalView extends View {
 	protected int[] getBarLnDefaultSpadding()
 	{
 		int [] ltrb = new int[4];
-		ltrb[0] = DensityUtil.dip2px(getContext(), 30); //left	
+		ltrb[0] = DensityUtil.dip2px(getContext(), 40); //left	
 		ltrb[1] = DensityUtil.dip2px(getContext(), 60); //top	
 		ltrb[2] = DensityUtil.dip2px(getContext(), 20); //right	
 		ltrb[3] = DensityUtil.dip2px(getContext(), 40); //bottom						
@@ -148,7 +148,7 @@ public abstract class GraphicalView extends View {
 	{
 		int [] ltrb = new int[4];
 		ltrb[0] = DensityUtil.dip2px(getContext(), 20); //left	
-		ltrb[1] = DensityUtil.dip2px(getContext(), 57); //top	
+		ltrb[1] = DensityUtil.dip2px(getContext(), 65); //top	
 		ltrb[2] = DensityUtil.dip2px(getContext(), 20); //right		
 		ltrb[3] = DensityUtil.dip2px(getContext(), 20); //bottom						
 		return ltrb;

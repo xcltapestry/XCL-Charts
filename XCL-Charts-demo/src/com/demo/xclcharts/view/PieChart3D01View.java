@@ -215,14 +215,6 @@ public class PieChart3D01View extends TouchView implements Runnable{
 				" key:" +  pData.getKey() +
 				" Label:" + pData.getLabel() ,
 				Toast.LENGTH_SHORT).show();	
-		
-		/*
-		 int k	= chart.getDataSource().size();
-		 
-		 Toast.makeText(this.getContext(),								
-					" k:" +  Integer.toString(k) ,
-					Toast.LENGTH_SHORT).show();	
-		 */
 	}
 	
 }

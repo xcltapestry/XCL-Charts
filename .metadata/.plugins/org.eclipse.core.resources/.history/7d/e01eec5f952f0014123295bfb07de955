@@ -1,5 +1,0 @@
-package org.xclcharts.renderer.plot;
-
-public class PlotAttrInfoRender extends PlotAttrInfo{
-
-}

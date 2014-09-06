@@ -44,7 +44,7 @@ public class SpinnerPieChart01View extends GraphicalView {
  			break;
  		case 1:	//3D饼图
  			mChart = new PieChart3D();
- 			mChart.setLabelPosition(XEnum.SliceLabelPosition.INNER);
+ 			mChart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
  			mChart.getLabelPaint().setColor(Color.WHITE); 
  			
  			break;
@@ -59,7 +59,7 @@ public class SpinnerPieChart01View extends GraphicalView {
 			
  			((RoseChart) mChart).getInnerPaint().setColor((int)Color.rgb(153, 204, 0));
  			mChart.getLabelPaint().setColor(Color.WHITE);
- 			mChart.setLabelPosition(XEnum.SliceLabelPosition.INNER);
+ 			mChart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
  			break;		
  		}
  		

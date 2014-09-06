@@ -25,7 +25,6 @@ package org.xclcharts.renderer.line;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Color;
-import android.graphics.Paint;
 
 /**
  * @ClassName PlotDot
@@ -35,19 +34,24 @@ import android.graphics.Paint;
  */
 public class PlotDot {
 
-	private Paint mPaintDot = null;
+	//private Paint mPaintDot = null;
+	
+	private int mColor = Color.BLACK;
 	private int mRingInnerColor = Color.WHITE;
 	
 	//Triangle 三角  	
 	//线上的点为圆或角
 	protected XEnum.DotStyle mDotStyle = XEnum.DotStyle.DOT;
 	
-	private int mRadius = 10;
+	private float mRadius = 10.0f;
+	
+	private int mAlpha = 255;
 	
 	public PlotDot()
 	{		
 	}
 	
+	/*
 	private void initDotPaint()
 	{
 		if(null == mPaintDot)
@@ -56,8 +60,27 @@ public class PlotDot {
 			mPaintDot.setColor(Color.BLUE);
 			mPaintDot.setAntiAlias(true);
 		}
+	}*/
+	
+	
+	/**
+	 * 设置颜色
+	 * @param color	颜色
+	 */
+	public void setColor(int color)
+	{
+		mColor = color;
 	}
 	
+	/**
+	 * 返回颜色
+	 * @return 颜色
+	 */
+	public int getColor()
+	{
+		return mColor;
+	}
+			
 	/**
 	 * 设置点形状为环形时，内部所填充的颜色.仅对环形有效
 	 * @param color 内部填充颜色
@@ -80,12 +103,12 @@ public class PlotDot {
 	 * 开放绘制点的画笔
 	 * @return 画笔
 	 */
-	public Paint getDotPaint()
+	/*public Paint getDotPaint()
 	{
 		initDotPaint();
 		return mPaintDot;
 	}
-	
+	*/
 	/**
 	 * 设置点的显示风格
 	 * @param style 显示风格
@@ -108,7 +131,7 @@ public class PlotDot {
 	 * 设置点的绘制半径大小，会依此指定的半径来绘制相关图形
 	 * @param radius 半径
 	 */
-	public void setDotRadius(int radius)
+	public void setDotRadius(float radius)
 	{
 		mRadius = radius;
 	}
@@ -117,9 +140,27 @@ public class PlotDot {
 	 * 返回点的绘制半径大小
 	 * @return 半径
 	 */
-	public int getDotRadius()
+	public float getDotRadius()
 	{
 		return mRadius;
+	}
+	
+	/**
+	 * 设置透明度
+	 * @param alpha 透明度
+	 */
+	public void setAlpah(int alpha)
+	{
+		mAlpha = alpha;
+	}
+	
+	/**
+	 * 返回当前透明度
+	 * @return 透明度
+	 */
+	public int getAlpha()
+	{
+		return mAlpha;
 	}
 	
 	

@@ -380,10 +380,10 @@ public class PieChart extends CirChart{
 						+" 当前圆心角:"+Float.toString( currentValue )
 						+" 当前百分比:"+Double.toString( cData.getPercentage() ));
 				return false;
-			}else if( Float.compare(totalAngle, 360f) == 1) 
+			}else if( Float.compare(totalAngle, 360.1f) == 1) 
 			{
 				//圆心角总计大于360度
-				Log.e(TAG,"传入参数不合理，圆心角总计大于360度. 现有圆心角合计:"
+				Log.e(TAG,"传入参数不合理，圆心角总计大于360.1度. 现有圆心角合计:"
 							+Float.toString(totalAngle));
 				return false;
 			}

@@ -86,21 +86,22 @@ public class DountChart01View extends TouchView {
 		try {			
 			//设置绘图区默认缩进px值
 			int [] ltrb = getPieDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
+			chart.setPadding(ltrb[0], ltrb[1] + 100, ltrb[2], ltrb[3]);
 							
 			//设置起始偏移角度
 			chart.setInitialAngle(90);	
 			
 			//数据源
 			chart.setDataSource(lPieData);
-			chart.setCenterText("UNIX系统");
-						
+			chart.setCenterText("新品太多!!!");			
+			chart.getCenterTextPaint().setColor(Color.rgb(242, 167, 69));						
+									
 			//标签显示(隐藏，显示在中间，显示在扇区外面) 
-			chart.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
-			chart.getLabelPaint().setColor(Color.BLUE);
+			chart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
+			chart.getLabelPaint().setColor(Color.WHITE);
 			
 			//标题
-			chart.setTitle("Dount Chart");
+			chart.setTitle("环形图");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			//显示key
 			chart.getPlotLegend().showLegend();		
@@ -110,7 +111,7 @@ public class DountChart01View extends TouchView {
 			chart.setBackgroundColor(Color.rgb(19, 163, 224));		
 			 
 			//内环背景色
-			chart.getInnerPaint().setColor(Color.rgb(180, 205, 230));
+			chart.getInnerPaint().setColor(Color.rgb(19, 163, 224));
 			
 			//设置附加信息
 			addAttrInfo();
@@ -128,23 +129,23 @@ public class DountChart01View extends TouchView {
 		Paint paintTB = new Paint();
 		paintTB.setColor(Color.GRAY);
 		paintTB.setTextAlign(Align.CENTER);
-		paintTB.setTextSize(22);			
-		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.TOP, "TOP info", 0.5f, paintTB);			
-		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, "BOTTOM info", 0.5f, paintTB);
+		paintTB.setTextSize(25);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.TOP, "九月的手机,", 0.5f, paintTB);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, "绝对不够......", 0.5f, paintTB);
 		
 		Paint paintLR = new Paint();		
 		paintLR.setTextAlign(Align.CENTER);
-		paintLR.setTextSize(22);
-		paintLR.setColor(Color.BLUE);			
-		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.LEFT, "LEFT info", 0.5f, paintLR);			
-		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.RIGHT, "RIGHT info", 0.5f, paintLR);
+		paintLR.setTextSize(25);
+		paintLR.setColor((int)Color.rgb(191, 79, 75));			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.LEFT, "性能高!", 0.5f, paintLR);			
+		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.RIGHT, "诱惑大!", 0.5f, paintLR);
 		
 		Paint paintBase = new Paint();		
 		paintBase.setTextAlign(Align.CENTER);
-		paintBase.setTextSize(22);
-		paintBase.setColor((int)Color.rgb(56, 172, 240));
+		paintBase.setTextSize(25);
+		paintBase.setColor((int)Color.rgb(242, 167, 69));
 		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, 
-								"Information", 0.3f, paintBase);		
+								"一个肾,", 0.3f, paintBase);		
 		/////////////////////////////////////////////////////////////
 	}
 	

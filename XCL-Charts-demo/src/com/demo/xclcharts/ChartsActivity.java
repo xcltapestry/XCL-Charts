@@ -48,6 +48,7 @@ import com.demo.xclcharts.view.BarChart05View;
 import com.demo.xclcharts.view.BarChart06View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
+import com.demo.xclcharts.view.BubbleChart01View;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
@@ -60,8 +61,10 @@ import com.demo.xclcharts.view.PieChart3D01View;
 import com.demo.xclcharts.view.RadarChart01View;
 import com.demo.xclcharts.view.RadarChart02View;
 import com.demo.xclcharts.view.RadarChart03View;
+import com.demo.xclcharts.view.RangeBarChart01View;
 import com.demo.xclcharts.view.RoseChart01View;
 import com.demo.xclcharts.view.ArcLineChart01View;
+import com.demo.xclcharts.view.ScatterChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.SplineChart02View;
 import com.demo.xclcharts.view.SplineChart03View;
@@ -117,7 +120,10 @@ public class ChartsActivity extends Activity {
 				new RadarChart02View(this),
 				new RadarChart03View(this),
 				new BarChart06View(this),
-				new ArcLineChart01View(this)}; 
+				new ArcLineChart01View(this),
+				new ScatterChart01View(this),
+				new BubbleChart01View(this),
+				new RangeBarChart01View(this)}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  
 		mSelected = bunde.getInt("selected");  

@@ -27,9 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
-import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotCustomLine;
@@ -38,12 +36,9 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
+import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.Paint.Align;
 import android.graphics.RectF;
 import android.util.Log;
 
@@ -79,6 +74,9 @@ public class SplineChart extends LnChart{
 		
 	//key
 	private List<LnData> mLstKey = new ArrayList<LnData>();	
+	
+	//平滑曲线
+  	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
 
 		
 	public SplineChart()
@@ -165,6 +163,25 @@ public class SplineChart extends LnChart{
 	{
 		mCustomLine.setCustomLines(customLineDataset);
 	}
+	
+	/**
+	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
+	 * @param style
+	 */
+	public void setCrurveLineStyle(XEnum.CrurveLineStyle style)
+	{
+		mCrurveLineStyle = style;
+	}
+	
+	/**
+	 * 返回曲线显示风格
+	 * @return 显示风格
+	 */
+	public XEnum.CrurveLineStyle getCrurveLineStyle()
+	{
+		return mCrurveLineStyle;
+	}
+	
 				
 	private void calcAllPoints( SplineData bd,List<RectF> lstDots,List<PointF> lstPoints)
 	{
@@ -326,7 +343,7 @@ public class SplineChart extends LnChart{
 	/**
 	 * 绘制图
 	 */
-	private boolean renderVerticalPlot(Canvas canvas)
+	private boolean renderPlot(Canvas canvas)
 	{
 		//检查是否有设置分类轴的最大最小值		
 		if(mMaxValue == mMinValue && 0 == mMaxValue)
@@ -382,7 +399,7 @@ public class SplineChart extends LnChart{
 			super.postRender(canvas);
 						
 			//绘制图表
-			if( (ret = renderVerticalPlot(canvas)) == true)
+			if( (ret = renderPlot(canvas)) == true)
 			{			
 				//画曲线图，横向的定制线
 				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());

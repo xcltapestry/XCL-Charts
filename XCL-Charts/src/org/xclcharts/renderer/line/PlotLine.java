@@ -38,11 +38,18 @@ public class PlotLine {
 	
 	private Paint mPaintLine = null;
 	private Paint mPaintLabel = null;	
+	private Paint mPaintDot = null;	
 	private PlotDot mPlotDot = null;
 			
 	public PlotLine()
 	{
-		mPlotDot = new PlotDot();		
+		mPlotDot = new PlotDot();	
+		
+		mPaintDot = new Paint();
+		mPaintDot.setColor(Color.BLUE);
+		mPaintDot.setAntiAlias(true);
+		mPaintDot.setStrokeWidth(5);
+		
 	}
 	
 	private void initLinePaint()
@@ -95,7 +102,7 @@ public class PlotLine {
 	 */
 	public Paint getDotPaint()
 	{
-		return mPlotDot.getDotPaint();
+		return mPaintDot;// mPlotDot.getDotPaint();
 	}
 	
 	/**

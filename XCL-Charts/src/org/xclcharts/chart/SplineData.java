@@ -38,6 +38,8 @@ public class SplineData extends LnData{
 			//线上每个点的值
 			private LinkedHashMap<Double,Double> mLinePointMap ;		
 			
+			public SplineData(){}
+			
 			/**
 			 * 构成一条完整的线条
 			 * @param lineKey 	 对应的键值		

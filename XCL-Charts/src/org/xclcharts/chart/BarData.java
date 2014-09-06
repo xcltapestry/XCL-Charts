@@ -38,6 +38,7 @@ public class BarData {
 		//线上每个点的值
 		private List<Double> mDataSet;
 		
+		//用于为每个柱形定制颜色
 		private List<Integer> mDataColor;
 
 		//值

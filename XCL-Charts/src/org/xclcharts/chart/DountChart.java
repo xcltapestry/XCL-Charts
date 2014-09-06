@@ -29,6 +29,7 @@ import org.xclcharts.renderer.plot.PlotAttrInfoRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Paint.Align;
 
 /**
@@ -153,18 +154,33 @@ public class DountChart  extends PieChart{
 		}
 	}
 
+	@Override
+	protected void renderLabelInside(Canvas canvas,String text,
+			 float cirX,float cirY,float radius,float calcAngle)
+	{
+		//显示在扇形的中心
+		float calcRadius = mFillRadius + (radius - mFillRadius) /2 ;
+		
+		//计算百分比标签
+		PointF point = MathHelper.getInstance().calcArcEndPointXY(
+						cirX, cirY, calcRadius, calcAngle); 						 
+		//标识
+		canvas.drawText( text ,point.x, point.y ,this.getLabelPaint());		
+	}
+	
+		
 	/**
 	 * 绘制图 -- 环形图的标签处理待改进 ***
 	 */
 	@Override
 	protected boolean renderPlot(Canvas canvas)
 	{
+		 calcInnerRadius();
+		 
 		 super.renderPlot(canvas);
 		//中心点坐标
 		 float cirX = plotArea.getCenterX();
-	     float cirY = plotArea.getCenterY();
-	     
-	     calcInnerRadius();
+	     float cirY = plotArea.getCenterY();	     	    
 	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);   
 	     
 	     //绘制附加信息

@@ -175,7 +175,8 @@ public class BarChart extends AxisChart {
 	protected int getDataAxisDetailSetMaxSize() {
 		// 得到最大size个数
 		int dsetMaxSize = 0;
-		for (int i = 0; i < mDataSet.size(); i++) {
+		int size = mDataSet.size();
+		for (int i = 0; i < size; i++) {
 			if (dsetMaxSize < mDataSet.get(i).getDataSet().size())
 				dsetMaxSize = mDataSet.get(i).getDataSet().size();
 		}
@@ -405,7 +406,7 @@ public class BarChart extends AxisChart {
 
 		float scrWidth = getAxisScreenWidth();
 		float valueWidth = (float) dataAxis.getAxisRange();
-		int barDefualtColor = 0;
+		int barDefualtColor = 0,vSize = 0;
 		Double bv = 0d;
 
 		for (int i = 0; i < barNumber; i++) {
@@ -421,7 +422,8 @@ public class BarChart extends AxisChart {
 			
 
 			// 画同分类下的所有柱形
-			for (int j = 0; j < barValues.size(); j++) {
+			vSize = barValues.size();
+			for (int j = 0; j < vSize; j++) {
 				bv = barValues.get(j);							
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
 											
@@ -501,7 +503,8 @@ public class BarChart extends AxisChart {
 		
 
 		// X 轴 即分类轴
-		for (int i = 0; i < mDataSet.size(); i++) {
+		int size = mDataSet.size();
+		for (int i = 0; i < size; i++) {
 			// 得到分类对应的值数据集
 			BarData bd = mDataSet.get(i);	
 			
@@ -583,9 +586,7 @@ public class BarChart extends AxisChart {
 		}
 		return ret;
 	}
-	
-	
-	
+		
 	
 	/**
 	 * 对于有为单个柱形设置颜色的情况，以这个函数来为画笔设置相应的颜色

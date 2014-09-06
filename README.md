@@ -1,11 +1,12 @@
 XCL-Charts
 ==========
 
-<b>XCL-Charts V1.5</b><br/>
+<b>XCL-Charts V1.6</b><br/>
  &nbsp;&nbsp;&nbsp;&nbsp;Android开源图表库(XCL-Charts is a free charting library for Android platform.) <br/>
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于原生的Canvas来绘制各种图表,在设计时，尽量在保证开发效率的同时，给使用者提供足够多的定制化能力。因此使用简便,同时具有相当灵活的定制能力。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>3D/非3D柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
- 折线图(Line Chart)、曲线图(Spline Chart)、环形图(Dount Chart)、南丁格尔玫瑰图(Rose Chart)、仪表盘(Dial Chart)、刻度盘(Gauge Chart)、雷达图(Radar Chart)、圆形图(Circle Chart)、弧线比较图等图表。<br/>
+ 折线图(Line Chart)、曲线图(Spline Chart)、环形图(Dount Chart)、南丁格尔玫瑰图(Rose Chart)、仪表盘(Dial Chart)、刻度盘(Gauge Chart)、雷达图(Radar Chart)、
+ 圆形图(Circle Chart)、弧线比较图、散点图(Scatter Chart)、气泡图(Bubble Chart)、范围条形图(RangeBar Chart)等图表。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括支持图表缩放、手势移动、点击响应、动画显示、多轴显示、图表参考线、多图表的混合显示及同数据源不同类型图表切换等。</b><br/> 
  
  <b>License</b><br/>
@@ -17,8 +18,7 @@ XCL-Charts
 <br/> 
 GitHub代码托管地址:
 https://github.com/xcltapestry/XCL-Charts <br/>		
-开源中国代码托管地址:
-https://git.oschina.net/xclcharts/XCL-Charts <br/>
+
 开源中国项目地址:
 http://www.oschina.net/p/xcl-charts
 <br/>
@@ -74,7 +74,7 @@ http://www.oschina.net/p/xcl-charts
   </p>
  <br/>  
 <p>
-<img src="http://img.blog.csdn.net/20140830204800338" alt="dount chart" />
+<img src="http://img.blog.csdn.net/20140906215314764" alt="dount chart" />
 <img src="http://img.blog.csdn.net/20140611213636640?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="line chart" />
 </p>
  <br/>
@@ -86,18 +86,17 @@ http://www.oschina.net/p/xcl-charts
  <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
     </p>
   <br/>
-     <p>
  <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />
  <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart 横向" />
-  </p>
- <br/>
-  <p><img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />
+<img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />
 <img src="http://img.blog.csdn.net/20140716213635034" alt="piechart2d" />
 <img src="http://img.blog.csdn.net/20140816155314843" alt="bzsplinechart" />
- </p>
-<br/>
 <img src="http://img.blog.csdn.net/20140823203324712" alt="radarchart_round" />
 <img src="http://img.blog.csdn.net/20140823203347192" alt="radarchart_rose" />
 <img src="http://img.blog.csdn.net/20140830204725581" alt="areachart_bz" />
 <img src="http://img.blog.csdn.net/20140831201802281" alt="arclinechart" />
+
+<img src="http://img.blog.csdn.net/20140906205730414" alt="rangebarchart" />
+<img src="http://img.blog.csdn.net/20140906205841894" alt="ScatterChart" />
+<img src="http://img.blog.csdn.net/20140906205700281" alt="BubbleChart" />
   

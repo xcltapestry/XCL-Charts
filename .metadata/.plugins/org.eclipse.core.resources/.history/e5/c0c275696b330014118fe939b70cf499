@@ -1,0 +1,14 @@
+package org.xclcharts.chart;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+
+public class BubbleData {
+	
+	//线上每个点的值
+	private LinkedHashMap<Double,Double> mPointMap ;
+	private List<Double> mBubble ;	
+	
+	
+
+}

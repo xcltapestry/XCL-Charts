@@ -1,0 +1,77 @@
+package org.xclcharts.chart;
+
+import java.util.LinkedHashMap;
+import java.util.List;
+
+import android.graphics.Paint;
+
+public class RangeBarData {
+	
+		//汽泡颜色
+		private int mColor = 0;				
+		
+		private double mMax = 0d;
+		private double mMin = 0d;
+		
+	
+		/**
+		 * 柱形数据
+		 * @param key		对应的键值	
+		 * @param categories 分类数据库	
+		 * @param rangeData	柱形对应的数据范围(最小,最大)
+		 * @param color		柱形颜色
+		 */
+		
+		public RangeBarData(double max,
+							double min, 
+							int color) {
+			// TODO Auto-generated constructor stub
+		
+			setMax(max);			
+			setMin(min);			
+			setColor(color);		
+		}	
+		
+		
+		
+		
+		public void setMax(double max)
+		{
+			mMax = max;
+		}
+		
+		public void setMin(double min)
+		{
+			mMin = min;
+		}
+		
+		public double getMax()
+		{
+			return mMax;
+		}
+		
+		public double getMin()
+		{
+			return mMin;
+		}		
+		
+		/**
+		 * 设置柱形颜色
+		 * @param color 颜色
+	 	 */
+		public void setColor(int color)
+		{
+			mColor = color;
+		}
+		
+		/**
+		 * 返回柱形颜色
+		 * @return 颜色
+		 */
+		public int getColor()
+		{
+			return mColor;
+		}
+
+		
+}
