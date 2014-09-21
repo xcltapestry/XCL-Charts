@@ -113,6 +113,10 @@ public class PieChart01View extends TouchView implements Runnable{
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			
+			//设置允许的平移模式
+			//chart.enablePanMode();
+			//chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);		
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

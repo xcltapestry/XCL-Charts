@@ -29,7 +29,7 @@ import android.view.View;
 
 /**
  * @ClassName ChartTouch
- * @Description  上下左右移动图表   		
+ * @Description  上下左右移动图表绘图区及通过两指放大缩小整个图表   		
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
@@ -41,13 +41,18 @@ public class ChartTouch implements IChartTouch {
 	//单点移动前的坐标位置
 	private float oldX = 0.0f,oldY = 0.0f; 	
 	
+	//scale
+	private float oldDist = 1.0f,newDist = 0.0f;
+	private float halfDist = 0.0f,scaleRate = 0.0f;
+	
 	public ChartTouch(View view, XChart chart) {
 		this.mChart = chart;
 		this.mView = view;
 	}
 	
 	//用来设置图表的位置   	
-	private void setLocation(float oldX, float oldY,float newX, float newY ) {
+	private void setLocation(float oldX, float oldY,
+							float newX, float newY ) {
 		// TODO Auto-generated method stub
 		
 		float xx = 0.0f,yy = 0.0f;		          
@@ -59,20 +64,80 @@ public class ChartTouch implements IChartTouch {
         {
       	  xx = (float) (txy[0] + newX - oldX) ;
       	  yy = (float) (txy[1] + newY - oldY) ;
-        }  
+        }
         mChart.setTranslateXY(xx, yy);
-  
-        mChart.setChartRange(mChart.getLeft() + newX-oldX, mChart.getTop() + newY-oldY, 
-    			mChart.getWidth(), mChart.getHeight());
+        
+       // mChart.setChartRange(mChart.getLeft() + newX-oldX, 
+       // mChart.getTop() + newY-oldY, 
+      //		mChart.getWidth(), mChart.getHeight());
+        
     	mView.invalidate();		
 	}
+	
+	private float spacing(MotionEvent event) {  
+	    float x = event.getX(0) - event.getX(1);  
+	    float y = event.getY(0) - event.getY(1);  
+	    return (float)Math.sqrt(x * x + y * y);  
+	}  
+	
 		
 	@Override
 	 public void handleTouch(MotionEvent event) {  
 		
+			if (event.getPointerCount() == 1)
+			{
+				handleTouch_PanMode(event);
+			}else if (event.getPointerCount() == 2){
+				if(mChart.getScaleStatus())handleTouch_Scale(event);
+			}else{				
+			}		   
+	    }  
+	
+	
+	 public void handleTouch_Scale(MotionEvent event) 
+	 {  		 
+		 switch(event.getActionMasked())
+		 {
+		 	case MotionEvent.ACTION_DOWN:  //单点触碰	
+		 		scaleRate = 1.0f ;//50.0f;		        
+	            break;  
+	        case MotionEvent.ACTION_UP:  
+	            break;  
+	        case MotionEvent.ACTION_POINTER_UP: 
+	            break;  
+	        case MotionEvent.ACTION_POINTER_DOWN:  //多点触碰
+	        	//两点按下时的距离  
+	        	 oldDist=this.spacing(event);		  
+	            break;  
+	        case MotionEvent.ACTION_MOVE:  
+	        
+    		  	newDist = spacing(event);    
+    		  	halfDist = newDist/2 ;
+    		  	
+                if( Float.compare(newDist, 10.0f) == 1){
+                	scaleRate = newDist/oldDist ;		 
+                	/**
+                	 * 目前是采用在点那就以那范围为中心放大缩小.
+                	 * 其实还有另一种方式:以图中心点(即chart.getPlotArea().getCenterXY())来放大缩小，
+                	 * 		但如果是这种最好可以在view加上一排透明按纽或scrollbars,但没找到合适的方法...... 嗚....
+                	 */
+                    mChart.setScale(scaleRate ,scaleRate, 
+                    		event.getX() - halfDist,event.getY() - halfDist );		                    
+                    mView.invalidate();
+                }	        		 	        	 
+		 		break;		 		
+			 default:
+				break;
+		 }
+
+	 }
+	 
+	 public void handleTouch_PanMode(MotionEvent event) {  
+			
 		 int action = event.getAction();
 		    if ( action == MotionEvent.ACTION_MOVE) {
-			      if (oldX >= 0 || oldY >= 0) {
+			   
+			      if (oldX > 0 && oldY > 0) {
 				        float newX = event.getX(0);
 				        float newY = event.getY(0);
 				        
@@ -82,7 +147,7 @@ public class ChartTouch implements IChartTouch {
 				        
 				        oldX = newX;
 				        oldY = newY;
-			      }
+			      }			      			      
 		    } else if (action == MotionEvent.ACTION_DOWN) {
 			      oldX = event.getX(0);
 			      oldY = event.getY(0);
@@ -97,6 +162,5 @@ public class ChartTouch implements IChartTouch {
 			      }
 		    }	        
 	    }  
-	 
 
 }

@@ -75,8 +75,6 @@ public class RangeBarChart  extends AxisChart {
 	public Bar getBar() {
 		return mFlatBar;
 	}
-	
-
 
 	/**
 	 * 分类轴的数据源
@@ -125,7 +123,6 @@ public class RangeBarChart  extends AxisChart {
 		return mBarWidth;
 	}
 	
-
 	/**
 	 * 设置图例
 	 * @param key 图例

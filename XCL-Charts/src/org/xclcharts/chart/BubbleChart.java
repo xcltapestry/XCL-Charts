@@ -35,7 +35,7 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.RectF;
+import android.graphics.Paint.Style;
 import android.util.Log;
 
 /**
@@ -68,6 +68,8 @@ public class BubbleChart extends LnChart{
 	
 	private Paint mPaintPoint = null;	
 	private PlotDot mPlotDot = new PlotDot();
+	
+	private Paint mPaintBorderPoint = null;	
 
 	public BubbleChart()
 	{
@@ -201,7 +203,19 @@ public class BubbleChart extends LnChart{
 		}
 		return mPaintPoint;
 	}
-				
+		
+	public Paint getPointBorderPaint()
+	{
+		if(null == mPaintBorderPoint)
+		{
+			mPaintBorderPoint = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPaintBorderPoint.setStyle(Style.STROKE);
+			mPaintBorderPoint.setStrokeWidth(2);
+		}
+		return mPaintBorderPoint;
+	}
+			
+	
 	private void renderPoints( Canvas canvas, BubbleData bd ,int dataID)
 	{			
 		float initX =  plotArea.getLeft();
@@ -243,7 +257,10 @@ public class BubbleChart extends LnChart{
 		int bubbleSize =  lstBubble.size() ;
 		double bubble = 0;
 		float curRadius = 0.0f;		
+		//汽泡颜色
 		getPointPaint().setColor(bd.getColor());	
+		//边框颜色
+		if(bd.getBorderColor() != -1) getPointBorderPaint().setColor(bd.getBorderColor());			
 				
 		Iterator iter = chartValues.entrySet().iterator();
 		while(iter.hasNext()){
@@ -269,8 +286,7 @@ public class BubbleChart extends LnChart{
 					lineStopX =  add(initX , XvaluePostion);  
 					lineStopY =  sub(initY , YvaluePostion);
 				}            
-            	
-            	
+            	            	
         		if(j >= bubbleSize )
         		{
         			continue;
@@ -280,7 +296,8 @@ public class BubbleChart extends LnChart{
         		
         		curRadius = calcRaidus(scale, size, (float) bubble);
         		
-        		if(Float.compare(curRadius, 0.0f) == 0 || Float.compare(curRadius, 0.0f) == -1) 
+        		if(Float.compare(curRadius, 0.0f) == 0 
+        				|| Float.compare(curRadius, 0.0f) == -1) 
         		{
         			//Log.e(TAG,"当前气泡半径小于或等于0。");
         			continue;
@@ -288,15 +305,22 @@ public class BubbleChart extends LnChart{
 
         		mPlotDot.setDotRadius( curRadius); 
         		
-            	RectF rect = PlotDotRender.getInstance().renderDot(
+            	PlotDotRender.getInstance().renderDot(
             			canvas,mPlotDot,
             			lineStartX,lineStartY,lineStopX,lineStopY,
             			getPointPaint());
-            	
-            	savePointRecord(dataID,childID,lineStopX,lineStopY,rect); 
+            	                        	
+            	savePointRecord(dataID,childID, lineStopX + mMoveX ,lineStopY + mMoveY,
+				            	lineStopX  - 2*curRadius + mMoveX , lineStopY - curRadius + mMoveY,
+				            	lineStopX  + curRadius + mMoveX, lineStopY + curRadius + mMoveY);
+            	            	
+            	if(bd.getBorderColor() != -1)
+            	{
+            		canvas.drawCircle(lineStopX,lineStopY, curRadius, getPointBorderPaint());
+            	}
+            	            	            
     			childID++;
-             	
-    			            	
+             	    			            	
             	if(bd.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
@@ -312,7 +336,6 @@ public class BubbleChart extends LnChart{
 				j++;	              								
 		}								
 	}
-
 		
 
 	/**
@@ -332,32 +355,146 @@ public class BubbleChart extends LnChart{
 			return false;
 		}
 					
-		renderVerticalDataAxis(canvas);
-		renderVerticalCategoryAxis(canvas);		
+		//renderVerticalDataAxis(canvas);
+		//renderVerticalCategoryAxis(canvas);		
 		
 		//开始处 X 轴 即分类轴              	
 		int size = mDataset.size();
 		for(int i=0;i<size;i++)
 		{																	
-			BubbleData bd =  mDataset.get(i);			
-				
+			BubbleData bd =  mDataset.get(i);							
 			renderPoints( canvas, bd,i);	
 		}	
 		//key
+		//plotLegend.renderBubbleKey(canvas,mDataset);
+		
+		return true;
+	}	
+
+	private boolean drawVerticalPlot(Canvas canvas)
+	{						
+		//绘制Y轴tick和marks	
+		renderVerticalDataAxis(canvas);
+		
+		//绘制X轴tick和marks
+		renderVerticalCategoryAxis(canvas);
+				
+		//绘图区
+		if(renderPlot(canvas) == true)
+		{				
+			//画横向定制线
+			//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+		}
+		
+		// 轴 线
+		renderVerticalDataAxisLine(canvas);
+		
+		renderVerticalDataAxisRightLine(canvas);
+		renderVerticalCategoryAxisLine(canvas);		
+	
+		//图例
 		plotLegend.renderBubbleKey(canvas,mDataset);
 		
 		return true;
-	}
+	 }
 	
+	private boolean drawClipVerticalPlot(Canvas canvas)
+	{				
+		//显示绘图区rect
+		float offsetX = mTranslateXY[0];
+		float offsetY = mTranslateXY[1];
+		initMoveXY();				
+						
+		//设置图显示范围
+		canvas.save();	
+		canvas.clipRect(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());
+				
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			float yMargin = getDrawClipVerticalYMargin();
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					renderVerticalDataAxis(canvas);
+			canvas.restore();	
+		}else{
+			renderVerticalDataAxis(canvas);
+		}
+		
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{	
+			float xMargin = getDrawClipVerticalXMargin();
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					
+					renderVerticalCategoryAxis(canvas);
+			canvas.restore();	
+		}else{
+			renderVerticalCategoryAxis(canvas);
+		}
+								
+			//设置绘图区显示范围
+			canvas.save();
+			if (getRightAxisVisible())
+			{
+				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+								plotArea.getRight(), plotArea.getBottom());
+			}else{
+				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+								this.getRight(), plotArea.getBottom());
+			}			
+					canvas.save();
+					canvas.translate(mMoveX, mMoveY);
+					
+					if(renderPlot(canvas) == true)
+					{				
+						//画横向定制线
+						//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+					}
+					
+					canvas.restore();
+			canvas.restore();			
+			
+		//还原绘图区绘制
+		canvas.restore(); //clip	
+		
+		// 轴 线
+		renderVerticalDataAxisLine(canvas);
+		
+		renderVerticalDataAxisRightLine(canvas);
+		renderVerticalCategoryAxisLine(canvas);		
+	
+		//图例
+		plotLegend.renderBubbleKey(canvas,mDataset);
+		
+		return true;
+	 }
+	 		
 	@Override
 	public boolean postRender(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 		
 		try {
 			super.postRender(canvas);
-						
+					
 			//绘制图表
-			return renderPlot(canvas);
+			if(getPanModeStatus())
+			{
+				return drawClipVerticalPlot(canvas);
+			}else{
+				return drawVerticalPlot(canvas);
+			}
+			
 		}catch( Exception e){
 			 throw e;
 		}

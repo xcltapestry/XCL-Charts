@@ -52,9 +52,11 @@ public class LnChart extends AxisChart {
 	// 是否显示底轴
 	private boolean mRightAxisVisible = true;	
 	
-	private PointF[] BezierControls ;
+	private PointF[] BezierControls ;		
 	
-	
+	//Pan模式下移动距离
+	protected float mMoveX = 0.0f;
+	protected float mMoveY = 0.0f;
 
 	public LnChart() {
 		super();
@@ -95,6 +97,15 @@ public class LnChart extends AxisChart {
 	public void setTopAxisVisible(boolean visible) {
 		mTopAxisVisible = visible;
 	}
+	
+	/**
+	 * 是否会显示顶上的轴线
+	 * @return
+	 */
+	public boolean getTopAxisVisible()
+	{
+		return mTopAxisVisible;
+	}
 
 	/**
 	 * 是否显示右边轴线
@@ -104,8 +115,16 @@ public class LnChart extends AxisChart {
 	public void setRightAxisVisible(boolean visible) {
 		mRightAxisVisible = visible;
 	}
-
-	//
+	
+	/**
+	 * 返回是否显示右边轴线
+	 * @return
+	 */
+	public boolean getRightAxisVisible()
+	{
+		return mRightAxisVisible;
+	}
+	
 	/**
 	 * 绘制左边竖轴(对线图而言坐标轴默认都是封闭的)
 	 */
@@ -130,6 +149,10 @@ public class LnChart extends AxisChart {
 			
 			// 依起始数据坐标与数据刻度间距算出上移高度			
 			currentY =  MathHelper.getInstance().sub(plotBottom, i * YSteps);
+			
+			//是否绘制tick
+			if(dataAxis.getTickLabelVisible() &&
+					isrenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 			
 			// 标签
 			currentTickLabel = MathHelper.getInstance().add(
@@ -157,14 +180,28 @@ public class LnChart extends AxisChart {
 					Double.toString(currentTickLabel));
 
 		}
-
+		
+		if (!mTopAxisVisible)
+		{	
+			//即如果顶轴不显示的话，补上一条网格线
+			plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
+		}		
+	}
+	
+	protected void renderVerticalDataAxisLine(Canvas canvas)
+	{
+		float plotLeft = plotArea.getLeft();
+		float plotTop = plotArea.getTop();
+		float plotRight = plotArea.getRight();
+		float plotBottom = plotArea.getBottom();
+		
 		// top X轴线
 		if (mTopAxisVisible)
 		{		
 			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop);
 		}else{
 			//即如果顶轴不显示的话，补上一条网格线
-			plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
+			//plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
 		}
 
 		// 左Y轴 线
@@ -175,8 +212,8 @@ public class LnChart extends AxisChart {
 		{
 			plotGrid.renderGridLinesHorizontal(
 					canvas,plotLeft, plotBottom,plotRight, plotBottom);
-		}
-	}
+		}				
+	}		
 
 	// 坐标轴是封闭的
 	/**
@@ -201,6 +238,10 @@ public class LnChart extends AxisChart {
 			dataAxis.setAxisTickCurrentID(i);					
 			currentY = MathHelper.getInstance().sub(plotArea.getBottom() , i * YSteps);
 			
+			//是否绘制tick
+			if(dataAxis.getTickLabelVisible() &&
+					isrenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
+			
 			// 标签
 			Double currentTickLabel = MathHelper.getInstance().add(
 								dataAxis.getAxisMin() , (i * dataAxis.getAxisSteps()));
@@ -209,19 +250,25 @@ public class LnChart extends AxisChart {
 				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
 						plotArea.getTop(), Double.toString(currentTickLabel));
 			} else {
-				this.dataAxis
-						.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
+				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
 								MathHelper.getInstance().add(currentY , markHeight),
 								Double.toString(currentTickLabel));
 			}
 			// 右边轴默认不显示网格,所以在此忽略不作处理
+		}	
+	}
+	
+	protected void renderVerticalDataAxisRightLine(Canvas canvas) 
+	{		
+		if(mRightAxisVisible)
+		{
+			// 轴 线
+			float paintWidth = MathHelper.getInstance().div(
+					  		    dataAxis.getAxisPaint().getStrokeWidth() , 2f);
+			dataAxis.renderAxis(canvas,plotArea.getRight() + paintWidth,
+					plotArea.getBottom(), plotArea.getRight() + paintWidth,
+					plotArea.getTop());	
 		}
-		// 轴 线
-		float paintWidth = MathHelper.getInstance().div(
-				  		    dataAxis.getAxisPaint().getStrokeWidth() , 2f);
-		dataAxis.renderAxis(canvas,plotArea.getRight() + paintWidth,
-				plotArea.getBottom(), plotArea.getRight() + paintWidth,
-				plotArea.getTop());
 	}
 
 	/**
@@ -247,6 +294,10 @@ public class LnChart extends AxisChart {
 			// 依初超始X坐标与标签间距算出当前刻度的X坐标
 			currentX =MathHelper.getInstance().add(plotArea.getLeft() , (i) * XSteps); 
 			
+			//是否绘制tick
+			if(categoryAxis.getTickLabelVisible() && 
+					isRenderVerticalCategoryAxisTick(currentX,this.mMoveX))continue;
+			
 			// 绘制竖向网格线
 			if (plotGrid.isShowVerticalLines()) {
 				if (i > 0 && i + 1 < dataSet.size())
@@ -265,17 +316,31 @@ public class LnChart extends AxisChart {
 			}
 
 		}
-		// 右边轴线
-	if (mRightAxisVisible)
-	{
-		categoryAxis.renderAxis(canvas,plotArea.getRight(),
-				plotArea.getBottom(), plotArea.getRight(),
-				plotArea.getTop());
-	}else{
-		//即如果右轴不显示的话，补上一条网格线
-		plotGrid.renderGridLinesVertical(canvas,plotArea.getRight(),
-				plotArea.getBottom(), plotArea.getRight(),plotArea.getTop());
+		
+		if (!mRightAxisVisible)
+		{
+			
+			//即如果右轴不显示的话，补上一条网格线
+			plotGrid.renderGridLinesVertical(canvas,plotArea.getRight(),
+					plotArea.getBottom(), plotArea.getRight(),plotArea.getTop());
+		}
+		
+	
 	}
+	
+	protected void renderVerticalCategoryAxisLine(Canvas canvas)
+	{
+		// 右边轴线
+		if (mRightAxisVisible)
+		{
+			categoryAxis.renderAxis(canvas,plotArea.getRight(),
+					plotArea.getBottom(), plotArea.getRight(),
+					plotArea.getTop());
+		}else{
+			//即如果右轴不显示的话，补上一条网格线
+			//plotGrid.renderGridLinesVertical(canvas,plotArea.getRight(),
+			//		plotArea.getBottom(), plotArea.getRight(),plotArea.getTop());
+		}
 
 		// bottom轴 线		
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(),
@@ -289,7 +354,6 @@ public class LnChart extends AxisChart {
 			
 		}
 	}
-	
 	
 	@Override
 	public boolean isPlotClickArea(float x,float y)
@@ -315,9 +379,7 @@ public class LnChart extends AxisChart {
 		return getPointRecord(x,y);
 	}
 		
-	
-	
-	
+			
 	//遍历曲线
 	protected void renderBezierCurveLine(Canvas canvas,Paint paint,Path bezierPath ,
 										List<PointF> lstPoints )
@@ -372,5 +434,22 @@ public class LnChart extends AxisChart {
 		bezierPath.reset();
 	}
 	
+	protected void initMoveXY()
+	{
+		mMoveX = mMoveY = 0.0f;  	
+		switch(this.getPlotPanMode())
+		{
+		case HORIZONTAL:
+			mMoveX = mTranslateXY[0]; 			
+			break;
+		case VERTICAL:
+			mMoveY = mTranslateXY[1]; 					
+			break;
+		default:
+			mMoveX = mTranslateXY[0]; 
+			mMoveY = mTranslateXY[1]; 
+			break;
+		}
+	}
 
 }

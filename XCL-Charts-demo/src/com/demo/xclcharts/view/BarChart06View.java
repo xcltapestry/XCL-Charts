@@ -226,7 +226,7 @@ public class BarChart06View extends TouchView implements Runnable{
           	dataSeries.add(0d);       
           	for(int i=0;i< chartData.size() ;i++)
           	{
-          		Thread.sleep(100);
+          		Thread.sleep(200);
           		List<BarData> animationData = new LinkedList<BarData>();
           		for(int j=0;j<chartData.size();j++)
                   {            			            			

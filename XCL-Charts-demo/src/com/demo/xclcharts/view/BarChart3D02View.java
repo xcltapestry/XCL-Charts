@@ -154,6 +154,8 @@ public class BarChart3D02View extends TouchView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			
+			//仅能纵向移动
+			chart.setPlotPanMode(XEnum.PanMode.VERTICAL);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

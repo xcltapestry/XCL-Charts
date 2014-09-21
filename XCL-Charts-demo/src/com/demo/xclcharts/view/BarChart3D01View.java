@@ -113,6 +113,9 @@ public class BarChart3D01View extends TouchView {
 			chart.getDataAxis().setAxisSteps(100);
 			//chart.getCategoryAxis().setAxisTickLabelsRotateAngle(-45f);
 			
+			//隐藏轴线和tick
+			chart.getDataAxis().setAxisLineVisible(false);
+			//chart.getDataAxis().setTickMarksVisible(false);
 			
 			//标题
 			chart.setTitle("本周水果销售情况");
@@ -167,7 +170,10 @@ public class BarChart3D01View extends TouchView {
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
-		
+			
+			//仅能横向移动
+			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
+					
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

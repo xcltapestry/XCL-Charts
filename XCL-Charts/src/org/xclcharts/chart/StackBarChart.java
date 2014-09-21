@@ -67,8 +67,8 @@ public class StackBarChart  extends BarChart{
 	protected boolean renderHorizontalBar(Canvas canvas)
 	{
 		 if(null == categoryAxis.getDataSet()) return false;		 
-		 renderHorizontalBarDataAxis(canvas);
-		 renderHorizontalBarLabelAxis(canvas);
+		 //renderHorizontalBarDataAxis(canvas);
+		 //renderHorizontalBarLabelAxis(canvas);
 		
 		 float axisScreenWidth  =  getAxisScreenWidth(); 
 		 float axisDataRange = (float) dataAxis.getAxisRange(); 	
@@ -121,7 +121,7 @@ public class StackBarChart  extends BarChart{
 				    flatBar.renderBar(currentX ,topY,rightX,bottomY,canvas);
 				    				    
 				    //保存位置
-				    saveBarRectFRecord(i,r,currentX, topY,rightX, bottomY); 
+				    saveBarRectFRecord(i,r,currentX + mMoveX, topY + mMoveY,rightX + mMoveX, bottomY+ mMoveY); 
 					
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
@@ -140,14 +140,14 @@ public class StackBarChart  extends BarChart{
 		 }	
 	 		 		 
 	 	//Y轴线
-		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-							  plotArea.getLeft(), plotArea.getTop());	
+		//dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+		//					  plotArea.getLeft(), plotArea.getTop());	
 		 
 		//X轴 线		
-		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-								  plotArea.getRight(),  plotArea.getBottom());	
+		//categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+		//						  plotArea.getRight(),  plotArea.getBottom());	
 		//画Key说明
-		plotLegend.renderBarKey(canvas, this.getDataSource());
+		//plotLegend.renderBarKey(canvas, this.getDataSource());
 		return true;
 	}
 	
@@ -163,8 +163,8 @@ public class StackBarChart  extends BarChart{
 			if(null == chartDataSource) return false;	
 						
 			//坐标布局
-			renderVerticalBarDataAxis(canvas);
-			renderVerticalBarCategoryAxis(canvas);
+			//renderVerticalBarDataAxis(canvas);
+			//renderVerticalBarCategoryAxis(canvas);
 			
 			float XSteps = getVerticalXSteps(dataSet.size() + 1 );			 
 			float axisScreenHeight  =  getAxisScreenHeight(); 
@@ -210,7 +210,7 @@ public class StackBarChart  extends BarChart{
 						float rightX = add(currentX , barWidht/2);						
 						flatBar.renderBar(leftX, topY, rightX, currentY, canvas);
 						//保存位置
-						saveBarRectFRecord(i,r,leftX, topY,rightX, currentY); 
+						saveBarRectFRecord(i,r,leftX + mMoveX, topY + mMoveY,rightX + mMoveX, currentY + mMoveY); 
 						
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
@@ -225,11 +225,11 @@ public class StackBarChart  extends BarChart{
 			 }			 
 			 
 			//轴 线		 		 
-			 dataAxis.renderAxis(canvas,plotArea.getLeft(),  plotArea.getBottom(),
-		 			   			 plotArea.getRight(),  plotArea.getBottom());
+			 //dataAxis.renderAxis(canvas,plotArea.getLeft(),  plotArea.getBottom(),
+		 	//		   			 plotArea.getRight(),  plotArea.getBottom());
 			 
 			 //key值说明
-			 plotLegend.renderBarKey(canvas, this.getDataSource());
+			// plotLegend.renderBarKey(canvas, this.getDataSource());
 			 return true;
 	}
 	

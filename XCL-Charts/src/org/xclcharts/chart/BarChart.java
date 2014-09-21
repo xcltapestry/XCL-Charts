@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.AxisChart;
@@ -57,6 +58,9 @@ public class BarChart extends AxisChart {
 
 	//用于绘制定制线(分界线)
 	private PlotCustomLine mCustomLine = null;	
+	
+	protected float mMoveX = 0.0f;
+	protected float mMoveY = 0.0f;
 
 	public BarChart() {
 		super();
@@ -214,7 +218,7 @@ public class BarChart extends AxisChart {
 		int count = categoryAxis.getDataSet().size() + 1;		
 		return div(getAxisScreenHeight() , count );		
 	}	
-
+		
 	/**
 	 * 绘制左边竖轴，及上面的刻度线和分类
 	 */
@@ -223,10 +227,12 @@ public class BarChart extends AxisChart {
 		int tickCount = dataAxis.getAixTickCount();
 		// 数据轴高度步长
 		float YSteps = getVerticalYSteps(tickCount);
-		float currentY = plotArea.getBottom();
+		float currentY = 0.0f; 
 		
 		double slen = 0d;
 		double currentTickLabel =  0d;
+		
+		float axisX =  plotArea.getLeft();
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
@@ -239,37 +245,33 @@ public class BarChart extends AxisChart {
 			// 依起始数据坐标与数据刻度间距算出上移高度
 			currentY = sub(plotArea.getBottom(), mul(i,YSteps));
 			
+			//是否绘制tick
+			if(dataAxis.getTickLabelVisible() &&
+					isrenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
+									
 			// 分类		
 			slen = i * dataAxis.getAxisSteps();			
 			currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);
 					
 			// 从左到右的横向网格线		
 			if ( i % 2 != 0) {
-				plotGrid.renderOddRowsFill(canvas, plotArea.getLeft(),
-						add(currentY,YSteps), plotArea.getRight(), currentY);
+				plotGrid.renderOddRowsFill(canvas,axisX, add(currentY,YSteps), plotArea.getRight(), currentY);
 			} else {
-				plotGrid.renderEvenRowsFill(canvas, plotArea.getLeft(),
-						add(currentY,YSteps), plotArea.getRight(), currentY);
+				plotGrid.renderEvenRowsFill(canvas, axisX,add(currentY,YSteps), plotArea.getRight(), currentY);
 			}
 			
 			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
-			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(), currentY,
-											   plotArea.getRight(), currentY);			
+			plotGrid.renderGridLinesHorizontal(canvas, axisX , currentY,plotArea.getRight(), currentY);			
 					
 			if(i == tickCount)
 			{
-				dataAxis.renderAxisHorizontalTick(this,canvas, plotArea.getLeft(),
-												  plotArea.getTop() , 
+				dataAxis.renderAxisHorizontalTick(this,canvas,axisX,plotArea.getTop() , 
 												  Double.toString(currentTickLabel));
 			}else{
-				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
-												currentY, Double.toString(currentTickLabel));
+				dataAxis.renderAxisHorizontalTick(this,canvas,axisX,currentY, Double.toString(currentTickLabel));
 			}
 			
 		}
-		// 轴 线
-		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
-				plotArea.getLeft(), plotArea.getTop());
 	}
 
 	/**
@@ -281,7 +283,7 @@ public class BarChart extends AxisChart {
 		if(null == dataSet) return ;
 		
 		// 分类轴(X 轴)
-		float currentX = plotArea.getLeft();
+		float currentX = 0.0f;
 
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度  
@@ -291,6 +293,10 @@ public class BarChart extends AxisChart {
 			// 依初超始X坐标与分类间距算出当前刻度的X坐标
 			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
 
+			//是否绘制tick
+			if(categoryAxis.getTickLabelVisible() && 
+					isRenderVerticalCategoryAxisTick(currentX,this.mMoveX))continue;
+						
 			// 绘制横向网格线
 			if (plotGrid.isShowVerticalLines()) {
 				canvas.drawLine(currentX, plotArea.getBottom(),
@@ -313,7 +319,8 @@ public class BarChart extends AxisChart {
 		float XSteps = div(this.getAxisScreenWidth() , tickCount); 
 
 		// x 轴
-		float currentX = this.plotArea.getLeft();
+		float currentX = 0.0f;
+		float axisX = plotArea.getLeft();
 		double currentTickLabel = 0d;
 		
 		for (int i = 0; i <= tickCount; i++) {				
@@ -323,19 +330,15 @@ public class BarChart extends AxisChart {
 			dataAxis.setAxisTickCurrentID(i);
 						
 			// 依起始数据坐标与数据刻度间距算出上移高度
-			currentX = add(plotArea.getLeft() , mul(i , XSteps));
+			currentX = add(axisX , mul(i , XSteps));
+			
+			//是否需要绘制tick
+			if(dataAxis.getTickLabelVisible() &&
+					isRenderHorizontalDataAxisTick(currentX,this.mMoveX))continue;
 												
 			//标签
 			currentTickLabel =  MathHelper.getInstance().add(
-										dataAxis.getAxisMin(), i *  dataAxis.getAxisSteps());
-									
-			//绘制tick
-			this.dataAxis.renderAxisVerticalTick(canvas,currentX,
-											plotArea.getBottom(), 
-											Double.toString(currentTickLabel));
-		
-			// 从底到上的竖向网格线
-			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
+										dataAxis.getAxisMin(), i *  dataAxis.getAxisSteps());														
 			
 			if (i % 2 != 0) {
 				plotGrid.renderOddRowsFill(canvas,currentX, plotArea.getTop(),
@@ -344,7 +347,15 @@ public class BarChart extends AxisChart {
 				plotGrid.renderEvenRowsFill(canvas,currentX, plotArea.getTop(),
 								sub(currentX , XSteps), plotArea.getBottom());
 			}
-		
+								
+			//绘制tick
+			this.dataAxis.renderAxisVerticalTick(canvas,currentX,
+											plotArea.getBottom(), 
+											Double.toString(currentTickLabel));
+			
+			// 从底到上的竖向网格线
+			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
+						
 			plotGrid.renderGridLinesVertical(canvas,currentX,
 								plotArea.getBottom(), currentX, plotArea.getTop());
 		}
@@ -353,25 +364,33 @@ public class BarChart extends AxisChart {
 	/**
 	 * 绘制横向柱形图中的分类轴
 	 */
-	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
+	protected void renderHorizontalBarCategoryAxis(Canvas canvas) {
 		// Y 轴
 		// 分类横向间距高度
 		float YSteps = div(getAxisScreenHeight()
 								, (categoryAxis.getDataSet().size() + 1));
 		
 		float currentY = 0.0f;
+		float axisX = plotArea.getLeft();
+		float axisY = plotArea.getBottom() ;//+ this.mMoveY; // mTranslateXY[1];
 		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
 			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
-			currentY = sub(plotArea.getBottom(), mul((i + 1) , YSteps));
+			currentY = sub(axisY, mul((i + 1) , YSteps));
+			
+			//是否绘制tick
+			if(categoryAxis.getTickLabelVisible() &&  
+					isRenderHorizontalCategoryAxisTick(currentY,this.mMoveY))continue;
 			
 			// 横的grid线
-			plotGrid.renderGridLinesHorizontal(canvas,plotArea.getLeft(),
+			plotGrid.renderGridLinesHorizontal(canvas,axisX,
 												currentY, plotArea.getRight(), currentY);
 			// 分类
-			this.categoryAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
-												currentY, categoryAxis.getDataSet().get(i));
+			categoryAxis.renderAxisHorizontalTick(this,canvas,axisX,currentY,
+												categoryAxis.getDataSet().get(i));
 		}
 	}
+	
+	
 
 	/**
 	 * 绘制横向柱形图
@@ -379,15 +398,13 @@ public class BarChart extends AxisChart {
 	 */
 	protected boolean renderHorizontalBar(Canvas canvas) {
 		
-		if(null == mDataSet) return false;
-		
-		//坐标系
-		renderHorizontalBarDataAxis(canvas);
-		renderHorizontalBarLabelAxis(canvas);			
+		if(null == mDataSet) return false;				
 
 		// 得到Y 轴分类横向间距高度
 		float YSteps = getHorizontalYSteps();
-
+		float barInitX = plotArea.getLeft() ;
+		float barInitY = plotArea.getBottom() ;
+		
 		// 画柱形
 		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度
 		int barNumber = getDatasetSize(mDataSet); 
@@ -420,14 +437,13 @@ public class BarChart extends AxisChart {
 			barDefualtColor = bd.getColor();
 			mFlatBar.getBarPaint().setColor(barDefualtColor);		
 			
-
 			// 画同分类下的所有柱形
 			vSize = barValues.size();
 			for (int j = 0; j < vSize; j++) {
 				bv = barValues.get(j);							
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
 											
-				float currLableY = sub(plotArea.getBottom() , mul((j + 1) , YSteps));			
+				float currLableY = sub(barInitY , mul((j + 1) , YSteps));		
 				float drawBarButtomY = add(currLableY,labelBarUseHeight / 2);		
 				float tw = add(barHeight,barInnerMargin);
 				drawBarButtomY = sub(drawBarButtomY, tw * currNumber);			
@@ -439,38 +455,28 @@ public class BarChart extends AxisChart {
 				float valuePostion = mul(scrWidth,fvper);
 																			
 				// 画出柱形
-				float rightX = add(plotArea.getLeft() , valuePostion);
-				mFlatBar.renderBar(plotArea.getLeft(),drawBarTopY  ,rightX, drawBarButtomY,
+				float rightX = add(barInitX , valuePostion);
+				mFlatBar.renderBar(barInitX,drawBarTopY  ,rightX, drawBarButtomY,
 									canvas);
 				
 				//保存位置
-				saveBarRectFRecord(i,j,plotArea.getLeft(),drawBarTopY ,rightX, drawBarButtomY); 
+				saveBarRectFRecord(i,j,barInitX + mMoveX,drawBarTopY  + mMoveY,
+									rightX  + mMoveX, drawBarButtomY + mMoveY);
 			
 				// 柱形顶端标识
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-						add(plotArea.getLeft() , valuePostion),
-						sub(drawBarButtomY , barHeight / 2),canvas);
+												rightX, 
+												sub(drawBarButtomY , barHeight / 2),canvas);
 			}
 			currNumber++;
 		}
 
-		// Y轴线
-		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-									plotArea.getLeft(), plotArea.getTop());
-
-		// X轴 线
-		categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-										plotArea.getRight(), plotArea.getBottom());
-		// 画Key说明
-		plotLegend.renderBarKey(canvas, this.mDataSet);
 		//画横向柱形图，竖向的定制线
 		mCustomLine.setHorizontalPlot(dataAxis, plotArea, this.getAxisScreenWidth());
 		mCustomLine.renderHorizontalCustomlinesDataAxis(canvas);
 		return true;
-	}
-
+	}		
 	
-
 	/**
 	 * 绘制竖向柱形图
 	 */
@@ -479,10 +485,7 @@ public class BarChart extends AxisChart {
 		if(null == mDataSet) return false;	
 		// 得到分类轴数据集
 		List<String> dataSet = categoryAxis.getDataSet();
-		if(null == dataSet) return false;
-				
-		renderVerticalBarDataAxis(canvas);
-		renderVerticalBarCategoryAxis(canvas);		
+		if(null == dataSet) return false;	
 
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight = (float) dataAxis.getAxisRange();		
@@ -529,8 +532,7 @@ public class BarChart extends AxisChart {
 				float valuePostion = mul(axisScreenHeight, fvper);
 						
 				float currLableX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
-				float drawBarStartX = sub(currLableX , labelBarUseWidth / 2);
-				
+				float drawBarStartX = sub(currLableX , labelBarUseWidth / 2);				
 
 				// 计算同分类多柱 形时，新柱形的起始X坐标
 				float tw = add(barWidth,barInnerMargin);
@@ -544,8 +546,9 @@ public class BarChart extends AxisChart {
 				mFlatBar.renderBar(drawBarStartX,plotArea.getBottom(),drawBarEndX, topY,
 									canvas);
 				//保存位置
-				saveBarRectFRecord(i,j,drawBarStartX,topY ,drawBarEndX,plotArea.getBottom()); 
-
+				saveBarRectFRecord(i,j,drawBarStartX + mMoveX,topY + mMoveY,
+									    drawBarEndX  + mMoveX,plotArea.getBottom() + mMoveY); 
+				
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 						add(drawBarStartX , barWidth / 2),
@@ -554,12 +557,6 @@ public class BarChart extends AxisChart {
 			currNumber++;
 		}
 
-		// 轴 线
-		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
-				plotArea.getRight(), plotArea.getBottom());
-
-		// 绘制分类各柱形集的说明描述
-		plotLegend.renderBarKey(canvas, this.mDataSet);
 		//画竖向柱形图的定制线		
 		mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 		mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
@@ -567,6 +564,255 @@ public class BarChart extends AxisChart {
 	}
 	
 	
+	private boolean drawHorizontalBar(Canvas canvas)
+	{						
+		
+		//绘制X轴tick和marks		
+		renderHorizontalBarDataAxis(canvas);
+		
+		//绘制Y轴tick和marks		
+		renderHorizontalBarCategoryAxis(canvas);
+		
+		//设置绘图区显示范围
+		renderHorizontalBar(canvas);
+		
+		//轴线
+		renderHorizontalBarAxis(canvas);
+
+		//图例
+		plotLegend.renderBarKey(canvas, this.mDataSet);			
+		return true;
+	}
+	
+	
+	private void initMoveXY()
+	{
+		mMoveX = mMoveY = 0.0f;  	
+		switch(this.getPlotPanMode())
+		{
+		case HORIZONTAL:
+			mMoveX = mTranslateXY[0]; 			
+			break;
+		case VERTICAL:
+			mMoveY = mTranslateXY[1]; 					
+			break;
+		default:
+			mMoveX = mTranslateXY[0]; 
+			mMoveY = mTranslateXY[1]; 
+			break;
+		}
+	}
+	
+	
+	protected float getDrawClipHorizontalBarXMargin()
+	{
+		float XMargin = 0.0f;
+		if(dataAxis.getTickLabelVisible())
+		{												
+			if(dataAxis.getHorizontalTickAlign() != Align.LEFT)
+			{
+				//这个有可能会因为format而不准，但没找到更合适的方法
+				String str =  Double.toString(dataAxis.getAxisMin());					
+				XMargin = DrawHelper.getInstance().getTextWidth(
+										dataAxis.getTickLabelPaint(), str); 
+				
+				if(dataAxis.getHorizontalTickAlign() == Align.CENTER)
+				{
+					XMargin = div(XMargin,2);
+				}													
+			}
+		}
+		return XMargin;
+	}
+	
+	protected float getDrawClipHorizontalBarYMargin()
+	{
+		float yMargin = 0.0f;
+		if(categoryAxis.getTickLabelVisible())
+		{
+			yMargin = DrawHelper.getInstance().getPaintFontHeight(
+							categoryAxis.getTickLabelPaint() ) / 2;				
+		}	
+		return yMargin;
+	}
+	
+	
+	private boolean drawClipHorizontalBar(Canvas canvas)
+	 {		
+		//显示绘图区rect
+		float offsetX = mTranslateXY[0]; 
+		float offsetY = mTranslateXY[1]; 					
+		initMoveXY();		
+	
+		//设置图显示范围
+		canvas.save();				
+		canvas.clipRect(this.getLeft() , this.getTop() , this.getRight(), this.getBottom());		
+				
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{								
+			float xMargin = getDrawClipHorizontalBarXMargin();
+						
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					renderHorizontalBarDataAxis(canvas);				
+			canvas.restore();	
+		}else{
+			renderHorizontalBarDataAxis(canvas);	
+		}
+		
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{							
+			float yMargin = getDrawClipHorizontalBarYMargin();
+			
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft(), plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					renderHorizontalBarCategoryAxis(canvas);
+			canvas.restore();	
+		}else{
+			renderHorizontalBarCategoryAxis(canvas);
+		}
+									
+			//设置绘图区显示范围
+			canvas.save();
+			canvas.clipRect(plotArea.getLeft() , plotArea.getTop() ,
+							this.getRight(), plotArea.getBottom());			
+					canvas.save();
+					canvas.translate(mMoveX, mMoveY);	
+					renderHorizontalBar(canvas);					
+					canvas.restore();
+			canvas.restore();
+								
+		//还原绘图区绘制
+		canvas.restore(); //clip			
+		
+		//轴线
+		renderHorizontalBarAxis(canvas);
+
+		//图例
+		plotLegend.renderBarKey(canvas, this.mDataSet);						
+		return true;
+	 }
+	
+	private boolean drawVerticalBar(Canvas canvas)
+	{						
+		this.mMoveX = this.mMoveY = 0.0f;
+		
+		//绘制Y轴tick和marks			
+		renderVerticalBarDataAxis(canvas);
+	
+		//绘制X轴tick和marks			
+		renderVerticalBarCategoryAxis(canvas);
+		
+		//设置绘图区显示范围
+		renderVerticalBar(canvas);
+					
+		//轴线
+		renderVerticalBarAxis(canvas);
+
+		//图例
+		plotLegend.renderBarKey(canvas, this.mDataSet);				
+		
+		return true;
+	 }
+
+	private boolean drawClipVerticalBar(Canvas canvas)
+	{				
+		//显示绘图区rect
+		float offsetX = mTranslateXY[0]; 
+		float offsetY = mTranslateXY[1]; 					
+		initMoveXY();	
+				
+		//设置图显示范围
+		canvas.save();
+		canvas.clipRect(this.getLeft(),this.getTop(),this.getRight(),this.getBottom());
+				
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			float yMargin = getDrawClipVerticalYMargin();
+					
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );	
+	
+					renderVerticalBarDataAxis(canvas);					
+			canvas.restore();	
+		}else{
+			renderVerticalBarDataAxis(canvas);
+		}
+
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{			
+			float xMargin = getDrawClipVerticalXMargin();
+			
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft()  - xMargin , plotArea.getTop(),
+									plotArea.getRight() + xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+				
+					renderVerticalBarCategoryAxis(canvas);							
+			canvas.restore();	
+		}else{
+			renderVerticalBarCategoryAxis(canvas);
+		}
+						
+			//设置绘图区显示范围
+			canvas.save();			
+				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(),
+								plotArea.getRight(), plotArea.getBottom() + 1.0f);
+									
+					canvas.save();
+					canvas.translate(mMoveX,mMoveY);
+					renderVerticalBar(canvas);					
+					canvas.restore();
+			canvas.restore();
+			
+		//还原绘图区绘制
+		canvas.restore(); //clip						
+				
+		//轴线
+		renderVerticalBarAxis(canvas);
+
+		//图例
+		plotLegend.renderBarKey(canvas, this.mDataSet);						
+		return true;
+	 }
+	
+		
+	protected void renderHorizontalBarAxis(Canvas canvas)
+	{
+		//Y轴 线
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getTop(),
+									plotArea.getLeft(), plotArea.getBottom());							
+		//Y轴 线
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
+									plotArea.getRight(), plotArea.getBottom());		
+	}
+		
+	protected void renderVerticalBarAxis(Canvas canvas)
+	{
+		//Y轴 线
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getTop(),
+									plotArea.getLeft(), plotArea.getBottom());							
+		//Y轴 线
+		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
+									plotArea.getRight(), plotArea.getBottom());			
+	}		
+	
+	/////////////////////////////////////////////////////////////////////////////////////
+		
 	protected int getDatasetSize(List<BarData> dataSource)
 	{		
 		 if(null == dataSource) return 0;
@@ -647,12 +893,22 @@ public class BarChart extends AxisChart {
 			
 			boolean ret = true;
 			switch (mDirection) {
-				case HORIZONTAL: {
-					ret =  renderHorizontalBar(canvas);
+				case HORIZONTAL: {								
+					if(getPanModeStatus())
+					{
+						ret = drawClipHorizontalBar(canvas);
+					}else{
+						ret = drawHorizontalBar(canvas);
+					}					
 					break;
 				}
 				case VERTICAL: {
-					ret = renderVerticalBar(canvas);
+					if(getPanModeStatus())
+					{
+						ret = drawClipVerticalBar(canvas);
+					}else{
+						ret = drawVerticalBar(canvas);
+					}					
 					break;
 				}
 			}
@@ -662,5 +918,21 @@ public class BarChart extends AxisChart {
 		}
 		
 	}
+	/////////////////////////////////////
+	@Override
+	public boolean render(Canvas canvas) throws Exception {
+		// TODO Auto-generated method stubcalcPlotRange		
+		try {
+				if (null == canvas)
+						return false;
+				
+				super.render(canvas);				
+				return true;				
+		} catch (Exception e) {
+			throw e;
+		}
+	}
 
+	
+	///////////////////////////////////////
 }

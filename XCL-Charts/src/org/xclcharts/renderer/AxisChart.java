@@ -22,6 +22,7 @@
 package org.xclcharts.renderer;
 
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.axis.CategoryAxis;
@@ -32,6 +33,7 @@ import org.xclcharts.renderer.plot.AxisTitle;
 import org.xclcharts.renderer.plot.AxisTitleRender;
 
 import android.graphics.Canvas;
+import android.graphics.Paint.Align;
 
 /**
  * @ClassName AxisChart
@@ -51,6 +53,11 @@ public class AxisChart extends EventChart {
 	
 	//格式化柱形顶上或线交叉点的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
+	
+	//平移模式下的可移动方向
+	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
+	private boolean mEnablePanMode = true;
+	
 	
 	public AxisChart() {
 		// TODO Auto-generated constructor stub		
@@ -163,21 +170,105 @@ public class AxisChart extends EventChart {
 	protected float getVerticalXSteps(int num) {
 		//float XSteps = (float) Math.ceil(getAxisScreenWidth() / num);		
 		return MathHelper.getInstance().div(getAxisScreenWidth(),num);		
+	}	
+	
+	
+	/**
+	 * 检查竖图中数据轴的tick是否显示 
+	 * @param currentY	y坐标
+	 * @param moveY	y坐标平移值
+	 * @return	是否绘制
+	 */
+	protected boolean isrenderVerticalBarDataAxisTick(float currentY,float moveY)
+	{
+		if(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
+				Float.compare(currentY, plotArea.getBottom()  - moveY) == 1 )
+		{
+			return true;
+		}
+		return false;
+	}
+			
+	/**
+	 *  检查竖图中分类轴的tick是否显示 
+	 * @param currentX	x坐标
+	 * @param moveX	x坐标平移值
+	 * @return 是否绘制
+	 */
+	protected boolean isRenderVerticalCategoryAxisTick(float currentX,float moveX)
+	{
+		if(Float.compare(currentX , plotArea.getLeft() - moveX ) == -1 || 
+				Float.compare(currentX , plotArea.getRight() - moveX) == 1 )				
+		{
+			return true;
+		}
+		return false;
 	}
 	
+	protected boolean isRenderHorizontalDataAxisTick(float currentX,float moveX)
+	{
+		if(Float.compare(currentX , plotArea.getLeft() - moveX ) == -1 || 
+				Float.compare(currentX , plotArea.getRight() - moveX) == 1 )				
+		{
+			return true;
+		}
+		return false;
+	}
 	
+	protected boolean isRenderHorizontalCategoryAxisTick(float currentY,float moveY)
+	{
+		if(categoryAxis.getTickLabelVisible() && 
+				(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
+				 Float.compare(currentY , plotArea.getBottom() - moveY) == 1 ))
+		{
+			return true;
+		}
+		return false;
+	}
 	
-		
+	protected float getDrawClipVerticalYMargin()
+	{
+		float yMargin = 0.0f;
+		if(dataAxis.getTickLabelVisible())
+		{
+			yMargin = DrawHelper.getInstance().getPaintFontHeight(
+									dataAxis.getTickLabelPaint() ) / 2;				
+		}
+		return yMargin;
+	}
+	
+	protected float getDrawClipVerticalXMargin()
+	{
+		float xMargin = 0.0f;
+		if(categoryAxis.getTickLabelVisible())
+		{												
+			if(categoryAxis.getHorizontalTickAlign() != Align.LEFT)
+			{
+				String str = categoryAxis.getDataSet().get(0);					
+				xMargin = DrawHelper.getInstance().getTextWidth(
+										categoryAxis.getTickLabelPaint(), str); 
+				
+				if(categoryAxis.getHorizontalTickAlign() == Align.CENTER)
+				{
+					xMargin = div(xMargin,2);
+				}													
+			}
+		}
+		return xMargin;
+	}
+	
+			
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception
 	{
 		try {
-			super.postRender(canvas);
+			super.postRender(canvas);			
 			
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
 			 plotArea.render(canvas);	
+			
 			//绘制标题
 			renderTitle(canvas);
 			//绘制轴标题
@@ -190,6 +281,7 @@ public class AxisChart extends EventChart {
 		return true;
 	}
 
+	/*
 	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stub
 	
@@ -201,7 +293,49 @@ public class AxisChart extends EventChart {
 		}
 		return true;
 	}		
-	 
+	 */
 	
-
+	/**
+	 * 设置手势平移模式
+	 * @param mode	平移模式
+	 */
+	public void setPlotPanMode(XEnum.PanMode mode)
+	{
+		 mPlotPanMode = mode;
+	}
+	
+	/**
+	 * 返回当前图表平移模式
+	 * @return 平移模式
+	 */
+	public XEnum.PanMode getPlotPanMode()
+	{
+		return mPlotPanMode;
+	}
+	
+	/**
+	 * 激活平移模式
+	 */
+	public void enablePanMode()
+	{
+		mEnablePanMode = true;		
+	}
+	
+	/**
+	 * 禁用平移模式
+	 */
+	public void disablePanMode()
+	{
+		mEnablePanMode = false;		
+	}
+	
+	/**
+	 * 返回当前图表的平移状态
+	 * @return
+	 */
+	public boolean getPanModeStatus()
+	{
+		return mEnablePanMode;
+	}
+	
 }

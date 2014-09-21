@@ -88,7 +88,7 @@ public class AreaChart02View extends TouchView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-        chart.setChartRange(w,h);
+        chart.setChartRange(w + w *0.5f,h);
     }  
 			 
 	private void chartRender()
@@ -103,6 +103,8 @@ public class AreaChart02View extends TouchView {
 				chart.setCategories(mLabels);
 				//数据轴
 				chart.setDataSource(mDataset);
+				//仅横向平移
+				chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
 							
 				//数据轴最大值
 				chart.getDataAxis().setAxisMax(100);
@@ -255,7 +257,7 @@ public class AreaChart02View extends TouchView {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub		
-		//super.onTouchEvent(event);		
+		super.onTouchEvent(event);		
 		if(event.getAction() == MotionEvent.ACTION_UP) 
 		{			
 			triggerClick(event.getX(),event.getY());

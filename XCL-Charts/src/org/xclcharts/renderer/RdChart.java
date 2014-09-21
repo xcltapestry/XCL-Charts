@@ -24,6 +24,7 @@ package org.xclcharts.renderer;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.event.click.PointPosition;
 
+import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
@@ -176,6 +177,43 @@ public class RdChart extends EventChart {
 		}		
 		return mPaintLine;
 	}
+	
+	
+	@Override
+	public boolean render(Canvas canvas) throws Exception {
+		// TODO Auto-generated method stubcalcPlotRange
+		boolean ret = true;
+		try {
+				if (null == canvas)
+						return false;
+				
+				
+				canvas.save();
+				//设置原点位置
+				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
+				//绘制图表							
+				//ret = postRender(canvas);	
+				
+				super.render(canvas);
+				
+				//绘制边框
+				//renderBorder(canvas);
+				//还原								
+				canvas.restore();
+				
+				
+				//return postRender(canvas);	
+				
+				//return ret;
+				
+				return true;
+				
+		} catch (Exception e) {
+			throw e;
+		}
+		//return ret;
+	}
+	
 	
 
 }

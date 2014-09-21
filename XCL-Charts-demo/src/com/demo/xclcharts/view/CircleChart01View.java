@@ -92,6 +92,8 @@ public class CircleChart01View extends GraphicalView {
 			//设置图表数据源			
 			chart.setDataSource(mlPieData);				
 			
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

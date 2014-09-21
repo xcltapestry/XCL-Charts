@@ -152,7 +152,7 @@ public class BarChart3D extends BarChart{
 	
 	
 	@Override
-	protected void renderHorizontalBarLabelAxis(Canvas canvas) {
+	protected void renderHorizontalBarCategoryAxis(Canvas canvas) {
 		// Y 轴
 		// 分类横向间距高度	
 		float YSteps = div(getAxisScreenHeight(), (categoryAxis.getDataSet().size() + 1)  );						
@@ -177,6 +177,8 @@ public class BarChart3D extends BarChart{
 	}
 	
 	
+	
+	
 	@Override
 	protected boolean renderHorizontalBar(Canvas canvas)
 	{		
@@ -184,20 +186,24 @@ public class BarChart3D extends BarChart{
 		 List<BarData> chartDataSource = this.getDataSource(); 
 		 if(null == chartDataSource) return false;	
 		
-		 renderHorizontalBarDataAxis(canvas);
+		// renderHorizontalBarDataAxis(canvas);
 		 
 		//x轴 线 [要向里突]
-		 dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-				 			 plotArea.getRight(),  plotArea.getBottom());	
+		// dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+		//		 			 plotArea.getRight(),  plotArea.getBottom());	
 		 //Y 轴           
-		 renderHorizontalBarLabelAxis(canvas);
+		// renderHorizontalBarLabelAxis(canvas);
 			
 		 //Y轴线
-		 mBar3D.render3DYAxis(plotArea.getLeft(), plotArea.getTop(), 
-							 plotArea.getRight(), plotArea.getBottom(),canvas);
+		 //mBar3D.render3DYAxis(plotArea.getLeft(), plotArea.getTop(), 
+		//					 plotArea.getRight(), plotArea.getBottom(),canvas);
 		 					
 			//得到Y 轴分类横向间距高度
-			 float YSteps = getHorizontalYSteps();			
+			 float YSteps = getHorizontalYSteps();	
+			 
+			 float barInitX = plotArea.getLeft() + this.mMoveX;
+			 float barInitY =  plotArea.getBottom() ;// + this.mMoveY;
+			 
 			 
 			//依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度	
 			int barNumber = getDatasetSize(chartDataSource);  
@@ -233,8 +239,8 @@ public class BarChart3D extends BarChart{
 					Double bv = barValues.get(j);					
 					setBarDataColor(mBar3D.getBarPaint(),barDataColor,j,barDefualtColor);
 					
-					float ty1 = mul((j+1) , YSteps);
-					float drawBarButtomY = add(sub(plotArea.getBottom(),ty1) ,labelBarUseHeight / 2 );					
+					float ty1 = mul((j+1) , YSteps); 
+					float drawBarButtomY = add(sub(barInitY,ty1) ,labelBarUseHeight / 2 );	//plotArea.getBottom()				
 					drawBarButtomY = sub(drawBarButtomY , (barHeight + barInnerMargin ) * currNumber);					
 																				
                 	//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来
@@ -243,22 +249,24 @@ public class BarChart3D extends BarChart{
                             	        
                 	//画出柱形                	 	
                 	float topY = sub(drawBarButtomY , barHeight);
-                	float rightX = add(plotArea.getLeft() , valuePostion);
-	                mBar3D.renderHorizontal3DBar(plotArea.getLeft(), topY, rightX, drawBarButtomY, 
+                	float rightX = add(barInitX, valuePostion);
+	                mBar3D.renderHorizontal3DBar(barInitX, 
+	                							 topY, rightX, drawBarButtomY, 
 	                							mBar3D.getBarPaint().getColor(), canvas);
 	                
 	                //保存位置
-	                saveBarRectFRecord(i,j,plotArea.getLeft(),topY,rightX, drawBarButtomY); 	                	             
+	                saveBarRectFRecord(i,j,barInitX + mMoveX, //plotArea.getLeft(),
+	                						topY  + mMoveY,rightX  + mMoveX, drawBarButtomY  + mMoveY); 	                	             
                 	                               	
                 	//在柱形的顶端显示上柱形的当前值	                
 	                mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
-	                		 add(plotArea.getLeft() , valuePostion)  , 
+	                		 rightX, // add(plotArea.getLeft() , valuePostion)  , 
 	                		 sub(drawBarButtomY , barHeight/2), canvas);
                 }
 				currNumber ++;
 			}	
 			//画图例
-			plotLegend.renderBarKey(canvas, this.getDataSource());
+			//plotLegend.renderBarKey(canvas, this.getDataSource());
 			return true;
 	}
 	
@@ -305,17 +313,15 @@ public class BarChart3D extends BarChart{
 		}
 	}
 		
-	
 
 	@Override
 	protected boolean renderVerticalBar(Canvas canvas)
-	{		
-		renderVerticalBarDataAxis(canvas);
-		renderVerticalBarCategoryAxis(canvas);
-		
+	{	
 		//分类轴(X 轴) 且在这画柱形    
 		 float currentX = 0.0f;
-		 float initX = currentX = plotArea.getLeft();
+		 
+		 float barInitX = plotArea.getLeft() ; 
+		 float barInitY =  plotArea.getBottom() ;
 							 		
 		 //得到分类轴数据集
 		List<String> dataSet =  categoryAxis.getDataSet();
@@ -324,12 +330,7 @@ public class BarChart3D extends BarChart{
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度					
 		float XSteps = div(plotArea.getWidth() , (dataSet.size() + 1 ) );		
-		
-	 	//X轴 线
-		mBar3D.render3DXAxis(plotArea.getLeft(), plotArea.getBottom(),
-							 plotArea.getRight(), plotArea.getBottom(), 
-							 canvas);
-	
+			
 		//得到数据源
 		List<BarData> chartDataSource = this.getDataSource();
 		if(null == chartDataSource) return false;	
@@ -354,7 +355,7 @@ public class BarChart3D extends BarChart{
 		for(int i=0;i<barNumber;i++)
 		{
 		    //依初超始X坐标与分类间距算出当前刻度的X坐标
-			currentX = add(initX, mul((i+1), XSteps) );
+			currentX = add(barInitX, mul((i+1), XSteps) );
 			
 			//得到分类对应的值数据集				
 			BarData bd = chartDataSource.get(i);
@@ -376,35 +377,106 @@ public class BarChart3D extends BarChart{
 			    valuePostion =  mul( plotArea.getHeight() , valuePostion);     	   					
 				
 				//计算同分类多柱 形时，新柱形的起始X坐标
-			    float drawBarStartX =  sub( add(initX, mul((j + 1) , XSteps) ) , labelBarUseWidth / 2);				
+			    float drawBarStartX =  sub( add(barInitX, mul((j + 1) , XSteps) ) , labelBarUseWidth / 2);				
 				drawBarStartX = add(drawBarStartX, (barWidth + barInnerMargin ) * currNumber);
 				
 				//计算同分类多柱 形时，新柱形的结束X坐标
 				float drawBarEndX = add(drawBarStartX , barWidth);	  					
 				
 				//画出柱形      
-				float topY = sub(plotArea.getBottom()  , valuePostion);
+				float topY = sub( barInitY , valuePostion); 
 				mBar3D.renderVertical3DBar(drawBarStartX, topY ,
-				               			drawBarEndX, plotArea.getBottom(),
+				               			drawBarEndX, barInitY, 
 				               			mBar3D.getBarPaint().getColor(), canvas);
         
 				//保存位置
-				saveBarRectFRecord(i,j,drawBarStartX,topY,drawBarEndX, plotArea.getBottom()); 				
+				saveBarRectFRecord(i,j,drawBarStartX  + mMoveX,topY  + mMoveY,
+										drawBarEndX  + mMoveX, plotArea.getBottom()  + mMoveY); 				
 				
            		//在柱形的顶端显示上柱形的当前值
            		mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
 			                		 add(drawBarStartX , barWidth/2) ,	
-			                		 sub(plotArea.getBottom()  , valuePostion),  
+			                		 topY, 
 			                		 canvas);
            }	
 			currNumber ++;				
 		}
 	 
-		//绘制图例
-		plotLegend.renderBarKey(canvas, this.getDataSource());
 		return true;
 	}
 
 	
+	@Override
+	protected void renderHorizontalBarAxis(Canvas canvas)
+	{
+		 
+		//x轴 线 [要向里突]
+		 dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+				 			 plotArea.getRight(),  plotArea.getBottom());			 
+			
+		 //Y轴线
+		mBar3D.render3DYAxis(plotArea.getLeft(), plotArea.getTop(), 
+							 plotArea.getRight(), plotArea.getBottom(),canvas);
+	}
+	
+	@Override
+	protected void renderVerticalBarAxis(Canvas canvas)
+	{		
+		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getTop(),
+	 			 plotArea.getLeft(),  plotArea.getBottom());	
+		
+		//X轴 线
+		mBar3D.render3DXAxis(plotArea.getLeft(), plotArea.getBottom(),
+									 plotArea.getRight(), plotArea.getBottom(), 
+									 canvas);
+	}
+
+	@Override
+	protected float getDrawClipVerticalYMargin()
+	{
+		return 0.0f;
+	}
+	
+	@Override
+	protected float getDrawClipVerticalXMargin()
+	{
+		return 0.0f;
+	}
+	
+	@Override
+	protected float getDrawClipHorizontalBarXMargin()
+	{
+		return 0.0f;
+	}
+	
+	@Override
+	protected float getDrawClipHorizontalBarYMargin()
+	{
+		return 0.0f;
+	}
+	
+	@Override
+	protected boolean isrenderVerticalBarDataAxisTick(float currentY,float moveY)
+	{
+		return false;
+	}
+	
+	@Override
+	protected boolean isRenderVerticalCategoryAxisTick(float currentX,float moveX)
+	{
+		return false;
+	}
+	
+	@Override
+	protected boolean isRenderHorizontalDataAxisTick(float currentX,float moveX)
+	{
+		return false;
+	}
+	
+	@Override
+	protected boolean isRenderHorizontalCategoryAxisTick(float currentY,float moveY)
+	{		
+		return false;
+	}
 	
 }

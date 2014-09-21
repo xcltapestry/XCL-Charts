@@ -33,10 +33,12 @@ import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -51,7 +53,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class BarChart01View extends TouchView implements Runnable{
+public class BarChart01View extends TouchView implements Runnable{ //TouchView
 	
 	private String TAG = "BarChart01View";
 	private BarChart chart = new BarChart();
@@ -88,7 +90,7 @@ public class BarChart01View extends TouchView implements Runnable{
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-        chart.setChartRange(w,h);
+        chart.setChartRange(w + w * 0.5f,h);
     }  
 	
 	
@@ -105,6 +107,8 @@ public class BarChart01View extends TouchView implements Runnable{
 			chart.addSubtitle("(XCL-Charts Demo)");	
 			chart.getPlotTitle().getTitlePaint().setColor(Color.BLUE);
 			chart.getPlotTitle().getSubtitlePaint().setColor(Color.BLUE);
+			//chart.getPlotTitle().setTitleAlign(XEnum.ChartTitleAlign.LEFT);
+			
 			//数据源
 			//chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
@@ -161,6 +165,8 @@ public class BarChart01View extends TouchView implements Runnable{
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			
+			//chart.disablePanMode();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -188,9 +194,17 @@ public class BarChart01View extends TouchView implements Runnable{
 		dataSeriesC.add(65d);
 		BarData BarDataC = new BarData("MySQL",dataSeriesC,(int)Color.rgb(0, 75, 106)); 
 		
+		List<Double> dataSeriesD= new LinkedList<Double>();	
+		dataSeriesD.add(52d);
+		dataSeriesD.add(45d);
+		dataSeriesD.add(35d);
+		BarData BarDataD = new BarData("Other",dataSeriesD,(int)Color.rgb(17, 3, 111)); 
+		
+		
 		chartData.add(BarDataA);
 		chartData.add(BarDataB);
 		chartData.add(BarDataC);
+		chartData.add(BarDataD);
 	}
 	
 	private void chartLabels()
@@ -235,7 +249,7 @@ public class BarChart01View extends TouchView implements Runnable{
           	dataSeries.add(0d);       
           	for(int i=0;i< chartData.size() ;i++)
           	{
-          		Thread.sleep(100);
+          		Thread.sleep(200);
           		List<BarData> animationData = new LinkedList<BarData>();
           		for(int j=0;j<chartData.size();j++)
                 {            			            			          			

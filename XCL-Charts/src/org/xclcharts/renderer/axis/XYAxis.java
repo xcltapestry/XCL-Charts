@@ -179,12 +179,12 @@ public class XYAxis extends Axis {
 		}
 
 		//横轴刻度线
-		if (getTickMarksVisible()) {
+		if (getTickMarksVisible()) 
+		{		
 			canvas.drawLine(marksStartX, centerY, 
 					MathHelper.getInstance().add(markeStopX, this.getAxisPaint().getStrokeWidth() / 2),
 					centerY,
-					getTickMarksPaint());
-
+					getTickMarksPaint());		
 		}
 
 		//标签

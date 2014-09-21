@@ -137,7 +137,8 @@ public class PieChart3D extends PieChart{
      	    }		
 		    
 		    //保存角度
-		    saveArcRecord(j,cirX,cirY,radius,offsetAngle,currentAngle);
+		    saveArcRecord(j,cirX+ this.mTranslateXY[0],cirY+ this.mTranslateXY[1],
+		    					radius,offsetAngle,currentAngle);
 		    
            //下次的起始角度  
 		    offsetAngle = add(offsetAngle,currentAngle);

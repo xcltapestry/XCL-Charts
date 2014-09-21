@@ -41,7 +41,7 @@ import android.view.View;
  */
 
 @SuppressLint("NewApi")
-public abstract class GraphicalView extends View {
+public abstract class GraphicalView extends View { //View ChartScrollView
 
 	private String TAG = "GraphicalView";	
 	protected int mScrWidth = 0;
@@ -82,7 +82,13 @@ public abstract class GraphicalView extends View {
 	         canvas.drawRect(rect, paint);
 		     */ 
 			 
-			  render(canvas);	    	 		
+			  //canvas.save();
+		      //   canvas.clipRect(100, 100, 450, 600); 
+		         
+			  render(canvas);	
+			  
+			 // this.scrollBy(0, -10);
+			  //canvas.restore();
 		  } catch (Exception e) {
 				// TODO Auto-generated catch block
 			  Log.e(TAG, e.toString());
@@ -95,6 +101,8 @@ public abstract class GraphicalView extends View {
 			disableHardwareAccelerated();	
 			//得到屏幕信息
 			getScreenInfo();
+			
+			 
 	  }
 	  
 	/**

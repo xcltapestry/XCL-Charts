@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="281" key="DIALOG_Y_ORIGIN"/>
-		<item value="434" key="DIALOG_HEIGHT"/>
-		<item value="994" key="DIALOG_X_ORIGIN"/>
+		<item value="336" key="DIALOG_Y_ORIGIN"/>
+		<item value="270" key="DIALOG_X_ORIGIN"/>
+		<item value="391" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="ScatterData" key="selection"/>
+		<item value="size" key="selection"/>
 		<list key="findhistory">
-			<item value="ScatterData"/>
-			<item value="DotStyle"/>
-			<item value="line"/>
-			<item value="OUTS"/>
-			<item value="setLabelPosition"/>
-			<item value="renderVerticalBar"/>
-			<item value="mPlotArea"/>
-			<item value="plotLegend"/>
+			<item value="size"/>
+			<item value="spa"/>
+			<item value="enable"/>
+			<item value="setScale"/>
+			<item value="TempScrollView"/>
+			<item value="drawClipVerticalPlot"/>
+			<item value="renderVerticalBarCategoryAxis"/>
+			<item value="getDrawClipVerticalBarXMargin"/>
 		</list>
 		<list key="replacehistory">
-			<item value="mapPoint"/>
-			<item value="BubbleData"/>
-			<item value="key"/>
-			<item value="ey"/>
-			<item value="mPointMap"/>
-			<item value="getKey"/>
-			<item value="setKey"/>
-			<item value="getDataSet"/>
+			<item value="ChartScrollView"/>
+			<item value="TempScrollView"/>
+			<item value="mEnablePanMode"/>
+			<item value="mEnablePlotPan"/>
+			<item value="PanMode"/>
+			<item value="getPlotMoveDirection"/>
+			<item value="mPlotMoveDirection"/>
+			<item value="mEnablePlotMove"/>
 		</list>
 	</section>
 </section>

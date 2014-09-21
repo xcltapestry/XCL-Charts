@@ -48,7 +48,8 @@ public class BubbleData {
 	//是否在点上显示标签
 	private boolean mLabelVisible = false;
 	//气泡颜色
-	private int mColor = 0;	
+	private int mColor = 0;		
+	private int mBorderColor = -1;
 	
 	public BubbleData(){}
 	
@@ -192,5 +193,24 @@ public class BubbleData {
 		return mColor;
 	}
 	
+	/**
+	 * 设置气泡边框颜色
+	 * @param color 颜色
+ 	 */
+	public void setBorderColor(int color)
+	{
+		mBorderColor = color;
+	}
+	
+	/**
+	 * 得到气泡边框颜色
+	 * @return 颜色
+	 */
+	public int getBorderColor()
+	{
+		return mBorderColor;
+	}
 
+	
+	
 }

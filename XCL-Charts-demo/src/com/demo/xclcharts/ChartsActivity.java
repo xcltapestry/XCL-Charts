@@ -21,7 +21,6 @@
  */
 package com.demo.xclcharts;
 
-
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -76,6 +75,34 @@ import com.demo.xclcharts.view.TouchView;
  * @ClassName ChartsActivity
  * @Description  展示各类图表
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ */
+
+
+/**
+ * 关于整个图表缩放的说明 :
+ * 	Demo中提供了两种缩放模式:
+ * 		1. 通过 ZoomControls控件调用TouchView中的Zoom相关函数来缩放图表.
+ * 		  通过这种方式缩放后的点击事件。
+ * 		禁用方式:
+ * 			可通过直接继承GraphicalView或通过覆盖onTouchEvent事件来禁用
+ * 		2. 通过chart.enableScale()来激活通过双指手势对图表进行缩放。
+ * 		 不过这种方式缩放后点击事件就乱了。
+ *      禁用方式:
+ *      	chart.disableScal();
+ * 
+ * 图表区的平移  :  
+ *  激活图表区的平移     
+ * 		chart.enablePanMode()
+ *  禁用图表区的平移     
+ *  	chart.disablePanMode()
+ *  
+ *  如果要展示的图表数据比较长或多，可以通过调整个图的大小，即chart.setChartRange()的值。
+ *  然后用户可以通过平移图表区的方式来展示未显示出来的数据. 
+ *  注意，此方式对性能会有些损失，超大量的就不用尝试了. 
+ *  对于这种可以通过scrollview控件等方式来处理。
+ *  
+ * @author XCL
+ *
  */
 public class ChartsActivity extends Activity {
 	
@@ -178,13 +205,15 @@ public class ChartsActivity extends Activity {
 		   int scrWidth = (int) (dm.widthPixels * 0.9); 	
 		   int scrHeight = (int) (dm.heightPixels * 0.9); 			   		
 	       RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
-	    		   													scrWidth, scrHeight);	
+	    		   													scrWidth, scrHeight);
+	       
 	       //居中显示
            layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT);   
            //图表view放入布局中，也可直接将图表view放入Activity对应的xml文件中
-           final RelativeLayout chartLayout = new RelativeLayout(this);  	
+           final RelativeLayout chartLayout = new RelativeLayout(this);  
+      
            chartLayout.addView( mCharts[mSelected], layoutParams);
-                      		  
+  
 	        //增加控件
 		   ((ViewGroup) content).addView(chartLayout);		   
 		   ((ViewGroup) content).addView(mZoomControls);
@@ -192,10 +221,7 @@ public class ChartsActivity extends Activity {
 		    //放大监听
 		    mZoomControls.setOnZoomInClickListener(new OnZoomInClickListenerImpl());
 		    //缩小监听
-		    mZoomControls.setOnZoomOutClickListener(new OnZoomOutClickListenerImpl());  
-		    
-		    
-		    
+		    mZoomControls.setOnZoomOutClickListener(new OnZoomOutClickListenerImpl());  		 
 	}
 
 	@Override

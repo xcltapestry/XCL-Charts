@@ -268,6 +268,14 @@ public class XEnum {
 			RADAR,ROUND
 		}
 		
+		/**
+		 * 手势平移模式(模向，纵向，自由移动)
+		 * @author XCL
+		 *
+		 */
+		public enum PanMode {  
+			HORIZONTAL,VERTICAL,FREE
+		}
 		
 		
 }

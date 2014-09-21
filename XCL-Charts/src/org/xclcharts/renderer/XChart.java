@@ -78,7 +78,7 @@ public class XChart implements IRender {
 	private boolean mBackgroundColorVisible = false;
 	
 	//坐标系原点坐标
-	private float[] mTranslateXY = new float[2];		
+	protected float[] mTranslateXY = new float[2];		
 		
 	//是否显示边框
 	private boolean mShowBorder = false;
@@ -135,11 +135,11 @@ public class XChart implements IRender {
 		if (top > 0)
 			mPaddingTop = top;
 		if (bottom > 0)
-			mPaddingBottom = bottom;
+			mPaddingBottom = bottom ;
 		if (left > 0)
 			mPaddingLeft = left;
 		if (right > 0)
-			mPaddingRight = right;
+			mPaddingRight = right ;
 	}
 			
 
@@ -542,7 +542,7 @@ public class XChart implements IRender {
 	 * 绘制边框
 	 * @param canvas
 	 */
-	private void renderBorder(Canvas canvas)
+	protected void renderBorder(Canvas canvas)
 	{
 		if(mShowBorder)
 		{
@@ -573,8 +573,71 @@ public class XChart implements IRender {
 		}
 	}
 	
+	private boolean mEnableScale = true;
+	private float mXScale = 0.0f, mYScale  = 0.0f;
+	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
 	
-
+	/**
+	 * 设置缩放参数
+	 * @param xScale	x方向缩放比例
+	 * @param yScale	y方向缩放比例
+	 * @param centerX	缩放中心点x坐标
+	 * @param centerY	缩放中心点y坐标
+	 */
+	public void setScale(float xScale,float yScale,
+						 float centerX,float centerY)
+	{
+		mXScale = xScale;
+		mYScale  = yScale;
+		mCenterX  = centerX;
+		mCenterY  = centerY;
+	}
+	
+	/**
+	 * 缩放图表
+	 * @param canvas	画布
+	 */
+	private void scaleChart(Canvas canvas)
+	{
+		if(!mEnableScale)return;
+		
+		if( Float.compare(mCenterX, 0.0f) == 1 ||
+				Float.compare(mCenterY, 0.0f) == 1	)
+			{
+				canvas.scale(mXScale, mYScale,mCenterX,mCenterY);
+			//}else{
+				//canvas.scale(mScale, mScale,plotArea.getCenterX(),plotArea.getCenterY());					
+			}
+	}
+	
+	/**
+	 * 激活图表缩放(但注意，图表缩放后，如果有同时激活click事件，
+	 * 	则所保留的clicked相关信息并不会随着缩放即会乱掉。
+	 * 	所以两个事件暂在图库中不能并存)
+	 */
+	public void enableScale()
+	{
+		mEnableScale = true;
+	}
+	
+	/**
+	 * 禁用图表缩放
+	 */
+	public void disableScale()
+	{
+		mEnableScale = false;
+	}
+	
+	/**
+	 * 返回图表缩放状态 
+	 * @return 缩放状态 
+	 */
+	public boolean getScaleStatus()
+	{
+		return mEnableScale;
+	}
+	
+		
 	/**
 	 * 用于延迟绘制
 	 * @param canvas	画布
@@ -584,13 +647,16 @@ public class XChart implements IRender {
 	protected boolean postRender(Canvas canvas)  throws Exception
 	{
 		try{
+	
 			// 绘制图背景
-			renderChartBackground(canvas);						
+			renderChartBackground(canvas);
+			
 		} catch (Exception e) {
 			throw e;
 		}
 		return true;
 	}
+
 
 	@Override
 	public boolean render(Canvas canvas) throws Exception {
@@ -600,19 +666,20 @@ public class XChart implements IRender {
 				if (null == canvas)
 						return false;
 				
-				canvas.save();
-				//设置原点位置
-				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
-				//绘制图表							
-				ret = postRender(canvas);					
+				//缩放图表
+				scaleChart(canvas);	
+				
+				//绘制图表	
+				ret = postRender(canvas);	
+				
 				//绘制边框
 				renderBorder(canvas);
-				//还原								
-				canvas.restore();
+				
+				return ret;					
 		} catch (Exception e) {
 			throw e;
 		}
-		return ret;
+		//return ret;
 	}
 
 	

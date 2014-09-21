@@ -161,7 +161,8 @@ public abstract class TouchView  extends GraphicalView implements IChartZoom {
 		// TODO Auto-generated method stub
 		
 	}
-
+	
+	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub		
@@ -177,4 +178,8 @@ public abstract class TouchView  extends GraphicalView implements IChartZoom {
 		
 		return true;
 	}
+	
+	
+	
+		
 }

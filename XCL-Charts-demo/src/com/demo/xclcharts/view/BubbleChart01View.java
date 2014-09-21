@@ -33,6 +33,7 @@ import org.xclcharts.chart.BubbleData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -133,6 +134,12 @@ public class BubbleChart01View extends TouchView {
 			//chart.getPlotArea().setBackgroupColor(true, Color.WHITE);
 		
 		
+			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);		
+			chart.getCategoryAxis().setTickMarksVisible(false);
+			
+			chart.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
+			chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
+			
 			chart.getDataAxis().getAxisPaint().setStrokeWidth(3);
 			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(3);
 			
@@ -141,9 +148,7 @@ public class BubbleChart01View extends TouchView {
 			
 			chart.getDataAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
 			chart.getCategoryAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
-			
-		
-			
+								
 			
 			//定义交叉点标签显示格式,特别备注,因曲线图的特殊性，所以返回格式为:  x值,y值
 			//请自行分析定制
@@ -185,7 +190,7 @@ public class BubbleChart01View extends TouchView {
 		
 		linePoint1.put(55d, 33d);
 		linePoint1.put(62d, 45d);
-		
+		//气泡大小
 		ArrayList<Double> linePoint1_bubble = new ArrayList<Double>();		
 		linePoint1_bubble.add(55d);
 		linePoint1_bubble.add(60d);
@@ -198,8 +203,8 @@ public class BubbleChart01View extends TouchView {
 		BubbleData dataSeries1 = new BubbleData("青菜萝卜够吃",linePoint1,linePoint1_bubble,
 				(int)Color.rgb(54, 141, 238) );			
 		dataSeries1.setLabelVisible(true);	
-		dataSeries1.getDotLabelPaint().setTextAlign(Align.CENTER);
-		
+		dataSeries1.getDotLabelPaint().setTextAlign(Align.CENTER);		
+		dataSeries1.setBorderColor(Color.RED);
 		
 		//线2的数据集
 		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
@@ -221,16 +226,32 @@ public class BubbleChart01View extends TouchView {
 		BubbleData dataSeries2 = new BubbleData("饭管够",
 				linePoint2,linePoint2_bubble,(int)Color.rgb(255, 165, 132));
 		
-		
-		
+		//dataSeries2.setBorderColor(Color.BLUE);
+					
 		dataSeries2.setLabelVisible(true);		
 		//dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
-		//dataSeries2.getDotLabelPaint().setColor(Color.RED);
-			
+		dataSeries2.getDotLabelPaint().setColor(Color.rgb(69, 199, 101));
+		
+		LinkedHashMap<Double,Double> linePoint3= new LinkedHashMap<Double,Double>();
+		linePoint3.put(10d, 70d);
+		linePoint3.put(25d, 85d);
+		linePoint3.put(30d, 95d);
+		
+		ArrayList<Double> linePoint3_bubble = new ArrayList<Double>();		
+		linePoint3_bubble.add(55d);
+		linePoint3_bubble.add(60d);
+		linePoint3_bubble.add(65d);
+		
+		BubbleData dataSeries3 = new BubbleData("钱不够花",
+				linePoint2,linePoint3_bubble,(int)Color.rgb(247, 178, 79));
+		
+		dataSeries3.setBorderColor(Color.rgb(47, 254, 225));
+					
 			
 		//设定数据源		
 		chartData.add(dataSeries1);				
 		chartData.add(dataSeries2);	
+		chartData.add(dataSeries3);	
 	}
 	
 	private void chartLabels()

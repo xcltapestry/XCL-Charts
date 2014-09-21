@@ -55,10 +55,13 @@ public class CirChart extends EventChart{
 	
 	//初始偏移角度
 	protected float mOffsetAngle = 0.0f;//180;
-
 	
 	//标签与点的转折线长度
 	private int mLabelBrokenLineLength = 10;
+	
+	//平移模式下的可移动方向
+	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
+	private boolean mEnablePanMode = true;
 	
 		
 	public CirChart()
@@ -316,11 +319,55 @@ public class CirChart extends EventChart{
 		}		
 		return true;
 	}
+	
+	/**
+	 * 设置手势平移模式
+	 * @param mode	平移模式
+	 */
+	public void setPlotPanMode(XEnum.PanMode mode)
+	{
+		 mPlotPanMode = mode;
+	}
+	
+	/**
+	 * 返回当前图表平移模式
+	 * @return 平移模式
+	 */
+	public XEnum.PanMode getPlotPanMode()
+	{
+		return mPlotPanMode;
+	}
+	
+	/**
+	 * 激活平移模式
+	 */
+	public void enablePanMode()
+	{
+		mEnablePanMode = true;		
+	}
+	
+	/**
+	 * 禁用平移模式
+	 */
+	public void disablePanMode()
+	{
+		mEnablePanMode = false;		
+	}
+	
+	/**
+	 * 返回当前图表的平移状态
+	 * @return
+	 */
+	public boolean getPanModeStatus()
+	{
+		return mEnablePanMode;
+	}
+	
 		
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
 	{	
-		try {
+		try {						
 			super.postRender(canvas);
 			
 			//计算主图表区范围
@@ -328,11 +375,51 @@ public class CirChart extends EventChart{
 			//画Plot Area背景			
 			 plotArea.render(canvas);			 
 			//绘制标题
-			renderTitle(canvas);
+			renderTitle(canvas);					
 		} catch (Exception e) {
 			throw e;
 		}
 		return true;
+	}
+	
+	@Override
+	public boolean render(Canvas canvas) throws Exception {
+		// TODO Auto-generated method stubcalcPlotRange
+		try {
+				if (null == canvas)
+						return false;
+				
+				if(getPanModeStatus())
+				{											
+					canvas.save();
+					//设置原点位置					
+					switch(this.getPlotPanMode())
+					{
+					case HORIZONTAL:
+						canvas.translate(mTranslateXY[0],0);		
+						break;
+					case VERTICAL:
+						canvas.translate(0,mTranslateXY[1]);		
+						break;
+					default:
+						canvas.translate(mTranslateXY[0],mTranslateXY[1]);
+						break;
+					}
+					
+						//绘制图表
+						super.render(canvas);
+						
+					//还原								
+					canvas.restore();			
+				}else{
+					//绘制图表
+					super.render(canvas);
+				}
+						
+				return true;				
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 	
 	

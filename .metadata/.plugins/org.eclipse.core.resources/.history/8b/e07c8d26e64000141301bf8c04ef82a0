@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- 
+    <style name="Theme.TemScrollView" parent="android:Theme">
+        <item name="tempScrollViewStyle">@style/Widget.ChartScrollView</item>
+    </style>
+    
+    
+    --> 
+    
+    <style name="Theme.TemScrollView" parent="android:Theme">
+        <item name="tempScrollViewStyle">ChartScrollView</item>
+    </style>
+
+   <style name="Widget">
+    </style>
+
+    <style name="Widget.ChartScrollView" parent="Widget">
+        <item name="android:scrollbars">vertical</item>
+        <item name="android:fadingEdge">vertical</item>
+    </style>
+    
+</resources>

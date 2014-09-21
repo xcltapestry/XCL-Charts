@@ -51,6 +51,7 @@ public class EventChart extends XChart {
 	private int mSelectID = -1;
 	private boolean mShowClikedFocus = false;
 	
+	//private ArrayList<? extends PositionRecord> mRecordset = null;	
 		
 	public EventChart() {
 		// TODO Auto-generated constructor stub		
@@ -120,6 +121,13 @@ public class EventChart extends XChart {
 	
 	protected void savePointRecord(final int dataID,final int childID,final float x,final float y,final RectF r)
 	{
+		savePointRecord(dataID,childID,x,y,r.left,r.top,r.right,r.bottom);		
+	}
+	
+	protected void savePointRecord(final int dataID,final int childID,
+								  float x,float y,
+								  float left,float top, float right, float bottom)
+	{
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotPointPosition>();
 	
 		if(this.getListenItemClickStatus())
@@ -128,7 +136,7 @@ public class EventChart extends XChart {
 			pRecord.savePlotDataID(dataID);
 			pRecord.savePlotDataChildID(childID);			
 			pRecord.savePlotPosition(x, y);							
-			pRecord.savePlotRectF(r.left,r.top,r.right,r.bottom);			
+			pRecord.savePlotRectF(left,top,right,bottom);			
 			pRecord.extPointClickRange(mClickRangeExtValue);			
 			mRecordset.add(pRecord);				
 		}
@@ -259,7 +267,7 @@ public class EventChart extends XChart {
 	}
 	
 	protected PointPosition getPointRecord(final float x,final float y)
-	{			
+	{						
 		if(!isPlotClickArea(x,y))return null;		
 		if(null == mRecordset) return null;
 						
@@ -267,7 +275,7 @@ public class EventChart extends XChart {
 		while(it.hasNext())
 		{		
 			PlotPointPosition record = (PlotPointPosition)it.next();
-			if(record.compareF(x, y))
+			if(record.compareF(x,y))
 			{
 				saveSelected(record.getRecordID());
 				return record;			
@@ -277,7 +285,7 @@ public class EventChart extends XChart {
 		return null;
 	}
 	
-	private void initPositionRecord()
+	protected void initPositionRecord()
 	{
 		if(null != mRecordset) mRecordset.clear();
 	}

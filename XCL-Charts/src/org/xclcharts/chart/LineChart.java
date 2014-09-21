@@ -35,7 +35,6 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
-import android.graphics.RectF;
 import android.util.Log;
 
 /**
@@ -57,8 +56,10 @@ public class LineChart extends LnChart{
 
 	//用于绘制定制线(分界线)
 	private PlotCustomLine mCustomLine = null;
-	
+	//当线与轴交叉时是否不断开连接
 	private boolean mLineAxisIntersectVisible = false;
+	//图例
+	private List<LnData> mLstKey = new ArrayList<LnData>();
 	
 	
 	public LineChart()
@@ -245,15 +246,19 @@ public class LineChart extends LnChart{
 	            		
 	            		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
 	                	{                		       	
-	                		PlotDot pDot = pLine.getPlotDot();	                
-	                		float rendEndX  = lineEndX  + pDot.getDotRadius();               		
+	                		PlotDot pDot = pLine.getPlotDot();	        
+	                		float radius = pDot.getDotRadius();
+	                		float rendEndX  = lineEndX  + radius;               		
 	            				                		
-	                		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
+	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,
 	                				pLine.getDotPaint()); //标识图形            		
+	                			                		
+	                		savePointRecord(dataID,childID, lineEndX + mMoveX, lineEndY + mMoveY,
+	                				lineEndX - radius + mMoveX,lineEndY - radius + mMoveY,
+	                				lineEndX + radius + mMoveX,lineEndY + radius + mMoveY);
 	                		
-	                		savePointRecord(dataID,childID,lineEndX, lineEndY,rect);    
 	                		childID++;
 	                		
 	            			lineEndX = rendEndX;	            			
@@ -280,26 +285,19 @@ public class LineChart extends LnChart{
 		}
 
 		
-		
+			
 		/**
 		 * 绘制图表
 		 */
 		private boolean renderVerticalPlot(Canvas canvas)
 		{											
-			if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-			{
-				renderVerticalDataAxis(canvas);
-			}else{
-				renderVerticalDataAxisRight(canvas);
-			}						
-			renderVerticalCategoryAxis(canvas);
 			if(null == mDataSet) 
 			{
 				Log.e(TAG,"数据轴数据为空.");
 				return false;
-			}
+			}			
 			
-			List<LnData> lstKey = new ArrayList<LnData>();	
+			mLstKey.clear();
 			String key = "";
 			//开始处 X 轴 即分类轴                  
 			for(int i=0;i<mDataSet.size();i++)
@@ -310,33 +308,155 @@ public class LineChart extends LnChart{
 					return false;;
 				key = mDataSet.get(i).getLineKey();				
 				if("" != key && key.length() > 0)
-					lstKey.add(mDataSet.get(i));
+					mLstKey.add(mDataSet.get(i));
 			}			
-			//图例
-			plotLegend.renderLineKey(canvas, lstKey);
+			
 			return true;
 		}	
+				
+		private boolean drawVerticalPlot(Canvas canvas)
+		{					
+			//绘制Y轴tick和marks		
+			if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
+			{
+				renderVerticalDataAxis(canvas);
+			}else{
+				renderVerticalDataAxisRight(canvas);
+			}
+									
+			//绘制X轴tick和marks	
+			renderVerticalCategoryAxis(canvas);
+			
+			//设置绘图区显示范围
+			if(renderVerticalPlot(canvas) == true)
+			{				
+				//画横向定制线
+				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+			}		
+						
+			//轴 线
+			renderVerticalDataAxisLine(canvas);
+			
+			renderVerticalDataAxisRightLine(canvas);
+			renderVerticalCategoryAxisLine(canvas);
+			
+			//图例
+			plotLegend.renderLineKey(canvas, mLstKey);
+			
+			return true;
+		 }
+				
+		private boolean drawClipVerticalPlot(Canvas canvas)
+		{					
+			//显示绘图区rect
+			float offsetX = mTranslateXY[0]; 
+			float offsetY = mTranslateXY[1];		
+			initMoveXY();
+			
+			//设置图显示范围
+			canvas.save();	
+			canvas.clipRect(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());			
+			
+			if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+					|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+			{				
+				float yMargin = getDrawClipVerticalYMargin();
+				
+				//绘制Y轴tick和marks			
+				canvas.save();		
+						canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+										this.getRight(), plotArea.getBottom() + yMargin);
+						canvas.translate(0 , offsetY );
+						
+						if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
+						{
+							renderVerticalDataAxis(canvas);
+						}else{
+							renderVerticalDataAxisRight(canvas);
+						}	
+				canvas.restore();	
+			}else{
+				if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
+				{
+					renderVerticalDataAxis(canvas);
+				}else{
+					renderVerticalDataAxisRight(canvas);
+				}
+			}
+			
+			if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+					|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+			{					
+				float xMargin = getDrawClipVerticalXMargin();
+				
+				//绘制X轴tick和marks			
+				canvas.save();		
+						canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+										plotArea.getRight()+ xMargin, this.getBottom());
+						canvas.translate(offsetX,0);
+						
+						renderVerticalCategoryAxis(canvas);
+				canvas.restore();	
+			}else{
+				renderVerticalCategoryAxis(canvas);
+			}
+							
+				//设置绘图区显示范围
+				canvas.save();				
+				if (getRightAxisVisible())
+				{
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+									plotArea.getRight(), plotArea.getBottom());
+				}else{
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+									this.getRight(), plotArea.getBottom());
+				}
+						canvas.save();					
+						canvas.translate(mMoveX, mMoveY);	
+												
+						if(renderVerticalPlot(canvas) == true)
+						{				
+							//画横向定制线
+							mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+							mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+						}						
+						canvas.restore();
+				canvas.restore();
+				
+			//还原绘图区绘制
+			canvas.restore(); //clip	
+						
+			//轴 线
+			renderVerticalDataAxisLine(canvas);
+			
+			renderVerticalDataAxisRightLine(canvas);
+			renderVerticalCategoryAxisLine(canvas);
+			
+			//图例
+			plotLegend.renderLineKey(canvas, mLstKey);
+			
+			return true;
+		 }
 		 
 		
 		//绘制图表	
 		@Override
 		protected boolean postRender(Canvas canvas) throws Exception
-		{			
-			boolean ret = true;
+		{						
 			try{
-				super.postRender(canvas);				
+				super.postRender(canvas);	
 				
-				//画线形图
-				if((ret = renderVerticalPlot(canvas)) == true)
-				{				
-					//画横向定制线
-					mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-					ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-				}
+				//绘制图表
+				if(getPanModeStatus()) 
+				{
+					return drawClipVerticalPlot(canvas);
+				}else{
+					return drawVerticalPlot(canvas);
+				}				
 			} catch (Exception e) {
 				throw e;
 			}
-			return ret;
 		}
 		
 		

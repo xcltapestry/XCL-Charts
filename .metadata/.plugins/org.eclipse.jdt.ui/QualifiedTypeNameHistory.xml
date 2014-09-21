@@ -1,16 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AttributeInfoPosition"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AttributeInfoLoction"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.R.id"/>
-<fullyQualifiedTypeName name="android.widget.Button"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart03View"/>
-<fullyQualifiedTypeName name="android.graphics.Canvas"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.Pointer"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PointerRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Loction"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart05View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart02View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart04View"/>
@@ -19,8 +9,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.LineChart03View"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.CurveHelper"/>
-<fullyQualifiedTypeName name="android.graphics.Paint"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RadarChartType"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.RadarChart02View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.RadarChart03View"/>
@@ -50,14 +38,26 @@
 <fullyQualifiedTypeName name="android.R.color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.RangeBarChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.RangeBarData"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.RangeBarChart01View"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.event.click.BarPosition"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="android.graphics.Typeface"/>
+<fullyQualifiedTypeName name="android.graphics.RectF"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
+<fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.MoveDirection"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.R"/>
 </qualifiedTypeNameHistroy>
