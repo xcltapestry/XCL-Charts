@@ -48,7 +48,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.MoveDirection"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 </qualifiedTypeNameHistroy>

@@ -136,7 +136,7 @@ public class SplineChart03View  extends TouchView {
 			
 			//显示平滑曲线
 			chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEZIERCURVE);
-			
+												
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -29,6 +29,8 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
+import org.xclcharts.chart.SplineChart;
+import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
@@ -61,6 +63,7 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
+			
 	
 	public BarChart01View(Context context) {
 		super(context);
@@ -165,7 +168,13 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			
+			//禁用平移模式
 			//chart.disablePanMode();
+			
+			//扩展横向显示范围
+			chart.getPlotArea().extWidth(200f);
+						
+			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -249,7 +258,7 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
           	dataSeries.add(0d);       
           	for(int i=0;i< chartData.size() ;i++)
           	{
-          		Thread.sleep(200);
+          		Thread.sleep(150);
           		List<BarData> animationData = new LinkedList<BarData>();
           		for(int j=0;j<chartData.size();j++)
                 {            			            			          			
@@ -265,7 +274,7 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
           			chart.getPlotLegend().showLegend();
           		}          		
           		chart.setDataSource(animationData);          		
-          		postInvalidate();            		
+          		postInvalidate();    
           	}      
           	
           }

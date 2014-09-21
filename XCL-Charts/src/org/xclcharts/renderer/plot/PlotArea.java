@@ -50,6 +50,9 @@ public class PlotArea {
 	
 	//是否画背景色
 	private boolean mBackgroundColorVisible = false;
+	
+	//扩展宽度
+	private float mExtWidth = 0.0f;
 		
 	
 	public PlotArea()
@@ -122,7 +125,7 @@ public class PlotArea {
 	 * @return Y坐标
 	 */
 	public float getTop() {
-		return mTop;
+		return mTop ;
 	}
 	
 	/**
@@ -130,7 +133,7 @@ public class PlotArea {
 	 * @return Y坐标
 	 */
 	public float getBottom() {
-		return mBottom;
+		return mBottom ;
 	}
 	
 	/**
@@ -138,7 +141,7 @@ public class PlotArea {
 	 * @return X坐标
 	 */
 	public float getRight() {
-		return mRight;
+		return (mRight + mExtWidth);
 	}
 	
 	/**
@@ -166,5 +169,14 @@ public class PlotArea {
 		border.renderBorder(canvas, mLeft  , mTop  , mRight , mBottom  ); 
 	}
 	*/
+	
+	/**
+	 * 扩展绘图区的实际宽度,用来处理需要很大显示范围的图表
+	 * @param width 宽度
+	 */
+	public void extWidth(float width)
+	{
+		mExtWidth = width;
+	}
 	
 }

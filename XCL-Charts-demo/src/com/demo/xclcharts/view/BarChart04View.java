@@ -158,7 +158,10 @@ public class BarChart04View extends TouchView {
 			
 			 //让柱子间没空白
 			 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
-			
+			 
+			 //禁用平移模式
+			 chart.disablePanMode();
+			 
 			// chart.showRoundBorder();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

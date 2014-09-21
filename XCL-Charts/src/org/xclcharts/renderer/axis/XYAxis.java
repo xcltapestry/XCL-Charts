@@ -242,10 +242,9 @@ public class XYAxis extends Axis {
 			}
 			
 			if(this.getTickLabelVisible())
-			{
-				labelsStartY = MathHelper.getInstance().sub(marksStartY,  
-						getTickLabelMargin() + 
-						DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint())); 
+			{		
+				//DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint()) / 2 
+				labelsStartY = MathHelper.getInstance().sub(marksStartY,  getTickLabelMargin() ); 
 			}
 			
 			break;

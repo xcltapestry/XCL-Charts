@@ -155,6 +155,9 @@ public class BarChart05View extends TouchView implements Runnable{
 			
 			//隐藏Key
 			chart.getPlotLegend().hideLegend();
+			
+			 //禁用平移模式
+			 chart.disablePanMode();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

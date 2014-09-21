@@ -88,7 +88,7 @@ public class AreaChart02View extends TouchView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-        chart.setChartRange(w + w *0.5f,h);
+        chart.setChartRange(w ,h);
     }  
 			 
 	private void chartRender()
@@ -162,7 +162,10 @@ public class AreaChart02View extends TouchView {
 						String label = df.format(value).toString();
 						return label;
 					}});
-			
+				
+				//扩大显示宽度
+				chart.getPlotArea().extWidth(100f);
+						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

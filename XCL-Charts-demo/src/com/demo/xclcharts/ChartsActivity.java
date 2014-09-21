@@ -96,7 +96,8 @@ import com.demo.xclcharts.view.TouchView;
  *  禁用图表区的平移     
  *  	chart.disablePanMode()
  *  
- *  如果要展示的图表数据比较长或多，可以通过调整个图的大小，即chart.setChartRange()的值。
+ *  如果要展示的图表数据比较长或多，可以通过调整绘图区宽度chart.getPlotArea().extWidth(增加宽度);或整
+ *  个图的大小，即chart.setChartRange()的值。
  *  然后用户可以通过平移图表区的方式来展示未显示出来的数据. 
  *  注意，此方式对性能会有些损失，超大量的就不用尝试了. 
  *  对于这种可以通过scrollview控件等方式来处理。
