@@ -27,6 +27,9 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.util.Log;
 
@@ -46,8 +49,7 @@ public class PieChart3D extends PieChart{
 		
 	public PieChart3D() {
 		// TODO Auto-generated constructor stub
-		super();	 
-		
+		super();	 		
 	}
 	
 	private boolean render3D(Canvas canvas,
@@ -91,6 +93,7 @@ public class PieChart3D extends PieChart{
 		            //下次的起始角度  
 				    offsetAngle = add(offsetAngle,currentAngle);  	            		           
 				}
+			  
 	            canvas.restore();
 	            offsetAngle = initOffsetAngle;
 		}
@@ -106,6 +109,8 @@ public class PieChart3D extends PieChart{
         float currentAngle = 0.0f;	              
         float newRadius = 0.0f;	
         PointF[] arrPoint = new PointF[chartDataSource.size()];
+        
+       
 					
         int size = chartDataSource.size();
 		for(int j=0;j< size;j++)
@@ -131,7 +136,7 @@ public class PieChart3D extends PieChart{
                 
 		        arrPoint[j] = new PointF(point.x,point.y);
             }else{
-                canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true, geArcPaint());
+               // canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true, geArcPaint());
                 
      	       arrPoint[j] = new PointF(cirX,cirY);
      	    }		
@@ -142,6 +147,8 @@ public class PieChart3D extends PieChart{
 		    
            //下次的起始角度  
 		    offsetAngle = add(offsetAngle,currentAngle);
+		    
+		  
 		}		
 		
 		//绘制Label

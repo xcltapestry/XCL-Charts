@@ -90,7 +90,7 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-        chart.setChartRange(w + w * 0.5f,h);
+        chart.setChartRange(w,h); // + w * 0.5f
     }  
 	
 	

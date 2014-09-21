@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Loction"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart05View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart02View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DialChart04View"/>
@@ -46,12 +45,9 @@
 <fullyQualifiedTypeName name="android.graphics.Typeface"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
-<fullyQualifiedTypeName name="android.graphics.Paint"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.MoveDirection"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
@@ -60,4 +56,8 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.R"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.R"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.view.DountChart3D01View"/>
+<fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 </qualifiedTypeNameHistroy>

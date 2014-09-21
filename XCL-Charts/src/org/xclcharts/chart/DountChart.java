@@ -168,6 +168,26 @@ public class DountChart  extends PieChart{
 		canvas.drawText( text ,point.x, point.y ,this.getLabelPaint());		
 	}
 	
+	protected void renderInnderCircle(Canvas canvas)
+	{
+		//中心点坐标
+		 float cirX = plotArea.getCenterX();
+	     float cirY = plotArea.getCenterY();	     	    
+	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);	    	  		
+	}
+	
+	protected void renderDount(Canvas canvas)
+	{
+		 //内部
+		 renderInnderCircle(canvas);  
+		 
+		  //绘制附加信息
+		  plotAttrInfoRender.renderAttrInfo(canvas, plotArea.getCenterX(), 
+				  				plotArea.getCenterY(), this.getRadius());
+	  
+		 //中心文本	
+	     renderCenterText(canvas);
+	}
 		
 	/**
 	 * 绘制图 -- 环形图的标签处理待改进 ***
@@ -178,15 +198,20 @@ public class DountChart  extends PieChart{
 		 calcInnerRadius();
 		 
 		 super.renderPlot(canvas);
-		//中心点坐标
-		 float cirX = plotArea.getCenterX();
-	     float cirY = plotArea.getCenterY();	     	    
-	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);   
-	     
-	     //绘制附加信息
-		 plotAttrInfoRender.renderAttrInfo(canvas, cirX, cirY, this.getRadius());
+		 
+		 renderDount(canvas);
+		
+		 /*
+		 //内部
+		 renderInnderCircle(canvas);  
+		 
+		  //绘制附加信息
+		  plotAttrInfoRender.renderAttrInfo(canvas, plotArea.getCenterX(), 
+				  				plotArea.getCenterY(), this.getRadius());
+	  
 		 //中心文本	
 	     renderCenterText(canvas);
+	     */
 	     return true;
 	}	
 
