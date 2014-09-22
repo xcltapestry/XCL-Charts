@@ -31,7 +31,7 @@ public class RangeBarData {
 								
 		private double mMax = 0d;
 		private double mMin = 0d;
-		
+		private double mX = 0d;		
 		
 		public RangeBarData(){};
 			
@@ -41,12 +41,23 @@ public class RangeBarData {
 		 * @param max	最大值
 		 * @param color	柱形颜色
 		 */
-		public RangeBarData(double min, double max) {
+		/*public RangeBarData(double min, double max) {
 			// TODO Auto-generated constructor stub
 		
 			setMax(max);			
 			setMin(min);			
 		}	
+		*/
+		public RangeBarData(double x,double min, double max) {
+			// TODO Auto-generated constructor stub
+			setX(x);
+			setMax(max);			
+			setMin(min);			
+		}
+		
+		
+		
+		
 		
 		/**
 		 * 最大值				
@@ -83,5 +94,23 @@ public class RangeBarData {
 		{
 			return mMin;
 		}		
+		
+		/**
+		 * 返回X值
+		 * @return	X值
+		 */
+		public void setX(double x)
+		{
+			mX = x;
+		}
+		
+		/**
+		 * 返回X值
+		 * @return	X值
+		 */
+		public double getX()
+		{
+			return mX;
+		}	
 				
 }

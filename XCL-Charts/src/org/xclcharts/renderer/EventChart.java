@@ -34,7 +34,12 @@ import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.event.click.PositionRecord;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.PointF;
 import android.graphics.RectF;
+import android.util.Log;
 
 /**
  * @ClassName EventChart
@@ -45,11 +50,19 @@ import android.graphics.RectF;
 
 public class EventChart extends XChart {
 	
+	private static final String TAG="EventChart";
+	
 	private boolean mListenClick = false;
 	private int mClickRangeExtValue = 0;	
 	private ArrayList mRecordset = null;	
 	private int mSelectID = -1;
 	private boolean mShowClikedFocus = false;
+	
+	private Paint mFocusPaint = null;
+	private PointF mFocusPoint = null;
+	private float mFocusRadius = 0.0f;	
+	private RectF mFocusRect = null;
+	
 	
 	//private ArrayList<? extends PositionRecord> mRecordset = null;	
 		
@@ -119,7 +132,8 @@ public class EventChart extends XChart {
 		mSelectID = recordID;
 	}
 	
-	protected void savePointRecord(final int dataID,final int childID,final float x,final float y,final RectF r)
+	protected void savePointRecord(final int dataID,final int childID,
+									final float x,final float y,final RectF r)
 	{
 		savePointRecord(dataID,childID,x,y,r.left,r.top,r.right,r.bottom);		
 	}
@@ -288,14 +302,71 @@ public class EventChart extends XChart {
 	protected void initPositionRecord()
 	{
 		if(null != mRecordset) mRecordset.clear();
+		mSelectID = -1;
 	}
 	
-	private boolean renderFocusShape(Canvas canvas)
+	/**
+	 * 开放焦点画笔	
+	 * @return 画笔
+	 */
+	public Paint getFocusPaint()
+	{
+		if(null == mFocusPaint)mFocusPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		return mFocusPaint;
+	}
+	
+	/**
+	 * 点的焦点参数
+	 * @param point 点
+	 * @param radius 半径
+	 */
+	public void showFocusPointF(PointF point,float radius)
+	{
+		mFocusPoint = point;
+		mFocusRadius = radius;
+	}
+	
+	/**
+	 * 柱形类的焦点参数
+	 * @param rect 柱形
+	 */
+	public void showFocusRectF(RectF rect)
+	{
+		mFocusRect = rect;
+	}
+	
+
+	/**
+	 * 绘制焦点形状
+	 * @param canvas 画布
+	 * @return
+	 */
+	protected boolean renderFocusShape(Canvas canvas)
 	{				
 		if(!mShowClikedFocus) return true;
 		
-		//是否显示焦点(lnchart显示rect框，bar显示rect,pie 则分裂跳出)
-		//...
+		//是否显示焦点(lnchart显示rect框，bar显示rect,pie 显示arc)
+		//...		
+		//if(-1 != mSelectID)
+		//{
+			// mRecordset.renderShape(canvas);
+		//}
+	
+		if(null != mFocusPoint)
+		{									
+			canvas.drawCircle(mFocusPoint.x, mFocusPoint.y, 
+							  mFocusRadius, getFocusPaint());
+			mFocusPoint = null;
+		}else if(null != mFocusRect){		
+			canvas.save();
+			canvas.clipRect(plotArea.getLeft(),plotArea.getTop(),
+					plotArea.getRight(),plotArea.getBottom());
+				canvas.drawRect(mFocusRect, getFocusPaint());
+			canvas.restore();
+			mFocusRect = null;
+		}else{
+		}
+		
 		return true;
 	}
 		
@@ -305,12 +376,14 @@ public class EventChart extends XChart {
 		// 绘制图表
 		try {
 			super.postRender(canvas);
+								
+			//清理
 			initPositionRecord();
-			//绘制选中点
-			return renderFocusShape(canvas);
+			
 		} catch (Exception e) {
 			throw e;
 		}
+		return true;
 	}
 	
 	

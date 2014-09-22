@@ -51,6 +51,10 @@ public class BubbleData {
 	private int mColor = 0;		
 	private int mBorderColor = -1;
 	
+	//标签文字旋转角度
+	private float mItemLabelRotateAngle = 0.0f;	
+	
+	
 	public BubbleData(){}
 	
 	/**
@@ -211,6 +215,20 @@ public class BubbleData {
 		return mBorderColor;
 	}
 
-	
+	/**
+	 * 返回标签在显示时的旋转角度
+	 * @return 旋转角度
+	 */
+	public float getItemLabelRotateAngle() {
+		return mItemLabelRotateAngle;
+	}
+
+	/**
+	 * 设置标签在显示时的旋转角度
+	 * @param rotateAngle 旋转角度
+	 */
+	public void setItemLabelRotateAngle(float rotateAngle) {
+		this.mItemLabelRotateAngle = rotateAngle;
+	}
 	
 }

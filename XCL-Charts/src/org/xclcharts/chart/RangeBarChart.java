@@ -55,6 +55,11 @@ public class RangeBarChart  extends AxisChart {
 	private String mKey = "";
 	private float mBarWidth = 50f;	
 	private boolean mLabelVisible = true;
+	
+
+	//分类轴的最大，最小值
+	private double mMaxValue = 0d;
+	private double mMinValue = 0d;
 
 
 	public RangeBarChart() {
@@ -265,14 +270,14 @@ public class RangeBarChart  extends AxisChart {
 		
 		// 分类轴(X 轴)
 		float currentX = plotArea.getLeft();
-
+	
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度  
 		float XSteps = div(getAxisScreenWidth() , (dataSet.size() + 1)); 
 
 		for (int i = 0; i < dataSet.size(); i++) {
 			// 依初超始X坐标与分类间距算出当前刻度的X坐标
-			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
+			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 			
 
 			// 绘制横向网格线
 			if (plotGrid.isShowVerticalLines()) {
@@ -301,6 +306,24 @@ public class RangeBarChart  extends AxisChart {
 				
 		return pos;
 	}
+	
+	/**
+	 *  显示数据的数据轴最大值
+	 * @param value 数据轴最大值
+	 */
+	public void setCategoryAxisMax( double value)
+	{
+		mMaxValue = value;
+	}	
+	
+	/**
+	 * 设置分类轴最小值
+	 * @param value 最小值
+	 */
+	public void setCategoryAxisMin( double value)
+	{
+		mMinValue = value;
+	}	
 		
 
 	/**
@@ -321,7 +344,7 @@ public class RangeBarChart  extends AxisChart {
 		 		 				
 		float barWidthHalf = mBarWidth/2;
 	
-		
+		float axisScreenWidth = getAxisScreenWidth(); 
 		float fontHeight = DrawHelper.getInstance().getPaintFontHeight(
 												mFlatBar.getItemLabelPaint());
 
@@ -330,7 +353,10 @@ public class RangeBarChart  extends AxisChart {
 		for (int i = 0; i < dataSetSize; i++) {
 			// 得到分类对应的值数据集
 			RangeBarData bd = mDataSet.get(i);					
-			currentX = add(plotArea.getLeft() , mul( (i+1) , XSteps));
+			//currentX = add(plotArea.getLeft() , mul( (i+1) , XSteps));
+			//
+			currentX = (float) (axisScreenWidth * ( (bd.getX() - mMinValue ) / (mMaxValue - mMinValue))) ;  
+			currentX =  add(plotArea.getLeft(),currentX);
 			
 			float[] pos = cataPosition(bd.getMin(), bd.getMax());
 			
@@ -386,6 +412,13 @@ public class RangeBarChart  extends AxisChart {
 		// 绘制图表
 		try {
 			super.postRender(canvas);
+			
+			//检查是否有设置分类轴的最大最小值		
+			if(mMaxValue == mMinValue && 0 == mMaxValue)
+			{
+				Log.e(TAG,"请检查是否有设置分类轴的最大最小值。");
+				return false;
+			}
 			
 			if(null == mDataSet)
 			{

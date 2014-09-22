@@ -40,6 +40,7 @@ import org.xclcharts.renderer.plot.PlotGrid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -167,6 +168,7 @@ public class SplineChart01View extends TouchView {
 			chart.ActiveListenItemClick();
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			chart.extPointClickRange(5);
+			chart.showClikedFocus();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -204,8 +206,7 @@ public class SplineChart01View extends TouchView {
 		SplineData dataSeries2 = new SplineData("饭管够",linePoint2,
 				(int)Color.rgb(255, 165, 132) );
 		
-		
-		
+				
 		dataSeries2.setLabelVisible(true);		
 		dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
 		dataSeries2.getDotLabelPaint().setColor(Color.RED);
@@ -284,6 +285,20 @@ public class SplineChart01View extends TouchView {
 							" Current Value(key,value):"+
 							Double.toString(xValue)+","+Double.toString(yValue), 
 							Toast.LENGTH_SHORT).show();
+			     
+			    
+			        float r = record.getRadius();
+					chart.showFocusPointF(record.getPosition(),r * 2);		
+					chart.getFocusPaint().setStyle(Style.STROKE);
+					chart.getFocusPaint().setStrokeWidth(3);		
+					if(record.getDataID() >= 2)
+					{
+						chart.getFocusPaint().setColor(Color.BLUE);
+					}else{
+						chart.getFocusPaint().setColor(Color.RED);
+					}		
+					this.invalidate();
+					
 			     break;
 			}
 	        i++;

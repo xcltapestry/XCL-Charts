@@ -39,6 +39,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -170,6 +171,7 @@ public class BubbleChart01View extends TouchView {
 			chart.ActiveListenItemClick();
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			chart.extPointClickRange(5);
+			chart.showClikedFocus();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -231,6 +233,7 @@ public class BubbleChart01View extends TouchView {
 		dataSeries2.setLabelVisible(true);		
 		//dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
 		dataSeries2.getDotLabelPaint().setColor(Color.rgb(69, 199, 101));
+		dataSeries2.setItemLabelRotateAngle(45.f);
 		
 		LinkedHashMap<Double,Double> linePoint3= new LinkedHashMap<Double,Double>();
 		linePoint3.put(10d, 70d);
@@ -322,6 +325,20 @@ public class BubbleChart01View extends TouchView {
 							" Current Value(key,value):"+
 							Double.toString(xValue)+","+Double.toString(yValue), 
 							Toast.LENGTH_SHORT).show();
+			     
+			     
+			     	float r = record.getRadius();
+					chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
+					chart.getFocusPaint().setStyle(Style.STROKE);
+					chart.getFocusPaint().setStrokeWidth(3);		
+					if(record.getDataID() >= 3)
+					{
+						chart.getFocusPaint().setColor(Color.WHITE);
+					}else{
+						chart.getFocusPaint().setColor(Color.RED);
+					}		
+					this.invalidate();
+					
 			     break;
 			}
 	        i++;

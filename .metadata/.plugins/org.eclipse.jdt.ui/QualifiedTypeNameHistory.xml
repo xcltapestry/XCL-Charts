@@ -16,13 +16,10 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotAttrInfoRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotAttrInfo"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.RoundBarChart01View"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
-<fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.RoundBarData"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.AxisChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDot"/>
@@ -33,7 +30,6 @@
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BubbleChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BubbleChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BubbleData"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.R.color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
@@ -51,13 +47,17 @@
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.R"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.R"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DountChart3D01View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
+<fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 </qualifiedTypeNameHistroy>

@@ -27,6 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
@@ -300,6 +301,8 @@ public class SplineChart extends LnChart{
 		LinkedHashMap<Double,Double> chartValues = spData.getLineDataSet();	
 		if(null == chartValues) return false;
 		
+		float itemAngle = spData.getItemLabelRotateAngle();
+		
 		int i = 0;
 		Iterator iter = chartValues.entrySet().iterator();
 		while(iter.hasNext()){
@@ -333,9 +336,9 @@ public class SplineChart extends LnChart{
         		if(spData.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
-                    canvas.drawText(getFormatterDotLabel(
-                    				Double.toString(xValue)+","+ Double.toString(yValue)),
-                    				dot.right ,dot.bottom,  pLine.getDotLabelPaint());
+        			DrawHelper.getInstance().drawRotateText(getFormatterDotLabel(
+            				Double.toString(xValue)+","+ Double.toString(yValue)),
+            				dot.right ,dot.bottom,itemAngle, canvas, pLine.getDotLabelPaint());
             	}        	
         		i++;
 		}	
@@ -513,10 +516,15 @@ public class SplineChart extends LnChart{
 			
 			if(getPanModeStatus()) 
 			{
-				return drawClipVerticalPlot(canvas);	
+				drawClipVerticalPlot(canvas);	
 			}else{
-				return drawVerticalPlot(canvas);	
-			}						
+				drawVerticalPlot(canvas);	
+			}		
+			
+			//显示焦点
+			renderFocusShape(canvas);
+			
+			return true;
 		}catch( Exception e){
 			 throw e;
 		}

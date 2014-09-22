@@ -123,20 +123,6 @@ public class PieChart01View extends TouchView implements Runnable{
 		}
 	}
 	
-	/*
-	private String percent(double dle){
-		NumberFormat nf=NumberFormat.getPercentInstance();
-		nf.setMinimumFractionDigits(0);
-		return nf.format(dle);
-	}
-	private double towDigits(double dle){
-		BigDecimal bg = new BigDecimal(dle);
-		return bg.setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue();
-
-	}
-	*/
-	
-	
 	private void chartDataSet()
 	{
 		/*
@@ -154,20 +140,6 @@ public class PieChart01View extends TouchView implements Runnable{
 		chartData.add(new PieData("workdone","6%" , (0.06*100),(int)Color.rgb(60, 173, 213)));
 		chartData.add(new PieData("dispute","6%" ,  (0.06*100),(int)Color.rgb(90, 79, 88)));
 	
-		/*
-		chartData.add(new PieData("closed","7%" ,   (0.07*100),(int)Color.rgb(155, 187, 90)));
-		chartData.add(new PieData("inspect","19%" ,   (0.19*100),(int)Color.rgb(191, 79, 75)));
-		chartData.add(new PieData("open","74%" ,  (0.74*100),(int)Color.rgb(242, 167, 69)));
-	
-		
-		chartData.add(new PieData("closed","7%" ,   (0.07*100),(int)Color.rgb(155, 187, 90)));
-		chartData.add(new PieData("inspect","18%" ,   (0.18*100),(int)Color.rgb(191, 79, 75)));
-		chartData.add(new PieData("open","74%" ,  (0.74*100),(int)Color.rgb(242, 167, 69)));
-		
-		chartData.add(new PieData("closed","36%" ,   (0.36*100),(int)Color.rgb(155, 187, 90)));
-		chartData.add(new PieData("inspect","16%" ,   (0.16*100),(int)Color.rgb(191, 79, 75)));
-		chartData.add(new PieData("open","49%" ,  (0.49*100),(int)Color.rgb(242, 167, 69)));
-		*/
 	}
 
 	@Override

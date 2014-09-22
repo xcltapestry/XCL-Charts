@@ -912,6 +912,8 @@ public class BarChart extends AxisChart {
 					break;
 				}
 			}
+			
+			
 			return ret;
 		} catch (Exception e) {
 			throw e;
@@ -926,7 +928,9 @@ public class BarChart extends AxisChart {
 				if (null == canvas)
 						return false;
 				
-				super.render(canvas);				
+				super.render(canvas);	
+				
+				renderFocusShape(canvas);
 				return true;				
 		} catch (Exception e) {
 			throw e;

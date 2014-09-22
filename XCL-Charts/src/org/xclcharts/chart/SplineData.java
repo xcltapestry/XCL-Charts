@@ -36,7 +36,10 @@ public class SplineData extends LnData{
 
 	
 			//线上每个点的值
-			private LinkedHashMap<Double,Double> mLinePointMap ;		
+			private LinkedHashMap<Double,Double> mLinePointMap ;	
+			
+			//标签文字旋转角度
+			private float mItemLabelRotateAngle = 0.0f;	
 			
 			public SplineData(){}
 			
@@ -92,5 +95,22 @@ public class SplineData extends LnData{
 			public LinkedHashMap<Double,Double> getLineDataSet() {
 				return mLinePointMap;
 			}
+			
+			/**
+			 * 返回标签在显示时的旋转角度
+			 * @return 旋转角度
+			 */
+			public float getItemLabelRotateAngle() {
+				return mItemLabelRotateAngle;
+			}
+
+			/**
+			 * 设置标签在显示时的旋转角度
+			 * @param rotateAngle 旋转角度
+			 */
+			public void setItemLabelRotateAngle(float rotateAngle) {
+				this.mItemLabelRotateAngle = rotateAngle;
+			}
+			
 			
 }

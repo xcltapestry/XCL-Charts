@@ -41,6 +41,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -167,6 +168,7 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
 			
 			//禁用平移模式
 			//chart.disablePanMode();
@@ -309,6 +311,12 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 				" Current Value:" + Double.toString(bValue) +
 				" info:" + record.getRectInfo() , 
 				Toast.LENGTH_SHORT).show();		
+		
+		chart.showFocusRectF(record.getRectF());		
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		chart.getFocusPaint().setColor(Color.GREEN);	
+		this.invalidate();
 	}
 	
 

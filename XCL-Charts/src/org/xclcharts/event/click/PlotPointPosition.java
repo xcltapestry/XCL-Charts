@@ -36,12 +36,7 @@ public class PlotPointPosition extends PointPosition{
 	
 	public PlotPointPosition()
 	{	
-	}
-	
-	public PointF getPosition()
-	{
-		return mPoint;
-	}
+	}	
 			
 	//当前记录在数据源中行号
 	public void savePlotDataID(int num)
@@ -63,7 +58,8 @@ public class PlotPointPosition extends PointPosition{
 		mPoint.y =  y;				
 	}
 	
-	public void savePlotRectF(float left,float top,float right,float bottom)
+	public void savePlotRectF(float left,float top,
+							  float right,float bottom)
 	{		
 		saveRectF(left, top, right, bottom);
 	}

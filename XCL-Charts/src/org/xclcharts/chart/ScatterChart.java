@@ -396,10 +396,14 @@ public class ScatterChart extends LnChart{
 			//绘制图表			
 			if(getPanModeStatus())
 			{
-				return drawClipVerticalPlot(canvas);
+				drawClipVerticalPlot(canvas);
 			}else{
-				return drawVerticalPlot(canvas);
+				drawVerticalPlot(canvas);
 			}
+			
+			//显示焦点
+			renderFocusShape(canvas);
+			return true;
 		}catch( Exception e){
 			 throw e;
 		}

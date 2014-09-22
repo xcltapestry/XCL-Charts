@@ -1,0 +1,17 @@
+package org.xclcharts.chart;
+
+public class BaseData {
+
+
+	public BaseData() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	//LineAnnotation TextAnnotation EllipseAnnotation AnnotationGroup
+	public void setAnnotationStyle()
+	{
+		
+	}
+	
+}

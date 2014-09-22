@@ -73,9 +73,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 		return ((float)Math.abs(mBottom - (mBottom - mTop)/2));	
 	}
 	
-	public float getLeft() {
-		return mLeft;
-	}
+	
 
 	/**
 	 * 设置绘图区的左边X坐标
@@ -108,6 +106,17 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	public void setBottom(float bottom) {
 		this.mBottom = bottom;
 	}
+	
+	
+	public float getPlotRight() {
+		return mRight + getExtWidth();
+	}
+	
+	
+	//public float getPlotTop() {
+	//	return mTop + getExtWidth();
+	//}
+	
 
 	@Override
 	public boolean render(Canvas canvas) throws Exception {

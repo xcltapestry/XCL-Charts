@@ -666,20 +666,21 @@ public class XChart implements IRender {
 				if (null == canvas)
 						return false;
 				
-				//缩放图表
-				scaleChart(canvas);	
-				
-				//绘制图表	
-				ret = postRender(canvas);	
-				
-				//绘制边框
-				renderBorder(canvas);
+				canvas.save();
+					//缩放图表
+					scaleChart(canvas);	
+					
+					//绘制图表	
+					ret = postRender(canvas);	
+					
+					//绘制边框
+					renderBorder(canvas);					
+				canvas.restore();
 				
 				return ret;					
 		} catch (Exception e) {
 			throw e;
 		}
-		//return ret;
 	}
 
 	

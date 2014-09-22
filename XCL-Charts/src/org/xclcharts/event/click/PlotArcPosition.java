@@ -60,7 +60,8 @@ public class PlotArcPosition extends ArcPosition{
 	
 	public void savePlotCirXY(float x,float y)
 	{
-		mCirXY = new PointF();
+		if(null == mCirXY)
+			mCirXY = new PointF();
 		
 		mCirXY.x =  x;
 		mCirXY.y =  y;				
@@ -71,7 +72,5 @@ public class PlotArcPosition extends ArcPosition{
 	{
 		return compareRange(x,y);
 	}
-	
-	
-
+		
 }

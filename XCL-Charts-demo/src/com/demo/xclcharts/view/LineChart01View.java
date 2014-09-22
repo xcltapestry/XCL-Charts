@@ -36,6 +36,8 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.graphics.PointF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -128,6 +130,7 @@ public class LineChart01View extends TouchView {
 			chart.ActiveListenItemClick();
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			chart.extPointClickRange(5);
+			chart.showClikedFocus();
 			
 			//显示轴交叉
 			chart.setLineAxisIntersectVisible(true);
@@ -166,7 +169,9 @@ public class LineChart01View extends TouchView {
 		lineData1.setDotStyle(XEnum.DotStyle.RECT);				
 		lineData1.getDotLabelPaint().setColor(Color.BLUE);
 		lineData1.getDotLabelPaint().setTextSize(22);
-		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);		
+		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);	
+		lineData1.setItemLabelRotateAngle(45.f);
+		
 		//Line 2
 		LinkedList<Double> dataSeries2= new LinkedList<Double>();	
 		dataSeries2.add((double)30); 
@@ -179,6 +184,7 @@ public class LineChart01View extends TouchView {
 		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);
 		lineData2.setLabelVisible(true);		
 		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
+		
 		
 		//Line 3
 		LinkedList<Double> dataSeries3= new LinkedList<Double>();	
@@ -263,13 +269,27 @@ public class LineChart01View extends TouchView {
 
 		LineData lData = chartData.get(record.getDataID());
 		Double lValue = lData.getLinePoint().get(record.getDataChildID());
-							
+		
 		Toast.makeText(this.getContext(), 
 				record.getPointInfo() +
 				" Key:"+lData.getLineKey() +
 				" Label:"+lData.getLabel() +								
 				" Current Value:"+Double.toString(lValue), 
 				Toast.LENGTH_SHORT).show();		
+		
+	
+		float r = record.getRadius();
+		chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		if(record.getDataID() >= 3)
+		{
+			chart.getFocusPaint().setColor(Color.BLUE);
+		}else{
+			chart.getFocusPaint().setColor(Color.RED);
+		}		
+		this.invalidate();
+		
 	}
 	
 	

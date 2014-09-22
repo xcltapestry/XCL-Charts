@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
@@ -202,6 +203,8 @@ public class LineChart extends LnChart{
 			}else{
 				XSteps = div( getAxisScreenWidth(),(dataSet.size() - 1));
 			}
+			
+			float itemAngle = bd.getItemLabelRotateAngle();
 					
 		    //画线
 			for(Double bv : chartValues)
@@ -265,9 +268,9 @@ public class LineChart extends LnChart{
 	                	}
 	            		
 	            		if(bd.getLabelVisible()) //标签
-	                	{	                		       		
-	                		canvas.drawText(this.getFormatterItemLabel(bv), 
-	    							lineEndX, lineEndY,  pLine.getDotLabelPaint());
+	                	{	                	            			
+	            			DrawHelper.getInstance().drawRotateText(this.getFormatterItemLabel(bv), 
+	    										lineEndX, lineEndY, itemAngle, canvas, pLine.getDotLabelPaint());
 	                	}
 	            			            		
 	            	}else{
@@ -450,10 +453,15 @@ public class LineChart extends LnChart{
 				//绘制图表
 				if(getPanModeStatus()) 
 				{
-					return drawClipVerticalPlot(canvas);
+					drawClipVerticalPlot(canvas);
 				}else{
-					return drawVerticalPlot(canvas);
+					drawVerticalPlot(canvas);
 				}				
+				
+				//显示焦点
+				renderFocusShape(canvas);
+				
+				return true;
 			} catch (Exception e) {
 				throw e;
 			}

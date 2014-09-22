@@ -179,4 +179,12 @@ public class PlotArea {
 		mExtWidth = width;
 	}
 	
+	public float getExtWidth()
+	{
+		return mExtWidth;
+	}
+	
+	
+	
+	
 }

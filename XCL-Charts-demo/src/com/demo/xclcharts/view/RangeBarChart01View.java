@@ -39,6 +39,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -111,6 +112,11 @@ public class RangeBarChart01View extends TouchView {
 			chart.getDataAxis().setAxisSteps(64);
 			
 			chart.getDataAxis().setDetailModeSteps(4);
+			
+			chart.setCategoryAxisMax(100);
+			chart.setCategoryAxisMin(0);
+			
+			
 			
 			//指定数据轴标签旋转-45度显示
 			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);
@@ -190,7 +196,7 @@ public class RangeBarChart01View extends TouchView {
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
-				
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -203,18 +209,19 @@ public class RangeBarChart01View extends TouchView {
 		RangeBarData data1 = new RangeBarData();
 		data1.setMin(200d);
 		data1.setMax(270d);
+		data1.setX(10d);
 				
 		RangeBarData data2 = new RangeBarData();
 		data2.setMin(300d);
 		data2.setMax(570d);		
+		data2.setX(20d);
 		
 		BarDataSet.add(data1);
 		BarDataSet.add(data2);
-		BarDataSet.add(new RangeBarData(400d,700d));
-		
-		BarDataSet.add(new RangeBarData(350d,650d));
-		BarDataSet.add(new RangeBarData(500d,780d));
-		BarDataSet.add(new RangeBarData(720d,980d));
+		BarDataSet.add(new RangeBarData(30d,400d,700d));		
+		BarDataSet.add(new RangeBarData(40d,350d,650d));
+		BarDataSet.add(new RangeBarData(60d,500d,780d));
+		BarDataSet.add(new RangeBarData(90d,720d,980d));
 		
 	}
 	private void chartLabels()
@@ -270,6 +277,6 @@ public class RangeBarChart01View extends TouchView {
 				"info:" + record.getRectInfo() +
 				" Min:" + Double.toString( bData.getMin()) + 		
 				" Max:" + Double.toString( bData.getMax()) , 
-				Toast.LENGTH_SHORT).show();				
+				Toast.LENGTH_SHORT).show();					
 	}
 }

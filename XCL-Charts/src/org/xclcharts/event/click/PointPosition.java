@@ -39,7 +39,10 @@ public class PointPosition extends RectPosition {
 	{	
 	}
 	
-
+	public PointF getPosition()
+	{
+		return mPoint;
+	}
 	
 	
 	public String getPointInfo()

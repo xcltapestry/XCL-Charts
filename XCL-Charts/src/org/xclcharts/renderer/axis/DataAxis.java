@@ -22,6 +22,8 @@
 
 package org.xclcharts.renderer.axis;
 
+
+
 /**
  * @ClassName DataAxis
  * @Description 数据轴(Data Axis)基类，主要用于设置步长及最大，最小值
@@ -37,7 +39,10 @@ public class DataAxis extends XYAxis {
 	 private double mDataAxisSteps = 0d;
 	 private double mDetailModeSteps = 0d;
 	 
-
+	//轴范围分区数据集
+	//private LinkedHashMap<Double,Double> mRangeMap ;	 
+	//private ArrayList<Integer> mRangeColor ;	
+	 
 	public DataAxis()
 	{
 		super();		
@@ -120,5 +125,16 @@ public class DataAxis extends XYAxis {
 		return((Double.compare(mDetailModeSteps, 0d) == 0)?false:true); 
 	}
 	
+	
+	/*
+	 * 绘制轴范围分区  ........ 没心情，不做了
+	public void setRangeAxis(LinkedHashMap<Double,Double> rangeMap,
+							  ArrayList<Integer> rangeColor)
+	{
+		mRangeMap = rangeMap;
+		mRangeColor = rangeColor;
+	}
+	*/
+
 	
 }

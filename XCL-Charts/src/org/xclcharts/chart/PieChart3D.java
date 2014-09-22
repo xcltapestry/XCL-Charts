@@ -109,9 +109,7 @@ public class PieChart3D extends PieChart{
         float currentAngle = 0.0f;	              
         float newRadius = 0.0f;	
         PointF[] arrPoint = new PointF[chartDataSource.size()];
-        
-       
-					
+               					
         int size = chartDataSource.size();
 		for(int j=0;j< size;j++)
 		{
@@ -136,7 +134,7 @@ public class PieChart3D extends PieChart{
                 
 		        arrPoint[j] = new PointF(point.x,point.y);
             }else{
-               // canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true, geArcPaint());
+                canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true, geArcPaint());
                 
      	       arrPoint[j] = new PointF(cirX,cirY);
      	    }		

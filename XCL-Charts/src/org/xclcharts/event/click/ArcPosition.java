@@ -50,6 +50,28 @@ public class ArcPosition extends PositionRecord {
 		return mOffsetAngle + mCurrentAngle;
 	}
 
+	
+	public float getRadius()
+	{
+		return mRadius;		
+	}
+	
+	public PointF getPointF()
+	{
+		return mCirXY;
+	}
+	
+	public float getOffsetAngle()
+	{
+		return mOffsetAngle;
+	}
+	
+	public float currentAngle()
+	{
+		return mCurrentAngle;
+	}
+	
+	
 
 	@Override
 	protected boolean compareRange(float x, float y) {

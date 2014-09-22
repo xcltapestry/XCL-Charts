@@ -39,6 +39,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -169,6 +170,7 @@ public class BarChart02View extends TouchView {
 		
 			//激活点击监听
 			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
 	}
 	private void chartDataSet()
 	{
@@ -240,7 +242,14 @@ public class BarChart02View extends TouchView {
 				"info:" + record.getRectInfo() +
 				" Key:" + bData.getKey() + 							
 				" Current Value:" + Double.toString(bValue), 
-				Toast.LENGTH_SHORT).show();			
+				Toast.LENGTH_SHORT).show();		
+		
+	
+		chart.showFocusRectF(record.getRectF());		
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		chart.getFocusPaint().setColor(Color.GREEN);	
+		this.invalidate();
 	}
 	
 }

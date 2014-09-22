@@ -21,6 +21,8 @@
  */
 package org.xclcharts.event.click;
 
+import org.xclcharts.common.MathHelper;
+
 import android.graphics.RectF;
 
 /**
@@ -36,7 +38,6 @@ public class RectPosition extends PositionRecord{
 	
 	//放大值
 	protected int mExtValue = 0;
-		
 	
 	public RectPosition()
 	{	
@@ -57,6 +58,13 @@ public class RectPosition extends PositionRecord{
 	protected void saveRectF(RectF r)
 	{
 		mRectF = r;
+	}
+	
+	public float getRadius()
+	{
+		float radius = 0.0f;		
+		radius = (mRectF.bottom -  mExtValue) - (mRectF.top +  mExtValue) ;
+		return radius; //MathHelper.getInstance().div(radius, 2.f);		
 	}
 			
 	public String getRectInfo()

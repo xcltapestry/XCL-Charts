@@ -150,7 +150,11 @@ public class DataAxisRender extends DataAxis {
 	public void renderAxis(Canvas canvas, float startX,float startY,float stopX,float stopY)
 	{
 		if(getVisible() && getAxisLineVisible())
+		{
+			//绘制轴范围分区
+			//绘制轴线
 			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+		}
 	}	
 
 }

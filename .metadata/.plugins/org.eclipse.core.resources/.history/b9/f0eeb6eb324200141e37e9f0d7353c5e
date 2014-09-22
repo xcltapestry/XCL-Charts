@@ -1,0 +1,12 @@
+package org.xclcharts.chart;
+
+public class BaseData {
+
+	//Annotation
+	
+	public Annotation() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+}

@@ -623,6 +623,10 @@ public class RadarChart extends RdChart{
 			
 			//绘制图表
 			renderPlot(canvas);
+			
+			//显示焦点
+			renderFocusShape(canvas);
+		
 		} catch (Exception e) {
 			throw e;
 		}
