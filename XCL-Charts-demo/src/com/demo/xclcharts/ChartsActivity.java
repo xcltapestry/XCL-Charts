@@ -69,7 +69,7 @@ import com.demo.xclcharts.view.SplineChart02View;
 import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.StackBarChart01View;
 import com.demo.xclcharts.view.StackBarChart02View;
-import com.demo.xclcharts.view.TouchView;
+import com.demo.xclcharts.view.DemoView;
 
 /**
  * @ClassName ChartsActivity
@@ -81,7 +81,7 @@ import com.demo.xclcharts.view.TouchView;
 /**
  * 关于整个图表缩放的说明 :
  * 	Demo中提供了两种缩放模式:
- * 		1. 通过 ZoomControls控件调用TouchView中的Zoom相关函数来缩放图表.
+ * 		1. 通过 ZoomControls控件调用DemoView中的Zoom相关函数来缩放图表.
  * 		  通过这种方式缩放后的点击事件。
  * 		禁用方式:
  * 			可通过直接继承GraphicalView或通过覆盖onTouchEvent事件来禁用
@@ -110,7 +110,7 @@ public class ChartsActivity extends Activity {
 	private ZoomControls mZoomControls;
 	private int mSelected = 0;
 	
-	private TouchView[] mCharts ;
+	private DemoView[] mCharts ;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +118,7 @@ public class ChartsActivity extends Activity {
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE); //设置没标题
 		
-				mCharts = new TouchView[]{new BarChart01View(this),
+				mCharts = new DemoView[]{new BarChart01View(this),
 				new BarChart02View(this),
 				new BarChart05View(this),
 				new BarChart03View(this),
@@ -172,7 +172,7 @@ public class ChartsActivity extends Activity {
 		   //图表的使用方法:
 		   //使用方式一:
 		   // 1.新增一个Activity
-		   // 2.新增一个View,继承Demo中的GraphicalView或TouchView都可，依Demo中View目录下例子绘制图表.
+		   // 2.新增一个View,继承Demo中的GraphicalView或DemoView都可，依Demo中View目录下例子绘制图表.
 		   // 3.将自定义的图表View放置入Activity对应的XML中，将指明其layout_width与layout_height大小.
 		   // 运行即可看到效果. 可参考非ChartsActivity的那几个图的例子，都是这种方式。
 		
@@ -195,11 +195,13 @@ public class ChartsActivity extends Activity {
 		   FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);  
 		   frameParm.gravity = Gravity.BOTTOM|Gravity.RIGHT;  
 		
+		   /*
 		  //缩放控件放置在FrameLayout的上层，用于放大缩小图表
 	       mZoomControls = new ZoomControls(this);
 	       mZoomControls.setIsZoomInEnabled(true);
 	       mZoomControls.setIsZoomOutEnabled(true);	  
 		   mZoomControls.setLayoutParams(frameParm);  
+		   */
 		   
 		   //图表显示范围在占屏幕大小的90%的区域内
 		   DisplayMetrics dm = getResources().getDisplayMetrics();		   
@@ -217,12 +219,12 @@ public class ChartsActivity extends Activity {
   
 	        //增加控件
 		   ((ViewGroup) content).addView(chartLayout);		   
-		   ((ViewGroup) content).addView(mZoomControls);
+		   //((ViewGroup) content).addView(mZoomControls);
 		    setContentView(content);		   	       
 		    //放大监听
-		    mZoomControls.setOnZoomInClickListener(new OnZoomInClickListenerImpl());
+		  //  mZoomControls.setOnZoomInClickListener(new OnZoomInClickListenerImpl());
 		    //缩小监听
-		    mZoomControls.setOnZoomOutClickListener(new OnZoomOutClickListenerImpl());  		 
+		  //  mZoomControls.setOnZoomOutClickListener(new OnZoomOutClickListenerImpl());  		 
 	}
 
 	@Override
@@ -258,6 +260,7 @@ public class ChartsActivity extends Activity {
 	    }
 	 
 	 
+	 /*
 	 private class OnZoomInClickListenerImpl implements OnClickListener {
 
 	        @Override
@@ -274,6 +277,6 @@ public class ChartsActivity extends Activity {
 	        }
 	    }
 	    
-	 
+	 */
 	 
 }

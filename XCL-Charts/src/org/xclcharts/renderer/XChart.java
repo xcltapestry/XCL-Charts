@@ -37,6 +37,9 @@ package org.xclcharts.renderer;
  */
 
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.info.Legend;
+import org.xclcharts.renderer.info.LegendRender;
+import org.xclcharts.renderer.info.ToolTipRender;
 import org.xclcharts.renderer.plot.Border;
 import org.xclcharts.renderer.plot.BorderRender;
 import org.xclcharts.renderer.plot.PlotArea;
@@ -70,10 +73,10 @@ public class XChart implements IRender {
 	private float mHeight = 0.0f;
 
 	// 图的内边距属性
-	private float mPaddingTop = 0f;
-	private float mPaddingBottom = 0f;
-	private float mPaddingLeft = 0f;
-	private float mPaddingRight = 0f;
+	private float mPaddingTop = 0.f;
+	private float mPaddingBottom = 0.f;
+	private float mPaddingLeft = 0.f;
+	private float mPaddingRight = 0.f;
 	// 是否画背景色
 	private boolean mBackgroundColorVisible = false;
 	
@@ -86,6 +89,13 @@ public class XChart implements IRender {
 	
 	//图例类
 	protected PlotLegendRender plotLegend = null;
+	
+	//动态图例
+	private LegendRender mDyLegend = null;
+	
+	private boolean mEnableScale = true;
+	private float mXScale = 0.0f, mYScale  = 0.0f;
+	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
 	
 		
 	public XChart() {
@@ -573,9 +583,7 @@ public class XChart implements IRender {
 		}
 	}
 	
-	private boolean mEnableScale = true;
-	private float mXScale = 0.0f, mYScale  = 0.0f;
-	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
+	
 	
 	/**
 	 * 设置缩放参数
@@ -637,6 +645,12 @@ public class XChart implements IRender {
 		return mEnableScale;
 	}
 	
+	public Legend getDyLegend()
+	{
+		if(null == mDyLegend)mDyLegend = new LegendRender();
+		
+		return mDyLegend;
+	}
 		
 	/**
 	 * 用于延迟绘制
@@ -651,12 +665,13 @@ public class XChart implements IRender {
 			// 绘制图背景
 			renderChartBackground(canvas);
 			
+			
 		} catch (Exception e) {
 			throw e;
 		}
 		return true;
 	}
-
+	
 
 	@Override
 	public boolean render(Canvas canvas) throws Exception {
@@ -674,8 +689,17 @@ public class XChart implements IRender {
 					ret = postRender(canvas);	
 					
 					//绘制边框
-					renderBorder(canvas);					
+					renderBorder(canvas);	
+					
+					//动态图例
+					if(null != mDyLegend)
+					{
+						mDyLegend.setPlotWH(this.getWidth(), this.getHeight());
+						mDyLegend.renderInfo(canvas);
+					}
 				canvas.restore();
+				
+				
 				
 				return ret;					
 		} catch (Exception e) {

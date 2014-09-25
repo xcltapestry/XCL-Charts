@@ -39,6 +39,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -48,7 +49,7 @@ import android.widget.Toast;
  * @Description  堆叠图 的例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class StackBarChart02View extends TouchView {
+public class StackBarChart02View extends DemoView {
 
 	private String TAG = "StackBarChart02View";
 	private StackBarChart chart = new StackBarChart();
@@ -242,6 +243,12 @@ public class StackBarChart02View extends TouchView {
 				" Key:" + bData.getKey() + 							
 				" Current Value:" + Double.toString(bValue), 
 				Toast.LENGTH_SHORT).show();		
+		
+		chart.showFocusRectF(record.getRectF());		
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		chart.getFocusPaint().setColor(Color.GREEN);	
+		this.invalidate();
 	}
 
 }

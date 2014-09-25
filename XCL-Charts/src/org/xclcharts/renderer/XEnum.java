@@ -278,4 +278,8 @@ public class XEnum {
 		}
 		
 		
+		public enum DyInfoStyle {			
+			RECT,ROUNDRECT
+		}
+		
 }

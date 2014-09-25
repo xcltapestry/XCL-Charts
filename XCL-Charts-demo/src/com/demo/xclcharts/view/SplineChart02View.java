@@ -53,7 +53,7 @@ import android.widget.Toast;
  * @Description  三角函数曲线图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class SplineChart02View extends TouchView {
+public class SplineChart02View extends DemoView {
 
 	private String TAG = "SplineChart02View";
 	private SplineChart chart = new SplineChart();

@@ -49,7 +49,7 @@ import android.view.MotionEvent;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class MultiBarChart01View extends TouchView {
+public class MultiBarChart01View extends DemoView {
 	
 	private String TAG = "MultiBarchart201View";
 	private BarChart chart = new BarChart();

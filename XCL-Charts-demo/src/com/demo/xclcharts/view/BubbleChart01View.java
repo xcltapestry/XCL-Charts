@@ -52,7 +52,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  *  
  */
-public class BubbleChart01View extends TouchView {
+public class BubbleChart01View extends DemoView {
 
 	private String TAG = "ScatterChart01View";
 	private BubbleChart chart = new BubbleChart();

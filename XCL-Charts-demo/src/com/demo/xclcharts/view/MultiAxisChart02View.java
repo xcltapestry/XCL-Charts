@@ -51,7 +51,7 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class MultiAxisChart02View extends TouchView {
+public class MultiAxisChart02View extends DemoView {
 
 	private String TAG = "MultiAxisChart02View";
 	private

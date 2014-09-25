@@ -50,7 +50,7 @@ import android.widget.Toast;
  * @Description  3D柱形图例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class BarChart3D02View extends TouchView {
+public class BarChart3D02View extends DemoView {
 	
 	private String TAG = "Bar3DChart02View";
 	private BarChart3D chart = new BarChart3D();

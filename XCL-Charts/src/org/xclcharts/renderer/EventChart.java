@@ -32,6 +32,8 @@ import org.xclcharts.event.click.PlotBarPosition;
 import org.xclcharts.event.click.PlotPointPosition;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.event.click.PositionRecord;
+import org.xclcharts.renderer.info.ToolTip;
+import org.xclcharts.renderer.info.ToolTipRender;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -61,8 +63,9 @@ public class EventChart extends XChart {
 	private Paint mFocusPaint = null;
 	private PointF mFocusPoint = null;
 	private float mFocusRadius = 0.0f;	
-	private RectF mFocusRect = null;
+	private RectF mFocusRect = null;	
 	
+	private ToolTipRender mToolTip = null;
 	
 	//private ArrayList<? extends PositionRecord> mRecordset = null;	
 		
@@ -335,7 +338,27 @@ public class EventChart extends XChart {
 		mFocusRect = rect;
 	}
 	
-
+	
+	/**
+	 * 开放提示信息类
+	 * @return 信息基类
+	 */
+	public ToolTip getToolTip()
+	{
+		if(null == mToolTip) mToolTip = new ToolTipRender();
+		return mToolTip;
+	}
+	
+	/**
+	 * 绘制提示信息
+	 * @param canvas	信息
+	 */
+	protected void renderToolTip(Canvas canvas)
+	{
+		if(null == mToolTip)return;
+		mToolTip.renderInfo(canvas);
+	}	
+	
 	/**
 	 * 绘制焦点形状
 	 * @param canvas 画布

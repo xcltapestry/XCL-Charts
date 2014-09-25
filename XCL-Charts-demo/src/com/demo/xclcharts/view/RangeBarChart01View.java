@@ -50,7 +50,7 @@ import android.widget.Toast;
  * @Description  范围条形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RangeBarChart01View extends TouchView {
+public class RangeBarChart01View extends DemoView {
 	
 	private String TAG = "RangeBarChart01View";
 	private RangeBarChart chart = new RangeBarChart();

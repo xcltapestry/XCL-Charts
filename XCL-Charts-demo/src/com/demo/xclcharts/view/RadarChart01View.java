@@ -52,7 +52,7 @@ import android.widget.Toast;
  * @Description  蜘蛛雷达图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RadarChart01View extends TouchView {
+public class RadarChart01View extends DemoView {
 
 	private String TAG = "RadarChart01View";
 	private RadarChart chart = new RadarChart();

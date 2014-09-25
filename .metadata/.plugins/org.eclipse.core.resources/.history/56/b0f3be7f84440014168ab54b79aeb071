@@ -1,0 +1,27 @@
+package org.xclcharts.view;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.View;
+
+public class GraphicalView extends View {
+
+	 public GraphicalView(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	 }
+
+	 public GraphicalView(Context context, AttributeSet attrs){   
+	        super(context, attrs);   
+	      
+	 }
+	 
+	 public GraphicalView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		
+	 }
+	 
+	 
+	 
+	 
+}

@@ -1,0 +1,31 @@
+package org.xclcharts.renderer.info;
+
+import org.xclcharts.renderer.XEnum;
+
+public class ToolTip extends DyInfo{
+	
+	public ToolTip()
+	{
+		super();
+	}
+	
+	
+	public void showRectHint()
+	{
+		setStyle(XEnum.DyInfoStyle.RECT);
+	}
+	
+	public void showRoundRectHint()
+	{
+		setStyle(XEnum.DyInfoStyle.ROUNDRECT);
+	}
+	
+	public void showRoundRectHint(float x,float y)
+	{
+		setStyle(XEnum.DyInfoStyle.ROUNDRECT);
+		mRoundRectX = x;
+		mRoundRectY = y;
+	}
+	
+
+}

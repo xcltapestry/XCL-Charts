@@ -51,7 +51,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class AreaChart01View extends TouchView {
+public class AreaChart01View extends DemoView {
 	
 	private String TAG = "AreaChart01View";
 	

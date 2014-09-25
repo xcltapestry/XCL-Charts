@@ -9,6 +9,7 @@ import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;

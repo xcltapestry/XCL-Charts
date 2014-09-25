@@ -1,0 +1,41 @@
+package org.xclcharts.view;
+
+import org.xclcharts.event.touch.ChartTouch;
+import org.xclcharts.event.zoom.ChartZoom;
+import org.xclcharts.event.zoom.IChartZoom;
+
+import android.content.Context;
+import android.util.AttributeSet;
+
+
+public class TouchView extends GraphicalView implements IChartZoom {
+	
+	private String TAG = "TouchView";
+	
+	private ChartZoom mChartZoom[];
+	private ChartTouch mChartTouch[];
+	
+	//处理类型
+	private static final int INIT_ZOOM = 0; 
+	private static final int INIT_TOUCH = 1;
+		
+	
+	public TouchView(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		
+	}	
+	
+	 public TouchView(Context context, AttributeSet attrs){   
+	        super(context, attrs);   
+	        
+	 }
+	 
+	 public TouchView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		
+	 }
+	 
+	 
+
+}

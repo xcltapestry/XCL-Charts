@@ -29,6 +29,7 @@ import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;

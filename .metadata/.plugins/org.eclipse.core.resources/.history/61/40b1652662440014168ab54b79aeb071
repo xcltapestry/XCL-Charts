@@ -1,0 +1,10 @@
+package org.xclcharts.renderer.info;
+
+public class ToolTipRender extends ToolTip{
+
+	public ToolTipRender()
+	{
+		super();
+	}
+	
+}

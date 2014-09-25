@@ -1,0 +1,78 @@
+package org.xclcharts.view;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
+import android.view.View.MeasureSpec;
+
+public abstract class GraphicalView extends View {
+	
+	private String TAG = "GraphicalView";	
+
+	 public GraphicalView(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	 }
+
+	 public GraphicalView(Context context, AttributeSet attrs){   
+	        super(context, attrs);   
+	      
+	 }
+	 
+	 public GraphicalView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		
+	 }
+	 
+	 
+	 public abstract void render(Canvas canvas);
+	 
+	 public void onDraw(Canvas canvas)
+	  {		 
+		  try {	
+			  render(canvas);	
+		  } catch (Exception e) {
+				// TODO Auto-generated catch block
+			  Log.e(TAG, e.toString());
+		  }	
+	   }
+	 
+	 
+	 
+	 @Override
+		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+			setMeasuredDimension(measureWidth(widthMeasureSpec),measureHeight(heightMeasureSpec));
+		}
+		
+		private int measureWidth(int measureSpec) {
+			int result = 0;
+			int specMode = MeasureSpec.getMode(measureSpec);
+			int specSize = MeasureSpec.getSize(measureSpec);
+
+			if (specMode == MeasureSpec.EXACTLY) { //fill_parent
+				result = specSize;
+			} else if (specMode == MeasureSpec.AT_MOST) { //wrap_content
+				result = Math.min(result, specSize);
+			}
+			return result;
+		}
+
+		private int measureHeight(int measureSpec) {
+			int result = 0;
+			int specMode = MeasureSpec.getMode(measureSpec);
+			int specSize = MeasureSpec.getSize(measureSpec);
+
+			if (specMode == MeasureSpec.EXACTLY) { //fill_parent
+				result = specSize;
+			} else if (specMode == MeasureSpec.AT_MOST) { //wrap_content
+				result = Math.min(result, specSize);
+			}
+			return result;
+		}
+		
+	 
+}

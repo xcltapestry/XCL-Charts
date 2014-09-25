@@ -29,6 +29,7 @@ import org.xclcharts.chart.DialChart;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotAttrInfo;
+import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;

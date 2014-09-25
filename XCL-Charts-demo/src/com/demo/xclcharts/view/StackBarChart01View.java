@@ -41,6 +41,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -51,7 +52,7 @@ import android.widget.Toast;
  * @Description  堆叠图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class StackBarChart01View extends TouchView {
+public class StackBarChart01View extends DemoView {
 	
 	private String TAG = "StackBarChart01View";
 	private StackBarChart chart = new StackBarChart();
@@ -249,7 +250,14 @@ public class StackBarChart01View extends TouchView {
 				"info:" + record.getRectInfo() +
 				" Key:" + bData.getKey() + 							
 				" Current Value:" + Double.toString(bValue), 
-				Toast.LENGTH_SHORT).show();				
+				Toast.LENGTH_SHORT).show();
+		
+		chart.showFocusRectF(record.getRectF());		
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		chart.getFocusPaint().setColor(Color.GREEN);	
+		this.invalidate();
+		
 	}
 	
 }

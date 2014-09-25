@@ -26,6 +26,7 @@ import java.util.LinkedList;
 
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;

@@ -1,0 +1,11 @@
+package org.xclcharts.renderer.info;
+
+public class LegendRender extends Legend{
+	
+	public LegendRender()
+	{
+		super();
+	}
+	
+
+}

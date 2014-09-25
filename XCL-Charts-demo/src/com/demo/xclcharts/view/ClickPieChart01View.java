@@ -30,6 +30,7 @@ import org.xclcharts.common.DensityUtil;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.event.click.ChartArcListener;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.view.GraphicalView;
 
 
 

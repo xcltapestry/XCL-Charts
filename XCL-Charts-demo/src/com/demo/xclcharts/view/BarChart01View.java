@@ -36,10 +36,12 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.line.PlotDot;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
@@ -56,7 +58,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class BarChart01View extends TouchView implements Runnable{ //TouchView
+public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	
 	private String TAG = "BarChart01View";
 	private BarChart chart = new BarChart();
@@ -64,6 +66,9 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
+	
+	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	PlotDot dotToolTip = new PlotDot();
 			
 	
 	public BarChart01View(Context context) {
@@ -175,8 +180,41 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 			
 			//扩展横向显示范围
 			chart.getPlotArea().extWidth(200f);
+			
+			//禁用双指缩放
+			chart.disableScale();
 						
 			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
+			
+			
+			Paint pDyLegend = new Paint(Paint.ANTI_ALIAS_FLAG);
+			PlotDot dotDyLegend = new PlotDot();
+			
+			chart.getDyLegend().setPosition(0.8f,0.3f);
+			chart.getDyLegend().getBackgroundPaint().setColor(Color.BLACK);
+			chart.getDyLegend().getBackgroundPaint().setAlpha(100);
+			chart.getDyLegend().setRowSpan(20.f);
+			
+			pDyLegend.setColor(Color.GREEN);		
+			dotDyLegend.setDotStyle(XEnum.DotStyle.RECT);
+			chart.getDyLegend().setStyle(XEnum.DyInfoStyle.ROUNDRECT);
+			chart.getDyLegend().addLegend(dotDyLegend, "图例一", pDyLegend);
+			
+			Paint pDyLegend2 = new Paint(Paint.ANTI_ALIAS_FLAG);
+			pDyLegend2.setColor(Color.RED);	
+			chart.getDyLegend().addLegend(dotDyLegend, "图例二", pDyLegend2);
+			
+			Paint pDyLegend3 = new Paint(Paint.ANTI_ALIAS_FLAG);
+			pDyLegend3.setColor(Color.CYAN);	
+			chart.getDyLegend().addLegend(dotDyLegend,"图例三", pDyLegend3);
+			
+			Paint pDyLegend4 = new Paint(Paint.ANTI_ALIAS_FLAG);
+			pDyLegend4.setColor(Color.YELLOW);
+			chart.getDyLegend().addLegend(dotDyLegend,"图例四", pDyLegend4);
+			
+			
+			//chart.getDyLegend().addLegend(" Current Value: +Double.toString(bValue)",pDyLegend);
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -306,16 +344,31 @@ public class BarChart01View extends TouchView implements Runnable{ //TouchView
 		BarData bData = chartData.get(record.getDataID());					
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
 
+		/*
 		Toast.makeText(this.getContext(),				
 				" Key:" + bData.getKey() + 							
 				" Current Value:" + Double.toString(bValue) +
 				" info:" + record.getRectInfo() , 
 				Toast.LENGTH_SHORT).show();		
+		*/
 		
 		chart.showFocusRectF(record.getRectF());		
 		chart.getFocusPaint().setStyle(Style.STROKE);
 		chart.getFocusPaint().setStrokeWidth(3);		
 		chart.getFocusPaint().setColor(Color.GREEN);	
+		
+						
+		
+		//p.setTextAlign(Align.CENTER);
+		pToolTip.setColor(Color.RED);		
+		dotToolTip.setDotStyle(XEnum.DotStyle.RECT);
+		
+		chart.getToolTip().setCurrentXY(x,y);
+		chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);
+		
+		chart.getToolTip().addToolTip(dotToolTip, bData.getKey(), pToolTip);
+		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(bValue),pToolTip);
+		
 		this.invalidate();
 	}
 	

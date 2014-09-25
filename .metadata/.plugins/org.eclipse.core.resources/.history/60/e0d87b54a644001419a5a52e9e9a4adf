@@ -1,0 +1,35 @@
+package com.demo.xclcharts.view;
+
+import java.util.List;
+
+import org.xclcharts.renderer.XChart;
+import org.xclcharts.view.ChartView;
+
+import android.content.Context;
+import android.util.AttributeSet;
+
+public class DemoView extends ChartView{
+
+	public DemoView(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
+	
+	 public DemoView(Context context, AttributeSet attrs){   
+	        super(context, attrs);   
+	        
+	 }
+	 
+	 public DemoView(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+		
+	 }
+
+	@Override
+	public List<XChart> bindChart() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+}

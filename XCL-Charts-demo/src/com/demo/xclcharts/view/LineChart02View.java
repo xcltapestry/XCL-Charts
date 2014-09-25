@@ -50,7 +50,7 @@ import android.util.Log;
  * 	看看我弄的效果有多靓. ~_~
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class LineChart02View extends TouchView implements Runnable{
+public class LineChart02View extends DemoView implements Runnable{
 	
 	private String TAG = "LineChart02View";
 	private LineChart chart = new LineChart();

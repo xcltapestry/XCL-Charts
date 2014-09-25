@@ -53,7 +53,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class ScatterChart01View extends TouchView {
+public class ScatterChart01View extends DemoView {
 
 	private String TAG = "ScatterChart01View";
 	private ScatterChart chart = new ScatterChart();

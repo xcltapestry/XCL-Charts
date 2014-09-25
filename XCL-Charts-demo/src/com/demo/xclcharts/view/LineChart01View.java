@@ -48,7 +48,7 @@ import android.widget.Toast;
  * @Description  折线图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class LineChart01View extends TouchView {
+public class LineChart01View extends DemoView {
 	
 	private String TAG = "LineChart01View";
 	private LineChart chart = new LineChart();

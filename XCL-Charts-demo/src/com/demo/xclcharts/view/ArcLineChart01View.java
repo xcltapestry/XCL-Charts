@@ -44,7 +44,7 @@ import android.util.Log;
  * @Description  弧线比较图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class ArcLineChart01View extends TouchView {
+public class ArcLineChart01View extends DemoView {
 	
 	private String TAG = "ArcLineChart01View";
 	private ArcLineChart chart = new ArcLineChart();	

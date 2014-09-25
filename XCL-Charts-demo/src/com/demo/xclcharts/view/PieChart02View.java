@@ -48,7 +48,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class PieChart02View extends TouchView {
+public class PieChart02View extends DemoView {
 
 	 private String TAG = "PieChart02View";
 	 private PieChart chart = new PieChart();	

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.chart.DialChart;
+import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;

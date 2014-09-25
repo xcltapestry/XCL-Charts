@@ -49,7 +49,7 @@ import android.widget.Toast;
  * @Description  圆形雷达图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RadarChart02View extends TouchView {
+public class RadarChart02View extends DemoView {
 
 	private String TAG = "RadarChart02View";
 	private RadarChart chart = new RadarChart();

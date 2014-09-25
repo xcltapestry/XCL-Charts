@@ -152,7 +152,8 @@ public class PlotDotRender {
 	}
 	
 	
-	private void renderRing(Canvas canvas,Paint paint,float radius,PlotDot pDot,float cX ,float bottom)
+	private void renderRing(Canvas canvas,Paint paint,float radius,
+													PlotDot pDot,float cX ,float bottom)
 	{
 		float ringRadius = radius * 0.7f; // MathHelper.getInstance().mul(radius, 0.7f);		
         canvas.drawCircle(cX, bottom, radius, paint);
@@ -183,8 +184,8 @@ public class PlotDotRender {
 	}
 	
 	
-	private void renderPrismatic(Canvas canvas,Paint paint,float radius,float right,float bottom,
-								 float left )
+	private void renderPrismatic(Canvas canvas,Paint paint,
+								float radius,float right,float bottom,float left )
 	{
 		initPath();
 		mPath.moveTo(right - radius, bottom);

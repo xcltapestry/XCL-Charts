@@ -50,7 +50,7 @@ import android.widget.Toast;
  * @Description  柱形图例子(横向)
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class BarChart02View extends TouchView {
+public class BarChart02View extends DemoView {
 	
 	private String TAG = "BarChart02View";
 	private BarChart chart = new BarChart();

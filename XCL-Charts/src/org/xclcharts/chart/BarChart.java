@@ -931,6 +931,8 @@ public class BarChart extends AxisChart {
 				super.render(canvas);	
 				
 				renderFocusShape(canvas);
+				
+				renderToolTip(canvas);
 				return true;				
 		} catch (Exception e) {
 			throw e;

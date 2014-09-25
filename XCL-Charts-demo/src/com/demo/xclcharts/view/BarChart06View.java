@@ -49,7 +49,7 @@ import android.util.Log;
  */
 
 
-public class BarChart06View extends TouchView implements Runnable{
+public class BarChart06View extends DemoView implements Runnable{
 	
 	private String TAG = "AnimationBar01View";
 	private BarChart chart = new BarChart();

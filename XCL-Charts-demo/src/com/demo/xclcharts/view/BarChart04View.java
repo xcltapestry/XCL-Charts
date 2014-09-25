@@ -48,7 +48,7 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class BarChart04View extends TouchView {
+public class BarChart04View extends DemoView {
 	
 	private String TAG = "BarChart04View";
 	private BarChart chart = new BarChart();

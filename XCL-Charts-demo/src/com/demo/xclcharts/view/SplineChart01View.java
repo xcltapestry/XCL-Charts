@@ -50,7 +50,7 @@ import android.widget.Toast;
  * @Description  曲线图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class SplineChart01View extends TouchView {
+public class SplineChart01View extends DemoView {
 
 	private String TAG = "SplineChart01View";
 	private SplineChart chart = new SplineChart();

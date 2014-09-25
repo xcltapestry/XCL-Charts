@@ -50,7 +50,7 @@ import android.util.Log;
  * @Description 主要演示一个轴上显示多种图的坐标系	
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class MultiAxisChart01View extends TouchView {
+public class MultiAxisChart01View extends DemoView {
 	
 	private String TAG = "MultiAxisChart01View";
 	

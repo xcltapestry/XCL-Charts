@@ -1,0 +1,11 @@
+package org.xclcharts.renderer.info;
+
+public class ToolTip extends DyInfo{
+	
+	public ToolTip()
+	{
+		super();
+	}
+	
+
+}

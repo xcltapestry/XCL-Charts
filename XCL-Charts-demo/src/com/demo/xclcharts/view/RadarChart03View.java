@@ -53,7 +53,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class RadarChart03View extends TouchView {
+public class RadarChart03View extends DemoView {
 
 	private String TAG = "RadarChart03View";
 	private RadarChart chart = new RadarChart();

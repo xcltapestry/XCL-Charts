@@ -42,7 +42,7 @@ import android.util.Log;
  * @Description  南丁格尔玫瑰图 的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class RoseChart01View extends TouchView {
+public class RoseChart01View extends DemoView {
 
 	private String TAG = "RoseChart01View";
 	private RoseChart chart = new RoseChart();

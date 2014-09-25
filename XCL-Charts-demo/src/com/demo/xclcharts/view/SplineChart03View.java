@@ -23,7 +23,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.Toast;
 
-public class SplineChart03View  extends TouchView {
+public class SplineChart03View  extends DemoView {
 	
 
 	private String TAG = "SplineChart03View";

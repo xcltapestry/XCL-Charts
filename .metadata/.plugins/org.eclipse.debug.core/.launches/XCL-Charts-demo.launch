@@ -15,5 +15,6 @@
 <listEntry value="4"/>
 <listEntry value="1"/>
 </listAttribute>
+<booleanAttribute key="org.eclipse.jdt.launching.ALLOW_TERMINATE" value="true"/>
 <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="XCL-Charts-demo"/>
 </launchConfiguration>

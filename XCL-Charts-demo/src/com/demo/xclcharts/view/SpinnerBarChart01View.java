@@ -34,6 +34,7 @@ import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -45,7 +46,7 @@ import android.util.Log;
  * @Description  柱形图同数据源不同柱形图切换的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class SpinnerBarChart01View extends GraphicalView {
+public class SpinnerBarChart01View extends DemoView {
 	
 	private String TAG = "SpinnerBarChart01View";
 	

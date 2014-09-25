@@ -47,7 +47,7 @@ import android.util.Log;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  * MODIFIED    YYYY-MM-DD   REASON
  */
-public class BarChart03View extends TouchView implements Runnable{
+public class BarChart03View extends DemoView implements Runnable{
 	
 	private String TAG = "BarChart03View";
 	private BarChart chart = new BarChart();

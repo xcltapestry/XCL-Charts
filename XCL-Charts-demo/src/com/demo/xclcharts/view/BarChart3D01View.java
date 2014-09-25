@@ -49,7 +49,7 @@ import android.widget.Toast;
  * @Description  3D柱形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class BarChart3D01View extends TouchView {
+public class BarChart3D01View extends DemoView {
 	
 	private String TAG = "Bar3DChart01View";	
 	private BarChart3D chart = new BarChart3D();
@@ -173,6 +173,9 @@ public class BarChart3D01View extends TouchView {
 			
 			//仅能横向移动
 			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
+			
+			//chart.getCategoryAxis().setTickLabelMargin(margin)
+			
 					
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

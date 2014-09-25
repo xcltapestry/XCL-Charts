@@ -47,7 +47,7 @@ import android.util.Log;
  * @Description  定制线横向柱形图例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class BarChart05View extends TouchView implements Runnable{
+public class BarChart05View extends DemoView implements Runnable{
 	
 	private String TAG = "BarChart05View";
 	private BarChart chart = new BarChart();

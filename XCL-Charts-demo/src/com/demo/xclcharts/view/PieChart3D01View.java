@@ -47,7 +47,7 @@ import android.widget.Toast;
  *  依这个例子发挥发挥，可以让图从屏幕各个方向出现.
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
-public class PieChart3D01View extends TouchView implements Runnable{
+public class PieChart3D01View extends DemoView implements Runnable{
 
 	private String TAG = "Pie3DChart01View";
 	private PieChart3D chart = new PieChart3D();
