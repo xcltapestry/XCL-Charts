@@ -33,7 +33,9 @@ import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 import org.xclcharts.renderer.line.PlotCustomLine;
 
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.Log;
@@ -236,14 +238,21 @@ public class BarChart extends AxisChart {
 
 		// 数据轴(Y 轴)
 		for (int i = 0; i <= tickCount; i++) {
-			if (i == 0)
-				continue;
+			//if (i == 0)
+			//	continue;
 			
 			//将当前为第几个tick传递轴，用以区分是否为主明tick
 			dataAxis.setAxisTickCurrentID(i);
 			
 			// 依起始数据坐标与数据刻度间距算出上移高度
-			currentY = sub(plotArea.getBottom(), mul(i,YSteps));
+			if(0 == i)
+			{
+				currentY = plotArea.getBottom();
+				currentTickLabel = dataAxis.getAxisMin();
+				dataAxis.renderAxisHorizontalTick(this,canvas,axisX,currentY, Double.toString(currentTickLabel));
+				continue;
+			}else
+				currentY = sub(plotArea.getBottom(), mul(i,YSteps));
 			
 			//是否绘制tick
 			if(dataAxis.getTickLabelVisible() &&
@@ -254,7 +263,8 @@ public class BarChart extends AxisChart {
 			currentTickLabel = MathHelper.getInstance().add(dataAxis.getAxisMin(), slen);
 					
 			// 从左到右的横向网格线		
-			if ( i % 2 != 0) {
+			if ( i % 2 != 0) 
+			{
 				plotGrid.renderOddRowsFill(canvas,axisX, add(currentY,YSteps), plotArea.getRight(), currentY);
 			} else {
 				plotGrid.renderEvenRowsFill(canvas, axisX,add(currentY,YSteps), plotArea.getRight(), currentY);
@@ -324,12 +334,21 @@ public class BarChart extends AxisChart {
 		double currentTickLabel = 0d;
 		
 		for (int i = 0; i <= tickCount; i++) {				
-			if (i == 0)continue;
+			//if (i == 0)continue;
 			
 			//将当前为第几个tick传递轴，用以区分是否为主明tick
 			dataAxis.setAxisTickCurrentID(i);
 						
 			// 依起始数据坐标与数据刻度间距算出上移高度
+			if(0 == i)
+			{
+				currentX = axisX;
+				currentTickLabel = dataAxis.getAxisMin();
+				this.dataAxis.renderAxisVerticalTick(canvas,currentX,
+								plotArea.getBottom(), 
+								Double.toString(currentTickLabel));
+				continue;
+			}else
 			currentX = add(axisX , mul(i , XSteps));
 			
 			//是否需要绘制tick
@@ -686,7 +705,8 @@ public class BarChart extends AxisChart {
 							this.getRight(), plotArea.getBottom());			
 					canvas.save();
 					canvas.translate(mMoveX, mMoveY);	
-					renderHorizontalBar(canvas);					
+					renderHorizontalBar(canvas);	
+					execGC();
 					canvas.restore();
 			canvas.restore();
 								
@@ -722,6 +742,51 @@ public class BarChart extends AxisChart {
 		
 		return true;
 	 }
+	
+	
+	/*
+	 Bitmap bufferBitmap; 
+	 Paint pbufferBitmap = new Paint(); 	 
+	 private boolean drawClipVerticalBarBmp(Canvas canvas)
+	 {
+		 Matrix matrix = new Matrix();
+		 matrix.postTranslate(mMoveX,mMoveY);
+		
+			try {										
+				if(null == bufferBitmap)
+				 {
+					   bufferBitmap = Bitmap.createBitmap(
+							   (int)(plotArea.getLeft() + (plotArea.getRight() - plotArea.getLeft())),
+							   (int)(plotArea.getTop() + (plotArea.getBottom() - plotArea.getTop())), 
+							  Bitmap.Config.ARGB_8888); 
+					   
+					   if (null == bufferBitmap) {
+						   return renderVerticalBar(canvas);							 
+					   }else{
+						    final Canvas bufferCanvas = new Canvas(bufferBitmap); 							 
+							renderVerticalBar(bufferCanvas);	
+					   }
+				 }
+				// canvas.drawBitmap(bufferBitmap, 0, 0,null); 						 
+				 canvas.drawBitmap(bufferBitmap, matrix,null); 	
+				 
+				// if(bufferBitmap != null && !bufferBitmap.isRecycled()){ 
+				 //       // 回收并且置为null
+				//	 bufferBitmap.recycle(); 
+				//	 bufferBitmap = null; 
+				//} 
+				//System.gc();
+				
+				Log.e(TAG,"---System.gc()------------------");
+				 
+			} catch (OutOfMemoryError e) {				
+				renderVerticalBar(canvas);	
+				Log.e(TAG,"---OutOfMemoryError------------------");
+			}
+			return true;
+	 }
+	 */
+	 
 
 	private boolean drawClipVerticalBar(Canvas canvas)
 	{				
@@ -772,11 +837,15 @@ public class BarChart extends AxisChart {
 			canvas.save();			
 				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(),
 								plotArea.getRight(), plotArea.getBottom() + 1.0f);
+				
+					//drawClipVerticalBarBmp(canvas);								
 									
 					canvas.save();
 					canvas.translate(mMoveX,mMoveY);
-					renderVerticalBar(canvas);					
+						renderVerticalBar(canvas);
+						execGC();
 					canvas.restore();
+					
 			canvas.restore();
 			
 		//还原绘图区绘制
@@ -786,7 +855,8 @@ public class BarChart extends AxisChart {
 		renderVerticalBarAxis(canvas);
 
 		//图例
-		plotLegend.renderBarKey(canvas, this.mDataSet);						
+		plotLegend.renderBarKey(canvas, this.mDataSet);		
+		
 		return true;
 	 }
 	

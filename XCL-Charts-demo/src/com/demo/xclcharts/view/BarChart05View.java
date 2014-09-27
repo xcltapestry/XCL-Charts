@@ -143,6 +143,8 @@ public class BarChart05View extends DemoView implements Runnable{
 			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
+			chart.getBar().setBarStyle(XEnum.BarStyle.FILL);
+			
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
 				@Override

@@ -423,6 +423,8 @@ public class LineChart extends LnChart{
 							//画横向定制线
 							mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 							mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+							
+							execGC();
 						}						
 						canvas.restore();
 				canvas.restore();
@@ -460,7 +462,8 @@ public class LineChart extends LnChart{
 				
 				//显示焦点
 				renderFocusShape(canvas);
-				
+				//响应提示
+				renderToolTip(canvas);
 				return true;
 			} catch (Exception e) {
 				throw e;

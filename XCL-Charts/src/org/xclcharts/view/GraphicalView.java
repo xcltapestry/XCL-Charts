@@ -25,7 +25,9 @@ import org.xclcharts.common.SysinfoHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -68,10 +70,12 @@ public abstract class GraphicalView extends View {
 	  */
 	 public abstract void render(Canvas canvas);
 	 
+
+	
 	 public void onDraw(Canvas canvas)
 	  {		 
-		  try {	
-			  render(canvas);	
+		  try {								  			  
+				render(canvas);								
 		  } catch (Exception e) {
 				// TODO Auto-generated catch block
 			  Log.e(TAG, e.toString());

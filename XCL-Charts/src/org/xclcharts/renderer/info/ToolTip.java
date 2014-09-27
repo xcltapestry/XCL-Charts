@@ -25,9 +25,14 @@ import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
 
 import android.graphics.Paint;
-import android.graphics.PointF;
 import android.graphics.Paint.Align;
 
+/**
+ * @ClassName ToolTip
+ * @Description tooltip基类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
 public class ToolTip extends DyInfo{
 	
 	public ToolTip()

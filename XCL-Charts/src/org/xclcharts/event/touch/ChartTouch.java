@@ -45,6 +45,10 @@ public class ChartTouch implements IChartTouch {
 	private float oldDist = 1.0f,newDist = 0.0f;
 	private float halfDist = 0.0f,scaleRate = 0.0f;
 	
+	//pan
+	private int action = 0;
+	private float newX = 0.0f, newY = 0.0f;
+	
 	public ChartTouch(View view, XChart chart) {
 		this.mChart = chart;
 		this.mView = view;
@@ -65,13 +69,17 @@ public class ChartTouch implements IChartTouch {
       	  xx = (float) (txy[0] + newX - oldX) ;
       	  yy = (float) (txy[1] + newY - oldY) ;
         }
-        mChart.setTranslateXY(xx, yy);
-        
+        mChart.setTranslateXY(xx, yy);        
+        mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
+        				 (int)mChart.getRight(), (int)mChart.getBottom());
+             
        // mChart.setChartRange(mChart.getLeft() + newX-oldX, 
        // mChart.getTop() + newY-oldY, 
       //		mChart.getWidth(), mChart.getHeight());
         
-    	mView.invalidate();		
+       //用scrollBy()同样是通过重绘来弄的
+       // mView.scrollBy((int)xx, (int)yy);
+       
 	}
 	
 	private float spacing(MotionEvent event) {  
@@ -99,64 +107,70 @@ public class ChartTouch implements IChartTouch {
 		 switch(event.getActionMasked())
 		 {
 		 	case MotionEvent.ACTION_DOWN:  //单点触碰	
-		 		scaleRate = 1.0f ;//50.0f;		        
+		 		scaleRate = 1.0f ;	 		 
 	            break;  
 	        case MotionEvent.ACTION_UP:  
 	            break;  
 	        case MotionEvent.ACTION_POINTER_UP: 
 	            break;  
-	        case MotionEvent.ACTION_POINTER_DOWN:  //多点触碰
-	        	//两点按下时的距离  
-	        	 oldDist=this.spacing(event);		  
+	        case MotionEvent.ACTION_POINTER_DOWN:  //多点触碰	       
+			    //两点按下时的距离  
+			    oldDist=this.spacing(event);				   
 	            break;  
-	        case MotionEvent.ACTION_MOVE:  
-	        
-    		  	newDist = spacing(event);    
-    		  	halfDist = newDist/2 ;
-    		  	
+	        case MotionEvent.ACTION_MOVE:  	   	      
+    		  	newDist = spacing(event);   		  	    		      		  	
                 if( Float.compare(newDist, 10.0f) == 1){
+                	halfDist = newDist/2 ;
                 	scaleRate = newDist/oldDist ;		 
                 	/**
-                	 * 目前是采用在点那就以那范围为中心放大缩小.
-                	 * 其实还有另一种方式:以图中心点(即chart.getPlotArea().getCenterXY())来放大缩小，
-                	 * 		但如果是这种最好可以在view加上一排透明按纽或scrollbars,但没找到合适的方法...... 嗚....
+                	 * 目前是采用在点那就以那范围为中心放大缩小.              
                 	 */
                     mChart.setScale(scaleRate ,scaleRate, 
                     		event.getX() - halfDist,event.getY() - halfDist );		                    
-                    mView.invalidate();
-                }	        		 	        	 
+                   
+                    mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
+           				 			 (int)mChart.getRight(), (int)mChart.getBottom());
+                }	        		        	
 		 		break;		 		
 			 default:
 				break;
 		 }
 
 	 }
-	 
+	 	 
+
 	 public void handleTouch_PanMode(MotionEvent event) {  
 			
-		 int action = event.getAction();
+		    action = event.getAction();
 		    if ( action == MotionEvent.ACTION_MOVE) {
 			   
-			      if (oldX > 0 && oldY > 0) {
-				        float newX = event.getX(0);
-				        float newY = event.getY(0);
-				        
-				        if(newX-oldX == 0 || newY-oldY == 0) return;
-				        
-				        setLocation(oldX,oldY,newX,newY );
-				        
-				        oldX = newX;
-				        oldY = newY;
+			      if (oldX > 0 && oldY > 0) 
+			      {			    	    	  			    	  
+				        newX = event.getX(0);
+				        newY = event.getY(0);
+				       
+			        	if(Float.compare(Math.abs(newX - oldX ) , 10.f ) == 1 
+				        		&& Float.compare(Math.abs(newY - oldY), 10.f) == 1)
+				        {
+				        	setLocation(oldX,oldY,newX,newY );			          				        
+					        oldX = newX;
+					        oldY = newY;					        
+				        }			        
 			      }			      			      
-		    } else if (action == MotionEvent.ACTION_DOWN) {
+		    } else if (action == MotionEvent.ACTION_DOWN) { 
+		    	  //在第一个点被按下时触发
 			      oldX = event.getX(0);
-			      oldY = event.getY(0);
-		      
-		    } else if (action == MotionEvent.ACTION_UP 
+			      oldY = event.getY(0);	
+			      
+		    } else if (action == MotionEvent.ACTION_POINTER_DOWN) { 
+		    		//当屏幕上已经有一个点被按住，此时再按下其他点时触发。		    			    	
+		    } else if (action == MotionEvent.ACTION_UP  //当屏幕上唯一的点被放开时触发
 		    		|| action == MotionEvent.ACTION_POINTER_UP) {
 			      oldX = 0.0f;
 			      oldY = 0.0f;
-			      if (action == MotionEvent.ACTION_POINTER_UP) {
+			      
+			      if (action == MotionEvent.ACTION_POINTER_UP) { 
+			    	//当屏幕上有多个点被按住，松开其中一个点时触发（即非最后一个点被放开时）。
 			        oldX = -1f;
 			        oldY = -1f;
 			      }

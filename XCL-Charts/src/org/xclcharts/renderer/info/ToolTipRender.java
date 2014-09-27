@@ -23,6 +23,12 @@ package org.xclcharts.renderer.info;
 
 import android.graphics.Canvas;
 
+/**
+ * @ClassName ToolTip
+ * @Description tooltip绘制类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ *  
+ */
 public class ToolTipRender extends ToolTip{
 
 	public ToolTipRender()

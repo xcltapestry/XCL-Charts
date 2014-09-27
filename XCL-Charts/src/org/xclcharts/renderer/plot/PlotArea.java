@@ -152,6 +152,12 @@ public class PlotArea {
 		mWidth = (float)Math.abs(mRight - mLeft);		
 		return mWidth;
 	}
+	
+	
+	public float getPlotWidth() {		
+		return (float)Math.abs(mRight + mExtWidth - mLeft);		
+	}
+	
 
 	/**
 	 * 绘图区高度

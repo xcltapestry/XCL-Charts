@@ -387,6 +387,7 @@ public class BubbleChart extends LnChart{
 			//画横向定制线
 			//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+			execGC();
 		}
 		
 		// 轴 线
@@ -462,6 +463,7 @@ public class BubbleChart extends LnChart{
 						//画横向定制线
 						//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+						execGC();
 					}
 					
 					canvas.restore();
@@ -498,6 +500,8 @@ public class BubbleChart extends LnChart{
 			}
 			//显示焦点
 			renderFocusShape(canvas);
+			//响应提示
+			renderToolTip(canvas);
 			return true;
 		}catch( Exception e){
 			 throw e;

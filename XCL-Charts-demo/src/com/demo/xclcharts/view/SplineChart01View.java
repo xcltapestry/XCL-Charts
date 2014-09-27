@@ -40,6 +40,7 @@ import org.xclcharts.renderer.plot.PlotGrid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -57,6 +58,8 @@ public class SplineChart01View extends DemoView {
 	//分类轴标签集合
 	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
+	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
 	
 	public SplineChart01View(Context context) {
 		super(context);
@@ -278,14 +281,14 @@ public class SplineChart01View extends DemoView {
 			{							 						
 			     Double xValue =(Double) entry.getKey();
 			     Double yValue =(Double) entry.getValue();	
-			     
+			     /*
 			     Toast.makeText(this.getContext(), 
 							record.getPointInfo() +
 							" Key:"+lData.getLineKey() +								
 							" Current Value(key,value):"+
 							Double.toString(xValue)+","+Double.toString(yValue), 
 							Toast.LENGTH_SHORT).show();
-			     
+			     */
 			    
 			        float r = record.getRadius();
 					chart.showFocusPointF(record.getPosition(),r * 2);		
@@ -296,7 +299,15 @@ public class SplineChart01View extends DemoView {
 						chart.getFocusPaint().setColor(Color.BLUE);
 					}else{
 						chart.getFocusPaint().setColor(Color.RED);
-					}		
+					}	
+					
+					//在点击处显示tooltip
+					pToolTip.setColor(Color.RED);				
+					chart.getToolTip().setCurrentXY(x,y);
+					chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),pToolTip);
+					chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),pToolTip);		
+					chart.getToolTip().addToolTip(" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),pToolTip);
+					
 					this.invalidate();
 					
 			     break;

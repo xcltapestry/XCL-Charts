@@ -366,6 +366,7 @@ public class ScatterChart extends LnChart{
 						//画横向定制线
 						//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+						execGC();
 					}
 					
 					canvas.restore();

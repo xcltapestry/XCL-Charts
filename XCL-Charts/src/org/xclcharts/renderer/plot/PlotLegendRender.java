@@ -170,6 +170,7 @@ public class PlotLegendRender extends PlotLegend{
 			if (mKeyLabelX + 2 * mRectWidth + strWidth > mXChart.getRight()) {
 				mKeyLabelX = mPlotArea.getLeft();
 				mKeyLabelY = mKeyLabelY + rectHeight * 2;
+				mKeyLabelY += mRowSpan;
 			}
 
 			canvas.drawRect(mKeyLabelX, mKeyLabelY, mKeyLabelX + mRectWidth,
@@ -254,6 +255,7 @@ public class PlotLegendRender extends PlotLegend{
 
 			if (mTotalTextWidth > mPlotArea.getWidth()) {
 				mKeyLabelY -= mTextHeight;
+				mKeyLabelY -= mRowSpan;
 				mKeyLabelX = mPlotArea.getLeft();
 				mTotalTextWidth = 0.0f;
 			}
@@ -314,6 +316,7 @@ public class PlotLegendRender extends PlotLegend{
 
 			if (mTotalTextWidth > mPlotArea.getWidth()) {
 				mKeyLabelY -= mTextHeight;
+				mKeyLabelY -= mRowSpan;
 				mKeyLabelX = mPlotArea.getLeft();
 				mTotalTextWidth = 0.0f;
 			}
@@ -377,6 +380,7 @@ public class PlotLegendRender extends PlotLegend{
 
 			if (mTotalTextWidth > mPlotArea.getWidth()) {
 				mKeyLabelY -= mTextHeight;
+				mKeyLabelY -= mRowSpan;
 				mKeyLabelX = mPlotArea.getLeft();
 				mTotalTextWidth = 0.0f;
 			}
@@ -487,6 +491,7 @@ public class PlotLegendRender extends PlotLegend{
 			canvas.drawText(key,mKeyLabelX - mRectWidth,
 											mKeyLabelY, getLegendLabelPaint());							
 			mKeyLabelY = MathHelper.getInstance().add(mKeyLabelY, mTextHeight);
+			mKeyLabelY += mRowSpan;
 			
 			//到底了还显示不下，在左边接着显示
 			if(Float.compare(mKeyLabelY, mPlotArea.getBottom()) == 1 
@@ -504,6 +509,7 @@ public class PlotLegendRender extends PlotLegend{
 							 Float.compare(tmpX, mPlotArea.getRight()) == 0 )	
 			{						
 				mKeyLabelY = MathHelper.getInstance().add(mKeyLabelY, mTextHeight);
+				mKeyLabelY += mRowSpan;
 				mKeyLabelX = mPlotArea.getLeft();
 				mTotalTextWidth = 0.0f;
 			}else{

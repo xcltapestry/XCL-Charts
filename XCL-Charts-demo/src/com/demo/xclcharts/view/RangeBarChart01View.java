@@ -38,6 +38,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
@@ -57,6 +58,9 @@ public class RangeBarChart01View extends DemoView {
 	//标签轴
 	List<String> chartLabels = new LinkedList<String>();
 	List<RangeBarData> BarDataSet = new LinkedList<RangeBarData>();
+	
+	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
 
 	public RangeBarChart01View(Context context) {
 		super(context);
@@ -100,8 +104,7 @@ public class RangeBarChart01View extends DemoView {
 			
 			//显示边框
 			//chart.showRoundBorder();			
-			
-		
+					
 			//数据源		
 			chart.setCategories(chartLabels);	
 			chart.setDataSource(BarDataSet);
@@ -114,9 +117,7 @@ public class RangeBarChart01View extends DemoView {
 			chart.getDataAxis().setDetailModeSteps(4);
 			
 			chart.setCategoryAxisMax(100);
-			chart.setCategoryAxisMin(0);
-			
-			
+			chart.setCategoryAxisMin(0);					
 			
 			//指定数据轴标签旋转-45度显示
 			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);
@@ -196,6 +197,7 @@ public class RangeBarChart01View extends DemoView {
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -272,11 +274,22 @@ public class RangeBarChart01View extends DemoView {
 		BarPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 		
-		RangeBarData bData = BarDataSet.get(record.getDataID());
+		/*
+		RangeBarData bData = BarDataSet.get(record.getDataID());		
 		Toast.makeText(this.getContext(),
 				"info:" + record.getRectInfo() +
 				" Min:" + Double.toString( bData.getMin()) + 		
 				" Max:" + Double.toString( bData.getMax()) , 
-				Toast.LENGTH_SHORT).show();					
+				Toast.LENGTH_SHORT).show();		
+		*/
+		
+		//显示选中框
+		chart.showFocusRectF(record.getRectF());		
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		chart.getFocusPaint().setColor(Color.RED);	
+		
+		this.invalidate();
+		
 	}
 }

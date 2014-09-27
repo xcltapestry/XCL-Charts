@@ -175,7 +175,8 @@ public class BarChart3D01View extends DemoView {
 			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
 			
 			//chart.getCategoryAxis().setTickLabelMargin(margin)
-			
+			//扩展横向显示范围
+			chart.getPlotArea().extWidth(200f);
 					
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -190,14 +191,27 @@ public class BarChart3D01View extends DemoView {
 		dataSeriesA.add(200d);
 		dataSeriesA.add(250d);
 		dataSeriesA.add(400d); 
+		dataSeriesA.add(450d); 
+		dataSeriesA.add(150d);
 
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add(300d);
 		dataSeriesB.add(150d); 
 		dataSeriesB.add(450d); 
+		dataSeriesB.add(480d); 
+		dataSeriesB.add(200d);
 		
 		BarDataset.add(new BarData("左边店",dataSeriesA,(int)Color.rgb(252, 210, 9)));
 		BarDataset.add(new BarData("右边店",dataSeriesB,(int)Color.rgb(55, 144, 206)));
+		
+		
+		List<Double> dataSeriesC= new LinkedList<Double>();	
+		dataSeriesC.add(270d);
+		dataSeriesC.add(180d); 
+		//dataSeriesC.add(450d); 
+		//dataSeriesC.add(380d); 
+		//dataSeriesC.add(230d);
+		BarDataset.add(new BarData("右边店2",dataSeriesC,(int)Color.rgb(155, 144, 206)));
 	}
 	
 	private void chartLabels()
@@ -205,6 +219,8 @@ public class BarChart3D01View extends DemoView {
 		chartLabels.add("桃子(Peach)"); 
 		chartLabels.add("梨子(Pear)"); 
 		chartLabels.add("香蕉 (Banana)"); 
+		chartLabels.add("苹果");
+		chartLabels.add("桔子");
 	}
 
 

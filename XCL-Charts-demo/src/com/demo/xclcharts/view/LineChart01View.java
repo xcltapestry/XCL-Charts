@@ -35,6 +35,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.PointF;
@@ -57,6 +58,9 @@ public class LineChart01View extends DemoView {
 	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<LineData> chartData = new LinkedList<LineData>();
 
+	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
+	
 	public LineChart01View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -270,13 +274,14 @@ public class LineChart01View extends DemoView {
 		LineData lData = chartData.get(record.getDataID());
 		Double lValue = lData.getLinePoint().get(record.getDataChildID());
 		
+		/*
 		Toast.makeText(this.getContext(), 
 				record.getPointInfo() +
 				" Key:"+lData.getLineKey() +
 				" Label:"+lData.getLabel() +								
 				" Current Value:"+Double.toString(lValue), 
 				Toast.LENGTH_SHORT).show();		
-		
+		*/
 	
 		float r = record.getRadius();
 		chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
@@ -288,6 +293,15 @@ public class LineChart01View extends DemoView {
 		}else{
 			chart.getFocusPaint().setColor(Color.RED);
 		}		
+		
+		//在点击处显示tooltip
+		pToolTip.setColor(Color.RED);				
+		chart.getToolTip().setCurrentXY(x,y);
+		chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),pToolTip);
+		chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),pToolTip);		
+		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),pToolTip);
+		
+		
 		this.invalidate();
 		
 	}

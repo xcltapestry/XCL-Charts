@@ -167,7 +167,10 @@ public class FlatBar extends Bar{
 			return false;
 		} 
 		
-		setBarGradient(left,top,right,bottom);
+		if(getBarStyle() != XEnum.BarStyle.FILL)
+		{
+			setBarGradient(left,top,right,bottom);
+		}
 		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
 		return true;
 	}

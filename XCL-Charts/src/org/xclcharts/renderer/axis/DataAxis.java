@@ -39,6 +39,9 @@ public class DataAxis extends XYAxis {
 	 private double mDataAxisSteps = 0d;
 	 private double mDetailModeSteps = 0d;
 	 
+	//是否显示第一个序号的标签文本
+	 protected boolean mShowFirstTick = true;
+	 
 	//轴范围分区数据集
 	//private LinkedHashMap<Double,Double> mRangeMap ;	 
 	//private ArrayList<Integer> mRangeColor ;	
@@ -125,6 +128,21 @@ public class DataAxis extends XYAxis {
 		return((Double.compare(mDetailModeSteps, 0d) == 0)?false:true); 
 	}
 	
+	/**
+	 * 显示数据轴第一个序号的值，默认显示
+	 */
+	public void showFirstTick()
+	{
+		mShowFirstTick = true;
+	}
+	
+	/**
+	 * 不显示数据轴第一个序号的值，默认显示
+	 */
+	public void hideFirstTick()
+	{
+		mShowFirstTick = false;
+	}
 	
 	/*
 	 * 绘制轴范围分区  ........ 没心情，不做了

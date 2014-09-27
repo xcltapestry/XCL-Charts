@@ -220,7 +220,7 @@ public class BarChart3D extends BarChart{
 			float labelBarUseHeight = add(mul(barNumber ,barHeight) ,
 										  mul((barNumber - 1) , barInnerMargin));	
 			
-			float scrWidth = plotArea.getWidth();
+			float scrWidth = plotArea.getPlotWidth(); //plotArea.getWidth();
 			float valueWidth = (float) dataAxis.getAxisRange();
 			
 			for(int i=0;i<barNumber;i++)
@@ -329,7 +329,8 @@ public class BarChart3D extends BarChart{
 				
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度					
-		float XSteps = div(plotArea.getWidth() , (dataSet.size() + 1 ) );		
+		float XSteps = div(plotArea.getPlotWidth() , (dataSet.size() + 1 ) );	//plotArea.getWidth()
+		
 			
 		//得到数据源
 		List<BarData> chartDataSource = this.getDataSource();

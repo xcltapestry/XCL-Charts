@@ -433,8 +433,14 @@ public class RangeBarChart  extends AxisChart {
 				Log.e(TAG,"分类轴数据集为空.");
 				return false;
 			}		
-			return renderVerticalBar(canvas);
+			 renderVerticalBar(canvas);
 			
+			//显示焦点
+			renderFocusShape(canvas);
+			//响应提示
+			renderToolTip(canvas);
+			
+			return true;
 		} catch (Exception e) {
 			throw e;
 		}

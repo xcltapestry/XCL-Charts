@@ -143,11 +143,14 @@ public class DyInfo {
 				textWidth = 0;
 						
 			rowWidth = textWidth;	
-			PlotDot plot = mClickedDotStyle.get(i);			
-			if(countDots > i && plot.getDotStyle() !=  XEnum.DotStyle.HIDE )
+			if(countDots > i)
 			{
-				rowWidth += textHeight + mColSpan;
-			}		
+				PlotDot plot = mClickedDotStyle.get(i);			
+				if( plot.getDotStyle() !=  XEnum.DotStyle.HIDE )
+				{
+					rowWidth += textHeight + mColSpan;
+				}		
+			}
 			
 			if(Float.compare(rowWidth, maxWidth) == 1)
 			{
@@ -165,9 +168,18 @@ public class DyInfo {
 		getInfoRect();		
 	}
 	
+	/**
+	 * 设置行间距
+	 * @param span 间距
+	 */
 	public void setRowSpan(float span)
 	{
 		mRowSpan = span;		
+	}
+	
+	public void setColSpan(float span)
+	{
+		mColSpan = span;
 	}
 	
 	public void setMargin(float margin)

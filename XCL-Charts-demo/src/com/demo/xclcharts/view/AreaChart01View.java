@@ -51,7 +51,7 @@ import android.widget.Toast;
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
-public class AreaChart01View extends DemoView {
+public class AreaChart01View extends DemoView implements Runnable {
 	
 	private String TAG = "AreaChart01View";
 	
@@ -83,6 +83,8 @@ public class AreaChart01View extends DemoView {
 		chartLabels();
 		chartDataSet();		
 		chartRender();
+		
+		new Thread(this).start();
 	 }
 	
 	@Override  
@@ -124,14 +126,17 @@ public class AreaChart01View extends DemoView {
 				chart.getCategoryAxis().setAxisLineVisible(false);
 				chart.getCategoryAxis().setTickMarksVisible(false);				
 				
+				/*
 				//标题
 				chart.setTitle("区域图(Area Chart)");
 				chart.addSubtitle("(XCL-Charts Demo)");	
 				//轴标题
 				chart.getAxisTitle().setLowerAxisTitle("(年份)");
-				
+				*/
 				//透明度
 				chart.setAreaAlpha(100);
+				
+				/*
 				//显示图例
 				chart.getPlotLegend().showLegend();
 				
@@ -139,7 +144,7 @@ public class AreaChart01View extends DemoView {
 				chart.ActiveListenItemClick();
 				//为了让触发更灵敏，可以扩大5px的点击监听范围
 				chart.extPointClickRange(5);
-				
+				*/
 				//定义数据轴标签显示格式
 				chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 		
@@ -266,6 +271,59 @@ public class AreaChart01View extends DemoView {
 				Toast.LENGTH_SHORT).show();			
 	}
 	
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		 try {          
+         	chartAnimation();         	
+         }
+         catch(Exception e) {
+             Thread.currentThread().interrupt();
+         }        
+	}
 
+	private void chartAnimation()
+	{
+		  try {                            	           		
+		
+			chart.getPlotLegend().hideLegend();
+          
+          	int [] ltrb = getBarLnDefaultSpadding();          	
+          	for(int i=8; i> 0 ;i--)
+          	{
+          		Thread.sleep(100);
+          		chart.setPadding(ltrb[0],ltrb[1], i *  ltrb[2], ltrb[3]);	    	
+          		
+          		if(1 == i)
+          		{          			
+          			drawTitle();
+          			
+          		}
+          		postInvalidate();    
+          	} 
+          	                 
+          }
+          catch(Exception e) {
+              Thread.currentThread().interrupt();
+          }            
+	}
+	
+	private void drawTitle()
+	{		
+		//标题
+		chart.setTitle("区域图(Area Chart)");
+		chart.addSubtitle("(XCL-Charts Demo)");	
+		//轴标题
+		chart.getAxisTitle().setLowerAxisTitle("(年份)");
+		
+		//显示图例
+		chart.getPlotLegend().showLegend();
+		
+		//激活点击监听
+		chart.ActiveListenItemClick();
+		//为了让触发更灵敏，可以扩大5px的点击监听范围
+		chart.extPointClickRange(5);		
+	}
 	
 }

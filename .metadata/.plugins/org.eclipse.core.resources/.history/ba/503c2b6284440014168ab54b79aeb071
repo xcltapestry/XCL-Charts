@@ -1,7 +1,0 @@
-package org.xclcharts.view;
-
-import android.view.View;
-
-public class GraphicalView extends View {
-
-}

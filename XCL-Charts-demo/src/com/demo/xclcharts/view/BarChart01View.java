@@ -29,25 +29,22 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
-import org.xclcharts.chart.SplineChart;
-import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.Legend;
 import org.xclcharts.renderer.line.PlotDot;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 /**
  * @ClassName BarChart01View
@@ -101,25 +98,16 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
        //图所占范围大小
         chart.setChartRange(w,h); // + w * 0.5f
     }  
-	
-	
+		 	
 	private void chartRender()
 	{
 		try {								
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);			
-			
-			
-			//标题
-			chart.setTitle("主要数据库分布情况");
-			chart.addSubtitle("(XCL-Charts Demo)");	
-			chart.getPlotTitle().getTitlePaint().setColor(Color.BLUE);
-			chart.getPlotTitle().getSubtitlePaint().setColor(Color.BLUE);
-			//chart.getPlotTitle().setTitleAlign(XEnum.ChartTitleAlign.LEFT);
-			
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);		
+						
 			//数据源
-			//chart.setDataSource(chartData);
+			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
 			
 			//轴标题
@@ -171,51 +159,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
 			
-			//激活点击监听
-			chart.ActiveListenItemClick();
-			chart.showClikedFocus();
-			
-			//禁用平移模式
-			//chart.disablePanMode();
-			
 			//扩展横向显示范围
 			chart.getPlotArea().extWidth(200f);
-			
-			//禁用双指缩放
-			chart.disableScale();
-						
-			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
-			
-			
-			Paint pDyLegend = new Paint(Paint.ANTI_ALIAS_FLAG);
-			PlotDot dotDyLegend = new PlotDot();
-			
-			chart.getDyLegend().setPosition(0.8f,0.3f);
-			chart.getDyLegend().getBackgroundPaint().setColor(Color.BLACK);
-			chart.getDyLegend().getBackgroundPaint().setAlpha(100);
-			chart.getDyLegend().setRowSpan(20.f);
-			
-			pDyLegend.setColor(Color.GREEN);		
-			dotDyLegend.setDotStyle(XEnum.DotStyle.RECT);
-			chart.getDyLegend().setStyle(XEnum.DyInfoStyle.ROUNDRECT);
-			chart.getDyLegend().addLegend(dotDyLegend, "图例一", pDyLegend);
-			
-			Paint pDyLegend2 = new Paint(Paint.ANTI_ALIAS_FLAG);
-			pDyLegend2.setColor(Color.RED);	
-			chart.getDyLegend().addLegend(dotDyLegend, "图例二", pDyLegend2);
-			
-			Paint pDyLegend3 = new Paint(Paint.ANTI_ALIAS_FLAG);
-			pDyLegend3.setColor(Color.CYAN);	
-			chart.getDyLegend().addLegend(dotDyLegend,"图例三", pDyLegend3);
-			
-			Paint pDyLegend4 = new Paint(Paint.ANTI_ALIAS_FLAG);
-			pDyLegend4.setColor(Color.YELLOW);
-			chart.getDyLegend().addLegend(dotDyLegend,"图例四", pDyLegend4);
-			
-			
-			//chart.getDyLegend().addLegend(" Current Value: +Double.toString(bValue)",pDyLegend);
-			
-			
+									
+			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -293,34 +240,87 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	
 	private void chartAnimation()
 	{
-		  try {                            	            	 
-          	List<Double> dataSeries= new LinkedList<Double>();	
-          	dataSeries.add(0d);       
-          	for(int i=0;i< chartData.size() ;i++)
+		  try {                            	           		
+			chart.getDataAxis().setVisible(false);
+			chart.getPlotLegend().hideLegend();
+          
+          	int [] ltrb = getBarLnDefaultSpadding();          	
+          	for(int i=8; i> 0 ;i--)
           	{
-          		Thread.sleep(150);
-          		List<BarData> animationData = new LinkedList<BarData>();
-          		for(int j=0;j<chartData.size();j++)
-                {            			            			          			
-          			if(j <= i)
-          			{
-          				animationData.add(chartData.get(j));
-          			}else{
-          				animationData.add(new BarData());
-          			}
-                }             		
-          		if(chartData.size() - 1  == i)
+          		Thread.sleep(100);
+          		chart.setPadding(ltrb[0],i *  ltrb[1], ltrb[2], ltrb[3]);	    	
+          		
+          		if(1 == i)
           		{          			
-          			chart.getPlotLegend().showLegend();
-          		}          		
-          		chart.setDataSource(animationData);          		
+          			drawTitle();
+          			drawDyLegend();
+          		}
           		postInvalidate();    
-          	}      
-          	
+          	} 
+          	                 
           }
           catch(Exception e) {
               Thread.currentThread().interrupt();
           }            
+	}
+	
+	private void drawTitle()
+	{		
+		//标题
+		chart.setTitle("主要数据库分布情况");
+		chart.addSubtitle("(XCL-Charts Demo)");	
+		chart.getPlotTitle().getTitlePaint().setColor(Color.BLUE);
+		chart.getPlotTitle().getSubtitlePaint().setColor(Color.BLUE);
+		
+		//激活点击监听
+		chart.ActiveListenItemClick();
+		chart.showClikedFocus();
+		
+		//禁用平移模式
+		//chart.disablePanMode();
+		//限制只能左右滑动
+		chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
+		
+		
+		
+		//禁用双指缩放
+		chart.disableScale();
+		
+		
+		chart.getDataAxis().setVisible(true);        			 
+		chart.getPlotLegend().showLegend();				
+	}
+	
+	private void drawDyLegend()
+	{
+		Paint pDyLegend = new Paint(Paint.ANTI_ALIAS_FLAG);
+		PlotDot dotDyLegend = new PlotDot();
+		
+		Legend dyLegend = chart.getDyLegend();		
+		dyLegend.setPosition(0.6f,0.3f);
+		dyLegend.setColSpan(30.f);
+		dyLegend.getBackgroundPaint().setColor(Color.BLACK);
+		dyLegend.getBackgroundPaint().setAlpha(100);
+		dyLegend.setRowSpan(20.f);
+		dyLegend.setMargin(15.f);
+	
+		
+		pDyLegend.setColor(Color.GREEN);		
+		dotDyLegend.setDotStyle(XEnum.DotStyle.RECT);
+		dyLegend.setStyle(XEnum.DyInfoStyle.ROUNDRECT);
+		dyLegend.addLegend(dotDyLegend, "动态图例一", pDyLegend);
+		
+		Paint pDyLegend2 = new Paint(Paint.ANTI_ALIAS_FLAG);
+		pDyLegend2.setColor(Color.RED);
+		dyLegend.addLegend(dotDyLegend, "动态图例二", pDyLegend2);
+		
+		Paint pDyLegend3 = new Paint(Paint.ANTI_ALIAS_FLAG);
+		pDyLegend3.setColor(Color.CYAN);	
+		dyLegend.addLegend(dotDyLegend,"动态图例三", pDyLegend3);
+		
+		Paint pDyLegend4 = new Paint(Paint.ANTI_ALIAS_FLAG);
+		pDyLegend4.setColor(Color.YELLOW);
+		dyLegend.addLegend(dotDyLegend,"动态图例四", pDyLegend4);
 	}
 	
 	
@@ -344,28 +344,17 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		BarData bData = chartData.get(record.getDataID());					
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
 
-		/*
-		Toast.makeText(this.getContext(),				
-				" Key:" + bData.getKey() + 							
-				" Current Value:" + Double.toString(bValue) +
-				" info:" + record.getRectInfo() , 
-				Toast.LENGTH_SHORT).show();		
-		*/
-		
+		//显示选中框
 		chart.showFocusRectF(record.getRectF());		
 		chart.getFocusPaint().setStyle(Style.STROKE);
 		chart.getFocusPaint().setStrokeWidth(3);		
-		chart.getFocusPaint().setColor(Color.GREEN);	
+		chart.getFocusPaint().setColor(Color.GREEN);							
 		
-						
-		
-		//p.setTextAlign(Align.CENTER);
+		//在点击处显示tooltip
 		pToolTip.setColor(Color.RED);		
-		dotToolTip.setDotStyle(XEnum.DotStyle.RECT);
-		
+		dotToolTip.setDotStyle(XEnum.DotStyle.RECT);		
 		chart.getToolTip().setCurrentXY(x,y);
-		chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);
-		
+		chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);		
 		chart.getToolTip().addToolTip(dotToolTip, bData.getKey(), pToolTip);
 		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(bValue),pToolTip);
 		

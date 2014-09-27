@@ -39,7 +39,6 @@ package org.xclcharts.renderer;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.info.Legend;
 import org.xclcharts.renderer.info.LegendRender;
-import org.xclcharts.renderer.info.ToolTipRender;
 import org.xclcharts.renderer.plot.Border;
 import org.xclcharts.renderer.plot.BorderRender;
 import org.xclcharts.renderer.plot.PlotArea;
@@ -54,9 +53,11 @@ import org.xclcharts.renderer.plot.PlotTitleRender;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.util.Log;
 
 public class XChart implements IRender {
-
+		
+	private static final String TAG = "XChart";
 	// 开放主图表区
 	protected PlotAreaRender plotArea = null;
 	// 开放主图表区网格
@@ -96,6 +97,8 @@ public class XChart implements IRender {
 	private boolean mEnableScale = true;
 	private float mXScale = 0.0f, mYScale  = 0.0f;
 	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
+	
+	private boolean mEnableGC = true;
 	
 		
 	public XChart() {
@@ -651,6 +654,17 @@ public class XChart implements IRender {
 		
 		return mDyLegend;
 	}
+	
+	public void disableGC()
+	{
+		mEnableGC = false;
+	}
+	
+	protected void execGC()
+	{
+		if(mEnableGC)System.gc();
+	}
+	
 		
 	/**
 	 * 用于延迟绘制
@@ -660,11 +674,9 @@ public class XChart implements IRender {
 	 */
 	protected boolean postRender(Canvas canvas)  throws Exception
 	{
-		try{
-	
+		try{	
 			// 绘制图背景
-			renderChartBackground(canvas);
-			
+			renderChartBackground(canvas);		
 			
 		} catch (Exception e) {
 			throw e;
@@ -699,8 +711,7 @@ public class XChart implements IRender {
 					}
 				canvas.restore();
 				
-				
-				
+				//Log.e(TAG,"XChart ----- Render ---------");
 				return ret;					
 		} catch (Exception e) {
 			throw e;

@@ -488,6 +488,7 @@ public class SplineChart extends LnChart{
 						//画横向定制线
 						mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 						mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+						execGC();
 					}					
 					canvas.restore();
 			canvas.restore();						
@@ -523,6 +524,9 @@ public class SplineChart extends LnChart{
 			
 			//显示焦点
 			renderFocusShape(canvas);
+			
+			//响应提示
+			renderToolTip(canvas);
 			
 			return true;
 		}catch( Exception e){

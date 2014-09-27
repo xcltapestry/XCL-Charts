@@ -413,7 +413,14 @@ public class PieChart extends CirChart{
 	        if(false == validateParams())return false;
 			
 			//绘制图表
-			return renderPlot(canvas);
+			renderPlot(canvas);
+			
+			//显示焦点
+			//renderFocusShape(canvas);
+			//响应提示
+			renderToolTip(canvas);
+			
+			return true;
 		} catch (Exception e) {
 			throw e;
 		}

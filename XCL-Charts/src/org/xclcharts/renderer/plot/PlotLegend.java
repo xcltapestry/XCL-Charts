@@ -43,7 +43,8 @@ public class PlotLegend {
 		//图例起始偏移多少距离
 		protected float mOffsetX = 0.0f;
 		protected float mOffsetY = 0.0f;
-		
+		//行间距
+		protected float mRowSpan = 10.0f;
 		
 		public PlotLegend() {
 			initChart();		
@@ -104,6 +105,16 @@ public class PlotLegend {
 			 mDataKeyMargin = margin;
 		 }
 		 
+		 
+		 /**
+		 * 设置行间距
+		 * @param span 间距
+		 */
+		public void setRowSpan(float span)
+		{
+			mRowSpan = span;		
+		}
+			
 		 /**
 		  * 返回图例间距
 		  * @return Key间距

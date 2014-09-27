@@ -1,12 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrurveLineStyle"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.AreaChart02View"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotAttrInfoRender"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotAttrInfo"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XChart"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.RoundBarChart01View"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.RoundBarData"/>
@@ -29,7 +22,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.MoveDirection"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
 <fullyQualifiedTypeName name="android.R"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.R"/>
@@ -38,14 +30,11 @@
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="android.graphics.PointF"/>
-<fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="android.graphics.Canvas"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDotRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.ToolTipRender"/>
@@ -57,7 +46,18 @@
 <fullyQualifiedTypeName name="org.xclcharts.common.DensityUtil"/>
 <fullyQualifiedTypeName name="org.xclcharts.view.GraphicalView"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.LegendRender"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
+<fullyQualifiedTypeName name="android.util.DisplayMetrics"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="android.graphics.PorterDuffXfermode"/>
+<fullyQualifiedTypeName name="android.graphics.PorterDuff"/>
+<fullyQualifiedTypeName name="android.graphics.PorterDuff.Mode"/>
+<fullyQualifiedTypeName name="android.graphics.Bitmap"/>
+<fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="android.graphics.Matrix"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.Legend"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 </qualifiedTypeNameHistroy>

@@ -59,6 +59,8 @@ public class StackBarChart01View extends DemoView {
 	//标签轴
 	List<String> chartLabels = new LinkedList<String>();
 	List<BarData> BarDataSet = new LinkedList<BarData>();
+	
+	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 
 	public StackBarChart01View(Context context) {
 		super(context);
@@ -175,6 +177,8 @@ public class StackBarChart01View extends DemoView {
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
+			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -245,17 +249,20 @@ public class StackBarChart01View extends DemoView {
 		
 		BarData bData = BarDataSet.get(record.getDataID());					
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
-
-		Toast.makeText(this.getContext(),
-				"info:" + record.getRectInfo() +
-				" Key:" + bData.getKey() + 							
-				" Current Value:" + Double.toString(bValue), 
-				Toast.LENGTH_SHORT).show();
-		
+				
 		chart.showFocusRectF(record.getRectF());		
-		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStyle(Style.FILL);
 		chart.getFocusPaint().setStrokeWidth(3);		
 		chart.getFocusPaint().setColor(Color.GREEN);	
+		chart.getFocusPaint().setAlpha(100);
+		
+		//在点击处显示tooltip
+		pToolTip.setColor(Color.WHITE);		
+		chart.getToolTip().setAlign(Align.LEFT);
+		chart.getToolTip().getBackgroundPaint().setColor(Color.BLACK);
+		chart.getToolTip().setCurrentXY(x,y);	
+		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(bValue),pToolTip);
+		
 		this.invalidate();
 		
 	}
