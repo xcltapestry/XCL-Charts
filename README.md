@@ -75,7 +75,7 @@ http://www.oschina.net/p/xcl-charts
  <br/>  
 <p>
 <img src="http://img.blog.csdn.net/20140906215314764" alt="dount chart" />
-<img src="http://img.blog.csdn.net/20140611213636640?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="line chart" />
+<img src="http://img.blog.csdn.net/20140927235143531" alt="line chart" />
 </p>
  <br/>
 <img src="http://img.blog.csdn.net/20140629115247625" alt="spline chart" />

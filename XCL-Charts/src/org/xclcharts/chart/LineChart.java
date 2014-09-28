@@ -347,6 +347,8 @@ public class LineChart extends LnChart{
 			//图例
 			plotLegend.renderLineKey(canvas, mLstKey);
 			
+			mLstKey.clear();
+			mLstKey = null;			
 			return true;
 		 }
 				

@@ -37,6 +37,8 @@ package org.xclcharts.renderer;
  */
 
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.info.DyLine;
+import org.xclcharts.renderer.info.DyLineRender;
 import org.xclcharts.renderer.info.Legend;
 import org.xclcharts.renderer.info.LegendRender;
 import org.xclcharts.renderer.plot.Border;
@@ -98,7 +100,12 @@ public class XChart implements IRender {
 	private float mXScale = 0.0f, mYScale  = 0.0f;
 	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
 	
+	//是否充许gc
 	private boolean mEnableGC = true;
+	
+	//是否显示十字交叉线
+	private boolean mDyLineVisible = false;
+	private DyLineRender mDyLine = null;
 	
 		
 	public XChart() {
@@ -648,6 +655,10 @@ public class XChart implements IRender {
 		return mEnableScale;
 	}
 	
+	/**
+	 * 返回动态图例类，当默认的图例不合需求时，可以用来应付一些特殊格式
+	 * @return 动态图例
+	 */
 	public Legend getDyLegend()
 	{
 		if(null == mDyLegend)mDyLegend = new LegendRender();
@@ -655,16 +666,65 @@ public class XChart implements IRender {
 		return mDyLegend;
 	}
 	
+	/**
+	 * 禁用在图库中执行System.gc()
+	 */
 	public void disableGC()
 	{
 		mEnableGC = false;
 	}
 	
+	/**
+	 * 执行System.gc()
+	 */
 	protected void execGC()
 	{
 		if(mEnableGC)System.gc();
 	}
 	
+	
+	/**
+	 * 绘制十字交叉线
+	 */
+	public void showDyLine()
+	{
+		mDyLineVisible = true;
+	}
+	
+	/**
+	 * 不绘制十字交叉线
+	 */
+	public void hideDyLine()
+	{
+		mDyLineVisible = false;
+	}
+	
+	/**
+	 * 返回是否显示十字交叉线
+	 * @return 是否显示
+	 */
+	public boolean getDyLineVisible()
+	{
+		return mDyLineVisible;
+	}
+	
+	/**
+	 * 开放十字交叉线绘制基类
+	 * @return 交叉线绘制基类
+	 */
+	public DyLine getDyLine()
+	{
+		if(null == mDyLine) mDyLine = new DyLineRender();
+		return mDyLine;
+	}
+	
+	private void renderDyLine(Canvas canvas)
+	{
+		if(!mDyLineVisible)return;
+		if(null == mDyLine) return;		
+		mDyLine.setPlotArea(this.plotArea);
+		mDyLine.renderLine(canvas);
+	}
 		
 	/**
 	 * 用于延迟绘制
@@ -703,12 +763,16 @@ public class XChart implements IRender {
 					//绘制边框
 					renderBorder(canvas);	
 					
+					//十字交叉线
+					renderDyLine(canvas);
+					
 					//动态图例
 					if(null != mDyLegend)
 					{
 						mDyLegend.setPlotWH(this.getWidth(), this.getHeight());
 						mDyLegend.renderInfo(canvas);
-					}
+					}					
+					
 				canvas.restore();
 				
 				//Log.e(TAG,"XChart ----- Render ---------");

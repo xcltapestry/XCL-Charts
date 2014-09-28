@@ -1,0 +1,35 @@
+package org.xclcharts.renderer.info;
+
+import org.xclcharts.renderer.plot.PlotArea;
+
+import android.graphics.Canvas;
+
+public class CrossLineRender extends CrossLine{
+	
+	PlotArea mArea = null;
+	
+	public CrossLineRender()
+	{
+		super();
+	}
+	
+	public void setPlotArea(PlotArea area)
+	{				
+		mArea = area;
+	}
+
+	public void renderInfo(Canvas canvas) 
+	{
+		//drawInfo(canvas);
+		float startX = mCenterXY.x;
+		float startY = mCenterXY.y;
+		float stopX = mArea.get;
+		float stopY = ;
+		
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+		
+		
+		
+	}
+
+}

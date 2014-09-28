@@ -33,17 +33,16 @@ import org.xclcharts.chart.BubbleData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
-import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 
 /**
@@ -59,6 +58,8 @@ public class BubbleChart01View extends DemoView {
 	//分类轴标签集合
 	private LinkedList<String> labels = new LinkedList<String>();
 	private List<BubbleData> chartData = new LinkedList<BubbleData>();
+	
+	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	public BubbleChart01View(Context context) {
 		super(context);
@@ -172,6 +173,9 @@ public class BubbleChart01View extends DemoView {
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			chart.extPointClickRange(5);
 			chart.showClikedFocus();
+			
+			//绘制交叉线
+			chart.showDyLine();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -302,48 +306,56 @@ public class BubbleChart01View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{
-		PointPosition record = chart.getPositionRecord(x,y);			
-		if( null == record) return;
-
-		BubbleData lData = chartData.get(record.getDataID());
-		LinkedHashMap<Double,Double> mapPoint =  lData.getDataSet();	
-		int pos = record.getDataChildID();
-		int i = 0;
-		Iterator it = mapPoint.entrySet().iterator();
-		while(it.hasNext())
+		
+		//交叉线
+		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
+		if(!chart.getListenItemClickStatus())
 		{
-			Entry  entry=(Entry)it.next();	
-			
-			if(pos == i)
-			{							 						
-			     Double xValue =(Double) entry.getKey();
-			     Double yValue =(Double) entry.getValue();	
-			     
-			     Toast.makeText(this.getContext(), 
-							record.getPointInfo() +
-							" Key:"+lData.getKey() +								
-							" Current Value(key,value):"+
-							Double.toString(xValue)+","+Double.toString(yValue), 
-							Toast.LENGTH_SHORT).show();
-			     
-			     
-			     	float r = record.getRadius();
-					chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
-					chart.getFocusPaint().setStyle(Style.STROKE);
-					chart.getFocusPaint().setStrokeWidth(3);		
-					if(record.getDataID() >= 3)
-					{
-						chart.getFocusPaint().setColor(Color.WHITE);
-					}else{
-						chart.getFocusPaint().setColor(Color.RED);
-					}		
-					this.invalidate();
-					
-			     break;
-			}
-	        i++;
-		}//end while
+			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();
+		}else{
+			PointPosition record = chart.getPositionRecord(x,y);			
+			if( null == record) return;
+	
+			BubbleData lData = chartData.get(record.getDataID());
+			LinkedHashMap<Double,Double> mapPoint =  lData.getDataSet();	
+			int pos = record.getDataChildID();
+			int i = 0;
+			Iterator it = mapPoint.entrySet().iterator();
+			while(it.hasNext())
+			{
+				Entry  entry=(Entry)it.next();	
 				
+				if(pos == i)
+				{							 						
+				     Double xValue =(Double) entry.getKey();
+				     Double yValue =(Double) entry.getValue();	
+				   				     
+				     	float r = record.getRadius();
+						chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
+						chart.getFocusPaint().setStyle(Style.STROKE);
+						chart.getFocusPaint().setStrokeWidth(3);		
+						if(record.getDataID() >= 3)
+						{
+							chart.getFocusPaint().setColor(Color.WHITE);
+						}else{
+							chart.getFocusPaint().setColor(Color.RED);
+						}		
+						
+						
+						//在点击处显示tooltip
+						mPaintTooltips.setColor(Color.RED);				
+						chart.getToolTip().setCurrentXY(x,y);
+						chart.getToolTip().addToolTip(" Key:"+lData.getKey(),mPaintTooltips);	
+						chart.getToolTip().addToolTip(
+								Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);					
+						
+						this.invalidate();
+						
+				     break;
+				}
+		        i++;
+			}//end while
+		}//end if
 	}
 	
 

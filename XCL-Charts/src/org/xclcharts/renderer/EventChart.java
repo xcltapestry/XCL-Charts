@@ -95,7 +95,7 @@ public class EventChart extends XChart {
 	 * 返回事件处理状态
 	 * @return 是否激活
 	 */
-	protected boolean getListenItemClickStatus()
+	public boolean getListenItemClickStatus()
 	{
 		return mListenClick;
 	}

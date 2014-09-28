@@ -35,10 +35,13 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.line.PlotDot;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -58,6 +61,8 @@ public class BarChart3D01View extends DemoView {
 	private List<String> chartLabels = new LinkedList<String>();
 	//数据轴
 	private List<BarData> BarDataset = new LinkedList<BarData>();	
+	
+	Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	public BarChart3D01View(Context context) {
 		super(context);
@@ -174,9 +179,12 @@ public class BarChart3D01View extends DemoView {
 			//仅能横向移动
 			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
 			
-			//chart.getCategoryAxis().setTickLabelMargin(margin)
+			
 			//扩展横向显示范围
 			chart.getPlotArea().extWidth(200f);
+			
+			//标签文字与轴间距
+			chart.getCategoryAxis().setTickLabelMargin(5);
 					
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -257,17 +265,23 @@ public class BarChart3D01View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{
+		if(!chart.getListenItemClickStatus()) return ;
+		
 		BarPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 		
 		BarData bData = BarDataset.get(record.getDataID());					
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
-
-		Toast.makeText(this.getContext(),
-				"info:" + record.getRectInfo() +
-				" Key:" + bData.getKey() + 							
-				" Current Value:" + Double.toString(bValue), 
-				Toast.LENGTH_SHORT).show();			
+		
+		//在点击处显示tooltip
+		mPaintToolTip.setColor(Color.WHITE);	
+		chart.getToolTip().getBackgroundPaint().setColor(Color.rgb(75, 202, 255));	
+		chart.getToolTip().getBorderPaint().setColor(Color.RED);
+		chart.getToolTip().setCurrentXY(x,y);	
+		chart.getToolTip().addToolTip(
+					" Current Value:" +Double.toString(bValue),mPaintToolTip);
+		
+		this.invalidate();
 	}
 	
 }

@@ -1,0 +1,120 @@
+package org.xclcharts.renderer.info;
+
+import org.xclcharts.renderer.plot.PlotArea;
+
+import android.graphics.Canvas;
+
+public class CrossLineRender extends CrossLine{
+	
+	PlotArea mArea = null;
+	
+	public CrossLineRender()
+	{
+		super();
+	}
+	
+	public void setPlotArea(PlotArea area)
+	{				
+		mArea = area;
+	}
+
+	
+	
+	// Cross 指定交叉的水平线和垂直线。
+	// BackwardDiagonal 从右上到左下的对角线的线条图案。
+	// Vertical		垂直线
+	// Horizontal 水平线
+	//public enum CrossLineStyle{
+	//	Cross,BackwardDiagonal,Vertical,Horizontal
+		
+	private void drawCross(Canvas canvas)
+	{
+		//竖线
+		float startX = mCenterXY.x;
+		float startY = mArea.getTop();
+		float stopX = mCenterXY.x;
+		float stopY = mArea.getBottom();
+		
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+				
+		startX = mArea.getLeft();
+		startY = mCenterXY.y;
+		stopX = mArea.getRight();
+		stopY = mCenterXY.y;
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());	
+	}
+	
+	private void drawBackwardDiagonal(Canvas canvas)
+	{
+		//竖线
+		drawVertical(canvas);
+		//横线
+		drawHorizontal(canvas);
+		
+		float startX = mCenterXY.x;
+		float startY = mArea.getTop();
+		float stopX = mCenterXY.x;
+		float stopY = mArea.getBottom();
+		
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+				
+		startX = mArea.getLeft();
+		startY = mCenterXY.y;
+		stopX = mArea.getRight();
+		stopY = mCenterXY.y;
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());	
+	}
+	
+	private void drawVertical(Canvas canvas)
+	{
+		//竖线
+		float startX = mCenterXY.x;
+		float startY = mArea.getTop();
+		float stopX = mCenterXY.x;
+		float stopY = mArea.getBottom();
+		
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+	}
+	
+	private void drawHorizontal(Canvas canvas)
+	{
+		float startX = mArea.getLeft();
+		float startY = mCenterXY.y;
+		float stopX = mArea.getRight();
+		float stopY = mCenterXY.y;
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());	
+	}
+	
+	public void renderLine(Canvas canvas) 
+	{
+		
+		switch(getCrossLineStyle())
+		{
+		case Cross:
+			break;
+		case BackwardDiagonal:
+			break;
+		case Vertical:
+			break;
+		case Horizontal:
+			break;
+		}
+		
+		
+		//竖线
+		float startX = mCenterXY.x;
+		float startY = mArea.getTop();
+		float stopX = mCenterXY.x;
+		float stopY = mArea.getBottom();
+		
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+				
+		startX = mArea.getLeft();
+		startY = mCenterXY.y;
+		stopX = mArea.getRight();
+		stopY = mCenterXY.y;
+		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());	
+		
+	}
+
+}

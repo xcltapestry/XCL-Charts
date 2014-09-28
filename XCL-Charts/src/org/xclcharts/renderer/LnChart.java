@@ -52,6 +52,8 @@ public class LnChart extends AxisChart {
 	// 是否显示底轴
 	private boolean mRightAxisVisible = true;	
 	
+	
+	
 	private PointF[] BezierControls ;		
 	
 	//Pan模式下移动距离
@@ -124,6 +126,8 @@ public class LnChart extends AxisChart {
 	{
 		return mRightAxisVisible;
 	}
+	
+	
 	
 	/**
 	 * 绘制左边竖轴(对线图而言坐标轴默认都是封闭的)

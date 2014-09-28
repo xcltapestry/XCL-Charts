@@ -42,6 +42,7 @@ import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
 /**
  * @ClassName LineChart01View
@@ -165,6 +166,8 @@ public class LineChart02View extends DemoView implements Runnable{
 				}});
 			
 			//chart.setItemLabelFormatter(callBack)
+			
+			chart.showDyLine();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -326,4 +329,25 @@ public class LineChart02View extends DemoView implements Runnable{
               Thread.currentThread().interrupt();
           }            
 	}
+	
+	
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		
+		super.onTouchEvent(event);
+				
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			//交叉线
+			if(chart.getDyLineVisible())
+			{
+				chart.getDyLine().setCenterXY(event.getX(),event.getY());
+				if(chart.getDyLine().isInvalidate())this.invalidate();
+			}
+		}
+		return true;
+	}
+	
 }

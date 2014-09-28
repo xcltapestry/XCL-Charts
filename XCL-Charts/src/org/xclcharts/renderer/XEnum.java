@@ -282,4 +282,11 @@ public class XEnum {
 			RECT,ROUNDRECT
 		}
 		
+		// Cross 指定交叉的水平线和垂直线。
+		// BackwardDiagonal 从右上到左下的对角线的线条图案。
+		// Vertical		垂直线
+		// Horizontal 水平线
+		public enum DyLineStyle{
+			Cross,BackwardDiagonal,Vertical,Horizontal
+		}
 }

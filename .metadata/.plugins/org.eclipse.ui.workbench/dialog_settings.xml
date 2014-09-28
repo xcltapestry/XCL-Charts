@@ -26,8 +26,8 @@
 		<item value="345" key="DIALOG_WIDTH"/>
 		<item value="com.android.ide.eclipse.ddms.views.AllocTrackerView" key="ShowViewDialog.STORE_SELECTED_VIEW_ID"/>
 		<item value="72" key="DIALOG_Y_ORIGIN"/>
-		<item value="451" key="DIALOG_HEIGHT"/>
 		<item value="471" key="DIALOG_X_ORIGIN"/>
+		<item value="451" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 		<list key="ShowViewDialog.STORE_EXPANDED_CATEGORIES_ID">
 			<item value="com.android.ide.eclipse.ddms.views.category"/>

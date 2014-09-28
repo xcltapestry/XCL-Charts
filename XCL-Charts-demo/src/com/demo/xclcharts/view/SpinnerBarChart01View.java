@@ -34,7 +34,6 @@ import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.view.GraphicalView;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -155,6 +154,10 @@ public class SpinnerBarChart01View extends DemoView {
 					String label = df.format(value).toString();				
 					return label+"%";
 				}});	       
+			
+			
+			mChart.DeactiveListenItemClick();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

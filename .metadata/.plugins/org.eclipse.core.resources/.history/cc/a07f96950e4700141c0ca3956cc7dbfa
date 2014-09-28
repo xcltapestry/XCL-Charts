@@ -1,0 +1,12 @@
+package org.xclcharts.renderer.info;
+
+public class CrossLineRender extends CrossLine{
+	
+	public CrossLineRender()
+	{
+		super();
+	}
+	
+	
+
+}

@@ -74,7 +74,7 @@ public class DyInfo {
 		
 	}
 	
-	public Paint getPaintBorder()
+	public Paint getBorderPaint()
 	{
 		if(null == mPaintBorder)
 		{
@@ -249,10 +249,10 @@ public class DyInfo {
 		if(XEnum.DyInfoStyle.RECT == mStyle)
 		{
 			canvas.drawRect(mRect, this.getBackgroundPaint());				
-			canvas.drawRect(mRect, this.getPaintBorder());
+			canvas.drawRect(mRect, this.getBorderPaint());
 		}else{
 			canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY, this.getBackgroundPaint());	
-			canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY,this.getPaintBorder());
+			canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY,this.getBorderPaint());
 		}
 		
 		float currDotsX = mRect.left + mMargin;

@@ -277,6 +277,12 @@ public class ScatterChart extends LnChart{
 	private boolean drawVerticalPlot(Canvas canvas)
 	{				
 			
+		// 轴 线
+		renderVerticalDataAxisLine(canvas);
+		
+		renderVerticalDataAxisRightLine(canvas);
+		renderVerticalCategoryAxisLine(canvas);
+				
 		//绘制Y轴tick和marks
 		renderVerticalDataAxis(canvas);	
 								
@@ -291,12 +297,7 @@ public class ScatterChart extends LnChart{
 			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
 		}		
 		
-		// 轴 线
-		renderVerticalDataAxisLine(canvas);
-		
-		renderVerticalDataAxisRightLine(canvas);
-		renderVerticalCategoryAxisLine(canvas);
-		
+				
 		//图例
 		plotLegend.renderPointKey(canvas,mDataset);
 		
@@ -310,6 +311,12 @@ public class ScatterChart extends LnChart{
 		float offsetX = mTranslateXY[0]; 
 		float offsetY = mTranslateXY[1];
 		initMoveXY();
+		
+		// 轴 线
+		renderVerticalDataAxisLine(canvas);
+		
+		renderVerticalDataAxisRightLine(canvas);
+		renderVerticalCategoryAxisLine(canvas);
 			
 		//设置图显示范围
 		canvas.save();	
@@ -375,11 +382,13 @@ public class ScatterChart extends LnChart{
 		//还原绘图区绘制
 		canvas.restore(); //clip	
 		
+		/*
 		// 轴 线
 		renderVerticalDataAxisLine(canvas);
 		
 		renderVerticalDataAxisRightLine(canvas);
 		renderVerticalCategoryAxisLine(canvas);
+		*/
 		
 		//图例
 		plotLegend.renderPointKey(canvas,mDataset);
@@ -404,6 +413,8 @@ public class ScatterChart extends LnChart{
 			
 			//显示焦点
 			renderFocusShape(canvas);
+			//响应提示
+			renderToolTip(canvas);
 			return true;
 		}catch( Exception e){
 			 throw e;

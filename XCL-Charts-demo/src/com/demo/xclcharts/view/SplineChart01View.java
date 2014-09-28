@@ -173,6 +173,9 @@ public class SplineChart01View extends DemoView {
 			chart.extPointClickRange(5);
 			chart.showClikedFocus();
 			
+			//显示十字交叉线
+			chart.showDyLine();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -264,57 +267,55 @@ public class SplineChart01View extends DemoView {
 	
 	//触发监听
 	private void triggerClick(float x,float y)
-	{
-		PointPosition record = chart.getPositionRecord(x,y);			
-		if( null == record) return;
-
-		SplineData lData = chartData.get(record.getDataID());
-		LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
-		int pos = record.getDataChildID();
-		int i = 0;
-		Iterator it = linePoint.entrySet().iterator();
-		while(it.hasNext())
+	{		
+		//交叉线
+		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
+		if(!chart.getListenItemClickStatus())
 		{
-			Entry  entry=(Entry)it.next();	
-			
-			if(pos == i)
-			{							 						
-			     Double xValue =(Double) entry.getKey();
-			     Double yValue =(Double) entry.getValue();	
-			     /*
-			     Toast.makeText(this.getContext(), 
-							record.getPointInfo() +
-							" Key:"+lData.getLineKey() +								
-							" Current Value(key,value):"+
-							Double.toString(xValue)+","+Double.toString(yValue), 
-							Toast.LENGTH_SHORT).show();
-			     */
-			    
-			        float r = record.getRadius();
-					chart.showFocusPointF(record.getPosition(),r * 2);		
-					chart.getFocusPaint().setStyle(Style.STROKE);
-					chart.getFocusPaint().setStrokeWidth(3);		
-					if(record.getDataID() >= 2)
-					{
-						chart.getFocusPaint().setColor(Color.BLUE);
-					}else{
-						chart.getFocusPaint().setColor(Color.RED);
-					}	
-					
-					//在点击处显示tooltip
-					pToolTip.setColor(Color.RED);				
-					chart.getToolTip().setCurrentXY(x,y);
-					chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),pToolTip);
-					chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),pToolTip);		
-					chart.getToolTip().addToolTip(" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),pToolTip);
-					
-					this.invalidate();
-					
-			     break;
-			}
-	        i++;
-		}//end while
+			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();
+		}else{	
+			PointPosition record = chart.getPositionRecord(x,y);			
+			if( null == record) return;
+	
+			SplineData lData = chartData.get(record.getDataID());
+			LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
+			int pos = record.getDataChildID();
+			int i = 0;
+			Iterator it = linePoint.entrySet().iterator();
+			while(it.hasNext())
+			{
+				Entry  entry=(Entry)it.next();	
 				
+				if(pos == i)
+				{							 						
+				     Double xValue =(Double) entry.getKey();
+				     Double yValue =(Double) entry.getValue();	
+				  
+				        float r = record.getRadius();
+						chart.showFocusPointF(record.getPosition(),r * 2);		
+						chart.getFocusPaint().setStyle(Style.STROKE);
+						chart.getFocusPaint().setStrokeWidth(3);		
+						if(record.getDataID() >= 2)
+						{
+							chart.getFocusPaint().setColor(Color.BLUE);
+						}else{
+							chart.getFocusPaint().setColor(Color.RED);
+						}	
+						
+						//在点击处显示tooltip
+						pToolTip.setColor(Color.RED);				
+						chart.getToolTip().setCurrentXY(x,y);
+						chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),pToolTip);
+						chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),pToolTip);		
+						chart.getToolTip().addToolTip(" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),pToolTip);
+						
+						this.invalidate();
+						
+				     break;
+				}
+		        i++;
+			}//end while
+		}
 	}
 	
 	

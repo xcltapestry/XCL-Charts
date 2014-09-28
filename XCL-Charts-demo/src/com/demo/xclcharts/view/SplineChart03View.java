@@ -17,7 +17,9 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -31,6 +33,8 @@ public class SplineChart03View  extends DemoView {
 	//分类轴标签集合
 	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
+	
+	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	public SplineChart03View(Context context) {
 		super(context);
@@ -133,6 +137,7 @@ public class SplineChart03View  extends DemoView {
 			chart.ActiveListenItemClick();
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			chart.extPointClickRange(5);
+			chart.showClikedFocus();
 			
 			//显示平滑曲线
 			chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEZIERCURVE);
@@ -257,6 +262,8 @@ public class SplineChart03View  extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{
+		if(!chart.getListenItemClickStatus()) return;
+		
 		PointPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 	
@@ -273,13 +280,26 @@ public class SplineChart03View  extends DemoView {
 			{							 						
 			     Double xValue =(Double) entry.getKey();
 			     Double yValue =(Double) entry.getValue();	
-			     
-			     Toast.makeText(this.getContext(), 
-							record.getPointInfo() +
-							" Key:"+lData.getLineKey() +								
-							" Current Value(key,value):"+
-							Double.toString(xValue)+","+Double.toString(yValue), 
-							Toast.LENGTH_SHORT).show();
+			    	     			     
+			     	float r = record.getRadius();
+					chart.showFocusPointF(record.getPosition(),r + r*0.8f);		
+					chart.getFocusPaint().setStyle(Style.FILL);
+					chart.getFocusPaint().setStrokeWidth(3);		
+					if(record.getDataID() >= 2)
+					{
+						chart.getFocusPaint().setColor(Color.BLUE);
+					}else{
+						chart.getFocusPaint().setColor(Color.RED);
+					}
+			     //在点击处显示tooltip
+					mPaintTooltips.setColor(Color.RED);				
+					chart.getToolTip().setCurrentXY(x,y);
+					chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);		
+					chart.getToolTip().addToolTip(
+							" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);
+					
+					this.invalidate();
+					
 			     break;
 			}
 	        i++;

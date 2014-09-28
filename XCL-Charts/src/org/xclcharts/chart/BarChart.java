@@ -794,6 +794,9 @@ public class BarChart extends AxisChart {
 		float offsetX = mTranslateXY[0]; 
 		float offsetY = mTranslateXY[1]; 					
 		initMoveXY();	
+		
+		//轴线
+		//renderVerticalBarAxis(canvas);
 				
 		//设置图显示范围
 		canvas.save();

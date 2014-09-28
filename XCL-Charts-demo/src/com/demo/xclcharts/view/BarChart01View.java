@@ -64,8 +64,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
 	
-	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
-	PlotDot dotToolTip = new PlotDot();
+	Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	PlotDot mDotToolTip = new PlotDot();
 			
 	
 	public BarChart01View(Context context) {
@@ -161,6 +161,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			
 			//扩展横向显示范围
 			chart.getPlotArea().extWidth(200f);
+			
+			//显示十字交叉线
+			chart.showDyLine();
+			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
 									
 			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);			
 		} catch (Exception e) {
@@ -279,8 +283,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		//禁用平移模式
 		//chart.disablePanMode();
 		//限制只能左右滑动
-		chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
-		
+		chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);	
 		
 		
 		//禁用双指缩放
@@ -297,7 +300,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		PlotDot dotDyLegend = new PlotDot();
 		
 		Legend dyLegend = chart.getDyLegend();		
-		dyLegend.setPosition(0.6f,0.3f);
+		dyLegend.setPosition(0.7f,0.3f);
 		dyLegend.setColSpan(30.f);
 		dyLegend.getBackgroundPaint().setColor(Color.BLACK);
 		dyLegend.getBackgroundPaint().setAlpha(100);
@@ -337,28 +340,43 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	
 	//触发监听
 	private void triggerClick(float x,float y)
-	{
-		BarPosition record = chart.getPositionRecord(x,y);			
-		if( null == record) return;
+	{		
 		
-		BarData bData = chartData.get(record.getDataID());					
-		Double bValue = bData.getDataSet().get(record.getDataChildID());			
-
-		//显示选中框
-		chart.showFocusRectF(record.getRectF());		
-		chart.getFocusPaint().setStyle(Style.STROKE);
-		chart.getFocusPaint().setStrokeWidth(3);		
-		chart.getFocusPaint().setColor(Color.GREEN);							
+		//交叉线
+		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);	
 		
-		//在点击处显示tooltip
-		pToolTip.setColor(Color.RED);		
-		dotToolTip.setDotStyle(XEnum.DotStyle.RECT);		
-		chart.getToolTip().setCurrentXY(x,y);
-		chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);		
-		chart.getToolTip().addToolTip(dotToolTip, bData.getKey(), pToolTip);
-		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(bValue),pToolTip);
-		
-		this.invalidate();
+		if(!chart.getListenItemClickStatus())
+		{
+			//交叉线
+			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();
+		}else{							
+			BarPosition record = chart.getPositionRecord(x,y);			
+			if( null == record)
+			{
+				if(chart.getDyLineVisible())this.invalidate();
+				return;
+			}
+			
+			BarData bData = chartData.get(record.getDataID());					
+			Double bValue = bData.getDataSet().get(record.getDataChildID());			
+	
+			//显示选中框
+			chart.showFocusRectF(record.getRectF());		
+			chart.getFocusPaint().setStyle(Style.STROKE);
+			chart.getFocusPaint().setStrokeWidth(3);		
+			chart.getFocusPaint().setColor(Color.GREEN);							
+			
+			//在点击处显示tooltip
+			mPaintToolTip.setColor(Color.RED);		
+			mDotToolTip.setDotStyle(XEnum.DotStyle.RECT);		
+			chart.getToolTip().setCurrentXY(x,y);
+			chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);		
+			chart.getToolTip().addToolTip(mDotToolTip, bData.getKey(), mPaintToolTip);
+			chart.getToolTip().addToolTip(
+						" Current Value:" +Double.toString(bValue),mPaintToolTip);
+			
+			this.invalidate();
+		}
 	}
 	
 

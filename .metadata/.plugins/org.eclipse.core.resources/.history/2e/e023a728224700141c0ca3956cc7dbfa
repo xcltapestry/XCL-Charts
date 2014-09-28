@@ -1,0 +1,65 @@
+package org.xclcharts.renderer.info;
+
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.PointF;
+
+public class CrossLine {
+	
+	private Paint mPaintLine = null;
+	protected PointF mCenterXY = null;
+	private XEnum.CrossLineStyle mCrossLineStyle = XEnum.CrossLineStyle.Cross;
+	
+	private float mOldX = 0.0f,mOldY =0.0f;
+	
+	public CrossLine()
+	{
+		
+	}
+	
+	public Paint getLinePaint()
+	{
+		if(null == mPaintLine)
+		{
+			mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+			//mPaintLine.setStyle(Style.STROKE);
+			mPaintLine.setColor(Color.rgb(215, 10, 10)); //50, 165, 238));			
+		}
+		
+		return mPaintLine;
+	}
+
+	public void setCenterXY(float x,float y)
+	{
+		if(null == mCenterXY) mCenterXY = new PointF();
+		mCenterXY.x = x;
+		mCenterXY.y = y;
+	}
+	
+	public boolean isInvalidate()
+	{
+		if(null == mCenterXY) return false;
+		if(Float.compare(Math.abs(mCenterXY.x - mOldX ) , 5.f ) == 1 
+        		|| Float.compare(Math.abs(mCenterXY.y - mOldY), 5.f) == 1)
+        {        				          				       
+        	mOldX = mCenterXY.x;
+        	mOldY = mCenterXY.y;		
+        	return true;
+        }	
+		return false;
+	}
+	
+	
+	
+	public void setCrossLineStyle(XEnum.CrossLineStyle style){
+		mCrossLineStyle = style;
+	}
+	
+	public XEnum.CrossLineStyle getCrossLineStyle()
+	{
+		return mCrossLineStyle;
+	}
+	
+}

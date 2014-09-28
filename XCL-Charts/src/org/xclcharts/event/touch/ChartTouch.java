@@ -23,6 +23,7 @@ package org.xclcharts.event.touch;
 
 import org.xclcharts.renderer.XChart;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -147,10 +148,10 @@ public class ChartTouch implements IChartTouch {
 			      if (oldX > 0 && oldY > 0) 
 			      {			    	    	  			    	  
 				        newX = event.getX(0);
-				        newY = event.getY(0);
-				       
-			        	if(Float.compare(Math.abs(newX - oldX ) , 10.f ) == 1 
-				        		&& Float.compare(Math.abs(newY - oldY), 10.f) == 1)
+				        newY = event.getY(0);		        
+				        
+			        	if(Float.compare(Math.abs(newX - oldX ) , 5.f ) == 1 
+				        		|| Float.compare(Math.abs(newY - oldY), 5.f) == 1)
 				        {
 				        	setLocation(oldX,oldY,newX,newY );			          				        
 					        oldX = newX;

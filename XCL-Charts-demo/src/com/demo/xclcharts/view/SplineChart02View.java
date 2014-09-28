@@ -41,6 +41,7 @@ import org.xclcharts.renderer.plot.PlotGrid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -60,6 +61,8 @@ public class SplineChart02View extends DemoView {
 	//分类轴标签集合
 	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
+	
+	
 	
 	public SplineChart02View(Context context) {
 		super(context);
@@ -170,10 +173,10 @@ public class SplineChart02View extends DemoView {
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
 			//激活点击监听
-			chart.ActiveListenItemClick();
+			//chart.ActiveListenItemClick();
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			//chart.extPointClickRange(5);
-			chart.showClikedFocus();
+			//chart.showClikedFocus();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -255,6 +258,8 @@ public class SplineChart02View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{
+		if(!chart.getListenItemClickStatus()) return;
+		
 		PointPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 
@@ -279,23 +284,13 @@ public class SplineChart02View extends DemoView {
 							Double.toString(xValue)+","+Double.toString(yValue), 
 							Toast.LENGTH_SHORT).show();
 			     
-			    
-			        float r = record.getRadius();
-					chart.showFocusPointF(record.getPosition(),r + r*0.8f);		
-					chart.getFocusPaint().setStyle(Style.FILL);
-					chart.getFocusPaint().setStrokeWidth(3);		
-					if(record.getDataID() >= 2)
-					{
-						chart.getFocusPaint().setColor(Color.BLUE);
-					}else{
-						chart.getFocusPaint().setColor(Color.RED);
-					}		
 					this.invalidate();
 					
 			     break;
 			}
 	        i++;
 		}//end while
+		
 				
 	}
 	

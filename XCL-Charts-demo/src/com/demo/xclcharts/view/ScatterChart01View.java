@@ -40,6 +40,7 @@ import org.xclcharts.renderer.plot.PlotGrid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -60,6 +61,8 @@ public class ScatterChart01View extends DemoView {
 	//分类轴标签集合
 	private LinkedList<String> labels = new LinkedList<String>();
 	private List<ScatterData> chartData = new LinkedList<ScatterData>();
+	
+	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	public ScatterChart01View(Context context) {
 		super(context);
@@ -118,7 +121,10 @@ public class ScatterChart01View extends DemoView {
 			//标签轴最小值
 			chart.setCategoryAxisMin(0);	
 			
-			chart.getDataAxis().setDetailModeSteps(4);
+			chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
+			chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);
+			
+			//chart.getDataAxis().setDetailModeSteps(4);
 			
 			
 			chart.getDataAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
@@ -151,6 +157,10 @@ public class ScatterChart01View extends DemoView {
 			
 			chart.getPointPaint().setStrokeWidth(6);
 			
+			//显示十字交叉线
+			chart.showDyLine();
+			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.BackwardDiagonal);
+						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -266,34 +276,50 @@ public class ScatterChart01View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{
-		PointPosition record = chart.getPositionRecord(x,y);			
-		if( null == record) return;
-
-		ScatterData lData = chartData.get(record.getDataID());
-		LinkedHashMap<Double,Double> linePoint =  lData.getDataSet();	
-		int pos = record.getDataChildID();
-		int i = 0;
-		Iterator it = linePoint.entrySet().iterator();
-		while(it.hasNext())
+		//交叉线
+		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
+		if(!chart.getListenItemClickStatus())
 		{
-			Entry  entry=(Entry)it.next();	
-			
-			if(pos == i)
-			{							 						
-			     Double xValue =(Double) entry.getKey();
-			     Double yValue =(Double) entry.getValue();	
-			     
-			     Toast.makeText(this.getContext(), 
-							record.getPointInfo() +
-							" Key:"+lData.getKey() +								
-							" Current Value(key,value):"+
-							Double.toString(xValue)+","+Double.toString(yValue), 
-							Toast.LENGTH_SHORT).show();
-			     break;
-			}
-	        i++;
-		}//end while
-				
+			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();
+		}else{	
+				PointPosition record = chart.getPositionRecord(x,y);			
+				if( null == record) return;
+		
+				ScatterData lData = chartData.get(record.getDataID());
+				LinkedHashMap<Double,Double> linePoint =  lData.getDataSet();	
+				int pos = record.getDataChildID();
+				int i = 0;
+				Iterator it = linePoint.entrySet().iterator();
+				while(it.hasNext())
+				{
+					Entry  entry=(Entry)it.next();	
+					
+					if(pos == i)
+					{							 						
+					     Double xValue =(Double) entry.getKey();
+					     Double yValue =(Double) entry.getValue();	
+					     
+					     /*
+					     Toast.makeText(this.getContext(), 
+									record.getPointInfo() +
+									" Key:"+lData.getKey() +								
+									" Current Value(key,value):"+
+									Double.toString(xValue)+","+Double.toString(yValue), 
+									Toast.LENGTH_SHORT).show();
+					     */
+					     
+					   //在点击处显示tooltip
+						mPaintTooltips.setColor(Color.RED);				
+						chart.getToolTip().setCurrentXY(x,y);
+						chart.getToolTip().addToolTip(" Key:"+lData.getKey(),mPaintTooltips);		
+						chart.getToolTip().addToolTip(
+								" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);
+						this.invalidate();	
+					     break;
+					}
+			        i++;
+				}//end while
+		} //end if		
 	}
 	
 }
