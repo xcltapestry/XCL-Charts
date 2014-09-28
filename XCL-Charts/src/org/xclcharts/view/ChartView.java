@@ -86,6 +86,7 @@ public abstract class ChartView extends GraphicalView {
 		 if(null != mChartTouch ) return mChartTouch.length;
 		
 		 List<XChart> listCharts = bindChart();
+		 if (listCharts == null)return 0;
 		 int count = listCharts.size();		 
 		 if(0 == count) return 0;	
 		 
