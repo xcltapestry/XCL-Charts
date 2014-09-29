@@ -43,6 +43,9 @@ public class LnData {
 	//线的基类
 	private PlotLine mPlotLine = null;
 	
+	//线的类型
+	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
+	
 	public LnData()
 	{
 		mPlotLine = new PlotLine(); 
@@ -181,4 +184,22 @@ public class LnData {
 		 mPlotLine.getPlotDot().setDotRadius(radius);
 	}
 	
+	
+	/**
+	 * 返回线的绘制类型(此设置对平滑曲线无效)
+	 * @return 线类型
+	 */
+	public XEnum.LineStyle getLineStyle()
+	{
+		return mLineStyle; 
+	}
+		
+	/**
+	 * 设置线的绘制类型(此设置对平滑曲线无效)
+	 * @param style 线类型
+	 */
+	public void setLineStyle(XEnum.LineStyle style)
+	{
+		mLineStyle = style;
+	}
 }

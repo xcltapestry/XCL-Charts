@@ -55,39 +55,7 @@ public class ChartTouch implements IChartTouch {
 		this.mView = view;
 	}
 	
-	//用来设置图表的位置   	
-	private void setLocation(float oldX, float oldY,
-							float newX, float newY ) {
-		// TODO Auto-generated method stub
-		
-		float xx = 0.0f,yy = 0.0f;		          
-        float[] txy = mChart.getTranslateXY();		          
-        xx =  txy[0];
-        yy =  txy[1];
-        
-        if(newX < oldX || newY < oldY)	 
-        {
-      	  xx = (float) (txy[0] + newX - oldX) ;
-      	  yy = (float) (txy[1] + newY - oldY) ;
-        }
-        mChart.setTranslateXY(xx, yy);        
-        mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
-        				 (int)mChart.getRight(), (int)mChart.getBottom());
-             
-       // mChart.setChartRange(mChart.getLeft() + newX-oldX, 
-       // mChart.getTop() + newY-oldY, 
-      //		mChart.getWidth(), mChart.getHeight());
-        
-       //用scrollBy()同样是通过重绘来弄的
-       // mView.scrollBy((int)xx, (int)yy);
-       
-	}
-	
-	private float spacing(MotionEvent event) {  
-	    float x = event.getX(0) - event.getX(1);  
-	    float y = event.getY(0) - event.getY(1);  
-	    return (float)Math.sqrt(x * x + y * y);  
-	}  
+
 	
 		
 	@Override
@@ -178,4 +146,37 @@ public class ChartTouch implements IChartTouch {
 		    }	        
 	    }  
 
+		//用来设置图表的位置   	
+		private void setLocation(float oldX, float oldY,
+								float newX, float newY ) {
+			// TODO Auto-generated method stub
+			
+			float xx = 0.0f,yy = 0.0f;		          
+	        float[] txy = mChart.getTranslateXY();		          
+	        xx =  txy[0];
+	        yy =  txy[1];
+	        
+	        if(newX < oldX || newY < oldY)	 
+	        {
+	      	  xx = (float) (txy[0] + newX - oldX) ;
+	      	  yy = (float) (txy[1] + newY - oldY) ;
+	        }
+	        mChart.setTranslateXY(xx, yy);        
+	        mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
+	        				 (int)mChart.getRight(), (int)mChart.getBottom());
+	             
+	       // mChart.setChartRange(mChart.getLeft() + newX-oldX, 
+	       // mChart.getTop() + newY-oldY, 
+	      //		mChart.getWidth(), mChart.getHeight());
+	        
+	       //用scrollBy()同样是通过重绘来弄的
+	       // mView.scrollBy((int)xx, (int)yy);
+	       
+		}
+		
+		private float spacing(MotionEvent event) {  
+		    float x = event.getX(0) - event.getX(1);  
+		    float y = event.getY(0) - event.getY(1);  
+		    return (float)Math.sqrt(x * x + y * y);  
+		}  
 }

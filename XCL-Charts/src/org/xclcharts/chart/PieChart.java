@@ -29,7 +29,9 @@ import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.CirChart;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.graphics.RadialGradient;
 import android.graphics.RectF;
@@ -57,14 +59,13 @@ public class PieChart extends CirChart{
 	
 	protected RectF mRectF = null;		
 	protected RectF mArcRF0 = null;
+	
+	//扇形边框
+	protected Paint mPaintArcBorder = null;
 
 	public PieChart()
 	{
-		super();
-		
-		//画笔初始化		
-		mPaintArc = new Paint();  
-		mPaintArc.setAntiAlias(true);					
+		super();				
 	}
 	
 	/**
@@ -72,7 +73,12 @@ public class PieChart extends CirChart{
 	 * @return 画笔
 	 */
 	public Paint geArcPaint()
-	{
+	{		
+		if(null == mPaintArc) //画笔初始化	
+		{				
+			mPaintArc = new Paint();  
+			mPaintArc.setAntiAlias(true);	
+		}
 		return mPaintArc;
 	}
 
@@ -94,6 +100,22 @@ public class PieChart extends CirChart{
 	public List<PieData> getDataSource()
 	{
 		return mDataset;
+	}
+	
+	
+	/**
+	 * 绘制扇形边框画笔
+	 * @return	画笔
+	 */
+	public Paint getArcBorderPaint()
+	{
+		if(null == mPaintArcBorder)
+		{
+			mPaintArcBorder = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPaintArcBorder.setStyle(Style.STROKE);
+			mPaintArcBorder.setColor(Color.WHITE);
+		}
+		return mPaintArcBorder;
 	}
 	
 	/**
@@ -161,6 +183,17 @@ public class PieChart extends CirChart{
 		}
 		return true;
 	}
+	
+	protected void renderArcBorder(Canvas canvas,RectF rect,
+								float offsetAngle,float currentAngle)
+	{
+		//边框
+    	if(null != mPaintArcBorder)
+    	{
+    		canvas.drawArc(rect, offsetAngle, currentAngle, true, mPaintArcBorder); 
+    	}
+	}
+	
 		
 	/**
 	 * 绘制指定角度扇区
@@ -189,7 +222,11 @@ public class PieChart extends CirChart{
 				paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
 	        
 			//在饼图中显示所占比例  
-        	canvas.drawArc(arcRF0, offsetAngle, currentAngle, true, paintArc);        	        	
+        	canvas.drawArc(arcRF0, offsetAngle, currentAngle, true, paintArc);      
+        	
+        	//边框
+        	renderArcBorder(canvas,arcRF0, offsetAngle, currentAngle);
+        	
 		}catch( Exception e){
 			throw e;
 		}
@@ -259,6 +296,9 @@ public class PieChart extends CirChart{
 	        //在饼图中显示所占比例  
 	        canvas.drawArc(mRectF, offsetAngle, currentAngle, true, paintArc);
 	        
+	        //边框
+        	renderArcBorder(canvas,mRectF, offsetAngle, currentAngle);
+	        
 	        return true;	        
 		}catch( Exception e){
 			 throw e;
@@ -320,18 +360,18 @@ public class PieChart extends CirChart{
 			{							
 				currentAngle = cData.getSliceAngle();		
 				if(!validateAngle(currentAngle)) continue;
-				mPaintArc.setColor(cData.getSliceColor());	
+				geArcPaint().setColor(cData.getSliceColor());	
 								
 			    if(cData.getSelected()) //指定突出哪个块
 	            {			    	            		            	
-	            	if(!drawSelectedSlice(canvas,mPaintArc,cData,
+	            	if(!drawSelectedSlice(canvas,geArcPaint(),cData,
 	            			cirX,cirY,radius,
 	            			offsetAngle,currentAngle))return false;	
 	            	
 	            	 arrPoint[i] = new PointF(MathHelper.getInstance().getPosX(), 
 			        						  MathHelper.getInstance().getPosY());	            	 	            	 
 	            }else{
-	            	if(!drawSlice(canvas,mPaintArc,mArcRF0,cData,
+	            	if(!drawSlice(canvas,geArcPaint(),mArcRF0,cData,
 	            			cirX,cirY,radius,
 	            			offsetAngle,(float) currentAngle))return false;	  
 	            	
@@ -402,6 +442,13 @@ public class PieChart extends CirChart{
 	{		
 		return getArcRecord(x,y);
 	}		
+		
+	private void freeObj()
+	{
+		if(null != mPaintArc) mPaintArc = null;
+		if(null != mRectF) mRectF = null;
+		if(null != mRectF) mRectF = null;	
+	}
 	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
@@ -415,8 +462,10 @@ public class PieChart extends CirChart{
 			//绘制图表
 			renderPlot(canvas);
 			
+			freeObj();
+			
 			//显示焦点
-			//renderFocusShape(canvas);
+			renderFocusShape(canvas);
 			//响应提示
 			renderToolTip(canvas);
 			

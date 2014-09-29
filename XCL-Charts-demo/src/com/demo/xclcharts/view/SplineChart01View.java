@@ -45,7 +45,6 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 /**
  * @ClassName SplineChart01View
  * @Description  曲线图 的例子
@@ -175,6 +174,9 @@ public class SplineChart01View extends DemoView {
 			
 			//显示十字交叉线
 			chart.showDyLine();
+			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Vertical);
+			//扩大实际绘制宽度
+			chart.getPlotArea().extWidth(100.f);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -308,7 +310,7 @@ public class SplineChart01View extends DemoView {
 						chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),pToolTip);
 						chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),pToolTip);		
 						chart.getToolTip().addToolTip(" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),pToolTip);
-						
+						chart.getToolTip().getBackgroundPaint().setAlpha(100);
 						this.invalidate();
 						
 				     break;

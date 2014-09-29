@@ -156,7 +156,7 @@ public class LnChart extends AxisChart {
 			
 			//是否绘制tick
 			if(dataAxis.getTickLabelVisible() &&
-					isrenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
+					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 			
 			// 标签
 			currentTickLabel = MathHelper.getInstance().add(
@@ -244,7 +244,7 @@ public class LnChart extends AxisChart {
 			
 			//是否绘制tick
 			if(dataAxis.getTickLabelVisible() &&
-					isrenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
+					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 			
 			// 标签
 			Double currentTickLabel = MathHelper.getInstance().add(

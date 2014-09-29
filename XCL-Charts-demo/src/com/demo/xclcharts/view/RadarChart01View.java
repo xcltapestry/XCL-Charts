@@ -27,13 +27,10 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.xclcharts.chart.BarData;
-import org.xclcharts.chart.LineData;
-import org.xclcharts.chart.RadarData;
 import org.xclcharts.chart.RadarChart;
+import org.xclcharts.chart.RadarData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -41,11 +38,12 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 /**
  * @ClassName RadarChart01View
@@ -61,6 +59,8 @@ public class RadarChart01View extends DemoView {
 	//标签集合
 	private List<String> labels = new LinkedList<String>();
 	private List<RadarData> chartData = new LinkedList<RadarData>();
+	
+	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	
 	public RadarChart01View(Context context) {
@@ -113,7 +113,7 @@ public class RadarChart01View extends DemoView {
 			//点击事件处理
 			chart.ActiveListenItemClick();
 			chart.extPointClickRange(50);
-			
+			chart.showClikedFocus();
 			
 			//数据轴最大值
 			chart.getDataAxis().setAxisMax(50);
@@ -244,11 +244,21 @@ public class RadarChart01View extends DemoView {
 		{
 			RadarData lData = chartData.get(record.getDataID());
 			Double lValue = lData.getLinePoint().get(record.getDataChildID());
+									
+			float r = record.getRadius();
+			chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
+			chart.getFocusPaint().setStyle(Style.STROKE);
+			chart.getFocusPaint().setStrokeWidth(3);		
+			chart.getFocusPaint().setColor(Color.YELLOW);	
 			
-			Toast.makeText(this.getContext(), 					
-					" Current Value:"+Double.toString(lValue) +
-					" Point info:"+record.getPointInfo() , 
-					Toast.LENGTH_SHORT).show();			
+			//在点击处显示tooltip
+			mPaintTooltips.setColor(Color.RED);				
+			chart.getToolTip().setCurrentXY(x,y);
+			chart.getToolTip().addToolTip(" 点击",mPaintTooltips);		
+			chart.getToolTip().addToolTip(" Current Value:"+Double.toString(lValue),mPaintTooltips);
+						
+			this.invalidate();
+			
 		}
 	}
 

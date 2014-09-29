@@ -21,9 +21,12 @@
  */
 package org.xclcharts.renderer.info;
 
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotArea;
 
 import android.graphics.Canvas;
+import android.graphics.Paint;
 
 /**
  * @ClassName DyLineRender
@@ -66,13 +69,15 @@ public class DyLineRender extends DyLine{
 		float stopX = mCenterXY.x;
 		float stopY = mArea.getBottom();
 		
-		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
+				startX, startY, stopX, stopY,canvas,getLinePaint());	
 		//横线
 		startX = mArea.getLeft();
 		startY = mCenterXY.y;
 		stopX = mCenterXY.x;
 		stopY = mCenterXY.y;
-		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
+				startX, startY, stopX, stopY,canvas,getLinePaint());	
 	}
 	
 	private void drawVertical(Canvas canvas)
@@ -83,7 +88,8 @@ public class DyLineRender extends DyLine{
 		float stopX = mCenterXY.x;
 		float stopY = mArea.getBottom();
 		
-		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());
+		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
+				startX, startY, stopX, stopY,canvas,getLinePaint());	
 	}
 	
 	private void drawHorizontal(Canvas canvas)
@@ -92,7 +98,9 @@ public class DyLineRender extends DyLine{
 		float startY = mCenterXY.y;
 		float stopX = mArea.getRight();
 		float stopY = mCenterXY.y;
-		canvas.drawLine(startX, startY, stopX, stopY, getLinePaint());	
+
+		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
+				startX, startY, stopX, stopY,canvas,getLinePaint());	
 	}
 	
 	public void renderLine(Canvas canvas) 

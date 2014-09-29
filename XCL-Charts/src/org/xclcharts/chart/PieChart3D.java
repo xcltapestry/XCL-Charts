@@ -154,6 +154,8 @@ public class PieChart3D extends PieChart{
 				
 		//图例
 		plotLegend.renderPieKey(canvas,this.getDataSource());	
+		plotLegend = null;
+		
 		arrPoint = null;
 		return true;
 	}

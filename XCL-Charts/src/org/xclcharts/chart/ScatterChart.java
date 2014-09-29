@@ -26,6 +26,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
@@ -172,6 +173,7 @@ public class ScatterChart extends LnChart{
 		int childID = 0;
 		
 		float YvaluePostion = 0.0f,XvaluePostion =0.0f;
+		float itemAngle = bd.getItemLabelRotateAngle();
 		
 		Iterator iter = chartValues.entrySet().iterator();
 		while(iter.hasNext()){
@@ -205,7 +207,7 @@ public class ScatterChart extends LnChart{
             		getPointPaint().setColor(dot.getColor());
             		getPointPaint().setAlpha(dot.getAlpha());
             		
-	            	RectF rect = PlotDotRender.getInstance().renderDot(
+	            	PlotDotRender.getInstance().renderDot(
 	            			canvas, bd.getPlotDot(),
 	            			lineStartX,lineStartY,lineStopX,lineStopY,
 	            			getPointPaint());
@@ -220,14 +222,15 @@ public class ScatterChart extends LnChart{
 	    			childID++;
              	}
     			            	
-	    			
+	    		
             	if(bd.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
-                    canvas.drawText(
+                    DrawHelper.getInstance().drawRotateText(
                     		getFormatterDotLabel(
                     				Double.toString(xValue)+","+ Double.toString(yValue)),
-                    				lineStopX,lineStopY,  bd.getDotLabelPaint());
+        					lineStopX,lineStopY, itemAngle, 
+        					canvas,  bd.getDotLabelPaint());	                    
             	}              	
             	            	            	
 				lineStartX = lineStopX;

@@ -159,12 +159,13 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
 			
-			//扩展横向显示范围
+			//扩展横向显示范围,当数据太多时可用这个扩展实际绘图面积
 			chart.getPlotArea().extWidth(200f);
 			
 			//显示十字交叉线
 			chart.showDyLine();
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
+			chart.getDyLine().setLineDrawStyle(XEnum.LineStyle.DASH);
 									
 			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);			
 		} catch (Exception e) {
@@ -374,7 +375,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.getToolTip().addToolTip(mDotToolTip, bData.getKey(), mPaintToolTip);
 			chart.getToolTip().addToolTip(
 						" Current Value:" +Double.toString(bValue),mPaintToolTip);
-			
+			chart.getToolTip().getBackgroundPaint().setAlpha(100);
 			this.invalidate();
 		}
 	}

@@ -83,7 +83,7 @@ public class PlotDotRender {
 			mPaintFill.setStyle(Style.FILL);
 			mPaintFill.setAntiAlias(true);
 		}
-		return mPaintFill;
+		return mPaintFill; 
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class PlotDotRender {
         canvas.drawCircle(cX, bottom, radius, paint);
 
         getInnerFillPaint().setColor(pDot.getRingInnerColor());
-        canvas.drawCircle(cX, bottom,ringRadius, getInnerFillPaint()); 
+        canvas.drawCircle(cX, bottom,ringRadius, getInnerFillPaint());         
 	}
 	
 	
@@ -216,11 +216,8 @@ public class PlotDotRender {
 	
 	private void renderX(Canvas canvas,Paint paint)
 	{
-		//float pWidth = paint.getStrokeWidth();
-		//paint.setStrokeWidth(2);
 		canvas.drawLine(mRect.left, mRect.top, mRect.right, mRect.bottom , paint);
-	    canvas.drawLine(mRect.left, mRect.bottom, mRect.right, mRect.top, paint);
-	    //paint.setStrokeWidth(pWidth);
+	    canvas.drawLine(mRect.left, mRect.bottom, mRect.right, mRect.top, paint);	   
 	}
 	
 }

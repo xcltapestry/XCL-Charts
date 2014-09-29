@@ -39,7 +39,6 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 /**
  * @ClassName PieChart01View
@@ -51,6 +50,7 @@ public class PieChart01View extends DemoView implements Runnable{
 	private String TAG = "PieChart01View";
 	private PieChart chart = new PieChart();	
 	private LinkedList<PieData> chartData = new LinkedList<PieData>();
+	
 
 	public PieChart01View(Context context) {
 		super(context);
@@ -112,10 +112,13 @@ public class PieChart01View extends DemoView implements Runnable{
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
 			
 			//设置允许的平移模式
 			//chart.enablePanMode();
-			//chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);		
+			//chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);	
+			
+			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -177,7 +180,7 @@ public class PieChart01View extends DemoView implements Runnable{
 			  	float sum = 0.0f;
 	          	for(int i=0;i< chartData.size() ;i++)
 	          	{
-	          		Thread.sleep(100);
+	          		Thread.sleep(150);
 	          		LinkedList<PieData> animationData = new LinkedList<PieData>();
 	        
 	          		sum = 0.0f;
@@ -195,7 +198,13 @@ public class PieChart01View extends DemoView implements Runnable{
 	          		chart.setDataSource(animationData);
 	          		
 	          		//激活点击监听
-	    			if(chartData.size() - 1 == i)chart.ActiveListenItemClick();
+	    			if(chartData.size() - 1 == i)
+	    			{
+	    				chart.ActiveListenItemClick();
+	    				//显示边框线，并设置其颜色
+	    				chart.getArcBorderPaint().setColor(Color.YELLOW);
+	    				chart.getArcBorderPaint().setStrokeWidth(3);
+	    			}
 	    			
 	          		postInvalidate();            				          	          	
 	          }
@@ -226,15 +235,35 @@ public class PieChart01View extends DemoView implements Runnable{
 	//触发监听
 	private void triggerClick(float x,float y)
 	{	
-		
+		if(!chart.getListenItemClickStatus())return;
+				
 		ArcPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
-		
-		PieData pData = chartData.get(record.getDataID());											
+		/*
+		PieData pData = chartData.get(record.getDataID());		
 		Toast.makeText(this.getContext(),								
 				" key:" +  pData.getKey() +
 				" Label:" + pData.getLabel() ,
-				Toast.LENGTH_SHORT).show();
+				Toast.LENGTH_SHORT).show(); 
+		*/
+				
+		boolean isInvaldate = true;		
+		for(int i=0;i < chartData.size();i++)
+		{	
+			PieData cData = chartData.get(i);
+			if(i == record.getDataID())
+			{
+				if(cData.getSelected()) 
+				{
+					isInvaldate = false;
+					break;
+				}else{
+					cData.setSelected(true);	
+				}
+			}else
+				cData.setSelected(false);			
+		}
+		if(isInvaldate)this.invalidate();
 		
 	}
 	

@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="292" key="DIALOG_Y_ORIGIN"/>
+		<item value="345" key="DIALOG_Y_ORIGIN"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="862" key="DIALOG_X_ORIGIN"/>
+		<item value="842" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,26 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="drawDyLegend" key="selection"/>
 		<list key="findhistory">
-			<item value="十字交叉线"/>
-			<item value="renderToolTip"/>
-			<item value="getToolTip"/>
-			<item value="CrossLine"/>
-			<item value="renderVerticalBarDataAxis"/>
-			<item value="dotToolTip"/>
-			<item value="pToolTip"/>
-			<item value="getL"/>
+			<item value="drawDyLegend"/>
+			<item value="setBarDirection"/>
+			<item value="getBarDirection"/>
+			<item value="mBarDirection"/>
+			<item value="mItemLabelAnchorOffset"/>
+			<item value="AnchorOffset"/>
+			<item value="off"/>
+			<item value="mCustomLine"/>
 		</list>
 		<list key="replacehistory">
+			<item value="isRenderVerticalBarDataAxisTick"/>
+			<item value="getBarPaint()"/>
 			<item value="十字交叉线"/>
 			<item value="DyLine"/>
 			<item value="mDotToolTip"/>
 			<item value="mPaintToolTip"/>
 			<item value="mPaintTooltips"/>
 			<item value="DemoView"/>
-			<item value="mCenterXY"/>
-			<item value="ChartScrollView"/>
 		</list>
 	</section>
 </section>

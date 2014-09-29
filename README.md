@@ -1,7 +1,7 @@
 XCL-Charts
 ==========
 
-<b>XCL-Charts V1.7</b><br/>
+<b>XCL-Charts V1.8</b><br/>
  &nbsp;&nbsp;&nbsp;&nbsp;Android开源图表库(XCL-Charts is a free charting library for Android platform.) <br/>
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于Android原生Canvas来绘制各种图表,使用简便,定制灵活。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>3D/非3D柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
@@ -28,17 +28,18 @@ http://www.oschina.net/p/xcl-charts
  <br/>
 
  <b>部份例图:</b><br/> 
- <p>
- <img src="http://img.blog.csdn.net/20140927225010546" alt="bar chart 竖向" />
+
+ <img src="http://img.blog.csdn.net/20140929210006405" alt="bar chart 竖向" />
    <img src="http://img.blog.csdn.net/20140927225047486" alt="stacked chart" />
   <img src="http://img.blog.csdn.net/20140701134158254?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="横向3D bar chart " />  
-  </p>
-  <br/>
- <img src="http://img.blog.csdn.net/20140701133255576" alt="3D bar chart" />
- <br/>
+
+ <img src="http://img.blog.csdn.net/20140929210049071" alt="3D bar chart" />
+ <img src="http://img.blog.csdn.net/20140929205829076" alt="line chart" />
+  <img src="http://img.blog.csdn.net/20140929205707316" alt="spline chart" />
+
 <img src="http://img.blog.csdn.net/20140701205543936" alt="3d pie chart 动画" />
 <img src="http://img.blog.csdn.net/20140701205633076" alt="bar chart 柱形渐显动画" />
- <br/>
+
 <img src="http://img.blog.csdn.net/20140701205702014" alt="Line chart(开放式) 渐显动画" />
 <img src="http://img.blog.csdn.net/20140706140434609" alt="pie chart 饼块渐显" />
  <br/>
@@ -73,30 +74,23 @@ http://www.oschina.net/p/xcl-charts
  
   </p>
  <br/>  
-<p>
-<img src="http://img.blog.csdn.net/20140906215314764" alt="dount chart" />
-<img src="http://img.blog.csdn.net/20140927235143531" alt="line chart" />
-</p>
- <br/>
-<img src="http://img.blog.csdn.net/20140629115247625" alt="spline chart" />
-<img src="http://img.blog.csdn.net/20140629115229156" alt="area chart" />  
-<br/> 
-   <p>
- <img src="http://img.blog.csdn.net/20140611213233687?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="bar chart 横向" />
- <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
-    </p>
-  <br/>
- <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />
- <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart 横向" />
-<img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />
+<img src="http://img.blog.csdn.net/20140929205751402" alt="dount chart" />
+<img src="http://img.blog.csdn.net/20140929205853100" alt="BubbleChart" />
+
+<img src="http://img.blog.csdn.net/20140929205933317" alt="ScatterChartt" />
+<img src="http://img.blog.csdn.net/20140929210328035" alt="area chart" />  
+
 <img src="http://img.blog.csdn.net/20140716213635034" alt="piechart2d" />
-<img src="http://img.blog.csdn.net/20140816155314843" alt="bzsplinechart" />
 <img src="http://img.blog.csdn.net/20140823203324712" alt="radarchart_round" />
 <img src="http://img.blog.csdn.net/20140823203347192" alt="radarchart_rose" />
 <img src="http://img.blog.csdn.net/20140830204725581" alt="areachart_bz" />
 <img src="http://img.blog.csdn.net/20140831201802281" alt="arclinechart" />
 
 <img src="http://img.blog.csdn.net/20140927224825199" alt="rangebarchart" />
-<img src="http://img.blog.csdn.net/20140906205841894" alt="ScatterChart" />
-<img src="http://img.blog.csdn.net/20140927224911952" alt="BubbleChart" />
+<img src="http://img.blog.csdn.net/20140929210132876" alt="ScatterChart" />
+ <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
+
+ <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />
+ <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart 横向" />
+<img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />
   

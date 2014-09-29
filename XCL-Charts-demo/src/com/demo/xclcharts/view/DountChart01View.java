@@ -113,6 +113,9 @@ public class DountChart01View extends DemoView {
 			//内环背景色
 			chart.getInnerPaint().setColor(Color.rgb(19, 163, 224));
 			
+			//显示边框线，并设置其颜色
+			chart.getArcBorderPaint().setColor(Color.YELLOW);
+			
 			//设置附加信息
 			addAttrInfo();
 			

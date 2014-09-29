@@ -43,13 +43,7 @@ public class PlotLine {
 			
 	public PlotLine()
 	{
-		mPlotDot = new PlotDot();	
-		
-		mPaintDot = new Paint();
-		mPaintDot.setColor(Color.BLUE);
-		mPaintDot.setAntiAlias(true);
-		mPaintDot.setStrokeWidth(5);
-		
+		mPlotDot = new PlotDot();			
 	}
 	
 	private void initLinePaint()
@@ -102,6 +96,13 @@ public class PlotLine {
 	 */
 	public Paint getDotPaint()
 	{
+		if(null == mPaintDot)
+		{
+			mPaintDot = new Paint();
+			mPaintDot.setColor(Color.BLUE);
+			mPaintDot.setAntiAlias(true);
+			mPaintDot.setStrokeWidth(5);
+		}
 		return mPaintDot;// mPlotDot.getDotPaint();
 	}
 	

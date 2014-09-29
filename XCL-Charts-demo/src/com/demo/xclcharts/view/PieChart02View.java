@@ -37,10 +37,11 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 /**
  * @ClassName PieChart02View
@@ -53,6 +54,7 @@ public class PieChart02View extends DemoView {
 	 private String TAG = "PieChart02View";
 	 private PieChart chart = new PieChart();	
 	 private LinkedList<PieData> chartData = new LinkedList<PieData>();
+	 Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	 public PieChart02View(Context context) {
 		super(context);
@@ -114,6 +116,7 @@ public class PieChart02View extends DemoView {
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -168,11 +171,23 @@ public class PieChart02View extends DemoView {
 		ArcPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 		
-		PieData pData = chartData.get(record.getDataID());											
-		Toast.makeText(this.getContext(),								
-				" key:" +  pData.getKey() +
-				" Label:" + pData.getLabel() ,
-				Toast.LENGTH_SHORT).show();	
+		PieData pData = chartData.get(record.getDataID());						
+		
+		//显示选中框
+		chart.showFocusArc(record,pData.getSelected());
+		chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(5);		
+		chart.getFocusPaint().setColor(Color.GREEN);	
+		chart.getFocusPaint().setAlpha(100);
+		
+		
+		//在点击处显示tooltip
+		mPaintToolTip.setColor(Color.RED);			
+		chart.getToolTip().setCurrentXY(x,y);		
+		chart.getToolTip().addToolTip(" key:" +  pData.getKey() +
+										" Label:" + pData.getLabel(),mPaintToolTip);		
+		this.invalidate();
+				
 		
 	}
 	 

@@ -570,23 +570,30 @@ public class RadarChart extends RdChart{
 			int dataID,int childID)
 	{
 		PlotLine plotLine = lineData.getPlotLine();
+		float itemAngle = lineData.getItemLabelRotateAngle();
 		
 		if(!plotLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
     	{                		       	
-    		PlotDot pDot = plotLine.getPlotDot();	      		              		
-    		RectF rect = PlotDotRender.getInstance().renderDot(canvas,pDot,
-    				currentX - pDot.getDotRadius() , currentY - pDot.getDotRadius(),
+    		PlotDot pDot = plotLine.getPlotDot();	
+    		float radius = pDot.getDotRadius();
+    		PlotDotRender.getInstance().renderDot(canvas,pDot,
+    				currentX - radius , currentY - radius,
     				currentX , currentY,
-    				lineData.getPlotLine().getDotPaint()); //标识图形            			                	
-    		savePointRecord(dataID,childID,currentX, currentY,rect);    
+    				lineData.getPlotLine().getDotPaint()); //标识图形         
     		
+    		//savePointRecord(dataID,childID,currentX, currentY,rect);    
+    		
+    		savePointRecord(dataID,childID, currentX, currentY,
+    				currentX - radius ,currentY - radius ,
+    				currentX + radius ,currentY + radius );  		    		
     	}
 		//是否显示标签
 		if(lineData.getLabelVisible())
-		{			
-			canvas.drawText(getFormatterDotLabel(lineData.getLinePoint().get(childID) ),
-							currentX, currentY, 
-							lineData.getPlotLine().getDotLabelPaint());
+		{						
+			DrawHelper.getInstance().drawRotateText(
+					this.getFormatterDotLabel( lineData.getLinePoint().get(childID) ), 
+					currentX, currentY, itemAngle, 
+					canvas, lineData.getPlotLine().getDotLabelPaint());			
 		}		
 	}
 

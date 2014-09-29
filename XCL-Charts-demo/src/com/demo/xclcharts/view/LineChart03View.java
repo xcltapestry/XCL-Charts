@@ -4,6 +4,7 @@ import java.util.LinkedList;
 
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.view.GraphicalView;
 
@@ -177,6 +178,20 @@ public class LineChart03View  extends GraphicalView {
 	        
 	 }
 	
+	
+	/*
+	 @Override
+		protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+			super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+			
+			int width = DensityUtil.dip2px(getContext(), 500);
+			int height = DensityUtil.dip2px(getContext(), 500);
+			
+			setMeasuredDimension(width,height);		
+		}
+	 */
+	 
 	
 
 	

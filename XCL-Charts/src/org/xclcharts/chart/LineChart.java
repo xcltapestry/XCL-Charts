@@ -241,9 +241,9 @@ public class LineChart extends LnChart{
 	            		
 	            		if(getLineAxisIntersectVisible() == true ||
 	            					Float.compare(lineStartY, initY) != 0 )	
-	            		{
-	            			canvas.drawLine( lineStartX ,lineStartY ,lineEndX ,lineEndY,
-	            												pLine.getLinePaint()); 
+	            		{	            		
+	            			DrawHelper.getInstance().drawLine(bd.getLineStyle(), 
+	            					lineStartX ,lineStartY ,lineEndX ,lineEndY,canvas,pLine.getLinePaint());		            			
 	            		}
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
 	            		
@@ -252,13 +252,23 @@ public class LineChart extends LnChart{
 	                		PlotDot pDot = pLine.getPlotDot();	        
 	                		float radius = pDot.getDotRadius();
 	                		float rendEndX  = lineEndX  + radius;               		
-	            				                		
+	            				      
+	                		/*
 	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,
 	                				pLine.getDotPaint()); //标识图形            		
 	                			                		
-	                		savePointRecord(dataID,childID, lineEndX + mMoveX, lineEndY + mMoveY,
+	                		savePointRecord(dataID,childID, lineEndX  + mMoveX, lineEndY  + mMoveY,
+	                				lineEndX - radius + mMoveX,lineEndY - radius + mMoveY,
+	                				lineEndX + radius + mMoveX,lineEndY + radius + mMoveY);
+	                		*/
+	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
+	                				lineStartX ,lineStartY ,
+	                				lineEndX ,lineEndY,
+	                				pLine.getDotPaint()); //标识图形            		
+	                			                		
+	                		savePointRecord(dataID,childID, lineEndX  + mMoveX, lineEndY  + mMoveY,
 	                				lineEndX - radius + mMoveX,lineEndY - radius + mMoveY,
 	                				lineEndX + radius + mMoveX,lineEndY + radius + mMoveY);
 	                		

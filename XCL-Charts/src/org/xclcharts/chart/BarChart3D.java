@@ -457,7 +457,7 @@ public class BarChart3D extends BarChart{
 	}
 	
 	@Override
-	protected boolean isrenderVerticalBarDataAxisTick(float currentY,float moveY)
+	protected boolean isRenderVerticalBarDataAxisTick(float currentY,float moveY)
 	{
 		return false;
 	}

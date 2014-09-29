@@ -38,7 +38,9 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -60,6 +62,8 @@ public class AreaChart01View extends DemoView implements Runnable {
 	private LinkedList<String> mLabels = new LinkedList<String>();
 	//数据集合
 	private LinkedList<AreaData> mDataset = new LinkedList<AreaData>();
+	
+	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 
 	public AreaChart01View(Context context) {
@@ -194,6 +198,13 @@ public class AreaChart01View extends DemoView implements Runnable {
 		dataSeries2.add((double)30); 
 		dataSeries2.add((double)15); 
 		
+		List<Double> dataSeries3 = new LinkedList<Double>();			
+		dataSeries3.add((double)35); 
+		dataSeries3.add((double)45); 
+		dataSeries3.add((double)65); 	
+		dataSeries3.add((double)75); 
+		dataSeries3.add((double)55); 
+		
 		//设置每条线各自的显示属性
 		//key,数据集,线颜色,区域颜色
 		AreaData line1 = new AreaData("小熊",dataSeries1,Color.BLUE,Color.YELLOW);
@@ -208,8 +219,15 @@ public class AreaChart01View extends DemoView implements Runnable {
 		line2.setLabelVisible(true);
 		line2.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		
+		
+		AreaData line3 = new AreaData("小小小熊",dataSeries3,
+				Color.rgb(246, 134, 31),Color.rgb(213, 198, 126)); 
+		//设置线上每点对应标签的颜色
+		//line3.getDotLabelPaint().setColor(Color.YELLOW);
+		line3.setLineStyle(XEnum.LineStyle.DOT);
 		mDataset.add(line1);
 		mDataset.add(line2);	
+		mDataset.add(line3);
 	}
 	
 	private void chartLabels()
@@ -263,12 +281,33 @@ public class AreaChart01View extends DemoView implements Runnable {
 		AreaData lData = mDataset.get(record.getDataID());
 		Double lValue = lData.getLinePoint().get(record.getDataChildID());	
 		
+		/*
 		Toast.makeText(this.getContext(), 
 				record.getPointInfo() +
 				" Key:"+lData.getLineKey() +
 				" Label:"+lData.getLabel() +								
 				" Current Value:"+Double.toString(lValue), 
-				Toast.LENGTH_SHORT).show();			
+				Toast.LENGTH_SHORT).show();	
+		*/
+		float r = record.getRadius();
+		chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
+		//chart.getFocusPaint().setStyle(Style.STROKE);
+		chart.getFocusPaint().setStrokeWidth(3);		
+		chart.getFocusPaint().setColor(Color.RED);
+		chart.getFocusPaint().setTextAlign(Align.CENTER);
+		
+		
+		//在点击处显示tooltip
+		mPaintTooltips.setColor(Color.YELLOW);			
+		chart.getToolTip().getBackgroundPaint().setColor(Color.GRAY);
+		chart.getToolTip().setCurrentXY(x,y);
+		chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);
+		chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),mPaintTooltips);		
+		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),mPaintTooltips);
+		chart.getToolTip().setAlign(Align.LEFT);
+					
+		this.invalidate();
+		
 	}
 	
 	
@@ -324,6 +363,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		chart.ActiveListenItemClick();
 		//为了让触发更灵敏，可以扩大5px的点击监听范围
 		chart.extPointClickRange(5);		
+		chart.showClikedFocus();
 	}
 	
 }

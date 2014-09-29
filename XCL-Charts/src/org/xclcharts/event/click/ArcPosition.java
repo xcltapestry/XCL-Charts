@@ -61,12 +61,12 @@ public class ArcPosition extends PositionRecord {
 		return mCirXY;
 	}
 	
-	public float getOffsetAngle()
+	public float getStartAngle()
 	{
 		return mOffsetAngle;
 	}
 	
-	public float currentAngle()
+	public float getSweepAngle()
 	{
 		return mCurrentAngle;
 	}

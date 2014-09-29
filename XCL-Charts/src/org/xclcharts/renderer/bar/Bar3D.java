@@ -153,7 +153,7 @@ public class Bar3D extends Bar{
 		//浅色	
 		int lightColor = DrawHelper.getInstance().getLightColor(color,mAlpha);
 		
-		mPaintBar.setColor(color);		
+		getBarPaint().setColor(color);		
 		mPaint3D.setColor(lightColor);
 		
 		//水平偏移量
@@ -174,7 +174,7 @@ public class Bar3D extends Bar{
 		mPathRectangle2D.lineTo(barRight2, barTop2); 
 		mPathRectangle2D.lineTo(barRight, barTop); 			
 		mPathRectangle2D.close();
-		canvas.drawPath(mPathRectangle2D,mPaintBar);
+		canvas.drawPath(mPathRectangle2D,getBarPaint());
 		
 		//右侧边
 		mPathRectangle2D.reset();
@@ -183,7 +183,7 @@ public class Bar3D extends Bar{
 		mPathRectangle2D.lineTo(barRight2, barBottom2); 
 		mPathRectangle2D.lineTo(barRight, barBottom); 
 		mPathRectangle2D.close();
-		canvas.drawPath(mPathRectangle2D,mPaintBar); 		
+		canvas.drawPath(mPathRectangle2D,getBarPaint()); 		
 		
 		mPathRectangle2D.reset();
 	    mPathRectangle2D.moveTo(barRight2, barTop2); 
@@ -307,7 +307,7 @@ public class Bar3D extends Bar{
 		//浅色
 		int lightColor =  DrawHelper.getInstance().getLightColor(color,mAlpha);
 		
-		mPaintBar.setColor(color);		
+		getBarPaint().setColor(color);		
 		mPaint3D.setColor(lightColor);
 		
 		//水平偏移量
@@ -340,7 +340,7 @@ public class Bar3D extends Bar{
 		mPathRectangle2D.lineTo(barRight2, barTop2 );
 		mPathRectangle2D.lineTo(barRight, barTop );
 		mPathRectangle2D.close();
-		canvas.drawPath(mPathRectangle2D,mPaintBar); 		
+		canvas.drawPath(mPathRectangle2D,getBarPaint()); 		
 	
 		//轮廓线
 		mPaintLine.reset();

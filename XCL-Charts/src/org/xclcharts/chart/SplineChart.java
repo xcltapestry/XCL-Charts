@@ -273,8 +273,9 @@ public class SplineChart extends LnChart{
 			PointF pointStart = lstPoints.get(i - 1);
 			PointF pointStop = lstPoints.get(i);
 			    
-			canvas.drawLine( pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
-					spData.getLinePaint()); 	
+			DrawHelper.getInstance().drawLine(spData.getLineStyle(),
+										pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
+										canvas,spData.getLinePaint());				
 		}
 		return true;
 	}
@@ -326,7 +327,9 @@ public class SplineChart extends LnChart{
             				pLine.getDotPaint()); //标识图形            			                	
             		dot.right = rendEndX;
         			        			
-        			savePointRecord(dataID,childID, dot.right + mMoveX, dot.bottom + mMoveY,
+            		//dot.right
+        			savePointRecord(dataID,childID, 
+        					dot.right - radius + mMoveX, dot.bottom + mMoveY,
         					dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
         					dot.right  + mMoveX			  , dot.bottom + radius + mMoveY);
         		

@@ -23,7 +23,6 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 public class SplineChart03View  extends DemoView {
 	
@@ -297,7 +296,7 @@ public class SplineChart03View  extends DemoView {
 					chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);		
 					chart.getToolTip().addToolTip(
 							" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);
-					
+					chart.getToolTip().getBackgroundPaint().setAlpha(100);
 					this.invalidate();
 					
 			     break;

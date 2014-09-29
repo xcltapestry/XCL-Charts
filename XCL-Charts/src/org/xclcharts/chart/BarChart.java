@@ -33,9 +33,7 @@ import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 import org.xclcharts.renderer.line.PlotCustomLine;
 
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.Log;
@@ -155,7 +153,9 @@ public class BarChart extends AxisChart {
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);					
 					dataAxis.setHorizontalTickAlign(Align.CENTER);
 					dataAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
-					getBar().getItemLabelPaint().setTextAlign(Align.LEFT);																
+					getBar().getItemLabelPaint().setTextAlign(Align.LEFT);	
+					
+					getBar().setBarDirection(XEnum.Direction.HORIZONTAL);
 					break;
 				}
 				case VERTICAL: {					
@@ -164,7 +164,8 @@ public class BarChart extends AxisChart {
 									
 					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
-					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);					
+					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);	
+					getBar().setBarDirection(XEnum.Direction.VERTICAL);
 					break;
 				}
 			}
@@ -256,7 +257,7 @@ public class BarChart extends AxisChart {
 			
 			//是否绘制tick
 			if(dataAxis.getTickLabelVisible() &&
-					isrenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
+					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 									
 			// 分类		
 			slen = i * dataAxis.getAxisSteps();			

@@ -140,7 +140,7 @@ public class LineChart01View extends DemoView {
 			chart.setLineAxisIntersectVisible(true);
 			//绘制十字交叉线
 			chart.showDyLine();
-		
+			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
 			
 			/*
 			//想隐藏轴线的可以下面的四个函数来隐藏
@@ -190,6 +190,7 @@ public class LineChart01View extends DemoView {
 		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);
 		lineData2.setLabelVisible(true);		
 		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
+		lineData2.setLineStyle(XEnum.LineStyle.DASH);
 		
 		
 		//Line 3

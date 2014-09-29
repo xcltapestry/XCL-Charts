@@ -179,7 +179,7 @@ public class AxisChart extends EventChart {
 	 * @param moveY	y坐标平移值
 	 * @return	是否绘制
 	 */
-	protected boolean isrenderVerticalBarDataAxisTick(float currentY,float moveY)
+	protected boolean isRenderVerticalBarDataAxisTick(float currentY,float moveY)
 	{
 		if(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
 				Float.compare(currentY, plotArea.getBottom()  - moveY) == 1 )

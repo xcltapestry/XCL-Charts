@@ -280,7 +280,7 @@ public class BarChart3D01View extends DemoView {
 		chart.getToolTip().setCurrentXY(x,y);	
 		chart.getToolTip().addToolTip(
 					" Current Value:" +Double.toString(bValue),mPaintToolTip);
-		
+		chart.getToolTip().getBackgroundPaint().setAlpha(100);
 		this.invalidate();
 	}
 	

@@ -48,13 +48,13 @@ public class Bar {
 	private XEnum.Direction mBarDirection = XEnum.Direction.VERTICAL;
 	
 	//柱形画笔
-	protected Paint mPaintBar = null;
+	private Paint mPaintBar = null;
 	
 	//文字画笔
 	private Paint mPaintItemLabel = null;		
 	
 	//柱形顶上文字偏移量
-	private int mItemLabelAnchorOffset = 10;
+	private int mItemLabelAnchorOffset = 5;
 	//柱形顶上文字旋转角度
 	private float mItemLabelRotateAngle = 0.0f;	
 	//是否显示柱形顶上文字标签
@@ -68,14 +68,6 @@ public class Bar {
 	
 	public Bar()
 	{				
-		initPaint();
-	}
-	
-	private void initPaint()
-	{
-		mPaintBar  = new Paint();
-		mPaintBar.setColor((int)Color.rgb(252, 210, 9));
-		mPaintBar.setStyle(Style.FILL);
 		
 	}
 		
@@ -274,10 +266,28 @@ public class Bar {
 	{
 		//在柱形的顶端显示上柱形的当前值			
 		if(getItemLabelsVisible())
-		{				
+		{							
+			//要依横向还是竖向
+			//如果是背向式的，还要看是向上还是向下
+			
+			float cx = x;
+			float cy = y;
+			
+			switch(mBarDirection)
+			{
+			case VERTICAL:
+				cy -= this.mItemLabelAnchorOffset;
+				break;
+			case HORIZONTAL:
+				cx += this.mItemLabelAnchorOffset;
+				break;	
+			default:
+				break;
+			}
+			
 			DrawHelper.getInstance().drawRotateText(text,
-								x ,
-								y,
+								cx ,
+								cy,
 	            			  getItemLabelRotateAngle(),
 	            			  canvas, 
 	            			  getItemLabelPaint());	

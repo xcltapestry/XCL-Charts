@@ -173,7 +173,13 @@ public class DountChart  extends PieChart{
 		//中心点坐标
 		 float cirX = plotArea.getCenterX();
 	     float cirY = plotArea.getCenterY();	     	    
-	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);	    	  		
+	     canvas.drawCircle(cirX, cirY, mFillRadius, mPaintFill);	 
+	     
+	     //边框线
+	     if(null != mPaintArcBorder)
+	     {
+	    	 canvas.drawCircle(cirX, cirY, mFillRadius, mPaintArcBorder);	 
+	     }
 	}
 	
 	protected void renderDount(Canvas canvas)

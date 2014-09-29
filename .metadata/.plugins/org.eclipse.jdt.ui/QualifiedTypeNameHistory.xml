@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.AxisChart"/>
-<fullyQualifiedTypeName name="org.xclcharts.chart.ScatterChart"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.ScatterChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.ScatterData"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -16,7 +14,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.event.click.BarPosition"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.graphics.Typeface"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.MoveDirection"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
@@ -28,10 +25,8 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="android.graphics.Canvas"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDotRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.ToolTipRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.ToolTip"/>
@@ -55,9 +50,14 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLine"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLineRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrossLineStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyLineStyle"/>
 </qualifiedTypeNameHistroy>

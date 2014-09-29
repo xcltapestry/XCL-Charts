@@ -53,6 +53,7 @@ public class PieChart3D01View extends DemoView implements Runnable{
 	private PieChart3D chart = new PieChart3D();
 	
 	private LinkedList<PieData> chartData = new LinkedList<PieData>();	
+	//Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	public PieChart3D01View(Context context) {
 		super(context);
@@ -167,7 +168,7 @@ public class PieChart3D01View extends DemoView implements Runnable{
 			  chart.setDataSource(chartData);
 			  
 			  for(int i=10;i>0;i--)
-			  {
+			  {				 
 				  Thread.sleep(100);
 				 // chart.setChartRange(0.0f, 0.0f,getScreenWidth()/i,getScreenHeight()/i);				  
 				  chart.setChartRange(0.0f, 0.0f,this.getWidth()/i,this.getHeight()/i);				  
@@ -181,7 +182,8 @@ public class PieChart3D01View extends DemoView implements Runnable{
 						chart.setChartRange(0.0f, 0.0f,getWidth(),getHeight());
 						
 						//激活点击监听
-						chart.ActiveListenItemClick();											
+						chart.ActiveListenItemClick();			
+						//chart.showClikedFocus();
 				  }
 				  postInvalidate(); 
 			  }
@@ -215,6 +217,13 @@ public class PieChart3D01View extends DemoView implements Runnable{
 				" key:" +  pData.getKey() +
 				" Label:" + pData.getLabel() ,
 				Toast.LENGTH_SHORT).show();	
+		/*
+		//在点击处显示tooltip
+		mPaintToolTip.setColor(Color.RED);			
+		chart.getToolTip().setCurrentXY(x,y);		
+		chart.getToolTip().addToolTip(" key:" +  pData.getKey() +
+										" Label:" + pData.getLabel(),mPaintToolTip);	
+		this.invalidate();*/
 	}
 	
 }

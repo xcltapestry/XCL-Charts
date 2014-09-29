@@ -25,6 +25,8 @@ package org.xclcharts.renderer;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.event.click.PlotArcPosition;
@@ -64,6 +66,8 @@ public class EventChart extends XChart {
 	private PointF mFocusPoint = null;
 	private float mFocusRadius = 0.0f;	
 	private RectF mFocusRect = null;	
+	private ArcPosition mFocusArcPosition = null;
+	private boolean mFocusArcSelect = false;
 	
 	private ToolTipRender mToolTip = null;
 	
@@ -120,10 +124,10 @@ public class EventChart extends XChart {
 	/**
 	 * 设置标识形状
 	 */
-	public void setClikedFocusShape()
-	{
+	//public void setClikedFocusShape()
+	//{
 		
-	}
+	//}
 	
 	private void clearSelected()
 	{
@@ -138,6 +142,7 @@ public class EventChart extends XChart {
 	protected void savePointRecord(final int dataID,final int childID,
 									final float x,final float y,final RectF r)
 	{
+		if(!getListenItemClickStatus())return;
 		savePointRecord(dataID,childID,x,y,r.left,r.top,r.right,r.bottom);		
 	}
 	
@@ -145,6 +150,7 @@ public class EventChart extends XChart {
 								  float x,float y,
 								  float left,float top, float right, float bottom)
 	{
+		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotPointPosition>();
 	
 		if(this.getListenItemClickStatus())
@@ -163,6 +169,7 @@ public class EventChart extends XChart {
 	protected void saveBarRectFRecord(int dataID,int childID,
 			   float left,float top,float right,float bottom)
 	{
+		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotBarPosition>();	
 		
 		if(this.getListenItemClickStatus())
@@ -175,11 +182,10 @@ public class EventChart extends XChart {
 				mRecordset.add(pRecord);															
 		}
 	}
-	
-	
-	
+			
 	protected void saveBarRecord(int dataID,int childID,float x,float y,RectF r)
 	{
+		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotBarPosition>();	
 	
 		if(this.getListenItemClickStatus())
@@ -197,6 +203,7 @@ public class EventChart extends XChart {
 	protected void saveArcRecord(int dataID,float centerX,float centerY,
 								 float radius,float offsetAngle,float Angle)
 	{
+		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotArcPosition>();	
 	
 		if(this.getListenItemClickStatus())
@@ -247,6 +254,7 @@ public class EventChart extends XChart {
 	 */
 	protected ArcPosition getArcRecord(float x,float y)
 	{			
+		if(!getListenItemClickStatus()) return null;		
 		if(!isPlotClickArea(x,y))return null;		
 		if(null == mRecordset) return null;
 			
@@ -266,6 +274,7 @@ public class EventChart extends XChart {
 	
 	protected BarPosition getBarRecord(float x,float y)
 	{		
+		if(!getListenItemClickStatus()) return null;
 		if(!isPlotClickArea(x,y))return null;		
 		if(null == mRecordset) return null;
 			
@@ -284,7 +293,8 @@ public class EventChart extends XChart {
 	}
 	
 	protected PointPosition getPointRecord(final float x,final float y)
-	{						
+	{					
+		if(!getListenItemClickStatus()) return null;
 		if(!isPlotClickArea(x,y))return null;		
 		if(null == mRecordset) return null;
 						
@@ -304,7 +314,11 @@ public class EventChart extends XChart {
 	
 	protected void initPositionRecord()
 	{
-		if(null != mRecordset) mRecordset.clear();
+		if(null != mRecordset)
+		{
+			mRecordset.clear();
+			mRecordset = null;
+		}
 		mSelectID = -1;
 	}
 	
@@ -338,6 +352,20 @@ public class EventChart extends XChart {
 		mFocusRect = rect;
 	}
 	
+	/**
+	 * 图，扇形类的焦点参数
+	 * @param arc 扇形选中类
+	 */
+	public void showFocusArc(ArcPosition arc)
+	{
+		showFocusArc(arc,false);
+	}
+	
+	public void showFocusArc(ArcPosition arc,boolean selected)
+	{
+		mFocusArcPosition = arc;
+		mFocusArcSelect = selected;
+	}
 	
 	/**
 	 * 开放提示信息类
@@ -351,7 +379,7 @@ public class EventChart extends XChart {
 	
 	/**
 	 * 绘制提示信息
-	 * @param canvas	信息
+	 * @param canvas 画布
 	 */
 	protected void renderToolTip(Canvas canvas)
 	{
@@ -362,7 +390,7 @@ public class EventChart extends XChart {
 	/**
 	 * 绘制焦点形状
 	 * @param canvas 画布
-	 * @return
+	 * @return 是否绘制成功
 	 */
 	protected boolean renderFocusShape(Canvas canvas)
 	{				
@@ -374,22 +402,46 @@ public class EventChart extends XChart {
 		//{
 			// mRecordset.renderShape(canvas);
 		//}
-	
-		if(null != mFocusPoint)
-		{									
-			canvas.drawCircle(mFocusPoint.x, mFocusPoint.y, 
-							  mFocusRadius, getFocusPaint());
-			mFocusPoint = null;
-		}else if(null != mFocusRect){		
-			canvas.save();
-			canvas.clipRect(plotArea.getLeft(),plotArea.getTop(),
-					plotArea.getRight(),plotArea.getBottom());
-				canvas.drawRect(mFocusRect, getFocusPaint());
-			canvas.restore();
-			mFocusRect = null;
-		}else{
+		try{
+				if(null != mFocusPoint)
+				{									
+					canvas.drawCircle(mFocusPoint.x, mFocusPoint.y, 
+									  mFocusRadius, getFocusPaint());	
+					mFocusPoint = null;
+				}else if(null != mFocusRect){		
+					canvas.save();
+					canvas.clipRect(plotArea.getLeft(),plotArea.getTop(),
+							plotArea.getRight(),plotArea.getBottom());
+						canvas.drawRect(mFocusRect, getFocusPaint());
+					canvas.restore();
+					mFocusRect = null;
+				}else if(null != mFocusArcPosition){												
+						PointF pointCir = mFocusArcPosition.getPointF();
+						float cirX = pointCir.x,cirY = pointCir.y;
+						float radius = mFocusArcPosition.getRadius();
+						if(mFocusArcSelect)
+						{
+							float SELECTED_OFFSET = 10.0f;							
+							//偏移圆心点位置(默认偏移半径的1/10)
+					    	float newRadius = div( radius , SELECTED_OFFSET);												    	
+					    	 //计算百分比标签
+					    	PointF point = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
+					    							newRadius,
+					    							add(mFocusArcPosition.getStartAngle() , mFocusArcPosition.getSweepAngle()/2f)); 					     
+					    	cirX = point.x;
+					    	cirY = point.y;
+						}
+						DrawHelper.getInstance().drawPercent(canvas, getFocusPaint(), 
+								cirX,cirY, radius,
+								mFocusArcPosition.getStartAngle(), mFocusArcPosition.getSweepAngle(), true);							
+						mFocusArcPosition = null;
+				}else{					
+					return false;
+				}
+		}catch(Exception ex)
+		{
+			Log.e(TAG,ex.toString());
 		}
-		
 		return true;
 	}
 		

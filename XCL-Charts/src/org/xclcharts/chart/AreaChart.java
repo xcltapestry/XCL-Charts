@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.common.CurveHelper;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
@@ -315,9 +316,10 @@ public class AreaChart extends LnChart{
         	if(0 == i)continue;
         	PointF pointStart = lstPoints.get(i - 1);
         	PointF pointStop = lstPoints.get(i);
-        	            
-  	        canvas.drawLine( pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
-  	    		  			areaData.getLinePaint()); 	
+        	            	
+  	      	DrawHelper.getInstance().drawLine(areaData.getLineStyle(), 
+  	    		  		pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
+  	    		  		canvas,areaData.getLinePaint());	
         }
 		return true;
 	}
@@ -354,7 +356,8 @@ public class AreaChart extends LnChart{
 		{
 			Log.e(TAG,"线数据集合为空.");
 			return false;
-		}	
+		}			
+		float itemAngle = bd.getItemLabelRotateAngle();
 		
 		for(int i=0;i<lstDots.size();i++)
 		{
@@ -373,7 +376,7 @@ public class AreaChart extends LnChart{
         				pLine.getDotPaint()); //标识图形            			                	
         		dot.right = rendEndX;
     			
-    			savePointRecord(dataID,childID, dot.right + mMoveX, dot.bottom + mMoveY,
+    			savePointRecord(dataID,childID, dot.right - radius+ mMoveX, dot.bottom + mMoveY,
     					dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
     					dot.right  + mMoveX			  , dot.bottom + radius + mMoveY);
     			
@@ -382,8 +385,9 @@ public class AreaChart extends LnChart{
     		
     		if(bd.getLabelVisible())
         	{        			            		
-        		canvas.drawText(this.getFormatterItemLabel(dv) ,
-        				dot.right ,dot.bottom,  pLine.getDotLabelPaint());
+        		DrawHelper.getInstance().drawRotateText(getFormatterItemLabel(dv) ,
+        				dot.right ,dot.bottom,itemAngle, canvas, pLine.getDotLabelPaint());
+        		
         	} 
 		}
 		return true;
