@@ -111,7 +111,7 @@ public class Bar {
 		//柱形顶上的文字标签	
 		if(null == mPaintItemLabel)
 		{
-			mPaintItemLabel = new Paint();
+			mPaintItemLabel = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPaintItemLabel.setTextSize(12);
 			mPaintItemLabel.setColor(Color.BLACK);
 			mPaintItemLabel.setTextAlign(Align.CENTER);

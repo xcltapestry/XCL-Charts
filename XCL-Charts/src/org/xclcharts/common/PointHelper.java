@@ -40,8 +40,8 @@ public class PointHelper {
 		// 求两点间距离
 		public static float distance(PointF p1, PointF p2) {
 			float dx = Math.abs(p2.x - p1.x);
-			float dy = Math.abs(p2.y - p1.y);
-			return (float) Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
+			float dy = Math.abs(p2.y - p1.y);			
+			return (float) Math.hypot(dx, dy);
 		}
 
 		// 平移点

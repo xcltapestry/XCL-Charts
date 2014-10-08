@@ -427,7 +427,8 @@ public class EventChart extends XChart {
 					    	 //计算百分比标签
 					    	PointF point = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
 					    							newRadius,
-					    							add(mFocusArcPosition.getStartAngle() , mFocusArcPosition.getSweepAngle()/2f)); 					     
+					    							add(mFocusArcPosition.getStartAngle() , 
+					    									mFocusArcPosition.getSweepAngle()/2f)); 					     
 					    	cirX = point.x;
 					    	cirY = point.y;
 						}

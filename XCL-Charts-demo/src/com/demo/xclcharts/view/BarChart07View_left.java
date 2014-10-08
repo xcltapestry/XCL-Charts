@@ -14,6 +14,7 @@ import org.xclcharts.view.GraphicalView;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -142,7 +143,7 @@ public class BarChart07View_left  extends GraphicalView {
 		private void chartDesireLines()
 		{										
 			CustomLineData cl = new CustomLineData("适中",18.5d,(int)Color.rgb(77, 184, 73),3);
-			cl.setLabelHorizontalPostion(XEnum.LabelAlign.LEFT);
+			cl.setLabelHorizontalPostion(Align.LEFT);
 			cl.hideLine();
 			mCustomLineDataset.add(cl);											
 		}

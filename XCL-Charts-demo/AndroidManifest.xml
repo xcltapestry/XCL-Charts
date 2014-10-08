@@ -54,8 +54,7 @@
         <activity
             android:name="com.demo.xclcharts.HLNScrollActivity"
             android:label="@string/title_activity_hlnscroll" 
-            android:hardwareAccelerated="false"
-            >
+            android:hardwareAccelerated="false">
              <!--2014-9-30  pand   解决了scrollview超过450dp不显示的问题 -->
         </activity>
         <activity

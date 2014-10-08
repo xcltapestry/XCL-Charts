@@ -261,6 +261,8 @@ public class SplineChart02View extends DemoView {
 		PointPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 
+		if(record.getDataID() >= chartData.size()) return;
+		
 		SplineData lData = chartData.get(record.getDataID());
 		LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
 		int pos = record.getDataChildID();
@@ -282,7 +284,7 @@ public class SplineChart02View extends DemoView {
 							Double.toString(xValue)+","+Double.toString(yValue), 
 							Toast.LENGTH_SHORT).show();
 			     
-					this.invalidate();
+					//this.invalidate();
 					
 			     break;
 			}

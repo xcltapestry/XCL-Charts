@@ -24,14 +24,13 @@ http://www.oschina.net/p/xcl-charts
 <br/>
 &nbsp;&nbsp;&nbsp;&nbsp;附注:
  <br/>&nbsp;&nbsp;&nbsp;&nbsp;建议用<b>jar</b>方式使用图表库，避免因程序更新引发一系列的连锁更新。
- <br/>&nbsp;&nbsp;&nbsp;&nbsp;因基础绘图类都已有单独封装，所以欢迎大家在此库基础上增加不同类型的图表和相关例子并分享您的改进。
  <br/>
 
  <b>部份例图:</b><br/> 
 
  <img src="http://img.blog.csdn.net/20140929210006405" alt="bar chart 竖向" />
    <img src="http://img.blog.csdn.net/20140927225047486" alt="stacked chart" />
-  <img src="http://img.blog.csdn.net/20140701134158254?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="横向3D bar chart " />  
+  <img src="http://img.blog.csdn.net/20141008195423602" alt="横向3D bar chart " />  
 
  <img src="http://img.blog.csdn.net/20140929210049071" alt="3D bar chart" />
  <img src="http://img.blog.csdn.net/20140929205829076" alt="line chart" />

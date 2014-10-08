@@ -105,7 +105,7 @@ public class DialChart01View extends GraphicalView {
 			chart.setTotalAngle(180);
 			chart.setStartAngle(180);
 			
-			//增加轴承
+			//增加轴
 			addAxis();						
 			/////////////////////////////////////////////////////////////
 			//设置附加信息
@@ -126,9 +126,7 @@ public class DialChart01View extends GraphicalView {
 	}
 	
 	public void addAxis()
-	{
-		/////////////////////////////////////////////////////////////		
-		
+	{	
 		try{
 			//开始设置轴			
 			//轴1 --最外面的弧线轴

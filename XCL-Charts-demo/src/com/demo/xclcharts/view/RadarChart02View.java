@@ -120,7 +120,7 @@ public class RadarChart02View extends DemoView {
 			//主轴标签偏移50，以便留出空间用于显示点和标签
 			chart.getDataAxis().setTickLabelMargin(20);
 			
-			chart.getLinePaint().setColor(Color.parseColor("#BFE154"));
+			chart.getLinePaint().setColor(Color.rgb(133, 194, 2)); //Color.parseColor("#BFE154"));
 			chart.getLabelPaint().setColor(Color.parseColor("#E94D43"));
 			chart.getLabelPaint().setFakeBoldText(true);
 			

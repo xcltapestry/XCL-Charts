@@ -25,9 +25,7 @@ import org.xclcharts.common.SysinfoHelper;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
@@ -38,6 +36,7 @@ import android.view.View;
  * @Description  XCL-Charts图表的View基类
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com) QQ群: 374780627
  */
+@SuppressLint("NewApi")
 public abstract class GraphicalView extends View {
 	
 	 private String TAG = "GraphicalView";	
@@ -126,8 +125,7 @@ public abstract class GraphicalView extends View {
 		 * 禁用硬件加速.
 		 * 原因:android自3.0引入了硬件加速，即使用GPU进行绘图,但它并不能完善的支持所有的绘图，
 		 * 通常表现为内容(如Rect或Path)不可见，异常或渲染错误。所以类了保证图表的正常显示，强制禁用掉.
-		 */
-		@SuppressLint("NewApi")
+		 */		
 		private void disableHardwareAccelerated()
 		{			
 			if(SysinfoHelper.getInstance().supportHardwareAccelerated())

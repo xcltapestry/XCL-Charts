@@ -32,7 +32,7 @@ import android.view.View;
 
 public class DensityUtil {
 	
-	private static final String TAG = "DensityUtil";
+	//private static final String TAG = "DensityUtil";
 	
 	private DensityUtil() {}
 	 

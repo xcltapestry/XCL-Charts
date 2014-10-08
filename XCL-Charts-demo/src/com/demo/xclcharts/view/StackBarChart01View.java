@@ -247,6 +247,7 @@ public class StackBarChart01View extends DemoView {
 		BarPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 		
+		if(record.getDataID() >= BarDataSet.size()) return;
 		BarData bData = BarDataSet.get(record.getDataID());					
 		Double bValue = bData.getDataSet().get(record.getDataChildID());			
 				

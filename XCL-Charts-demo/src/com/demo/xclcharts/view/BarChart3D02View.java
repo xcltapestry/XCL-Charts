@@ -147,6 +147,7 @@ public class BarChart3D02View extends DemoView {
 					String label = df.format(value).toString();
 					return label;
 				}});	       
+			chart.getBar().getItemLabelPaint().setTextSize(22);
 		
 			//定义基座颜色
 			chart.setAxis3DBaseColor((int)Color.rgb(132, 162, 197));

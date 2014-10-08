@@ -166,7 +166,6 @@ public class MultiAxisChart02View extends DemoView {
 			chart.getPlotGrid().showEvenRowBgColor();
 			chart.getPlotGrid().showOddRowBgColor();
 			//隐藏Key值
-			//chart.setPlotKeyVisible(false);	
 			chart.getPlotLegend().hideLegend();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -184,13 +183,13 @@ public class MultiAxisChart02View extends DemoView {
 		List<Double> dataSeries2= new LinkedList<Double>();	
 		dataSeries2.add(45000d); 
 		dataSeries2.add(85000d); 
-		//dataSeries2.add(450d); 
+		//dataSeries2.add(450d); 		
 
 		BarData BarDataA = new BarData("Virtual OPM",dataSeries1,(int)Color.rgb(0, 221, 177));	
 		BarData BarDataB = new BarData("Physical OPM",dataSeries2,(int)Color.rgb(238, 28, 161));		
-					
+				
 		chartData.add(BarDataA);
-		chartData.add(BarDataB);		
+		chartData.add(BarDataB);	
 	}
 	
 	private void chartLabels()
@@ -216,12 +215,16 @@ public class MultiAxisChart02View extends DemoView {
 		physical.add(110d); 
 		physical.add(125d); 
 		physical.add(0d); 
+	
+				
 		
 		//将标签与对应的数据集分别绑定
 		LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
 		LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
+		
 		lineData1.setDotStyle(XEnum.DotStyle.TRIANGLE);
 		lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
+			
 		
 		LinkedList<Double> BarKey1= new LinkedList<Double>();				
 		BarKey1.add(0d); 
@@ -230,15 +233,16 @@ public class MultiAxisChart02View extends DemoView {
 		
 		LineData lineDataBarKey1 = new LineData("Virtual OPM",BarKey1,(int)Color.rgb(0, 221, 177));
 		LineData lineDataBarKey2 = new LineData("Physical OPM",BarKey2,(int)Color.rgb(238, 28, 161));
+		
 		lineDataBarKey1.setDotStyle(XEnum.DotStyle.RECT);
 		lineDataBarKey2.setDotStyle(XEnum.DotStyle.RECT);
+		
 			
 		chartDataLn.add(lineDataBarKey1);
 		chartDataLn.add(lineDataBarKey2);	
 		
 		chartDataLn.add(lineData1);
 		chartDataLn.add(lineData2);	
-		
 	}
 	
 	
@@ -299,6 +303,7 @@ public class MultiAxisChart02View extends DemoView {
 			}
 			
 		});		
+					
 	}
 	
 	@Override

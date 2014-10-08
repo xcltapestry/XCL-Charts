@@ -38,16 +38,7 @@ public class XEnum {
 		 */
 		public enum ChartTitleAlign {  
 			LEFT, MIDDLE ,RIGHT
-		}
-		
-		/**
-		 * 标签显示位置
-		 * @author XCL
-		 *
-		 */
-		public enum LabelAlign {  
-			LEFT, MIDDLE ,RIGHT
-		}
+		}			
 		
 		/**
 		 * 对于圆形的图，如饼图之类，用来确定标签的显示位置
@@ -85,17 +76,7 @@ public class XEnum {
 		public enum TriangleStyle {
 			OUTLINE,FILL 
 		}
-		
-		
-		/**
-		 * 网格线:奇数行/偶数行
-		 * @author XCL
-		 *
-		 */
-		//public enum GridLines {
-		//	ODD_ROW,EVEN_ROW 
-		//}
-		
+
 		
 		/**
 		 * 线图，线的几种显示风格:Solid、Dot、Dash
@@ -133,17 +114,7 @@ public class XEnum {
 			HORIZONTAL, VERTICAL
 		}
 		
-		
-		/**
-		 * 轴类型(数据轴与标签轴)
-		 * @author XCL
-		 *
-		 */
-		//public enum AxisType {
-		//	DATA, LABEL
-		//}
-		
-		
+
 		/**
 		 * 轴标记类别:刻度线/标签
 		 * @author XCL

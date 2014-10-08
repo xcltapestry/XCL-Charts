@@ -29,14 +29,12 @@ import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-import android.widget.ZoomControls;
 
+import com.demo.xclcharts.view.ArcLineChart01View;
 import com.demo.xclcharts.view.AreaChart01View;
 import com.demo.xclcharts.view.AreaChart02View;
 import com.demo.xclcharts.view.BarChart01View;
@@ -48,6 +46,7 @@ import com.demo.xclcharts.view.BarChart06View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.BubbleChart01View;
+import com.demo.xclcharts.view.DemoView;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
@@ -62,14 +61,12 @@ import com.demo.xclcharts.view.RadarChart02View;
 import com.demo.xclcharts.view.RadarChart03View;
 import com.demo.xclcharts.view.RangeBarChart01View;
 import com.demo.xclcharts.view.RoseChart01View;
-import com.demo.xclcharts.view.ArcLineChart01View;
 import com.demo.xclcharts.view.ScatterChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.SplineChart02View;
 import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.StackBarChart01View;
 import com.demo.xclcharts.view.StackBarChart02View;
-import com.demo.xclcharts.view.DemoView;
 
 /**
  * @ClassName ChartsActivity
@@ -88,7 +85,7 @@ import com.demo.xclcharts.view.DemoView;
  * 		2. 通过chart.enableScale()来激活通过双指手势对图表进行缩放。
  * 		 不过这种方式缩放后点击事件就乱了。
  *      禁用方式:
- *      	chart.disableScal();
+ *      	chart.disableScale();
  * 
  * 图表区的平移  :  
  *  激活图表区的平移     
@@ -99,15 +96,15 @@ import com.demo.xclcharts.view.DemoView;
  *  如果要展示的图表数据比较长或多，可以通过调整绘图区宽度chart.getPlotArea().extWidth(增加宽度);或整
  *  个图的大小，即chart.setChartRange()的值。
  *  然后用户可以通过平移图表区的方式来展示未显示出来的数据. 
- *  注意，此方式对性能会有些损失，超大量的就不用尝试了. 
- *  对于这种可以通过scrollview控件等方式来处理。
+ *  注意，此方式对性能会有些损失，超大量的就不用尝试这种方式了， 
+ *  对于这种超大量的可以通过ScrollView控件方式来处理,具体可参考"左右滑动折线图"的例子。
  *  
  * @author XCL
  *
  */
 public class ChartsActivity extends Activity {
 	
-	private ZoomControls mZoomControls;
+	//private ZoomControls mZoomControls;
 	private int mSelected = 0;
 	
 	private DemoView[] mCharts ;

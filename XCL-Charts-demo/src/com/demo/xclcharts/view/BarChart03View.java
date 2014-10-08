@@ -38,6 +38,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -196,19 +197,19 @@ public class BarChart03View extends DemoView implements Runnable{
 	{				
 		CustomLineData line1 = new CustomLineData("及格线",60d,(int)Color.RED,7);
 		line1.setCustomLineCap(XEnum.DotStyle.PRISMATIC);		
-		line1.setLabelHorizontalPostion(XEnum.LabelAlign.LEFT);
+		line1.setLabelHorizontalPostion(Align.LEFT);
 		line1.setLabelOffset(15);	
 		line1.getLineLabelPaint().setColor(Color.RED);
 		mCustomLineDataset.add(line1);
 		
 		CustomLineData line2 = new CustomLineData("没过打屁股",60d,(int)Color.RED,7);
-		line2.setLabelHorizontalPostion(XEnum.LabelAlign.MIDDLE);
+		line2.setLabelHorizontalPostion(Align.CENTER);
 		line2.hideLine();
 		mCustomLineDataset.add(line2);
 		
 		CustomLineData line3 = new CustomLineData("良好",80d,(int)Color.rgb(35, 172, 57),5);	
 		line3.setCustomLineCap(XEnum.DotStyle.RECT);		
-		line3.setLabelHorizontalPostion(XEnum.LabelAlign.LEFT);	
+		line3.setLabelHorizontalPostion(Align.LEFT);	
 		line3.setLineStyle(XEnum.LineStyle.DOT);
 		mCustomLineDataset.add(line3);
 		
@@ -222,7 +223,7 @@ public class BarChart03View extends DemoView implements Runnable{
 		int average =  calcAvg() ;
 		CustomLineData line6 = new CustomLineData("本次考试平均得分:"+Integer.toString(average),
 														(double)average,(int)Color.BLUE,5);
-		line6.setLabelHorizontalPostion(XEnum.LabelAlign.MIDDLE);
+		line6.setLabelHorizontalPostion(Align.CENTER);
 		line6.setLineStyle(XEnum.LineStyle.DASH);
 		line6.getLineLabelPaint().setColor(Color.RED);
 		mCustomLineDataset.add(line6);							

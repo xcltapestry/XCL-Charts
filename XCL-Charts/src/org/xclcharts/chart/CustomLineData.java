@@ -45,7 +45,8 @@ public class CustomLineData {
 	private float mLabelRotateAngle = 0.0f; //-45f;
 	
 	//设置Label显示位置(左，中，右)
-	private XEnum.LabelAlign  mLabelAlign = XEnum.LabelAlign.RIGHT;
+	private Align  mLabelAlign = Align.RIGHT;
+	
 	//设置Label显示位置(上，中，下)
 	private XEnum.VerticalAlign mLabelPostion = XEnum.VerticalAlign.TOP;
 				
@@ -190,9 +191,9 @@ public class CustomLineData {
 	
 	/**
 	 * 设置标签显示位置(左，中，右),适合于竖向图，在横向图下设置无效.
-	 * @param align
+	 * @param align 位置
 	 */
-	public void setLabelHorizontalPostion(XEnum.LabelAlign align)
+	public void setLabelHorizontalPostion(Align align) //XEnum.LabelAlign
 	{
 		mLabelAlign = align;
 	}
@@ -201,7 +202,7 @@ public class CustomLineData {
 	 * 返回标签显示在左，中，右哪个位置
 	 * @return 位置
 	 */
-	public XEnum.LabelAlign getLabelHorizontalPostion()
+	public Align getLabelHorizontalPostion()
 	{
 		return mLabelAlign;
 	}

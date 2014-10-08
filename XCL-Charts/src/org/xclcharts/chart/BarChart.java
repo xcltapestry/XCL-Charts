@@ -653,7 +653,7 @@ public class BarChart extends AxisChart {
 			yMargin = DrawHelper.getInstance().getPaintFontHeight(
 							categoryAxis.getTickLabelPaint() ) / 2;				
 		}	
-		return yMargin;
+		return yMargin ;
 	}
 	
 	
@@ -759,7 +759,7 @@ public class BarChart extends AxisChart {
 					   bufferBitmap = Bitmap.createBitmap(
 							   (int)(plotArea.getLeft() + (plotArea.getRight() - plotArea.getLeft())),
 							   (int)(plotArea.getTop() + (plotArea.getBottom() - plotArea.getTop())), 
-							  Bitmap.Config.ARGB_8888); 
+							  Bitmap.Config.ARGB_4444); //ARGB_8888 RGB_565
 					   
 					   if (null == bufferBitmap) {
 						   return renderVerticalBar(canvas);							 
@@ -785,8 +785,8 @@ public class BarChart extends AxisChart {
 				Log.e(TAG,"---OutOfMemoryError------------------");
 			}
 			return true;
-	 }
-	 */
+	 }*/
+	 
 	 
 
 	private boolean drawClipVerticalBar(Canvas canvas)
@@ -828,7 +828,7 @@ public class BarChart extends AxisChart {
 			//绘制X轴tick和marks			
 			canvas.save();		
 					canvas.clipRect(plotArea.getLeft()  - xMargin , plotArea.getTop(),
-									plotArea.getRight() + xMargin, this.getBottom());
+									plotArea.getRight() + xMargin , this.getBottom());
 					canvas.translate(offsetX,0);
 				
 					renderVerticalBarCategoryAxis(canvas);							

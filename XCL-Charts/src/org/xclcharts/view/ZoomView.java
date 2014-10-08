@@ -33,7 +33,8 @@ import android.util.AttributeSet;
 
 /**
  * @ClassName ZoomView
- * @Description  包含放大缩小图表函数的View基类
+ * @Description  包含放大缩小图表函数的View基类,
+ *                与enableScale()所对应的放大缩小不同，这个可以补捉到处理后的位置信息
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com) QQ群: 374780627
  */
 public class ZoomView extends ChartView implements IChartZoom {

@@ -136,7 +136,7 @@ public class PieChart3D01View extends DemoView implements Runnable{
 	@Override
     public void render(Canvas canvas) {
         try{
-            chart.render(canvas);
+           chart.render(canvas);       
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }

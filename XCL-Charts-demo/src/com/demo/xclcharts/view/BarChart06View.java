@@ -112,9 +112,7 @@ public class BarChart06View extends DemoView implements Runnable{
 			//显示边框
 			chart.showRoundBorder();
 			
-			//标题
-			chart.setTitle("柱形渐显动画演示");
-			chart.addSubtitle("(XCL-Charts Demo)");	
+			chart.setDataSource(chartData);
 			
 			//数据源
 			chart.setCategories(chartLabels);	
@@ -219,32 +217,43 @@ public class BarChart06View extends DemoView implements Runnable{
        // } //end while
 	}
 	
+	
+	
 	private void chartAnimation()
 	{
-		  try {                            	            	 
-          	List<Double> dataSeries= new LinkedList<Double>();	
-          	dataSeries.add(0d);       
-          	for(int i=0;i< chartData.size() ;i++)
+		  try {                            	           		
+			chart.getDataAxis().setVisible(false);
+			
+						          
+          	int [] ltrb = getBarLnDefaultSpadding();          	
+          	for(int i=8; i> 0 ;i--)
           	{
-          		Thread.sleep(200);
-          		List<BarData> animationData = new LinkedList<BarData>();
-          		for(int j=0;j<chartData.size();j++)
-                  {            			            			
-          			if(j > i)
-          			{            		
-          				animationData.add(new BarData());
-          			}else{            			
-          				animationData.add(chartData.get(j));
-          			}
-                  }   
-          		chart.setDataSource(animationData);
-          		postInvalidate();            		
-          	}            	
+          		Thread.sleep(100);
+          		chart.setPadding(ltrb[0],i *  ltrb[1], ltrb[2], ltrb[3]);	    	
+          		
+          		if(1 == i)
+          		{          			
+          			drawTitle();
+          		}
+          		postInvalidate();    
+          	} 
+          	                 
           }
           catch(Exception e) {
               Thread.currentThread().interrupt();
           }            
 	}
+	
+	private void drawTitle()
+	{
+		//标题
+		chart.setTitle("柱形渐显动画演示");
+		chart.addSubtitle("(XCL-Charts Demo)");	
+				
+		chart.getDataAxis().setVisible(true);				
+	}
+	
+	
 	
 }
 

@@ -48,9 +48,7 @@ import android.view.MotionEvent;
 
 /**
  * @ClassName BarChart01View
- * @Description  柱形图例子(竖向) <br/>
- * 	问动画效果的人太多了，其实图表库就应当只管绘图，动画效果就交给View或SurfaceView吧,
- * 	看看我弄的效果有多靓. ~_~
+ * @Description  柱形图例子(竖向) 
  *  
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
@@ -358,7 +356,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 				return;
 			}
 			
-			BarData bData = chartData.get(record.getDataID());					
+			if(record.getDataID() >= chartData.size()) return;
+			BarData bData = chartData.get(record.getDataID());	
+			
+			if(record.getDataChildID() >= bData.getDataSet().size())return;
 			Double bValue = bData.getDataSet().get(record.getDataChildID());			
 	
 			//显示选中框

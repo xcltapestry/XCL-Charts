@@ -187,11 +187,11 @@ public class MathHelper {
     //两点间的距离
     public double getDistance(float sx,float sy,float tx,float ty)
     {	 
-    	float nx =  Math.abs(tx - sx);
-        float ny =  Math.abs(ty - sy);	         
-        return Math.sqrt(Math.hypot(nx, ny));      
+    	float nx = Math.abs(tx - sx);
+        float ny = Math.abs(ty - sy);	       
+          
+      	return Math.hypot(nx, ny);
     }	
-
 	 
 	/**
 	 * 加法运算

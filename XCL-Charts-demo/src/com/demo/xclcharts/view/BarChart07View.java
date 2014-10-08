@@ -11,11 +11,13 @@ import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.view.GraphicalView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 public class BarChart07View  extends GraphicalView {
 	
@@ -56,10 +58,12 @@ public class BarChart07View  extends GraphicalView {
 		 
 	
 		 
+		@SuppressLint("NewApi")
 		private void chartRender()
 		{
 			try {
 			
+				setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 				//数据源
 				chart.setDataSource(chartData);
 				chart.setCategories(chartLabels);	

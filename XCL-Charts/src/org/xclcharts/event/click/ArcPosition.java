@@ -47,7 +47,7 @@ public class ArcPosition extends PositionRecord {
 	
 	public float getAngle()
 	{
-		return mOffsetAngle + mCurrentAngle;
+		return MathHelper.getInstance().add(mOffsetAngle , mCurrentAngle);
 	}
 
 	
@@ -71,8 +71,6 @@ public class ArcPosition extends PositionRecord {
 		return mCurrentAngle;
 	}
 	
-	
-
 	@Override
 	protected boolean compareRange(float x, float y) {
 		// TODO Auto-generated method stub

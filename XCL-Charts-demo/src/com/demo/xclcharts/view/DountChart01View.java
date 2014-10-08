@@ -116,6 +116,10 @@ public class DountChart01View extends DemoView {
 			//显示边框线，并设置其颜色
 			chart.getArcBorderPaint().setColor(Color.YELLOW);
 			
+			//可用这个修改环所占比例
+			//chart.setInnerRadius(0.6f);
+		
+			
 			//设置附加信息
 			addAttrInfo();
 			

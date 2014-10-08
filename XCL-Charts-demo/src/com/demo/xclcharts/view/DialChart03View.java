@@ -98,7 +98,7 @@ public class DialChart03View extends GraphicalView {
 				//设置指针长度
 				chart.getPointer().setLength(0.75f);
 				
-				//增加轴承
+				//增加轴
 				addAxis();						
 				/////////////////////////////////////////////////////////////
 				//增加指针

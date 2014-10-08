@@ -1,8 +1,0 @@
-package org.xclcharts.view;
-
-import org.xclcharts.event.zoom.IChartZoom;
-
-
-public class TouchView extends GraphicalView implements IChartZoom {
-
-}

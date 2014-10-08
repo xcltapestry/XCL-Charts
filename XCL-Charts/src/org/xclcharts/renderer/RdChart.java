@@ -169,9 +169,8 @@ public class RdChart extends EventChart {
 	{
 		if(null == mPaintLine)
 		{
-			mPaintLine = new Paint();
+			mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
 			mPaintLine.setColor((int)Color.rgb(180, 205, 230));
-			mPaintLine.setAntiAlias(true);
 			mPaintLine.setStyle(Style.STROKE);
 			mPaintLine.setStrokeWidth(3);	
 		}		

@@ -4,16 +4,17 @@ import java.util.LinkedList;
 
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
-import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.view.GraphicalView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.View;
 
 public class LineChart03View  extends GraphicalView {
 	
@@ -46,9 +47,11 @@ public class LineChart03View  extends GraphicalView {
 			chartRender();
 	 }		
 
+	@SuppressLint("NewApi")
 	private void chartRender()
 	{
 		try {				
+			setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
 			//设定数据源
 			chart.setCategories(labels);								

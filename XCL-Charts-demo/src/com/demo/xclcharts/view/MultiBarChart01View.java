@@ -61,6 +61,7 @@ public class MultiBarChart01View extends DemoView {
 	private List<BarData> chartData2 = new LinkedList<BarData>();
 	
 	private int axisColor = Color.rgb(125, 223, 252);
+	int mOffset = 0;
 	
 	public MultiBarChart01View(Context context) {
 		super(context);
@@ -80,6 +81,9 @@ public class MultiBarChart01View extends DemoView {
 	 
 	 private void initView()
 	 {
+		 
+		    mOffset =  DensityUtil.dip2px(getContext(), 45);
+		 
 		 	chartLabels();
 			chartDataSet();
 			chartDataSet2();
@@ -95,38 +99,36 @@ public class MultiBarChart01View extends DemoView {
         chart.setChartRange(w,h);
         chart2.setChartRange(w,h);
     }  
-	
-	
+		
 	private void chartRender()
 	{
-		try {								
+		try {									 
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(DensityUtil.dip2px(getContext(), 45),ltrb[1], ltrb[2],  ltrb[3]);			
+			chart.setPadding(mOffset,ltrb[1], ltrb[2], ltrb[3] );				
 		
+			chart.getBar().setBarStyle(XEnum.BarStyle.FILL);		
+						
+			chart.setApplyBackgroundColor(true);
+			chart.setBackgroundColor(Color.rgb(19, 163, 224));						 
+			chart.showRoundBorder();
+	
 			//数据源
 			chart.setDataSource(chartData);
-			chart.setCategories(chartLabels);				
+			chart.setCategories(chartLabels);	
+		
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(2500);
 			chart.getDataAxis().setAxisMin(0);
 			chart.getDataAxis().setAxisSteps(500);
-								
+			
 			 //让柱子间没空白
 			 chart.getBar().setBarInnerMargin(0d);
-			 
+		
 			 //隐藏轴
 			 chart.getDataAxis().setVisible(false);
 			 chart.getCategoryAxis().setVisible(false);
-						 
-			 //将Bar风格设为Fill
-			 chart.getBar().setBarStyle(XEnum.BarStyle.FILL);
-			 
-			 chart.setApplyBackgroundColor(true);
-			 chart.setBackgroundColor(Color.rgb(19, 163, 224));						 
-			 chart.showRoundBorder();
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -139,10 +141,14 @@ public class MultiBarChart01View extends DemoView {
 		try {									 
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart2.setPadding(DensityUtil.dip2px(getContext(), 45),ltrb[1], ltrb[2], ltrb[3] );				
+			chart2.setPadding(mOffset,ltrb[1], ltrb[2], ltrb[3] );				
 			
 			//显示边框
 			//chart2.showRoundBorder();		
+			
+			// chart.setApplyBackgroundColor(true);
+			 chart2.setBackgroundColor(Color.rgb(19, 163, 224));						 
+			 chart2.showRoundBorder();
 			
 			chart2.getBar().setBarStyle(XEnum.BarStyle.FILL);		
 			
@@ -256,10 +262,7 @@ public class MultiBarChart01View extends DemoView {
 	}
 	
 	private void chartDataSet2()
-	{
-		
-		
-		
+	{						
 		//标签对应的柱形数据集
 		List<Double> dataSeriesA= new LinkedList<Double>();	
 		dataSeriesA.add(1600d); 

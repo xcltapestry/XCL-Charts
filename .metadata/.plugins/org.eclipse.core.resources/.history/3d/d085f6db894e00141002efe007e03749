@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".HLNScrollActivity" >
+    
+
+        
+         <FrameLayout  android:layout_width="600dp"
+						         android:layout_height="800dip" 		         
+	            		android:layout_centerInParent="true"	            		             
+             >      
+                     
+                <!-- 
+               <com.demo.xclcharts.view.LineChart03View_left
+			         android:id="@+id/circle_view"
+			         android:layout_width="300dp"
+					 android:layout_height="500dp" 	
+			         android:layout_gravity="left"
+			       />   	 -->
+			     
+               <!--   600dp  match_parent   android:fillViewport="true" -->
+                    <HorizontalScrollView
+				        android:id="@+id/horizontalScrollView1"
+				        android:layout_width="wrap_content"
+				        android:layout_height="500dp"
+						android:scrollbars="none"
+	            		 android:fadingEdge="none"	            		 
+	            		  android:layout_marginLeft="0dp"
+	            		  android:layout_marginRight="0dp"
+	            		        
+				        >				
+				        <LinearLayout
+				            android:id="@+id/line"
+				            android:layout_width="wrap_content"
+				        	android:layout_height="wrap_content" 
+				            android:orientation="horizontal" >			
+				            
+				            	                
+				             <com.demo.xclcharts.view.LineChart03View
+						         android:id="@+id/lineChartView_right"
+						         android:layout_width="800dp"
+						         android:layout_height="500dp" />	
+			         	            
+				        </LinearLayout>
+				    </HorizontalScrollView>
+	                 
+		  </FrameLayout>	       
+     
+
+
+</RelativeLayout>

@@ -55,11 +55,10 @@ import org.xclcharts.renderer.plot.PlotTitleRender;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.PointF;
-import android.util.Log;
 
 public class XChart implements IRender {
 		
-	private static final String TAG = "XChart";
+	//private static final String TAG = "XChart";
 	// 开放主图表区
 	protected PlotAreaRender plotArea = null;
 	// 开放主图表区网格
@@ -101,7 +100,7 @@ public class XChart implements IRender {
 	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
 	
 	//是否充许gc
-	private boolean mEnableGC = true;
+	private boolean mEnableGC = false;
 	
 	//是否显示十字交叉线
 	private boolean mDyLineVisible = false;
@@ -560,7 +559,7 @@ public class XChart implements IRender {
 	
 	/**
 	 * 绘制边框
-	 * @param canvas
+	 * @param canvas 画布
 	 */
 	protected void renderBorder(Canvas canvas)
 	{
