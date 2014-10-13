@@ -45,8 +45,8 @@ public class XEnum {
 		 * @author XCL  
 		 *
 		 */
-		public enum SliceLabelPosition{		
-			HIDE,INSIDE,OUTSIDE,LINE
+		public enum SliceLabelStyle{		
+			HIDE,INSIDE,OUTSIDE,BROKENLINE
 		}
 				
 		/**

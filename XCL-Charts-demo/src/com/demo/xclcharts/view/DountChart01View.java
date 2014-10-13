@@ -97,7 +97,7 @@ public class DountChart01View extends DemoView {
 			chart.getCenterTextPaint().setColor(Color.rgb(242, 167, 69));						
 									
 			//标签显示(隐藏，显示在中间，显示在扇区外面) 
-			chart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
+			chart.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
 			chart.getLabelPaint().setColor(Color.WHITE);
 			
 			//标题

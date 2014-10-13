@@ -2,29 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="241" key="DIALOG_Y_ORIGIN"/>
+		<item value="261" key="DIALOG_Y_ORIGIN"/>
+		<item value="883" key="DIALOG_X_ORIGIN"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="329" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="renderLabelInside" key="selection"/>
+		<item value="SliceLabelStyle" key="selection"/>
 		<list key="findhistory">
+			<item value="SliceLabelPosition"/>
+			<item value="mLabelPosition"/>
 			<item value="renderLabelInside"/>
 			<item value="getItemLabelRotateAngle"/>
 			<item value="mItemLabelRotateAngle"/>
 			<item value="mIsLabelLineSyncColor"/>
 			<item value="mIsLabelSyncColor"/>
 			<item value="renderLabelLine"/>
-			<item value="//标签显示位置"/>
-			<item value="mPaintLabel"/>
 		</list>
 		<list key="replacehistory">
+			<item value="SliceLabelStyle"/>
 			<item value="paintLabel"/>
 			<item value="isRenderVerticalBarDataAxisTick"/>
 			<item value="getBarPaint()"/>
@@ -32,7 +33,6 @@
 			<item value="DyLine"/>
 			<item value="mDotToolTip"/>
 			<item value="mPaintToolTip"/>
-			<item value="mPaintTooltips"/>
 		</list>
 	</section>
 </section>

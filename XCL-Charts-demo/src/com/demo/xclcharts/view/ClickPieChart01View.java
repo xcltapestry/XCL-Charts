@@ -90,7 +90,7 @@ public class ClickPieChart01View extends GraphicalView {
 	{
 		try {										
 			//标签显示(隐藏，显示在中间，显示在扇区外面,折线注释方式)
-			chart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);			
+			chart.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);			
 			
 			//图的内边距
 			

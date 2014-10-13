@@ -1,0 +1,14 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.renderer.XEnum;
+
+public class LabelLine {
+	
+	private XEnum.LabelLinePoint mLinePoint = XEnum.LabelLinePoint.NONE;
+	
+	public LabelLine()
+	{		
+	}
+
+	
+}

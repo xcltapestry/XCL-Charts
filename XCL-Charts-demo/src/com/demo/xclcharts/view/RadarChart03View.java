@@ -211,7 +211,7 @@ public class RadarChart03View extends DemoView {
 			chartRose.setInitialAngle(270 + 72/2);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chartRose.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
+			chartRose.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -247,7 +247,7 @@ public class RadarChart03View extends DemoView {
 			chartRose3.setInitialAngle(270 + 72/2);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chartRose3.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
+			chartRose3.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
 			
 			chartRose3.getLabelPaint().setColor(Color.parseColor("#D92222"));
 			

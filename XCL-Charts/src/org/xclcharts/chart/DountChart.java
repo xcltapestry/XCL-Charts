@@ -71,7 +71,7 @@ public class DountChart  extends PieChart{
 		
 		plotAttrInfoRender = new PlotAttrInfoRender();
 			
-		this.setLabelPosition(XEnum.SliceLabelPosition.OUTSIDE);
+		this.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
 	}
 	
 	private void initCenterTextPaint()

@@ -95,7 +95,7 @@ public class PieChart01View extends DemoView implements Runnable{
 			//chart.setInitialAngle(90);	
 			
 			//标签显示(隐藏，显示在中间，显示在扇区外面)
-			chart.setLabelPosition(XEnum.SliceLabelPosition.INSIDE);
+			chart.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
 			chart.getLabelPaint().setColor(Color.WHITE);
 			
 			//标题

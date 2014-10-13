@@ -50,7 +50,7 @@ public class CirChart extends EventChart{
 	private float mRadius=0.0f;		
 	
 	//标签注释显示位置 [隐藏,Default,Inside,Ouside,Line]
-	private XEnum.SliceLabelPosition mLabelPosition  = XEnum.SliceLabelPosition.INSIDE;	
+	private XEnum.SliceLabelStyle mLabelPosition  = XEnum.SliceLabelStyle.INSIDE;	
 	
 	//开放标签画笔让用户设置
 	private Paint mPaintLabel = null;
@@ -114,7 +114,7 @@ public class CirChart extends EventChart{
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
 	 * @param position 显示位置
 	 */
-	public void setLabelPosition(XEnum.SliceLabelPosition position)
+	public void setLabelStyle(XEnum.SliceLabelStyle position)
 	{
 		mLabelPosition = position;
 		//INNER,OUTSIDE,HIDE
@@ -127,17 +127,17 @@ public class CirChart extends EventChart{
 			break;
 		case HIDE :
 			break;
-		case LINE :
+		case BROKENLINE:
 			break;
 		default:			
 		}				
 	}
 	
 	/**
-	 * 返回标签位置设置
-	 * @return	标签位置
+	 * 返回标签风格设置
+	 * @return	标签风格
 	 */
-	public XEnum.SliceLabelPosition getLabelPosition()
+	public XEnum.SliceLabelStyle getLabelStyle()
 	{
 		return mLabelPosition;
 	}
@@ -250,7 +250,7 @@ public class CirChart extends EventChart{
 			final double offsetAngle,
 			final double curretAnglet)
 	{
-		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return true;
+		if(XEnum.SliceLabelStyle.HIDE == mLabelPosition) return true;
 		
 		String text = cData.getLabel();
 		if(""==text||text.length()==0)return true;
@@ -268,16 +268,16 @@ public class CirChart extends EventChart{
 		//标签颜色与当地扇区颜色同步
 		if(mIsLabelSyncColor) this.getLabelPaint().setColor(cData.getSliceColor());
 				
-		if(XEnum.SliceLabelPosition.INSIDE  == mLabelPosition)
+		if(XEnum.SliceLabelStyle.INSIDE  == mLabelPosition)
 		{			 
 			//显示在扇形的内部
 			renderLabelInside(canvas,text,cData.getItemLabelRotateAngle(),
 												cirX,cirY,radius,calcAngle);
-		}else if(XEnum.SliceLabelPosition.OUTSIDE == mLabelPosition){
+		}else if(XEnum.SliceLabelStyle.OUTSIDE == mLabelPosition){
 			//显示在扇形的外部
 			renderLabelOutside(canvas,text,cData.getItemLabelRotateAngle(),
 												cirX,cirY,radius,calcAngle);		
-		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){				
+		}else if(XEnum.SliceLabelStyle.BROKENLINE == mLabelPosition){				
 			//显示在扇形的外部
 			//1/4处为起始点
 			renderLabelLine(canvas,cData,cirX,cirY,radius,calcAngle);

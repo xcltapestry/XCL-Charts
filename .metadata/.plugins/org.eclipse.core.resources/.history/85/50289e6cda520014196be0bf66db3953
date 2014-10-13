@@ -1,0 +1,86 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Color;
+import android.graphics.Paint;
+
+public class LabelLine {
+	
+	private XEnum.LabelLinePoint mLinePoint = XEnum.LabelLinePoint.ALL;
+	private float mRadius = 5.f;
+	
+	//当标签为Line类型时使用
+	private Paint mPaintLabelLine = null;
+	
+	//画点 
+	private Paint mPaintPoint = null;
+		
+	//标签与点的转折线长度
+	private float mLabelBrokenLineLength = 20.f;
+		
+	
+	public LabelLine()
+	{		
+	}
+
+	public void setLinePoint(XEnum.LabelLinePoint linePoint)
+	{
+		mLinePoint = linePoint;
+	}
+	
+	public XEnum.LabelLinePoint getLinePointStyle()
+	{
+		return mLinePoint;
+	}
+	
+	public void setRadius(float radius)
+	{
+		mRadius = radius;
+	}
+	
+	public float getRadius()
+	{
+		return mRadius;
+	}
+	
+	
+	public void setBrokenLine(float len)
+	{
+		mLabelBrokenLineLength = len;
+	}
+	
+	public float getBrokenLine()
+	{
+		return mLabelBrokenLineLength;
+	}
+	
+	
+	
+	/**
+	 * 开放标签线画笔(当标签为Line类型时有效)
+	 * @return 画笔
+	 */
+	public Paint getLabelLinePaint()
+	{
+		if(null == mPaintLabelLine)
+		{
+			mPaintLabelLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPaintLabelLine.setColor(Color.BLACK);		
+			mPaintLabelLine.setStrokeWidth(2);
+		}
+		return mPaintLabelLine;
+	}
+	
+	
+	public Paint getPointPaint()
+	{
+		if(null == mPaintPoint)
+		{
+			mPaintPoint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		}
+		return mPaintPoint;
+	}
+	
+	
+}
