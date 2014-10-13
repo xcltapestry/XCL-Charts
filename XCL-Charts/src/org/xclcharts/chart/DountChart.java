@@ -22,6 +22,7 @@
 
 package org.xclcharts.chart;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotAttrInfo;
@@ -155,7 +156,7 @@ public class DountChart  extends PieChart{
 	}
 
 	@Override
-	protected void renderLabelInside(Canvas canvas,String text,
+	protected void renderLabelInside(Canvas canvas,String text,float itemAngle,
 			 float cirX,float cirY,float radius,float calcAngle)
 	{
 		//显示在扇形的中心
@@ -165,7 +166,8 @@ public class DountChart  extends PieChart{
 		PointF point = MathHelper.getInstance().calcArcEndPointXY(
 						cirX, cirY, calcRadius, calcAngle); 						 
 		//标识
-		canvas.drawText( text ,point.x, point.y ,this.getLabelPaint());		
+		DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+				canvas, getLabelPaint());
 	}
 	
 	protected void renderInnderCircle(Canvas canvas)

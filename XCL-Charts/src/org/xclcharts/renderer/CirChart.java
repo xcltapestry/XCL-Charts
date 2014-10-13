@@ -22,7 +22,11 @@
 
 package org.xclcharts.renderer;
 
+import org.xclcharts.chart.PieData;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.plot.LabelBrokenLine;
+import org.xclcharts.renderer.plot.LabelBrokenLineRender;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -46,53 +50,28 @@ public class CirChart extends EventChart{
 	private float mRadius=0.0f;		
 	
 	//标签注释显示位置 [隐藏,Default,Inside,Ouside,Line]
-	private XEnum.SliceLabelPosition mLabelPosition;
+	private XEnum.SliceLabelPosition mLabelPosition  = XEnum.SliceLabelPosition.INSIDE;	
 	
 	//开放标签画笔让用户设置
 	private Paint mPaintLabel = null;
-	//当标签为Line类型时使用
-	private Paint mPaintLabelLine = null;
-	
 	//初始偏移角度
-	protected float mOffsetAngle = 0.0f;//180;
-	
-	//标签与点的转折线长度
-	private int mLabelBrokenLineLength = 10;
+	protected float mOffsetAngle = 0.0f;//180;	
 	
 	//平移模式下的可移动方向
 	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
 	private boolean mEnablePanMode = true;
 	
+	//折线标签基类
+	private LabelBrokenLineRender mLabelLine = null;
+	
+	//同步标签颜色
+	private boolean mIsLabelLineSyncColor = false;
+	private boolean mIsLabelPointSyncColor = false;
+	private boolean mIsLabelSyncColor = false;
 		
 	public CirChart()
-	{
-		initChart();
+	{		
 	}
-	
-	private void initChart()
-	{
-		//标签显示位置
-		mLabelPosition = XEnum.SliceLabelPosition.INSIDE;
-				
-		mPaintLabel = new Paint();
-		mPaintLabel.setColor(Color.BLACK);
-		mPaintLabel.setTextSize(18);
-		mPaintLabel.setAntiAlias(true);
-		mPaintLabel.setTextAlign(Align.CENTER);	
-	
-	}
-	
-	private void initLabelLinePaint()
-	{
-		if(null == mPaintLabelLine)
-		{
-			mPaintLabelLine = new Paint();
-			mPaintLabelLine.setColor(Color.BLACK);
-			mPaintLabelLine.setAntiAlias(true);
-			mPaintLabelLine.setStrokeWidth(2);
-		}
-	}
-	
 	
 	@Override
 	protected void calcPlotRange()
@@ -142,7 +121,7 @@ public class CirChart extends EventChart{
 		switch(position)
 		{
 		case INSIDE :
-			mPaintLabel.setTextAlign(Align.CENTER);
+			getLabelPaint().setTextAlign(Align.CENTER);
 			break;
 		case OUTSIDE :
 			break;
@@ -169,20 +148,27 @@ public class CirChart extends EventChart{
 	 */
 	public Paint getLabelPaint()
 	{
+		if(null == mPaintLabel)
+		{
+			mPaintLabel = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPaintLabel.setColor(Color.BLACK);
+			mPaintLabel.setAntiAlias(true);
+			mPaintLabel.setTextAlign(Align.CENTER);	
+		}
 		return mPaintLabel;
 	}
 	
 	/**
-	 * 开放标签线画笔(当标签为Line类型时有效)
-	 * @return 画笔
+	 * 开放折线标签绘制类(当标签为Line类型时有效)
+	 * @return 折线标签绘制类
 	 */
-	public Paint getLabelLinePaint()
+	public LabelBrokenLine getLabelBrokenLine()
 	{
-		initLabelLinePaint();
-		return mPaintLabelLine;
+		if(null == mLabelLine)mLabelLine = new LabelBrokenLineRender();
+		return mLabelLine;
 	}
 	
-	protected void renderLabelInside(Canvas canvas,String text,
+	protected void renderLabelInside(Canvas canvas,String text,float itemAngle,
 									 float cirX,float cirY,float radius,float calcAngle)
 	{
 		//显示在扇形的中心
@@ -192,11 +178,11 @@ public class CirChart extends EventChart{
 		PointF point = MathHelper.getInstance().calcArcEndPointXY(
 										cirX, cirY, calcRadius, calcAngle); 						 
 		//标识
-		canvas.drawText( text ,point.x, point.y ,mPaintLabel);
-		
+		DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+											canvas, getLabelPaint());
 	}
 	
-	protected void renderLabelOutside(Canvas canvas,String text,
+	protected void renderLabelOutside(Canvas canvas,String text,float itemAngle,
 							float cirX,float cirY,float radius,float calcAngle)
 	{
 		//显示在扇形的外部
@@ -206,90 +192,67 @@ public class CirChart extends EventChart{
 										cirX, cirY, calcRadius, calcAngle); 	
 			 
 		//标识
-		canvas.drawText(text,point.x, point.y,mPaintLabel);  
+		DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+															canvas, getLabelPaint());
 	
 	}
 	
-	protected void renderLabelLine(Canvas canvas,String text,
+	//折线标签
+	protected void renderLabelLine(Canvas canvas,PieData cData,
 									float cirX,float cirY,float radius,float calcAngle)
-	{
-		initLabelLinePaint();
+	{		
+		if(null == mLabelLine)mLabelLine = new LabelBrokenLineRender();		
 		
-		//显示在扇形的外部
-		//1/4处为起始点
-		float calcRadius = MathHelper.getInstance().sub(radius  , radius / 4f);
-		MathHelper.getInstance().calcArcEndPointXY(
-										cirX, cirY, calcRadius, calcAngle);	
+		if(mIsLabelLineSyncColor)mLabelLine.getLabelLinePaint().setColor(cData.getSliceColor());
+		if(mIsLabelPointSyncColor)mLabelLine.getPointPaint().setColor(cData.getSliceColor());
 		
-		float startX = MathHelper.getInstance().getPosX();
-		float startY = MathHelper.getInstance().getPosY();
-			    
-	    //延长原来半径的一半在外面
-	    calcRadius =  radius / 2f;		
-	    MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAngle);			
-		float stopX = MathHelper.getInstance().getPosX();
-	    float stopY = MathHelper.getInstance().getPosY();
-	    //连接线
-	    canvas.drawLine(startX, startY,stopX, stopY, mPaintLabelLine);		    		    
-	    		    
-	    float endX = 0.0f;			    
-	    if(Float.compare(stopX, cirX) == 0){ //位于中间竖线上				    			    	
-	    	if(Float.compare(stopY, cirY) == 1 ) //中点上方,左折线
-	    	{
-	    		mPaintLabel.setTextAlign(Align.LEFT);
-	    		endX = stopX + mLabelBrokenLineLength;	
-	    	}else{ //中点下方,右折线		    		
-	    		endX = stopX - mLabelBrokenLineLength;	
-	    		mPaintLabel.setTextAlign(Align.RIGHT);
-	    	}
-	    }else if(Float.compare(stopY, cirY) == 0 ){ //中线横向两端
-	    	
-	    	if(Float.compare(stopX, cirX) == 0 ||
-	    			Float.compare(stopX, cirX) == -1) //左边
-	    	{
-	    		mPaintLabel.setTextAlign(Align.RIGHT);
-	    	}else{
-	    		mPaintLabel.setTextAlign(Align.LEFT);
-	    	}		    	
-	    	endX = stopX;		    
-	    }else if(Float.compare(stopX + mLabelBrokenLineLength, cirX) == 1 ) //右边
-	    {
-	    	mPaintLabel.setTextAlign(Align.LEFT);
-	    	endX = stopX + mLabelBrokenLineLength;		    		    	
-	    }else if(Float.compare(stopX - mLabelBrokenLineLength,cirX) == -1  ) //左边
-	    {
-	    	mPaintLabel.setTextAlign(Align.RIGHT);
-	    	endX = stopX - mLabelBrokenLineLength;		    			    	    
-	    }else {
-	    	endX = stopX;
-	    	mPaintLabel.setTextAlign(Align.CENTER);
-	    }		    
-	 
-	    //转折线
-	    canvas.drawLine(stopX, stopY, endX, stopY, mPaintLabelLine);
-	    //标签
-	    canvas.drawText(text,endX, stopY,mPaintLabel);     	
+		mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),cirX,cirY,radius,calcAngle,canvas,getLabelPaint());
+	}
 	
+	/**
+	 * 设置标签颜色与当地扇区颜色同步
+	 */
+	public void syncLabelLineColor()
+	{
+		mIsLabelLineSyncColor = true;
+	}
+	
+	/**
+	 * 设置折线标签点颜色与当地扇区颜色同步
+	 */
+	public void syncLabelPointColor()
+	{
+		mIsLabelPointSyncColor = true;
+	}
+	
+	/**
+	 * 设置折线标签颜色与当地扇区颜色同步
+	 */
+	public void syncLabelColor()
+	{
+		mIsLabelSyncColor = true;
 	}
 		
 	
 	/**
 	 * 绘制标签
-	 * @param text	内容
+	 * @param cData	PieData类
 	 * @param cirX	x坐标
 	 * @param cirY	y坐标
 	 * @param radius	半径
 	 * @param offsetAngle	偏移角度
 	 * @param curretAnglet	当前角度
 	 */
-	protected boolean renderLabel(Canvas canvas, String text,
+	protected boolean renderLabel(Canvas canvas, PieData cData,
 			final float cirX,
 			final float cirY,
 			final float radius,		
 			final double offsetAngle,
 			final double curretAnglet)
 	{
-		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return true;		
+		if(XEnum.SliceLabelPosition.HIDE == mLabelPosition) return true;
+		
+		String text = cData.getLabel();
 		if(""==text||text.length()==0)return true;
 				
 		float calcAngle = 0.0f;
@@ -301,25 +264,30 @@ public class CirChart extends EventChart{
 			Log.e(TAG,"计算出来的圆心角等于0.");
 			return false;
 		}
+		
+		//标签颜色与当地扇区颜色同步
+		if(mIsLabelSyncColor) this.getLabelPaint().setColor(cData.getSliceColor());
 				
 		if(XEnum.SliceLabelPosition.INSIDE  == mLabelPosition)
 		{			 
 			//显示在扇形的内部
-			renderLabelInside(canvas,text,cirX,cirY,radius,calcAngle);
+			renderLabelInside(canvas,text,cData.getItemLabelRotateAngle(),
+												cirX,cirY,radius,calcAngle);
 		}else if(XEnum.SliceLabelPosition.OUTSIDE == mLabelPosition){
 			//显示在扇形的外部
-			renderLabelOutside(canvas,text,cirX,cirY,radius,calcAngle);		
+			renderLabelOutside(canvas,text,cData.getItemLabelRotateAngle(),
+												cirX,cirY,radius,calcAngle);		
 		}else if(XEnum.SliceLabelPosition.LINE == mLabelPosition){				
 			//显示在扇形的外部
 			//1/4处为起始点
-			renderLabelLine(canvas,text,cirX,cirY,radius,calcAngle);
+			renderLabelLine(canvas,cData,cirX,cirY,radius,calcAngle);
 		}else{
 			Log.e(TAG,"未知的标签处理类型.");
 			return false;
 		}		
 		return true;
 	}
-	
+			
 	/**
 	 * 设置手势平移模式
 	 * @param mode	平移模式

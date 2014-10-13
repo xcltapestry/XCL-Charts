@@ -315,7 +315,7 @@ public class PieChart extends CirChart{
 			currentAngle = cData.getSliceAngle();		
 			if(!validateAngle(currentAngle)) continue;	
 											
-			 renderLabel(canvas,cData.getLabel(),
+			 renderLabel(canvas,cData,
 					 	arrPoint[i].x, 
 					 	arrPoint[i].y,
 	        			radius,offsetAngle,currentAngle);	

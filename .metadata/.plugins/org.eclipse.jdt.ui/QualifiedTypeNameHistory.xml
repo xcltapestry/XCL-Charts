@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.chart.ScatterData"/>
-<fullyQualifiedTypeName name="java.util.List"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.BubbleChart01View"/>
-<fullyQualifiedTypeName name="org.xclcharts.chart.BubbleChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.BubbleData"/>
 <fullyQualifiedTypeName name="android.R.color"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
@@ -39,7 +35,6 @@
 <fullyQualifiedTypeName name="android.graphics.PorterDuffXfermode"/>
 <fullyQualifiedTypeName name="android.graphics.PorterDuff"/>
 <fullyQualifiedTypeName name="android.graphics.PorterDuff.Mode"/>
-<fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.Legend"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
@@ -47,9 +42,7 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLine"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLineRender"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrossLineStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
@@ -60,4 +53,11 @@
 <fullyQualifiedTypeName name="android.graphics.Matrix"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.LabelLine"/>
+<fullyQualifiedTypeName name="android.graphics.Paint"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.LabelLineRender"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelSyncColor"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelLinePoint"/>
 </qualifiedTypeNameHistroy>
