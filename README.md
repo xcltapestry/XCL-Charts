@@ -7,7 +7,7 @@ XCL-Charts
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>3D/非3D柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
  折线图(Line Chart)、曲线图(Spline Chart)、环形图(Dount Chart)、南丁格尔玫瑰图(Rose Chart)、仪表盘(Dial Chart)、刻度盘(Gauge Chart)、雷达图(Radar Chart)、
  圆形图(Circle Chart)、弧线比较图、散点图(Scatter Chart)、气泡图(Bubble Chart)、范围条形图(RangeBar Chart)等图表。<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括支持手势缩放、图表滑动、点击提示、动画显示、多轴显示、图表参考线、多图表的混合显示及同数据源不同类型图表切换等。</b><br/> 
+ &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括支持手势缩放、图表滑动、点击提示、动画显示、多轴显示、动态图例、图表参考线、多图表的混合显示及同数据源不同类型图表切换等。</b><br/> 
  
  <b>License</b><br/>
       采用Apache v2 License开源协议。<br/>
@@ -86,7 +86,7 @@ http://www.oschina.net/p/xcl-charts
 <img src="http://img.blog.csdn.net/20140831201802281" alt="arclinechart" />
 
 <img src="http://img.blog.csdn.net/20140927224825199" alt="rangebarchart" />
-<img src="http://img.blog.csdn.net/20141014214336125" alt="piechart_line" />
+<img src="http://img.blog.csdn.net/20141014220823359" alt="piechart_line" />
  <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
 
  <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />
