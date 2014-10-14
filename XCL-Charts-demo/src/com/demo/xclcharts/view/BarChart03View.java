@@ -154,7 +154,7 @@ public class BarChart03View extends DemoView implements Runnable{
 				}});
 			
 			//隐藏Key
-			chart.getPlotLegend().hideLegend();
+			chart.getPlotLegend().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -22,13 +22,12 @@
 package org.xclcharts.renderer.plot;
 
 
-import org.xclcharts.renderer.IRender;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.IRender;
+import org.xclcharts.renderer.XChart;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 
 /**
  * @ClassName axisTitle
@@ -43,16 +42,7 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 	 	 	
 	public AxisTitleRender()
 	{
-		super();
-		
-		getLeftAxisTitlePaint().setTextSize(26);
-		getLeftAxisTitlePaint().setColor((int)Color.rgb(255, 153, 204));
-		
-		getLowerAxisTitlePaint().setTextSize(26);
-		getLowerAxisTitlePaint().setColor((int)Color.rgb(58, 65, 83));
-		
-		getRightAxisTitlePaint().setTextSize(26);
-		getRightAxisTitlePaint().setColor((int)Color.rgb(51, 204, 204));		
+		super();	
 	}
 	
 	/**

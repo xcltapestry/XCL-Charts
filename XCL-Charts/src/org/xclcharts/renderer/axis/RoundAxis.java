@@ -92,17 +92,16 @@ public class RoundAxis extends Axis{
 		 {
 		 case TICKAXIS:
 			 getTickLabelPaint().setTextAlign(Align.CENTER);
-			 
-			 setTickLabelVisible(true);
-			 setTickMarksVisible(true);
-			 
-			 this.setAxisLineVisible(true);			 
+		
+			 showAxisLabels();
+			 showTickMarks();
+			 showAxisLine();
 			 this.getAxisPaint().setStyle(Style.STROKE);
 			 
 			 break;
 		 case RINGAXIS:
-			 setTickLabelVisible(true);
-			 setTickMarksVisible(false);
+			 showAxisLabels();
+			 hideTickMarks();
 			 
 			 this.getAxisPaint().setStyle(Style.FILL);
 			 this.getAxisPaint().setColor(Color.BLUE);
@@ -111,15 +110,16 @@ public class RoundAxis extends Axis{
 			 
 			 break;
 		 case ARCLINEAXIS:			 
-			 setTickLabelVisible(false);
-			 setTickMarksVisible(false);
+			 hideAxisLabels();
+			 hideTickMarks();
 			 
 			 getAxisPaint().setStyle(Style.STROKE);
 			 
 		 case CIRCLEAXIS:			 
-			 setTickLabelVisible(false);
-			 setTickMarksVisible(false);
 			 //getAxisPaint().setStyle(Style.FILL);
+			 
+			 hideAxisLabels();
+			 hideTickMarks();
 			 
 			 break;
 		 default:

@@ -127,8 +127,8 @@ public class MultiBarChart01View extends DemoView {
 			 chart.getBar().setBarInnerMargin(0d);
 		
 			 //隐藏轴
-			 chart.getDataAxis().setVisible(false);
-			 chart.getCategoryAxis().setVisible(false);
+			 chart.getDataAxis().hide();
+			 chart.getCategoryAxis().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -214,7 +214,7 @@ public class MultiBarChart01View extends DemoView {
 			chart2.getAxisTitle().getLowerAxisTitlePaint().setColor(axisColor);
 			
 			//隐藏图例
-			chart2.getPlotLegend().hideLegend();			
+			chart2.getPlotLegend().hide();			
 			//chart2.showRoundBorder();
 			
 		} catch (Exception e) {

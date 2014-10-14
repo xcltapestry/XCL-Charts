@@ -64,12 +64,9 @@ public class BarChart extends AxisChart {
 
 	public BarChart() {
 		super();
-			
-		//定制线
-		mCustomLine = new PlotCustomLine();
-		
+	
 		// 默认显示Key		
-		plotLegend.showLegend();
+		plotLegend.show();
 		
 		//默认为竖向设置
 		defaultAxisSetting();	
@@ -90,6 +87,7 @@ public class BarChart extends AxisChart {
 	 */
 	public void setCustomLines( List<CustomLineData> customLineDataSet)
 	{
+		if(null == mCustomLine)mCustomLine = new PlotCustomLine();
 		mCustomLine.setCustomLines(customLineDataSet);
 	}
 
@@ -256,7 +254,7 @@ public class BarChart extends AxisChart {
 				currentY = sub(plotArea.getBottom(), mul(i,YSteps));
 			
 			//是否绘制tick
-			if(dataAxis.getTickLabelVisible() &&
+			if(dataAxis.isShowAxisLabels() &&
 					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 									
 			// 分类		
@@ -305,7 +303,7 @@ public class BarChart extends AxisChart {
 			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
 
 			//是否绘制tick
-			if(categoryAxis.getTickLabelVisible() && 
+			if(categoryAxis.isShowAxisLabels() && 
 					isRenderVerticalCategoryAxisTick(currentX,this.mMoveX))continue;
 						
 			// 绘制横向网格线
@@ -353,7 +351,7 @@ public class BarChart extends AxisChart {
 			currentX = add(axisX , mul(i , XSteps));
 			
 			//是否需要绘制tick
-			if(dataAxis.getTickLabelVisible() &&
+			if(dataAxis.isShowAxisLabels() &&
 					isRenderHorizontalDataAxisTick(currentX,this.mMoveX))continue;
 												
 			//标签
@@ -398,7 +396,7 @@ public class BarChart extends AxisChart {
 			currentY = sub(axisY, mul((i + 1) , YSteps));
 			
 			//是否绘制tick
-			if(categoryAxis.getTickLabelVisible() &&  
+			if(categoryAxis.isShowAxisLabels() &&  
 					isRenderHorizontalCategoryAxisTick(currentY,this.mMoveY))continue;
 			
 			// 横的grid线
@@ -492,8 +490,11 @@ public class BarChart extends AxisChart {
 		}
 
 		//画横向柱形图，竖向的定制线
-		mCustomLine.setHorizontalPlot(dataAxis, plotArea, this.getAxisScreenWidth());
-		mCustomLine.renderHorizontalCustomlinesDataAxis(canvas);
+		if(null != mCustomLine)
+		{
+			mCustomLine.setHorizontalPlot(dataAxis, plotArea, this.getAxisScreenWidth());
+			mCustomLine.renderHorizontalCustomlinesDataAxis(canvas);
+		}
 		return true;
 	}		
 	
@@ -578,8 +579,11 @@ public class BarChart extends AxisChart {
 		}
 
 		//画竖向柱形图的定制线		
-		mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-		mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+		if(null != mCustomLine)
+		{
+			mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+			mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+		}
 		return true;
 	}
 	
@@ -627,7 +631,7 @@ public class BarChart extends AxisChart {
 	protected float getDrawClipHorizontalBarXMargin()
 	{
 		float XMargin = 0.0f;
-		if(dataAxis.getTickLabelVisible())
+		if(dataAxis.isShowAxisLabels())
 		{												
 			if(dataAxis.getHorizontalTickAlign() != Align.LEFT)
 			{
@@ -648,7 +652,7 @@ public class BarChart extends AxisChart {
 	protected float getDrawClipHorizontalBarYMargin()
 	{
 		float yMargin = 0.0f;
-		if(categoryAxis.getTickLabelVisible())
+		if(categoryAxis.isShowAxisLabels())
 		{
 			yMargin = DrawHelper.getInstance().getPaintFontHeight(
 							categoryAxis.getTickLabelPaint() ) / 2;				

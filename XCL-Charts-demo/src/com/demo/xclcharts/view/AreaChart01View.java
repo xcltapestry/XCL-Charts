@@ -122,13 +122,13 @@ public class AreaChart01View extends DemoView implements Runnable {
 				chart.getPlotGrid().showHorizontalLines();
 				chart.getPlotGrid().showVerticalLines();	
 				//把顶轴和右轴隐藏
-				chart.setTopAxisVisible(false);
-				chart.setRightAxisVisible(false);
+				chart.hideTopAxis();
+				chart.hideRightAxis();
 				//把轴线和刻度线给隐藏起来
-				chart.getDataAxis().setAxisLineVisible(false);
-				chart.getDataAxis().setTickMarksVisible(false);			
-				chart.getCategoryAxis().setAxisLineVisible(false);
-				chart.getCategoryAxis().setTickMarksVisible(false);				
+				chart.getDataAxis().hideAxisLine();
+				chart.getDataAxis().hideTickMarks();			
+				chart.getCategoryAxis().hideAxisLine();
+				chart.getCategoryAxis().hideTickMarks();				
 				
 				/*
 				//标题
@@ -326,7 +326,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 	{
 		  try {                            	           		
 		
-			chart.getPlotLegend().hideLegend();
+			chart.getPlotLegend().hide();
           
           	int [] ltrb = getBarLnDefaultSpadding();          	
           	for(int i=8; i> 0 ;i--)
@@ -357,7 +357,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		chart.getAxisTitle().setLowerAxisTitle("(年份)");
 		
 		//显示图例
-		chart.getPlotLegend().showLegend();
+		chart.getPlotLegend().show();
 		
 		//激活点击监听
 		chart.ActiveListenItemClick();

@@ -87,7 +87,7 @@ public class SpinnerPieChart01View extends DemoView {
  			//设置起始偏移角度(即第一个扇区从哪个角度开始绘制)
  			mChart.setInitialAngle(90);	
  			//显示Key值
- 			mChart.getPlotLegend().hideLegend();
+ 			mChart.getPlotLegend().hide();
  			
  		} catch (Exception e) {
  			// TODO Auto-generated catch block

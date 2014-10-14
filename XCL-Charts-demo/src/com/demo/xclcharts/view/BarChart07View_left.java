@@ -101,11 +101,11 @@ public class BarChart07View_left  extends GraphicalView {
 					
 				});
 				
-				chart.getDataAxis().setAxisLineVisible(false);
+				chart.getDataAxis().hideAxisLine();
 			
 				//隐藏Key
-				chart.getPlotLegend().hideLegend();
-				chart.getCategoryAxis().setVisible(false);
+				chart.getPlotLegend().hide();
+				chart.getCategoryAxis().hide();
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

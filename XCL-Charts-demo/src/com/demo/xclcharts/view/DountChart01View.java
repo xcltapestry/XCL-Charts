@@ -104,7 +104,7 @@ public class DountChart01View extends DemoView {
 			chart.setTitle("环形图");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			//显示key
-			chart.getPlotLegend().showLegend();		
+			chart.getPlotLegend().show();		
 									
 			//图背景色
 			chart.setApplyBackgroundColor(true);

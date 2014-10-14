@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.R.color"/>
 <fullyQualifiedTypeName name="java.util.Iterator"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.RangeBarChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.RangeBarData"/>
@@ -37,13 +36,11 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.Legend"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLine"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLineRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrossLineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyLineStyle"/>
@@ -59,5 +56,8 @@
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelLinePoint"/>
+<fullyQualifiedTypeName name="android.graphics.Path"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SliceLabelStyle"/>
 </qualifiedTypeNameHistroy>

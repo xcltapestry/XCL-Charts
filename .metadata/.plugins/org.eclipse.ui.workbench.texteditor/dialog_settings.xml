@@ -2,8 +2,8 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="261" key="DIALOG_Y_ORIGIN"/>
-		<item value="883" key="DIALOG_X_ORIGIN"/>
+		<item value="328" key="DIALOG_Y_ORIGIN"/>
+		<item value="613" key="DIALOG_X_ORIGIN"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
@@ -13,26 +13,26 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="SliceLabelStyle" key="selection"/>
+		<item value="mLabelStyle" key="selection"/>
 		<list key="findhistory">
-			<item value="SliceLabelPosition"/>
 			<item value="mLabelPosition"/>
-			<item value="renderLabelInside"/>
-			<item value="getItemLabelRotateAngle"/>
-			<item value="mItemLabelRotateAngle"/>
-			<item value="mIsLabelLineSyncColor"/>
-			<item value="mIsLabelSyncColor"/>
-			<item value="renderLabelLine"/>
+			<item value="mPlotDot"/>
+			<item value="drawLeftAxisTitle"/>
+			<item value="mTickLabelVisible"/>
+			<item value="mPaintTickLabel"/>
+			<item value="isShowAxisLabel"/>
+			<item value="mAxisLineVisible"/>
+			<item value="isShow"/>
 		</list>
 		<list key="replacehistory">
-			<item value="SliceLabelStyle"/>
-			<item value="paintLabel"/>
-			<item value="isRenderVerticalBarDataAxisTick"/>
-			<item value="getBarPaint()"/>
-			<item value="十字交叉线"/>
-			<item value="DyLine"/>
-			<item value="mDotToolTip"/>
-			<item value="mPaintToolTip"/>
+			<item value="mLabelStyle"/>
+			<item value="mAxisLabelsVisible"/>
+			<item value="mPaintTickLabels"/>
+			<item value="isShowAxisLabels"/>
+			<item value="isShowAxisLabel"/>
+			<item value="isShowAxisLine"/>
+			<item value="isShow"/>
+			<item value="isShowTickMarks"/>
 		</list>
 	</section>
 </section>

@@ -49,7 +49,7 @@ public class BarChart3D extends BarChart{
 	public BarChart3D()
 	{
 		super();	
-		plotLegend.showLegend();
+		plotLegend.show();
 	}
 	
 	/**
@@ -134,10 +134,13 @@ public class BarChart3D extends BarChart{
 	protected void defaultAxisSetting()
 	{
 		super.defaultAxisSetting();
+		
+		categoryAxis.hideTickMarks();
+		/*
 		try{
 			switch (getChartDirection()) {
 				case HORIZONTAL: {				
-					categoryAxis.setTickMarksVisible(false);		
+					categoryAxis.hideTickMarksVisible(false);		
 					break;
 				}
 				case VERTICAL: {					
@@ -147,7 +150,7 @@ public class BarChart3D extends BarChart{
 			}
 		}catch(Exception ex){
 			Log.e(TAG, ex.toString());
-		}
+		}*/
 	}
 	
 	

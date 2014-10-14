@@ -130,15 +130,26 @@ public class PieChart02View extends DemoView {
 
 	private void chartDataSet()
 	{
-		//设置图表数据源		
-		chartData.add(new PieData("芝麻","芝麻:15%",15,(int)Color.rgb(77, 83, 97)));
-		chartData.add(new PieData("花生","花生:35%",35,(int)Color.rgb(148, 159, 181)));
-		chartData.add(new PieData("茶叶","茶叶(25%)",25,(int)Color.rgb(253, 180, 90)));
-		//将此比例块突出显示
+		//设置图表数据源				
+		PieData pieData = new PieData("芝麻","芝麻:15%",15,(int)Color.rgb(77, 83, 97)) ;
+		pieData.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.WHITE);		
+		chartData.add(pieData);
+				
+		chartData.add(new PieData("白糖","白糖(5%)",5,(int)Color.rgb(75, 132, 1)));
 		
-		PieData pd = new PieData("其它","其它(炒米，炒花生之类)",25,(int)Color.rgb(180, 205, 230),true);
+		//将此比例块突出显示		
+		PieData pd = new PieData("花生","花生:35%",35,(int)Color.rgb(180, 205, 230),true);
 		pd.setItemLabelRotateAngle(45.f);
 		chartData.add(pd);
+		
+		PieData pdOther = new PieData("其它","其它(炒米，炒花生之类)",15,(int)Color.rgb(148, 159, 181));
+		pdOther.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.BLACK);		
+		chartData.add(pdOther);
+		
+		PieData pdTea = new PieData("茶叶","茶叶(305%)",30,(int)Color.rgb(253, 180, 90));		
+		pdTea.setCustLabelStyle(XEnum.SliceLabelStyle.OUTSIDE,(int)Color.rgb(253, 180, 90));
+		chartData.add(pdTea);
+	
 	}
 	@Override
 	public void render(Canvas canvas) {

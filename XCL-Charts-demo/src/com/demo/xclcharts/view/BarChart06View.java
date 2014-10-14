@@ -151,7 +151,7 @@ public class BarChart06View extends DemoView implements Runnable{
 			 chart.getBar().setBarInnerMargin(0d);
 			
 			//隐藏Key
-			 chart.getPlotLegend().hideLegend();
+			 chart.getPlotLegend().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -222,7 +222,7 @@ public class BarChart06View extends DemoView implements Runnable{
 	private void chartAnimation()
 	{
 		  try {                            	           		
-			chart.getDataAxis().setVisible(false);
+			chart.getDataAxis().hide();
 			
 						          
           	int [] ltrb = getBarLnDefaultSpadding();          	
@@ -250,7 +250,7 @@ public class BarChart06View extends DemoView implements Runnable{
 		chart.setTitle("柱形渐显动画演示");
 		chart.addSubtitle("(XCL-Charts Demo)");	
 				
-		chart.getDataAxis().setVisible(true);				
+		chart.getDataAxis().show();		
 	}
 	
 	

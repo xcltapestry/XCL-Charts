@@ -244,8 +244,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	private void chartAnimation()
 	{
 		  try {                            	           		
-			chart.getDataAxis().setVisible(false);
-			chart.getPlotLegend().hideLegend();
+			chart.getDataAxis().hide();
+			chart.getPlotLegend().hide();
           
           	int [] ltrb = getBarLnDefaultSpadding();          	
           	for(int i=8; i> 0 ;i--)
@@ -289,8 +289,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		chart.disableScale();
 		
 		
-		chart.getDataAxis().setVisible(true);        			 
-		chart.getPlotLegend().showLegend();				
+		chart.getDataAxis().show();		 
+		chart.getPlotLegend().show();				
 	}
 	
 	private void drawDyLegend()

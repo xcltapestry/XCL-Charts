@@ -55,17 +55,7 @@ public class Pointer {
 	
 	public Pointer()
 	{
-		mPaintPoint = new Paint();
-		mPaintPoint.setColor((int)Color.rgb(235, 138, 61)); //(int)Color.rgb(173, 42, 76));
-		mPaintPoint.setStrokeWidth(3);
-		mPaintPoint.setStyle(Style.FILL); 
-		mPaintPoint.setAntiAlias(true);
 		
-		mPaintBaseCircle = new Paint();
-		mPaintBaseCircle.setStyle(Style.FILL);
-		mPaintBaseCircle.setAntiAlias(true);	
-		mPaintBaseCircle.setColor((int)Color.rgb(235, 138, 61));
-		mPaintBaseCircle.setStrokeWidth(8);
 	}
 	
 	/**
@@ -113,6 +103,14 @@ public class Pointer {
 	 */
 	public Paint getPointerPaint()
 	{
+		if(null == mPaintPoint)
+		{
+			mPaintPoint = new Paint();
+			mPaintPoint.setColor((int)Color.rgb(235, 138, 61));
+			mPaintPoint.setStrokeWidth(3);
+			mPaintPoint.setStyle(Style.FILL); 
+			mPaintPoint.setAntiAlias(true);
+		}
 		return mPaintPoint;
 	}
 	
@@ -122,6 +120,14 @@ public class Pointer {
 	 */
 	public Paint getBaseCirclePaint()
 	{
+		if(null == mPaintBaseCircle)
+		{
+			mPaintBaseCircle = new Paint();
+			mPaintBaseCircle.setStyle(Style.FILL);
+			mPaintBaseCircle.setAntiAlias(true);	
+			mPaintBaseCircle.setColor((int)Color.rgb(235, 138, 61));
+			mPaintBaseCircle.setStrokeWidth(8);
+		}
 		return mPaintBaseCircle;
 	}
 	

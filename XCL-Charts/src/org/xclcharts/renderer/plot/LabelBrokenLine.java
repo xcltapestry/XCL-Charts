@@ -25,6 +25,7 @@ import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.Log;
 
 /**
  * @ClassName LabelBrokenLine
@@ -33,6 +34,8 @@ import android.graphics.Paint;
  *  
  */
 public class LabelBrokenLine {
+	
+	private  static final  String TAG = "LabelBrokenLine";
 	
 	private XEnum.LabelLinePoint mLinePoint = XEnum.LabelLinePoint.ALL;
 	private float mRadius = 5.f;
@@ -44,11 +47,32 @@ public class LabelBrokenLine {
 	private Paint mPaintPoint = null;
 		
 	//标签与点的转折线长度
-	private float mLabelBrokenLineLength = 20.f;
+	private float mLabelBrokenLineLength = 30.f;
+	
+	//BEZIERCURVE 贝塞尔曲线  
+	protected boolean mIsBZLine = false;
 		
+	//折线起始点(1 - 10)
+	protected float mBrokenStartPoint =  3.f;
 	
 	public LabelBrokenLine()
 	{		
+	}
+	
+	/**
+	 * 设置显示线条为贝塞尔曲线
+	 */
+	public void isBZLine()
+	{
+		mIsBZLine = true;
+	}
+	
+	/**
+	 * 设置显示线条为普通直线
+	 */
+	public void isBeeLine()
+	{
+		mIsBZLine = false;
 	}
 
 	/**
@@ -132,6 +156,22 @@ public class LabelBrokenLine {
 			mPaintPoint = new Paint(Paint.ANTI_ALIAS_FLAG);
 		}
 		return mPaintPoint;
+	}
+	
+
+	/**
+	 * 折线转折起始点(1 - 10)比例
+	 * @param ratio  比例(1-10)
+	 */
+	public void setBrokenStartPoin(float ratio)
+	{
+		if(Float.compare(ratio, 1) == -1 || Float.compare(ratio, 10) == 1)
+		{
+			Log.e(TAG,"值必须在1到10范围内.");
+			return ;
+		}else{
+			mBrokenStartPoint = ratio;
+		}
 	}
 	
 	

@@ -95,9 +95,9 @@ public class RadarChart extends RdChart{
 		CategoryAxis = new CategoryAxisRender();
 		dataAxis.setHorizontalTickAlign(Align.LEFT);
 		dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
-		dataAxis.setTickMarksVisible(false);	
+		dataAxis.hideTickMarks();	
 		
-		this.plotLegend.showLegend();
+		this.plotLegend.show();
 	}
 	
 	

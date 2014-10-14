@@ -21,6 +21,7 @@
  */
 package org.xclcharts.renderer.plot;
 
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 
@@ -53,6 +54,8 @@ public class AxisTitle {
 		 mPaintLeftAxisTitle = new Paint();
 		 mPaintLeftAxisTitle.setTextAlign(Align.CENTER);
 		 mPaintLeftAxisTitle.setAntiAlias(true);
+		 mPaintLeftAxisTitle.setTextSize(26);
+		 mPaintLeftAxisTitle.setColor((int)Color.rgb(255, 153, 204));
 		}
 	}
 	
@@ -63,6 +66,9 @@ public class AxisTitle {
 		 mPaintLowerAxisTitle = new Paint();
 		 mPaintLowerAxisTitle.setTextAlign(Align.CENTER);
 		 mPaintLowerAxisTitle.setAntiAlias(true);
+		 
+		 mPaintLowerAxisTitle.setTextSize(26);
+		 mPaintLowerAxisTitle.setColor((int)Color.rgb(58, 65, 83));
 		}
 	}
 	
@@ -73,6 +79,9 @@ public class AxisTitle {
 		 mPaintRightAxisTitle = new Paint();
 		 mPaintRightAxisTitle.setTextAlign(Align.CENTER);
 		 mPaintRightAxisTitle.setAntiAlias(true);
+		 
+		 mPaintRightAxisTitle.setTextSize(26);
+		 mPaintRightAxisTitle.setColor((int)Color.rgb(51, 204, 204));	
 		}
 	}
 	

@@ -166,7 +166,7 @@ public class MultiAxisChart02View extends DemoView {
 			chart.getPlotGrid().showEvenRowBgColor();
 			chart.getPlotGrid().showOddRowBgColor();
 			//隐藏Key值
-			chart.getPlotLegend().hideLegend();
+			chart.getPlotLegend().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());			
@@ -263,7 +263,7 @@ public class MultiAxisChart02View extends DemoView {
 					
 			renderLnAxis();			
 		
-			lnChart.getPlotLegend().showLegend();
+			lnChart.getPlotLegend().show();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -277,7 +277,7 @@ public class MultiAxisChart02View extends DemoView {
 	{
 		//标签轴
 		lnChart.setCategories(chartLabelsLn);		
-		lnChart.getCategoryAxis().setVisible(false);	
+		lnChart.getCategoryAxis().hide();	
 		
 		//设定数据源						
 		lnChart.setDataSource(chartDataLn);

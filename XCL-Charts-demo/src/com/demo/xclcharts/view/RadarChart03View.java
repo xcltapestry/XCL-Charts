@@ -136,7 +136,7 @@ public class RadarChart03View extends DemoView {
 			chart.getLinePaint().setColor(Color.parseColor("#7579C3"));
 			chart.getLabelPaint().setColor(Color.parseColor("#3EABEF"));
 			chart.getLabelPaint().setFakeBoldText(true);
-			chart.getDataAxis().setTickLabelVisible(false);
+			chart.getDataAxis().hideAxisLabels();
 			
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){

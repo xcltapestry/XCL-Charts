@@ -63,7 +63,7 @@ public class LineChart03View  extends GraphicalView {
 			chart.getDataAxis().setAxisSteps(10);
 			
 			//chart.getDataAxis().setAxisLineVisible(false);
-			chart.getDataAxis().setVisible(false);
+			chart.getDataAxis().hide();
 			
 			chart.getCategoryAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 			chart.getCategoryAxis().setTickLabelRotateAngle(90);
@@ -71,10 +71,10 @@ public class LineChart03View  extends GraphicalView {
 			
 			chart.getAxisTitle().setLowerAxisTitle("(年份)");	
 			
-			chart.setRightAxisVisible(false);
-			chart.setTopAxisVisible(false);
+			chart.hideRightAxis();
+			chart.hideTopAxis();
 			
-			chart.getPlotLegend().hideLegend();			
+			chart.getPlotLegend().hide();			
 			
 			
 		} catch (Exception e) {

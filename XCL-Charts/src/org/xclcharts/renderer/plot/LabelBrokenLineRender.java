@@ -28,6 +28,8 @@ import org.xclcharts.renderer.XEnum;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
 
 
 /**
@@ -37,6 +39,8 @@ import android.graphics.Paint.Align;
  *  
  */
 public class LabelBrokenLineRender extends LabelBrokenLine{
+	
+	private Path mBzLine = null;
 	
 	public LabelBrokenLineRender()
 	{
@@ -53,8 +57,8 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 			 pointRadius = getRadius();
 		
 			//显示在扇形的外部
-			//1/4处为起始点
-			float calcRadius = MathHelper.getInstance().sub(radius  , radius / 4f);
+			//1/4处为起始点		  
+			float calcRadius = MathHelper.getInstance().sub(radius  , radius / mBrokenStartPoint);
 			MathHelper.getInstance().calcArcEndPointXY(
 											cirX, cirY, calcRadius, calcAngle);	
 			
@@ -62,12 +66,11 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 			float startY = MathHelper.getInstance().getPosY();
 				    
 		    //延长原来半径的一半在外面
-		    calcRadius =  radius / 2f;		
+		    calcRadius = radius / 2f;			    
 		    MathHelper.getInstance().calcArcEndPointXY(startX, startY, calcRadius, calcAngle);			
 			float stopX = MathHelper.getInstance().getPosX();
 		    float stopY = MathHelper.getInstance().getPosY();
-		    //连接线
-		    canvas.drawLine(startX, startY,stopX, stopY, getLabelLinePaint());	
+		 
 		    
 		    float borkenline = getBrokenLine(); //折线长度
 		    		    
@@ -109,9 +112,15 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 		    	endLabelX = endX = stopX;
 		    	paintLabel.setTextAlign(Align.CENTER);
 		    }
-	
-	//转折线
-    canvas.drawLine(stopX, stopY, endX, stopY, getLabelLinePaint());
+		    
+    if(mIsBZLine)
+    {
+	   //绘制贝塞尔曲线  
+	    drawBZLine(startX,startY,stopX, stopY, endX,canvas);
+    }else{
+    	 //转折线
+        drawBrokenLine(startX,startY,stopX, stopY, endX,canvas);
+    }
       	
     //标签点NONE,BEGIN,END,ALL    
     drawPoint(startX,startY,stopX, stopY, endX,pointRadius,canvas);
@@ -121,6 +130,33 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 													canvas, paintLabel);
 }
 
+	
+	private void drawBrokenLine(float startX,float startY,
+			float stopX,float stopY,float endX,
+			Canvas canvas)
+	{
+	    //连接线
+	    canvas.drawLine(startX, startY,stopX, stopY, getLabelLinePaint());		    
+		
+		//转折线
+	    canvas.drawLine(stopX, stopY, endX, stopY, getLabelLinePaint());
+	}
+
+	private void drawBZLine(float startX,float startY,
+							float stopX,float stopY,float endX,
+							Canvas canvas)
+	{
+		 if(null == mBzLine)mBzLine = new Path();
+		 
+		 getLabelLinePaint().setStyle(Style.STROKE);		 		 
+		 //绘制贝塞尔曲线  
+		 mBzLine.reset();
+		 mBzLine.moveTo(startX, startY);		    
+		 mBzLine.quadTo(stopX, stopY, endX, stopY);  
+		 canvas.drawPath(mBzLine, getLabelLinePaint());
+	}
+	
+		
 	private void drawPoint(float startX,float startY,
 							float stopX,float stopY,float endX,
 							float pointRadius,Canvas canvas)

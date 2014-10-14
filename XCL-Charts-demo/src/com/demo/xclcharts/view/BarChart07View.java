@@ -98,7 +98,7 @@ public class BarChart07View  extends GraphicalView {
 					}});
 				
 				//隐藏图例
-				chart.getPlotLegend().hideLegend();
+				chart.getPlotLegend().hide();
 				
 				 //让柱子间近似没空白
 				 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
@@ -109,8 +109,8 @@ public class BarChart07View  extends GraphicalView {
 				chart.getPlotGrid().getEvenRowsBgColorPaint().setColor((int)Color.rgb(225, 230, 246));
 				 
 				
-				chart.getDataAxis().setVisible(false);
-				chart.getCategoryAxis().setTickMarksVisible(false);
+				chart.getDataAxis().hide();
+				chart.getCategoryAxis().hideTickMarks();
 				
 				
 			} catch (Exception e) {

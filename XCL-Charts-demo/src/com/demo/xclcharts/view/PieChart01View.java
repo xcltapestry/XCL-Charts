@@ -104,7 +104,7 @@ public class PieChart01View extends DemoView implements Runnable{
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);				
 			
 			//显示图例
-			chart.getPlotLegend().showLegend();
+			chart.getPlotLegend().show();
 			//chart.getPlotLegend().getLegendLabelPaint().setTextSize(22);
 			//chart.showBorder();	
 			

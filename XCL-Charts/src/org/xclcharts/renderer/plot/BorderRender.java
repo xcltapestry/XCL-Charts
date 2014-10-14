@@ -58,20 +58,22 @@ public class BorderRender extends Border {
 	 */
 	public Paint getChartBackgroundPaint()
 	{
-		// 背景画笔
-		if(null == mPaintChartBackground)mPaintChartBackground = new Paint();
-		mPaintChartBackground.setStyle(Style.FILL);
-		mPaintChartBackground.setColor(Color.WHITE);
+		if(null == mPaintChartBackground)
+		{
+			mPaintChartBackground = new Paint();
+			mPaintChartBackground.setStyle(Style.FILL);
+			mPaintChartBackground.setColor(Color.WHITE);		
+		}
 		return mPaintChartBackground;
 	}	
 
 	/**
 	 * 绘制边
-	 * @param canvas
-	 * @param left
-	 * @param top
-	 * @param right
-	 * @param bottom
+	 * @param canvas	画布
+	 * @param left	左边距
+	 * @param top	上边距
+	 * @param right	右边距
+	 * @param bottom	底边距
 	 */
 	public void renderBorder(String type ,Canvas canvas,
 							 float left,float top,float right,float bottom)

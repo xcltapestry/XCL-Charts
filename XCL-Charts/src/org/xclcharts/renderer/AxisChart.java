@@ -217,7 +217,7 @@ public class AxisChart extends EventChart {
 	
 	protected boolean isRenderHorizontalCategoryAxisTick(float currentY,float moveY)
 	{
-		if(categoryAxis.getTickLabelVisible() && 
+		if(categoryAxis.isShowAxisLabels() && 
 				(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
 				 Float.compare(currentY , plotArea.getBottom() - moveY) == 1 ))
 		{
@@ -229,7 +229,7 @@ public class AxisChart extends EventChart {
 	protected float getDrawClipVerticalYMargin()
 	{
 		float yMargin = 0.0f;
-		if(dataAxis.getTickLabelVisible())
+		if(dataAxis.isShowAxisLabels())
 		{
 			yMargin = DrawHelper.getInstance().getPaintFontHeight(
 									dataAxis.getTickLabelPaint() ) / 2;				
@@ -240,7 +240,7 @@ public class AxisChart extends EventChart {
 	protected float getDrawClipVerticalXMargin()
 	{
 		float xMargin = 0.0f;
-		if(categoryAxis.getTickLabelVisible())
+		if(categoryAxis.isShowAxisLabels())
 		{												
 			if(categoryAxis.getHorizontalTickAlign() != Align.LEFT)
 			{

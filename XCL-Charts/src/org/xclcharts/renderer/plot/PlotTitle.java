@@ -49,123 +49,122 @@ public class PlotTitle {
 	
 	public PlotTitle()
 	{
-		initPaint();
+		
 	}
-	
-	private void initPaint()
+
+	/**
+	 * 设置标题
+	 * @param title 标题内容
+	 */
+	public void setTitle(String title)
 	{
-		//标题
-		//图表标题画笔
-		mTitlePaint  = new Paint();
-		mSubtitlePaint  = new Paint();
-		mTitlePaint.setTextSize(32);
-		mSubtitlePaint.setTextSize(22);
-		
-		mTitlePaint.setColor(Color.BLACK);
-		mSubtitlePaint.setColor(Color.BLACK);	
-		
-		mTitlePaint.setAntiAlias(true);
-		mSubtitlePaint.setAntiAlias(true);		
+		mChartTitle = title;		
 	}
 	
+	/**
+	 * 返回标题
+	 * @return 标题
+	 */
+	public String getTitle()
+	{
+		return mChartTitle;
+	}
+	
+	
+	/**
+	 * 设置子标题
+	 * @param subtitle 子标题
+	 */
+	public void setSubtitle(String subtitle)
+	{
+		mSubtitle = subtitle;					
+	}
+	
+	/**
+	 * 返回子标题
+	 * @return 子标题
+	 */
+	public String getSubtitle()
+	{
+		return mSubtitle;
+	}
+	 
+	
+	/**
+	 * 开放标题画笔
+	 * @return 画笔
+	 */
+	public Paint getTitlePaint()
+	 {
+		
+		if(null == mTitlePaint)
+		{
+			mTitlePaint  = new Paint();				
+			mTitlePaint.setTextSize(32);				
+			mTitlePaint.setColor(Color.BLACK);				
+			mTitlePaint.setAntiAlias(true);
+		}
+		
+		 return mTitlePaint ;
+	 }
 
-		/**
-		 * 设置标题
-		 * @param title 标题内容
-		 */
-		public void setTitle(String title)
+	
+	/**
+	 * 开放子标题画笔
+	 * @return 画笔
+	 */
+	public Paint getSubtitlePaint()
+	 {
+		if(null == mSubtitlePaint)
 		{
-			mChartTitle = title;		
+			mSubtitlePaint  = new Paint();
+			mSubtitlePaint.setTextSize(22);
+			mSubtitlePaint.setColor(Color.BLACK);	
+			mSubtitlePaint.setAntiAlias(true);	
 		}
-		
-		/**
-		 * 返回标题
-		 * @return 标题
-		 */
-		public String getTitle()
-		{
-			return mChartTitle;
-		}
-		
-		
-		/**
-		 * 设置子标题
-		 * @param subtitle 子标题
-		 */
-		public void setSubtitle(String subtitle)
-		{
-			mSubtitle = subtitle;					
-		}
-		
-		/**
-		 * 返回子标题
-		 * @return 子标题
-		 */
-		public String getSubtitle()
-		{
-			return mSubtitle;
-		}
-		 
-		
-		/**
-		 * 开放标题画笔
-		 * @return 画笔
-		 */
-		public Paint getTitlePaint()
-		 {
-			 return mTitlePaint ;
-		 }
-
-		
-		/**
-		 * 开放子标题画笔
-		 * @return 画笔
-		 */
-		public Paint getSubtitlePaint()
-		 {
-			 return mSubtitlePaint ;
-		 }
-				
-		/**
-		 * 设置标题横向显示位置(靠左，居中，靠右)
-		 * @param align 横向显示位置
-		 */
-		public void setTitleAlign(XEnum.ChartTitleAlign align)
-		{
-			mChartTitleAlign = align;
-		}
+		 return mSubtitlePaint ;
+	 }
 			
-		/**
-		 * 返回标题横向显示位置
-		 * @return 横向显示位置
-		 */
-		public XEnum.ChartTitleAlign getTitleAlign()
-		{
-			return mChartTitleAlign;
-		}
+	/**
+	 * 设置标题横向显示位置(靠左，居中，靠右)
+	 * @param align 横向显示位置
+	 */
+	public void setTitleAlign(XEnum.ChartTitleAlign align)
+	{
+		mChartTitleAlign = align;
+	}
 		
-		/**
-		 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
-		 * @param Position  上下显示位置
-		 */
-		public void setVerticalAlign(XEnum.VerticalAlign Position)
-		{
-			mTitlePosition = Position;
-		}
-			
-		/**
-		 * 设置标题上下显示位置
-		 * @return 上下显示位置
-		 */
-		public XEnum.VerticalAlign getVerticalAlign()
-		{
-			return mTitlePosition;
-		}
+	/**
+	 * 返回标题横向显示位置
+	 * @return 横向显示位置
+	 */
+	public XEnum.ChartTitleAlign getTitleAlign()
+	{
+		return mChartTitleAlign;
+	}
+	
+	/**
+	 * 设置标题上下显示位置,即图上边距与绘图区间哪个位置(靠上，居中，靠下).
+	 * @param Position  上下显示位置
+	 */
+	public void setVerticalAlign(XEnum.VerticalAlign Position)
+	{
+		mTitlePosition = Position;
+	}
 		
-		//
-		//public void setOffsetSpacing(double offset)
-		//{
-			
-		//}
+	/**
+	 * 设置标题上下显示位置
+	 * @return 上下显示位置
+	 */
+	public XEnum.VerticalAlign getVerticalAlign()
+	{
+		return mTitlePosition;
+	}
+	
+	//
+	//public void setOffsetSpacing(double offset)
+	//{
+		
+	//}
 	
 }

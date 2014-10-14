@@ -50,7 +50,7 @@ public class CirChart extends EventChart{
 	private float mRadius=0.0f;		
 	
 	//标签注释显示位置 [隐藏,Default,Inside,Ouside,Line]
-	private XEnum.SliceLabelStyle mLabelPosition  = XEnum.SliceLabelStyle.INSIDE;	
+	private XEnum.SliceLabelStyle mLabelStyle  = XEnum.SliceLabelStyle.INSIDE;	
 	
 	//开放标签画笔让用户设置
 	private Paint mPaintLabel = null;
@@ -112,13 +112,13 @@ public class CirChart extends EventChart{
 
 	/**
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
-	 * @param position 显示位置
+	 * @param style 显示位置
 	 */
-	public void setLabelStyle(XEnum.SliceLabelStyle position)
+	public void setLabelStyle(XEnum.SliceLabelStyle style)
 	{
-		mLabelPosition = position;
+		mLabelStyle = style;
 		//INNER,OUTSIDE,HIDE
-		switch(position)
+		switch(style)
 		{
 		case INSIDE :
 			getLabelPaint().setTextAlign(Align.CENTER);
@@ -139,7 +139,7 @@ public class CirChart extends EventChart{
 	 */
 	public XEnum.SliceLabelStyle getLabelStyle()
 	{
-		return mLabelPosition;
+		return mLabelStyle;
 	}
 	
 	/**
@@ -154,6 +154,7 @@ public class CirChart extends EventChart{
 			mPaintLabel.setColor(Color.BLACK);
 			mPaintLabel.setAntiAlias(true);
 			mPaintLabel.setTextAlign(Align.CENTER);	
+			mPaintLabel.setTextSize(18);
 		}
 		return mPaintLabel;
 	}
@@ -203,10 +204,13 @@ public class CirChart extends EventChart{
 	{		
 		if(null == mLabelLine)mLabelLine = new LabelBrokenLineRender();		
 		
-		if(mIsLabelLineSyncColor)mLabelLine.getLabelLinePaint().setColor(cData.getSliceColor());
-		if(mIsLabelPointSyncColor)mLabelLine.getPointPaint().setColor(cData.getSliceColor());
+		if(mIsLabelLineSyncColor)
+			mLabelLine.getLabelLinePaint().setColor(cData.getSliceColor());
+		if(mIsLabelPointSyncColor)
+			mLabelLine.getPointPaint().setColor(cData.getSliceColor());
 		
-		mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),cirX,cirY,radius,calcAngle,canvas,getLabelPaint());
+		mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),
+									cirX,cirY,radius,calcAngle,canvas,getLabelPaint());
 	}
 	
 	/**
@@ -250,7 +254,9 @@ public class CirChart extends EventChart{
 			final double offsetAngle,
 			final double curretAnglet)
 	{
-		if(XEnum.SliceLabelStyle.HIDE == mLabelPosition) return true;
+		
+		
+		if(XEnum.SliceLabelStyle.HIDE == mLabelStyle) return true;
 		
 		String text = cData.getLabel();
 		if(""==text||text.length()==0)return true;
@@ -267,17 +273,30 @@ public class CirChart extends EventChart{
 		
 		//标签颜色与当地扇区颜色同步
 		if(mIsLabelSyncColor) this.getLabelPaint().setColor(cData.getSliceColor());
+		
+		int color = getLabelPaint().getColor();
 				
-		if(XEnum.SliceLabelStyle.INSIDE  == mLabelPosition)
+		//有定制需求
+		XEnum.SliceLabelStyle labelStyle = mLabelStyle;
+		if( cData.getCustLabelStyleStatus() )
+		{
+			labelStyle = cData.getLabelStyle();
+			if( XEnum.SliceLabelStyle.INSIDE == labelStyle) 
+						getLabelPaint().setTextAlign(Align.CENTER);		
+			
+			getLabelPaint().setColor(cData.getCustLabelColor());
+		}
+		
+		if(XEnum.SliceLabelStyle.INSIDE  == labelStyle)
 		{			 
 			//显示在扇形的内部
 			renderLabelInside(canvas,text,cData.getItemLabelRotateAngle(),
 												cirX,cirY,radius,calcAngle);
-		}else if(XEnum.SliceLabelStyle.OUTSIDE == mLabelPosition){
+		}else if(XEnum.SliceLabelStyle.OUTSIDE == labelStyle){
 			//显示在扇形的外部
 			renderLabelOutside(canvas,text,cData.getItemLabelRotateAngle(),
 												cirX,cirY,radius,calcAngle);		
-		}else if(XEnum.SliceLabelStyle.BROKENLINE == mLabelPosition){				
+		}else if(XEnum.SliceLabelStyle.BROKENLINE == labelStyle){				
 			//显示在扇形的外部
 			//1/4处为起始点
 			renderLabelLine(canvas,cData,cirX,cirY,radius,calcAngle);
@@ -285,6 +304,8 @@ public class CirChart extends EventChart{
 			Log.e(TAG,"未知的标签处理类型.");
 			return false;
 		}		
+		
+		getLabelPaint().setColor(color);
 		return true;
 	}
 			

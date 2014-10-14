@@ -120,7 +120,7 @@ public class PlotLegendRender extends PlotLegend{
 	 * @return 是否成功
 	 */
 	public boolean renderBarKey(Canvas canvas,List<BarData> dataSet) {
-		if (!isShowLegend())return true;
+		if (!isShow())return true;
 		
 	    if(null == dataSet) return false;		
 		if(!validateParams())return false;										
@@ -191,7 +191,7 @@ public class PlotLegendRender extends PlotLegend{
 	 * @param canvas
 	 */
 	private void renderBarKeyRight(Canvas canvas,List<BarData> dataSet) {
-		if (false == isShowLegend())
+		if (false == isShow())
 			return;
 
 		initEnv();	
@@ -229,7 +229,7 @@ public class PlotLegendRender extends PlotLegend{
 	 * @param dataSet	数据集
 	 */
 	public void renderLineKey(Canvas canvas, List<LnData> dataSet) {
-		if (isShowLegend() == false)
+		if (isShow() == false)
 				return;		
 		if(null == dataSet) return ;
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
@@ -290,7 +290,7 @@ public class PlotLegendRender extends PlotLegend{
 	 * @param dataSet	数据集
 	 */
 	public void renderPointKey(Canvas canvas, List<ScatterData> dataSet) {
-		if (isShowLegend() == false)
+		if (isShow() == false)
 				return;		
 		if(null == dataSet) return ;
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
@@ -348,7 +348,7 @@ public class PlotLegendRender extends PlotLegend{
 	 * @param dataSet	数据集
 	 */
 	public void renderBubbleKey(Canvas canvas, List<BubbleData> dataSet) {
-		if (isShowLegend() == false)
+		if (isShow() == false)
 				return;		
 		if(null == dataSet) return ;
 		if(null == mPlotArea)mPlotArea = mXChart.getPlotArea();
@@ -434,7 +434,7 @@ public class PlotLegendRender extends PlotLegend{
 	 */
 	public void renderRoundBarKey(Canvas canvas,List<ArcLineData> dataset)
 	{
-		if (isShowLegend() == false) return;		
+		if (isShow() == false) return;		
 		if(null == dataset) return ;
 		
 		initRoundChartKey();
@@ -452,7 +452,7 @@ public class PlotLegendRender extends PlotLegend{
 	 */
 	public void renderPieKey(Canvas canvas,List<PieData> dataset)
 	{
-		if (isShowLegend() == false) return;		
+		if (isShow() == false) return;		
 		if(null == dataset) return ;
 		
 		initRoundChartKey();
@@ -468,7 +468,7 @@ public class PlotLegendRender extends PlotLegend{
 	 */
 	public void renderRdKey(Canvas canvas,List<RadarData> dataset)
 	{
-		if (isShowLegend() == false) return;
+		if (isShow() == false) return;
 		if(null == dataset) return ;
 		initRoundChartKey();
 		for(RadarData cData : dataset)

@@ -108,8 +108,8 @@ public class DialChart04View extends GraphicalView {
 			chart.getPlotAxis().get(0).setDetailModeSteps(4);
 			chart.getPlotAxis().get(0).getTickLabelPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(0).getTickMarksPaint().setColor(Color.WHITE);
-			chart.getPlotAxis().get(0).setAxisLineVisible(false);			
-			chart.getPlotAxis().get(0).setTickLabelVisible(true);			
+			chart.getPlotAxis().get(0).hideAxisLine();			
+			chart.getPlotAxis().get(0).showAxisLabels();			
 			
 			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);
 			chart.getPointer().setBaseRadius(15);

@@ -27,9 +27,6 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.graphics.PointF;
 import android.util.Log;
 

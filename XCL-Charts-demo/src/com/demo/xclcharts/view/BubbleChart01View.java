@@ -137,7 +137,7 @@ public class BubbleChart01View extends DemoView {
 		
 		
 			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);		
-			chart.getCategoryAxis().setTickMarksVisible(false);
+			chart.getCategoryAxis().hideTickMarks();
 			
 			chart.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
 			chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);

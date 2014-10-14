@@ -136,7 +136,7 @@ public class XYAxis extends Axis {
 	protected void renderHorizontalTick(XChart xchart,Canvas canvas, 
 											float centerX, float centerY,
 			String text) {
-		if (false == getVisible())
+		if (false == isShow())
 			return;
 
 		float marksStartX = centerX;
@@ -147,30 +147,30 @@ public class XYAxis extends Axis {
 
 		switch (getHorizontalTickAlign()) {
 		case LEFT: {
-			if (getTickMarksVisible()) {
+			if (isShowTickMarks()) {
 				marksStartX = MathHelper.getInstance().sub(centerX,getTickMarksLength()); 
 				markeStopX = centerX;				
 			}
 			
-			if(this.getTickLabelVisible())
+			if(this.isShowAxisLabels())
 				labelStartX = MathHelper.getInstance().sub(marksStartX , getTickLabelMargin());
 				
 												
 			break;
 		}
 		case CENTER: {
-			if (getTickMarksVisible()) {
+			if (isShowTickMarks()) {
 				marksStartX = MathHelper.getInstance().sub(centerX , getTickMarksLength() / 2);
 				markeStopX = MathHelper.getInstance().add(centerX , getTickMarksLength() / 2);
 			}
 			break;
 		}
 		case RIGHT:
-			if (getTickMarksVisible()) {
+			if (isShowTickMarks()) {
 				marksStartX = centerX;
 				markeStopX = MathHelper.getInstance().add(centerX , getTickMarksLength());				
 			}
-			if(this.getTickLabelVisible())
+			if(this.isShowAxisLabels())
 				labelStartX = MathHelper.getInstance().add(markeStopX , getTickLabelMargin());
 			
 			break;
@@ -179,7 +179,7 @@ public class XYAxis extends Axis {
 		}
 
 		//横轴刻度线
-		if (getTickMarksVisible()) 
+		if (isShowTickMarks()) 
 		{		
 			canvas.drawLine(marksStartX, centerY, 
 					MathHelper.getInstance().add(markeStopX, this.getAxisPaint().getStrokeWidth() / 2),
@@ -189,7 +189,7 @@ public class XYAxis extends Axis {
 
 		//标签
 		//  当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
-		if (getTickLabelVisible()) {			
+		if (isShowAxisLabels()) {			
 			int textHeight = DrawHelper.getInstance().getPaintFontHeight(
 														getTickLabelPaint());
 			textHeight /=4;
@@ -198,7 +198,7 @@ public class XYAxis extends Axis {
 			if(Align.LEFT == getHorizontalTickAlign()) //处理多行标签,待做
 			{
 				float width = 0.0f;
-				if (getTickMarksVisible()) {
+				if (isShowTickMarks()) {
 					width = markeStopX - xchart.getLeft();
 				}else{
 					//width = xchart.getPlotArea().getLeft() - xchart.getLeft();					
@@ -225,7 +225,7 @@ public class XYAxis extends Axis {
 	 * @param text		标签文本
 	 */
 	protected void renderVerticalTick(Canvas canvas, float centerX, float centerY, String text) {
-		if (false == getVisible())
+		if (false == isShow())
 			return;
 
 		float marksStartY = centerY;
@@ -235,13 +235,13 @@ public class XYAxis extends Axis {
 		
 		switch (getVerticalTickPosition()) {
 		case TOP: {
-			if (getTickMarksVisible()) 
+			if (isShowTickMarks()) 
 			{
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
 				marksStopY = centerY;				
 			}
 			
-			if(this.getTickLabelVisible())
+			if(this.isShowAxisLabels())
 			{		
 				//DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint()) / 2 
 				labelsStartY = MathHelper.getInstance().sub(marksStartY,  getTickLabelMargin() ); 
@@ -250,7 +250,7 @@ public class XYAxis extends Axis {
 			break;
 		}
 		case MIDDLE: {
-			if (getTickMarksVisible()) {
+			if (isShowTickMarks()) {
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength() / 2);
 				marksStopY = MathHelper.getInstance().add(centerY , getTickMarksLength() / 2);				
 			}
@@ -258,13 +258,13 @@ public class XYAxis extends Axis {
 		}
 		case BOTTOM:
 
-			if (getTickMarksVisible()) {
+			if (isShowTickMarks()) {
 				marksStartY = centerY;
 				//marksStopY = Math.round(centerY + getTickMarksLength());		
 				marksStopY =  MathHelper.getInstance().add(centerY , getTickMarksLength());
 			}
 			
-			if(this.getTickLabelVisible())
+			if(this.isShowAxisLabels())
 			{
 				labelsStartY = marksStopY
 						+ getTickLabelMargin()
@@ -278,7 +278,7 @@ public class XYAxis extends Axis {
 		}
 
 		
-		if (getTickMarksVisible()) {
+		if (isShowTickMarks()) {
 			canvas.drawLine(centerX,					
 					MathHelper.getInstance().sub(marksStartY,  getAxisPaint().getStrokeWidth() /2 ),
 				//	marksStartY - this.getAxisPaint().getStrokeWidth() / 2,					
@@ -287,7 +287,7 @@ public class XYAxis extends Axis {
 		}
 		
 		
-		if (getTickLabelVisible()) {
+		if (isShowAxisLabels()) {
 
 			//定制化显示格式			
 			DrawHelper.getInstance().drawRotateText(getFormatterLabel(text),

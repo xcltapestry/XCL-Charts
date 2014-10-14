@@ -135,8 +135,6 @@ public class XChart implements IRender {
 	{
 		return plotLegend;
 	}	
-	
-
 
 	/**
 	 * 用于指定绘图区与图范围的内边距。单位为PX值. 即用于确定plotArea范围

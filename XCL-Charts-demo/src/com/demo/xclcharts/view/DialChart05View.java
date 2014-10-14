@@ -120,8 +120,8 @@ public class DialChart05View extends GraphicalView {
 								
 			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243) );
 			
-			chart.getPlotAxis().get(0).setAxisLineVisible(false);
-			chart.getPlotAxis().get(2).setAxisLineVisible(false);
+			chart.getPlotAxis().get(0).hideAxisLine();
+			chart.getPlotAxis().get(2).hideAxisLine();
 			chart.getPlotAxis().get(0).getTickMarksPaint().setColor(Color.YELLOW);
 			chart.getPlotAxis().get(2).getTickMarksPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(2).getTickLabelPaint().setColor(Color.WHITE);

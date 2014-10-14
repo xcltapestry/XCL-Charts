@@ -65,7 +65,7 @@ public class PlotLegend {
 		 * 在图的上方显示图例
 		 * 
 		 */
-		public void showLegend()
+		public void show()
 		{
 			mKeyLabelVisible = true;
 		}
@@ -73,7 +73,7 @@ public class PlotLegend {
 		/**
 		 * 在图的上方不显示图例
 		 */
-		public void hideLegend()
+		public void hide()
 		{
 			mKeyLabelVisible = false;
 		}
@@ -82,7 +82,7 @@ public class PlotLegend {
 		 * 是否需绘制图的图例
 		 * @return 是否显示
 		 */
-		public boolean isShowLegend()
+		public boolean isShow()
 		{
 			return mKeyLabelVisible;
 		}

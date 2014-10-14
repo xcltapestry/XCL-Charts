@@ -156,7 +156,7 @@ public class BarChart05View extends DemoView implements Runnable{
 				}});
 			
 			//隐藏Key
-			chart.getPlotLegend().hideLegend();
+			chart.getPlotLegend().hide();
 			
 			 //禁用平移模式
 			 chart.disablePanMode();

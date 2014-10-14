@@ -124,18 +124,18 @@ public class LineChart02View extends DemoView implements Runnable{
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
 			//隐藏顶轴和右边轴
-			chart.setTopAxisVisible(false);
-			chart.setRightAxisVisible(false);
+			chart.hideTopAxis();
+			chart.hideRightAxis();
 			
 			//设置轴风格
 		
 			//chart.getDataAxis().setTickMarksVisible(false);
 			chart.getDataAxis().getAxisPaint().setStrokeWidth(2);
 			chart.getDataAxis().getTickMarksPaint().setStrokeWidth(2);
-			chart.getDataAxis().setTickLabelVisible(true);
+			chart.getDataAxis().showAxisLabels();
 			
 			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(2);
-			chart.getCategoryAxis().setTickMarksVisible(false);
+			chart.getCategoryAxis().hideTickMarks();
 			
 			
 			

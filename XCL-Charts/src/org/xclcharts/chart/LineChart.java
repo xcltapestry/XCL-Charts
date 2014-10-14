@@ -70,8 +70,7 @@ public class LineChart extends LnChart{
 	}
 
 	private void initChart()
-	{		
-		mCustomLine = new PlotCustomLine();
+	{				
 		defaultAxisSetting();		
 				
 		getDataAxis().getAxisPaint().setStrokeWidth(2);
@@ -124,11 +123,7 @@ public class LineChart extends LnChart{
 		 * @param dataSet 数据源
 		 */
 		public void setDataSource( LinkedList<LineData> dataSet)
-		{
-			if(null == dataSet || dataSet.size() == 0)
-			{
-				Log.e(TAG,"数据轴不能为空.");				
-			}else					
+		{						
 				if(null != mDataSet) mDataSet.clear();
 				this.mDataSet = dataSet;		
 		}			
@@ -139,6 +134,7 @@ public class LineChart extends LnChart{
 		 */
 		public void setDesireLines( List<CustomLineData> customLineDataset)
 		{
+			if(null == mCustomLine) mCustomLine = new PlotCustomLine();
 			mCustomLine.setCustomLines(customLineDataset);
 		}
 		
@@ -243,7 +239,8 @@ public class LineChart extends LnChart{
 	            					Float.compare(lineStartY, initY) != 0 )	
 	            		{	            		
 	            			DrawHelper.getInstance().drawLine(bd.getLineStyle(), 
-	            					lineStartX ,lineStartY ,lineEndX ,lineEndY,canvas,pLine.getLinePaint());		            			
+	            					lineStartX ,lineStartY ,lineEndX ,lineEndY,
+	            					canvas,pLine.getLinePaint());		            			
 	            		}
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
 	            		
@@ -280,7 +277,8 @@ public class LineChart extends LnChart{
 	            		if(bd.getLabelVisible()) //标签
 	                	{	                	            			
 	            			DrawHelper.getInstance().drawRotateText(this.getFormatterItemLabel(bv), 
-	    										lineEndX, lineEndY, itemAngle, canvas, pLine.getDotLabelPaint());
+	    										lineEndX, lineEndY, itemAngle, 
+	    										canvas, pLine.getDotLabelPaint());
 	                	}
 	            			            		
 	            	}else{
@@ -296,9 +294,7 @@ public class LineChart extends LnChart{
             } 				
 			return true;
 		}
-
-		
-			
+					
 		/**
 		 * 绘制图表
 		 */
@@ -342,10 +338,12 @@ public class LineChart extends LnChart{
 			
 			//设置绘图区显示范围
 			if(renderVerticalPlot(canvas) == true)
-			{				
-				//画横向定制线
-				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+			{								
+				if(null != mCustomLine) //画横向定制线
+				{
+					mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+					mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+				}
 			}		
 						
 			//轴 线
@@ -419,7 +417,7 @@ public class LineChart extends LnChart{
 							
 				//设置绘图区显示范围
 				canvas.save();				
-				if (getRightAxisVisible())
+				if (isShowRightAxis())
 				{
 					canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
 									plotArea.getRight(), plotArea.getBottom());
@@ -432,10 +430,11 @@ public class LineChart extends LnChart{
 												
 						if(renderVerticalPlot(canvas) == true)
 						{				
-							//画横向定制线
-							mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-							mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-							
+							if(null != mCustomLine) //画横向定制线
+							{
+								mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+								mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+							}
 							execGC();
 						}						
 						canvas.restore();

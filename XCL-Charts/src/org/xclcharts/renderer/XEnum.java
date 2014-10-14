@@ -155,9 +155,7 @@ public class XEnum {
 		public enum CrurveLineStyle
 		{			
 			BEELINE,BEZIERCURVE
-		}
-	
-		
+		}			
 		
 		/**
 		 * 点的类型，隐藏，三角形,方形,实心圆,空心圆,棱形

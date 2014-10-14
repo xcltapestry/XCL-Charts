@@ -22,6 +22,7 @@
 package org.xclcharts.chart;
 
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
 
 import android.util.Log;
 
@@ -46,6 +47,11 @@ public class PieData {
 	
 	//标签文字旋转角度
 	private float mItemLabelRotateAngle = 0.0f;	
+	
+	//标签注释显示位置 [隐藏,Default,Inside,Ouside,Line]
+	private XEnum.SliceLabelStyle mLabelStyle  = XEnum.SliceLabelStyle.INSIDE;	
+	private boolean mCustLabelStyle = false;	
+	private int mCustLabelColor = 0 ;
 	
 	public PieData() {
 		// TODO Auto-generated constructor stub
@@ -244,4 +250,44 @@ public class PieData {
 	public void setItemLabelRotateAngle(float rotateAngle) {
 		this.mItemLabelRotateAngle = rotateAngle;
 	}
+	
+	/**
+	 * 可用于定制记录的标签显示类型
+	 * @param style	标签风格
+	 * @param color 标签颜色
+	 */
+	public void setCustLabelStyle(XEnum.SliceLabelStyle style,int color)
+	{
+		mLabelStyle = style;
+		mCustLabelStyle = true;
+		mCustLabelColor = color;
+	}
+	
+	/**
+	 * 返回标签显示类型
+	 * @return 类型
+	 */
+	public XEnum.SliceLabelStyle getLabelStyle()
+	{
+		return mLabelStyle;
+	}
+	
+	/**
+	 * 返回是否有定制过标签类型
+	 * @return 状态
+	 */
+	public boolean getCustLabelStyleStatus()
+	{
+		return mCustLabelStyle;
+	}
+	
+	/**
+	 * 返回标签定制颜色
+	 * @return 颜色
+	 */
+	public int getCustLabelColor()
+	{
+		return mCustLabelColor;
+	}
+	
 }

@@ -115,13 +115,13 @@ public class AreaChart02View extends DemoView {
 				chart.getPlotGrid().showHorizontalLines();
 				chart.getPlotGrid().showVerticalLines();	
 				//把顶轴和右轴隐藏
-				chart.setTopAxisVisible(false);
-				chart.setRightAxisVisible(false);
+				chart.hideTopAxis();
+				chart.hideRightAxis();
 				//把轴线和刻度线给隐藏起来
-				chart.getDataAxis().setAxisLineVisible(false);
-				chart.getDataAxis().setTickMarksVisible(false);			
-				chart.getCategoryAxis().setAxisLineVisible(false);
-				chart.getCategoryAxis().setTickMarksVisible(false);				
+				chart.getDataAxis().hideAxisLine();
+				chart.getDataAxis().hideTickMarks();		
+				chart.getCategoryAxis().hideAxisLine();
+				chart.getCategoryAxis().hideTickMarks();				
 				
 				//标题
 				chart.setTitle("平滑区域图");
@@ -132,7 +132,7 @@ public class AreaChart02View extends DemoView {
 				//透明度
 				chart.setAreaAlpha(130);
 				//显示图例
-				chart.getPlotLegend().showLegend();
+				chart.getPlotLegend().show();
 				
 				//激活点击监听
 				chart.ActiveListenItemClick();

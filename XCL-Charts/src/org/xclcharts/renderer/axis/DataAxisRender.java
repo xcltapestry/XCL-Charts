@@ -112,8 +112,8 @@ public class DataAxisRender extends DataAxis {
 	 * 用于处理明细模式下，细分部份的标签不显示出来
 	 */
 	@Override
-	public boolean getTickLabelVisible() {		
-		return (!isPrimaryTick()?false:super.getTickLabelVisible());		
+	public boolean isShowAxisLabels() {		
+		return (!isPrimaryTick()?false:super.isShowAxisLabels());		
 	}
 			
 
@@ -127,7 +127,7 @@ public class DataAxisRender extends DataAxis {
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
 								float centerX,float centerY,String text)
 	{		
-		if(getVisible()) renderHorizontalTick(xchart,canvas, centerX,centerY,text);
+		if(isShow()) renderHorizontalTick(xchart,canvas, centerX,centerY,text);
 	}
 
 
@@ -140,7 +140,7 @@ public class DataAxisRender extends DataAxis {
 	 */
 	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
 	{
-		if(getVisible())
+		if(isShow())
 			renderVerticalTick(canvas,centerX,centerY,text);
 	}
 		
@@ -155,7 +155,7 @@ public class DataAxisRender extends DataAxis {
 	 */
 	public void renderAxis(Canvas canvas, float startX,float startY,float stopX,float stopY)
 	{
-		if(getVisible() && getAxisLineVisible())
+		if(isShow() && isShowAxisLine())
 		{
 			//绘制轴范围分区
 			//绘制轴线

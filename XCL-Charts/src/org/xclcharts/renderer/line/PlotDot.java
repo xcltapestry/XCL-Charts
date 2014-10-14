@@ -51,18 +51,6 @@ public class PlotDot {
 	{		
 	}
 	
-	/*
-	private void initDotPaint()
-	{
-		if(null == mPaintDot)
-		{
-			mPaintDot = new Paint();
-			mPaintDot.setColor(Color.BLUE);
-			mPaintDot.setAntiAlias(true);
-		}
-	}*/
-	
-	
 	/**
 	 * 设置颜色
 	 * @param color	颜色
@@ -99,16 +87,7 @@ public class PlotDot {
 		return mRingInnerColor;
 	}
 	
-	/**
-	 * 开放绘制点的画笔
-	 * @return 画笔
-	 */
-	/*public Paint getDotPaint()
-	{
-		initDotPaint();
-		return mPaintDot;
-	}
-	*/
+
 	/**
 	 * 设置点的显示风格
 	 * @param style 显示风格

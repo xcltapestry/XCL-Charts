@@ -360,7 +360,7 @@ public class ScatterChart extends LnChart{
 								
 			//设置绘图区显示范围
 			canvas.save();
-			if (getRightAxisVisible())
+			if (isShowRightAxis())
 			{
 				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
 								plotArea.getRight(), plotArea.getBottom());

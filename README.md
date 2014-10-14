@@ -86,7 +86,7 @@ http://www.oschina.net/p/xcl-charts
 <img src="http://img.blog.csdn.net/20140831201802281" alt="arclinechart" />
 
 <img src="http://img.blog.csdn.net/20140927224825199" alt="rangebarchart" />
-<img src="http://img.blog.csdn.net/20140929210132876" alt="ScatterChart" />
+<img src="http://img.blog.csdn.net/20141014214336125" alt="piechart_line" />
  <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
 
  <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />

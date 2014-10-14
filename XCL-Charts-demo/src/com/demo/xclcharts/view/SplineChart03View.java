@@ -102,12 +102,12 @@ public class SplineChart03View  extends DemoView {
 			chart.getBorder().setBorderLineColor((int)Color.rgb(179, 147, 197));
 					
 			//调轴线与网络线风格
-			chart.getCategoryAxis().setTickMarksVisible(false);
-			chart.getDataAxis().setAxisLineVisible(false);
-			chart.getDataAxis().setTickMarksVisible(false);		
+			chart.getCategoryAxis().hideTickMarks();
+			chart.getDataAxis().hideAxisLine();
+			chart.getDataAxis().hideTickMarks();		
 			chart.getPlotGrid().showHorizontalLines();
-			chart.setTopAxisVisible(false);
-			chart.setRightAxisVisible(false);				
+			chart.hideTopAxis();
+			chart.hideRightAxis();				
 			
 			chart.getPlotGrid().getHorizontalLinePaint().setColor((int)Color.rgb(179, 147, 197));
 			chart.getCategoryAxis().getAxisPaint().setColor( 

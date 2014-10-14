@@ -67,7 +67,7 @@ public class LnChart extends AxisChart {
 
 	private void initChart() {
 		//默认显示Key
-		plotLegend.showLegend();
+		plotLegend.show();
 	}
 
 	/**
@@ -92,37 +92,50 @@ public class LnChart extends AxisChart {
 	}
 
 	/**
-	 * 是否显示顶上的轴线
+	 * 显示顶上的轴
 	 * 
-	 * @param visible 是否显示
 	 */
-	public void setTopAxisVisible(boolean visible) {
-		mTopAxisVisible = visible;
+	public void showTopAxis() {
+		mTopAxisVisible = true;
 	}
+	
+	/**
+	 * 隐藏顶上的轴
+	 */
+	public void hideTopAxis() {
+		mTopAxisVisible = false;
+	}
+	
 	
 	/**
 	 * 是否会显示顶上的轴线
 	 * @return
 	 */
-	public boolean getTopAxisVisible()
+	public boolean isShowTopAxis()
 	{
 		return mTopAxisVisible;
 	}
 
 	/**
-	 * 是否显示右边轴线
+	 * 显示右边轴
 	 * 
-	 * @param visible 是否显示
 	 */
-	public void setRightAxisVisible(boolean visible) {
-		mRightAxisVisible = visible;
+	public void showRightAxis(){
+		mRightAxisVisible = true;
+	}
+	
+	/**
+	 * 隐藏右边轴
+	 */
+	public void hideRightAxis(){
+		mRightAxisVisible = false;
 	}
 	
 	/**
 	 * 返回是否显示右边轴线
-	 * @return
+	 * @return	是否显示
 	 */
-	public boolean getRightAxisVisible()
+	public boolean isShowRightAxis()
 	{
 		return mRightAxisVisible;
 	}
@@ -155,7 +168,7 @@ public class LnChart extends AxisChart {
 			currentY =  MathHelper.getInstance().sub(plotBottom, i * YSteps);
 			
 			//是否绘制tick
-			if(dataAxis.getTickLabelVisible() &&
+			if(dataAxis.isShowAxisLabels() &&
 					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 			
 			// 标签
@@ -212,7 +225,7 @@ public class LnChart extends AxisChart {
 		dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
 		
 		//如底线不显示，则补上一条网格线
-		if(!dataAxis.getAxisLineVisible() || !dataAxis.getVisible())
+		if(!dataAxis.isShowAxisLine() || !dataAxis.isShow())
 		{
 			plotGrid.renderGridLinesHorizontal(
 					canvas,plotLeft, plotBottom,plotRight, plotBottom);
@@ -243,7 +256,7 @@ public class LnChart extends AxisChart {
 			currentY = MathHelper.getInstance().sub(plotArea.getBottom() , i * YSteps);
 			
 			//是否绘制tick
-			if(dataAxis.getTickLabelVisible() &&
+			if(dataAxis.isShowAxisLabels() &&
 					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
 			
 			// 标签
@@ -299,7 +312,7 @@ public class LnChart extends AxisChart {
 			currentX =MathHelper.getInstance().add(plotArea.getLeft() , (i) * XSteps); 
 			
 			//是否绘制tick
-			if(categoryAxis.getTickLabelVisible() && 
+			if(categoryAxis.isShowAxisLabels() && 
 					isRenderVerticalCategoryAxisTick(currentX,this.mMoveX))continue;
 			
 			// 绘制竖向网格线
@@ -350,7 +363,7 @@ public class LnChart extends AxisChart {
 		categoryAxis.renderAxis(canvas,plotArea.getLeft(),
 				plotArea.getBottom(), plotArea.getRight(),
 				plotArea.getBottom());
-		if(!categoryAxis.getAxisLineVisible() || !categoryAxis.getVisible())
+		if(!categoryAxis.isShowAxisLine() || !categoryAxis.isShow())
 		{
 			//补上一条网格线
 			plotGrid.renderGridLinesVertical(canvas,plotArea.getLeft(),

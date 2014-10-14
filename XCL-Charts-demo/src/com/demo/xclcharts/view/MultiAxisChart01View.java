@@ -122,7 +122,7 @@ public class MultiAxisChart01View extends DemoView {
 				chart.getPlotGrid().showEvenRowBgColor();
 				chart.getPlotGrid().showOddRowBgColor();			
 				//隐蔽Key值说明			
-				chart.getPlotLegend().hideLegend();
+				chart.getPlotLegend().hide();
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, e.toString());
@@ -222,7 +222,7 @@ public class MultiAxisChart01View extends DemoView {
 		{
 			//标签轴
 			lnChart.setCategories(chartLabelsLn);		
-			lnChart.getCategoryAxis().setVisible(false);	
+			lnChart.getCategoryAxis().hide();	
 			
 			//设定数据源						
 			lnChart.setDataSource(chartDatasetLn);
@@ -237,7 +237,7 @@ public class MultiAxisChart01View extends DemoView {
 			dataAxis.getTickLabelPaint().setColor((int)Color.rgb(51, 204, 204));
 		
 			//把折线图默认的顶上的轴线隐藏
-			lnChart.setTopAxisVisible(false);
+			lnChart.hideTopAxis();
 			
 			//定制数据轴上的标签格式
 			lnChart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -313,7 +313,7 @@ public class MultiAxisChart01View extends DemoView {
 				
 				renderLnAxis();
 				
-				lnChart.getPlotLegend().showLegend();
+				lnChart.getPlotLegend().show();
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

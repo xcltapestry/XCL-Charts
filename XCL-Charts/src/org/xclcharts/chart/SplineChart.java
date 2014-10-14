@@ -88,8 +88,6 @@ public class SplineChart extends LnChart{
 	
 	private void initChart()
 	{
-		mCustomLine = new PlotCustomLine();
-		
 		categoryAxis.setHorizontalTickAlign(Align.CENTER);
 		dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
@@ -162,6 +160,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setCustomLines( List<CustomLineData> customLineDataset)
 	{
+		if(null == mCustomLine) mCustomLine = new PlotCustomLine();
 		mCustomLine.setCustomLines(customLineDataset);
 	}
 	
@@ -411,10 +410,12 @@ public class SplineChart extends LnChart{
 		
 		//设置绘图区显示范围
 		if(renderPlot(canvas) == true)
-		{				
-			//画横向定制线
-			mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-			mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+		{							
+			if(null != mCustomLine) //画横向定制线
+			{
+				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+			}				
 		}			
 		
 		// 轴 线
@@ -475,7 +476,7 @@ public class SplineChart extends LnChart{
 								
 			//设置绘图区显示范围
 			canvas.save();
-			if (getRightAxisVisible())
+			if (isShowRightAxis())
 			{
 				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
 								plotArea.getRight(), plotArea.getBottom());
@@ -488,9 +489,11 @@ public class SplineChart extends LnChart{
 					
 					if(renderPlot(canvas) == true)
 					{				
-						//画横向定制线
-						mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-						mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+						if(null != mCustomLine) //画横向定制线
+						{
+							mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+							mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+						}
 						execGC();
 					}					
 					canvas.restore();

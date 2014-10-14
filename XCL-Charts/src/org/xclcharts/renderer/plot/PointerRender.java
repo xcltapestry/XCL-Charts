@@ -25,7 +25,6 @@ import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
 import android.graphics.Path;
-import android.graphics.PointF;
 
 
 /**

@@ -42,11 +42,11 @@ public class Axis {
 	
 	//数据轴刻度线与边上的标注画笔
 	private Paint mPaintTickMarks = null;
-	private Paint mPaintTickLabel = null;	 
+	private Paint mPaintTickLabels = null;	 
 	 
 	//数据轴刻度线与边上的标注是否显示
 	private boolean mTickMarksVisible = true;
-	private boolean mTickLabelVisible = true;
+	private boolean mAxisLabelsVisible = true;
 	 
 	//刻度标记文字旋转角度
 	private float mTickLabelRotateAngle = 0.0f; //-45f;
@@ -82,49 +82,62 @@ public class Axis {
 	
 	private void initTickLabelPaint()
 	{
-		if(null == mPaintTickLabel)
+		if(null == mPaintTickLabels)
 		{
-			mPaintTickLabel = new Paint();		
-			mPaintTickLabel.setColor(Color.BLACK);	
-			mPaintTickLabel.setTextAlign(Align.RIGHT);
-			mPaintTickLabel.setTextSize(18);
-			mPaintTickLabel.setAntiAlias(true);
+			mPaintTickLabels = new Paint();		
+			mPaintTickLabels.setColor(Color.BLACK);	
+			mPaintTickLabels.setTextAlign(Align.RIGHT);
+			mPaintTickLabels.setTextSize(18);
+			mPaintTickLabels.setAntiAlias(true);
 		}
 	}
 	
 	/**
-	 * 是否显示轴(包含轴线，刻度线和标签)
-	 * @param visible 显示轴
+	 * 显示轴(包含轴线，刻度线和标签)
 	 */
-	public void setVisible(boolean visible)
+	public void show()
 	{
-		mAxisVisible = visible; 
+		mAxisVisible = true;
 	}
 	
 	/**
-	 * 返回是否显示轴(包含轴线，刻度线和标签)
-	 * @return 是否显示
+	 * 隐藏轴(包含轴线，刻度线和标签)
 	 */
-	public boolean getVisible()
+	public void hide()
+	{
+		mAxisVisible = false;
+	}
+	
+	/**
+	 * 是否显示轴线
+	 * @return	是否显示
+	 */
+	public boolean isShow()
 	{
 		return mAxisVisible;
 	}
 
+	/**
+	 * 显示轴线
+	 */
+	public void showAxisLine()
+	{
+		mAxisLineVisible = true;
+	}
 	
 	/**
-	 * 设置是否显示轴线
-	 * @param visible 是否显示轴线
+	 * 隐藏轴线
 	 */
-	public void setAxisLineVisible(boolean visible)
+	public void hideAxisLine()
 	{
-		mAxisLineVisible = visible; 
+		mAxisLineVisible = false;
 	}
 	
 	/**
 	 * 返回是否显示轴线
 	 * @return 是否显示
 	 */
-	public boolean getAxisLineVisible()
+	public boolean isShowAxisLine() 
 	{
 		return mAxisLineVisible;
 	}
@@ -153,40 +166,55 @@ public class Axis {
 	 */
 	public Paint getTickLabelPaint() {
 		initTickLabelPaint();
-		return mPaintTickLabel;
+		return mPaintTickLabels;
 	}
 
+	
 	/**
-	 * 设置是否显示轴刻度线
-	 * @param visible 是否显示
+	 * 显示轴刻度线
 	 */
-	public void setTickMarksVisible(boolean visible) {
-		this.mTickMarksVisible = visible;
+	public void showTickMarks() {
+		this.mTickMarksVisible = true;
 	}
 	
 	/**
-	 * 返回设置是否显示轴刻度线
+	 * 隐藏轴刻度线
+	 */
+	public void hideTickMarks() {
+		this.mTickMarksVisible = false;
+	}
+	
+	/**
+	 * 返回是否显示轴刻度线
 	 * @return 是否显示
 	 */
-	public boolean getTickMarksVisible()
+	public boolean  isShowTickMarks() 
 	{
 		return mTickMarksVisible;
 	}
-
+	
 	/**
-	 * 设置是否显示轴标签
-	 * @param visible 是否显示
+	 * 显示轴标签
 	 */
-	public void setTickLabelVisible(boolean visible) {
-		this.mTickLabelVisible = visible;
+	public void showAxisLabels()
+	{
+		mAxisLabelsVisible = true;
+	}
+	
+	/**
+	 * 隐藏轴标签
+	 */
+	public void hideAxisLabels()
+	{
+		mAxisLabelsVisible = false;
 	}
 
 	/**
 	 * 返回是否显示轴标签
 	 * @return 是否显示
 	 */
-	public boolean getTickLabelVisible() {
-		return this.mTickLabelVisible ;
+	public boolean isShowAxisLabels(){ 
+		return this.mAxisLabelsVisible ;
 	}
 	
 	/**

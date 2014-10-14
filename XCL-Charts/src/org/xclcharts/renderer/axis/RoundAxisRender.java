@@ -165,7 +165,7 @@ public class RoundAxisRender extends RoundAxis{
 						steps++;						
 					}
 					
-					if (getTickMarksVisible()) 
+					if (isShowTickMarks()) 
 					{						
 						if(0 == steps && mLongTickfakeBold )
 						{
@@ -176,7 +176,7 @@ public class RoundAxisRender extends RoundAxis{
 						canvas.drawLine(startX, startY, stopX, stopY, getTickMarksPaint());
 					}
 									
-					if (getTickLabelVisible()) 
+					if (isShowAxisLabels()) 
 					{
 						//回调函数定制化标签显示格式
 						 String label = getFormatterLabel(labels.get(i));							 
@@ -286,7 +286,7 @@ public class RoundAxisRender extends RoundAxis{
 	 */
 		public boolean renderFillAxis(Canvas canvas) throws Exception
 		{			
-			if(getVisible() && getAxisLineVisible())
+			if(isShow() && isShowAxisLine())
 			{
 				if(null != mColor)
 					getFillAxisPaint().setColor(mColor.get(0));
@@ -305,10 +305,10 @@ public class RoundAxisRender extends RoundAxis{
 		 */
 		public boolean renderTickAxis(Canvas canvas) throws Exception
 		{			
-			if(!getVisible()) return false;			
+			if(!isShow()) return false;			
 			if(null == mLabels) return false;
 						
-			if(getAxisLineVisible())
+			if(isShowAxisLine())
 			{
 				DrawHelper.getInstance().drawPathArc(canvas, this.getAxisPaint(),
 								this.mCirX,this.mCirY,this.mRadius,this.mInitAngle, this.mTotalAngle);							
@@ -326,7 +326,7 @@ public class RoundAxisRender extends RoundAxis{
 		 */
 		public boolean renderArcLineAxis(Canvas canvas) throws Exception
 		{			
-			if(getVisible() && getAxisLineVisible())
+			if(isShow() && isShowAxisLine())
 			{
 				DrawHelper.getInstance().drawPathArc(canvas, this.getAxisPaint() 
 								,mCirX, mCirY, mRadius,this.mInitAngle, this.mTotalAngle);
@@ -336,7 +336,7 @@ public class RoundAxisRender extends RoundAxis{
 		
 		public boolean renderCircleAxis(Canvas canvas) throws Exception
 		{			
-			if(getVisible() && getAxisLineVisible())
+			if(isShow() && isShowAxisLine())
 			{
 				if(null != mColor)
 					getAxisPaint().setColor(mColor.get(0));
@@ -355,7 +355,7 @@ public class RoundAxisRender extends RoundAxis{
 		 */
 		public boolean renderRingAxis(Canvas canvas) throws Exception
 		{
-			if(!getVisible()|| !getAxisLineVisible()) return true;
+			if(!isShow()|| !isShowAxisLine()) return true;
 			
 			if(null == mPercentage) return false;
 									
@@ -385,7 +385,8 @@ public class RoundAxisRender extends RoundAxis{
 			if(Float.compare(getRingInnerRadiusPercentage() , 0.0f) != 0 
 					&& Float.compare(getRingInnerRadiusPercentage() , 0.0f) == 1)
 			{									
-				canvas.drawCircle(this.mCirX, mCirY, getRingInnerRadius(), this.getFillAxisPaint());
+				canvas.drawCircle(this.mCirX, mCirY, 
+									getRingInnerRadius(), this.getFillAxisPaint());
 			}
 						
 			return true;
@@ -415,7 +416,7 @@ public class RoundAxisRender extends RoundAxis{
 					 						this.mCirX, this.mCirY,mRadius, 
 					 						startAngle, sweepAngle, true);
 			 			 
-			if (getTickLabelVisible() && ""!= label) 
+			if (isShowAxisLabels() && ""!= label) 
 			{
 			 	float Angle = MathHelper.getInstance().add(startAngle , sweepAngle / 2) ; 
 			 	MathHelper.getInstance().calcArcEndPointXY(this.mCirX, this.mCirY,
@@ -457,7 +458,7 @@ public class RoundAxisRender extends RoundAxis{
 		 */
 		public boolean renderLineAxis(Canvas canvas) throws Exception
 		{
-			 if(!getVisible()|| !getAxisLineVisible()) return true;		
+			 if(!isShow()|| !isShowAxisLine()) return true;		
 			 switch(mLocation)
 			 {
 			 case TOP:					 

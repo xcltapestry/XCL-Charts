@@ -100,7 +100,7 @@ public class ArcLineChart01View extends DemoView {
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);				
 			
 			//显示图例
-			chart.getPlotLegend().showLegend();
+			chart.getPlotLegend().show();
 									
 			//绑定数据源
 			chart.setDataSource(chartData);

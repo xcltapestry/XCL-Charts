@@ -149,7 +149,7 @@ public class DialChart03View extends GraphicalView {
 			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
 			chart.getPlotAxis().get(1).getTickLabelPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(1).getTickMarksPaint().setColor(Color.WHITE);
-			chart.getPlotAxis().get(1).setAxisLineVisible(false);
+			chart.getPlotAxis().get(1).hideAxisLine();
 			chart.getPlotAxis().get(1).setDetailModeSteps(3);
 			
 			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);

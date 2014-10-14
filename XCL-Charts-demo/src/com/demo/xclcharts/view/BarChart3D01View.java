@@ -119,7 +119,7 @@ public class BarChart3D01View extends DemoView {
 			//chart.getCategoryAxis().setAxisTickLabelsRotateAngle(-45f);
 			
 			//隐藏轴线和tick
-			chart.getDataAxis().setAxisLineVisible(false);
+			chart.getDataAxis().hideAxisLine();
 			//chart.getDataAxis().setTickMarksVisible(false);
 			
 			//标题

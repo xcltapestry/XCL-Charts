@@ -70,7 +70,7 @@ public class CategoryAxisRender extends CategoryAxis {
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
 							float centerX,float centerY,String text)
 	{			
-		if(getVisible())
+		if(isShow())
 			renderHorizontalTick(xchart,canvas,centerX,centerY,text);
 	}
 	
@@ -85,12 +85,12 @@ public class CategoryAxisRender extends CategoryAxis {
 							float centerX,float centerY,String text)
 	{
 		
-		if(getVisible())
+		if(isShow())
 			renderVerticalTick(canvas,centerX,centerY,text);
 	}
 	
 	/**
-	 * 绘制轴给
+	 * 绘制轴线
 	 * @param startX 起始点X坐标
 	 * @param startY 起始点Y坐标
 	 * @param stopX	 终止点X坐标	
@@ -98,7 +98,7 @@ public class CategoryAxisRender extends CategoryAxis {
 	 */
 	public void renderAxis(Canvas canvas,float startX,float startY,float stopX,float stopY)
 	{
-		if(getVisible() && getAxisLineVisible())
+		if(isShow() && isShowAxisLine())
 			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
 	}
 	

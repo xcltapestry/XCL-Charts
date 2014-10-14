@@ -67,7 +67,7 @@ public class RangeBarChart  extends AxisChart {
 	
 		
 		// 默认显示Key		
-		plotLegend.showLegend();
+		plotLegend.show();
 		
 		//默认为竖向设置
 		defaultAxisSetting();	

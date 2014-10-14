@@ -154,7 +154,7 @@ public class BarChart04View extends DemoView {
 				}});
 			
 			//隐藏Key
-			chart.getPlotLegend().hideLegend();
+			chart.getPlotLegend().hide();
 			
 			 //让柱子间没空白
 			 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢

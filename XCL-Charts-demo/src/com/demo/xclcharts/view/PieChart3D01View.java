@@ -103,7 +103,7 @@ public class PieChart3D01View extends DemoView implements Runnable{
 			//chart.getPlotTitle().setTitlePosition(XEnum.Position.LOWER);
 			
 			//不显示key
-			chart.getPlotLegend().hideLegend();
+			chart.getPlotLegend().hide();
 			//标签文本显示为白色
 			chart.getLabelPaint().setColor(Color.WHITE);
 			
