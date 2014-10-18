@@ -191,29 +191,17 @@ public class RdChart extends EventChart {
 		
 		try {
 				if (null == canvas)
-						return false;
-				
-				
+						return false;								
 				canvas.save();
 				//设置原点位置
 				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
-				//绘制图表							
-				//ret = postRender(canvas);	
-				
+			
 				super.render(canvas);
 				
-				//绘制边框
-				//renderBorder(canvas);
 				//还原								
 				canvas.restore();
 				
-				
-				//return postRender(canvas);	
-				
-				//return ret;
-				
-				return true;
-				
+				return true;				
 		} catch (Exception e) {
 			throw e;
 		}

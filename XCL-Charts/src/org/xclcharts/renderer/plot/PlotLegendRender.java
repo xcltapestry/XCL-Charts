@@ -345,12 +345,12 @@ public class PlotLegendRender extends PlotLegend{
 				if(XEnum.LegendType.COLUMN == getType())
 				{
 					mKeyLabelY = mPlotArea.getTop()  + mOffsetY;
-					mKeyLabelY += mXChart.getBorderWidth();	
+					//mKeyLabelY += mXChart.getBorderWidth();	
 					
 					mKeyLabelY += mBoxLineSize;
 				}else{
-					mKeyLabelY = mPlotArea.getTop() -  mRectHeight - mOffsetY;
-					mKeyLabelY -= mXChart.getBorderWidth();	
+					mKeyLabelY = mPlotArea.getTop() -  mRectHeight - mOffsetY;					
+					//mKeyLabelY -= mXChart.getBorderWidth();	
 					
 					mKeyLabelY -= mBoxLineSize;
 				}

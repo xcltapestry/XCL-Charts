@@ -103,6 +103,7 @@ public class RoseChart01View extends DemoView {
 			//设置标签显示位置,当前设置标签显示在扇区中间
 			chart.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
 			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

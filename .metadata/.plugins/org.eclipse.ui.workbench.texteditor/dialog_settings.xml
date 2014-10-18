@@ -2,29 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="330" key="DIALOG_Y_ORIGIN"/>
-		<item value="391" key="DIALOG_HEIGHT"/>
-		<item value="647" key="DIALOG_X_ORIGIN"/>
+		<item value="411" key="DIALOG_Y_ORIGIN"/>
+		<item value="773" key="DIALOG_X_ORIGIN"/>
+		<item value="362" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="renderFlatArcAndLegend" key="selection"/>
+		<item value="extW" key="selection"/>
 		<list key="findhistory">
-			<item value="renderFlatArcAndLegend"/>
-			<item value="chartDataSource"/>
-			<item value="getDataSource"/>
-			<item value="renderPlot"/>
-			<item value="renderPieKey"/>
-			<item value="renderLabel"/>
-			<item value="validateAngle"/>
-			<item value="mRectF"/>
+			<item value="extW"/>
+			<item value="ext"/>
+			<item value="bd.getLinePoint()"/>
+			<item value="mTopAxisVisible"/>
+			<item value="ScreenWidth("/>
+			<item value="getRight("/>
+			<item value="getPlotArea"/>
+			<item value="getFormatter"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mPaintArc"/>
 			<item value="categoryAxis"/>
 			<item value="setBorderLineColor"/>
 			<item value="setLineStyle"/>
@@ -32,7 +33,6 @@
 			<item value="mPaintBackground"/>
 			<item value="getPlotScreenWidth"/>
 			<item value="getPlotScreenWidth()"/>
-			<item value="getPlotScreenHeight"/>
 		</list>
 	</section>
 </section>

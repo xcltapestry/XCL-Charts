@@ -166,6 +166,8 @@ public class DountChart  extends PieChart{
 	protected void renderLabelInside(Canvas canvas,String text,float itemAngle,
 			 float cirX,float cirY,float radius,float calcAngle)
 	{
+		if("" == text) return ;
+			
 		//显示在扇形的中心
 		float calcRadius = mFillRadius + (radius - mFillRadius) /2 ;
 		
@@ -215,18 +217,6 @@ public class DountChart  extends PieChart{
 		 super.renderPlot(canvas);
 		 
 		 renderDount(canvas);
-		
-		 /*
-		 //内部
-		 renderInnderCircle(canvas);  
-		 
-		  //绘制附加信息
-		  plotAttrInfoRender.renderAttrInfo(canvas, plotArea.getCenterX(), 
-				  				plotArea.getCenterY(), this.getRadius());
-	  
-		 //中心文本	
-	     renderCenterText(canvas);
-	     */
 	     return true;
 	}	
 

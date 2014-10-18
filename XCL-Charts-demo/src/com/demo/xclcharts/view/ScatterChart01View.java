@@ -158,6 +158,7 @@ public class ScatterChart01View extends DemoView {
 			chart.showDyLine();
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.BackwardDiagonal);
 			
+			//chart.getPlotArea().extWidth(500.f);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -23,6 +23,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 
 import android.graphics.Canvas;
@@ -44,7 +45,7 @@ public class RoseChart extends PieChart{
 	
 	private  static final  String TAG="PieChart";
 	
-	private Paint mPaintInner = new Paint();
+	private Paint mPaintInner = null;
 
 	public RoseChart() {
 		// TODO Auto-generated constructor stub
@@ -58,12 +59,12 @@ public class RoseChart extends PieChart{
 		if(null == mPaintInner)
 		{
 			mPaintInner = new Paint();
-			mPaintInner.setColor(Color.DKGRAY);
-			//mPaintInner.setStyle(Style.STROKE);
+			//mPaintInner.setColor(Color.DKGRAY);
+			mPaintInner.setColor(Color.rgb(68, 68, 68));
 			mPaintInner.setStyle(Style.FILL);		
 			mPaintInner.setAntiAlias(true);		
 		}
-		
+				
 		//白色标签
 		if(null != getLabelPaint())
 		{
@@ -97,12 +98,7 @@ public class RoseChart extends PieChart{
 			float cirX = plotArea.getCenterX();
 		    float cirY = plotArea.getCenterY();
 	        float radius = getRadius();
-	     
-	        //画笔初始化
-			Paint paintArc = new Paint();  
-			paintArc.setAntiAlias(true);	
-			paintArc.setStyle(Style.FILL);	
-	        
+	    	        
 	        //外环
 			canvas.drawCircle(cirX,cirY,radius,mPaintInner); 
 	    
@@ -124,7 +120,7 @@ public class RoseChart extends PieChart{
 			
 	        for(PieData cData : chartDataSource)
 			{
-				paintArc.setColor(cData.getSliceColor());	
+	        	geArcPaint().setColor(cData.getSliceColor());	
 				
 				//将百分比转换为新扇区的半径    
 				double p = cData.getPercentage()/ 100;					
@@ -137,14 +133,21 @@ public class RoseChart extends PieChart{
 	            //在饼图中显示所占比例   
 	            RectF nRF = new RectF(sub(cirX , newRaidus),sub(cirY , newRaidus),
 	            					  add(cirX , newRaidus),add(cirY , newRaidus));  
-	            canvas.drawArc(nRF, mOffsetAngle, percentage, true, paintArc);       
-				
-	          //计算百分比标签  
-	            PointF point = MathHelper.getInstance().calcArcEndPointXY(
-	            			cirX, cirY, radius - radius/2/2, mOffsetAngle + percentage/2); 
-	            
+	            canvas.drawArc(nRF, mOffsetAngle, percentage, true, geArcPaint());       
+					       	            
 	            //标识  
-	            canvas.drawText(cData.getLabel(),point.x, point.y ,getLabelPaint());             
+	            String label = cData.getLabel();	            
+	            if("" != label)
+            	{            			            
+	            	//计算百分比标签  
+		            PointF point = MathHelper.getInstance().calcArcEndPointXY(
+		            			cirX, cirY, radius - radius/2/2, mOffsetAngle + percentage/2); 
+		            
+            		//请自行在回调函数中处理显示格式
+                    DrawHelper.getInstance().drawRotateText( label,
+                    		point.x, point.y, cData.getItemLabelRotateAngle(), 
+                    		canvas, getLabelPaint());
+            	}               
 	         
 	          //下次的起始角度  
 	            mOffsetAngle = add(mOffsetAngle,percentage);

@@ -147,13 +147,17 @@ public class AreaChart extends LnChart{
 		return mCrurveLineStyle;
 	}
 	
-	
-
 	private boolean calcAllPoints(AreaData bd,
 			List<RectF> lstDots,
 			List<PointF> lstPoints,
 			List<PointF> lstPathPoints)
 	{
+		
+		if(null == bd)
+		{
+			Log.e(TAG,"传入的数据序列参数为空.");
+			return false;
+		}
 		//数据源
 		List<Double> chartValues = bd.getLinePoint();
 		if(null == chartValues)

@@ -26,21 +26,21 @@
 			<item value="11" key="includeMask"/>
 			<item value="2" key="limitTo"/>
 			<item value="3" key="scope"/>
-			<item value="" key="javaElement"/>
 			<item value="\n" key="pattern"/>
-			<item value="0" key="matchLocations"/>
+			<item value="" key="javaElement"/>
 			<item value="0" key="searchFor"/>
+			<item value="0" key="matchLocations"/>
 			<item value="false" key="isCaseSensitive"/>
 			<list key="workingSets">
 			</list>
 		</section>
 	</section>
+	<section name="quick_assist_proposal_size">
+	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
-		<item value="true" key="create_unimplemented"/>
 		<item value="false" key="create_main"/>
-	</section>
-	<section name="quick_assist_proposal_size">
+		<item value="true" key="create_unimplemented"/>
 	</section>
 	<section name="javadoc">
 		<item value="false" key="nodeprecatedlist"/>
@@ -67,21 +67,21 @@
 		<section name="projects">
 			<section name="XCL-Charts">
 				<item value="E:\GitHub\GitHub\XCL-Charts\doc" key="destdir"/>
-				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts\javadoc.xml" key="antpath"/>
 				<item value="" key="href"/>
+				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts\javadoc.xml" key="antpath"/>
 			</section>
 			<section name="XCL-Charts-demo">
 				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\doc" key="destdir"/>
-				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\javadoc.xml" key="antpath"/>
 				<item value="" key="href"/>
+				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\javadoc.xml" key="antpath"/>
 			</section>
 		</section>
 	</section>
 	<section name="JavadocWizardDialog">
 		<item value="616" key="DIALOG_WIDTH"/>
 		<item value="8" key="DIALOG_Y_ORIGIN"/>
-		<item value="659" key="DIALOG_HEIGHT"/>
 		<item value="29" key="DIALOG_X_ORIGIN"/>
+		<item value="659" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="NewPackageWizardPage">

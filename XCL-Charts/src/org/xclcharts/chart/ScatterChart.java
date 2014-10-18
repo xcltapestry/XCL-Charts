@@ -151,6 +151,13 @@ public class ScatterChart extends LnChart{
 				
 	private void renderPoints( Canvas canvas, ScatterData bd ,int dataID)
 	{			
+		
+		if(null == bd)
+		{
+			Log.e(TAG,"传入的数据序列参数为空.");
+			return ;
+		}
+		
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
 		float lineStartX = initX;

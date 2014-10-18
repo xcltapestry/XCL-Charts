@@ -177,6 +177,7 @@ public class BubbleChart01View extends DemoView {
 			//绘制交叉线
 			//chart.showDyLine();
 			
+			//chart.getPlotArea().extWidth(500.f);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

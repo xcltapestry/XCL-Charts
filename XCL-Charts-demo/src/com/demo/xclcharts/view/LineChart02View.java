@@ -165,7 +165,7 @@ public class LineChart02View extends DemoView implements Runnable{
 						
 			//允许线与轴交叉时，线会断开
 			chart.setLineAxisIntersectVisible(false);
-						
+												
 			chart.showDyLine();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

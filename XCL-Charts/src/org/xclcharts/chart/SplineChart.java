@@ -37,10 +37,7 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -188,6 +185,13 @@ public class SplineChart extends LnChart{
 				
 	private void calcAllPoints( SplineData bd,List<RectF> lstDots,List<PointF> lstPoints)
 	{
+		
+		if(null == bd)
+		{
+			Log.e(TAG,"传入的数据序列参数为空.");
+			return;
+		}
+		
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
 		float lineStartX = initX;

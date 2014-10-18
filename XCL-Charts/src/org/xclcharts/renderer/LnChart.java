@@ -77,8 +77,8 @@ public class LnChart extends AxisChart {
 	 * 
 	 * @return Y轴步长
 	 */
-	private float getVerticalYSteps(int tickCount) {
-		return MathHelper.getInstance().div(getAxisScreenHeight() , tickCount);
+	private float getVerticalYSteps(int tickCount) { //getAxisScreenHeight
+		return MathHelper.getInstance().div(getPlotScreenHeight() , tickCount);
 	}
 
 	/**
@@ -90,7 +90,7 @@ public class LnChart extends AxisChart {
 	 */
 	protected float getVerticalXSteps(int num) {
 		//float XSteps = (float) Math.ceil(getAxisScreenWidth() / num);		
-		return MathHelper.getInstance().div(getAxisScreenWidth(),num);		
+		return MathHelper.getInstance().div(getPlotScreenWidth(),num);		//getAxisScreenWidth
 	}
 
 	/**
@@ -140,9 +140,7 @@ public class LnChart extends AxisChart {
 	public boolean isShowRightAxis()
 	{
 		return mRightAxisVisible;
-	}
-	
-	
+	}		
 	
 	/**
 	 * 绘制左边竖轴(对线图而言坐标轴默认都是封闭的)
@@ -217,7 +215,7 @@ public class LnChart extends AxisChart {
 		// top X轴线
 		if (mTopAxisVisible)
 		{		
-			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop);
+			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); //plotRight
 		}else{
 			//即如果顶轴不显示的话，补上一条网格线
 			//plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
@@ -266,10 +264,10 @@ public class LnChart extends AxisChart {
 								dataAxis.getAxisMin() , (i * dataAxis.getAxisSteps()));
 
 			if (i == tickCount) {
-				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
+				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getPlotRight(),
 						plotArea.getTop(), Double.toString(currentTickLabel));
 			} else {
-				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getRight(),
+				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getPlotRight(),
 								MathHelper.getInstance().add(currentY , markHeight),
 								Double.toString(currentTickLabel));
 			}
@@ -303,9 +301,9 @@ public class LnChart extends AxisChart {
 		float XSteps = 0.0f;
 		if (dataSet.size() == 1)  //label仅一个时右移
 		{
-			XSteps = div( getAxisScreenWidth(),(dataSet.size()));
+			XSteps = div( getPlotScreenWidth(),(dataSet.size()));
 		}else{
-			XSteps = div( getAxisScreenWidth(),(dataSet.size() - 1));
+			XSteps = div( getPlotScreenWidth(),(dataSet.size() - 1));
 		}		
 
 		for (int i = 0; i < dataSet.size(); i++) {
@@ -326,7 +324,7 @@ public class LnChart extends AxisChart {
 			}
 
 			if (dataSet.size() == i + 1) {
-				categoryAxis.renderAxisVerticalTick(canvas,plotArea.getRight(),
+				categoryAxis.renderAxisVerticalTick(canvas,plotArea.getPlotRight(),
 						plotArea.getBottom(), dataSet.get(i));
 			} else {
 				// 画上标签/刻度线
@@ -340,8 +338,8 @@ public class LnChart extends AxisChart {
 		{
 			
 			//即如果右轴不显示的话，补上一条网格线
-			plotGrid.renderGridLinesVertical(canvas,plotArea.getRight(),
-					plotArea.getBottom(), plotArea.getRight(),plotArea.getTop());
+			plotGrid.renderGridLinesVertical(canvas,plotArea.getPlotRight(),
+					plotArea.getBottom(), plotArea.getPlotRight(),plotArea.getTop());
 		}
 		
 	

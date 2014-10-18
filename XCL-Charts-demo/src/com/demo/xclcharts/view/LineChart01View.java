@@ -153,6 +153,7 @@ public class LineChart01View extends DemoView {
 			chart.getCategoryAxis().getAxisTickLabelPaint()
 			*/
 			
+			chart.getPlotArea().extWidth(100.f);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
