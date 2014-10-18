@@ -105,26 +105,25 @@ public class XChart implements IRender {
 	//是否显示十字交叉线
 	private boolean mDyLineVisible = false;
 	private DyLineRender mDyLine = null;
-	
 		
 	public XChart() {
-		initChart();
+		initChart();		
 	}
 
 	private void initChart() {
 		//默认的原点坐标
 		mTranslateXY[0] = 0.0f;
 		mTranslateXY[1] = 0.0f;
-		
+				
 		//图例
-		plotLegend = new PlotLegendRender(this);				
+		if(null == plotLegend)plotLegend = new PlotLegendRender(this);	
 		
 		// 图表
-		plotArea = new PlotAreaRender();
-		plotGrid = new PlotGridRender();		
-		plotTitle = new PlotTitleRender();
-		plotTitle.setVerticalAlign(XEnum.VerticalAlign.MIDDLE);
-		plotTitle.setTitleAlign(XEnum.ChartTitleAlign.MIDDLE);		
+		if(null == plotArea)plotArea = new PlotAreaRender();
+		
+		if(null == plotGrid)plotGrid = new PlotGridRender();
+		
+		if(null == plotTitle)plotTitle = new PlotTitleRender();						
 	}
 	
 	/**
@@ -133,6 +132,8 @@ public class XChart implements IRender {
 	 */
 	public PlotLegend getPlotLegend()
 	{
+		//图例
+		if(null == plotLegend)plotLegend = new PlotLegendRender(this);
 		return plotLegend;
 	}	
 
@@ -166,6 +167,7 @@ public class XChart implements IRender {
 	 * @return 主图表区基类
 	 */
 	public PlotArea getPlotArea() {
+		if(null == plotArea)plotArea = new PlotAreaRender();
 		return plotArea;
 	}
 
@@ -175,6 +177,7 @@ public class XChart implements IRender {
 	 * @return 网格基类
 	 */
 	public PlotGrid getPlotGrid() {
+		if(null == plotGrid)plotGrid = new PlotGridRender();
 		return plotGrid;
 	}
 
@@ -184,6 +187,7 @@ public class XChart implements IRender {
 	 * @return 标题基类
 	 */
 	public PlotTitle getPlotTitle() {
+		if(null == plotTitle)plotTitle = new PlotTitleRender();
 		return plotTitle;
 	}
 	
@@ -227,50 +231,12 @@ public class XChart implements IRender {
 	}
 
 	/**
-	 * 设置图表绘制范围,以指定上下左右范围方式确定图表大小.
-	 * 
-	 * @param left
-	 *            图表左上X坐标
-	 * @param top
-	 *            图表左上Y坐标
-	 * @param right
-	 *            图表右下X坐标
-	 * @param bottom
-	 *            图表右上Y坐标
-	 */
-	public void setChartRect(float left, float top, float right, float bottom) {
-
-		if (left > 0)
-			mLeft = left;
-		if (top > 0)
-			mTop = top;
-		if (right > 0)
-			mRight = right;
-		if (bottom > 0)
-			mBottom = bottom;
-		
-		mWidth = Math.abs(right - left);
-		mHeight = Math.abs(bottom - top);
-	}
-			
-
-	/**
-	 * 是否为竖屏显示
-	 * 
-	 * @return 是否为竖屏
-	 */
-	public boolean isVerticalScreen() {
-		return( (Float.compare(mWidth , mHeight) == -1)?true:false);
-	}
-
-
-	/**
 	 * 设置标题
 	 * 
 	 * @param title 标题
 	 */
 	public void setTitle(String title) {
-		plotTitle.setTitle(title);
+		if(null!= plotTitle)plotTitle.setTitle(title);
 	}
 
 	/**
@@ -279,7 +245,7 @@ public class XChart implements IRender {
 	 * @param subtitle 子标题
 	 */
 	public void addSubtitle(String subtitle) {
-		plotTitle.setSubtitle(subtitle);
+		if(null!= plotTitle)plotTitle.setSubtitle(subtitle);
 	}
 
 	/**
@@ -287,7 +253,7 @@ public class XChart implements IRender {
 	 * @param position 显示位置
 	 */
 	public void setTitleVerticalAlign(XEnum.VerticalAlign position) {
-		plotTitle.setVerticalAlign(position);
+		if(null!= plotTitle)plotTitle.setVerticalAlign(position);
 	}
 
 	/**
@@ -295,8 +261,8 @@ public class XChart implements IRender {
 	 * 
 	 * @param align 显示位置
 	 */
-	public void setTitleAlign(XEnum.ChartTitleAlign align) {
-		plotTitle.setTitleAlign(align);
+	public void setTitleAlign(XEnum.HorizontalAlign align) {
+		if(null!= plotTitle)plotTitle.setTitleAlign(align);
 	}
 	
 
@@ -411,6 +377,7 @@ public class XChart implements IRender {
 	 */
 	public void setTranslateXY(float x,float y)
 	{
+		if(null == mTranslateXY) mTranslateXY = new float[2];	
 		mTranslateXY[0] = x;
 		mTranslateXY[1] = y;
 	}
@@ -429,27 +396,20 @@ public class XChart implements IRender {
 	 */
 	protected void calcPlotRange() {	
 		
-		int borderWidth = getBorderWidth();		
+		int borderWidth = getBorderWidth();
+		if(null == plotArea) return;
 		plotArea.setBottom(sub(this.getBottom() - borderWidth/2 , mPaddingBottom) );
 		plotArea.setLeft(add(this.getLeft() + borderWidth/2 , mPaddingLeft));
 		plotArea.setRight(sub(this.getRight() - borderWidth/2 , mPaddingRight));		
 		plotArea.setTop(add(this.getTop() + borderWidth/2 , mPaddingTop));
 	}
 	
-
-	// 导出成文件,待实现
-	// public void exportAsBmpfile(String fileName)
-	// {
-
-	// }
-	
-
-
 	/**
 	 * 绘制标题
 	 */
 	protected void renderTitle(Canvas canvas) {				
 		int borderWidth = getBorderWidth();
+		if(null == plotTitle) return;
 		this.plotTitle.renderTitle(
 				mLeft + borderWidth, mRight - borderWidth, mTop + borderWidth,
 				mWidth, this.plotArea.getTop(), canvas);
@@ -475,9 +435,8 @@ public class XChart implements IRender {
 		getBackgroundPaint().setColor(color);
 		getPlotArea().getBackgroundPaint().setColor(color);
 		
-		//?? 
 		if(null == mBorder)mBorder = new BorderRender();
-		mBorder.getChartBackgroundPaint().setColor(color);		
+		mBorder.getBackgroundPaint().setColor(color);		
 	}
 	
 	/**
@@ -487,7 +446,7 @@ public class XChart implements IRender {
 	 */
 	public Paint getBackgroundPaint() {
 		if(null == mBorder)mBorder = new BorderRender();
-		return mBorder.getChartBackgroundPaint();			
+		return mBorder.getBackgroundPaint();			
 	}
 	
 	/**
@@ -509,6 +468,15 @@ public class XChart implements IRender {
 		if(null == mBorder)mBorder = new BorderRender();
 		mBorder.setBorderRectType(XEnum.RectType.ROUNDRECT);
 	}
+	
+	/**
+	 * 隐藏边框
+	 */
+	public void hideBorder()
+	{
+		 mShowBorder = false;
+		 if(null != mBorder)mBorder = null;
+	}	
 	
 	/**
 	 * 开放边框绘制类
@@ -652,6 +620,7 @@ public class XChart implements IRender {
 		return mEnableScale;
 	}
 	
+	
 	/**
 	 * 返回动态图例类，当默认的图例不合需求时，可以用来应付一些特殊格式
 	 * @return 动态图例
@@ -672,14 +641,21 @@ public class XChart implements IRender {
 	}
 	
 	/**
+	 * 在图绘制完后执行System.gc()
+	 */
+	public void enableGC()
+	{
+		mEnableGC = true;
+	}	
+	
+	/**
 	 * 执行System.gc()
 	 */
 	protected void execGC()
 	{
 		if(mEnableGC)System.gc();
 	}
-	
-	
+		
 	/**
 	 * 绘制十字交叉线
 	 */
@@ -715,12 +691,24 @@ public class XChart implements IRender {
 		return mDyLine;
 	}
 	
-	private void renderDyLine(Canvas canvas)
+	//交叉线
+	private void drawDyLine(Canvas canvas)
 	{
-		if(!mDyLineVisible)return;
-		if(null == mDyLine) return;		
-		mDyLine.setPlotArea(this.plotArea);
+		if(!mDyLineVisible)return;		
+		if(null == mDyLine) mDyLine = new DyLineRender();
+		
+		mDyLine.setPlotArea(this.getPlotArea());
 		mDyLine.renderLine(canvas);
+	}
+	
+	private void drawDyLegend(Canvas canvas)
+	{
+		//动态图例
+		if(null != mDyLegend)
+		{
+			mDyLegend.setPlotWH(this.getWidth(), this.getHeight());
+			mDyLegend.renderInfo(canvas);
+		}
 	}
 		
 	/**
@@ -747,10 +735,12 @@ public class XChart implements IRender {
 		// TODO Auto-generated method stubcalcPlotRange
 		boolean ret = true;
 		try {
+			
 				if (null == canvas)
 						return false;
 				
 				canvas.save();
+				
 					//缩放图表
 					scaleChart(canvas);	
 					
@@ -759,20 +749,15 @@ public class XChart implements IRender {
 					
 					//绘制边框
 					renderBorder(canvas);	
+															
+					//动态图例
+					drawDyLegend(canvas);	
 					
 					//十字交叉线
-					renderDyLine(canvas);
-					
-					//动态图例
-					if(null != mDyLegend)
-					{
-						mDyLegend.setPlotWH(this.getWidth(), this.getHeight());
-						mDyLegend.renderInfo(canvas);
-					}					
-					
+					drawDyLine(canvas);
+										
 				canvas.restore();
 				
-				//Log.e(TAG,"XChart ----- Render ---------");
 				return ret;					
 		} catch (Exception e) {
 			throw e;

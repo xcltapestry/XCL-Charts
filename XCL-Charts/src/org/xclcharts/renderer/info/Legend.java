@@ -40,7 +40,7 @@ public class Legend extends DyInfo{
 	
 	public Legend()
 	{
-		super();
+
 	}
 	
 	/**

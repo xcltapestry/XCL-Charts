@@ -41,7 +41,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.RectF;
 import android.util.Log;
 
 
@@ -57,7 +56,7 @@ public class RadarChart extends RdChart{
 	//数据轴
 	private DataAxisRender dataAxis  = null;
 	//分类轴
-	private CategoryAxisRender CategoryAxis  = null;			
+	private CategoryAxisRender categoryAxis  = null;			
 	//数据源
 	private List<RadarData> mDataSet;	
 					
@@ -85,19 +84,23 @@ public class RadarChart extends RdChart{
 		
 	public RadarChart()
 	{
-		super();
 		initChart();
 	}
 		
 	private void initChart()
 	{		
-		dataAxis = new DataAxisRender();
-		CategoryAxis = new CategoryAxisRender();
-		dataAxis.setHorizontalTickAlign(Align.LEFT);
-		dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
-		dataAxis.hideTickMarks();	
+		if(null == dataAxis)dataAxis = new DataAxisRender();
 		
-		this.plotLegend.show();
+		if(null != dataAxis)
+		{
+			dataAxis.setHorizontalTickAlign(Align.LEFT);
+			dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
+			dataAxis.hideTickMarks();	
+		}
+		
+		if(null == categoryAxis)categoryAxis = new CategoryAxisRender();
+		
+		if(null == plotLegend)this.plotLegend.show();
 	}
 	
 	
@@ -141,7 +144,7 @@ public class RadarChart extends RdChart{
 	 */
 	public CategoryAxis getCategoryAxis()
 	{
-		return CategoryAxis;
+		return categoryAxis;
 	}
 	
 	
@@ -152,7 +155,7 @@ public class RadarChart extends RdChart{
 	 *            标签集
 	 */
 	public void setCategories( List<String> dataSeries) {
-		CategoryAxis.setDataBuilding(dataSeries);
+		if(null != categoryAxis)categoryAxis.setDataBuilding(dataSeries);
 	}
 
 	/**
@@ -185,7 +188,7 @@ public class RadarChart extends RdChart{
 	
 	private boolean validateParams()
 	{
-		if(this.CategoryAxis.getDataSet().size() <= 0 )
+		if(this.categoryAxis.getDataSet().size() <= 0 )
 		{
 			Log.e(TAG,"标签数据源为空");
 			return false;
@@ -292,7 +295,7 @@ public class RadarChart extends RdChart{
 				if(i == dataAxisTickCount - 1  )
 				{		
 					//绘制最外围的标签		
-					 String label = CategoryAxis.getDataSet().get(j);					
+					 String label = categoryAxis.getDataSet().get(j);					
 				        					
 				     canvas.drawText(label, 
 				    		 mArrayLabelX[i][j], mArrayLabelY[i][j], getLabelPaint());   					
@@ -319,6 +322,7 @@ public class RadarChart extends RdChart{
 	 */
 	private int getAxisTickCount()
 	{		
+		if(null == dataAxis) return 0;
 		return (int) Math.round(dataAxis.getAixTickCount() + 1);
 	}
 	
@@ -328,7 +332,8 @@ public class RadarChart extends RdChart{
 	 */
 	private int getPlotAgentNumber()
 	{
-		return CategoryAxis.getDataSet().size();
+		if(null == categoryAxis)return 0;
+		return categoryAxis.getDataSet().size();
 	}
 	
 	/**

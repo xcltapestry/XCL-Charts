@@ -36,7 +36,7 @@ public class CategoryAxis extends XYAxis {
 	
 	public CategoryAxis()
 	{
-		super();		
+		
 	}
 	
 	/**

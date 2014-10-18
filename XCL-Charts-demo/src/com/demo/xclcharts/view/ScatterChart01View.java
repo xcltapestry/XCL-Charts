@@ -35,7 +35,6 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.plot.PlotGrid;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -45,7 +44,6 @@ import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 
 /**
@@ -82,9 +80,9 @@ public class ScatterChart01View extends DemoView {
 	 
 	 private void initView()
 	 {
-			chartLabels();
-			chartDataSet();	
-			chartRender();
+		chartLabels();
+		chartDataSet();	
+		chartRender();
 	 }
 	 
 	 
@@ -102,8 +100,7 @@ public class ScatterChart01View extends DemoView {
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
-			
+			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);							
 			
 			//数据源	
 			chart.setCategories(labels);
@@ -160,7 +157,7 @@ public class ScatterChart01View extends DemoView {
 			//显示十字交叉线
 			chart.showDyLine();
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.BackwardDiagonal);
-						
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

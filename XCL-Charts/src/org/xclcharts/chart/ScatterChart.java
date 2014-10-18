@@ -36,7 +36,6 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
-import android.graphics.RectF;
 import android.util.Log;
 
 
@@ -64,15 +63,15 @@ public class ScatterChart extends LnChart{
 
 	public ScatterChart()
 	{
-		super();
 		initChart();
 	}
 	
 	private void initChart()
-	{
-		
-		categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		dataAxis.setHorizontalTickAlign(Align.LEFT);
+	{				
+		if(null != categoryAxis)
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);
+		if(null != dataAxis)
+			dataAxis.setHorizontalTickAlign(Align.LEFT);			
 	}
 	
 	/**
@@ -81,7 +80,7 @@ public class ScatterChart extends LnChart{
 	 */
 	public void setCategories( List<String> categories)
 	{
-		categoryAxis.setDataBuilding(categories);
+		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 	}
 	
 	/**
@@ -89,8 +88,7 @@ public class ScatterChart extends LnChart{
 	 * @param dataSeries 数据序列
 	 */
 	public void setDataSource( List<ScatterData> dataSeries)
-	{
-		if(null != mDataset) mDataset.clear();
+	{		
 		this.mDataset = dataSeries;		
 	}	
 	
@@ -160,8 +158,8 @@ public class ScatterChart extends LnChart{
         float lineStopX = 0.0f;
         float lineStopY = 0.0f;        
     	
-    	float axisScreenWidth = getAxisScreenWidth(); 
-    	float axisScreenHeight = getAxisScreenHeight();
+    	float axisScreenWidth = getPlotScreenWidth(); 
+    	float axisScreenHeight = getPlotScreenHeight();
 		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
 		
 		//得到标签对应的值数据集		
@@ -256,10 +254,7 @@ public class ScatterChart extends LnChart{
 			Log.e(TAG,"数据源为空.");
 			return false;
 		}
-					
-		//renderVerticalDataAxis(canvas);
-		//renderVerticalCategoryAxis(canvas);		
-		
+							
 		//开始处 X 轴 即分类轴              	
 		for(int i=0;i<mDataset.size();i++)
 		{																	
@@ -270,10 +265,7 @@ public class ScatterChart extends LnChart{
 				continue;
 			}			
 			renderPoints( canvas, bd,i);	
-		}	
-		//key
-		//plotLegend.renderPointKey(canvas,mDataset);
-		
+		}
 		return true;
 	}
 	
@@ -302,7 +294,7 @@ public class ScatterChart extends LnChart{
 		
 				
 		//图例
-		plotLegend.renderPointKey(canvas,mDataset);
+		if(null != plotLegend)plotLegend.renderPointKey(canvas,mDataset);
 		
 		return true;
 	 }
@@ -384,17 +376,9 @@ public class ScatterChart extends LnChart{
 						
 		//还原绘图区绘制
 		canvas.restore(); //clip	
-		
-		/*
-		// 轴 线
-		renderVerticalDataAxisLine(canvas);
-		
-		renderVerticalDataAxisRightLine(canvas);
-		renderVerticalCategoryAxisLine(canvas);
-		*/
-		
+			
 		//图例
-		plotLegend.renderPointKey(canvas,mDataset);
+		if(null != plotLegend)plotLegend.renderPointKey(canvas,mDataset);
 		
 		return true;
 	 }

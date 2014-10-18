@@ -323,8 +323,8 @@ public class MultiBarChart01View extends DemoView {
 		return lst;
 	}
 
-	//重载掉，让其不能移动,实际应用时，可直接继承GraphicalView即可.
-	//此处是例子的权宜之计
+	//重载掉，让其不能移动,实际应用时，可直接继承GraphicalView
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		return false;

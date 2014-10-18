@@ -64,8 +64,9 @@ public class Axis {
 		{
 			mPaintAxis = new Paint();
 			mPaintAxis.setColor(Color.BLACK);		
-			//mPaintAxis.setStrokeWidth(mAxisLineWidth);
+			//mPaintAxis.setStrokeWidth(mAxisLineWidth); //设置轴线条粗细
 			mPaintAxis.setAntiAlias(true);	
+			mPaintAxis.setStrokeWidth(5);
 		}
 	}
 	
@@ -206,7 +207,7 @@ public class Axis {
 	 */
 	public void hideAxisLabels()
 	{
-		mAxisLabelsVisible = false;
+		mAxisLabelsVisible = false;		
 	}
 
 	/**
@@ -232,13 +233,6 @@ public class Axis {
 	public void setTickLabelRotateAngle(float rotateAngle) {
 		this.mTickLabelRotateAngle = rotateAngle;
 	}
-		
-	//轴结束方式,以Default还是箭头什么的,暂不实现
-	//public void setEndArrowType()
-	//{
-		
-	//}
-	
-	
+
 	
 }

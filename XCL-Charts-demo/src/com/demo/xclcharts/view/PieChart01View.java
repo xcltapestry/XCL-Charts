@@ -28,10 +28,12 @@ import java.util.List;
 
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotLegend;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -89,7 +91,8 @@ public class PieChart01View extends DemoView implements Runnable{
 			
 			//设置绘图区默认缩进px值
 			int [] ltrb = getPieDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);			
+			float right = DensityUtil.dip2px(getContext(), 100);			
+			chart.setPadding(ltrb[0], ltrb[1], right, ltrb[3]);			
 			
 			//设置起始偏移角度(即第一个扇区从哪个角度开始绘制)
 			//chart.setInitialAngle(90);	
@@ -102,12 +105,7 @@ public class PieChart01View extends DemoView implements Runnable{
 			chart.setTitle("饼图-Pie Chart");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);				
-			
-			//显示图例
-			chart.getPlotLegend().show();
-			//chart.getPlotLegend().getLegendLabelPaint().setTextSize(22);
-			//chart.showBorder();	
-			
+								
 			//chart.setDataSource(chartData);
 			
 			//激活点击监听
@@ -118,8 +116,14 @@ public class PieChart01View extends DemoView implements Runnable{
 			//chart.enablePanMode();
 			//chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);	
 			
-			
-			
+			//显示图例
+			PlotLegend legend = chart.getPlotLegend();	
+			legend.show();
+			legend.setType(XEnum.LegendType.COLUMN);
+			legend.setHorizontalAlign(XEnum.HorizontalAlign.RIGHT);
+			legend.setVerticalAlign(XEnum.VerticalAlign.MIDDLE);
+			legend.showBox();
+						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

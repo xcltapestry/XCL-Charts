@@ -39,7 +39,6 @@ public class PlotGridRender extends PlotGrid {
 	
 	public PlotGridRender()
 	{
-		super();
 	}
 	
 	/**

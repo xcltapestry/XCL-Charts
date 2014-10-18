@@ -37,13 +37,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 
 	public PlotAreaRender()
 	{
-		super();
-		init();
-	}
-	
-	private void init()
-	{
-		
+
 	}
 		
 	/**
@@ -107,7 +101,10 @@ public class PlotAreaRender extends PlotArea implements IRender{
 		this.mBottom = bottom;
 	}
 	
-	
+	/**
+	 * 返回实际绘图区最右边X值，包含了扩展绘图区范围
+	 * @return 绘图区最右边X值
+	 */
 	public float getPlotRight() {
 		return mRight + getExtWidth();
 	}

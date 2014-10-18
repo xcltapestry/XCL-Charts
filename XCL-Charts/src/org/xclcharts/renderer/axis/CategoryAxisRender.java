@@ -26,7 +26,6 @@ package org.xclcharts.renderer.axis;
 import java.util.List;
 
 import org.xclcharts.renderer.XChart;
-import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
@@ -42,10 +41,9 @@ public class CategoryAxisRender extends CategoryAxis {
 	
 
 	public CategoryAxisRender()
-	{
-		super();
-		getTickLabelPaint().setTextAlign(Align.CENTER);		
-		setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
+	{		
+		//getTickLabelPaint().setTextAlign(Align.CENTER);		
+		
 	}
 	
 	/**
@@ -108,7 +106,10 @@ public class CategoryAxisRender extends CategoryAxis {
 	 */
 	public void setDataBuilding(List<String> dataSet)
 	{
-		if(null != mDataSet) mDataSet.clear();
+		if(null != mDataSet)
+		{
+			mDataSet.clear(); mDataSet = null;
+		}
 		 mDataSet = dataSet;
 	}
 	

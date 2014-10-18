@@ -1,0 +1,8 @@
+package org.xclcharts.renderer.plot;
+
+public class PlotLegendInfo {
+	
+	public PlotLegendInfo();
+	
+
+}

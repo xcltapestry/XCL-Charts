@@ -29,6 +29,7 @@ import org.xclcharts.renderer.plot.PlotAttrInfo;
 import org.xclcharts.renderer.plot.PlotAttrInfoRender;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PointF;
 import android.graphics.Paint.Align;
@@ -56,20 +57,26 @@ public class DountChart  extends PieChart{
 	private PlotAttrInfoRender plotAttrInfoRender = null;
 	
 	public DountChart()
-	{
-		super();	
+	{		
 		initChart();
 	}
 	
 	private void initChart()
 	{
-		int fillColor = this.plotArea.getBackgroundPaint().getColor();
+		int fillColor = Color.BLACK;
 		
-		mPaintFill = new Paint();
-		mPaintFill.setColor(fillColor); 
-		mPaintFill.setAntiAlias(true);
+		if(null != plotArea)
+			fillColor =  plotArea.getBackgroundPaint().getColor();
 		
-		plotAttrInfoRender = new PlotAttrInfoRender();
+		if(null == mPaintFill)
+		{
+			mPaintFill = new Paint();
+			mPaintFill.setColor(fillColor); 
+			mPaintFill.setAntiAlias(true);
+		}
+		
+		if(null == plotAttrInfoRender)
+			plotAttrInfoRender = new PlotAttrInfoRender();
 			
 		this.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
 	}

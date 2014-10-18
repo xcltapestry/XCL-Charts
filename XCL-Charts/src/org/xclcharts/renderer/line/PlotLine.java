@@ -43,7 +43,7 @@ public class PlotLine {
 			
 	public PlotLine()
 	{
-		mPlotDot = new PlotDot();			
+		if(null == mPlotDot)mPlotDot = new PlotDot();			
 	}
 	
 	private void initLinePaint()

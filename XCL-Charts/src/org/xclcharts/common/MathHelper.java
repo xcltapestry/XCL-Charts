@@ -258,7 +258,8 @@ public class MathHelper {
 		  if (scale < 0) 
 		   throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
-		 
+		  if( Float.compare(v2, 0.0f) == 0)return 0.0f;
+			  							 
 		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
 		  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
 		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
@@ -274,8 +275,7 @@ public class MathHelper {
 	 {
 		  if (scale < 0) 
 			  throw new IllegalArgumentException("The scale must be a positive integer or zero");
-		
-		
+				
 		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v));
 		  BigDecimal bgNum2 = new BigDecimal("1");
 		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();		  
@@ -311,8 +311,7 @@ public class MathHelper {
 	 }
 	 
 	 public double sub(double v1, double v2) 
-	 {
-		 
+	 {		 
 		 BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
 		 BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
 		 return bgNum1.subtract(bgNum2).doubleValue();
@@ -342,7 +341,7 @@ public class MathHelper {
 		  if (scale < 0) 
 		   throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
-		 
+		  if(Double.compare(v2, 0d) == 0) return 0d;
 		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
 		  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
 		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();

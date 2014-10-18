@@ -33,6 +33,7 @@ import org.xclcharts.common.DensityUtil;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotLegend;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -121,6 +122,13 @@ public class PieChart02View extends DemoView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
+			
+			//显示图例
+			PlotLegend legend = chart.getPlotLegend();	
+			legend.show();
+			legend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
+			legend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			legend.showBox();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

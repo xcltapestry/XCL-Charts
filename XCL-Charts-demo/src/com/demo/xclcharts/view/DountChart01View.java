@@ -30,6 +30,7 @@ import org.xclcharts.chart.DountChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.plot.PlotLegend;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -104,7 +105,15 @@ public class DountChart01View extends DemoView {
 			chart.setTitle("环形图");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			//显示key
-			chart.getPlotLegend().show();		
+			//chart.getPlotLegend().show();		
+			//显示图例
+			PlotLegend legend = chart.getPlotLegend();	
+			legend.show();
+			legend.setType(XEnum.LegendType.ROW);
+			legend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
+			legend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			legend.showBox();
+			legend.getBox().setBorderRectType(XEnum.RectType.RECT);
 									
 			//图背景色
 			chart.setApplyBackgroundColor(true);

@@ -33,7 +33,7 @@ public class LegendRender extends Legend{
 	
 	public LegendRender()
 	{
-		super();
+
 	}
 	
 	public void setPlotWH(float width,float height)

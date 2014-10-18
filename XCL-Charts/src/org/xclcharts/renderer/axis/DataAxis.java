@@ -47,8 +47,7 @@ public class DataAxis extends XYAxis {
 	//private ArrayList<Integer> mRangeColor ;	
 	 
 	public DataAxis()
-	{
-		super();		
+	{		
 	}
 	 
 	/**

@@ -114,8 +114,7 @@ public class LineChart02View extends DemoView implements Runnable{
 			chart.getDataAxis().setAxisSteps(100);
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
-		
-			
+					
 			//背景网格
 			chart.getPlotGrid().showHorizontalLines(); 
 			
@@ -136,10 +135,7 @@ public class LineChart02View extends DemoView implements Runnable{
 			
 			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(2);
 			chart.getCategoryAxis().hideTickMarks();
-			
-			
-			
-			
+												
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 	
@@ -166,9 +162,11 @@ public class LineChart02View extends DemoView implements Runnable{
 				}});
 			
 			//chart.setItemLabelFormatter(callBack)
-			
+						
+			//允许线与轴交叉时，线会断开
+			chart.setLineAxisIntersectVisible(false);
+						
 			chart.showDyLine();
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -313,14 +311,9 @@ public class LineChart02View extends DemoView implements Runnable{
           		Thread.sleep(150);
           		LinkedList<LineData> animationData = new LinkedList<LineData>();
           		for(int j=0;j<chartData.size();j++)
-                  {            			            			
-          			if(j > i)
-          			{            		
-          				animationData.add(new LineData());
-          			}else{            			
-          				animationData.add(chartData.get(j));
-          			}
-                  }   
+                {            			            			
+          			if(j < i)animationData.add(chartData.get(j));          			
+                }   
           		chart.setDataSource(animationData);
           		postInvalidate();            		
           	}            	

@@ -32,13 +32,24 @@ package org.xclcharts.renderer;
 public class XEnum {
 
 		/**
-		 * 图标题的显示时靠左，中间，还是靠右
+		 * 横向显示位置,靠左，中间，还是靠右(如图标题......)
 		 * @author XCL
 		 *
 		 */
-		public enum ChartTitleAlign {  
-			LEFT, MIDDLE ,RIGHT
+		public enum HorizontalAlign {
+			LEFT, CENTER ,RIGHT
 		}			
+		
+		/**
+		 * 竖向显示位置,上方，中间，底部 (如坐标轴标签......)
+		 * @author XCL
+		 *
+		 */
+		public enum VerticalAlign
+		{
+			TOP,MIDDLE,BOTTOM
+		}
+	
 		
 		/**
 		 * 对于圆形的图，如饼图之类，用来确定标签的显示位置
@@ -79,7 +90,7 @@ public class XEnum {
 
 		
 		/**
-		 * 线图，线的几种显示风格:Solid、Dot、Dash
+		 * 线的几种显示风格:Solid、Dot、Dash
 		 * @author XCL
 		 *
 		 */
@@ -124,28 +135,19 @@ public class XEnum {
 			MARKS,LABELS
 		}
 		
+
 		
 		/**
-		 * 图例的位置,左边图例，底部图例,右边图例
+		 * 图例类型 
 		 * @author XCL
 		 *
 		 */
-		public enum LegendPostion
+		public enum LegendType
 		{
-			LEFT,LOWER,RIGHT
+			COLUMN,ROW
 		}
+									
 		
-		
-		/**
-		 * 坐标轴标签位置,上方，中间，底部   --Position
-		 * @author XCL
-		 *
-		 */
-		public enum VerticalAlign
-		{
-			TOP,MIDDLE,BOTTOM
-		}
-		//vertical-align
 		
 		/**
 		 * 线的类型，默认的直线还是贝塞尔曲线(Bézier curve)

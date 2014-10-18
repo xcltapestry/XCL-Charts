@@ -63,11 +63,10 @@ public class Bar3D extends Bar{
 	
 	
 	public Bar3D()
-	{
-		super();
-		mPaint3D = new Paint();		
-		mPaintBase = new Paint();
-		mPaintBase3D = new Paint();		
+	{		
+		if(null == mPaint3D)mPaint3D = new Paint();		
+		if(null== mPaintBase)mPaintBase = new Paint();
+		if(null == mPaintBase3D)mPaintBase3D = new Paint();		
 	}
 
 	/**

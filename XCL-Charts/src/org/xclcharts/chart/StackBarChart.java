@@ -44,8 +44,7 @@ public class StackBarChart  extends BarChart{
 
 	public StackBarChart()
 	{
-		super();
-		flatBar = new FlatBar();		
+		if(null == flatBar)flatBar = new FlatBar();		
 	}
 	
 	/**
@@ -67,10 +66,8 @@ public class StackBarChart  extends BarChart{
 	protected boolean renderHorizontalBar(Canvas canvas)
 	{
 		 if(null == categoryAxis.getDataSet()) return false;		 
-		 //renderHorizontalBarDataAxis(canvas);
-		 //renderHorizontalBarLabelAxis(canvas);
 		
-		 float axisScreenWidth  =  getAxisScreenWidth(); 
+		 float axisScreenWidth  =  getPlotScreenWidth(); 
 		 float axisDataRange = (float) dataAxis.getAxisRange(); 	
 		 float valueWidth = axisDataRange; 
 		 
@@ -137,17 +134,7 @@ public class StackBarChart  extends BarChart{
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					add(plotArea.getLeft() , totalPostion), currentY, canvas);
 				 }				 
-		 }	
-	 		 		 
-	 	//Y轴线
-		//dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-		//					  plotArea.getLeft(), plotArea.getTop());	
-		 
-		//X轴 线		
-		//categoryAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-		//						  plotArea.getRight(),  plotArea.getBottom());	
-		//画Key说明
-		//plotLegend.renderBarKey(canvas, this.getDataSource());
+		 }		 	
 		return true;
 	}
 	
@@ -161,11 +148,7 @@ public class StackBarChart  extends BarChart{
 			//得到数据源
 			List<BarData> chartDataSource = this.getDataSource();
 			if(null == chartDataSource) return false;	
-						
-			//坐标布局
-			//renderVerticalBarDataAxis(canvas);
-			//renderVerticalBarCategoryAxis(canvas);
-			
+					
 			float XSteps = getVerticalXSteps(dataSet.size() + 1 );			 
 			float axisScreenHeight  =  getAxisScreenHeight(); 
 			float axisDataHeight =  (float) dataAxis.getAxisRange(); 			
@@ -223,13 +206,7 @@ public class StackBarChart  extends BarChart{
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					currentX, sub(plotArea.getBottom() , totalPostion), canvas);
 			 }			 
-			 
-			//轴 线		 		 
-			 //dataAxis.renderAxis(canvas,plotArea.getLeft(),  plotArea.getBottom(),
-		 	//		   			 plotArea.getRight(),  plotArea.getBottom());
-			 
-			 //key值说明
-			// plotLegend.renderBarKey(canvas, this.getDataSource());
+		
 			 return true;
 	}
 	

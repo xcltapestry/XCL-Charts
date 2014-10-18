@@ -26,6 +26,7 @@ import java.util.List;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotAttrInfo;
 import org.xclcharts.renderer.plot.PlotAttrInfoRender;
 
@@ -77,15 +78,31 @@ public class ArcLineChart  extends XChart{
 		
 
 	public ArcLineChart()
-	{
-		super();
-				
-		int fillColor = this.plotArea.getBackgroundPaint().getColor();		
-		mPaintFill = new Paint();
-		mPaintFill.setColor(fillColor); 
-		mPaintFill.setAntiAlias(true);
+	{	
+		int fillColor = Color.BLACK;
+		if( null != plotArea)
+			 fillColor =  this.plotArea.getBackgroundPaint().getColor();		
 		
-		plotAttrInfoRender = new PlotAttrInfoRender();
+		if(null == mPaintFill)
+		{
+			mPaintFill = new Paint();
+			mPaintFill.setColor(fillColor); 
+			mPaintFill.setAntiAlias(true);
+		}
+		
+		if(null == plotAttrInfoRender)plotAttrInfoRender = new PlotAttrInfoRender();
+		
+		//初始化图例
+		if(null != plotLegend)
+		{
+			plotLegend.show();
+			plotLegend.setType(XEnum.LegendType.ROW);
+			plotLegend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
+			plotLegend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			plotLegend.showBox();
+			plotLegend.hideBackground();
+		}
+		
 	}
 	
 	@Override
@@ -167,8 +184,7 @@ public class ArcLineChart  extends XChart{
 	 * @param piedata 来源数据集
 	 */
 	public void setDataSource( List<ArcLineData> bardata)
-	{
-		if(null != mDataset)mDataset.clear();
+	{		
 		this.mDataset = bardata; 
 	}
 	
@@ -230,9 +246,7 @@ public class ArcLineChart  extends XChart{
 	{
 		mInnerRaius = precentage;
 	}
-	
-
-	
+		
 	/**
 	 * 检查角度的合法性
 	 * @param Angle 角度

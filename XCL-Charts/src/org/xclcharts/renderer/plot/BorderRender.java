@@ -37,10 +37,12 @@ import android.graphics.Paint.Style;
 public class BorderRender extends Border {
 	
 	private RectF mRect = new RectF();	
+	
+	//图背景画笔
+	private Paint mPaintBackground = null;
 
 	public BorderRender()
 	{
-		super();
 	}
 	
 	/**
@@ -56,16 +58,58 @@ public class BorderRender extends Border {
 	 * 图的背景画笔
 	 * @return 画笔
 	 */
-	public Paint getChartBackgroundPaint()
-	{
-		if(null == mPaintChartBackground)
+	 public Paint getBackgroundPaint()
 		{
-			mPaintChartBackground = new Paint();
-			mPaintChartBackground.setStyle(Style.FILL);
-			mPaintChartBackground.setColor(Color.WHITE);		
+			if(null == mPaintBackground)
+			{
+				mPaintBackground = new Paint();
+				mPaintBackground.setAntiAlias(true);
+				mPaintBackground.setStyle(Style.FILL);
+				mPaintBackground.setColor(Color.WHITE);
+			}
+			return mPaintBackground;
 		}
-		return mPaintChartBackground;
-	}	
+	 
+	 private void setPaintLineStyle()
+	 {
+		 switch(getBorderLineStyle())
+			{
+			case SOLID:					
+				break;
+			case DOT:			
+				getLinePaint().setPathEffect(DrawHelper.getInstance().getDotLineStyle());			
+				break;
+			case DASH:		
+				//虚实线 	
+				getLinePaint().setPathEffect(DrawHelper.getInstance().getDashLineStyle());
+				break;
+			}
+	 }
+	 
+	 
+	public void renderBox(Canvas canvas,RectF rect,
+							boolean showBoxBorder,boolean showBackground)
+	{			
+		setPaintLineStyle();	
+											
+		switch(getBorderRectType())
+		{
+			case RECT:		
+				if(showBackground)
+					canvas.drawRect(rect, getBackgroundPaint());	
+				
+				if(showBoxBorder)
+					canvas.drawRect(rect, getLinePaint());
+				break;
+			case ROUNDRECT:		
+				if(showBackground)
+						canvas.drawRoundRect(rect, getRoundRadius(), 
+											 getRoundRadius(), getBackgroundPaint());	
+				if(showBoxBorder)
+					canvas.drawRoundRect(rect, getRoundRadius(), getRoundRadius(), getLinePaint());					
+			break;
+		}			
+	}
 
 	/**
 	 * 绘制边
@@ -83,41 +127,29 @@ public class BorderRender extends Border {
 		mRect.top = top + mBorderSpadding;
 		mRect.right = right - mBorderSpadding;
 		mRect.bottom = bottom - mBorderSpadding;		
-		
-	
-		switch(getBorderLineStyle())
-		{
-		case SOLID:					
-			break;
-		case DOT:			
-			getLinePaint().setPathEffect(DrawHelper.getInstance().getDotLineStyle());			
-			break;
-		case DASH:		
-			//虚实线 	
-			getLinePaint().setPathEffect(DrawHelper.getInstance().getDashLineStyle());
-			break;
-		}	
+			
+		setPaintLineStyle();	
 		
 		switch(getBorderRectType())
 		{
-		case RECT:				
-			if(type.equals("CHART"))
-			{
-				if(null != mPaintChartBackground) 
-					canvas.drawRect(mRect, mPaintChartBackground);		
-			}else{ //BORDER
-				canvas.drawRect(mRect, getLinePaint());
-			}
-			break;
-		case ROUNDRECT:		
-			if(type.equals("CHART"))
-			{
-				if(null != mPaintChartBackground)
-					canvas.drawRoundRect(mRect, getRoundRadius(), 
-							getRoundRadius(), mPaintChartBackground);	
-			}else{ //BORDER
-				canvas.drawRoundRect(mRect, getRoundRadius(), getRoundRadius(), getLinePaint());		
-			}
+			case RECT:				
+				if(type.equals("CHART"))
+				{
+					if(null != mPaintBackground) 
+						canvas.drawRect(mRect, mPaintBackground);		
+				}else{ //BORDER
+					canvas.drawRect(mRect, getLinePaint());
+				}
+				break;
+			case ROUNDRECT:		
+				if(type.equals("CHART"))
+				{
+					if(null != mPaintBackground)
+						canvas.drawRoundRect(mRect, getRoundRadius(), 
+								getRoundRadius(), mPaintBackground);	
+				}else{ //BORDER
+					canvas.drawRoundRect(mRect, getRoundRadius(), getRoundRadius(), getLinePaint());		
+				}
 			break;
 		}
 	}

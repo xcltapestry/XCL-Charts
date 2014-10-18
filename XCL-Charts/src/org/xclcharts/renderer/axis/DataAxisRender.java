@@ -42,8 +42,7 @@ public class DataAxisRender extends DataAxis {
 	
 		
 	public DataAxisRender()
-	{
-		super();
+	{	
 	}
 		
 	/**

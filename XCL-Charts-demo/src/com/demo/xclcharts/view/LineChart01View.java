@@ -101,6 +101,7 @@ public class LineChart01View extends DemoView {
 			//显示边框
 			chart.showRoundBorder();
 			
+			
 			//设定数据源
 			chart.setCategories(labels);								
 			chart.setDataSource(chartData);
@@ -133,14 +134,12 @@ public class LineChart01View extends DemoView {
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
 			chart.extPointClickRange(5);
 			chart.showClikedFocus();
-			
-			//显示轴交叉
-			chart.setLineAxisIntersectVisible(true);
+												
 			//绘制十字交叉线
 			chart.showDyLine();
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
 			
-			/*
+			/*			
 			//想隐藏轴线的可以下面的四个函数来隐藏
 			chart.getDataAxis().setVisible(false);
 			chart.getCategoryAxis().setVisible(false);
@@ -154,7 +153,6 @@ public class LineChart01View extends DemoView {
 			chart.getCategoryAxis().getAxisTickLabelPaint()
 			*/
 			
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -162,6 +160,7 @@ public class LineChart01View extends DemoView {
 	}
 	private void chartDataSet()
 	{
+		
 		//Line 1
 		LinkedList<Double> dataSeries1= new LinkedList<Double>();	
 		dataSeries1.add(20d); 
@@ -270,6 +269,7 @@ public class LineChart01View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{		
+		
 		//交叉线
 		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
 		if(!chart.getListenItemClickStatus())
@@ -307,6 +307,7 @@ public class LineChart01View extends DemoView {
 						
 			this.invalidate();
 		}
+		
 		
 	}
 	

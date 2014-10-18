@@ -140,6 +140,10 @@ public class SplineChart03View  extends DemoView {
 			
 			//显示平滑曲线
 			chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEZIERCURVE);
+			
+			//图例显示在正下方
+			chart.getPlotLegend().setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			chart.getPlotLegend().setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
 												
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

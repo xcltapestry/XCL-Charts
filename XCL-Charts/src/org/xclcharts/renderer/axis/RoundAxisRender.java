@@ -54,7 +54,6 @@ public class RoundAxisRender extends RoundAxis{
 	
 	public RoundAxisRender()
 	{
-		super();
 	}
 	
 	public void setAxisPercentage(List<Float> angle)

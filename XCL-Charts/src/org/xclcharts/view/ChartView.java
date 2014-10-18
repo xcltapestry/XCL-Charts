@@ -41,21 +41,23 @@ public abstract class ChartView extends GraphicalView {
 	
 	private ChartTouch mChartTouch[];	
 
+	
 	public ChartView(Context context) {
 		super(context);
-		// TODO Auto-generated constructor stub
+		// TODO Auto-generated constructor stub				
 		
 	}	
 	
 	 public ChartView(Context context, AttributeSet attrs){   
-	        super(context, attrs);   
-	        
+	        super(context, attrs);   	   
 	 }
+	 
 	 
 	 public ChartView(Context context, AttributeSet attrs, int defStyle) {
 			super(context, attrs, defStyle);
 		
 	 }
+	 
 	 
 	@Override
 	public void render(Canvas canvas) {

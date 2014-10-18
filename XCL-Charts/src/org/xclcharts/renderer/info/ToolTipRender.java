@@ -33,7 +33,7 @@ public class ToolTipRender extends ToolTip{
 
 	public ToolTipRender()
 	{
-		super();
+		
 	}
 	
 	public void renderInfo(Canvas canvas) 

@@ -114,7 +114,6 @@ public class DyLine {
 		return mDyLineStyle;
 	}
 	
-	
 
 	/**
 	 * 设置线绘制为实线，虚实线 	等哪种风格

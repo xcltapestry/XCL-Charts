@@ -49,7 +49,6 @@ public class FlatBar extends Bar{
 	
 	public FlatBar()
 	{
-		super();
 	}
 
 	/**

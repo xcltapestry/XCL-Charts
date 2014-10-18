@@ -42,7 +42,7 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 	 	 	
 	public AxisTitleRender()
 	{
-		super();	
+
 	}
 	
 	/**

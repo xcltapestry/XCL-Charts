@@ -74,16 +74,19 @@ public class BubbleChart extends LnChart{
 
 	public BubbleChart()
 	{
-		super();
 		initChart();
 	}
 	
 	private void initChart()
 	{
-		categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		dataAxis.setHorizontalTickAlign(Align.LEFT);
+		if(null != categoryAxis)
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 		
-		mPlotDot.setDotStyle(XEnum.DotStyle.DOT);
+		if(null != dataAxis)
+			dataAxis.setHorizontalTickAlign(Align.LEFT);
+		
+		if(null != mPlotDot)
+			mPlotDot.setDotStyle(XEnum.DotStyle.DOT);
 	}
 	
 	
@@ -130,7 +133,7 @@ public class BubbleChart extends LnChart{
 	 */
 	public void setCategories( List<String> categories)
 	{
-		categoryAxis.setDataBuilding(categories);
+		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 	}
 	
 	/**
@@ -138,8 +141,7 @@ public class BubbleChart extends LnChart{
 	 * @param dataSeries 数据序列
 	 */
 	public void setDataSource( List<BubbleData> dataSeries)
-	{
-		if(null != mDataset) mDataset.clear();
+	{		
 		this.mDataset = dataSeries;		
 	}	
 	
@@ -226,8 +228,8 @@ public class BubbleChart extends LnChart{
         float lineStopX = 0.0f;
         float lineStopY = 0.0f;        
     	
-    	float axisScreenWidth = getAxisScreenWidth(); 
-    	float axisScreenHeight = getAxisScreenHeight();
+    	float axisScreenWidth = getPlotScreenWidth(); 
+    	float axisScreenHeight = getPlotScreenHeight();
 		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
 		
 		//得到标签对应的值数据集		

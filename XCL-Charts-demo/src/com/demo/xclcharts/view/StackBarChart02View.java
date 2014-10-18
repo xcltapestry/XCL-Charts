@@ -121,7 +121,7 @@ public class StackBarChart02View extends DemoView {
 			//标题
 			chart.setTitle("费用预算与实际发生对比");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.setTitleAlign(XEnum.ChartTitleAlign.MIDDLE);
+			chart.setTitleAlign(XEnum.HorizontalAlign.CENTER);
 			
 			//图例
 			chart.getAxisTitle().setLowerAxisTitle("单位为(W)");

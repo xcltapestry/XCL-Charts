@@ -37,7 +37,6 @@ public class PlotAttrInfoRender extends PlotAttrInfo{
 	
 	public PlotAttrInfoRender()
 	{
-		super();
 	}
 	
 	 

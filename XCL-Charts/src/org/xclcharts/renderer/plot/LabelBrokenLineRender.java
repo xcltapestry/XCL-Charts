@@ -44,7 +44,6 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 	
 	public LabelBrokenLineRender()
 	{
-		super();
 	}
 		
 	public void renderLabelLine(String text,float itemAngle,

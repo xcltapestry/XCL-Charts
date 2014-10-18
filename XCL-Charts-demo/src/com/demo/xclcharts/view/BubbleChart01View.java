@@ -175,7 +175,7 @@ public class BubbleChart01View extends DemoView {
 			chart.showClikedFocus();
 			
 			//绘制交叉线
-			chart.showDyLine();
+			//chart.showDyLine();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

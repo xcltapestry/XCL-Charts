@@ -76,8 +76,7 @@ public class RoundAxis extends Axis{
 	 
 	 
 	 public RoundAxis()
-	 {
-		super();		
+	 {		
 	 }
 	 
 	 /**

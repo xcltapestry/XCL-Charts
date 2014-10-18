@@ -51,9 +51,7 @@ public class LnChart extends AxisChart {
 	private boolean mTopAxisVisible = true;
 	// 是否显示底轴
 	private boolean mRightAxisVisible = true;	
-	
-	
-	
+			
 	private PointF[] BezierControls ;		
 	
 	//Pan模式下移动距离
@@ -61,13 +59,17 @@ public class LnChart extends AxisChart {
 	protected float mMoveY = 0.0f;
 
 	public LnChart() {
-		super();
-		initChart();
-	}
-
-	private void initChart() {
-		//默认显示Key
-		plotLegend.show();
+		
+		//初始化图例
+		if(null != plotLegend)
+		{
+			plotLegend.show();
+			plotLegend.setType(XEnum.LegendType.ROW);
+			plotLegend.setHorizontalAlign(XEnum.HorizontalAlign.LEFT);
+			plotLegend.setVerticalAlign(XEnum.VerticalAlign.TOP);
+			plotLegend.hideBox();
+		} 
+		
 	}
 
 	/**

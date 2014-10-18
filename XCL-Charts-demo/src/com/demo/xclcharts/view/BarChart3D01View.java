@@ -125,7 +125,7 @@ public class BarChart3D01View extends DemoView {
 			//标题
 			chart.setTitle("本周水果销售情况");
 			chart.addSubtitle("(XCL-Charts Demo)");		
-			chart.setTitleAlign(XEnum.ChartTitleAlign.RIGHT);
+			chart.setTitleAlign(XEnum.HorizontalAlign.RIGHT);
 			
 			
 			//背景网格

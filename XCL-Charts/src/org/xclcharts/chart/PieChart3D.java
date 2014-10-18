@@ -46,7 +46,7 @@ public class PieChart3D extends PieChart{
 		
 	public PieChart3D() {
 		// TODO Auto-generated constructor stub
-		super();	 		
+			 		
 	}
 	
 	private boolean render3D(Canvas canvas,
@@ -54,6 +54,7 @@ public class PieChart3D extends PieChart{
 							List<PieData> chartDataSource,
 							float cirX,float cirY,float radius)
 	{		
+		if(null == chartDataSource) return false;
  		float offsetAngle = initOffsetAngle;		
         float currentAngle = 0.0f;	              
         float newRadius = 0.0f;	
@@ -66,7 +67,8 @@ public class PieChart3D extends PieChart{
               size = chartDataSource.size();
 			  for(int j=0;j< size;j++)
 			  {			  
-				    PieData cData =  chartDataSource.get(j);			  								
+				    PieData cData =  chartDataSource.get(j);	
+				    if(null == cData) continue;
 					currentAngle = cData.getSliceAngle();						
 					if(!validateAngle(currentAngle)) continue;
 					geArcPaint().setColor(cData.getSliceColor());	
@@ -74,7 +76,7 @@ public class PieChart3D extends PieChart{
 				    if(cData.getSelected()) //指定突出哪个块
 		            {				    			    	
 				    	//偏移圆心点位置(默认偏移半径的1/10)
-				    	newRadius = div(radius , SELECTED_OFFSET);
+				    	newRadius = div(radius , getSelectedOffset());
 				    	 //计算百分比标签
 				    	PointF point = MathHelper.getInstance().calcArcEndPointXY(
 				    								cirX,cirY,newRadius,
@@ -94,6 +96,7 @@ public class PieChart3D extends PieChart{
 	            canvas.restore();
 	            offsetAngle = initOffsetAngle;
 		}
+		
 		return true;
 	}
 	
@@ -102,15 +105,19 @@ public class PieChart3D extends PieChart{
 										List<PieData> chartDataSource,
 										float cirX,float cirY,float radius)
 	{
+		
+		if(null == chartDataSource) return false;
+		
  		float offsetAngle = initOffsetAngle;				
         float currentAngle = 0.0f;	              
         float newRadius = 0.0f;	
-        PointF[] arrPoint = new PointF[chartDataSource.size()];
-               					
         int size = chartDataSource.size();
+        PointF[] arrPoint = new PointF[size];               					
+       
 		for(int j=0;j< size;j++)
 		{
 		 	PieData cData = chartDataSource.get(j);	
+		 	if(null == cData) continue;
 		 	currentAngle = cData.getSliceAngle();
 		 	if(!validateAngle(currentAngle)) continue;		  
 		 	geArcPaint().setColor( DrawHelper.getInstance().getDarkerColor(
@@ -119,7 +126,7 @@ public class PieChart3D extends PieChart{
 		    if(cData.getSelected()) //指定突出哪个块
             {					    					    	
 		    	//偏移圆心点位置(默认偏移半径的1/10)
-		    	newRadius = div(radius , SELECTED_OFFSET);
+		    	newRadius = div(radius , getSelectedOffset());
 		    	 //计算百分比标签
 		    	PointF point = MathHelper.getInstance().calcArcEndPointXY(
 		    					cirX,cirY,newRadius,add(offsetAngle , div(currentAngle,2f))); 	
@@ -135,25 +142,21 @@ public class PieChart3D extends PieChart{
                 
      	       arrPoint[j] = new PointF(cirX,cirY);
      	    }		
-		    
+		
 		    //保存角度
 		    saveArcRecord(j,cirX+ this.mTranslateXY[0],cirY+ this.mTranslateXY[1],
-		    					radius,offsetAngle,currentAngle);
+		    					radius,offsetAngle,currentAngle,getSelectedOffset());
 		    
            //下次的起始角度  
-		    offsetAngle = add(offsetAngle,currentAngle);
-		    
-		  
+		    offsetAngle = add(offsetAngle,currentAngle);		        		  
 		}		
 		
 		//绘制Label
-		renderLabels(canvas,initOffsetAngle,radius,arrPoint);	
-				
-		//图例
-		plotLegend.renderPieKey(canvas,this.getDataSource());	
-		plotLegend = null;
+		renderLabels(canvas,initOffsetAngle,radius,arrPoint);			
 		
-		arrPoint = null;
+		//图例
+		plotLegend.renderPieKey(canvas,chartDataSource);	
+		
 		return true;
 	}
 
@@ -178,7 +181,7 @@ public class PieChart3D extends PieChart{
         initRectF("mArcRF0",sub(cirX , radius) ,sub(cirY , radius),
         					add(cirX , radius),add(cirY , radius)); 
     
-				
+      
 		if(render3D(canvas,mOffsetAngle,chartDataSource,cirX, cirY, radius))
 		{
 			return renderFlatArcAndLegend(canvas,mOffsetAngle,chartDataSource,

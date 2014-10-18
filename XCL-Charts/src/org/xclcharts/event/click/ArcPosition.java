@@ -35,7 +35,8 @@ public class ArcPosition extends PositionRecord {
 	
 	protected float mOffsetAngle = 0.0f;
 	protected float mCurrentAngle = 0.0f;	
-	protected float mRadius = 0.0f;
+	protected float mRadius = 0.0f;	
+	protected float mSelectedOffset = 0.0f;
 	
 	protected PointF mCirXY = null;
 	
@@ -69,6 +70,11 @@ public class ArcPosition extends PositionRecord {
 	public float getSweepAngle()
 	{
 		return mCurrentAngle;
+	}
+		
+	public float getSelectedOffset()
+	{
+		return mSelectedOffset;
 	}
 	
 	@Override

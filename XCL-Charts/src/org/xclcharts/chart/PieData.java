@@ -55,7 +55,7 @@ public class PieData {
 	
 	public PieData() {
 		// TODO Auto-generated constructor stub
-		//super();
+
 	}
 		
 	/**

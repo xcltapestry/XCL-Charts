@@ -121,8 +121,10 @@ public class MultiAxisChart01View extends DemoView {
 				chart.getPlotGrid().showHorizontalLines();	
 				chart.getPlotGrid().showEvenRowBgColor();
 				chart.getPlotGrid().showOddRowBgColor();			
-				//隐蔽Key值说明			
+				//隐蔽图例			
 				chart.getPlotLegend().hide();
+				
+				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, e.toString());
@@ -314,6 +316,9 @@ public class MultiAxisChart01View extends DemoView {
 				renderLnAxis();
 				
 				lnChart.getPlotLegend().show();
+				
+				//允许线与轴交叉时，线会断开
+				lnChart.setLineAxisIntersectVisible(false);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

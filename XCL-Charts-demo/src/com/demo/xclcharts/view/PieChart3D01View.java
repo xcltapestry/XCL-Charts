@@ -104,6 +104,7 @@ public class PieChart3D01View extends DemoView implements Runnable{
 			
 			//不显示key
 			chart.getPlotLegend().hide();
+			
 			//标签文本显示为白色
 			chart.getLabelPaint().setColor(Color.WHITE);
 			
@@ -119,7 +120,7 @@ public class PieChart3D01View extends DemoView implements Runnable{
 		//设置图表数据源			
 		//PieData(标签，百分比，在饼图中对应的颜色)
 		
-		chartData.add(new PieData("PHP(15%)",15,
+		chartData.add(new PieData("test","PHP(15%)",15,
 								(int)Color.rgb(1, 170, 255)));
 		chartData.add(new PieData("Other",10,
 								(int)Color.rgb(148, 42, 133),false));	
@@ -183,7 +184,13 @@ public class PieChart3D01View extends DemoView implements Runnable{
 						
 						//激活点击监听
 						chart.ActiveListenItemClick();			
-						//chart.showClikedFocus();
+					
+						/*
+						chart.getPlotLegend().show();
+						chart.getPlotLegend().setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+						chart.getPlotLegend().setHorizontalAlign(XEnum.HorizontalAlign.CENTER);	
+						chart.getPlotLegend().hideBox();
+						*/
 				  }
 				  postInvalidate(); 
 			  }

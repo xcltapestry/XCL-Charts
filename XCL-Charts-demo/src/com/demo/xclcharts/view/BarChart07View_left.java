@@ -70,7 +70,7 @@ public class BarChart07View_left  extends GraphicalView {
 				//标题
 				chart.setTitle("柱形图左右移动演示");
 				chart.addSubtitle("(XCL-Charts Demo)");	
-				chart.setTitleAlign(XEnum.ChartTitleAlign.LEFT);
+				chart.setTitleAlign(XEnum.HorizontalAlign.LEFT);
 				//数据源
 				chart.setDataSource(chartData);
 				chart.setCategories(chartLabels);	

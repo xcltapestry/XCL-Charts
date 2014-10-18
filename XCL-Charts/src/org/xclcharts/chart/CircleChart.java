@@ -59,29 +59,40 @@ public class CircleChart extends CirChart {
     protected List<PieData> mDataSet;
 
     public CircleChart() {
-        super();
+    
         initChart();
     }
 
     private void initChart() {
-        mPaintBgCircle = new Paint();
-        mPaintBgCircle.setColor((int) Color.rgb(148, 159, 181));
-        mPaintBgCircle.setAntiAlias(true);
+    	if(null == mPaintBgCircle)
+    	{
+	        mPaintBgCircle = new Paint();
+	        mPaintBgCircle.setColor((int) Color.rgb(148, 159, 181));
+	        mPaintBgCircle.setAntiAlias(true);
+    	}
 
-        mPaintFillCircle = new Paint();
-        mPaintFillCircle.setColor((int) Color.rgb(77, 83, 97));
-        mPaintFillCircle.setAntiAlias(true);
+    	if(null == mPaintFillCircle)
+    	{
+	        mPaintFillCircle = new Paint();
+	        mPaintFillCircle.setColor((int) Color.rgb(77, 83, 97));
+	        mPaintFillCircle.setAntiAlias(true);
+    	}
+    	
+    	if(null != getLabelPaint())
+    	{
+	        getLabelPaint().setColor(Color.WHITE);
+	        getLabelPaint().setTextSize(36);
+	        getLabelPaint().setTextAlign(Align.CENTER);
+    	}
 
-        getLabelPaint().setColor(Color.WHITE);
-        getLabelPaint().setTextSize(36);
-        getLabelPaint().setTextAlign(Align.CENTER);
-
-
-        mPaintDataInfo = new Paint();
-        mPaintDataInfo.setTextSize(22);
-        mPaintDataInfo.setColor(Color.WHITE);
-        mPaintDataInfo.setTextAlign(Align.CENTER);
-        mPaintDataInfo.setAntiAlias(true);
+        if(null == mPaintDataInfo)
+        {
+	        mPaintDataInfo = new Paint();
+	        mPaintDataInfo.setTextSize(22);
+	        mPaintDataInfo.setColor(Color.WHITE);
+	        mPaintDataInfo.setTextAlign(Align.CENTER);
+	        mPaintDataInfo.setAntiAlias(true);
+        }
 
         //设置起始偏移角度
         setInitialAngle(180);

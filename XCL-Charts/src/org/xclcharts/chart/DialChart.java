@@ -68,13 +68,12 @@ public class DialChart  extends CirChart{
 		
 
 	public DialChart()
-	{
-		super();	
-		
+	{			
 		mStartAngle	= INIT_ANGLE;
 		mTotalAngle = FIX_TOTAL_ANGLE;
 		
-		plotAttrInfoRender = new PlotAttrInfoRender();
+		if(null == plotAttrInfoRender)
+			plotAttrInfoRender = new PlotAttrInfoRender();
 	}
 	
 	public void setStartAngle(float startAngle)

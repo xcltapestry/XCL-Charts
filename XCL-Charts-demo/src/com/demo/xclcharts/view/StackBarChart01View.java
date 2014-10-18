@@ -123,7 +123,7 @@ public class StackBarChart01View extends DemoView {
 			//标题
 			chart.setTitle("文件服务器空间使用情况");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.setTitleAlign(XEnum.ChartTitleAlign.MIDDLE);
+			chart.setTitleAlign(XEnum.HorizontalAlign.CENTER);
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 			
 			//轴标题

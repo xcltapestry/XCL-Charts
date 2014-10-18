@@ -37,7 +37,10 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
@@ -82,14 +85,15 @@ public class SplineChart extends LnChart{
 		
 	public SplineChart()
 	{
-		super();
 		initChart();
 	}
 	
 	private void initChart()
 	{
-		categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		dataAxis.setHorizontalTickAlign(Align.LEFT);
+		if(null != categoryAxis)
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);
+		if(null != dataAxis)
+			dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
 	
 	/**
@@ -98,7 +102,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setCategories( List<String> categories)
 	{
-		categoryAxis.setDataBuilding(categories);
+		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 	}
 	
 	/**
@@ -106,8 +110,7 @@ public class SplineChart extends LnChart{
 	 * @param dataSeries 数据序列
 	 */
 	public void setDataSource( List<SplineData> dataSeries)
-	{
-		if(null != mDataset) mDataset.clear();
+	{		
 		this.mDataset = dataSeries;		
 	}	
 	
@@ -192,8 +195,8 @@ public class SplineChart extends LnChart{
         float lineStopX = 0.0f;
         float lineStopY = 0.0f;        
     	
-    	float axisScreenWidth = getAxisScreenWidth(); 
-    	float axisScreenHeight = getAxisScreenHeight();
+    	float axisScreenWidth = getPlotScreenWidth(); 
+    	float axisScreenHeight = getPlotScreenHeight();
 		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
 		
 		//得到标签对应的值数据集		
@@ -327,11 +330,26 @@ public class SplineChart extends LnChart{
             		dot.right = rendEndX;
         			        			
             		//dot.right
+            		/*
         			savePointRecord(dataID,childID, 
         					dot.right - radius + mMoveX, dot.bottom + mMoveY,
         					dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
         					dot.right  + mMoveX			  , dot.bottom + radius + mMoveY);
+        		*/
+            		
+            		savePointRecord(dataID,childID, 
+        					dot.right - radius + mMoveX, dot.bottom + mMoveY,
+        					dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
+        					dot.right  + mMoveX			  , dot.bottom + radius + mMoveY);
         		
+        			
+        			//Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        			//paint.setStyle(Style.STROKE);
+        			//paint.setColor(Color.RED);
+        			
+        			//canvas.drawRect(new RectF(dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
+        			//		dot.right  + mMoveX			  , dot.bottom + radius + mMoveY), paint);
+        			
         			childID++;
             	}
         		
@@ -413,7 +431,7 @@ public class SplineChart extends LnChart{
 		{							
 			if(null != mCustomLine) //画横向定制线
 			{
-				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				mCustomLine.setVerticalPlot(dataAxis, plotArea, getPlotScreenHeight());
 				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
 			}				
 		}			
@@ -491,7 +509,7 @@ public class SplineChart extends LnChart{
 					{				
 						if(null != mCustomLine) //画横向定制线
 						{
-							mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+							mCustomLine.setVerticalPlot(dataAxis, plotArea, getPlotScreenHeight());
 							mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
 						}
 						execGC();

@@ -23,7 +23,6 @@ package org.xclcharts.event.touch;
 
 import org.xclcharts.renderer.XChart;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -36,8 +35,8 @@ import android.view.View;
 
 public class ChartTouch implements IChartTouch {
 	
-	private View mView;
-	private XChart mChart;
+	private View mView = null;
+	private XChart mChart = null;
   
 	//单点移动前的坐标位置
 	private float oldX = 0.0f,oldY = 0.0f; 	
@@ -54,10 +53,7 @@ public class ChartTouch implements IChartTouch {
 		this.mChart = chart;
 		this.mView = view;
 	}
-	
-
-	
-		
+				
 	@Override
 	 public void handleTouch(MotionEvent event) {  
 		
@@ -65,9 +61,10 @@ public class ChartTouch implements IChartTouch {
 			{
 				handleTouch_PanMode(event);
 			}else if (event.getPointerCount() == 2){
-				if(mChart.getScaleStatus())handleTouch_Scale(event);
+				if(null != mChart && mChart.getScaleStatus())handleTouch_Scale(event);
 			}else{				
 			}		   
+			
 	    }  
 	
 	
@@ -90,21 +87,23 @@ public class ChartTouch implements IChartTouch {
     		  	newDist = spacing(event);   		  	    		      		  	
                 if( Float.compare(newDist, 10.0f) == 1){
                 	halfDist = newDist/2 ;
+                	
+                	if(Float.compare(oldDist, 0.0f) == 0) return;                	
                 	scaleRate = newDist/oldDist ;		 
                 	/**
                 	 * 目前是采用在点那就以那范围为中心放大缩小.              
-                	 */
-                    mChart.setScale(scaleRate ,scaleRate, 
-                    		event.getX() - halfDist,event.getY() - halfDist );		                    
+                	 */                	
+                		mChart.setScale(scaleRate ,scaleRate, 
+                				event.getX() - halfDist,event.getY() - halfDist );		                    
                    
-                    mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
-           				 			 (int)mChart.getRight(), (int)mChart.getBottom());
+                	if(null != mView)
+                		mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
+           				 			 	(int)mChart.getRight(), (int)mChart.getBottom());
                 }	        		        	
 		 		break;		 		
 			 default:
 				break;
 		 }
-
 	 }
 	 	 
 
@@ -151,26 +150,24 @@ public class ChartTouch implements IChartTouch {
 								float newX, float newY ) {
 			// TODO Auto-generated method stub
 			
+			if(null == mChart) return;
+			if(null == mView) return;
+			
 			float xx = 0.0f,yy = 0.0f;		          
-	        float[] txy = mChart.getTranslateXY();		          
+	        float[] txy = mChart.getTranslateXY();		   
+	        if(null == txy) return;
 	        xx =  txy[0];
 	        yy =  txy[1];
 	        
-	        if(newX < oldX || newY < oldY)	 
-	        {
+	        //if(newX < oldX || newY < oldY)	 //加上这个，向右下移时会有没反应
+	        //{
 	      	  xx = (float) (txy[0] + newX - oldX) ;
 	      	  yy = (float) (txy[1] + newY - oldY) ;
-	        }
+	       // }
+	        
 	        mChart.setTranslateXY(xx, yy);        
 	        mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
 	        				 (int)mChart.getRight(), (int)mChart.getBottom());
-	             
-	       // mChart.setChartRange(mChart.getLeft() + newX-oldX, 
-	       // mChart.getTop() + newY-oldY, 
-	      //		mChart.getWidth(), mChart.getHeight());
-	        
-	       //用scrollBy()同样是通过重绘来弄的
-	       // mView.scrollBy((int)xx, (int)yy);
 	       
 		}
 		

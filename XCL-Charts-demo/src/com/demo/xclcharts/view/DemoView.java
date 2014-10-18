@@ -37,6 +37,7 @@ import android.util.AttributeSet;
  */
 public class DemoView extends ChartView{
 
+	
 	public DemoView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub

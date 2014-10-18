@@ -48,23 +48,29 @@ public class RoseChart extends PieChart{
 
 	public RoseChart() {
 		// TODO Auto-generated constructor stub
-		super();	
+			
 		initChart();
 	}
 	
 	private void initChart()
 	{										
 		//深色内环
-		mPaintInner = new Paint();
-		mPaintInner.setColor(Color.DKGRAY);
-		//mPaintInner.setStyle(Style.STROKE);
-		mPaintInner.setStyle(Style.FILL);		
-		mPaintInner.setAntiAlias(true);		
+		if(null == mPaintInner)
+		{
+			mPaintInner = new Paint();
+			mPaintInner.setColor(Color.DKGRAY);
+			//mPaintInner.setStyle(Style.STROKE);
+			mPaintInner.setStyle(Style.FILL);		
+			mPaintInner.setAntiAlias(true);		
+		}
 		
 		//白色标签
-		getLabelPaint().setColor(Color.WHITE);
-		getLabelPaint().setTextSize(22);
-		getLabelPaint().setTextAlign(Align.CENTER);	
+		if(null != getLabelPaint())
+		{
+			getLabelPaint().setColor(Color.WHITE);
+			getLabelPaint().setTextSize(22);
+			getLabelPaint().setTextAlign(Align.CENTER);	
+		}
 	}
 	
 	/**

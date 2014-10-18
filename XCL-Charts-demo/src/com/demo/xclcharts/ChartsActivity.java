@@ -115,40 +115,42 @@ public class ChartsActivity extends Activity {
 		
 		requestWindowFeature(Window.FEATURE_NO_TITLE); //设置没标题
 		
-				mCharts = new DemoView[]{new BarChart01View(this),
-				new BarChart02View(this),
-				new BarChart05View(this),
-				new BarChart03View(this),
-				new BarChart04View(this),
-				
-				new BarChart3D01View(this),
-				new BarChart3D02View(this),
-				new StackBarChart01View(this),
-				new StackBarChart02View(this),
-				new LineChart01View(this),
-				new LineChart02View(this),
-				new SplineChart03View(this),
-				new SplineChart01View(this),
-				new SplineChart02View(this),
-				new AreaChart01View(this),
-				new AreaChart02View(this),
-				new MultiAxisChart01View(this),
-				new MultiAxisChart02View(this),
-				new MultiBarChart01View(this),
-				
-				new PieChart01View(this),
-				new PieChart02View(this),
-				new PieChart3D01View(this),
-				new DountChart01View(this),
-				new RoseChart01View(this),
-				new RadarChart01View(this),
-				new RadarChart02View(this),
-				new RadarChart03View(this),
-				new BarChart06View(this),
-				new ArcLineChart01View(this),
-				new ScatterChart01View(this),
-				new BubbleChart01View(this),
-				new RangeBarChart01View(this)}; 
+		mCharts = new DemoView[]{
+			new BarChart01View(this) ,
+			new BarChart02View(this),
+			new BarChart05View(this),
+			new BarChart03View(this),
+			new BarChart04View(this),
+			
+			new BarChart3D01View(this),
+			new BarChart3D02View(this),
+			new StackBarChart01View(this),
+			new StackBarChart02View(this),
+			new LineChart01View(this),
+			new LineChart02View(this),
+			new SplineChart03View(this),
+			new SplineChart01View(this),
+			new SplineChart02View(this),
+			new AreaChart01View(this),
+			new AreaChart02View(this),
+			new MultiAxisChart01View(this),
+			new MultiAxisChart02View(this),
+			new MultiBarChart01View(this),
+			
+			new PieChart01View(this),
+			new PieChart02View(this),
+			new PieChart3D01View(this),
+			new DountChart01View(this),
+			new RoseChart01View(this),
+			new RadarChart01View(this),
+			new RadarChart02View(this),
+			new RadarChart03View(this),
+			new BarChart06View(this),
+			new ArcLineChart01View(this),
+			new ScatterChart01View(this),
+			new BubbleChart01View(this),
+			new RangeBarChart01View(this) 				
+		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  
 		mSelected = bunde.getInt("selected");  

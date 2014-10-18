@@ -34,6 +34,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.DyLine;
 import org.xclcharts.renderer.info.Legend;
 import org.xclcharts.renderer.line.PlotDot;
 
@@ -108,6 +109,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
 			
+			
 			//轴标题
 			chart.getAxisTitle().setLeftAxisTitle("数据库个数");
 			chart.getAxisTitle().setLowerAxisTitle("分布位置");
@@ -133,6 +135,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
+			
+		
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
 				@Override
@@ -153,17 +157,22 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.getCategoryAxis().getAxisPaint().setColor(axisColor);			
 			chart.getDataAxis().getTickMarksPaint().setColor(axisColor);
 			chart.getCategoryAxis().getTickMarksPaint().setColor(axisColor);
-			
+								
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
 			
 			//扩展横向显示范围,当数据太多时可用这个扩展实际绘图面积
 			chart.getPlotArea().extWidth(200f);
-			
+		  			
+  			
 			//显示十字交叉线
 			chart.showDyLine();
-			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
-			chart.getDyLine().setLineDrawStyle(XEnum.LineStyle.DASH);
+			DyLine dyl = chart.getDyLine();
+			if( null != dyl)
+			{
+				dyl.setDyLineStyle(XEnum.DyLineStyle.Horizontal);
+				dyl.setLineDrawStyle(XEnum.LineStyle.DASH);
+			}
 									
 			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);			
 		} catch (Exception e) {
@@ -288,6 +297,16 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		//禁用双指缩放
 		chart.disableScale();
 		
+		/*
+		//显示十字交叉线
+		chart.showDyLine();
+		DyLine dyl = chart.getDyLine();
+		if( null != dyl)
+		{
+			dyl.setDyLineStyle(XEnum.DyLineStyle.Horizontal);
+			dyl.setLineDrawStyle(XEnum.LineStyle.DASH);
+		}
+		*/
 		
 		chart.getDataAxis().show();		 
 		chart.getPlotLegend().show();				
@@ -295,21 +314,21 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	
 	private void drawDyLegend()
 	{
-		Paint pDyLegend = new Paint(Paint.ANTI_ALIAS_FLAG);
-		PlotDot dotDyLegend = new PlotDot();
 		
 		Legend dyLegend = chart.getDyLegend();		
+		if(null == dyLegend) return;
 		dyLegend.setPosition(0.7f,0.3f);
 		dyLegend.setColSpan(30.f);
 		dyLegend.getBackgroundPaint().setColor(Color.BLACK);
 		dyLegend.getBackgroundPaint().setAlpha(100);
 		dyLegend.setRowSpan(20.f);
 		dyLegend.setMargin(15.f);
-	
-		
-		pDyLegend.setColor(Color.GREEN);		
-		dotDyLegend.setDotStyle(XEnum.DotStyle.RECT);
 		dyLegend.setStyle(XEnum.DyInfoStyle.ROUNDRECT);
+		
+		Paint pDyLegend = new Paint(Paint.ANTI_ALIAS_FLAG);
+		pDyLegend.setColor(Color.GREEN);			
+		PlotDot dotDyLegend = new PlotDot();
+		dotDyLegend.setDotStyle(XEnum.DotStyle.RECT);		
 		dyLegend.addLegend(dotDyLegend, "动态图例一", pDyLegend);
 		
 		Paint pDyLegend2 = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -379,6 +398,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.getToolTip().getBackgroundPaint().setAlpha(100);
 			this.invalidate();
 		}
+		
 	}
 	
 

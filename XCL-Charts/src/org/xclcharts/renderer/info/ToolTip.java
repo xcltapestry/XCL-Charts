@@ -37,7 +37,7 @@ public class ToolTip extends DyInfo{
 	
 	public ToolTip()
 	{
-		super();
+	
 	}
 	
 	/*

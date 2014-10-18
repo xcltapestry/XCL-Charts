@@ -58,26 +58,31 @@ public class LineChart extends LnChart{
 	//用于绘制定制线(分界线)
 	private PlotCustomLine mCustomLine = null;
 	//当线与轴交叉时是否不断开连接
-	private boolean mLineAxisIntersectVisible = false;
+	private boolean mLineAxisIntersectVisible = true;
 	//图例
 	private List<LnData> mLstKey = new ArrayList<LnData>();
 	
 	
 	public LineChart()
 	{
-		super();
-		initChart();
+		 initChart();
 	}
 
 	private void initChart()
 	{				
 		defaultAxisSetting();		
 				
-		getDataAxis().getAxisPaint().setStrokeWidth(2);
-		getDataAxis().getTickMarksPaint().setStrokeWidth(2);
+		if(null != getDataAxis())
+		{
+			getDataAxis().getAxisPaint().setStrokeWidth(2);
+			getDataAxis().getTickMarksPaint().setStrokeWidth(2);
+		}
 		
-		getCategoryAxis().getAxisPaint().setStrokeWidth(2);
-		getCategoryAxis().getTickMarksPaint().setStrokeWidth(2);
+		if(null != getCategoryAxis())
+		{
+			getCategoryAxis().getAxisPaint().setStrokeWidth(2);
+			getCategoryAxis().getTickMarksPaint().setStrokeWidth(2);
+		}
 	}
 	
 	/**
@@ -97,11 +102,11 @@ public class LineChart extends LnChart{
 	{
 		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
 		{
-			categoryAxis.setHorizontalTickAlign(Align.CENTER);
-			dataAxis.setHorizontalTickAlign(Align.LEFT);	
+			if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
+			if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);	
 		}else{		
-			dataAxis.setHorizontalTickAlign(Align.RIGHT);
-			dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);			
+			if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.RIGHT);
+			if(null != dataAxis)dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);			
 		}	
 	}
 	 
@@ -111,11 +116,7 @@ public class LineChart extends LnChart{
 		 */
 		public void setCategories( List<String> categories)
 		{
-			if(null == categories || categories.size() == 0)
-			{
-				Log.e(TAG,"分类轴不能为空.");
-			}else							
-				categoryAxis.setDataBuilding(categories);
+			if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 		}
 		
 		/**
@@ -123,9 +124,8 @@ public class LineChart extends LnChart{
 		 * @param dataSet 数据源
 		 */
 		public void setDataSource( LinkedList<LineData> dataSet)
-		{						
-				if(null != mDataSet) mDataSet.clear();
-				this.mDataSet = dataSet;		
+		{										
+			this.mDataSet = dataSet;		
 		}			
 						
 		/**
@@ -165,6 +165,14 @@ public class LineChart extends LnChart{
 		 */
 		private boolean renderLine(Canvas canvas, LineData bd,String type,int dataID)
 		{
+			if(null == categoryAxis || null == dataAxis) return false;
+			
+			if(null == bd)
+			{
+				Log.e(TAG,"传入的线的数据序列参数为空.");
+				return false;
+			}
+			
 			float initX =  plotArea.getLeft();
             float initY =  plotArea.getBottom();
              
@@ -180,12 +188,12 @@ public class LineChart extends LnChart{
 				return false;
 			}		
 			//数据序列
-			List<Double> chartValues = bd.getLinePoint();	
+			List<Double> chartValues = bd.getLinePoint();
 			if(null == chartValues)
 			{
-				Log.e(TAG,"线的数据序列为空.");
-				return false;			
-			}			
+				Log.e(TAG,"当前线数据序列值为空.");
+				return false;
+			}
 				
 			//步长
 			float axisScreenHeight = getAxisScreenHeight();
@@ -194,10 +202,10 @@ public class LineChart extends LnChart{
 			int j = 0,childID = 0;	
 			if (dataSet.size() == 1) //label仅一个时右移
 			{
-				XSteps = div( getAxisScreenWidth(),(dataSet.size() ));
+				XSteps = div( getPlotScreenWidth(),(dataSet.size() ));
 				j = 1;
 			}else{
-				XSteps = div( getAxisScreenWidth(),(dataSet.size() - 1));
+				XSteps = div( getPlotScreenWidth(),(dataSet.size() - 1));
 			}
 			
 			float itemAngle = bd.getItemLabelRotateAngle();
@@ -309,7 +317,8 @@ public class LineChart extends LnChart{
 			mLstKey.clear();
 			String key = "";
 			//开始处 X 轴 即分类轴                  
-			for(int i=0;i<mDataSet.size();i++)
+			int count = mDataSet.size();
+			for(int i=0;i<count;i++)
 			{								
 				if(renderLine(canvas,mDataSet.get(i),"LINE",i) == false) 
 					return false;;

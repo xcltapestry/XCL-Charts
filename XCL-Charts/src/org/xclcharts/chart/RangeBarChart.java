@@ -63,11 +63,9 @@ public class RangeBarChart  extends AxisChart {
 
 
 	public RangeBarChart() {
-		super();
-	
-		
+				
 		// 默认显示Key		
-		plotLegend.show();
+		if(null !=plotLegend)plotLegend.show();
 		
 		//默认为竖向设置
 		defaultAxisSetting();	
@@ -88,7 +86,7 @@ public class RangeBarChart  extends AxisChart {
 	 *            分类集
 	 */
 	public void setCategories( List<String> categories) {	
-		categoryAxis.setDataBuilding(categories);
+		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 	}
 
 	/**
@@ -97,8 +95,7 @@ public class RangeBarChart  extends AxisChart {
 	 * @param dataSeries
 	 *            数据源
 	 */
-	public void setDataSource( List<RangeBarData> dataSeries) {
-		if(null != mDataSet) mDataSet.clear();		
+	public void setDataSource( List<RangeBarData> dataSeries) {	
 		this.mDataSet = dataSeries;
 	}
 
@@ -170,13 +167,19 @@ public class RangeBarChart  extends AxisChart {
 	 */
 	protected void defaultAxisSetting()
 	{
-		try{						
-			dataAxis.setHorizontalTickAlign(Align.LEFT);
-			dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);					
-							
-			categoryAxis.setHorizontalTickAlign(Align.CENTER);			
-			categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
-			categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);											
+		try{	
+			if(null != dataAxis)
+			{
+				dataAxis.setHorizontalTickAlign(Align.LEFT);
+				dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);					
+			}
+			
+			if(null != categoryAxis)
+			{
+				categoryAxis.setHorizontalTickAlign(Align.CENTER);			
+				categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
+				categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
+			}
 		}catch(Exception ex){
 			Log.e(TAG, ex.toString());
 		}
@@ -200,7 +203,7 @@ public class RangeBarChart  extends AxisChart {
 	 */
 	protected float getVerticalXSteps(int num) {
 		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)			
-		return  div(getAxisScreenWidth() ,num);
+		return  div(getPlotScreenWidth() ,num);
 	}	
 
 	/**
@@ -234,15 +237,15 @@ public class RangeBarChart  extends AxisChart {
 			// 从左到右的横向网格线		
 			if ( i % 2 != 0) {
 				plotGrid.renderOddRowsFill(canvas, plotArea.getLeft(),
-						add(currentY,YSteps), plotArea.getRight(), currentY);
+						add(currentY,YSteps), plotArea.getPlotRight(), currentY);
 			} else {
 				plotGrid.renderEvenRowsFill(canvas, plotArea.getLeft(),
-						add(currentY,YSteps), plotArea.getRight(), currentY);
+						add(currentY,YSteps), plotArea.getPlotRight(), currentY);
 			}
 			
 			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
 			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(), currentY,
-											   plotArea.getRight(), currentY);			
+											   plotArea.getPlotRight(), currentY);			
 					
 			if(i == tickCount)
 			{
@@ -273,7 +276,7 @@ public class RangeBarChart  extends AxisChart {
 	
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度  
-		float XSteps = div(getAxisScreenWidth() , (dataSet.size() + 1)); 
+		float XSteps = div(getPlotScreenWidth() , (dataSet.size() + 1)); 
 
 		for (int i = 0; i < dataSet.size(); i++) {
 			// 依初超始X坐标与分类间距算出当前刻度的X坐标
@@ -344,7 +347,7 @@ public class RangeBarChart  extends AxisChart {
 		 		 				
 		float barWidthHalf = mBarWidth/2;
 	
-		float axisScreenWidth = getAxisScreenWidth(); 
+		float axisScreenWidth = getPlotScreenWidth(); 
 		float fontHeight = DrawHelper.getInstance().getPaintFontHeight(
 												mFlatBar.getItemLabelPaint());
 
@@ -384,7 +387,7 @@ public class RangeBarChart  extends AxisChart {
 		 
 		// 轴 线
 		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
-									plotArea.getRight(), plotArea.getBottom());
+									plotArea.getPlotRight(), plotArea.getBottom());
 
 		// 绘制柱形图例
 		plotLegend.renderRangeBarKey(canvas,getKey(),mFlatBar.getBarPaint().getColor());

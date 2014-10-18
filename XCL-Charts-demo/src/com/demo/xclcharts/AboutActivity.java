@@ -54,8 +54,8 @@ public class AboutActivity extends Activity {
 	
 		TextView tv_title = (TextView) findViewById(R.id.tv_title);
 		String html = "<big><font color ='red'>XCL-Charts</font></big><br/>"			
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.8<br/>"
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-10-08<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.9<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-10-18<br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群: 374780627<br/>"
 					+ "<big><font color ='red'>License</font></big><br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;Apache v2 License开源协议。"
@@ -75,7 +75,7 @@ public class AboutActivity extends Activity {
 				+ " <br/><br/>有什么改进或建议可发邮件联系或至博客留言。 "
 				+ " <br/><big>Blog:http://blog.csdn.net/xcl168</big> "
 				+ " <br/><big>Mail:xcl_168@aliyun.com</big> "
-				+ " <br/><br/>感谢 cubehead、cmeiyuan、cheyiliu、Pand的代码提交与修正及其它网友的支持与热情反馈。"
+				+ " <br/><br/>感谢 cubehead、cmeiyuan、cheyiliu、Pand提交代码及其它网友的支持与反馈。"
 				
 				+ "</body></html>";
 		CharSequence charSequenceInfo = Html.fromHtml(htmlInfo);

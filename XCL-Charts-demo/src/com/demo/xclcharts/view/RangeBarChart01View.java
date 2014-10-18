@@ -137,7 +137,7 @@ public class RangeBarChart01View extends DemoView {
 			//标题
 			chart.setTitle("范围条形图");
 			chart.addSubtitle("(XCL-Charts Demo)");
-			chart.setTitleAlign(XEnum.ChartTitleAlign.MIDDLE);
+			chart.setTitleAlign(XEnum.HorizontalAlign.CENTER);
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 		
 			

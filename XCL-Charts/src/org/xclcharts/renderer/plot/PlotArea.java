@@ -119,12 +119,20 @@ public class PlotArea {
 	public float getLeft() {
 		return mLeft;
 	}
+	
+	public float getPlotLeft() {
+		return mLeft;
+	}
 
 	/**
 	 * 绘图区上方Y坐标
 	 * @return Y坐标
 	 */
 	public float getTop() {
+		return mTop ;
+	}
+	
+	public float getPlotTop() {
 		return mTop ;
 	}
 	
@@ -136,11 +144,19 @@ public class PlotArea {
 		return mBottom ;
 	}
 	
+	public float getPlotBottom() {
+		return mBottom ;
+	}
+	
 	/**
 	 * 绘图区右边位置X坐标
 	 * @return X坐标
 	 */
 	public float getRight() {
+		return mRight;
+	}
+	
+	public float getPlotRight() {
 		return (mRight + mExtWidth);
 	}
 	
@@ -165,6 +181,11 @@ public class PlotArea {
 	 */
 	public float getHeight() {		
 		mHeight = Math.abs(getBottom() - getTop());
+		return mHeight;
+	}
+	
+	public float getPlotHeight() {		
+		mHeight = Math.abs(getPlotBottom() - getPlotTop());
 		return mHeight;
 	}
 		

@@ -22,6 +22,7 @@
 
 package org.xclcharts.common;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.xclcharts.renderer.XEnum;
@@ -390,4 +391,5 @@ public class DrawHelper {
 		}
 	}	
 		
+
 }

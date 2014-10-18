@@ -21,6 +21,8 @@
  */
 package org.xclcharts.renderer.plot;
 
+import org.xclcharts.renderer.XEnum;
+
 import android.graphics.Color;
 import android.graphics.Paint;
 
@@ -33,33 +35,37 @@ import android.graphics.Paint;
 public class PlotLegend {
 	
 		//数据集的说明描述与图这间的空白间距
-		private float mDataKeyMargin  = 10f;	
+		protected float mMargin  = 10f;	
 		//数据集的说明描述画笔
-		private Paint mDataKeyPaint = null;
-			
+		private Paint mKeyPaint = null;
+					
 		//是否显示图例
-		private boolean mKeyLabelVisible = false;
+		private boolean mVisible = false;
 		
 		//图例起始偏移多少距离
 		protected float mOffsetX = 0.0f;
 		protected float mOffsetY = 0.0f;
 		//行间距
-		protected float mRowSpan = 10.0f;
+		protected float mRowSpan = 10.0f;		
+		protected float mColSpan = 10.0f;		
 		
-		public PlotLegend() {
-			initChart();		
-		}
-		/**
-		 * 初始化设置
-		 */
-		private void initChart()
-		{	
-			mDataKeyPaint = new Paint();
-			mDataKeyPaint.setColor(Color.BLACK);
-			mDataKeyPaint.setAntiAlias(true);			
-			mDataKeyPaint.setTextSize(15);
-			//mDataKeyPaint.setStyle(Style.FILL);			
-		}
+		//图例方向
+		/*
+		private XEnum.LegendType mLegendType = XEnum.LegendType.COLUMN;		
+		private XEnum.HorizontalAlign mHorizontalAlign = XEnum.HorizontalAlign.RIGHT;		
+		private XEnum.VerticalAlign mVerticalAlign = XEnum.VerticalAlign.MIDDLE;
+		 */	
+		private XEnum.LegendType mLegendType = XEnum.LegendType.ROW;		
+		private XEnum.HorizontalAlign mHorizontalAlign = XEnum.HorizontalAlign.LEFT;
+		private XEnum.VerticalAlign mVerticalAlign = XEnum.VerticalAlign.TOP;
+	
+		//box
+		protected BorderRender mBorder = new BorderRender();
+		protected boolean mShowBox = true;
+		protected boolean mShowBoxBorder = true;
+		protected boolean mShowBackground = true;
+				
+		public PlotLegend() {}
 
 		/**
 		 * 在图的上方显示图例
@@ -67,7 +73,7 @@ public class PlotLegend {
 		 */
 		public void show()
 		{
-			mKeyLabelVisible = true;
+			mVisible = true;
 		}
 		
 		/**
@@ -75,7 +81,8 @@ public class PlotLegend {
 		 */
 		public void hide()
 		{
-			mKeyLabelVisible = false;
+			mVisible = false;
+			if(null != mKeyPaint) mKeyPaint = null;
 		}
 						
 		/**
@@ -84,25 +91,83 @@ public class PlotLegend {
 		 */
 		public boolean isShow()
 		{
-			return mKeyLabelVisible;
+			return mVisible;
 		}
+		
+		/**
+		 * 不显示图例框		
+		 */
+		public void hideBox()
+		{
+			mShowBox = false;
+		}
+		
+		/**
+		 * 不显示图例边框		
+		 */
+		public void hideBorder()
+		{
+			mShowBoxBorder = false;
+		}
+		
+		/**
+		 * 不显示图例背景	
+		 */
+		public void hideBackground()
+		{
+			mShowBackground = false;
+		}
+		
+		/**
+		 * 显示图例框		
+		 */
+		public void showBox()
+		{
+			mShowBox = true;
+			showBorder();
+			showBackground();
+		}
+		
+		/**
+		 * 显示图例边框		
+		 */
+		public void showBorder()
+		{
+			mShowBoxBorder = true;
+		}
+		
+		/**
+		 * 显示图背景		
+		 */
+		public void showBackground()
+		{
+			mShowBackground = true;
+		}
+		
 		 
 		 /**
 		  * 开放图例绘制画笔
 		  * @return 画笔
 		  */
-		 public Paint getLegendLabelPaint()
+		 public Paint getPaint()
 		 {		 
-			 return mDataKeyPaint;
+			 if(null == mKeyPaint)
+			 {
+				mKeyPaint = new Paint();
+				mKeyPaint.setColor(Color.BLACK);
+				mKeyPaint.setAntiAlias(true);			
+				mKeyPaint.setTextSize(15);	
+			 }
+			 return mKeyPaint;
 		 }
 		 
 		 /**
 		  * 设置图例间距
 		  * @param margin Key间距
 		  */
-		 public void setLegendLabelMargin(float margin)
+		 public void setLabelMargin(float margin)
 		 {		 
-			 mDataKeyMargin = margin;
+			 mMargin = margin;
 		 }
 		 
 		 
@@ -114,21 +179,26 @@ public class PlotLegend {
 		{
 			mRowSpan = span;		
 		}
+		
+		public void setColSpan(float span)
+		{
+			mColSpan = span;
+		}
 			
 		 /**
 		  * 返回图例间距
 		  * @return Key间距
 		  */
-		 public float getLegendLabelMargin()
+		 public float getLabelMargin()
 		 {
-			 return mDataKeyMargin;
+			 return mMargin;
 		 }
 		 
 		 /**
 		  * 图例起始向X方向偏移多少距离
 		  * @param offset 偏移值
 		  */
-		 public void setLegendOffsetX(float offset)
+		 public void setOffsetX(float offset)
 		 {		 
 			 mOffsetX = offset;
 		 }
@@ -137,9 +207,74 @@ public class PlotLegend {
 		  * 图例起始向Y方向偏移多少距离
 		  * @param offset 偏移值
 		  */
-		 public void setLegendOffsetY(float offset)
+		 public void setOffsetY(float offset)
 		 {		 
 			 mOffsetY = offset;
 		 }
-
+		 
+		 /**
+		  * 图例显示类型:使用行类型横向显示，或使用列类型竖向显示 
+		  * @param type 显示类型
+		  */
+		 public void setType(XEnum.LegendType type)
+		 {
+			 mLegendType = type;
+		 }
+		 
+		 /**
+		  * 返回图例显示类型
+		  * @return 显示类型
+		  */
+		 public XEnum.LegendType getType()
+		 {
+			 return mLegendType;
+		 }
+		 		 
+		 /**
+		  * 设置横向显示方式位置
+		  * @param align 位置
+		  */
+		 public void setHorizontalAlign(XEnum.HorizontalAlign align)
+		 {
+			 mHorizontalAlign = align;
+		 }
+		 
+		 /**
+		  * 返回横向显示方式位置
+		  * @return	位置
+		  */
+		 public XEnum.HorizontalAlign getHorizontalAlign()
+		 {
+			 return mHorizontalAlign;
+		 }		 
+		 
+		 /**
+		  * 设置竖向显示方式位置
+		  * @param align 位置
+		  */
+		 public void setVerticalAlign(XEnum.VerticalAlign align)
+		 {
+			 mVerticalAlign = align;
+		 }
+		 
+		 /**
+		  * 设置竖向显示方式位置
+		  * @return	位置
+		  */
+		 public XEnum.VerticalAlign getVerticalAlign()
+		 {
+			 return mVerticalAlign;
+		 }
+		 
+		
+		 /**
+		  * 开放图例框绘制基类
+		  * @return  框绘制类
+		  */
+		 public Border getBox()
+		 {		
+			 return mBorder;
+		 }
+		 
+		 
 }

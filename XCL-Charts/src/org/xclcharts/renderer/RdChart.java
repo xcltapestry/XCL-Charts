@@ -55,14 +55,21 @@ public class RdChart extends EventChart {
 	private Paint mPaintLine = null;
 		
 	
-	public RdChart() {
-		super();
-		initChart();
+	public RdChart() {		
+		
+		//初始化图例
+		if(null != plotLegend)
+		{
+			plotLegend.show();
+			plotLegend.setType(XEnum.LegendType.ROW);
+			plotLegend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
+			plotLegend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			plotLegend.showBox();
+			plotLegend.hideBackground();
+		}
+				
 	}
-	
-	private void initChart() {								
-	}
-	
+			
 	@Override
 	protected void calcPlotRange()
 	{
@@ -181,7 +188,7 @@ public class RdChart extends EventChart {
 	@Override
 	public boolean render(Canvas canvas) throws Exception {
 		// TODO Auto-generated method stubcalcPlotRange
-		boolean ret = true;
+		
 		try {
 				if (null == canvas)
 						return false;

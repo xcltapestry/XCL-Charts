@@ -1,0 +1,18 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.renderer.line.PlotDot;
+
+public class PlotLegendInfo {
+	
+	public String label = "";
+	
+	public float width = 0.0f;
+	public float height =0.0f;
+	
+	public PlotDot plot = null;
+
+	public PlotLegendInfo(){};
+	
+
+	
+}

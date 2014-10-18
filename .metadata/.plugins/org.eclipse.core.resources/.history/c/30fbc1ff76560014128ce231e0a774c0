@@ -1,0 +1,26 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Paint;
+
+public class RectBorder {
+	
+	//线的基类画笔	
+	private Paint mPaintBorderLine = null;
+	
+	
+	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
+	private XEnum.RectType mRectType = XEnum.RectType.ROUNDRECT;	
+	private int mRaidus = 15;
+	protected static final int mBorderSpadding = 5;
+	
+	
+		
+		
+	public RectBorder(){}
+	
+	
+	
+
+}

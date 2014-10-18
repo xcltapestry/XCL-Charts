@@ -41,16 +41,19 @@ public abstract class GraphicalView extends View {
 	
 	 private String TAG = "GraphicalView";	
 
+
 	 public GraphicalView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
 		initChartView();
+		 
 	 }
 
 	 public GraphicalView(Context context, AttributeSet attrs){   
         super(context, attrs);   
         initChartView();
 	 }
+
 	 
 	 public GraphicalView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);

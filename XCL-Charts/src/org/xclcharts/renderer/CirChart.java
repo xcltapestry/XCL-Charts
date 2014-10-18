@@ -71,6 +71,18 @@ public class CirChart extends EventChart{
 		
 	public CirChart()
 	{		
+		
+		//初始化图例
+		if(null != plotLegend)
+		{
+			plotLegend.show();
+			plotLegend.setType(XEnum.LegendType.ROW);
+			plotLegend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
+			plotLegend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			plotLegend.showBox();
+			plotLegend.hideBackground();
+		}
+				
 	}
 	
 	@Override
@@ -253,17 +265,15 @@ public class CirChart extends EventChart{
 			final float radius,		
 			final double offsetAngle,
 			final double curretAnglet)
-	{
-		
-		
+	{				
 		if(XEnum.SliceLabelStyle.HIDE == mLabelStyle) return true;
 		
+		if(null == cData)return false;
 		String text = cData.getLabel();
 		if(""==text||text.length()==0)return true;
 				
-		float calcAngle = 0.0f;
-				
-		calcAngle =  (float) MathHelper.getInstance().add(offsetAngle , curretAnglet/2);
+	
+		float calcAngle = (float) MathHelper.getInstance().add(offsetAngle , curretAnglet/2);
 		if(Float.compare(calcAngle,0.0f) == 0 
 				|| Float.compare(calcAngle,0.0f) == -1 )
 		{
@@ -273,7 +283,7 @@ public class CirChart extends EventChart{
 		
 		//标签颜色与当地扇区颜色同步
 		if(mIsLabelSyncColor) this.getLabelPaint().setColor(cData.getSliceColor());
-		
+	
 		int color = getLabelPaint().getColor();
 				
 		//有定制需求
@@ -303,8 +313,7 @@ public class CirChart extends EventChart{
 		}else{
 			Log.e(TAG,"未知的标签处理类型.");
 			return false;
-		}		
-		
+		}						
 		getLabelPaint().setColor(color);
 		return true;
 	}

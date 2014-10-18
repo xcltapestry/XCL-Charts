@@ -39,17 +39,16 @@ public class PlotTitle {
 	private  String mChartTitle = "";
 	private  String mSubtitle = "";	
 	//图表标题画笔
-	private Paint mTitlePaint = null;
-	private Paint mSubtitlePaint = null;	
+	private Paint mPaintTitle = null;
+	private Paint mPaintSubtitle = null;	
 	//图表标题显示位置
-	private XEnum.ChartTitleAlign mChartTitleAlign = XEnum.ChartTitleAlign.MIDDLE;	
+	private XEnum.HorizontalAlign mChartTitleAlign = XEnum.HorizontalAlign.CENTER;	
 	//标题的显示位置(TOP,CENTER,BOTTOM)即是否靠最上面，
 	//还是Chart top与Plot top的中间位置，还是PLOT TOP的位置
 	private XEnum.VerticalAlign mTitlePosition = XEnum.VerticalAlign.MIDDLE;
 	
 	public PlotTitle()
 	{
-		
 	}
 
 	/**
@@ -97,15 +96,15 @@ public class PlotTitle {
 	public Paint getTitlePaint()
 	 {
 		
-		if(null == mTitlePaint)
+		if(null == mPaintTitle)
 		{
-			mTitlePaint  = new Paint();				
-			mTitlePaint.setTextSize(32);				
-			mTitlePaint.setColor(Color.BLACK);				
-			mTitlePaint.setAntiAlias(true);
+			mPaintTitle  = new Paint();				
+			mPaintTitle.setTextSize(32);				
+			mPaintTitle.setColor(Color.BLACK);				
+			mPaintTitle.setAntiAlias(true);
 		}
 		
-		 return mTitlePaint ;
+		 return mPaintTitle ;
 	 }
 
 	
@@ -115,21 +114,21 @@ public class PlotTitle {
 	 */
 	public Paint getSubtitlePaint()
 	 {
-		if(null == mSubtitlePaint)
+		if(null == mPaintSubtitle)
 		{
-			mSubtitlePaint  = new Paint();
-			mSubtitlePaint.setTextSize(22);
-			mSubtitlePaint.setColor(Color.BLACK);	
-			mSubtitlePaint.setAntiAlias(true);	
+			mPaintSubtitle  = new Paint();
+			mPaintSubtitle.setTextSize(22);
+			mPaintSubtitle.setColor(Color.BLACK);	
+			mPaintSubtitle.setAntiAlias(true);	
 		}
-		 return mSubtitlePaint ;
+		 return mPaintSubtitle ;
 	 }
 			
 	/**
 	 * 设置标题横向显示位置(靠左，居中，靠右)
 	 * @param align 横向显示位置
 	 */
-	public void setTitleAlign(XEnum.ChartTitleAlign align)
+	public void setTitleAlign(XEnum.HorizontalAlign align)
 	{
 		mChartTitleAlign = align;
 	}
@@ -138,7 +137,7 @@ public class PlotTitle {
 	 * 返回标题横向显示位置
 	 * @return 横向显示位置
 	 */
-	public XEnum.ChartTitleAlign getTitleAlign()
+	public XEnum.HorizontalAlign getTitleAlign()
 	{
 		return mChartTitleAlign;
 	}

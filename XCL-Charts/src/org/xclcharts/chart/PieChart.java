@@ -50,8 +50,8 @@ public class PieChart extends CirChart{
 			
 	//是否使用渲染来突出效果
 	private boolean mGradient = true;
-	//选中区偏移长度
-	protected static  float SELECTED_OFFSET = 10.0f;
+	//选中区偏移分离长度
+	private float mSelectedOffset = 10.0f;
 
 	//数据源
 	private List<PieData> mDataset;
@@ -65,7 +65,7 @@ public class PieChart extends CirChart{
 
 	public PieChart()
 	{
-		super();				
+				
 	}
 	
 	/**
@@ -88,8 +88,7 @@ public class PieChart extends CirChart{
 	 * @param piedata 来源数据集
 	 */
 	public void setDataSource( List<PieData> piedata)
-	{
-		if(null != mDataset)mDataset.clear();
+	{		
 		this.mDataset = piedata; 
 	}
 	
@@ -142,6 +141,25 @@ public class PieChart extends CirChart{
 	{
 		return mGradient;
 	}
+	
+	/**
+	 * 选中区偏移分离距离
+	 * @param len 距离
+	 */
+	public void setSelectedOffset(float len)
+	{
+		mSelectedOffset = len;
+	}
+	
+	/**
+	 * 选中区偏移分离距离
+	 * @return 距离
+	 */
+	public float getSelectedOffset()
+	{
+		return mSelectedOffset;
+	}
+	
 	  
 	/**
 	 * 给画笔设置渲染颜色和效果
@@ -178,7 +196,7 @@ public class PieChart extends CirChart{
 		if(Float.compare(Angle, 0.0f) == 0 
 				|| Float.compare(Angle, 0.0f) == -1)
 		{
-			Log.e(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(Angle));
+			//Log.w(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(Angle));
 			return false;
 		}
 		return true;
@@ -279,7 +297,7 @@ public class PieChart extends CirChart{
 		try{			
 			
 			//偏移圆心点位置(默认偏移半径的1/10)
-	    	float newRadius = div(radius , SELECTED_OFFSET);
+	    	float newRadius = div(radius , mSelectedOffset);
 	    	
 	    	 //计算百分比标签
 	    	PointF point = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
@@ -310,15 +328,21 @@ public class PieChart extends CirChart{
 		int i = 0;
 		float currentAngle = 0.0f,offsetAngle = offset;
 		
+		if(null == arrPoint) return false;
+		
 		for(PieData cData : mDataset)
 		{						
 			currentAngle = cData.getSliceAngle();		
 			if(!validateAngle(currentAngle)) continue;	
-											
-			 renderLabel(canvas,cData,
-					 	arrPoint[i].x, 
-					 	arrPoint[i].y,
-	        			radius,offsetAngle,currentAngle);	
+			
+			if( arrPoint.length > i) 
+			{						
+				 renderLabel(canvas,cData,
+						 	arrPoint[i].x, 
+						 	arrPoint[i].y,
+		        			radius,offsetAngle,currentAngle);	
+				 
+			}
 			 		    
 			 //下次的起始角度  
 		    offsetAngle = add(offsetAngle, currentAngle);
@@ -380,7 +404,7 @@ public class PieChart extends CirChart{
 			    
 			    //保存角度
 			    saveArcRecord(i,cirX + this.mTranslateXY[0],cirY + this.mTranslateXY[1],
-			    				radius,offsetAngle,currentAngle);
+			    				radius,offsetAngle,currentAngle,mSelectedOffset);
 			
 			    //下次的起始角度  
 			    offsetAngle = add(offsetAngle, currentAngle);
@@ -392,8 +416,7 @@ public class PieChart extends CirChart{
 			
 			//图KEY
 			plotLegend.renderPieKey(canvas,this.mDataset);
-			
-			arrPoint = null;					
+								
 		 }catch( Exception e){
 			 Log.e(TAG,e.toString());
 			 return false;
@@ -442,13 +465,7 @@ public class PieChart extends CirChart{
 	{		
 		return getArcRecord(x,y);
 	}		
-		
-	private void freeObj()
-	{
-		if(null != mPaintArc) mPaintArc = null;
-		if(null != mRectF) mRectF = null;
-		if(null != mRectF) mRectF = null;	
-	}
+
 	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
@@ -460,9 +477,7 @@ public class PieChart extends CirChart{
 	        if(false == validateParams())return false;
 			
 			//绘制图表
-			renderPlot(canvas);
-			
-			freeObj();
+			renderPlot(canvas);			
 			
 			//显示焦点
 			renderFocusShape(canvas);

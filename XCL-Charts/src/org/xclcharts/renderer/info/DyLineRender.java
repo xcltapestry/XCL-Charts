@@ -22,11 +22,9 @@
 package org.xclcharts.renderer.info;
 
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotArea;
 
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
 /**
  * @ClassName DyLineRender
@@ -36,11 +34,10 @@ import android.graphics.Paint;
  */
 public class DyLineRender extends DyLine{
 	
-	PlotArea mArea = null;
+	private PlotArea mArea = null;
 	
 	public DyLineRender()
 	{
-		super();
 	}
 	
 	public void setPlotArea(PlotArea area)
@@ -62,7 +59,7 @@ public class DyLineRender extends DyLine{
 	}
 	
 	private void drawBackwardDiagonal(Canvas canvas)
-	{
+	{		
 		//竖线
 		float startX = mCenterXY.x;
 		float startY = mCenterXY.y;
@@ -81,7 +78,7 @@ public class DyLineRender extends DyLine{
 	}
 	
 	private void drawVertical(Canvas canvas)
-	{
+	{	
 		//竖线
 		float startX = mCenterXY.x;
 		float startY = mArea.getTop();
@@ -104,7 +101,10 @@ public class DyLineRender extends DyLine{
 	}
 	
 	public void renderLine(Canvas canvas) 
-	{		
+	{				
+		if(null == mArea) return;
+		if(null == mCenterXY) return;
+		
 		switch(getDyLineStyle())
 		{
 		case Cross:

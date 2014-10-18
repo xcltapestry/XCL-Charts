@@ -49,7 +49,7 @@ public class AxisChart extends EventChart {
 	//标签轴
 	protected CategoryAxisRender categoryAxis  = null;	
 	//轴标题类
-	protected AxisTitleRender axisTitle = null;
+	private AxisTitleRender axisTitle = null;
 	
 	//格式化柱形顶上或线交叉点的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
@@ -60,8 +60,7 @@ public class AxisChart extends EventChart {
 	
 	
 	public AxisChart() {
-		// TODO Auto-generated constructor stub		
-		super();
+		// TODO Auto-generated constructor stub			
 		initChart();		
 	}
 	
@@ -72,11 +71,21 @@ public class AxisChart extends EventChart {
 	private void initChart()
 	{				
 		//数据轴
-		dataAxis  = new DataAxisRender();
+		if(null == dataAxis)dataAxis  = new DataAxisRender();
 		//标签轴
-		categoryAxis  = new CategoryAxisRender();				
-		//轴标题
-		axisTitle = new AxisTitleRender();			
+		if(null == categoryAxis)categoryAxis  = new CategoryAxisRender();	
+		
+		
+		//初始化图例
+		if(null != plotLegend)
+		{
+			plotLegend.show();
+			plotLegend.setType(XEnum.LegendType.ROW);
+			plotLegend.setHorizontalAlign(XEnum.HorizontalAlign.LEFT);
+			plotLegend.setVerticalAlign(XEnum.VerticalAlign.TOP);
+			plotLegend.hideBox();
+		}
+		
 	}
 		
 
@@ -84,7 +93,10 @@ public class AxisChart extends EventChart {
 	  * 开放数据轴绘制类
 	  * @return 数据轴绘制类
 	  */
-	public DataAxis getDataAxis() {
+	public DataAxis getDataAxis() 
+	{
+		//数据轴
+		if(null == dataAxis)dataAxis  = new DataAxisRender();
 		return dataAxis;
 	}
 
@@ -92,7 +104,10 @@ public class AxisChart extends EventChart {
 	 * 开放标签轴绘制类
 	 * @return 标签轴绘制类
 	 */
-	public CategoryAxis getCategoryAxis() {
+	public CategoryAxis getCategoryAxis() 
+	{
+		//标签轴
+		if(null == categoryAxis)categoryAxis  = new CategoryAxisRender();
 		return categoryAxis;
 	}
 
@@ -100,7 +115,10 @@ public class AxisChart extends EventChart {
 	 * 开放轴标题绘制类
 	 * @return 图例绘制类
 	 */
-	public AxisTitle getAxisTitle() {
+	public AxisTitle getAxisTitle() 
+	{		
+		//轴标题
+		if(null == axisTitle)axisTitle = new AxisTitleRender();					
 		return axisTitle;
 	}
 
@@ -110,8 +128,22 @@ public class AxisChart extends EventChart {
 	 */
 	protected float getAxisScreenWidth()
 	{
+		if(null == plotArea)return 0.0f;
 		return(Math.abs(plotArea.getRight() - plotArea.getLeft()));
 	}
+	
+	protected float getPlotScreenWidth()
+	{
+		if(null == plotArea)return 0.0f;
+		return(Math.abs(plotArea.getPlotRight() - plotArea.getPlotLeft()));
+	}
+	
+	protected float getPlotScreenHeight()
+	{
+		if(null == plotArea)return 0.0f;
+		return( Math.abs(plotArea.getPlotBottom() - plotArea.getPlotTop()));
+	}
+	
 	
 	/**
 	 * 轴所占的屏幕高度
@@ -119,6 +151,7 @@ public class AxisChart extends EventChart {
 	 */
 	protected float getAxisScreenHeight()
 	{
+		if(null == plotArea)return 0.0f;
 		return( Math.abs(plotArea.getBottom() - plotArea.getTop()));
 	}
 	
@@ -257,24 +290,27 @@ public class AxisChart extends EventChart {
 		return xMargin;
 	}
 	
-			
+	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception
 	{
-		try {
+		try {			
 			super.postRender(canvas);			
 			
 			//计算主图表区范围
 			 calcPlotRange();
 			//画Plot Area背景			
 			 plotArea.render(canvas);	
-			
+						 
 			//绘制标题
-			renderTitle(canvas);
+			 renderTitle(canvas);
 			//绘制轴标题
-			axisTitle.setRange(this);
-			axisTitle.render(canvas);
-		
+			if(null != axisTitle)
+			{
+				axisTitle.setRange(this);
+				axisTitle.render(canvas);
+			}
+			
 		}catch( Exception e){
 			 throw e;
 		}

@@ -40,7 +40,7 @@ public class PlotTitleRender extends PlotTitle{
 
 	public PlotTitleRender()
 	{
-		super();		
+			
 	}
 	
 	/**
@@ -107,7 +107,7 @@ public class PlotTitleRender extends PlotTitle{
 			getTitlePaint().setTextAlign(Align.LEFT);			
 			getSubtitlePaint().setTextAlign(Align.LEFT);			
 			break;
-		case MIDDLE:
+		case CENTER:
 			
 			titleX = (float)Math.round(chartLeft + chartWidth / 2);
 			titleY = titleInitY;

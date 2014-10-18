@@ -66,17 +66,17 @@ public class BarChart02View extends DemoView {
 	}
 	
 	public BarChart02View(Context context, AttributeSet attrs){   
-        super(context, attrs);   
+        super(context, attrs);           
         initView();
 	 }
 	 
 	 public BarChart02View(Context context, AttributeSet attrs, int defStyle) {
-			super(context, attrs, defStyle);
-			initView();
+		super(context, attrs, defStyle);			
+		initView();
 	 }
 	 
 	 private void initView()
-	 {
+	 {		 
 		 	chartLabels();
 			chartDataSet();	
 			chartRender();
@@ -87,7 +87,7 @@ public class BarChart02View extends DemoView {
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);   
        //图所占范围大小
-        chart.setChartRange(w,h);
+        if(null !=chart)chart.setChartRange(w,h);
     }  
 	
 	
@@ -98,11 +98,12 @@ public class BarChart02View extends DemoView {
 			int [] ltrb = getBarLnDefaultSpadding();
 			chart.setPadding(DensityUtil.dip2px(getContext(), 50),ltrb[1], ltrb[2],  ltrb[3]);
 			
+	
 			chart.setTitle("每日收益情况");
 			chart.addSubtitle("(XCL-Charts Demo)");		
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
-			chart.setTitleAlign(XEnum.ChartTitleAlign.LEFT);
-			
+			chart.setTitleAlign(XEnum.HorizontalAlign.LEFT);
+		
 			//数据源
 			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
@@ -117,6 +118,7 @@ public class BarChart02View extends DemoView {
 			chart.getDataAxis().setAxisMin(100);
 			chart.getDataAxis().setAxisSteps(100);
 			
+		
 			chart.getDataAxis().getTickLabelPaint().
 									setColor((int)Color.rgb(199, 88, 122));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -129,18 +131,6 @@ public class BarChart02View extends DemoView {
 				}
 				
 			});
-			
-			/*
-			chart.getCategoryAxis().setLabelFormatter(new IFormatterTextCallBack(){
-
-				@Override
-				public String textFormatter(String value) {
-					// TODO Auto-generated method stub				
-					String tmp = "~"+value+"]";
-					return tmp;
-				}				
-			});
-			*/
 			
 			//网格
 			chart.getPlotGrid().showHorizontalLines();
@@ -161,16 +151,18 @@ public class BarChart02View extends DemoView {
 					DecimalFormat df=new DecimalFormat("#0.00");					 
 					String label = df.format(value).toString();
 					return label;
-				}});	        
-			
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				Log.e(TAG, e.toString());
-			}
-		
+				}});	 
+				  
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, e.toString());
+		}
+		
+			
 	}
 	private void chartDataSet()
 	{
@@ -243,8 +235,7 @@ public class BarChart02View extends DemoView {
 				" Key:" + bData.getKey() + 							
 				" Current Value:" + Double.toString(bValue), 
 				Toast.LENGTH_SHORT).show();		
-		
-	
+			
 		chart.showFocusRectF(record.getRectF());		
 		chart.getFocusPaint().setStyle(Style.STROKE);
 		chart.getFocusPaint().setStrokeWidth(3);		

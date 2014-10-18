@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="328" key="DIALOG_Y_ORIGIN"/>
-		<item value="613" key="DIALOG_X_ORIGIN"/>
+		<item value="330" key="DIALOG_Y_ORIGIN"/>
 		<item value="391" key="DIALOG_HEIGHT"/>
+		<item value="647" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="mLabelStyle" key="selection"/>
+		<item value="renderFlatArcAndLegend" key="selection"/>
 		<list key="findhistory">
-			<item value="mLabelPosition"/>
-			<item value="mPlotDot"/>
-			<item value="drawLeftAxisTitle"/>
-			<item value="mTickLabelVisible"/>
-			<item value="mPaintTickLabel"/>
-			<item value="isShowAxisLabel"/>
-			<item value="mAxisLineVisible"/>
-			<item value="isShow"/>
+			<item value="renderFlatArcAndLegend"/>
+			<item value="chartDataSource"/>
+			<item value="getDataSource"/>
+			<item value="renderPlot"/>
+			<item value="renderPieKey"/>
+			<item value="renderLabel"/>
+			<item value="validateAngle"/>
+			<item value="mRectF"/>
 		</list>
 		<list key="replacehistory">
-			<item value="mLabelStyle"/>
-			<item value="mAxisLabelsVisible"/>
-			<item value="mPaintTickLabels"/>
-			<item value="isShowAxisLabels"/>
-			<item value="isShowAxisLabel"/>
-			<item value="isShowAxisLine"/>
-			<item value="isShow"/>
-			<item value="isShowTickMarks"/>
+			<item value="categoryAxis"/>
+			<item value="setBorderLineColor"/>
+			<item value="setLineStyle"/>
+			<item value="setLineColor"/>
+			<item value="mPaintBackground"/>
+			<item value="getPlotScreenWidth"/>
+			<item value="getPlotScreenWidth()"/>
+			<item value="getPlotScreenHeight"/>
 		</list>
 	</section>
 </section>

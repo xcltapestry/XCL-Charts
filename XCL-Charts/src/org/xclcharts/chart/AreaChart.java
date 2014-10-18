@@ -84,11 +84,9 @@ public class AreaChart extends LnChart{
   	
 			  	
 	public AreaChart()
-	{
-		super();
-	
-		categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		dataAxis.setHorizontalTickAlign(Align.LEFT);		
+	{			
+		if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
+		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);		
 	}
 	
 	private void initPaint()
@@ -109,7 +107,7 @@ public class AreaChart extends LnChart{
 	 */
 	public void setCategories(List<String> categories)
 	{				
-		categoryAxis.setDataBuilding(categories);
+		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 	}
 	
 	/**
@@ -117,8 +115,7 @@ public class AreaChart extends LnChart{
 	 * @param dataset 数据源
 	 */
 	public void setDataSource(List<AreaData> dataset)
-	{		
-		if(null != mDataset) mDataset.clear();		
+	{				
 		this.mDataset = dataset;		
 	}
 	
@@ -175,7 +172,7 @@ public class AreaChart extends LnChart{
         						
 		float axisScreenHeight = getAxisScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
-		float currLablesSteps = div(getAxisScreenWidth(), 
+		float currLablesSteps = div(getPlotScreenWidth(), 
 										(categoryAxis.getDataSet().size() -1));
 				
 		//path area
