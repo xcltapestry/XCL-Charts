@@ -96,7 +96,7 @@ public class XChart implements IRender {
 	private LegendRender mDyLegend = null;
 	
 	private boolean mEnableScale = true;
-	private float mXScale = 0.0f, mYScale  = 0.0f;
+	private float mXScale = 0.0f, mYScale = 0.0f;
 	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
 	
 	//是否充许gc
@@ -575,6 +575,21 @@ public class XChart implements IRender {
 		mCenterX  = centerX;
 		mCenterY  = centerY;
 	}
+		
+	protected boolean getClikedScaleStatus()
+	{
+		if(!mEnableScale)return true;		
+		if( Float.compare(mXScale, 0.0f) == 0)return true;
+		
+		//如果在这范围内，则可以处理点击
+		if(Float.compare(mXScale , 0.95f) == 1 &&
+				Float.compare(mXScale , 1.1f) == -1)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 	/**
 	 * 缩放图表
@@ -586,9 +601,9 @@ public class XChart implements IRender {
 		
 		if( Float.compare(mCenterX, 0.0f) == 1 ||
 				Float.compare(mCenterY, 0.0f) == 1	)
-			{
-				canvas.scale(mXScale, mYScale,mCenterX,mCenterY);
-			//}else{
+			{							
+				canvas.scale(mXScale, mYScale,mCenterX,mCenterY);				
+				//}else{
 				//canvas.scale(mScale, mScale,plotArea.getCenterX(),plotArea.getCenterY());					
 			}
 	}

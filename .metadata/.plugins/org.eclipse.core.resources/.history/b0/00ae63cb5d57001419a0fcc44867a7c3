@@ -234,9 +234,7 @@ public class EventChart extends XChart {
 	 */
 	public boolean isPlotClickArea(float x,float y)
 	{				
-		if(!getListenItemClickStatus())return false;	
-		
-		if(!getClikedScaleStatus())return false;
+		if(!getListenItemClickStatus())return false;			
 		
 		if(Float.compare(x , getPlotArea().getLeft()) == -1 ) return false;
 		if(Float.compare(x, getPlotArea().getRight() ) == 1 ) return false;	

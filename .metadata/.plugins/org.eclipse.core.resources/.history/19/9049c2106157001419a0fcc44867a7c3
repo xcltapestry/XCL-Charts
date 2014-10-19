@@ -334,7 +334,11 @@ public class AreaChart01View extends DemoView implements Runnable {
           		Thread.sleep(100);
           		chart.setPadding(ltrb[0],ltrb[1], i *  ltrb[2], ltrb[3]);	    	
           		
-          		if(1 == i)drawTitle(); 
+          		if(1 == i)
+          		{          			
+          			drawTitle();
+          			
+          		}
           		postInvalidate();    
           	} 
           	                 

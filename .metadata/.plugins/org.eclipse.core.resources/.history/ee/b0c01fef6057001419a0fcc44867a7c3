@@ -61,9 +61,10 @@ public class ChartTouch implements IChartTouch {
 			{
 				handleTouch_PanMode(event);
 			}else if (event.getPointerCount() == 2){
-				if(null != mChart && mChart.getScaleStatus())
-										handleTouch_Scale(event);
-			}		   			
+				if(null != mChart && mChart.getScaleStatus())handleTouch_Scale(event);
+			}else{				
+			}		   
+			
 	    }  
 	
 	
