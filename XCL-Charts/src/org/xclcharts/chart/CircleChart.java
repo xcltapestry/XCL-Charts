@@ -40,7 +40,8 @@ import java.util.List;
 
 /**    
  * @ClassName CircleChart
- * @Description 圆形图基类
+ * @Description 圆形图基类 <br/>
+ *        注意：当为半圆时，推荐 宽应当是高的两倍。
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
@@ -54,6 +55,13 @@ public class CircleChart extends CirChart {
     private Paint mPaintBgCircle = null;
     private Paint mPaintFillCircle = null;
     private Paint mPaintDataInfo = null;
+    
+    //内部填充
+    private boolean mShowInnerFill = true;
+    
+    //内部背景填充
+    private boolean mShowInnerBG = true;
+    
 
     //数据源
     protected List<PieData> mDataSet;
@@ -70,36 +78,14 @@ public class CircleChart extends CirChart {
 	}
 
     private void initChart() {
-    	if(null == mPaintBgCircle)
-    	{
-	        mPaintBgCircle = new Paint();
-	        mPaintBgCircle.setColor((int) Color.rgb(148, 159, 181));
-	        mPaintBgCircle.setAntiAlias(true);
-    	}
-
-    	if(null == mPaintFillCircle)
-    	{
-	        mPaintFillCircle = new Paint();
-	        mPaintFillCircle.setColor((int) Color.rgb(77, 83, 97));
-	        mPaintFillCircle.setAntiAlias(true);
-    	}
-    	
+    	        	
     	if(null != getLabelPaint())
     	{
 	        getLabelPaint().setColor(Color.WHITE);
 	        getLabelPaint().setTextSize(36);
 	        getLabelPaint().setTextAlign(Align.CENTER);
     	}
-
-        if(null == mPaintDataInfo)
-        {
-	        mPaintDataInfo = new Paint();
-	        mPaintDataInfo.setTextSize(22);
-	        mPaintDataInfo.setColor(Color.WHITE);
-	        mPaintDataInfo.setTextAlign(Align.CENTER);
-	        mPaintDataInfo.setAntiAlias(true);
-        }
-
+      
         //设置起始偏移角度
         setInitialAngle(180);
     }
@@ -137,7 +123,14 @@ public class CircleChart extends CirChart {
      *
      * @return 画笔
      */
-    public Paint getPaintFillCircle() {
+    public Paint getFillCirclePaint() {
+    	
+    	if(null == mPaintFillCircle)
+    	{
+	        mPaintFillCircle = new Paint();
+	        mPaintFillCircle.setColor((int) Color.rgb(77, 83, 97));
+	        mPaintFillCircle.setAntiAlias(true);
+    	}
         return mPaintFillCircle;
     }
 
@@ -146,7 +139,13 @@ public class CircleChart extends CirChart {
      *
      * @return 画笔
      */
-    public Paint getPaintBgCircle() {
+    public Paint getBgCirclePaint() {
+    	if(null == mPaintBgCircle)
+    	{
+	        mPaintBgCircle = new Paint();
+	        mPaintBgCircle.setColor((int) Color.rgb(148, 159, 181));
+	        mPaintBgCircle.setAntiAlias(true);
+    	}
         return mPaintBgCircle;
     }
 
@@ -155,10 +154,69 @@ public class CircleChart extends CirChart {
      *
      * @return 画笔
      */
-    public Paint getPaintDataInfo() {
+    public Paint getDataInfoPaint() {
+    	
+    	 if(null == mPaintDataInfo)
+         {
+ 	        mPaintDataInfo = new Paint();
+ 	        mPaintDataInfo.setTextSize(22);
+ 	        mPaintDataInfo.setColor(Color.WHITE);
+ 	        mPaintDataInfo.setTextAlign(Align.CENTER);
+ 	        mPaintDataInfo.setAntiAlias(true);
+         }
+    	 
         return mPaintDataInfo;
-    }
+    }            
 
+    /**
+     * 隐藏内部背景填充
+     */
+    public void hideInnerFill()
+    {
+    	mShowInnerFill = false;
+    }
+    
+    /**
+     * 隐藏背景
+     */
+    public void hideInnerBG()
+    {
+    	mShowInnerBG = false;
+    }
+    
+    /**
+     * 隐藏内部背景填充
+     */
+    public void showInnerFill()
+    {
+    	mShowInnerFill = true;
+    }
+    
+    /**
+     * 显示内部背景填充
+     * @return 显示状态
+     */
+    public boolean isShowInnerFill()
+    {
+    	return mShowInnerFill;
+    }
+    
+    /**
+     * 隐藏背景
+     */
+    public void showInnerBG()
+    {
+    	mShowInnerBG = true;
+    }
+    
+    /**
+     * 背景显示状态
+     * @return 显示状态
+     */
+    public boolean isShowInnerBG()
+    {
+    	return mShowInnerBG;
+    }
 
     /**
      * 依比例绘制扇区
@@ -216,7 +274,7 @@ public class CircleChart extends CirChart {
             //用于存放当前百分比的圆心角度
             float currentAngle = 0.0f;
 
-            int infoHeight = DrawHelper.getInstance().getPaintFontHeight(mPaintDataInfo);
+            int infoHeight = DrawHelper.getInstance().getPaintFontHeight(getDataInfoPaint());
             int LabelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
             int textHeight = LabelHeight + infoHeight;
 
@@ -224,40 +282,70 @@ public class CircleChart extends CirChart {
                 paintArc.setColor(cData.getSliceColor());
                 if (XEnum.CircleType.HALF == mDisplayType) {
                     setInitialAngle(180);
-
-                    drawPercent(canvas, mPaintBgCircle, cirX, cirY, radius, 180f, 180f);
-                    //drawPercent(canvas, mPaintFillCircle, cirX, cirY, (float) (Math.round(radius * 0.9f)), 180f, 180f);                    
-                    drawPercent(canvas, mPaintFillCircle, cirX, cirY, 
-                    		MathHelper.getInstance().round(mul(radius , 0.9f),2), 180f, 180f);
+                    
+                    //半圆， 宽应当是高的两倍
+                    float hRadius =  this.getWidth() / 2.f; 
+                    float hCirY = this.getBottom() ; 
+                                                            
+                    if(this.isShowBorder())
+                    {
+                    	hRadius -= this.getBorderWidth() ;
+                    	hCirY  -= this.getBorderWidth() / 2;
+                    }                   
+                    
+                    float oRadius = MathHelper.getInstance().round(mul(hRadius , 0.9f),2);
+                    float iRadius = MathHelper.getInstance().round( mul(hRadius , 0.8f),2);
+                                       
+                    if(isShowInnerBG()) //内部背景填充
+                    {
+                    	drawPercent(canvas, getBgCirclePaint(), cirX, hCirY, hRadius, 180f, 180f);                    	                    	
+                    }else{
+                    	oRadius = iRadius = hRadius;
+                    }
+                    
+                    if(isShowInnerFill())
+                    {
+	                    drawPercent(canvas, getFillCirclePaint(), cirX, hCirY, oRadius, 180f, 180f);
+                    }
                     
                     
                     float per = (float) cData.getPercentage();                    
-                    currentAngle = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);
+                    currentAngle = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);                                    
+                    drawPercent(canvas, paintArc, cirX, hCirY, hRadius , 180f,  currentAngle);
                     
-                                        
-                    drawPercent(canvas, paintArc, cirX, cirY, radius, 180f,  currentAngle);
-                    drawPercent(canvas, mPaintFillCircle, cirX, cirY,
-                    						MathHelper.getInstance().round( mul(radius , 0.8f),2), 180f, 180f);
+                    if(isShowInnerFill())  //内部填充
+                    {
+                    	drawPercent(canvas, getFillCirclePaint(), cirX, hCirY ,iRadius, 180f, 180f);
+                    }
                     
-                    canvas.drawText(cData.getLabel(), cirX, cirY - textHeight, getLabelPaint());
-                    canvas.drawText(mDataInfo, cirX, cirY - infoHeight, mPaintDataInfo);
+                    if("" != cData.getLabel())
+                    	canvas.drawText(cData.getLabel(), cirX, hCirY - textHeight, getLabelPaint());
+                    if("" != mDataInfo )
+                    	canvas.drawText(mDataInfo, cirX, hCirY - infoHeight, getDataInfoPaint());
 
                 } else {
                     currentAngle = cData.getSliceAngle();
-                    canvas.drawCircle(cirX, cirY, radius, mPaintBgCircle);
-                   // canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.9f)), mPaintFillCircle);
-                    canvas.drawCircle(cirX, cirY, 
-                    					MathHelper.getInstance().round(mul(radius , 0.9f),2), mPaintFillCircle);
+                    
+                    if(isShowInnerBG())
+                    	canvas.drawCircle(cirX, cirY, radius, getBgCirclePaint());
+                    	// canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.9f)), mPaintFillCircle);
+                    
+                    if(isShowInnerFill())
+                    	canvas.drawCircle(cirX, cirY, 
+                    					MathHelper.getInstance().round(mul(radius , 0.9f),2), getFillCirclePaint());
                     
 
                     canvas.drawArc(arcRF0, mOffsetAngle, currentAngle, true, paintArc);
-                    canvas.drawCircle(cirX, cirY, 
-                    					MathHelper.getInstance().round(mul(radius , 0.8f),2), mPaintFillCircle);
                     
-                    canvas.drawText(cData.getLabel(), cirX, cirY, getLabelPaint());
+                    if(isShowInnerFill())
+                    	canvas.drawCircle(cirX, cirY, 
+                    					MathHelper.getInstance().round(mul(radius , 0.8f),2), getFillCirclePaint());
+                    
+                    if("" != cData.getLabel())
+                       canvas.drawText(cData.getLabel(), cirX, cirY, getLabelPaint());
 
-                    if (mDataInfo.length() > 0)
-                        canvas.drawText(mDataInfo, cirX, add(cirY , LabelHeight), mPaintDataInfo);
+                    if ("" != mDataInfo)
+                        canvas.drawText(mDataInfo, cirX, add(cirY , LabelHeight), getDataInfoPaint());
                 }
 
                 break;

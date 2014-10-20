@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.xclcharts.chart.CircleChart;
 import org.xclcharts.chart.PieData;
-import org.xclcharts.common.DensityUtil;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.view.GraphicalView;
 
@@ -76,8 +75,8 @@ public class CircleChart01View extends GraphicalView {
         super.onSizeChanged(w, h, oldw, oldh);  
         //图所占范围大小
         //xml中的设置: android:layout_height="200dip"  
-        int chartHeight = DensityUtil.dip2px(getContext(), 200 / 2); //100dip
-        chart.setChartRange(w ,h + chartHeight); 
+       // int chartHeight = DensityUtil.dip2px(getContext(), 200 / 2); //100dip
+        chart.setChartRange(w ,h); // + chartHeight); 
     }  		
 	
 			
@@ -94,7 +93,6 @@ public class CircleChart01View extends GraphicalView {
 			chart.setDataSource(mlPieData);				
 			
 			
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -108,16 +106,16 @@ public class CircleChart01View extends GraphicalView {
 		{
 			mDataInfo = "轻松搞定";
 			chart.getLabelPaint().setColor(Color.WHITE);
-			chart.getPaintDataInfo().setColor(Color.WHITE);
+			chart.getDataInfoPaint().setColor(Color.WHITE);
 			
 		}else if(per < 70){
 			mDataInfo = "充满活力";
 			chart.getLabelPaint().setColor((int)Color.rgb(72, 201, 176));
-			chart.getPaintDataInfo().setColor(Color.WHITE);
+			chart.getDataInfoPaint().setColor(Color.WHITE);
 		}else{
 			mDataInfo = "不堪重负";
 			chart.getLabelPaint().setColor(Color.RED);
-			chart.getPaintDataInfo().setColor(Color.RED);
+			chart.getDataInfoPaint().setColor(Color.RED);
 		}
 		//PieData(标签，百分比，在饼图中对应的颜色)
 		mlPieData.clear();		

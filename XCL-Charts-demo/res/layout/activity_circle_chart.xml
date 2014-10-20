@@ -21,8 +21,8 @@
  				 <!--  half -->
    				 <com.demo.xclcharts.view.CircleChart01View
 			         android:id="@+id/halfcircle_view"
-			         android:layout_width="300dip"  
-			         android:layout_height="200dip"  
+			         android:layout_width="200dip"  
+			         android:layout_height="100dip"  
 			          android:layout_gravity="center_vertical|right"
 			      />   	
 			         
@@ -33,6 +33,14 @@
 			         android:layout_height="200dip"  
 			         android:layout_gravity="center_vertical|left"
 			       />   	
+			       
+   				    <!--  half -->
+   				 	<com.demo.xclcharts.view.CircleChart03View
+			         android:id="@+id/halfcircle_view2"
+			         android:layout_width="200dip"  
+			         android:layout_height="100dip"  
+			          android:layout_gravity="center_vertical|right"
+			      />   	
 			  		     
         </LinearLayout>       		
    				 

@@ -84,11 +84,11 @@ public class CircleChart02View extends GraphicalView {
 			chart.setDataSource(mlPieData);
 			
 			//背景色
-			chart.getPaintBgCircle().setColor((int)Color.rgb(117, 197, 141));
+			chart.getBgCirclePaint().setColor((int)Color.rgb(117, 197, 141));
 			//深色
-			chart.getPaintFillCircle().setColor((int)Color.rgb(77, 180, 123));
+			chart.getFillCirclePaint().setColor((int)Color.rgb(77, 180, 123));
 			//信息颜色
-			chart.getPaintDataInfo().setColor((int)Color.rgb(243, 75, 125));
+			chart.getDataInfoPaint().setColor((int)Color.rgb(243, 75, 125));
 			//显示边框
 			chart.showRoundBorder();
 			

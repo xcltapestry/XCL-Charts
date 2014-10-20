@@ -1,0 +1,11 @@
+org.xclcharts.chart
+org.xclcharts.common
+org.xclcharts.event.click
+org.xclcharts.event.touch
+org.xclcharts.renderer
+org.xclcharts.renderer.axis
+org.xclcharts.renderer.bar
+org.xclcharts.renderer.info
+org.xclcharts.renderer.line
+org.xclcharts.renderer.plot
+org.xclcharts.view

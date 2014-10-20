@@ -13,8 +13,15 @@ public class CircleChartActivity extends Activity {
 	
 	//半圆
 	com.demo.xclcharts.view.CircleChart01View halfchart = null;
+	
+	
 	//圆
 	com.demo.xclcharts.view.CircleChart02View chart = null;
+	
+	//半圆
+	com.demo.xclcharts.view.CircleChart03View halfchart2 = null;
+		
+		
 	//进度/状态
 	TextView  process = null;
 
@@ -65,6 +72,7 @@ public class CircleChartActivity extends Activity {
 	{
 		halfchart = (com.demo.xclcharts.view.CircleChart01View)findViewById(R.id.halfcircle_view); 
 		chart = (com.demo.xclcharts.view.CircleChart02View)findViewById(R.id.circle_view); 
+		halfchart2 = (com.demo.xclcharts.view.CircleChart03View)findViewById(R.id.halfcircle_view2);
 		process = (TextView)findViewById(R.id.tv_process);          		
 		SeekBar seekBar = (SeekBar) this.findViewById(R.id.seekBar1);	
 				
@@ -91,6 +99,11 @@ public class CircleChartActivity extends Activity {
 	       			chart.setPercentage(progress);
 	       			chart.chartRender();
 	       			chart.invalidate();
+	       			
+	       			halfchart2.setPercentage(progress);
+	       			halfchart2.chartRender();
+	       			halfchart2.invalidate();
+	       			
 	            }
 	        });
 	}

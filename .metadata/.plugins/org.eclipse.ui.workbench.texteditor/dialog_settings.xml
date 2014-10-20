@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="362" key="DIALOG_Y_ORIGIN"/>
-		<item value="1060" key="DIALOG_X_ORIGIN"/>
+		<item value="214" key="DIALOG_Y_ORIGIN"/>
 		<item value="362" key="DIALOG_HEIGHT"/>
+		<item value="919" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="xchart" key="selection"/>
+		<item value="halfchart2" key="selection"/>
 		<list key="findhistory">
-			<item value="xchart"/>
-			<item value="mLst"/>
-			<item value="renderVerticalBarCategoryAxis"/>
-			<item value="renderHorizontalBar"/>
-			<item value="renderHorizontalBarCategoryAxis"/>
-			<item value="renderDataAxisTick"/>
-			<item value="renderVerticalPlot"/>
-			<item value="renderHorizontalBarDataAxis"/>
+			<item value="halfchart2"/>
+			<item value="getPaintDataInfo"/>
+			<item value="getPaintBgCircle"/>
+			<item value="getPaintFillCircle"/>
+			<item value="mPaintDataInfo"/>
+			<item value="isPlotClickArea"/>
+			<item value="save"/>
+			<item value="savePointRecord"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getDataInfoPaint"/>
+			<item value="getBgCirclePaint"/>
+			<item value="getFillCirclePaint"/>
 			<item value="mPaintArc"/>
 			<item value="categoryAxis"/>
 			<item value="setBorderLineColor"/>
 			<item value="setLineStyle"/>
 			<item value="setLineColor"/>
-			<item value="mPaintBackground"/>
-			<item value="getPlotScreenWidth"/>
-			<item value="getPlotScreenWidth()"/>
 		</list>
 	</section>
 </section>
