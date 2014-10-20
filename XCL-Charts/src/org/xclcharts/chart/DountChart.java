@@ -61,6 +61,12 @@ public class DountChart  extends PieChart{
 		initChart();
 	}
 	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.DOUNT;
+	}
+	
 	private void initChart()
 	{
 		int fillColor = Color.BLACK;

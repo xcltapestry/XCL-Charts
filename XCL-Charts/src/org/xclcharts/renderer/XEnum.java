@@ -248,7 +248,7 @@ public class XEnum {
 			HORIZONTAL,VERTICAL,FREE
 		}
 		
-		
+		//边框风格
 		public enum DyInfoStyle {			
 			RECT,ROUNDRECT
 		}
@@ -266,5 +266,10 @@ public class XEnum {
 			NONE,BEGIN,END,ALL
 		}
 		
+		// 库支持哪些类型的图
+		public enum ChartType{
+			NONE,BAR,BAR3D,STACKBAR,PIE,PIE3D,DOUNT,LINE,SPLINE,AREA,
+			ROSE,RADAR,DIAL,RANGEBAR,ARCLINE,CIRCLE,SCATTER,BUBBLE,GAUGE
+		}
 	
 }

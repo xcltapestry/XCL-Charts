@@ -27,6 +27,7 @@ import java.util.List;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -74,8 +75,13 @@ public class GaugeChart extends CirChart{
 
 	public GaugeChart()
 	{
-		super();	
 		initPaint();
+	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.GAUGE;
 	}
 	
 	private void initPaint()

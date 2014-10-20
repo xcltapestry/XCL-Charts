@@ -82,13 +82,24 @@ public class SplineChart extends LnChart{
 		
 	public SplineChart()
 	{
-		initChart();
+		categoryAxisDefaultSetting();	
+		dataAxisDefaultSetting();
 	}
 	
-	private void initChart()
+	@Override
+	public XEnum.ChartType getType()
 	{
+		return XEnum.ChartType.SPLINE;
+	}
+
+	private void categoryAxisDefaultSetting()
+	{		
 		if(null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
+	}
+	
+	private void dataAxisDefaultSetting()
+	{		
 		if(null != dataAxis)
 			dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
@@ -415,9 +426,7 @@ public class SplineChart extends LnChart{
 			mLstDots.clear();	
 			mBezierPath.reset();
 		}	
-		//key
-		//plotLegend.renderLineKey(canvas,mLstKey);
-		//mLstKey.clear();
+		
 		return true;
 	}
 	
@@ -444,7 +453,10 @@ public class SplineChart extends LnChart{
 		renderVerticalDataAxisLine(canvas);
 		
 		renderVerticalDataAxisRightLine(canvas);
-		renderVerticalCategoryAxisLine(canvas);		
+		renderVerticalCategoryAxisLine(canvas);	
+		
+		//轴刻度
+		renderAxesTick(canvas);	
 		
 		//图例
 		plotLegend.renderLineKey(canvas,mLstKey);
@@ -471,8 +483,8 @@ public class SplineChart extends LnChart{
 			float yMargin = getDrawClipVerticalYMargin();
 			//绘制Y轴tick和marks			
 			canvas.save();		
-					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
+							plotArea.getRight(), plotArea.getBottom() + yMargin);
 					canvas.translate(0 , offsetY );							
 					renderVerticalDataAxis(canvas);					
 			canvas.restore();	
@@ -516,7 +528,7 @@ public class SplineChart extends LnChart{
 							mCustomLine.setVerticalPlot(dataAxis, plotArea, getPlotScreenHeight());
 							mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
 						}
-						execGC();
+						
 					}					
 					canvas.restore();
 			canvas.restore();						
@@ -530,10 +542,45 @@ public class SplineChart extends LnChart{
 		renderVerticalDataAxisRightLine(canvas);
 		renderVerticalCategoryAxisLine(canvas);		
 		
+		/////////////////////////////////////////////////
+		//轴刻度
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			float yMargin = getDrawClipVerticalYMargin();
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );							
+					renderDataAxisTick(canvas);					
+			canvas.restore();	
+		}else{
+			renderDataAxisTick(canvas);
+		}
+		
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{	
+			float xMargin = getDrawClipVerticalXMargin();
+			
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					renderCategoryAxisTick(canvas);
+			canvas.restore();	
+		}else{
+			renderCategoryAxisTick(canvas);
+		}
+		/////////////////////////////////////////////////
+				
 		//图例
 		plotLegend.renderLineKey(canvas,mLstKey);
 		mLstKey.clear();
 		
+		execGC();
 		return true;
 	 }
 	 			

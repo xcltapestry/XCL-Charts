@@ -86,6 +86,12 @@ public class RadarChart extends RdChart{
 	{
 		initChart();
 	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.RADAR;
+	}
 		
 	private void initChart()
 	{		
@@ -101,8 +107,7 @@ public class RadarChart extends RdChart{
 		if(null == categoryAxis)categoryAxis = new CategoryAxisRender();
 		
 		if(null == plotLegend)this.plotLegend.show();
-	}
-	
+	}		
 	
 	private void clearArray()
 	{

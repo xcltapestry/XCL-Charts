@@ -106,6 +106,12 @@ public class ArcLineChart  extends XChart{
 	}
 	
 	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.ARCLINE;
+	}
+	
+	@Override
 	protected void calcPlotRange()
 	{
 		super.calcPlotRange();		

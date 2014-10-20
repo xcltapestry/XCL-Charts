@@ -127,6 +127,16 @@ public class XChart implements IRender {
 	}
 	
 	/**
+	 * 返回当前绘制的是什么类型的图
+	 * @return 类型
+	 */
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.NONE;
+	}
+
+	
+	/**
 	 * 开放图例基类
 	 * @return	基类
 	 */
@@ -577,8 +587,8 @@ public class XChart implements IRender {
 	}
 		
 	protected boolean getClikedScaleStatus()
-	{
-		if(!mEnableScale)return true;		
+	{		
+		if(!mEnableScale)return true;	
 		if( Float.compare(mXScale, 0.0f) == 0)return true;
 		
 		//如果在这范围内，则可以处理点击

@@ -76,7 +76,7 @@ public class EventChart extends XChart {
 			
 		initPositionRecord();
 	}
-	
+		
 	/**
 	 * 激活点击事件
 	 */
@@ -233,10 +233,8 @@ public class EventChart extends XChart {
 	 * @return 是否需处理
 	 */
 	public boolean isPlotClickArea(float x,float y)
-	{				
+	{						
 		if(!getListenItemClickStatus())return false;	
-		
-		if(!getClikedScaleStatus())return false;
 		
 		if(Float.compare(x , getPlotArea().getLeft()) == -1 ) return false;
 		if(Float.compare(x, getPlotArea().getRight() ) == 1 ) return false;	
@@ -256,7 +254,8 @@ public class EventChart extends XChart {
 	protected ArcPosition getArcRecord(float x,float y)
 	{			
 		if(!getListenItemClickStatus()) return null;		
-		if(!isPlotClickArea(x,y))return null;		
+		if(!isPlotClickArea(x,y))return null;
+		if(!getClikedScaleStatus())return null;
 		if(null == mRecordset) return null;
 			
 		Iterator it = mRecordset.iterator();
@@ -276,7 +275,8 @@ public class EventChart extends XChart {
 	protected BarPosition getBarRecord(float x,float y)
 	{		
 		if(!getListenItemClickStatus()) return null;
-		if(!isPlotClickArea(x,y))return null;		
+		if(!isPlotClickArea(x,y))return null;	
+		if(!getClikedScaleStatus())return null;
 		if(null == mRecordset) return null;
 			
 		Iterator it = mRecordset.iterator();
@@ -296,7 +296,8 @@ public class EventChart extends XChart {
 	protected PointPosition getPointRecord(final float x,final float y)
 	{					
 		if(!getListenItemClickStatus()) return null;
-		if(!isPlotClickArea(x,y))return null;		
+		if(!isPlotClickArea(x,y))return null;	
+		if(!getClikedScaleStatus())return null;		
 		if(null == mRecordset) return null;
 						
 		Iterator it = mRecordset.iterator();
@@ -461,6 +462,5 @@ public class EventChart extends XChart {
 		}
 		return true;
 	}
-	
-	
+
 }

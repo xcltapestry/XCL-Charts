@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
@@ -47,6 +48,12 @@ public class PieChart3D extends PieChart{
 	public PieChart3D() {
 		// TODO Auto-generated constructor stub
 			 		
+	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.PIE3D;
 	}
 	
 	private boolean render3D(Canvas canvas,

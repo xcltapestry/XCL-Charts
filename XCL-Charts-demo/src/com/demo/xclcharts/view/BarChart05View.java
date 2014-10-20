@@ -39,6 +39,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -109,8 +110,8 @@ public class BarChart05View extends DemoView implements Runnable{
 			chart.setCustomLines(mCustomLineDataset);
 			
 			//图例
-			chart.getAxisTitle().setLeftAxisTitle("分数");
-			chart.getAxisTitle().setLowerAxisTitle("科目");
+			chart.getAxisTitle().setLeftAxisTitle("科目");
+			chart.getAxisTitle().setLowerAxisTitle("分数");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(100);
@@ -160,6 +161,16 @@ public class BarChart05View extends DemoView implements Runnable{
 			
 			 //禁用平移模式
 			 chart.disablePanMode();
+			 
+			 //轴
+			 chart.getCategoryAxis().setHorizontalTickAlign(Align.RIGHT);
+			 chart.getCategoryAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
+			 chart.getCategoryAxis().getTickLabelPaint().setColor((int)Color.rgb(199, 88, 122));
+			 
+			 
+			 //chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
+			 //chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);	
+			 //chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);							 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

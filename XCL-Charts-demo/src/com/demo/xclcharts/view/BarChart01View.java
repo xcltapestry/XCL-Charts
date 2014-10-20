@@ -111,7 +111,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			
 			
 			//轴标题
-			chart.getAxisTitle().setLeftAxisTitle("数据库个数");
+			chart.getAxisTitle().setLeftAxisTitle("数据库");
 			chart.getAxisTitle().setLowerAxisTitle("分布位置");
 			
 			//数据轴

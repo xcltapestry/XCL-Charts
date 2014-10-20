@@ -62,6 +62,12 @@ public class CircleChart extends CirChart {
     
         initChart();
     }
+    
+    @Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.CIRCLE;
+	}
 
     private void initChart() {
     	if(null == mPaintBgCircle)

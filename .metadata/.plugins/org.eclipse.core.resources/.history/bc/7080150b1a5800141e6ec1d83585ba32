@@ -1,0 +1,19 @@
+package org.xclcharts.renderer;
+
+public class AxisTick {
+	
+	public float X = 0.0f;
+	public float Y = 0.0f;
+	
+	public String Label = "";
+	
+	public AxisTick(){};
+	
+	public AxisTick(float x,float y,String label)
+	{
+		 X = x;
+		 Y = y;
+		 Label = label;
+	};
+
+}

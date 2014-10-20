@@ -76,6 +76,12 @@ public class DialChart  extends CirChart{
 			plotAttrInfoRender = new PlotAttrInfoRender();
 	}
 	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.DIAL;
+	}
+	
 	public void setStartAngle(float startAngle)
 	{	
 		mStartAngle = startAngle;

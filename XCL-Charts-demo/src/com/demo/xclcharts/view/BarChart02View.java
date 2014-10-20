@@ -39,6 +39,7 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -117,8 +118,7 @@ public class BarChart02View extends DemoView {
 			chart.getDataAxis().setAxisMax(500);
 			chart.getDataAxis().setAxisMin(100);
 			chart.getDataAxis().setAxisSteps(100);
-			
-		
+									
 			chart.getDataAxis().getTickLabelPaint().
 									setColor((int)Color.rgb(199, 88, 122));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -156,6 +156,9 @@ public class BarChart02View extends DemoView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
+			
+			chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
+			chart.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

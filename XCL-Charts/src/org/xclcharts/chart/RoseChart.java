@@ -25,6 +25,7 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -52,6 +53,13 @@ public class RoseChart extends PieChart{
 			
 		initChart();
 	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.ROSE;
+	}
+	
 	
 	private void initChart()
 	{										

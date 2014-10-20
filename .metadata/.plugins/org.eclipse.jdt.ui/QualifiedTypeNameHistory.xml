@@ -1,14 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.graphics.Typeface"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.MoveDirection"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PointerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartTitleAlign"/>
 <fullyQualifiedTypeName name="android.R"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.R"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DountChart3D01View"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
-<fullyQualifiedTypeName name="android.graphics.PointF"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Canvas"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDotRender"/>
@@ -32,12 +27,10 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLineRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrossLineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyLineStyle"/>
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.graphics.Bitmap"/>
 <fullyQualifiedTypeName name="android.graphics.Matrix"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.LabelLine"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.LabelLineRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelSyncColor"/>
@@ -57,7 +50,14 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RectType"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.DyLine"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LegendType"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
+<fullyQualifiedTypeName name="android.graphics.PointF"/>
+<fullyQualifiedTypeName name="android.graphics.Point"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.AxisTick"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 </qualifiedTypeNameHistroy>

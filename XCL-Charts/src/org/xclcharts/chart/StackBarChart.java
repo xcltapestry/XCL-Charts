@@ -25,6 +25,7 @@ package org.xclcharts.chart;
 import java.util.List;
 
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 
@@ -45,6 +46,12 @@ public class StackBarChart  extends BarChart{
 	public StackBarChart()
 	{
 		if(null == flatBar)flatBar = new FlatBar();		
+	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.STACKBAR;
 	}
 	
 	/**

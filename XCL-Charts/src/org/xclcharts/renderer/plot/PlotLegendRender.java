@@ -44,7 +44,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
-import android.util.Log;
 
 /**
  * @ClassName PlotLegendRender
@@ -461,6 +460,7 @@ public class PlotLegendRender extends PlotLegend{
 			    currRowX += mColSpan;				  
 		}
 		
+		mMapID.clear();
 		clearLst();
 	}
 	
@@ -526,7 +526,7 @@ public class PlotLegendRender extends PlotLegend{
 		String key = "";
 		for (LnData cData : dataSet) {
 			key = cData.getLineKey();				
-			if("" == key||key.length() == 0) continue;
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getLineColor());
@@ -541,7 +541,7 @@ public class PlotLegendRender extends PlotLegend{
 		String key = "";
 		for (BarData cData : dataSet) {
 			key = cData.getKey();				
-			if("" == key||key.length() == 0) continue;
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getColor());
@@ -560,7 +560,7 @@ public class PlotLegendRender extends PlotLegend{
 		String key = "";
 		for(PieData cData : dataSet){
 			key = cData.getKey();				
-			if("" == key||key.length() == 0) continue;
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getSliceColor());
@@ -578,7 +578,7 @@ public class PlotLegendRender extends PlotLegend{
 		String key = "";
 		for(RadarData cData : dataSet){
 			key = cData.getLineKey();				
-			if("" == key||key.length() == 0) continue;
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getLineColor());			
@@ -594,7 +594,7 @@ public class PlotLegendRender extends PlotLegend{
 		String key = "";
 		for (ScatterData cData : dataSet) {
 			key = cData.getKey();				
-			if("" == key||key.length() == 0) continue;
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getPlotDot().getColor());
@@ -609,7 +609,7 @@ public class PlotLegendRender extends PlotLegend{
 		String key = "";
 		for (BubbleData cData : dataSet) {
 			key = cData.getKey();				
-			if("" == key||key.length() == 0) continue;
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getColor());
@@ -626,8 +626,8 @@ public class PlotLegendRender extends PlotLegend{
 		
 		String key = "";
 		for (ArcLineData cData : dataSet) {
-			key = cData.getKey();				
-			if("" == key||key.length() == 0) continue;
+			key = cData.getKey();	
+			if(!isDrawKey(key))continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getBarColor());
@@ -636,6 +636,12 @@ public class PlotLegendRender extends PlotLegend{
 			pDot.setDotStyle(XEnum.DotStyle.RECT);
 			mLstDotStyle.add(pDot);
 		}
+	}
+	
+	private boolean isDrawKey(String key)
+	{
+		if("" == key||key.length() == 0) return false;
+		return true;
 	}
 	
 	////////////////////////////////

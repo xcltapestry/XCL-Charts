@@ -63,17 +63,28 @@ public class ScatterChart extends LnChart{
 
 	public ScatterChart()
 	{
-		initChart();
+		categoryAxisDefaultSetting();
+		dataAxisDefaultSetting();
 	}
 	
-	private void initChart()
-	{				
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.SCATTER;
+	}
+
+	private void categoryAxisDefaultSetting()
+	{		
 		if(null != categoryAxis)
-			categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		if(null != dataAxis)
-			dataAxis.setHorizontalTickAlign(Align.LEFT);			
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);					
 	}
 	
+	private void dataAxisDefaultSetting()
+	{		
+		if(null != dataAxis)
+			dataAxis.setHorizontalTickAlign(Align.LEFT);	
+	}
+		
 	/**
 	 * 分类轴的数据源
 	 * @param categories 标签集
@@ -263,7 +274,8 @@ public class ScatterChart extends LnChart{
 		}
 							
 		//开始处 X 轴 即分类轴              	
-		for(int i=0;i<mDataset.size();i++)
+		int count = mDataset.size();
+		for(int i=0;i<count;i++)
 		{																	
 			ScatterData bd =  mDataset.get(i);			
 			if(bd.getPlotDot().getDotStyle().equals(XEnum.DotStyle.HIDE) == true 
@@ -299,7 +311,8 @@ public class ScatterChart extends LnChart{
 			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
 		}		
 		
-				
+		//轴刻度
+		renderAxesTick(canvas);			
 		//图例
 		if(null != plotLegend)plotLegend.renderPointKey(canvas,mDataset);
 		
@@ -331,8 +344,8 @@ public class ScatterChart extends LnChart{
 			
 			//绘制Y轴tick和marks			
 			canvas.save();		
-					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
+							plotArea.getRight(), plotArea.getBottom() + yMargin);
 					canvas.translate(0 , offsetY );					
 					
 					renderVerticalDataAxis(canvas);					
@@ -375,7 +388,7 @@ public class ScatterChart extends LnChart{
 						//画横向定制线
 						//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-						execGC();
+						
 					}
 					
 					canvas.restore();
@@ -384,9 +397,47 @@ public class ScatterChart extends LnChart{
 		//还原绘图区绘制
 		canvas.restore(); //clip	
 			
+		//////////////////////////////////////////////////////////
+		//轴刻度
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			float yMargin = getDrawClipVerticalYMargin();
+			
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					renderDataAxisTick(canvas);			
+			canvas.restore();	
+		}else{
+			renderDataAxisTick(canvas);
+		}
+		
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{	
+			float xMargin = getDrawClipVerticalXMargin();
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					
+					renderCategoryAxisTick(canvas);
+			canvas.restore();	
+		}else{
+			renderCategoryAxisTick(canvas);
+		}
+		
+		//////////////////////////////////////////////////////////
+		
 		//图例
 		if(null != plotLegend)plotLegend.renderPointKey(canvas,mDataset);
 		
+		execGC();
 		return true;
 	 }
 	

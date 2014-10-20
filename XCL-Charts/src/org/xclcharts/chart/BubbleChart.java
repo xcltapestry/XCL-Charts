@@ -77,16 +77,31 @@ public class BubbleChart extends LnChart{
 		initChart();
 	}
 	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.BUBBLE;
+	}
+	
 	private void initChart()
 	{
-		if(null != categoryAxis)
-			categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		
-		if(null != dataAxis)
-			dataAxis.setHorizontalTickAlign(Align.LEFT);
-		
 		if(null != mPlotDot)
 			mPlotDot.setDotStyle(XEnum.DotStyle.DOT);
+		
+		categoryAxisDefaultSetting();
+		dataAxisDefaultSetting();
+	}
+	
+	private void categoryAxisDefaultSetting()
+	{		
+		if(null != categoryAxis)
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);
+	}
+	
+	private void dataAxisDefaultSetting()
+	{		
+		if(null != dataAxis)
+			dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
 	
 	
@@ -388,19 +403,21 @@ public class BubbleChart extends LnChart{
 		{				
 			//画横向定制线
 			//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-			execGC();
+			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);				
 		}
 		
 		// 轴 线
 		renderVerticalDataAxisLine(canvas);
 		
 		renderVerticalDataAxisRightLine(canvas);
-		renderVerticalCategoryAxisLine(canvas);		
+		renderVerticalCategoryAxisLine(canvas);	
+		
+		//轴刻度
+		renderAxesTick(canvas);
 	
 		//图例
 		plotLegend.renderBubbleKey(canvas,mDataset);
-		
+		execGC();
 		return true;
 	 }
 	
@@ -421,8 +438,8 @@ public class BubbleChart extends LnChart{
 			float yMargin = getDrawClipVerticalYMargin();
 			//绘制Y轴tick和marks			
 			canvas.save();		
-					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
+							plotArea.getRight(), plotArea.getBottom() + yMargin);
 					canvas.translate(0 , offsetY );					
 					
 					renderVerticalDataAxis(canvas);
@@ -479,6 +496,41 @@ public class BubbleChart extends LnChart{
 		
 		renderVerticalDataAxisRightLine(canvas);
 		renderVerticalCategoryAxisLine(canvas);		
+		
+		////////////////////////////////////////////////////
+		//轴刻度
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			float yMargin = getDrawClipVerticalYMargin();
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					renderDataAxisTick(canvas);
+			canvas.restore();	
+		}else{
+			renderDataAxisTick(canvas);
+		}
+		
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{	
+			float xMargin = getDrawClipVerticalXMargin();
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					
+					renderCategoryAxisTick(canvas);
+			canvas.restore();	
+		}else{
+			renderCategoryAxisTick(canvas);
+		}
+		////////////////////////////////////////////////////
 	
 		//图例
 		plotLegend.renderBubbleKey(canvas,mDataset);

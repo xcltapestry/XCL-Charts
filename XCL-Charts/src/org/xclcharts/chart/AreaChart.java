@@ -85,8 +85,14 @@ public class AreaChart extends LnChart{
 			  	
 	public AreaChart()
 	{			
-		if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);		
+		categoryAxisDefaultSetting();
+		dataAxisDefaultSetting();
+	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.AREA;
 	}
 	
 	private void initPaint()
@@ -98,6 +104,18 @@ public class AreaChart extends LnChart{
 			mPaintAreaFill.setAntiAlias(true);
 			mPaintAreaFill.setColor((int)Color.rgb(73, 172, 72));	
 		}
+	}
+	
+	
+	private void categoryAxisDefaultSetting()
+	{		
+		if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
+	}
+	
+	
+	private void dataAxisDefaultSetting()
+	{		
+		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
 		
 				
@@ -402,9 +420,6 @@ public class AreaChart extends LnChart{
 			return false;
 		}
 		
-		//renderVerticalDataAxis(canvas);
-		//renderVerticalCategoryAxis(canvas);
-		
 		initPaint();
 		if(null == mPathArea) mPathArea = new Path();
 								
@@ -439,8 +454,7 @@ public class AreaChart extends LnChart{
 			mLstPoints.clear();
 			mLstPathPoints.clear();
 		}							
-		//plotLegend.renderLineKey(canvas, mLstKey);
-		//mLstKey.clear();
+		
 		return true;
 	}
 	
@@ -461,6 +475,9 @@ public class AreaChart extends LnChart{
 		renderVerticalDataAxisRightLine(canvas);
 		renderVerticalCategoryAxisLine(canvas);				
 			
+		//轴刻度
+		renderAxesTick(canvas);
+				
 		//图例
 		plotLegend.renderLineKey(canvas, mLstKey);
 		mLstKey.clear();
@@ -486,8 +503,8 @@ public class AreaChart extends LnChart{
 			float yMargin = getDrawClipVerticalYMargin();
 			//绘制Y轴tick和marks			
 			canvas.save();		
-					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
+							plotArea.getRight(), plotArea.getBottom() + yMargin);
 					canvas.translate(0 , offsetY );					
 					
 					renderVerticalDataAxis(canvas);					
@@ -529,9 +546,7 @@ public class AreaChart extends LnChart{
 					{				
 						//画横向定制线
 						//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-						
-						execGC();
+						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);													
 					}
 					
 					canvas.restore();
@@ -545,11 +560,47 @@ public class AreaChart extends LnChart{
 		
 		renderVerticalDataAxisRightLine(canvas);
 		renderVerticalCategoryAxisLine(canvas);
+		
+		/////////////////////////////////////////
+		//轴刻度
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			float yMargin = getDrawClipVerticalYMargin();
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					renderDataAxisTick(canvas);			
+			canvas.restore();	
+		}else{
+			renderDataAxisTick(canvas);
+		}
+			
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{	
+			float xMargin = getDrawClipVerticalXMargin();
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					
+					renderCategoryAxisTick(canvas);
+			canvas.restore();
+		}else{
+			renderCategoryAxisTick(canvas);
+		}
+		/////////////////////////////////////////
 			
 		//图例
 		plotLegend.renderLineKey(canvas, mLstKey);
 		mLstKey.clear();
 		
+		execGC();
 		return true;
 	 }
 	 				

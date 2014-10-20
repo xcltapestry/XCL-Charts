@@ -26,6 +26,8 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.axis.AxisTick;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.Bar3D;
 
@@ -48,6 +50,13 @@ public class BarChart3D extends BarChart{
 
 	public BarChart3D()
 	{			
+		if(null != categoryAxis)categoryAxis.hideTickMarks();
+	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.BAR3D;
 	}
 	
 	/**
@@ -129,13 +138,11 @@ public class BarChart3D extends BarChart{
 	/**
 	 * 3D时，隐藏旧那个刻度线标识
 	 */
-	@Override
-	protected void defaultAxisSetting()
-	{
-		super.defaultAxisSetting();
-		if(null != categoryAxis)categoryAxis.hideTickMarks();	
-	}
-	
+	//@Override
+	//protected void categoryAxisDefaultSetting()
+	//{
+	//	if(null != categoryAxis)categoryAxis.hideTickMarks();
+	//}	
 	
 	@Override
 	protected void renderHorizontalBarCategoryAxis(Canvas canvas) {
@@ -157,16 +164,12 @@ public class BarChart3D extends BarChart{
 							
 			// 分类			
 			double tfx = (mBar3D.getOffsetX() * 2);
-			float labelX = sub(plotArea.getLeft() ,dtof(tfx)); 
+			float labelX = sub(plotArea.getLeft() ,dtof(tfx)); 						
+			mLstCateTick.add(new AxisTick(labelX,currentY, categoryAxis.getDataSet().get(i)  ));
 			
-			this.categoryAxis.renderAxisHorizontalTick(this,canvas, labelX,
-													currentY, categoryAxis.getDataSet().get(i) );
 		}
 	}
-	
-	
-	
-	
+				
 	@Override
 	protected boolean renderHorizontalBar(Canvas canvas)
 	{		
@@ -282,8 +285,8 @@ public class BarChart3D extends BarChart{
 								MathHelper.getInstance().add(baseOffsetY, baseTickness) , labelHeight);			
 			float currentY = add(plotArea.getBottom(),dtof(th));
 				  currentX =  sub(currentX, dtof(baseOffsetX) );	
-			
-			categoryAxis.renderAxisVerticalTick(canvas, currentX,currentY, dataSet.get(i));
+						
+			mLstCateTick.add(new AxisTick(currentX,currentY, dataSet.get(i)));
 		}
 	}
 		

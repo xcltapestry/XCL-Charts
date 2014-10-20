@@ -178,10 +178,12 @@ public class XYAxis extends Axis {
 		//横轴刻度线
 		if (isShowTickMarks()) 
 		{				
-			canvas.drawLine(marksStartX, centerY, 
-					MathHelper.getInstance().add(markeStopX, this.getAxisPaint().getStrokeWidth() / 2),
-					centerY,
-					getTickMarksPaint());		
+				canvas.drawLine(marksStartX, centerY, 
+						MathHelper.getInstance().add(markeStopX, 
+									this.getAxisPaint().getStrokeWidth() / 2),
+						centerY,
+						getTickMarksPaint());	
+			
 		}
 
 		//标签
@@ -221,7 +223,8 @@ public class XYAxis extends Axis {
 	 * @param centerY	轴上中点Y坐标
 	 * @param text		标签文本
 	 */
-	protected void renderVerticalTick(Canvas canvas, float centerX, float centerY, String text) {
+	protected void renderVerticalTick(Canvas canvas, 
+									 float centerX, float centerY, String text) {
 		if (false == isShow())
 			return;
 
@@ -276,11 +279,18 @@ public class XYAxis extends Axis {
 
 		
 		if (isShowTickMarks()) {
+			float mstartX = MathHelper.getInstance().sub(marksStartY,  getAxisPaint().getStrokeWidth() /2 ) ;
+			
+			//if( Float.compare(mstartX, xchart.getPlotArea().getLeft()) == -1) ||
+			//		Float.compare(mstartX, xchart.getPlotArea().getRight()) == 1 	)
+			//{				
+			//}else{	
 			canvas.drawLine(centerX,					
-					MathHelper.getInstance().sub(marksStartY,  getAxisPaint().getStrokeWidth() /2 ),
+					mstartX,
 				//	marksStartY - this.getAxisPaint().getStrokeWidth() / 2,					
 					centerX,
 					marksStopY, getTickMarksPaint());
+			//}
 		}
 		
 		
@@ -302,6 +312,8 @@ public class XYAxis extends Axis {
 	private void renderLeftAxisTickMaskLabel(Canvas canvas, 
 											float centerX, float centerY, String text,float width)
 	{
+		if(!isShowAxisLabels())return;
+			
 		//格式化后的标签文本.  
 		 String label =  getFormatterLabel(text);
 		
