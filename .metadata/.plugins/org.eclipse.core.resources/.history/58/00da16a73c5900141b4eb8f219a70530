@@ -478,14 +478,14 @@ public class AreaChart extends LnChart{
 	}
 	/////////////////////////////////////////////
 	
-	/*
+	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
 	{
 		try {
 			super.postRender(canvas);
 			
-			
+			/*
 			//绘制图表
 			if(getPanModeStatus()) 
 			{
@@ -493,7 +493,7 @@ public class AreaChart extends LnChart{
 			}else{
 				drawFixedPlot(canvas);
 			}
-			
+			*/
 			
 			//显示焦点
 			renderFocusShape(canvas);
@@ -503,6 +503,6 @@ public class AreaChart extends LnChart{
 		} catch (Exception e) {
 			throw e;
 		}
-	}*/
+	}
 	 
 }

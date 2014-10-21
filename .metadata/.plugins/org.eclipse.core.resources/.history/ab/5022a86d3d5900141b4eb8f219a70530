@@ -663,8 +663,6 @@ public class AxisChart extends EventChart {
 		return true;
 	 }
 	/////////////////////////
-
-	////////////////////////
 			
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception

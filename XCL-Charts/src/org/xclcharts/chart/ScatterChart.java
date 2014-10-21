@@ -301,30 +301,5 @@ public class ScatterChart extends LnChart{
 		plotLegend.renderPointKey(canvas,mDataset);				
 	}
 	/////////////////////////////////////////////
-
-	
-	@Override
-	public boolean postRender(Canvas canvas) throws Exception {
-		// TODO Auto-generated method stub
-		
-		try {
-			super.postRender(canvas);
-			//绘制图表			
-			if(getPanModeStatus())
-			{
-				drawClipVerticalPlot(canvas);
-			}else{
-				drawFixedPlot(canvas);
-			}
-			
-			//显示焦点
-			renderFocusShape(canvas);
-			//响应提示
-			renderToolTip(canvas);
-			return true;
-		}catch( Exception e){
-			 throw e;
-		}
-	}
 	
 }

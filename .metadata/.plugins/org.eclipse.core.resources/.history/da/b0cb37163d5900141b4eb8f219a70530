@@ -390,7 +390,20 @@ public class BubbleChart extends LnChart{
 	
 	protected void drawClipPlot(Canvas canvas)
 	{
-		renderPlot(canvas);
+		if(renderPlot(canvas) == true)
+		{				
+			//画横向定制线
+			////mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+			////ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);													
+		}
+	}
+	
+	protected void drawClipAxisLine(Canvas canvas)
+	{
+		renderVerticalDataAxisLine(canvas);
+		
+		renderVerticalDataAxisRightLine(canvas);
+		renderVerticalCategoryAxisLine(canvas);	
 	}
 	
 	protected void drawClipLegend(Canvas canvas)

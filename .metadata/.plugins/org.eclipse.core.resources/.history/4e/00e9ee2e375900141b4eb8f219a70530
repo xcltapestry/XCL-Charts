@@ -168,7 +168,7 @@ public class StackBarChart  extends BarChart{
 			 for(int r=0;r<dataSize;r++) //轴上的每个标签
 			 {				 				 		
 				 	 currentX = add(plotArea.getLeft() , mul( (r+1) , XSteps));				 	 
-					 currentY = plotArea.getBottom() ;
+					 currentY = plotArea.getBottom();
 					 Double total = 0d;
 					 
 					 sourceSize = chartDataSource.size();

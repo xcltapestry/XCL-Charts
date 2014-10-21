@@ -96,7 +96,7 @@ public class XChart implements IRender {
 	private LegendRender mDyLegend = null;
 	
 	private boolean mEnableScale = true;
-	private float mXScale = 0.0f, mYScale  = 0.0f;
+	private float mXScale = 0.0f, mYScale = 0.0f;
 	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
 	
 	//是否充许gc
@@ -123,8 +123,18 @@ public class XChart implements IRender {
 		
 		if(null == plotGrid)plotGrid = new PlotGridRender();
 		
-		if(null == plotTitle)plotTitle = new PlotTitleRender();		
+		if(null == plotTitle)plotTitle = new PlotTitleRender();						
 	}
+	
+	/**
+	 * 返回当前绘制的是什么类型的图
+	 * @return 类型
+	 */
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.NONE;
+	}
+
 	
 	/**
 	 * 开放图例基类
@@ -132,6 +142,8 @@ public class XChart implements IRender {
 	 */
 	public PlotLegend getPlotLegend()
 	{
+		//图例
+		if(null == plotLegend)plotLegend = new PlotLegendRender(this);
 		return plotLegend;
 	}	
 
@@ -165,6 +177,7 @@ public class XChart implements IRender {
 	 * @return 主图表区基类
 	 */
 	public PlotArea getPlotArea() {
+		if(null == plotArea)plotArea = new PlotAreaRender();
 		return plotArea;
 	}
 
@@ -174,6 +187,7 @@ public class XChart implements IRender {
 	 * @return 网格基类
 	 */
 	public PlotGrid getPlotGrid() {
+		if(null == plotGrid)plotGrid = new PlotGridRender();
 		return plotGrid;
 	}
 
@@ -183,6 +197,7 @@ public class XChart implements IRender {
 	 * @return 标题基类
 	 */
 	public PlotTitle getPlotTitle() {
+		if(null == plotTitle)plotTitle = new PlotTitleRender();
 		return plotTitle;
 	}
 	
@@ -224,44 +239,6 @@ public class XChart implements IRender {
 		if (Float.compare(width, 0.0f) > 0)mWidth = width;
 		if (Float.compare(height, 0.0f) > 0)mHeight = height;
 	}
-
-	/**
-	 * 设置图表绘制范围,以指定上下左右范围方式确定图表大小.
-	 * 
-	 * @param left
-	 *            图表左上X坐标
-	 * @param top
-	 *            图表左上Y坐标
-	 * @param right
-	 *            图表右下X坐标
-	 * @param bottom
-	 *            图表右上Y坐标
-	 */
-	public void setChartRect(float left, float top, float right, float bottom) {
-
-		if (left > 0)
-			mLeft = left;
-		if (top > 0)
-			mTop = top;
-		if (right > 0)
-			mRight = right;
-		if (bottom > 0)
-			mBottom = bottom;
-		
-		mWidth = Math.abs(right - left);
-		mHeight = Math.abs(bottom - top);
-	}
-			
-
-	/**
-	 * 是否为竖屏显示
-	 * 
-	 * @return 是否为竖屏
-	 */
-	public boolean isVerticalScreen() {
-		return( (Float.compare(mWidth , mHeight) == -1)?true:false);
-	}
-
 
 	/**
 	 * 设置标题
@@ -410,6 +387,7 @@ public class XChart implements IRender {
 	 */
 	public void setTranslateXY(float x,float y)
 	{
+		if(null == mTranslateXY) mTranslateXY = new float[2];	
 		mTranslateXY[0] = x;
 		mTranslateXY[1] = y;
 	}
@@ -467,7 +445,6 @@ public class XChart implements IRender {
 		getBackgroundPaint().setColor(color);
 		getPlotArea().getBackgroundPaint().setColor(color);
 		
-		//?? 
 		if(null == mBorder)mBorder = new BorderRender();
 		mBorder.getBackgroundPaint().setColor(color);		
 	}
@@ -608,6 +585,21 @@ public class XChart implements IRender {
 		mCenterX  = centerX;
 		mCenterY  = centerY;
 	}
+		
+	protected boolean getClikedScaleStatus()
+	{		
+		if(!mEnableScale)return true;	
+		if( Float.compare(mXScale, 0.0f) == 0)return true;
+		
+		//如果在这范围内，则可以处理点击
+		if(Float.compare(mXScale , 0.95f) == 1 &&
+				Float.compare(mXScale , 1.1f) == -1)
+		{
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 	/**
 	 * 缩放图表
@@ -619,9 +611,9 @@ public class XChart implements IRender {
 		
 		if( Float.compare(mCenterX, 0.0f) == 1 ||
 				Float.compare(mCenterY, 0.0f) == 1	)
-			{
-				canvas.scale(mXScale, mYScale,mCenterX,mCenterY);
-			//}else{
+			{							
+				canvas.scale(mXScale, mYScale,mCenterX,mCenterY);				
+				//}else{
 				//canvas.scale(mScale, mScale,plotArea.getCenterX(),plotArea.getCenterY());					
 			}
 	}
@@ -724,12 +716,24 @@ public class XChart implements IRender {
 		return mDyLine;
 	}
 	
-	private void renderDyLine(Canvas canvas)
+	//交叉线
+	protected void drawDyLine(Canvas canvas)
 	{
-		if(!mDyLineVisible)return;
-		if(null == mDyLine) return;		
-		mDyLine.setPlotArea(this.plotArea);
+		if(!mDyLineVisible)return;		
+		if(null == mDyLine) mDyLine = new DyLineRender();
+		
+		mDyLine.setPlotArea(this.getPlotArea());
 		mDyLine.renderLine(canvas);
+	}
+	
+	private void drawDyLegend(Canvas canvas)
+	{
+		//动态图例
+		if(null != mDyLegend)
+		{
+			mDyLegend.setPlotWH(this.getWidth(), this.getHeight());
+			mDyLegend.renderInfo(canvas);
+		}
 	}
 		
 	/**
@@ -761,6 +765,7 @@ public class XChart implements IRender {
 						return false;
 				
 				canvas.save();
+				
 					//缩放图表
 					scaleChart(canvas);	
 					
@@ -769,17 +774,13 @@ public class XChart implements IRender {
 					
 					//绘制边框
 					renderBorder(canvas);	
+															
+					//动态图例
+					drawDyLegend(canvas);	
 					
 					//十字交叉线
-					renderDyLine(canvas);
-					
-					//动态图例
-					if(null != mDyLegend)
-					{
-						mDyLegend.setPlotWH(this.getWidth(), this.getHeight());
-						mDyLegend.renderInfo(canvas);
-					}					
-					
+					drawDyLine(canvas);
+										
 				canvas.restore();
 				
 				return ret;					

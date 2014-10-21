@@ -306,39 +306,12 @@ public class LineChart extends LnChart{
 				
 			}
 		}
-		
-	
+			
 		protected void drawClipLegend(Canvas canvas)
 		{
 			plotLegend.renderLineKey(canvas, mLstKey);
 			mLstKey.clear();
 		}
 		/////////////////////////////////////////////
-		
-		//绘制图表	
-		@Override
-		protected boolean postRender(Canvas canvas) throws Exception
-		{						
-			try{
-				super.postRender(canvas);	
-				
-				//绘制图表
-				if(getPanModeStatus()) 
-				{
-					drawClipVerticalPlot(canvas);
-				}else{
-					drawFixedPlot(canvas);
-				}				
-				
-				//显示焦点
-				renderFocusShape(canvas);
-				//响应提示
-				renderToolTip(canvas);
-				return true;
-			} catch (Exception e) {
-				throw e;
-			}
-		}
-		
-		
+
 }
