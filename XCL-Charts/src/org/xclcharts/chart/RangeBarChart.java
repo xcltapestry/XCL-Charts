@@ -21,6 +21,7 @@
  */
 package org.xclcharts.chart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
@@ -28,6 +29,7 @@ import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.AxisChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.axis.AxisTick;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 
@@ -60,6 +62,10 @@ public class RangeBarChart  extends AxisChart {
 	//分类轴的最大，最小值
 	private double mMaxValue = 0d;
 	private double mMinValue = 0d;
+	
+	//轴刻度
+	protected ArrayList<AxisTick> mLstDataTick = new  ArrayList<AxisTick>();
+	protected ArrayList<AxisTick> mLstCateTick = new  ArrayList<AxisTick>();
 
 
 	public RangeBarChart() {
@@ -196,7 +202,7 @@ public class RangeBarChart  extends AxisChart {
 	 * @return Y轴步长
 	 */
 	private float getVerticalYSteps(int tickCount) {		
-		return (div(getAxisScreenHeight(),tickCount));
+		return (div(getPlotScreenHeight(),tickCount));
 	}
 
 	/**
@@ -254,12 +260,10 @@ public class RangeBarChart  extends AxisChart {
 					
 			if(i == tickCount)
 			{
-				dataAxis.renderAxisHorizontalTick(this,canvas, plotArea.getLeft(),
-												  plotArea.getTop() , 
-												  Double.toString(currentTickLabel));
+				mLstDataTick.add(new AxisTick(i,plotArea.getLeft(),plotArea.getTop(), Double.toString(currentTickLabel) ));
 			}else{
-				dataAxis.renderAxisHorizontalTick(this,canvas,plotArea.getLeft(),
-												currentY, Double.toString(currentTickLabel));
+				mLstDataTick.add(new AxisTick(i,plotArea.getLeft(),currentY, Double.toString(currentTickLabel) ));
+				
 			}
 			
 		}
@@ -294,8 +298,10 @@ public class RangeBarChart  extends AxisChart {
 								plotGrid.getVerticalLinePaint());
 			}
 			// 画上分类/刻度线
-			categoryAxis.renderAxisVerticalTick(canvas,currentX,
-							plotArea.getBottom(), dataSet.get(i));
+			mLstCateTick.add(new AxisTick(i,currentX,plotArea.getBottom(), dataSet.get(i)));
+			
+			//categoryAxis.renderAxisVerticalTick(canvas,currentX,
+			//				plotArea.getBottom(), dataSet.get(i));
 		}
 	}
 	
@@ -394,12 +400,23 @@ public class RangeBarChart  extends AxisChart {
 		dataAxis.renderAxis(canvas, plotArea.getLeft(), plotArea.getBottom(),
 									plotArea.getPlotRight(), plotArea.getBottom());
 		
-		
+		//轴刻度
+		renderAxesTick(canvas);
 
 		// 绘制柱形图例
 		plotLegend.renderRangeBarKey(canvas,getKey(),mFlatBar.getBarPaint().getColor());
 		
 		return true;
+	}
+	
+	//轴刻度
+	private void renderAxesTick(Canvas canvas)
+	{				
+		drawCategoryAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstCateTick);		
+		mLstCateTick.clear();
+		
+		drawDataAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstDataTick);		
+		mLstDataTick.clear();
 	}
 	
 	

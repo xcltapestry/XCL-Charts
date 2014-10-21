@@ -380,30 +380,32 @@ public class BarChart3D extends BarChart{
 	 
 		return true;
 	}
-
 	
 	@Override
-	protected void renderHorizontalBarAxis(Canvas canvas)
-	{
-		 
-		//x轴 线 [要向里突]
-		 dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
-				 			 plotArea.getPlotRight(),  plotArea.getBottom());			 
+	protected void drawClipAxisLine(Canvas canvas)
+	{				
+		switch (getChartDirection()) 
+		{
+		case HORIZONTAL: 
+			//x轴 线 [要向里突]
+			 dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getBottom(),
+					 			 plotArea.getPlotRight(),  plotArea.getBottom());			 
+				
+			 //Y轴线
+			mBar3D.render3DYAxis(plotArea.getLeft(), plotArea.getTop(), 
+								 plotArea.getPlotRight(), plotArea.getBottom(),canvas);
 			
-		 //Y轴线
-		mBar3D.render3DYAxis(plotArea.getLeft(), plotArea.getTop(), 
-							 plotArea.getPlotRight(), plotArea.getBottom(),canvas);
-	}
-	
-	@Override
-	protected void renderVerticalBarAxis(Canvas canvas)
-	{		
-		dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getTop(),
-	 			 					plotArea.getLeft(),  plotArea.getBottom());	
-		
-		//X轴 线
-		mBar3D.render3DXAxis(plotArea.getLeft(), plotArea.getBottom(),
-							 plotArea.getPlotRight(), plotArea.getBottom(), canvas);
+			break;				
+		case VERTICAL: 
+			dataAxis.renderAxis(canvas,plotArea.getLeft(), plotArea.getTop(),
+	 					plotArea.getLeft(),  plotArea.getBottom());	
+
+			//X轴 线
+			mBar3D.render3DXAxis(plotArea.getLeft(), plotArea.getBottom(),
+						 plotArea.getPlotRight(), plotArea.getBottom(), canvas);
+			
+			break;				
+		}
 	}
 
 	@Override

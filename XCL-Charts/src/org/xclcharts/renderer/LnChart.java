@@ -32,6 +32,7 @@ import org.xclcharts.renderer.axis.AxisTick;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
@@ -56,13 +57,14 @@ public class LnChart extends AxisChart {
 			
 	private PointF[] BezierControls ;		
 	
-	//Pan模式下移动距离
-	protected float mMoveX = 0.0f;
-	protected float mMoveY = 0.0f;
-	
 	//轴刻度的位置信息
 	private ArrayList<AxisTick> mLstDataTick = new  ArrayList<AxisTick>();
 	private ArrayList<AxisTick> mLstCateTick = new  ArrayList<AxisTick>();
+	
+	//数据轴显示在左边还是右边
+	private XEnum.LineDataAxisLocation mDataAxisPosition = 
+									XEnum.LineDataAxisLocation.LEFT;
+		
 
 	public LnChart() {
 		
@@ -75,6 +77,9 @@ public class LnChart extends AxisChart {
 			plotLegend.setVerticalAlign(XEnum.VerticalAlign.TOP);
 			plotLegend.hideBox();
 		} 
+		
+		categoryAxisDefaultSetting();
+		dataAxisDefaultSetting();
 		
 	}
 
@@ -148,6 +153,62 @@ public class LnChart extends AxisChart {
 		return mRightAxisVisible;
 	}		
 	
+	
+	
+	/**
+	 * 设置数据轴显示在哪边,默认是左边
+	 * @param position 显示位置
+	 */
+	public void setDataAxisLocation( XEnum.LineDataAxisLocation position)
+	{
+		mDataAxisPosition = position;	
+		categoryAxisDefaultSetting();
+		dataAxisDefaultSetting();
+	}
+	
+	public XEnum.LineDataAxisLocation getDataAxisLocation()
+	{
+		return mDataAxisPosition;
+	}
+	
+	private void categoryAxisDefaultSetting()
+	{		
+		if(null == mDataAxisPosition) return;
+		if(null == categoryAxis) return;
+		if(!categoryAxis.isShow())return;
+		
+		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
+		{
+			categoryAxis.setHorizontalTickAlign(Align.CENTER);
+		}
+		
+		getCategoryAxis().getAxisPaint().setStrokeWidth(2);
+		getCategoryAxis().getTickMarksPaint().setStrokeWidth(2);
+	}
+	
+	private void dataAxisDefaultSetting()
+	{		
+		if(null == mDataAxisPosition) return;
+		if(null == dataAxis) return;
+		if(!dataAxis.isShow())return;
+		
+		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
+		{
+			dataAxis.setHorizontalTickAlign(Align.LEFT);	
+		}else{
+			dataAxis.setHorizontalTickAlign(Align.RIGHT);
+			if(dataAxis.isShowAxisLabels())
+					dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);	
+		}
+			
+		if(dataAxis.isShowAxisLine())
+				getDataAxis().getAxisPaint().setStrokeWidth(2);
+		if(dataAxis.isShowTickMarks())
+				getDataAxis().getTickMarksPaint().setStrokeWidth(2);
+	}
+	
+	
+	
 	/**
 	 * 绘制左边竖轴(对线图而言坐标轴默认都是封闭的)
 	 */
@@ -197,8 +258,7 @@ public class LnChart extends AxisChart {
 							plotRight, currentY);
 				}
 			}
-			//dataAxis.renderAxisHorizontalTick(this,canvas,plotLeft, currentY,
-			//		Double.toString(currentTickLabel));			
+			
 			mLstDataTick.add(new AxisTick(i,plotLeft, currentY, Double.toString(currentTickLabel)));
 
 		}
@@ -294,7 +354,7 @@ public class LnChart extends AxisChart {
 	/**
 	 * 绘制底部标签轴
 	 */
-	protected void renderVerticalCategoryAxis(Canvas canvas) {
+	protected void drawClipCategoryAxis(Canvas canvas) {
 		// 标签轴(X 轴)
 		float currentX = plotArea.getLeft();
 
@@ -367,30 +427,9 @@ public class LnChart extends AxisChart {
 		{
 			//补上一条网格线
 			plotGrid.renderGridLinesVertical(canvas,plotArea.getLeft(),
-					plotArea.getBottom(), plotArea.getLeft(),plotArea.getTop());
-			
+					plotArea.getBottom(), plotArea.getLeft(),plotArea.getTop());			
 		}
 	}
-		
-	
-	//轴刻度
-	protected void renderAxesTick(Canvas canvas)
-	{				
-		renderCategoryAxisTick(canvas);
-		renderDataAxisTick(canvas);
-	}
-		
-	protected void renderCategoryAxisTick(Canvas canvas)
-	{		
-		drawCategoryAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstCateTick);	
-		mLstCateTick.clear();
-	}
-	
-	protected void renderDataAxisTick(Canvas canvas)
-	{		
-		drawDataAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstDataTick);	
-		mLstDataTick.clear();
-	}	
 		
 		
 	@Override
@@ -472,22 +511,48 @@ public class LnChart extends AxisChart {
 		bezierPath.reset();
 	}
 	
-	protected void initMoveXY()
-	{
-		mMoveX = mMoveY = 0.0f;  	
-		switch(this.getPlotPanMode())
+	/////////////////////////////////////////
+	
+	
+	protected void drawClipDataAxis(Canvas canvas)
+	{		
+		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
 		{
-		case HORIZONTAL:
-			mMoveX = mTranslateXY[0]; 			
-			break;
-		case VERTICAL:
-			mMoveY = mTranslateXY[1]; 					
-			break;
-		default:
-			mMoveX = mTranslateXY[0]; 
-			mMoveY = mTranslateXY[1]; 
-			break;
-		}
+			renderVerticalDataAxis(canvas);
+		}else{
+			renderVerticalDataAxisRight(canvas);
+		}		
 	}
+	/////////////////////
+	
+	protected void drawClipAxisLine(Canvas canvas)
+	{
+		renderVerticalDataAxisLine(canvas);
+		
+		renderVerticalDataAxisRightLine(canvas);
+		renderVerticalCategoryAxisLine(canvas);
+	}
+	
+	protected void drawClipDataAxisTick(Canvas canvas)
+	{		
+		drawDataAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstDataTick);	
+		mLstDataTick.clear();
+	}
+	
+	protected void drawClipCategoryAxisTick(Canvas canvas)
+	{
+		drawCategoryAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstCateTick);	
+		mLstCateTick.clear();
+	}
+	
+		
+	//轴刻度
+	protected void renderAxesTick(Canvas canvas)
+	{				
+		drawClipDataAxisTick(canvas);
+		drawClipCategoryAxisTick(canvas);
+	}
+	
+	/////////////////////////////////////////
 
 }

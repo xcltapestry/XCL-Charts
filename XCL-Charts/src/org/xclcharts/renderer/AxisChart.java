@@ -337,6 +337,339 @@ public class AxisChart extends EventChart {
 		return xMargin;
 	}
 	
+		
+	/////////////////////////
+	
+	protected float getDrawClipYMargin()
+	{		
+		return getDrawClipVerticalYMargin();
+	}
+	
+	protected float getDrawClipXMargin()
+	{
+		return getDrawClipVerticalXMargin();
+	}
+	
+	//Pan模式下移动距离
+	protected float mMoveX = 0.0f;
+	protected float mMoveY = 0.0f;
+	
+	
+	protected void initMoveXY()
+	{
+		mMoveX = mMoveY = 0.0f;  	
+		switch(this.getPlotPanMode())
+		{
+		case HORIZONTAL:
+			mMoveX = mTranslateXY[0]; 			
+			break;
+		case VERTICAL:
+			mMoveY = mTranslateXY[1]; 					
+			break;
+		default:
+			mMoveX = mTranslateXY[0]; 
+			mMoveY = mTranslateXY[1]; 
+			break;
+		}
+	}
+	
+	
+	public boolean isShowRightAxis()
+	{		
+		return false;
+	}
+	
+	protected void drawClipCategoryAxis(Canvas canvas)
+	{
+		
+	}
+	
+	protected void drawClipDataAxis(Canvas canvas)
+	{
+		
+	}
+	
+	protected void drawClipPlot(Canvas canvas)
+	{
+		
+	}
+	
+	protected void drawClipAxisLine(Canvas canvas)
+	{
+		
+	}
+		
+	protected void drawClipDataAxisTick(Canvas canvas)
+	{
+		
+	}
+	
+	protected void drawClipCategoryAxisTick(Canvas canvas)
+	{
+		
+	}
+	
+	protected void drawClipLegend(Canvas canvas)
+	{
+		
+	}
+	
+	protected boolean drawFixedPlot(Canvas canvas)
+	{	
+		this.mMoveX = this.mMoveY = 0.0f;
+		
+		//绘制Y轴tick和marks	
+		drawClipDataAxis(canvas);	
+				
+		//绘制X轴tick和marks	
+		drawClipCategoryAxis(canvas);
+		
+		//绘图
+		drawClipPlot(canvas);
+		
+		//轴 线
+		drawClipAxisLine(canvas);				
+			
+		//轴刻度
+		drawClipDataAxisTick(canvas);	
+		drawClipCategoryAxisTick(canvas);
+				
+		//图例
+		drawClipLegend(canvas);		
+		return true;
+	 }
+	
+	
+	protected float getClipYMargin()
+	{
+		float yMargin = getDrawClipVerticalYMargin();
+		return yMargin;
+	}
+	
+	protected float getClipXMargin()
+	{
+		float xMargin = getDrawClipVerticalXMargin();
+		return xMargin;
+	}
+	
+	protected boolean drawClipVerticalPlot(Canvas canvas)
+	{
+				
+		//显示绘图区rect
+		float offsetX = mTranslateXY[0]; 
+		float offsetY = mTranslateXY[1];  
+		initMoveXY();
+						
+		
+		float yMargin =  getClipYMargin();
+		float xMargin = getClipXMargin();
+		
+		//设置图显示范围
+		canvas.save();
+		canvas.clipRect(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());
+				
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{
+			
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
+							plotArea.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					drawClipDataAxis(canvas);					
+			canvas.restore();	
+		}else{
+			drawClipDataAxis(canvas);	
+		}
+			
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{	
+			
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					
+					drawClipCategoryAxis(canvas);
+			canvas.restore();
+		}else{
+			drawClipCategoryAxis(canvas);
+		}
+						
+			//设置绘图区显示范围
+			canvas.save();
+			if (isShowRightAxis())
+			{
+				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+								plotArea.getRight(), plotArea.getBottom());
+			}else{
+				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+								this.getRight(), plotArea.getBottom());
+			}
+					canvas.save();					
+					canvas.translate(mMoveX, mMoveY);
+					//绘图
+					drawClipPlot(canvas);
+					
+					canvas.restore();
+			canvas.restore();			
+			
+		//还原绘图区绘制
+		canvas.restore(); //clip	
+		
+		//轴 线
+		drawClipAxisLine(canvas);		
+		
+		/////////////////////////////////////////
+		//轴刻度
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{			
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					drawClipDataAxisTick(canvas);		
+			canvas.restore();	
+		}else{
+			drawClipDataAxisTick(canvas);	
+		}
+			
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{				
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					drawClipCategoryAxisTick(canvas);
+			canvas.restore();
+		}else{
+			drawClipCategoryAxisTick(canvas);
+		}
+		/////////////////////////////////////////
+			
+		//图例
+		drawClipLegend(canvas);
+		
+		execGC();
+		return true;
+	 }
+	
+	/////////////////////////  drawClipHorizontalPlot
+	protected boolean drawClipHorizontalPlot(Canvas canvas)
+	 {		
+		//显示绘图区rect
+		float offsetX = mTranslateXY[0]; 
+		float offsetY = mTranslateXY[1]; 					
+		initMoveXY();		
+				
+		float yMargin =  getClipYMargin();
+		float xMargin = getClipXMargin();
+	
+		//设置图显示范围
+		canvas.save();				
+		canvas.clipRect(this.getLeft() , this.getTop() , this.getRight(), this.getBottom());		
+				
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{																	
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+					drawClipDataAxis(canvas);						
+			canvas.restore();	
+		}else{
+			drawClipDataAxis(canvas);			
+		}
+		
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{													
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft(), plotArea.getTop() - yMargin,  //this.getLeft()
+									plotArea.getRight(), plotArea.getBottom() + yMargin); //this.getRight()
+					canvas.translate(0 , offsetY );					
+					drawClipCategoryAxis(canvas);		
+			canvas.restore();	
+		}else{
+			drawClipCategoryAxis(canvas);
+		}
+		//////////////////////////////////////////////////
+		
+			//////////////////////////////////////////////////								
+			//设置绘图区显示范围
+			canvas.save();
+			canvas.clipRect(plotArea.getLeft() , plotArea.getTop() ,
+							this.getRight(), plotArea.getBottom());			
+					canvas.save();
+					canvas.translate(mMoveX, mMoveY);	
+					//绘图
+					drawClipPlot(canvas);
+					
+					canvas.restore();
+			canvas.restore();
+		
+			
+		//还原绘图区绘制
+		canvas.restore(); //clip							
+
+		//////////////////////////////////////////////////			
+		//轴线
+		drawClipAxisLine(canvas);
+				
+		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{																	
+			//绘制X轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
+									plotArea.getRight()+ xMargin, this.getBottom());
+					canvas.translate(offsetX,0);
+											
+					drawClipDataAxisTick(canvas);
+			canvas.restore();	
+		}else{
+			drawClipDataAxisTick(canvas);
+		}
+						
+		
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{													
+			//绘制Y轴tick和marks			
+			canvas.save();		
+					canvas.clipRect(this.getLeft(), plotArea.getTop() - yMargin, 
+									this.getRight(), plotArea.getBottom() + yMargin);
+					canvas.translate(0 , offsetY );					
+					
+					drawClipCategoryAxisTick(canvas);
+			canvas.restore();	
+		}else{	
+			drawClipCategoryAxisTick(canvas);
+		}
+		
+		//////////////////////////////////////////////////
+		
+		//图例
+		drawClipLegend(canvas);	
+		
+		execGC();
+		return true;
+	 }
+	/////////////////////////
+	
+	
 	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception

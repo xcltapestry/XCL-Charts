@@ -345,7 +345,8 @@ public class BubbleChart extends LnChart{
             	{            			
             		//请自行在回调函数中处理显示格式
                     DrawHelper.getInstance().drawRotateText(getFormatterDotLabel(
-                            Double.toString(xValue)+","+ Double.toString(yValue)+" : "+Double.toString(bubble)),
+                            Double.toString(xValue)+","+ Double.toString(yValue)
+                            +" : "+Double.toString(bubble)),
                             lineStopX,lineStopY, itemAngle, canvas, bd.getDotLabelPaint());
             	}  
             	            	            	
@@ -372,10 +373,7 @@ public class BubbleChart extends LnChart{
 		{
 			Log.e(TAG,"数据源为空.");
 			return false;
-		}
-					
-		//renderVerticalDataAxis(canvas);
-		//renderVerticalCategoryAxis(canvas);		
+		}		
 		
 		//开始处 X 轴 即分类轴              	
 		int size = mDataset.size();
@@ -384,159 +382,36 @@ public class BubbleChart extends LnChart{
 			BubbleData bd =  mDataset.get(i);							
 			renderPoints( canvas, bd,i);	
 		}	
-		//key
-		//plotLegend.renderBubbleKey(canvas,mDataset);
 		
 		return true;
 	}	
 
-	private boolean drawVerticalPlot(Canvas canvas)
-	{						
-		//绘制Y轴tick和marks	
-		renderVerticalDataAxis(canvas);
-		
-		//绘制X轴tick和marks
-		renderVerticalCategoryAxis(canvas);
-				
-		//绘图区
+	/////////////////////////////////////////////
+	
+	protected void drawClipPlot(Canvas canvas)
+	{
 		if(renderPlot(canvas) == true)
 		{				
 			//画横向定制线
-			//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-			//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);				
+			////mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+			////ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);													
 		}
-		
-		// 轴 线
+	}
+	
+	protected void drawClipAxisLine(Canvas canvas)
+	{
 		renderVerticalDataAxisLine(canvas);
 		
 		renderVerticalDataAxisRightLine(canvas);
 		renderVerticalCategoryAxisLine(canvas);	
-		
-		//轴刻度
-		renderAxesTick(canvas);
+	}
 	
-		//图例
-		plotLegend.renderBubbleKey(canvas,mDataset);
-		execGC();
-		return true;
-	 }
-	
-	private boolean drawClipVerticalPlot(Canvas canvas)
-	{				
-		//显示绘图区rect
-		float offsetX = mTranslateXY[0];
-		float offsetY = mTranslateXY[1];
-		initMoveXY();				
-						
-		//设置图显示范围
-		canvas.save();	
-		canvas.clipRect(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());
-				
-		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
-				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{
-			float yMargin = getDrawClipVerticalYMargin();
-			//绘制Y轴tick和marks			
-			canvas.save();		
-					canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
-							plotArea.getRight(), plotArea.getBottom() + yMargin);
-					canvas.translate(0 , offsetY );					
-					
-					renderVerticalDataAxis(canvas);
-			canvas.restore();	
-		}else{
-			renderVerticalDataAxis(canvas);
-		}
-		
-		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
-				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{	
-			float xMargin = getDrawClipVerticalXMargin();
-			//绘制X轴tick和marks			
-			canvas.save();		
-					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
-									plotArea.getRight()+ xMargin, this.getBottom());
-					canvas.translate(offsetX,0);
-					
-					renderVerticalCategoryAxis(canvas);
-			canvas.restore();	
-		}else{
-			renderVerticalCategoryAxis(canvas);
-		}
-								
-			//设置绘图区显示范围
-			canvas.save();
-			if (isShowRightAxis())
-			{
-				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
-								plotArea.getRight(), plotArea.getBottom());
-			}else{
-				canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
-								this.getRight(), plotArea.getBottom());
-			}			
-					canvas.save();
-					canvas.translate(mMoveX, mMoveY);
-					
-					if(renderPlot(canvas) == true)
-					{				
-						//画横向定制线
-						//mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-						//ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-						execGC();
-					}
-					
-					canvas.restore();
-			canvas.restore();			
-			
-		//还原绘图区绘制
-		canvas.restore(); //clip	
-		
-		// 轴 线
-		renderVerticalDataAxisLine(canvas);
-		
-		renderVerticalDataAxisRightLine(canvas);
-		renderVerticalCategoryAxisLine(canvas);		
-		
-		////////////////////////////////////////////////////
-		//轴刻度
-		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
-				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{
-			float yMargin = getDrawClipVerticalYMargin();
-			//绘制Y轴tick和marks			
-			canvas.save();		
-					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-									this.getRight(), plotArea.getBottom() + yMargin);
-					canvas.translate(0 , offsetY );					
-					
-					renderDataAxisTick(canvas);
-			canvas.restore();	
-		}else{
-			renderDataAxisTick(canvas);
-		}
-		
-		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
-				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{	
-			float xMargin = getDrawClipVerticalXMargin();
-			//绘制X轴tick和marks			
-			canvas.save();		
-					canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
-									plotArea.getRight()+ xMargin, this.getBottom());
-					canvas.translate(offsetX,0);
-					
-					renderCategoryAxisTick(canvas);
-			canvas.restore();	
-		}else{
-			renderCategoryAxisTick(canvas);
-		}
-		////////////////////////////////////////////////////
-	
-		//图例
-		plotLegend.renderBubbleKey(canvas,mDataset);
-		
-		return true;
-	 }
+	protected void drawClipLegend(Canvas canvas)
+	{
+		plotLegend.renderBubbleKey(canvas,mDataset);		
+	}
+	/////////////////////////////////////////////
+
 	 		
 	@Override
 	public boolean postRender(Canvas canvas) throws Exception {
@@ -550,7 +425,7 @@ public class BubbleChart extends LnChart{
 			{
 				drawClipVerticalPlot(canvas);
 			}else{
-				drawVerticalPlot(canvas);
+				drawFixedPlot(canvas);
 			}
 			//显示焦点
 			renderFocusShape(canvas);

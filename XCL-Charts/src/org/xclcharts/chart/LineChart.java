@@ -50,10 +50,6 @@ public class LineChart extends LnChart{
 	
 	//数据源
 	protected List<LineData> mDataSet;
-	
-	//数据轴显示在左边还是右边
-	private XEnum.LineDataAxisLocation mDataAxisPosition = 
-								XEnum.LineDataAxisLocation.LEFT;
 
 	//用于绘制定制线(分界线)
 	private PlotCustomLine mCustomLine = null;
@@ -64,8 +60,7 @@ public class LineChart extends LnChart{
 	
 	public LineChart()
 	{
-		categoryAxisDefaultSetting();
-		dataAxisDefaultSetting();
+		
 	}
 	
 	@Override
@@ -73,54 +68,7 @@ public class LineChart extends LnChart{
 	{
 		return XEnum.ChartType.LINE;
 	}
-	
-	/**
-	 * 设置数据轴显示在哪边,默认是左边
-	 * @param position 显示位置
-	 */
-	public void setDataAxisLocation( XEnum.LineDataAxisLocation position)
-	{
-		mDataAxisPosition = position;	
-		categoryAxisDefaultSetting();
-		dataAxisDefaultSetting();
-	}
-	
-	private void categoryAxisDefaultSetting()
-	{		
-		if(null == mDataAxisPosition) return;
-		if(null == categoryAxis) return;
-		if(!categoryAxis.isShow())return;
-		
-		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-		{
-			categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		}
-		
-		getCategoryAxis().getAxisPaint().setStrokeWidth(2);
-		getCategoryAxis().getTickMarksPaint().setStrokeWidth(2);
-	}
-	
-	private void dataAxisDefaultSetting()
-	{		
-		if(null == mDataAxisPosition) return;
-		if(null == dataAxis) return;
-		if(!dataAxis.isShow())return;
-		
-		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-		{
-			dataAxis.setHorizontalTickAlign(Align.LEFT);	
-		}else{
-			dataAxis.setHorizontalTickAlign(Align.RIGHT);
-			if(dataAxis.isShowAxisLabels())
-					dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);	
-		}
-			
-		if(dataAxis.isShowAxisLine())
-				getDataAxis().getAxisPaint().setStrokeWidth(2);
-		if(dataAxis.isShowTickMarks())
-				getDataAxis().getTickMarksPaint().setStrokeWidth(2);
-	}
-	
+
 	 
 		/**
 		 * 分类轴的数据源
@@ -343,179 +291,29 @@ public class LineChart extends LnChart{
 			
 			return true;
 		}	
+
+		/////////////////////////////////////////////
 				
-		private boolean drawVerticalPlot(Canvas canvas)
-		{					
-			//绘制Y轴tick和marks		
-			if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-			{
-				renderVerticalDataAxis(canvas);
-			}else{
-				renderVerticalDataAxisRight(canvas);
-			}
-									
-			//绘制X轴tick和marks	
-			renderVerticalCategoryAxis(canvas);
-			
-			//设置绘图区显示范围
+		protected void drawClipPlot(Canvas canvas)
+		{
 			if(renderVerticalPlot(canvas) == true)
-			{								
+			{				
 				if(null != mCustomLine) //画横向定制线
 				{
 					mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
 					mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
 				}
-			}		
-						
-			//轴 线
-			renderVerticalDataAxisLine(canvas);
-			
-			renderVerticalDataAxisRightLine(canvas);
-			renderVerticalCategoryAxisLine(canvas);
-			
-			//轴刻度
-			renderAxesTick(canvas);	
-			
-			//图例
+				
+			}
+		}
+		
+	
+		protected void drawClipLegend(Canvas canvas)
+		{
 			plotLegend.renderLineKey(canvas, mLstKey);
-			
 			mLstKey.clear();
-			mLstKey = null;			
-			return true;
-		 }
-				
-		private boolean drawClipVerticalPlot(Canvas canvas)
-		{					
-			//显示绘图区rect
-			float offsetX = mTranslateXY[0]; 
-			float offsetY = mTranslateXY[1];		
-			initMoveXY();
-			
-			//设置图显示范围
-			canvas.save();	
-			canvas.clipRect(this.getLeft(), this.getTop(), this.getRight(), this.getBottom());			
-			
-			if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
-					|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-			{				
-				float yMargin = getDrawClipVerticalYMargin();
-				
-				//绘制Y轴tick和marks			
-				canvas.save();		
-						canvas.clipRect(plotArea.getLeft() , plotArea.getTop() - yMargin, 
-										plotArea.getRight(), plotArea.getBottom() + yMargin);
-						canvas.translate(0 , offsetY );
-						
-						if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-						{
-							renderVerticalDataAxis(canvas);
-						}else{
-							renderVerticalDataAxisRight(canvas);
-						}	
-				canvas.restore();	
-			}else{
-				if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-				{
-					renderVerticalDataAxis(canvas);
-				}else{
-					renderVerticalDataAxisRight(canvas);
-				}
-			}
-			
-			if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
-					|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-			{					
-				float xMargin = getDrawClipVerticalXMargin();
-				
-				//绘制X轴tick和marks			
-				canvas.save();		
-						canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
-										plotArea.getRight()+ xMargin, this.getBottom());
-						canvas.translate(offsetX,0);
-						
-						renderVerticalCategoryAxis(canvas);
-				canvas.restore();	
-			}else{
-				renderVerticalCategoryAxis(canvas);
-			}
-							
-				//设置绘图区显示范围
-				canvas.save();				
-				if (isShowRightAxis())
-				{
-					canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
-									plotArea.getRight(), plotArea.getBottom());
-				}else{
-					canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
-									this.getRight(), plotArea.getBottom());
-				}
-						canvas.save();					
-						canvas.translate(mMoveX, mMoveY);	
-												
-						if(renderVerticalPlot(canvas) == true)
-						{				
-							if(null != mCustomLine) //画横向定制线
-							{
-								mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-								mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
-							}
-							
-						}						
-						canvas.restore();
-				canvas.restore();
-				
-			//还原绘图区绘制
-			canvas.restore(); //clip	
-						
-			//轴 线
-			renderVerticalDataAxisLine(canvas);
-			
-			renderVerticalDataAxisRightLine(canvas);
-			renderVerticalCategoryAxisLine(canvas);
-						
-			/////////////////////////////////
-			//轴刻度
-			if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
-					|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-			{				
-				float yMargin = getDrawClipVerticalYMargin();
-				
-				//绘制Y轴tick和marks			
-				canvas.save();		
-						canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-										this.getRight(), plotArea.getBottom() + yMargin);
-						canvas.translate(0 , offsetY );
-						
-						renderDataAxisTick(canvas);
-				canvas.restore();	
-			}else{
-				renderDataAxisTick(canvas);
-			}
-			
-			if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
-					|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-			{					
-				float xMargin = getDrawClipVerticalXMargin();
-				
-				//绘制X轴tick和marks			
-				canvas.save();		
-						canvas.clipRect(plotArea.getLeft() - xMargin, plotArea.getTop(), 
-										plotArea.getRight()+ xMargin, this.getBottom());
-						canvas.translate(offsetX,0);
-						
-						renderCategoryAxisTick(canvas);
-				canvas.restore();	
-			}else{
-				renderCategoryAxisTick(canvas);
-			}
-			////////////////////////////////
-			
-			//图例
-			plotLegend.renderLineKey(canvas, mLstKey);
-			execGC();
-			return true;
-		 }
-		 
+		}
+		/////////////////////////////////////////////
 		
 		//绘制图表	
 		@Override
@@ -529,7 +327,7 @@ public class LineChart extends LnChart{
 				{
 					drawClipVerticalPlot(canvas);
 				}else{
-					drawVerticalPlot(canvas);
+					drawFixedPlot(canvas);
 				}				
 				
 				//显示焦点

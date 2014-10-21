@@ -170,7 +170,9 @@ public class BarChart05View extends DemoView implements Runnable{
 			 
 			 //chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
 			 //chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);	
-			 //chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);							 
+			 //chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);		
+			 
+			 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

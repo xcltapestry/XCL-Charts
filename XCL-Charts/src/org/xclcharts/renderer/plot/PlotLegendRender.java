@@ -197,7 +197,7 @@ public class PlotLegendRender extends PlotLegend{
 		render(canvas);		
 	}
 	
-	//lnchart pointchart ....
+	
 	private void setLnChartStatus()
 	{
 		if(null == mPaintLine)mPaintLine = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -344,13 +344,9 @@ public class PlotLegendRender extends PlotLegend{
 				if(XEnum.LegendType.COLUMN == getType())
 				{
 					mKeyLabelY = mPlotArea.getTop()  + mOffsetY;
-					//mKeyLabelY += mXChart.getBorderWidth();	
-					
 					mKeyLabelY += mBoxLineSize;
 				}else{
-					mKeyLabelY = mPlotArea.getTop() -  mRectHeight - mOffsetY;					
-					//mKeyLabelY -= mXChart.getBorderWidth();	
-					
+					mKeyLabelY = mPlotArea.getTop() -  mRectHeight - mOffsetY;	
 					mKeyLabelY -= mBoxLineSize;
 				}
 				
