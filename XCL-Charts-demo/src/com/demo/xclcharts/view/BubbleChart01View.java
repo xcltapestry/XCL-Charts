@@ -309,7 +309,7 @@ public class BubbleChart01View extends DemoView {
 	{
 		
 		//交叉线
-		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
+		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);		
 		if(!chart.getListenItemClickStatus())
 		{
 			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();

@@ -148,8 +148,8 @@ public class MultiAxisChart01View extends DemoView {
 		
 		private void chartLabels()
 		{			
-			chartLabels.add("4 Cores Per Node"); 
-			chartLabels.add("8 Cores per Node"); 	
+			chartLabels.add("14 Cores Per Node"); 
+			chartLabels.add("18 Cores per Node"); 	
 		}
 		
 						
@@ -215,6 +215,12 @@ public class MultiAxisChart01View extends DemoView {
 				}
 				
 			});
+			
+			chart.getPlotGrid().hideEvenRowBgColor();
+			chart.getPlotGrid().hideHorizontalLines();
+			chart.getPlotGrid().hideOddRowBgColor();
+			chart.getPlotGrid().hideVerticalLines();
+			
 		}
 		
 		/**
@@ -239,7 +245,7 @@ public class MultiAxisChart01View extends DemoView {
 			dataAxis.getTickLabelPaint().setColor((int)Color.rgb(51, 204, 204));
 		
 			//把折线图默认的顶上的轴线隐藏
-			lnChart.hideTopAxis();
+			//lnChart.hideTopAxis();
 			
 			//定制数据轴上的标签格式
 			lnChart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){

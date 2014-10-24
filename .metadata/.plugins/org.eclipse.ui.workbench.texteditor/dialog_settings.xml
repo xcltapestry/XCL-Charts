@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="198" key="DIALOG_Y_ORIGIN"/>
-		<item value="1033" key="DIALOG_X_ORIGIN"/>
-		<item value="362" key="DIALOG_HEIGHT"/>
+		<item value="309" key="DIALOG_Y_ORIGIN"/>
+		<item value="905" key="DIALOG_X_ORIGIN"/>
+		<item value="405" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -12,27 +12,27 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
-		<item value="false" key="wholeword"/>
-		<item value="drawClipAxisLine" key="selection"/>
+		<item value="true" key="wholeword"/>
+		<item value="renderLabels" key="selection"/>
 		<list key="findhistory">
-			<item value="drawClipAxisLine"/>
-			<item value="drawClipVerticalPlot"/>
-			<item value="LnChart.java"/>
-			<item value="setDataAxisLocation"/>
-			<item value="mDirection"/>
-			<item value="renderHorizontalBarAxis"/>
-			<item value="getDrawClipHorizontalBarYMargin"/>
-			<item value="drawClipHorizontalBar"/>
+			<item value="renderLabels"/>
+			<item value="setAxesClosed"/>
+			<item value="mLstDataTick"/>
+			<item value="defaultAxisSetting"/>
+			<item value="getVerticalXSteps"/>
+			<item value="getVerticalYSteps"/>
+			<item value="drawDataAxisLabels"/>
+			<item value="drawClipDataAxisTickMarks"/>
 		</list>
 		<list key="replacehistory">
-			<item value="getDataInfoPaint"/>
-			<item value="getBgCirclePaint"/>
-			<item value="getFillCirclePaint"/>
-			<item value="mPaintArc"/>
-			<item value="categoryAxis"/>
-			<item value="setBorderLineColor"/>
-			<item value="setLineStyle"/>
-			<item value="setLineColor"/>
+			<item value="drawClipDataAxisGridlines"/>
+			<item value="drawClipCategoryAxisGridlines"/>
+			<item value="drawClipDataAxisTickMarks"/>
+			<item value="drawClipCategoryAxisTickMarks"/>
+			<item value="drawClipDataAxis"/>
+			<item value="CategoryAxisPosition"/>
+			<item value="DataAxisPosition"/>
+			<item value="DataAxisLocation"/>
 		</list>
 	</section>
 </section>

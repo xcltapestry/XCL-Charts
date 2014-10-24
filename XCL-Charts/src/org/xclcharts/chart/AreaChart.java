@@ -107,13 +107,13 @@ public class AreaChart extends LnChart{
 	}
 	
 	
-	private void categoryAxisDefaultSetting()
+	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
 	
 	
-	private void dataAxisDefaultSetting()
+	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);
 	}
@@ -202,12 +202,17 @@ public class AreaChart extends LnChart{
 		            
         double dper = 0d;
 		int j = 0;	 
+		int count = chartValues.size();
+		if(count <= 0) return false;
+								
 		for(Double bv : chartValues)
         {								
 			//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
         	//float valuePosition = (float) Math.round(
-			//		axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;        	            
-        	dper = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());
+			//		axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;    
+		
+			//首尾为0,path不能闭合，改成 0.001都可以闭合?
+        	dper = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin()); 
         	float valuePosition = mul(axisScreenHeight, div(dtof(dper),axisDataHeight) );
         	
         	if(j == 0 )
@@ -228,9 +233,12 @@ public class AreaChart extends LnChart{
         		lstPoints.add( new PointF(lineStartX,lineStartY));
         		lstPoints.add( new PointF(lineStopX,lineStopY));
     			
-        		//path area
-        		lstPathPoints.add( new PointF(lineStartX,lineStartY));
-        		lstPathPoints.add( new PointF(lineStopX,lineStopY));
+        		if(Double.compare( bv, dataAxis.getAxisMin())  != 0  ) // 0d
+        		{        			
+	        		//path area
+	        		lstPathPoints.add( new PointF(lineStartX,lineStartY));
+        		}
+	        		lstPathPoints.add( new PointF(lineStopX,lineStopY));        		
     		}else{     
     			//line
     			lstPoints.add( new PointF(lineStopX,lineStopY));
@@ -248,7 +256,12 @@ public class AreaChart extends LnChart{
 		
 		//path area
 		lstPathPoints.add( new PointF(lineStartX ,lineStartY));
-		lstPathPoints.add( new PointF(lineStartX ,initY));
+		
+		if(Double.compare( chartValues.get(count - 1), dataAxis.getAxisMin() )  != 0  ) // 0d
+		{
+    		//path area
+			lstPathPoints.add( new PointF(lineStartX ,initY));
+		}
 		return true;        
 	}
 	
@@ -278,53 +291,85 @@ public class AreaChart extends LnChart{
 	}
 	
 
-	private boolean renderBezierArea(Canvas canvas, Paint paintAreaFill,Path bezierPath,
+	private boolean renderBezierArea(Canvas canvas, Paint paintAreaFill,
+										Path bezierPath,
 										AreaData areaData,
 										List<PointF> lstPathPoints)
 	{		        				
 		if(null == bezierPath)bezierPath = new Path();
-
+			
 		//start point
 		bezierPath.moveTo(plotArea.getLeft(), plotArea.getBottom());		
+		int count = lstPathPoints.size();
 		
-		for(int i = 0;i<lstPathPoints.size();i++)
+		float x = 0.0f,y =0.0f;
+		switch(count)
 		{
-			if(i<3) continue;
+			case 0:
+				return false;
+			case 1:
+				bezierPath.lineTo(lstPathPoints.get(0).x, lstPathPoints.get(0).y);
+				break;
+			case 2:
+				x = (lstPathPoints.get(1).x + lstPathPoints.get(0).x) /2 ;
+				y = (lstPathPoints.get(1).y + lstPathPoints.get(0).y) /2 ;
+				bezierPath.quadTo(x, y,
+								  lstPathPoints.get(1).x, lstPathPoints.get(1).y);
+				break;		
+			case 3:
+				
+				x = (lstPathPoints.get(1).x + lstPathPoints.get(0).x) /2 ;
+				y = (lstPathPoints.get(1).y + lstPathPoints.get(0).y) /2 ;
+				bezierPath.quadTo(x, y,
+								  lstPathPoints.get(1).x, lstPathPoints.get(1).y);
+				
+				x = (lstPathPoints.get(2).x + lstPathPoints.get(1).x) /2 ;
+				y = (lstPathPoints.get(2).y + lstPathPoints.get(1).y) /2 ;
+				bezierPath.quadTo(x, y,
+								  lstPathPoints.get(2).x, lstPathPoints.get(2).y);
+				break;	
+			default:			
+				for(int i = 0;i<count;i++)
+				{
+					if(i<3) continue;
+					
+					CurveHelper.curve3( lstPathPoints.get(i-2),  
+							lstPathPoints.get(i-1), 
+							lstPathPoints.get(i-3),
+							lstPathPoints.get(i), 
+							mBezierControls);
+					
+					bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+							mBezierControls[1].x, mBezierControls[1].y, 
+							lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
+				}			
 			
-			CurveHelper.curve3( lstPathPoints.get(i-2),  
-					lstPathPoints.get(i-1), 
-					lstPathPoints.get(i-3),
-					lstPathPoints.get(i), 
-					mBezierControls);
 			
-			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
-					mBezierControls[1].x, mBezierControls[1].y, 
-					lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
-		}			
-	
-	
-		if(lstPathPoints.size()> 3)
-		{			
-			PointF stop  = lstPathPoints.get(lstPathPoints.size()-1);
-			//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
-			CurveHelper.curve3(lstPathPoints.get(lstPathPoints.size()-2),  
-										stop, 
-										lstPathPoints.get(lstPathPoints.size()-3),
-										stop, 
-										mBezierControls);
-			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
-					mBezierControls[1].x, mBezierControls[1].y, 
-					lstPathPoints.get(lstPathPoints.size() -1 ).x, 
-					lstPathPoints.get(lstPathPoints.size() -1 ).y);							
-		}							
+				//if(count > 3)
+				//{			
+					PointF stop  = lstPathPoints.get(lstPathPoints.size()-1);
+					//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
+					CurveHelper.curve3(lstPathPoints.get(lstPathPoints.size()-2),  
+												stop, 
+												lstPathPoints.get(lstPathPoints.size()-3),
+												stop, 
+												mBezierControls);
+					bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+							mBezierControls[1].x, mBezierControls[1].y, 
+							lstPathPoints.get(lstPathPoints.size() -1 ).x, 
+							lstPathPoints.get(lstPathPoints.size() -1 ).y);							
+				//}						
+		}
 		bezierPath.close();
 		paintAreaFill.setColor(areaData.getAreaFillColor());	
 		
-		paintAreaFill.setAlpha(this.mAreaAlpha); 		
+		paintAreaFill.setAlpha(this.mAreaAlpha); 	
 	    canvas.drawPath(bezierPath, paintAreaFill);		
 	    bezierPath.reset();
 		return true;
 	}
+	
+	
 	
 	
 	private boolean renderLine(Canvas canvas, AreaData areaData,
@@ -427,7 +472,8 @@ public class AreaChart extends LnChart{
 		//mPaintAreaFill.setAlpha( mAreaAlpha );  
 						
 		//开始处 X 轴 即分类轴                  
-		for(int i=0;i<mDataset.size();i++)
+		int count = mDataset.size();
+		for(int i=0;i<count;i++)
 		{					
 			AreaData areaData = mDataset.get(i);
 			
@@ -460,7 +506,7 @@ public class AreaChart extends LnChart{
 
 
 	/////////////////////////////////////////////	
-	
+	@Override
 	protected void drawClipPlot(Canvas canvas)
 	{
 		if(renderVerticalPlot(canvas) == true)
@@ -471,38 +517,13 @@ public class AreaChart extends LnChart{
 		}
 	}
 
+	@Override
 	protected void drawClipLegend(Canvas canvas)
 	{
 		plotLegend.renderLineKey(canvas, mLstKey);
 		mLstKey.clear();
 	}
 	/////////////////////////////////////////////
-	
-	/*
-	@Override
-	protected boolean postRender(Canvas canvas) throws Exception 
-	{
-		try {
-			super.postRender(canvas);
-			
-			
-			//绘制图表
-			if(getPanModeStatus()) 
-			{
-				drawClipVerticalPlot(canvas);
-			}else{
-				drawFixedPlot(canvas);
-			}
-			
-			
-			//显示焦点
-			renderFocusShape(canvas);
-			//响应提示
-			renderToolTip(canvas);
-			return true;
-		} catch (Exception e) {
-			throw e;
-		}
-	}*/
+
 	 
 }

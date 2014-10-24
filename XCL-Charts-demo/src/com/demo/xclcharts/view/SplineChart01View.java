@@ -271,7 +271,7 @@ public class SplineChart01View extends DemoView {
 	private void triggerClick(float x,float y)
 	{		
 		//交叉线
-		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
+		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);		
 		if(!chart.getListenItemClickStatus())
 		{
 			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();

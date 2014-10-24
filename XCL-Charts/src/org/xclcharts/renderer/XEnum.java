@@ -179,9 +179,14 @@ public class XEnum {
 		 * @author XCL
 		 *
 		 */
-		public enum LineDataAxisLocation {  
-			LEFT, RIGHT
+		public enum DataAxisPosition {  
+			LEFT, RIGHT,BOTTOM, TOP
 		}
+		
+		public enum CategoryAxisPosition {  
+			BOTTOM, TOP,LEFT, RIGHT
+		}
+		
 		
 		/**
 		 * 雷达图数据区域的填充方式

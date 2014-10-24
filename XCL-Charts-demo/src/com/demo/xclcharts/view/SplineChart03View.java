@@ -106,8 +106,8 @@ public class SplineChart03View  extends DemoView {
 			chart.getDataAxis().hideAxisLine();
 			chart.getDataAxis().hideTickMarks();		
 			chart.getPlotGrid().showHorizontalLines();
-			chart.hideTopAxis();
-			chart.hideRightAxis();				
+			//chart.hideTopAxis();
+			//chart.hideRightAxis();				
 			
 			chart.getPlotGrid().getHorizontalLinePaint().setColor((int)Color.rgb(179, 147, 197));
 			chart.getCategoryAxis().getAxisPaint().setColor( 

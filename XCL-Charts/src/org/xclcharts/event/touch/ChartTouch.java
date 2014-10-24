@@ -163,7 +163,8 @@ public class ChartTouch implements IChartTouch {
 	      	  xx = (float) (txy[0] + newX - oldX) ;
 	      	  yy = (float) (txy[1] + newY - oldY) ;
 	       // }
-	        
+	      	  
+	    	        
 	        mChart.setTranslateXY(xx, yy);        
 	        mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
 	        				 (int)mChart.getRight(), (int)mChart.getBottom());

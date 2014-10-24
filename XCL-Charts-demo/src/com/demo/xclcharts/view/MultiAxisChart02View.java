@@ -287,7 +287,7 @@ public class MultiAxisChart02View extends DemoView {
 		//设定数据源						
 		lnChart.setDataSource(chartDataLn);
 		//数据轴
-		lnChart.setDataAxisLocation(XEnum.LineDataAxisLocation.RIGHT);		
+		lnChart.setDataAxisPosition(XEnum.DataAxisPosition.RIGHT);		
 		DataAxis dataAxis = lnChart.getDataAxis();		
 		dataAxis.setAxisMax(135);
 		dataAxis.setAxisMin(0);

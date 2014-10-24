@@ -95,7 +95,7 @@ public class PlotAttrInfo {
 	  * @param paint		用来绘制用的画笔
 	  */
 	   public void addAttributeInfo(Location  position ,String info,
-	   								float infoPosRadiusPercentage  ,Paint paint) { 
+	   								float infoPosRadiusPercentage,Paint paint) { 
 	   	
 		   	if(null == mAttrInfoLocation) mAttrInfoLocation = new ArrayList<Location> ();
 		   	if(null == mAttrInfo) mAttrInfo = new ArrayList<String>();

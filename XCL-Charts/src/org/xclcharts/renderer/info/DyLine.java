@@ -71,7 +71,7 @@ public class DyLine {
 	 * @param x		x坐标
 	 * @param y		y坐标
 	 */
-	public void setCenterXY(float x,float y)
+	public void setCurrentXY(float x,float y) //setCurrentXY
 	{
 		if(null == mCenterXY) mCenterXY = new PointF();
 		mCenterXY.x = x;

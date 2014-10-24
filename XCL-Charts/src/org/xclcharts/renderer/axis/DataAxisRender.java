@@ -81,19 +81,22 @@ public class DataAxisRender extends DataAxis {
 	 * @return 是否为主tick
 	 */
 	public boolean isPrimaryTick()
+	{		
+		return isPrimaryTick(mCurrentId);		
+	}
+	
+	public boolean isPrimaryTick(int id)
 	{
 		if(isDetailMode())
 		{		
-			if(0 == mCurrentId && mShowFirstTick) return true;
+			if(0 == id && mShowFirstTick) return true;
 			
-			if( mCurrentId < getDetailModeSteps() 
-					|| mCurrentId%getDetailModeSteps() != 0 )
+			if( id < getDetailModeSteps() 
+					|| id%getDetailModeSteps() != 0 )
 				return false;
 		}		
 		return true;		
 	}
-	
-	
 	
 	
 	/**
@@ -112,9 +115,13 @@ public class DataAxisRender extends DataAxis {
 	 */
 	@Override
 	public boolean isShowAxisLabels() {		
-		return (!isPrimaryTick()?false:super.isShowAxisLabels());		
+		return (!isPrimaryTick()?false:super.isShowAxisLabels());	
 	}
-			
+	
+
+	//public boolean isShowAxisDetailModeLabels() {		
+	//	return (!isPrimaryTick()?false:isShowAxisLabels());	
+	//}
 
 	/**
 	 * 绘制横向刻度标记
@@ -125,8 +132,12 @@ public class DataAxisRender extends DataAxis {
 	 */
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
 								float centerX,float centerY,String text)
-	{		
-		if(isShow()) renderHorizontalTick(xchart,canvas, centerX,centerY,text);
+	{				
+		if(isShow())
+		{
+			//if(isShowAxisDetailModeLabels())
+				renderHorizontalTick(xchart,canvas, centerX,centerY,text);
+		}
 	}
 
 
@@ -140,7 +151,10 @@ public class DataAxisRender extends DataAxis {
 	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
 	{
 		if(isShow())
-			renderVerticalTick(canvas,centerX,centerY,text);
+		{
+			//if(isShowAxisDetailModeLabels())
+					renderVerticalTick(canvas,centerX,centerY,text);
+		}
 	}
 		
 

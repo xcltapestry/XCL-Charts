@@ -35,7 +35,6 @@ import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
-import android.graphics.Paint.Align;
 import android.util.Log;
 
 /**
@@ -151,7 +150,7 @@ public class LineChart extends LnChart{
 			List<Double> chartValues = bd.getLinePoint();
 			if(null == chartValues)
 			{
-				Log.e(TAG,"当前线数据序列值为空.");
+				Log.e(TAG,"当前分类的线数据序列值为空.");
 				return false;
 			}
 				
@@ -294,6 +293,7 @@ public class LineChart extends LnChart{
 
 		/////////////////////////////////////////////
 				
+		@Override
 		protected void drawClipPlot(Canvas canvas)
 		{
 			if(renderVerticalPlot(canvas) == true)
@@ -307,6 +307,7 @@ public class LineChart extends LnChart{
 			}
 		}
 			
+		@Override
 		protected void drawClipLegend(Canvas canvas)
 		{
 			plotLegend.renderLineKey(canvas, mLstKey);

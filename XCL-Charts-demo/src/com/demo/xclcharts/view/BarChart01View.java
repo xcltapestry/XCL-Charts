@@ -361,7 +361,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	{		
 		
 		//交叉线
-		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);	
+		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);	
 		
 		if(!chart.getListenItemClickStatus())
 		{

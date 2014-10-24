@@ -32,10 +32,10 @@ import org.xclcharts.renderer.axis.AxisTick;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
+import android.util.Log;
 
 /**
  * @ClassName XChart
@@ -48,25 +48,18 @@ import android.graphics.PointF;
 
 public class LnChart extends AxisChart {
 	
-	//private static final String TAG="LnChart";
-
-	// 是否显示顶轴
-	private boolean mTopAxisVisible = true;
-	// 是否显示底轴
-	private boolean mRightAxisVisible = true;	
-			
+	private static final String TAG = "LnChart";
+	
 	private PointF[] BezierControls ;		
 	
 	//轴刻度的位置信息
-	private ArrayList<AxisTick> mLstDataTick = new  ArrayList<AxisTick>();
-	private ArrayList<AxisTick> mLstCateTick = new  ArrayList<AxisTick>();
-	
-	//数据轴显示在左边还是右边
-	private XEnum.LineDataAxisLocation mDataAxisPosition = 
-									XEnum.LineDataAxisLocation.LEFT;
-		
-
+	private ArrayList<AxisTick> mLstDataTick = null;
+	private ArrayList<AxisTick> mLstCateTick = null;
+				
 	public LnChart() {
+				
+		if(null == mLstDataTick)mLstDataTick = new  ArrayList<AxisTick>();
+		if(null == mLstCateTick)mLstCateTick = new  ArrayList<AxisTick>();		
 		
 		//初始化图例
 		if(null != plotLegend)
@@ -81,356 +74,211 @@ public class LnChart extends AxisChart {
 		categoryAxisDefaultSetting();
 		dataAxisDefaultSetting();
 		
+		setAxesClosed(true);		
 	}
-
-	/**
-	 * 竖向柱形图 Y轴的屏幕高度/数据轴的刻度标记总数 = 步长
-	 * 
-	 * @return Y轴步长
-	 */
-	private float getVerticalYSteps(int tickCount) { //getAxisScreenHeight
-		return MathHelper.getInstance().div(getPlotScreenHeight() , tickCount);
-	}
-
-	/**
-	 * 竖向图 得到X轴的步长 X轴的屏幕宽度 / 刻度标记总数 = 步长
-	 * 
-	 * @param num
-	 *            刻度标记总数
-	 * @return X轴步长
-	 */
-	protected float getVerticalXSteps(int num) {
-		//float XSteps = (float) Math.ceil(getAxisScreenWidth() / num);		
-		return MathHelper.getInstance().div(getPlotScreenWidth(),num);		//getAxisScreenWidth
-	}
-
-	/**
-	 * 显示顶上的轴
-	 * 
-	 */
-	public void showTopAxis() {
-		mTopAxisVisible = true;
-	}
-	
-	/**
-	 * 隐藏顶上的轴
-	 */
-	public void hideTopAxis() {
-		mTopAxisVisible = false;
-	}
-	
-	
-	/**
-	 * 是否会显示顶上的轴线
-	 * @return
-	 */
-	public boolean isShowTopAxis()
-	{
-		return mTopAxisVisible;
-	}
-
-	/**
-	 * 显示右边轴
-	 * 
-	 */
-	public void showRightAxis(){
-		mRightAxisVisible = true;
-	}
-	
-	/**
-	 * 隐藏右边轴
-	 */
-	public void hideRightAxis(){
-		mRightAxisVisible = false;
-	}
-	
-	/**
-	 * 返回是否显示右边轴线
-	 * @return	是否显示
-	 */
-	public boolean isShowRightAxis()
-	{
-		return mRightAxisVisible;
-	}		
-	
-	
-	
-	/**
-	 * 设置数据轴显示在哪边,默认是左边
-	 * @param position 显示位置
-	 */
-	public void setDataAxisLocation( XEnum.LineDataAxisLocation position)
-	{
-		mDataAxisPosition = position;	
-		categoryAxisDefaultSetting();
-		dataAxisDefaultSetting();
-	}
-	
-	public XEnum.LineDataAxisLocation getDataAxisLocation()
-	{
-		return mDataAxisPosition;
-	}
-	
-	private void categoryAxisDefaultSetting()
-	{		
-		if(null == mDataAxisPosition) return;
-		if(null == categoryAxis) return;
-		if(!categoryAxis.isShow())return;
 		
-		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-		{
-			categoryAxis.setHorizontalTickAlign(Align.CENTER);
-		}
-		
-		getCategoryAxis().getAxisPaint().setStrokeWidth(2);
-		getCategoryAxis().getTickMarksPaint().setStrokeWidth(2);
-	}
-	
-	private void dataAxisDefaultSetting()
-	{		
-		if(null == mDataAxisPosition) return;
-		if(null == dataAxis) return;
-		if(!dataAxis.isShow())return;
-		
-		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-		{
-			dataAxis.setHorizontalTickAlign(Align.LEFT);	
-		}else{
-			dataAxis.setHorizontalTickAlign(Align.RIGHT);
-			if(dataAxis.isShowAxisLabels())
-					dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);	
-		}
-			
-		if(dataAxis.isShowAxisLine())
-				getDataAxis().getAxisPaint().setStrokeWidth(2);
-		if(dataAxis.isShowTickMarks())
-				getDataAxis().getTickMarksPaint().setStrokeWidth(2);
-	}
-	
-	
-	
 	/**
-	 * 绘制左边竖轴(对线图而言坐标轴默认都是封闭的)
+	 * 绘制底部标签轴
 	 */
-	protected void renderVerticalDataAxis(Canvas canvas) {
+	@Override
+	protected void drawClipDataAxisGridlines(Canvas canvas) 
+	{						
+		// 与柱形图不同，无须多弄一个
+		float XSteps = 0.0f,YSteps = 0.0f;
+		
 		// 数据轴数据刻度总个数
 		int tickCount = dataAxis.getAixTickCount();
-		// 数据轴高度步长
-		float YSteps = getVerticalYSteps(tickCount);
-
-		float plotLeft = plotArea.getLeft();
-		float plotTop = plotArea.getTop();
-		float plotRight = plotArea.getRight();
-		float plotBottom = plotArea.getBottom();
-		float currentY = plotBottom;
+		int labeltickCount = tickCount;
+		
+		if( 0 == tickCount)
+		{
+			Log.e(TAG,"数据库数据源为0!");
+			return ;
+		}else if (1 == tickCount)  //label仅一个时右移
+			    labeltickCount = tickCount - 1 ;
+					
+		// 标签轴(X 轴)		
+		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
+		// 标签
 		double currentTickLabel = 0d;
-
-		// 数据轴(Y 轴)
-		for (int i = 0; i <= tickCount; i++) 
-		{			
-			// 依起始数据坐标与数据刻度间距算出上移高度			
-			currentY =  MathHelper.getInstance().sub(plotBottom, i * YSteps);
-			
-			//是否绘制tick
-			if(dataAxis.isShowAxisLabels() &&
-					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
-			
-			// 标签
-			currentTickLabel = MathHelper.getInstance().add(
-								dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());
-
-			if (i > 0) {
-				// 从左到右的横向网格线
-				if (i % 2 != 0) {
-					plotGrid.renderOddRowsFill(canvas,plotLeft, 
-							MathHelper.getInstance().add(currentY , YSteps),
-							plotRight, currentY);
-				} else {
-					plotGrid.renderEvenRowsFill(canvas,plotLeft, 
-							MathHelper.getInstance().add(currentY , YSteps),
-							plotRight, currentY);
+		// 轴位置
+		XEnum.DataAxisPosition pos = getDataAxisPosition();
+				
+		//步长
+		switch(pos)
+		{			 
+			case LEFT: //Y
+			case RIGHT:			
+				YSteps = getVerticalYSteps(labeltickCount) ;	
+											
+				if( XEnum.DataAxisPosition.RIGHT  == pos)
+				{    //显示在右边
+					currentX = axisX = plotArea.getRight();
+				}else{ //显示在左边
+					currentX = axisX = plotArea.getLeft();
+				}			
+				
+				currentY = axisY = plotArea.getBottom();
+				break;						
+			case TOP: //X
+			case BOTTOM:
+				XSteps = getVerticalXSteps(labeltickCount);						
+				if(XEnum.DataAxisPosition.TOP == pos)
+				{
+					currentY = axisY = plotArea.getTop();
+				}else{
+					currentY = axisY = plotArea.getBottom();
 				}
-
-				if (i > 0 && i < tickCount){
-					dataAxis.setAxisTickCurrentID(i);
-					plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick());
-					plotGrid.renderGridLinesHorizontal(canvas,plotLeft, currentY,
-							plotRight, currentY);
-				}
-			}
-			
-			mLstDataTick.add(new AxisTick(i,plotLeft, currentY, Double.toString(currentTickLabel)));
-
+				currentX = axisX = plotArea.getLeft();
+				break;			
 		}
 		
-		if (!mTopAxisVisible)
-		{	
-			//即如果顶轴不显示的话，补上一条网格线
-			plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
-		}		
-	}
-	
-	protected void renderVerticalDataAxisLine(Canvas canvas)
-	{
-		float plotLeft = plotArea.getLeft();
-		float plotTop = plotArea.getTop();
-		float plotRight = plotArea.getRight();
-		float plotBottom = plotArea.getBottom();
-		
-		// top X轴线
-		if (mTopAxisVisible)
-		{		
-			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); //plotRight
-		}else{
-			//即如果顶轴不显示的话，补上一条网格线
-			//plotGrid.renderGridLinesHorizontal(canvas,plotLeft, plotTop,plotRight, plotTop);
-		}
-
-		// 左Y轴 线
-		dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
-		
-		//如底线不显示，则补上一条网格线
-		if(!dataAxis.isShowAxisLine() || !dataAxis.isShow())
-		{
-			plotGrid.renderGridLinesHorizontal(
-					canvas,plotLeft, plotBottom,plotRight, plotBottom);
-		}				
-	}		
-
-	// 坐标轴是封闭的
-	/**
-	 * 绘制右边数据轴
-	 */
-	protected void renderVerticalDataAxisRight(Canvas canvas) {
-		// 数据轴数据刻度总个数
-		int tickCount = dataAxis.getAixTickCount();
-		// 数据轴高度步长
-		float YSteps = getVerticalYSteps(tickCount);
-		float currentY = plotArea.getBottom();
-
-		float markHeight = MathHelper.getInstance().div(
-				  dataAxis.getTickMarksPaint().getStrokeWidth() , 2f);
-
-		// 数据轴(Y 轴)
-		for (int i = 0; i <= tickCount; i++) {
-			if (i == 0)
-				continue;
-			
-			currentY = MathHelper.getInstance().sub(plotArea.getBottom() , i * YSteps);
-			
-			//是否绘制tick
-			if(dataAxis.isShowAxisLabels() &&
-					isRenderVerticalBarDataAxisTick(currentY,mMoveY)) continue;
-			
-			// 标签
-			Double currentTickLabel = MathHelper.getInstance().add(
-								dataAxis.getAxisMin() , (i * dataAxis.getAxisSteps()));
-
-			if (i == tickCount) {
-				mLstDataTick.add(new AxisTick(i,plotArea.getPlotRight(),plotArea.getTop(), 
-														Double.toString(currentTickLabel)));
-			} else {
-				mLstDataTick.add(new AxisTick(i,plotArea.getPlotRight(),
-											  MathHelper.getInstance().add(currentY , markHeight), 
-											  Double.toString(currentTickLabel)));
-			}
-			// 右边轴默认不显示网格,所以在此忽略不作处理
-		}	
-	}
-	
-	protected void renderVerticalDataAxisRightLine(Canvas canvas) 
-	{		
-		if(mRightAxisVisible)
-		{
-			// 轴 线
-			float paintWidth = MathHelper.getInstance().div(
-					  		    dataAxis.getAxisPaint().getStrokeWidth() , 2f);
-			dataAxis.renderAxis(canvas,plotArea.getRight() + paintWidth,
-					plotArea.getBottom(), plotArea.getRight() + paintWidth,
-					plotArea.getTop());	
-		}
+		mLstDataTick.clear();			
+		//绘制
+		for (int i = 0; i < tickCount; i++)
+		{					
+			switch(pos)
+			{				 
+				case LEFT: //Y
+				case RIGHT:								
+					// 依起始数据坐标与数据刻度间距算出上移高度	
+					currentY =  sub(plotArea.getBottom(), i * YSteps);
+								
+					// 从左到右的横向网格线
+					drawHorizontalGridLines(canvas,plotArea.getLeft(),plotArea.getRight(),
+																i,tickCount,YSteps,currentY);
+															
+					//这个有点问题，要处理下，
+					//  隐藏时应当不需要这个，但目前主明细模式下，会有问题，加 了一个都显示不出来
+					//  先省略，没心情弄了
+					//if(!dataAxis.isShowAxisLabels())continue;
+					 
+					// 标签					
+					currentTickLabel = MathHelper.getInstance().add(
+										dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
+					
+					mLstDataTick.add(new AxisTick(i,axisX , currentY, Double.toString(currentTickLabel)));
+					break;							
+				case TOP: //X
+				case BOTTOM:	
+					 // 依初超始X坐标与标签间距算出当前刻度的X坐标
+					 currentX = add(plotArea.getLeft() , (i) * XSteps); 
+								
+					 //绘制竖向网格线
+					 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
+													i ,tickCount,XSteps,currentX);
+				
+					// if(!dataAxis.isShowAxisLabels())continue;
+					 
+					// 画上标签/刻度线	
+					currentTickLabel = MathHelper.getInstance().add(
+											dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
+										
+					mLstDataTick.add(new AxisTick(i,currentX, axisY, Double.toString(currentTickLabel)));
+															
+					break;	
+			} //switch end						
+		} //end for	
 	}
 
 	/**
 	 * 绘制底部标签轴
 	 */
-	protected void drawClipCategoryAxis(Canvas canvas) {
-		// 标签轴(X 轴)
-		float currentX = plotArea.getLeft();
-
+	protected void drawClipCategoryAxisGridlines(Canvas canvas) 
+	{				
 		// 得到标签轴数据集
 		List<String> dataSet = categoryAxis.getDataSet();
 		// 与柱形图不同，无须多弄一个
-		float XSteps = 0.0f;
-		if (dataSet.size() == 1)  //label仅一个时右移
+		float XSteps = 0.0f,YSteps = 0.0f;
+		int j = 0;
+				
+		int tickCount = dataSet.size();
+		int labeltickCount = tickCount;
+		if( 0 == tickCount)
 		{
-			XSteps = div( getPlotScreenWidth(),(dataSet.size()));
-		}else{
-			XSteps = div( getPlotScreenWidth(),(dataSet.size() - 1));
-		}		
-
-		for (int i = 0; i < dataSet.size(); i++) {
-
-			// 依初超始X坐标与标签间距算出当前刻度的X坐标
-			currentX = MathHelper.getInstance().add(plotArea.getLeft() , (i) * XSteps); 
-			
-			//是否绘制tick
-			if(categoryAxis.isShowAxisLabels() && 
-					isRenderVerticalCategoryAxisTick(currentX,this.mMoveX))continue;
-			
-			// 绘制竖向网格线
-			if (plotGrid.isShowVerticalLines()) {
-				if (i > 0 && i + 1 < dataSet.size())
-					plotGrid.renderGridLinesVertical(canvas,currentX,
-							plotArea.getBottom(), currentX,plotArea.getTop());
-			}
-
-			if (dataSet.size() == i + 1) {
-				mLstCateTick .add(new AxisTick( plotArea.getPlotRight(),plotArea.getBottom(), 
-												dataSet.get(i)));
-			} else {
-				// 画上标签/刻度线
-				mLstCateTick .add(new AxisTick( currentX,plotArea.getBottom(), dataSet.get(i)));
-			}
-
+			Log.e(TAG,"分类轴数据源为0!");
+			return ;
+		}else if (1 == tickCount)  //label仅一个时右移
+		{
+			labeltickCount = tickCount - 1 ;
+			j = 1;
 		}
+			
+		// 标签轴(X 轴)
+		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
-		if (!mRightAxisVisible)
-		{			
-			//即如果右轴不显示的话，补上一条网格线
-			plotGrid.renderGridLinesVertical(canvas,plotArea.getPlotRight(),
-					plotArea.getBottom(), plotArea.getPlotRight(),plotArea.getTop());
-		}
+		XEnum.CategoryAxisPosition pos = getCategoryAxisPosition();
+								
+		if( XEnum.CategoryAxisPosition.LEFT == pos || 
+				XEnum.CategoryAxisPosition.RIGHT == pos)
+		{						
+			YSteps = getVerticalYSteps( labeltickCount) ;
+			switch(pos) //Y
+			{				 
+				case LEFT:
+					currentX = axisX = plotArea.getLeft();
+					break;
+				case RIGHT:	
+					currentX = axisX = plotArea.getRight();
+					break;
+			}
+			currentY = axisY = plotArea.getBottom();										
+		}else{ //TOP BOTTOM														
 			
+			XSteps = getVerticalXSteps(labeltickCount);
+			switch(pos) //Y
+			{				 
+				case TOP:
+					currentY = axisY = plotArea.getTop();
+					break;
+				case BOTTOM:	
+					currentY = axisY = plotArea.getBottom();					
+					break;
+			}		
+			currentX = axisX = plotArea.getLeft();
+		}
+					
+		mLstCateTick.clear();	
+		
+		//绘制
+		for (int i = 0; i < tickCount; i++) 
+		{			
+			switch(pos)
+			{				 
+				case LEFT: //Y
+				case RIGHT:			
+					
+					// 依起始数据坐标与数据刻度间距算出上移高度									
+					currentY = sub(plotArea.getBottom(), j * YSteps);
+																							
+					// 从左到右的横向网格线
+					drawHorizontalGridLines(canvas,plotArea.getLeft(),plotArea.getRight(),
+																i,tickCount,YSteps,currentY);
+					
+					if(!categoryAxis.isShowAxisLabels()) continue;	
+					mLstCateTick .add(new AxisTick( axisX,currentY, dataSet.get(i)));
+					
+					break;							
+				case TOP: //X
+				case BOTTOM:			
+					// 依初超始X坐标与标签间距算出当前刻度的X坐标			
+					currentX = add(plotArea.getLeft() , (j) * XSteps); 
+										
+					 //绘制竖向网格线
+					 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
+													i ,tickCount,XSteps,currentX);
+				
+					 if(!categoryAxis.isShowAxisLabels()) continue;	
+					 									
+					mLstCateTick .add(new AxisTick( currentX,axisY, dataSet.get(i)));	
+						
+					break;			
+			} //switch end
+			j++;
+		} //end for
+	
 	}
 	
-		
-	protected void renderVerticalCategoryAxisLine(Canvas canvas)
-	{
-		// 右边轴线
-		if (mRightAxisVisible)
-		{
-			categoryAxis.renderAxis(canvas,plotArea.getRight(),
-					plotArea.getBottom(), plotArea.getRight(),
-					plotArea.getTop());
-		}else{
-			//即如果右轴不显示的话，补上一条网格线
-			//plotGrid.renderGridLinesVertical(canvas,plotArea.getRight(),
-			//		plotArea.getBottom(), plotArea.getRight(),plotArea.getTop());
-		}
-
-		// bottom轴 线		
-		categoryAxis.renderAxis(canvas,plotArea.getLeft(),
-				plotArea.getBottom(), plotArea.getRight(),
-				plotArea.getBottom());
-		if(!categoryAxis.isShowAxisLine() || !categoryAxis.isShow())
-		{
-			//补上一条网格线
-			plotGrid.renderGridLinesVertical(canvas,plotArea.getLeft(),
-					plotArea.getBottom(), plotArea.getLeft(),plotArea.getTop());			
-		}
-	}
-		
 		
 	@Override
 	public boolean isPlotClickArea(float x,float y)
@@ -464,35 +312,65 @@ public class LnChart extends AxisChart {
 		if(null == BezierControls ) BezierControls = new PointF[2];				
 		paint.setStyle(Style.STROKE);
 		
-			for(int i = 0;i<lstPoints.size();i++)
-			{
-				if(i<3) continue;
+		int count = lstPoints.size();
+		
+		float x = 0.0f,y =0.0f;
+		switch(count)
+		{
+			case 0:
+				return ;
+			case 1:
+				bezierPath.lineTo(lstPoints.get(0).x, lstPoints.get(0).y);
+				break;
+			case 2:
+				x = (lstPoints.get(1).x + lstPoints.get(0).x) /2 ;
+				y = (lstPoints.get(1).y + lstPoints.get(0).y) /2 ;
+				bezierPath.quadTo(x, y,
+						lstPoints.get(1).x, lstPoints.get(1).y);
+				break;		
+			case 3:
+				x = (lstPoints.get(1).x + lstPoints.get(0).x) /2 ;
+				y = (lstPoints.get(1).y + lstPoints.get(0).y) /2 ;
+				bezierPath.quadTo(x, y,
+						lstPoints.get(1).x, lstPoints.get(1).y);
 				
-				CurveHelper.curve3( lstPoints.get(i-2),  
-									lstPoints.get(i-1), 
-									lstPoints.get(i-3),
-									lstPoints.get(i), 
-									BezierControls);
-				renderBezierCurvePath(canvas,paint,bezierPath,
-								lstPoints.get(i-2), lstPoints.get(i -1 ), 
-								BezierControls );
-			}			
+				x = (lstPoints.get(2).x + lstPoints.get(1).x) /2 ;
+				y = (lstPoints.get(2).y + lstPoints.get(1).y) /2 ;
+				bezierPath.quadTo(x, y,
+						lstPoints.get(2).x, lstPoints.get(2).y);
+				break;	
+			default:	
 		
-		
-			if(lstPoints.size()> 3)
-			{			
-				PointF stop  = lstPoints.get(lstPoints.size()-1);
-				//PointF start = lstPoints.get(lstPoints.size()-2);						
-				CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
-											stop, 
-											lstPoints.get(lstPoints.size()-3),
-											stop, 
-											BezierControls);
-				renderBezierCurvePath(canvas,paint,bezierPath,
-								lstPoints.get(lstPoints.size()-2), 
-								lstPoints.get(lstPoints.size() -1 ), 
-								BezierControls );
-			}					
+				for(int i = 0;i<count;i++)
+				{
+					if(i<3) continue;
+					
+					CurveHelper.curve3( lstPoints.get(i-2),  
+										lstPoints.get(i-1), 
+										lstPoints.get(i-3),
+										lstPoints.get(i), 
+										BezierControls);
+					renderBezierCurvePath(canvas,paint,bezierPath,
+									lstPoints.get(i-2), lstPoints.get(i -1 ), 
+									BezierControls );
+				}			
+			
+			
+				if(count> 3)
+				{			
+					PointF stop  = lstPoints.get(lstPoints.size()-1);
+					//PointF start = lstPoints.get(lstPoints.size()-2);						
+					CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
+												stop, 
+												lstPoints.get(lstPoints.size()-3),
+												stop, 
+												BezierControls);
+					renderBezierCurvePath(canvas,paint,bezierPath,
+									lstPoints.get(lstPoints.size()-2), 
+									lstPoints.get(lstPoints.size() -1 ), 
+									BezierControls );
+				}				
+			} // switch
 	}
 
 
@@ -512,71 +390,21 @@ public class LnChart extends AxisChart {
 	}
 	
 	/////////////////////////////////////////
-	
-	
-	protected void drawClipDataAxis(Canvas canvas)
-	{		
-		if(XEnum.LineDataAxisLocation.LEFT == mDataAxisPosition)
-		{
-			renderVerticalDataAxis(canvas);
-		}else{
-			renderVerticalDataAxisRight(canvas);
-		}		
-	}
+
 	/////////////////////
-	
-	protected void drawClipAxisLine(Canvas canvas)
-	{
-		renderVerticalDataAxisLine(canvas);
-		
-		renderVerticalDataAxisRightLine(canvas);
-		renderVerticalCategoryAxisLine(canvas);
-	}
-	
-	protected void drawClipDataAxisTick(Canvas canvas)
-	{		
-		drawDataAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstDataTick);	
+	@Override
+	protected void drawClipDataAxisTickMarks(Canvas canvas)
+	{	
+		drawDataAxisLabels(canvas,mLstDataTick);	//XEnum.Direction.VERTICAL
 		mLstDataTick.clear();
 	}
 	
-	protected void drawClipCategoryAxisTick(Canvas canvas)
+	@Override
+	protected void drawClipCategoryAxisTickMarks(Canvas canvas)
 	{
-		drawCategoryAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstCateTick);	
+		drawCategoryAxisLabels(canvas,mLstCateTick);	
 		mLstCateTick.clear();
 	}
-	
-		
-	//轴刻度
-	protected void renderAxesTick(Canvas canvas)
-	{				
-		drawClipDataAxisTick(canvas);
-		drawClipCategoryAxisTick(canvas);
-	}
-	
-	/////////////////////////////////////////
-	
-	@Override
-	protected boolean postRender(Canvas canvas) throws Exception
-	{		
-		try{
-			super.postRender(canvas);	
-			
-			//绘制图表
-			if(getPanModeStatus()) 
-			{
-				drawClipVerticalPlot(canvas);
-			}else{
-				drawFixedPlot(canvas);
-			}			
-			
-			//显示焦点
-			renderFocusShape(canvas);
-			//响应提示
-			renderToolTip(canvas);
-			return true;
-		} catch (Exception e) {
-			throw e;
-		}
-	}
 
+	/////////////////////////////////////////	
 }

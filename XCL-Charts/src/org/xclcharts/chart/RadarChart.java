@@ -353,7 +353,7 @@ public class RadarChart extends RdChart{
 	/**
 	 * 得到所有相关的交叉点坐标
 	 */
-	private void calcAllPoint()
+	private void calcAllPoints()
 	{				
 		float cirX = plotArea.getCenterX();
 		float cirY = plotArea.getCenterY();
@@ -614,7 +614,7 @@ public class RadarChart extends RdChart{
 	protected void renderPlot(Canvas canvas)
 	{
 		if(!validateParams()) return;
-		calcAllPoint();
+		calcAllPoints();
 		renderGridLines(canvas);
 		renderAxisLines(canvas);
 		renderDataArea(canvas);

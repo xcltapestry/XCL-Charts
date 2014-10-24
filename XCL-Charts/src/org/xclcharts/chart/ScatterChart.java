@@ -73,13 +73,13 @@ public class ScatterChart extends LnChart{
 		return XEnum.ChartType.SCATTER;
 	}
 
-	private void categoryAxisDefaultSetting()
+	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);					
 	}
 	
-	private void dataAxisDefaultSetting()
+	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)
 			dataAxis.setHorizontalTickAlign(Align.LEFT);	

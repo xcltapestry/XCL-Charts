@@ -720,9 +720,11 @@ public class XChart implements IRender {
 	private void drawDyLine(Canvas canvas)
 	{
 		if(!mDyLineVisible)return;		
-		if(null == mDyLine) mDyLine = new DyLineRender();
-		
-		mDyLine.setPlotArea(this.getPlotArea());
+		if(null == mDyLine) 
+		{
+			mDyLine = new DyLineRender();
+			mDyLine.setPlotArea(this.getPlotArea());
+		}				
 		mDyLine.renderLine(canvas);
 	}
 	
@@ -764,6 +766,7 @@ public class XChart implements IRender {
 				if (null == canvas)
 						return false;
 				
+				
 				canvas.save();
 				
 					//缩放图表
@@ -782,6 +785,7 @@ public class XChart implements IRender {
 					drawDyLine(canvas);
 										
 				canvas.restore();
+			
 				
 				return ret;					
 		} catch (Exception e) {

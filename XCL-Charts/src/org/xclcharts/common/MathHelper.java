@@ -342,6 +342,7 @@ public class MathHelper {
 		   throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
 		  if(Double.compare(v2, 0d) == 0) return 0d;
+		  
 		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
 		  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
 		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();

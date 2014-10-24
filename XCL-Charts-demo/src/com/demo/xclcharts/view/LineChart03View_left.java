@@ -66,8 +66,8 @@ public class LineChart03View_left extends GraphicalView {
 			
 		//chart.getCategoryAxis().setHorizontalTickAlign(align)
 			chart.getCategoryAxis().hide();		
-			chart.hideTopAxis();
-			chart.hideRightAxis();
+			//chart.hideTopAxis();
+			//chart.hideRightAxis();
 									
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

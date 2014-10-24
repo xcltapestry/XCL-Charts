@@ -71,8 +71,8 @@ public class LineChart03View  extends GraphicalView {
 			
 			chart.getAxisTitle().setLowerAxisTitle("(年份)");	
 			
-			chart.hideRightAxis();
-			chart.hideTopAxis();
+			//chart.hideRightAxis();
+			//chart.hideTopAxis();
 			
 			chart.getPlotLegend().hide();			
 			

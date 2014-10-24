@@ -175,7 +175,7 @@ public class RangeBarChart  extends AxisChart {
 
 	
 	
-	private void categoryAxisDefaultSetting()
+	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)
 		{
@@ -186,7 +186,7 @@ public class RangeBarChart  extends AxisChart {
 		
 	}
 	
-	private void dataAxisDefaultSetting()
+	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)
 		{
@@ -196,26 +196,6 @@ public class RangeBarChart  extends AxisChart {
 	}
 		
 
-	/**
-	 * 	竖向柱形图
-	 *  Y轴的屏幕高度/数据轴的刻度标记总数 = 步长
-	 * @return Y轴步长
-	 */
-	private float getVerticalYSteps(int tickCount) {		
-		return (div(getPlotScreenHeight(),tickCount));
-	}
-
-	/**
-	 * 竖向柱形图
-	 * 得到X轴的步长
-	 * X轴的屏幕宽度 / 刻度标记总数  = 步长
-	 * @param num 刻度标记总数 
-	 * @return X轴步长
-	 */
-	protected float getVerticalXSteps(int num) {
-		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)			
-		return  div(getPlotScreenWidth() ,num);
-	}	
 
 	/**
 	 * 绘制左边竖轴，及上面的刻度线和分类
@@ -412,10 +392,10 @@ public class RangeBarChart  extends AxisChart {
 	//轴刻度
 	private void renderAxesTick(Canvas canvas)
 	{				
-		drawCategoryAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstCateTick);		
+		drawCategoryAxisLabels(canvas,mLstCateTick);		
 		mLstCateTick.clear();
 		
-		drawDataAxisLabels(canvas,XEnum.Direction.VERTICAL,mLstDataTick);		
+		drawDataAxisLabels(canvas,mLstDataTick);		//XEnum.Direction.VERTICAL
 		mLstDataTick.clear();
 	}
 	

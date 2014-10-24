@@ -92,13 +92,13 @@ public class BubbleChart extends LnChart{
 		dataAxisDefaultSetting();
 	}
 	
-	private void categoryAxisDefaultSetting()
+	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
 	
-	private void dataAxisDefaultSetting()
+	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)
 			dataAxis.setHorizontalTickAlign(Align.LEFT);

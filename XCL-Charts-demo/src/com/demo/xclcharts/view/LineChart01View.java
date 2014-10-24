@@ -154,6 +154,11 @@ public class LineChart01View extends DemoView {
 			*/
 			
 			chart.getPlotArea().extWidth(100.f);
+			
+			//调整轴显示位置
+			chart.setDataAxisPosition(XEnum.DataAxisPosition.RIGHT);
+			chart.setCategoryAxisPosition(XEnum.CategoryAxisPosition.TOP);
+									
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -272,7 +277,7 @@ public class LineChart01View extends DemoView {
 	{		
 		
 		//交叉线
-		if(chart.getDyLineVisible())chart.getDyLine().setCenterXY(x,y);		
+		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);		
 		if(!chart.getListenItemClickStatus())
 		{
 			//交叉线

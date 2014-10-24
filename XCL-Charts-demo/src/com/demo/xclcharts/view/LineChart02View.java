@@ -47,8 +47,7 @@ import android.view.MotionEvent;
 /**
  * @ClassName LineChart01View
  * @Description  折线图的例子 <br/>
- *  * 	问动画效果的人太多了，其实图表库就应当只管绘图，动画效果就交给View或SurfaceView吧,
- * 	看看我弄的效果有多靓. ~_~
+ *  * 	~_~
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 public class LineChart02View extends DemoView implements Runnable{
@@ -123,8 +122,8 @@ public class LineChart02View extends DemoView implements Runnable{
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
 			//隐藏顶轴和右边轴
-			chart.hideTopAxis();
-			chart.hideRightAxis();
+			//chart.hideTopAxis();
+			//chart.hideRightAxis();
 			
 			//设置轴风格
 		
@@ -165,8 +164,15 @@ public class LineChart02View extends DemoView implements Runnable{
 						
 			//允许线与轴交叉时，线会断开
 			chart.setLineAxisIntersectVisible(false);
-												
+			
+			//chart.setDataSource(chartData); 
+			//动态线									
 			chart.showDyLine();
+			
+			//不封闭
+			chart.setAxesClosed(false);
+			
+			//chart.getDataAxis().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -246,7 +252,7 @@ public class LineChart02View extends DemoView implements Runnable{
 		
 		chartData.add(lineData4);
 		chartData.add(lineData5);
-		chartData.add(lineData6);
+		chartData.add(lineData6); 
 	}
 	
 	private void chartLabels()
@@ -302,19 +308,25 @@ public class LineChart02View extends DemoView implements Runnable{
 	
 	private void chartAnimation()
 	{
-		  try {                            	            	 
-          	List<Double> dataSeries= new LinkedList<Double>();	          	
-          	dataSeries.add(0d);       
-          	
-          	for(int i=0;i< chartData.size() ;i++)
+		  try { 
+          	int count =  chartData.size();
+          	for(int i=0;i< count ;i++)
           	{
           		Thread.sleep(150);
           		LinkedList<LineData> animationData = new LinkedList<LineData>();
-          		for(int j=0;j<chartData.size();j++)
+          		for(int j=0;j<=i;j++)
                 {            			            			
-          			if(j < i)animationData.add(chartData.get(j));          			
+          			animationData.add(chartData.get(j));          			
                 }   
-          		chart.setDataSource(animationData);
+         
+          		//Log.e(TAG,"size = "+animationData.size());
+          		chart.setDataSource(animationData);          		
+          		if(i == count - 1)
+          		{
+          			chart.getDataAxis().show();
+          			chart.getDataAxis().showAxisLabels();
+          			
+          		}
           		postInvalidate();            		
           	}            	
           }
@@ -322,9 +334,7 @@ public class LineChart02View extends DemoView implements Runnable{
               Thread.currentThread().interrupt();
           }            
 	}
-	
-	
-	
+			
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub		
@@ -336,7 +346,7 @@ public class LineChart02View extends DemoView implements Runnable{
 			//交叉线
 			if(chart.getDyLineVisible())
 			{
-				chart.getDyLine().setCenterXY(event.getX(),event.getY());
+				chart.getDyLine().setCurrentXY(event.getX(),event.getY());
 				if(chart.getDyLine().isInvalidate())this.invalidate();
 			}
 		}

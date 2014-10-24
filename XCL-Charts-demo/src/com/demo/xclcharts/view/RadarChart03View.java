@@ -32,7 +32,6 @@ import org.xclcharts.chart.RadarData;
 import org.xclcharts.chart.RoseChart;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
@@ -43,8 +42,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.Toast;
 
 
 /**
@@ -117,7 +114,7 @@ public class RadarChart03View extends DemoView {
 			int [] ltrb = getPieDefaultSpadding();
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
-			chart.setTitle("雷达玫瑰混合图");
+			chart.setTitle("玫瑰风向图");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
 

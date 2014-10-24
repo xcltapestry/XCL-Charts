@@ -31,6 +31,7 @@ import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName XYAxis
@@ -133,9 +134,14 @@ public class XYAxis extends Axis {
 	protected void renderHorizontalTick(XChart xchart,Canvas canvas, 
 											float centerX, float centerY,
 			String text) {
-		if (false == isShow())
-			return;
+		
+		//Log.e("XYAxis","XYAxis renderHorizontalTick");
+		
+		if (false == isShow())return;
 
+		//Log.e("XYAxis","XYAxis renderHorizontalTick  isShow == true");
+		
+		
 		float marksStartX = centerX;
 		float markeStopX = centerX;
 

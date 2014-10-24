@@ -433,17 +433,18 @@ public class BarChart3D extends BarChart{
 	}
 	
 	@Override
-	protected boolean isRenderVerticalBarDataAxisTick(float currentY,float moveY)
+	protected boolean isDrawVerticalDataTickMarks(float currentY,float moveY)
 	{
 		return false;
 	}
 	
 	@Override
-	protected boolean isRenderVerticalCategoryAxisTick(float currentX,float moveX)
+	protected boolean isDrawVerticalCategoryTickMarks(float currentX,float moveX)
 	{
 		return false;
 	}
 	
+	/*
 	@Override
 	protected boolean isRenderHorizontalDataAxisTick(float currentX,float moveX)
 	{
@@ -455,5 +456,6 @@ public class BarChart3D extends BarChart{
 	{		
 		return false;
 	}
+	*/
 	
 }
