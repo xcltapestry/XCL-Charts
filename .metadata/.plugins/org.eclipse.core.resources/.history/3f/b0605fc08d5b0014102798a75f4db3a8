@@ -636,6 +636,11 @@ public class AxisChart extends EventChart {
 	}
 	
 	
+	public boolean isShowRightAxis()
+	{		
+		return false;
+	}
+	
 	protected void drawClipCategoryAxisGridlines(Canvas canvas)
 	{
 		
@@ -757,19 +762,12 @@ public class AxisChart extends EventChart {
 	 }
 	
 	
-	/**
-	 * X方向的轴刻度平移扩展间距
-	 * @param margin 间距
-	 */
+	
 	public void setXTickMarksOffsetMargin(float margin)
 	{
 		mxMargin = margin;
 	}
 	
-	/**
-	 * Y方向的轴刻度平移扩展间距
-	 * @param margin 间距
-	 */
 	public void setYTickMarksOffsetMargin(float margin)
 	{
 		myMargin = margin;
@@ -796,7 +794,7 @@ public class AxisChart extends EventChart {
 		
 		float yMargin = getClipYMargin(); // getDrawClipYMargin
 		float xMargin = getClipXMargin();
-		float gWidth = 0.0f;
+		 float gWidth = this.getPlotGrid().getHorizontalLinePaint().getStrokeWidth();
 			
 
 		//设置图显示范围
@@ -805,13 +803,12 @@ public class AxisChart extends EventChart {
 				
 				if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
 						|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-				{			
-					if(getPlotGrid().isShowVerticalLines())
-						gWidth = this.getPlotGrid().getVerticalLinePaint().getStrokeWidth();
+				{
+					gWidth = this.getPlotGrid().getHorizontalLinePaint().getStrokeWidth();
 					//绘制Y轴tick和marks			
 					canvas.save();																	
-					canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
-									plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
+					canvas.clipRect(plotArea.getLeft() - hWidth , plotArea.getTop() - hWidth, 
+									plotArea.getRight() + hWidth, plotArea.getBottom() + hWidth);
 					
 							canvas.translate(0 , offsetY );			
 							
@@ -824,13 +821,12 @@ public class AxisChart extends EventChart {
 				if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
 						|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 				{	
-					if(getPlotGrid().isShowHorizontalLines())
-							gWidth = this.getPlotGrid().getHorizontalLinePaint().getStrokeWidth();
+					
 					//绘制X轴tick和marks			
 					canvas.save();		
 					
-						canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
-										plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
+						canvas.clipRect(plotArea.getLeft() - hWidth , plotArea.getTop() - hWidth, 
+										plotArea.getRight() + hWidth, plotArea.getBottom() + hWidth);
 							canvas.translate(offsetX,0);
 							
 							drawClipCategoryAxisGridlines(canvas);
@@ -912,7 +908,6 @@ public class AxisChart extends EventChart {
 				
 		float yMargin = getClipYMargin();
 		float xMargin = getClipXMargin();
-		float gWidth = 0.0f;
 	
 		//设置图显示范围
 		canvas.save();				
@@ -920,15 +915,11 @@ public class AxisChart extends EventChart {
 				
 		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{								
-			
-			if(getPlotGrid().isShowHorizontalLines())
-				gWidth = this.getPlotGrid().getHorizontalLinePaint().getStrokeWidth();
-			
+		{																	
 			//绘制X轴tick和marks			
 			canvas.save();							
-			canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
-					plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
+			canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+							plotArea.getRight(), plotArea.getBottom());
 					canvas.translate(offsetX,0);
 					drawClipDataAxisGridlines(canvas);						
 			canvas.restore();	
@@ -938,13 +929,11 @@ public class AxisChart extends EventChart {
 		
 		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{									
-			if(getPlotGrid().isShowVerticalLines())
-				gWidth = this.getPlotGrid().getVerticalLinePaint().getStrokeWidth();
+		{													
 			//绘制Y轴tick和marks			
 			canvas.save();					
-			canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
-					plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
+					canvas.clipRect(plotArea.getLeft() , plotArea.getTop(), 
+									plotArea.getRight(), plotArea.getBottom());
 					canvas.translate(0 , offsetY );					
 					drawClipCategoryAxisGridlines(canvas);		
 			canvas.restore();	

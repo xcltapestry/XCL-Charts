@@ -358,7 +358,13 @@ public class AreaChart01View extends DemoView implements Runnable {
 		chart.ActiveListenItemClick();
 		//为了让触发更灵敏，可以扩大5px的点击监听范围
 		chart.extPointClickRange(5);		
-		chart.showClikedFocus();				
+		chart.showClikedFocus();
+		
+		chart.getDataAxis().show();
+		chart.getCategoryAxis().show();
+		//chart.getDataAxis().showAxisLine();
+		//chart.getCategoryAxis().showAxisLine();
+		
 	}
 	
 }
