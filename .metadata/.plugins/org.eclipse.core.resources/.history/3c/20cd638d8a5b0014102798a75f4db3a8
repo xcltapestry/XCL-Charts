@@ -158,8 +158,7 @@ public class LineChart01View extends DemoView {
 			//调整轴显示位置
 			chart.setDataAxisPosition(XEnum.DataAxisPosition.RIGHT);
 			chart.setCategoryAxisPosition(XEnum.CategoryAxisPosition.TOP);
-			
-					
+									
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

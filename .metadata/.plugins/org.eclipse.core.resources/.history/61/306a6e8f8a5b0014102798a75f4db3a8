@@ -663,6 +663,7 @@ public class AxisChart extends EventChart {
 		float plotRight = plotArea.getRight();
 		float plotBottom = plotArea.getBottom();
 		
+		//getAxesClosedStatus
 		
 		switch(mDataAxisPosition)
 		{
@@ -676,7 +677,7 @@ public class AxisChart extends EventChart {
 			dataAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom); 
 			
 			if(getAxesClosedStatus()) 
-				dataAxis.renderAxis(canvas,plotLeft, plotTop, plotLeft, plotBottom);			
+				dataAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom);			
 			break;			
 		case TOP:
 			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); 
