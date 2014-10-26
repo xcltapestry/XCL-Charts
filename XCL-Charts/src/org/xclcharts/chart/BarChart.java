@@ -341,7 +341,8 @@ public class BarChart extends AxisChart {
 					currentTickLabel = MathHelper.getInstance().add(
 										dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
 															
-					mLstDataTick.add(new PlotAxisTick(i, sub(axisX ,get3DOffsetX()) , 
+					//sub(axisX ,get3DOffsetX())
+					mLstDataTick.add(new PlotAxisTick(i, axisX, 
 												currentY, Double.toString(currentTickLabel)));										
 					break;							
 				case TOP: //X
