@@ -278,7 +278,7 @@ public class BarChart extends AxisChart {
 		
 		if( 0 == tickCount)
 		{
-			Log.e(TAG,"数据库数据源为0!");
+			Log.e(TAG,"数据轴数据源为0!");
 			return ;
 		}else if (1 == tickCount)  //label仅一个时右移
 			    labeltickCount = tickCount - 1 ;
