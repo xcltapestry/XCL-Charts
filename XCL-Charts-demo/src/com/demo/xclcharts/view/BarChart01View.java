@@ -173,8 +173,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 				dyl.setDyLineStyle(XEnum.DyLineStyle.Horizontal);
 				dyl.setLineDrawStyle(XEnum.LineStyle.DASH);
 			}
-									
-			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);			
+			
+			//调整轴显示位置
+			//chart.setDataAxisPosition(XEnum.DataAxisPosition.RIGHT);
+			//chart.setCategoryAxisPosition(XEnum.CategoryAxisPosition.TOP);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

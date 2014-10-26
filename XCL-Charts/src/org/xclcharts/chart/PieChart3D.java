@@ -26,6 +26,7 @@ import java.util.List;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.PlotArcLabelInfo;
 
 import android.graphics.Canvas;
 import android.graphics.PointF;
@@ -89,12 +90,15 @@ public class PieChart3D extends PieChart{
 				    								cirX,cirY,newRadius,
 				    								add(offsetAngle, div(currentAngle,2f))); 	
 				        			        
-				        initRectF("mRectF",sub(point.x, radius) ,sub(point.y , radius),
-				        				   add(point.x , radius),add(point.y , radius));
+				        initRectF(sub(point.x, radius) ,sub(point.y , radius), 
+				        		   add(point.x , radius),add(point.y , radius));
 				        
 	                    canvas.drawArc(mRectF, offsetAngle, currentAngle, true,geArcPaint());
-		            }else{
-	                    canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true,geArcPaint());
+		            }else{		       
+		                //确定饼图范围       
+		                initRectF(sub(cirX , radius) ,sub(cirY , radius),  
+		                		  add(cirX , radius) ,add(cirY , radius)); 		            		                
+	                    canvas.drawArc(mRectF, offsetAngle, currentAngle, true,geArcPaint()); 
 		            }			    			    
 		            //下次的起始角度  
 				    offsetAngle = add(offsetAngle,currentAngle);  	            		           
@@ -119,7 +123,12 @@ public class PieChart3D extends PieChart{
         float currentAngle = 0.0f;	              
         float newRadius = 0.0f;	
         int size = chartDataSource.size();
-        PointF[] arrPoint = new PointF[size];               					
+        mLstLabels.clear();
+        
+        float left = sub(cirX , radius) ;
+        float top = sub(cirY , radius) ;        
+		float right = add(cirX , radius) ;
+		float bottom = add(cirY , radius);		  
        
 		for(int j=0;j< size;j++)
 		{
@@ -138,16 +147,19 @@ public class PieChart3D extends PieChart{
 		    	PointF point = MathHelper.getInstance().calcArcEndPointXY(
 		    					cirX,cirY,newRadius,add(offsetAngle , div(currentAngle,2f))); 	
 		          		        
-		        initRectF("mRectF",sub(point.x , radius) ,sub(point.y , radius ),
-		        				   add(point.x , radius ),add(point.y , radius));   
+		        initRectF(sub(point.x , radius) ,sub(point.y , radius ), 
+		        		  add(point.x , radius ),add(point.y , radius));   
 		        
                 canvas.drawArc(mRectF, offsetAngle, currentAngle, true,geArcPaint());
                 
-		        arrPoint[j] = new PointF(point.x,point.y);
+		        mLstLabels.add(new PlotArcLabelInfo(j,point.x, point.y,radius,offsetAngle, currentAngle));
             }else{
-                canvas.drawArc(mArcRF0, offsetAngle, currentAngle, true, geArcPaint());
+            	//确定饼图范围       
+                initRectF(left,top,right,bottom); 		
                 
-     	       arrPoint[j] = new PointF(cirX,cirY);
+                canvas.drawArc(mRectF, offsetAngle, currentAngle, true, geArcPaint()); 
+                
+     	       mLstLabels.add(new PlotArcLabelInfo(j,cirX,cirY,radius,offsetAngle, currentAngle));     	      
      	    }		
 		
 		    //保存角度
@@ -159,7 +171,7 @@ public class PieChart3D extends PieChart{
 		}		
 		
 		//绘制Label
-		renderLabels(canvas,initOffsetAngle,radius,arrPoint);			
+		renderLabels(canvas);			
 		
 		//图例
 		plotLegend.renderPieKey(canvas,chartDataSource);	
@@ -183,12 +195,7 @@ public class PieChart3D extends PieChart{
 		float cirX = plotArea.getCenterX();
 	    float cirY = plotArea.getCenterY();	     
         float radius = getRadius();
-        
-        //确定饼图范围       
-        initRectF("mArcRF0",sub(cirX , radius) ,sub(cirY , radius),
-        					add(cirX , radius),add(cirY , radius)); 
-    
-      
+       
 		if(render3D(canvas,mOffsetAngle,chartDataSource,cirX, cirY, radius))
 		{
 			return renderFlatArcAndLegend(canvas,mOffsetAngle,chartDataSource,

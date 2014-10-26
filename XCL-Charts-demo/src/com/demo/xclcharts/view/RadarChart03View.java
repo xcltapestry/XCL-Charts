@@ -46,7 +46,7 @@ import android.util.Log;
 
 /**
  * @ClassName RadarChart03View
- * @Description  圆形雷达图的例子
+ * @Description  玫瑰风向图(wind rose)的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 

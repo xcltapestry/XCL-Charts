@@ -22,13 +22,12 @@
 
 package org.xclcharts.renderer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.axis.AxisTick;
+import org.xclcharts.renderer.info.PlotAxisTick;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -51,15 +50,8 @@ public class LnChart extends AxisChart {
 	private static final String TAG = "LnChart";
 	
 	private PointF[] BezierControls ;		
-	
-	//轴刻度的位置信息
-	private ArrayList<AxisTick> mLstDataTick = null;
-	private ArrayList<AxisTick> mLstCateTick = null;
 				
 	public LnChart() {
-				
-		if(null == mLstDataTick)mLstDataTick = new  ArrayList<AxisTick>();
-		if(null == mLstCateTick)mLstCateTick = new  ArrayList<AxisTick>();		
 		
 		//初始化图例
 		if(null != plotLegend)
@@ -77,6 +69,7 @@ public class LnChart extends AxisChart {
 		setAxesClosed(true);		
 	}
 		
+	
 	/**
 	 * 绘制底部标签轴
 	 */
@@ -157,7 +150,7 @@ public class LnChart extends AxisChart {
 					currentTickLabel = MathHelper.getInstance().add(
 										dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
 					
-					mLstDataTick.add(new AxisTick(i,axisX , currentY, Double.toString(currentTickLabel)));
+					mLstDataTick.add(new PlotAxisTick(i,axisX , currentY, Double.toString(currentTickLabel)));
 					break;							
 				case TOP: //X
 				case BOTTOM:	
@@ -174,16 +167,19 @@ public class LnChart extends AxisChart {
 					currentTickLabel = MathHelper.getInstance().add(
 											dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
 										
-					mLstDataTick.add(new AxisTick(i,currentX, axisY, Double.toString(currentTickLabel)));
+					mLstDataTick.add(new PlotAxisTick(i,currentX, axisY, Double.toString(currentTickLabel)));
 															
 					break;	
 			} //switch end						
 		} //end for	
 	}
 
+
+	
 	/**
 	 * 绘制底部标签轴
 	 */
+	@Override
 	protected void drawClipCategoryAxisGridlines(Canvas canvas) 
 	{				
 		// 得到标签轴数据集
@@ -191,7 +187,7 @@ public class LnChart extends AxisChart {
 		// 与柱形图不同，无须多弄一个
 		float XSteps = 0.0f,YSteps = 0.0f;
 		int j = 0;
-				
+	
 		int tickCount = dataSet.size();
 		int labeltickCount = tickCount;
 		if( 0 == tickCount)
@@ -203,7 +199,7 @@ public class LnChart extends AxisChart {
 			labeltickCount = tickCount - 1 ;
 			j = 1;
 		}
-			
+							
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
@@ -256,7 +252,7 @@ public class LnChart extends AxisChart {
 																i,tickCount,YSteps,currentY);
 					
 					if(!categoryAxis.isShowAxisLabels()) continue;	
-					mLstCateTick .add(new AxisTick( axisX,currentY, dataSet.get(i)));
+					mLstCateTick .add(new PlotAxisTick( axisX,currentY, dataSet.get(i)));
 					
 					break;							
 				case TOP: //X
@@ -270,7 +266,7 @@ public class LnChart extends AxisChart {
 				
 					 if(!categoryAxis.isShowAxisLabels()) continue;	
 					 									
-					mLstCateTick .add(new AxisTick( currentX,axisY, dataSet.get(i)));	
+					mLstCateTick .add(new PlotAxisTick( currentX,axisY, dataSet.get(i)));	
 						
 					break;			
 			} //switch end
@@ -313,64 +309,51 @@ public class LnChart extends AxisChart {
 		paint.setStyle(Style.STROKE);
 		
 		int count = lstPoints.size();
+		if( count <= 1  ) return; //没有或仅一个点就不需要了
 		
-		float x = 0.0f,y =0.0f;
-		switch(count)
-		{
-			case 0:
-				return ;
-			case 1:
-				bezierPath.lineTo(lstPoints.get(0).x, lstPoints.get(0).y);
-				break;
-			case 2:
-				x = (lstPoints.get(1).x + lstPoints.get(0).x) /2 ;
-				y = (lstPoints.get(1).y + lstPoints.get(0).y) /2 ;
-				bezierPath.quadTo(x, y,
-						lstPoints.get(1).x, lstPoints.get(1).y);
-				break;		
-			case 3:
-				x = (lstPoints.get(1).x + lstPoints.get(0).x) /2 ;
-				y = (lstPoints.get(1).y + lstPoints.get(0).y) /2 ;
-				bezierPath.quadTo(x, y,
-						lstPoints.get(1).x, lstPoints.get(1).y);
-				
-				x = (lstPoints.get(2).x + lstPoints.get(1).x) /2 ;
-				y = (lstPoints.get(2).y + lstPoints.get(1).y) /2 ;
-				bezierPath.quadTo(x, y,
-						lstPoints.get(2).x, lstPoints.get(2).y);
-				break;	
-			default:	
-		
-				for(int i = 0;i<count;i++)
-				{
-					if(i<3) continue;
-					
-					CurveHelper.curve3( lstPoints.get(i-2),  
-										lstPoints.get(i-1), 
-										lstPoints.get(i-3),
-										lstPoints.get(i), 
+		if(count <= 3)
+		{			
+			bezierPath.moveTo(lstPoints.get(0).x, lstPoints.get(0).y);
+			bezierPath.lineTo(lstPoints.get(1).x, lstPoints.get(1).y);
+			
+			if(3 == count)
+				bezierPath.lineTo(lstPoints.get(2).x, lstPoints.get(2).y);
+			
+			canvas.drawPath(bezierPath, paint);
+			bezierPath.reset();					
+			return;
+		}
+	
+		for(int i = 0;i<count;i++)
+		{					
+			if(i<3) continue;
+			
+			CurveHelper.curve3( lstPoints.get(i-2),  
+								lstPoints.get(i-1), 
+								lstPoints.get(i-3),
+								lstPoints.get(i), 
+								BezierControls);
+			renderBezierCurvePath(canvas,paint,bezierPath,
+							lstPoints.get(i-2), lstPoints.get(i -1 ), 
+							BezierControls );
+		}			
+	
+	
+		if(count> 3)
+		{			
+			PointF stop  = lstPoints.get(lstPoints.size()-1);
+			//PointF start = lstPoints.get(lstPoints.size()-2);						
+			CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
+										stop, 
+										lstPoints.get(lstPoints.size()-3),
+										stop, 
 										BezierControls);
-					renderBezierCurvePath(canvas,paint,bezierPath,
-									lstPoints.get(i-2), lstPoints.get(i -1 ), 
-									BezierControls );
-				}			
-			
-			
-				if(count> 3)
-				{			
-					PointF stop  = lstPoints.get(lstPoints.size()-1);
-					//PointF start = lstPoints.get(lstPoints.size()-2);						
-					CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
-												stop, 
-												lstPoints.get(lstPoints.size()-3),
-												stop, 
-												BezierControls);
-					renderBezierCurvePath(canvas,paint,bezierPath,
-									lstPoints.get(lstPoints.size()-2), 
-									lstPoints.get(lstPoints.size() -1 ), 
-									BezierControls );
-				}				
-			} // switch
+			renderBezierCurvePath(canvas,paint,bezierPath,
+							lstPoints.get(lstPoints.size()-2), 
+							lstPoints.get(lstPoints.size() -1 ), 
+							BezierControls );
+		}				
+		
 	}
 
 
@@ -390,21 +373,5 @@ public class LnChart extends AxisChart {
 	}
 	
 	/////////////////////////////////////////
-
-	/////////////////////
-	@Override
-	protected void drawClipDataAxisTickMarks(Canvas canvas)
-	{	
-		drawDataAxisLabels(canvas,mLstDataTick);	//XEnum.Direction.VERTICAL
-		mLstDataTick.clear();
-	}
-	
-	@Override
-	protected void drawClipCategoryAxisTickMarks(Canvas canvas)
-	{
-		drawCategoryAxisLabels(canvas,mLstCateTick);	
-		mLstCateTick.clear();
-	}
-
 	/////////////////////////////////////////	
 }

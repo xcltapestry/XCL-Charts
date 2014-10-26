@@ -178,7 +178,7 @@ public class BarChart04View extends DemoView {
 		int max = 35;
 	    int min = 15;
 	        
-		for(int i=1;i<31;i++)
+		for(int i=1;i<31;i++) 
 		{
 			Random random = new Random();
 			int v = random.nextInt(max)%(max-min+1) + min;			 

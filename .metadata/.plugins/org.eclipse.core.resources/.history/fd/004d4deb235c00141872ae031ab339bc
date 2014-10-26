@@ -1,0 +1,46 @@
+package org.xclcharts.renderer.info;
+
+public class PlotArcLabelInfo extends PlotDataInfo{
+	
+	/*
+	//坐标
+		public float X = 0.0f;
+		public float Y = 0.0f;
+		
+		public float Angle = 0.0f;
+		
+		//标签
+		public String Label = "";
+		
+		//将当前为第几个tick传递轴，用以区分是否为主明tick
+		public int ID = -1;
+				
+		*/
+		
+		public float Radius = 0.0f;
+		
+		
+		public float offsetAngle = 0.0f;
+		public float currentAngle = 0.0f;
+		
+		
+		public ArcLabelInfo(){};
+		
+		public ArcLabelInfo(float x,float y,String label)
+		{
+			 X = x;
+			 Y = y;
+			 Label = label;
+		};
+		
+		public ArcLabelInfo(int id,float x,float y,String label)
+		{
+			 ID = id;
+			 X = x;
+			 Y = y;
+			 Label = label;
+		};
+		
+	
+
+}

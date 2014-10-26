@@ -311,6 +311,10 @@ public class MultiAxisChart02View extends DemoView {
 					
 		//允许线与轴交叉时，线会断开
 		lnChart.setLineAxisIntersectVisible(false);
+		
+		//调整右轴显示风格
+		lnChart.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
+		lnChart.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 	}
 	
 	@Override

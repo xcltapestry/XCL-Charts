@@ -119,13 +119,6 @@ public class EventChart extends XChart {
 		mShowClikedFocus = true;
 	}
 	
-	/**
-	 * 设置标识形状
-	 */
-	//public void setClikedFocusShape()
-	//{
-		
-	//}
 	
 	private void clearSelected()
 	{
@@ -151,16 +144,13 @@ public class EventChart extends XChart {
 		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotPointPosition>();
 	
-		if(this.getListenItemClickStatus())
-		{
-			PlotPointPosition pRecord = new PlotPointPosition();			
-			pRecord.savePlotDataID(dataID);
-			pRecord.savePlotDataChildID(childID);			
-			pRecord.savePlotPosition(x, y);							
-			pRecord.savePlotRectF(left,top,right,bottom);			
-			pRecord.extPointClickRange(mClickRangeExtValue);			
-			mRecordset.add(pRecord);				
-		}
+		PlotPointPosition pRecord = new PlotPointPosition();			
+		pRecord.savePlotDataID(dataID);
+		pRecord.savePlotDataChildID(childID);			
+		pRecord.savePlotPosition(x, y);							
+		pRecord.savePlotRectF(left,top,right,bottom);			
+		pRecord.extPointClickRange(mClickRangeExtValue);			
+		mRecordset.add(pRecord);
 	}
 	
 	
@@ -169,16 +159,13 @@ public class EventChart extends XChart {
 	{
 		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotBarPosition>();	
-		
-		if(this.getListenItemClickStatus())
-		{
-				PlotBarPosition pRecord = new PlotBarPosition();			
-				pRecord.savePlotDataID(dataID);
-				pRecord.savePlotDataChildID(childID);
-				pRecord.savePlotRectF(left, top, right, bottom);			
-				pRecord.extPointClickRange(mClickRangeExtValue);
-				mRecordset.add(pRecord);															
-		}
+				
+		PlotBarPosition pRecord = new PlotBarPosition();			
+		pRecord.savePlotDataID(dataID);
+		pRecord.savePlotDataChildID(childID);
+		pRecord.savePlotRectF(left, top, right, bottom);			
+		pRecord.extPointClickRange(mClickRangeExtValue);
+		mRecordset.add(pRecord);		
 	}
 			
 	protected void saveBarRecord(int dataID,int childID,float x,float y,RectF r)
@@ -186,15 +173,12 @@ public class EventChart extends XChart {
 		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotBarPosition>();	
 	
-		if(this.getListenItemClickStatus())
-		{
-			PlotBarPosition pRecord = new PlotBarPosition();			
-			pRecord.savePlotDataID(dataID);
-			pRecord.savePlotDataChildID(childID);						
-			pRecord.savePlotRectF(r);			
-			pRecord.extPointClickRange(mClickRangeExtValue);
-			mRecordset.add(pRecord);
-		}
+		PlotBarPosition pRecord = new PlotBarPosition();			
+		pRecord.savePlotDataID(dataID);
+		pRecord.savePlotDataChildID(childID);						
+		pRecord.savePlotRectF(r);			
+		pRecord.extPointClickRange(mClickRangeExtValue);
+		mRecordset.add(pRecord);		
 	}
 	
 	//保存角度 (半径)
@@ -205,14 +189,11 @@ public class EventChart extends XChart {
 		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotArcPosition>();	
 	
-		if(this.getListenItemClickStatus())
-		{
-			PlotArcPosition pRecord = new PlotArcPosition();			
-			pRecord.savePlotDataID(dataID);		
-			pRecord.savePlotCirXY(centerX,centerY);
-			pRecord.saveAngle(radius,offsetAngle,Angle,selectedOffset);	
-			mRecordset.add(pRecord);
-		}
+		PlotArcPosition pRecord = new PlotArcPosition();			
+		pRecord.savePlotDataID(dataID);		
+		pRecord.savePlotCirXY(centerX,centerY);
+		pRecord.saveAngle(radius,offsetAngle,Angle,selectedOffset);	
+		mRecordset.add(pRecord);		
 	}
 
 
@@ -398,12 +379,6 @@ public class EventChart extends XChart {
 	{				
 		if(!mShowClikedFocus) return true;
 		
-		//是否显示焦点(lnchart显示rect框，bar显示rect,pie 显示arc)
-		//...		
-		//if(-1 != mSelectID)
-		//{
-			// mRecordset.renderShape(canvas);
-		//}
 		try{
 				if(null != mFocusPoint)
 				{									

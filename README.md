@@ -1,13 +1,13 @@
 XCL-Charts
 ==========
 
-<b>XCL-Charts V1.9</b><br/>
+<b>XCL-Charts V2.0</b><br/>
  &nbsp;&nbsp;&nbsp;&nbsp;Android开源图表库(XCL-Charts is a free charting library for Android platform.) <br/>
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于Android原生Canvas来绘制各种图表,使用简便,定制灵活。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>3D/非3D柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
  折线图(Line Chart)、曲线图(Spline Chart)、环形图(Dount Chart)、南丁格尔玫瑰图(Rose Chart)、仪表盘(Dial Chart)、刻度盘(Gauge Chart)、雷达图(Radar Chart)、
- 圆形图(Circle Chart)、弧线比较图、散点图(Scatter Chart)、气泡图(Bubble Chart)、范围条形图(RangeBar Chart),玫瑰风向图等图表。<br/>
- &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括支持手势缩放、图表滑动、点击提示、动画显示、多轴显示、动态图例、图表参考线、多图表的混合显示及同数据源不同类型图表切换等。</b><br/> 
+ 圆形图(Circle Chart)、弧线比较图、散点图(Scatter Chart)、气泡图(Bubble Chart)、范围条形图(RangeBar Chart),玫瑰风向图(Wind Rose)等图表。<br/>
+ &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括手势缩放、图表滑动、点击交互、动画效果、多XY轴显示、轴线任意方位显示、动态图例、图表参考线、混合图表及同数据源图表类型切换等。</b><br/> 
  
  <b>License</b><br/>
       采用Apache v2 License开源协议。<br/>
@@ -29,7 +29,7 @@ http://www.oschina.net/p/xcl-charts
   <img src="http://img.blog.csdn.net/20141008195423602" alt="横向3D bar chart " />  
 
  <img src="http://img.blog.csdn.net/20140929210049071" alt="3D bar chart" />
- <img src="http://img.blog.csdn.net/20140929205829076" alt="line chart" />
+ <img src="http://img.blog.csdn.net/20141026175026701?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="line chart" />
   <img src="http://img.blog.csdn.net/20140929205707316" alt="spline chart" />
 
 <img src="http://img.blog.csdn.net/20140701205543936" alt="3d pie chart 动画" />
@@ -56,16 +56,17 @@ http://www.oschina.net/p/xcl-charts
  </p> 
   <br/>    
 <p>
+
  <img src="http://img.blog.csdn.net/20140628215606296" alt="rose chart" />
- <img src="http://img.blog.csdn.net/20140611213841375?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart 1" /> 
+ <img src="http://img.blog.csdn.net/20141020232722384" alt="circle chart" /> 
  <img src="http://img.blog.csdn.net/20140611213922187?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 bar chart" />
    </p>
  <br/>
 
    <p>
- <img src="http://img.blog.csdn.net/20140611214155312?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="half circle chart" /> 
- <img src="http://img.blog.csdn.net/20140611214208953?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="Gauge Chart" />
- <img src="http://img.blog.csdn.net/20140611214132625?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="circle chart" /> 
+ <img src="http://img.blog.csdn.net/20141026173734266?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="Gauge chart" /> 
+ <img src="http://img.blog.csdn.net/20141026173816339?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="flat pie Chart" />
+ <img src="http://img.blog.csdn.net/20141026174027988?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="arcline chart" /> 
  
   </p>
  <br/>  
@@ -76,16 +77,15 @@ http://www.oschina.net/p/xcl-charts
 <img src="http://img.blog.csdn.net/20140929210328035" alt="area chart" />  
 
 <img src="http://img.blog.csdn.net/20141020201349022" alt="piechart2d" />
-<img src="http://img.blog.csdn.net/20140823203324712" alt="radarchart_round" />
-<img src="http://img.blog.csdn.net/20140823203347192" alt="radarchart_rose" />
+<img src="http://img.blog.csdn.net/20141026173927656?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="radarchart_round" />
+<img src="http://img.blog.csdn.net/20141026173932576?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="wind_rose_chart" />
 <img src="http://img.blog.csdn.net/20140830204725581" alt="areachart_bz" />
-<img src="http://img.blog.csdn.net/20140831201802281" alt="arclinechart" />
-
 <img src="http://img.blog.csdn.net/20140927224825199" alt="rangebarchart" />
-<img src="http://img.blog.csdn.net/20141014220823359" alt="piechart_line" />
- <img src="http://img.blog.csdn.net/20140611213335156?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="stacked chart 横向" />
 
- <img src="http://img.blog.csdn.net/20140611213901843?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="mutil chart  2 横向" />
- <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="同源 pie chart 横向" />
-<img src="http://img.blog.csdn.net/20140716213434150" alt="mulbar stacked chart" />
+ <img src="http://img.blog.csdn.net/20141026173520745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast  " alt="mulbar chart1" />
+ <img src="http://img.blog.csdn.net/20141026173558715?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="mulbar chart2" />
+ <img src="http://img.blog.csdn.net/20141026173628714?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="mulstackedbar chart" />
   
+ <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="souce pie chart h" />
+ <img src="http://img.blog.csdn.net/20141026174556664?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="bar chart h" />
+ <img src="http://img.blog.csdn.net/20141026174630595?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="stacked chart h" />

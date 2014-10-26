@@ -54,8 +54,8 @@ public class AboutActivity extends Activity {
 	
 		TextView tv_title = (TextView) findViewById(R.id.tv_title);
 		String html = "<big><font color ='red'>XCL-Charts</font></big><br/>"			
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 1.9<br/>"
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-10-24<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 2.0<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2014-10-26<br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群: 374780627<br/>"
 					+ "<big><font color ='red'>License</font></big><br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;Apache v2 License开源协议。"

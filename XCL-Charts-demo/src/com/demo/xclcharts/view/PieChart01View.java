@@ -182,7 +182,8 @@ public class PieChart01View extends DemoView implements Runnable{
 		  try {       
 			 
 			  	float sum = 0.0f;
-	          	for(int i=0;i< chartData.size() ;i++)
+			  	int count = chartData.size();
+	          	for(int i=0;i< count ;i++)
 	          	{
 	          		Thread.sleep(150);
 	          		LinkedList<PieData> animationData = new LinkedList<PieData>();
@@ -194,15 +195,13 @@ public class PieChart01View extends DemoView implements Runnable{
 	          			sum = (float) MathHelper.getInstance().add(
 	          									sum , chartData.get(j).getPercentage());	          			
 	          		}   		          		
-	          		
-	          		
-	          				          				          		
+	          			          			          				          				          	
 	          		animationData.add(new PieData("","",  MathHelper.getInstance().sub(100.0f , sum),
 	          											  (int)Color.argb(1, 0, 0, 0)));		          		
 	          		chart.setDataSource(animationData);
 	          		
 	          		//激活点击监听
-	    			if(chartData.size() - 1 == i)
+	    			if(count - 1 == i)
 	    			{
 	    				chart.ActiveListenItemClick();
 	    				//显示边框线，并设置其颜色

@@ -12,8 +12,8 @@
         
   		 <com.demo.xclcharts.view.GaugeChart01View
 	         android:id="@+id/chart_view"
-	         android:layout_width="300dip"  
-	         android:layout_height="300dip"  			        
+	         android:layout_width="400dip"  
+	         android:layout_height="200dip"  			        
 	         android:layout_centerInParent="true"
 	      />   	
 	         

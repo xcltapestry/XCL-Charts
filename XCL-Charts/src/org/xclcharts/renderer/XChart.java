@@ -105,6 +105,11 @@ public class XChart implements IRender {
 	//是否显示十字交叉线
 	private boolean mDyLineVisible = false;
 	private DyLineRender mDyLine = null;
+	
+	//是否平移
+	protected boolean mEnablePanMode = true;
+	//平移模式下的可移动方向
+	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
 		
 	public XChart() {
 		initChart();		
@@ -387,6 +392,7 @@ public class XChart implements IRender {
 	 */
 	public void setTranslateXY(float x,float y)
 	{
+		if(!mEnablePanMode)return; 
 		if(null == mTranslateXY) mTranslateXY = new float[2];	
 		mTranslateXY[0] = x;
 		mTranslateXY[1] = y;
@@ -647,6 +653,51 @@ public class XChart implements IRender {
 	
 	
 	/**
+	 * 设置手势平移模式
+	 * @param mode	平移模式
+	 */
+	public void setPlotPanMode(XEnum.PanMode mode)
+	{
+		 mPlotPanMode = mode;
+	}
+	
+	/**
+	 * 返回当前图表平移模式
+	 * @return 平移模式
+	 */
+	public XEnum.PanMode getPlotPanMode()
+	{
+		return mPlotPanMode;
+	}
+	
+	/**
+	 * 激活平移模式
+	 */
+	public void enablePanMode()
+	{
+		mEnablePanMode = true;		
+	}
+	
+	/**
+	 * 禁用平移模式
+	 */
+	public void disablePanMode()
+	{
+		mEnablePanMode = false;		
+	}
+	
+	/**
+	 * 返回当前图表的平移状态
+	 * @return  平移状态
+	 */
+	public boolean getPanModeStatus()
+	{
+		return mEnablePanMode;
+	}
+	
+	
+	
+	/**
 	 * 返回动态图例类，当默认的图例不合需求时，可以用来应付一些特殊格式
 	 * @return 动态图例
 	 */
@@ -720,12 +771,9 @@ public class XChart implements IRender {
 	private void drawDyLine(Canvas canvas)
 	{
 		if(!mDyLineVisible)return;		
-		if(null == mDyLine) 
-		{
-			mDyLine = new DyLineRender();
-			mDyLine.setPlotArea(this.getPlotArea());
-		}				
-		mDyLine.renderLine(canvas);
+		if(null == mDyLine)mDyLine = new DyLineRender(); 
+		mDyLine.renderLine(canvas,plotArea.getLeft(),plotArea.getTop(),
+								  plotArea.getRight(),plotArea.getBottom());
 	}
 	
 	private void drawDyLegend(Canvas canvas)
@@ -799,7 +847,7 @@ public class XChart implements IRender {
 	 * 加法运算
 	 * @param v1 参数1
 	 * @param v2 参数2
-	 * @return
+	 * @return 结果
 	 */
 	 protected float add(float v1, float v2) 
 	 {

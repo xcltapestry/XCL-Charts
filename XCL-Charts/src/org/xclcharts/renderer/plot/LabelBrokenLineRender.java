@@ -30,6 +30,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.PointF;
 
 
 /**
@@ -46,9 +47,10 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 	{
 	}
 		
-	public void renderLabelLine(String text,float itemAngle,
+	public PointF renderLabelLine(String text,float itemAngle,
 			float cirX,float cirY,float radius,float calcAngle,
-			Canvas canvas,Paint paintLabel )
+			Canvas canvas,Paint paintLabel,
+			boolean showLabel)
 	{
 		float pointRadius = 0.0f;
 		if(getLinePointStyle() == XEnum.LabelLinePoint.END 
@@ -124,9 +126,11 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
     //标签点NONE,BEGIN,END,ALL    
     drawPoint(startX,startY,stopX, stopY, endX,pointRadius,canvas);
     
-    //标签
-    DrawHelper.getInstance().drawRotateText(text,endLabelX, stopY, itemAngle, 
+    if(showLabel) //标签    
+    	DrawHelper.getInstance().drawRotateText(text,endLabelX, stopY, itemAngle, 
 													canvas, paintLabel);
+    
+    return (new PointF(endLabelX, stopY));
 }
 
 	

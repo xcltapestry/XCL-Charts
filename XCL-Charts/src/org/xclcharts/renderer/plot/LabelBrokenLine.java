@@ -104,7 +104,7 @@ public class LabelBrokenLine {
 	
 	/**
 	 * 返回点的半径
-	 * @return
+	 * @return 半径
 	 */
 	public float getRadius()
 	{

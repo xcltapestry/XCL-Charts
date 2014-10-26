@@ -82,9 +82,7 @@ public class RadarChart02View extends DemoView {
 			chartDataSet();	
 			chartRender();
 	 }
-	 
-	 
-	
+	 	 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
@@ -147,6 +145,8 @@ public class RadarChart02View extends DemoView {
 					String label = "["+df.format(value).toString()+"]";
 					return label;
 				}});
+			
+			chart.enablePanMode();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -243,7 +243,7 @@ public class RadarChart02View extends DemoView {
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		
+		super.onTouchEvent(event);
 		if(event.getAction() == MotionEvent.ACTION_UP) 
 		{			
 			triggerClick(event.getX(),event.getY());			

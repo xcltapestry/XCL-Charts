@@ -21,6 +21,7 @@
  */
 package org.xclcharts.chart;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
@@ -28,6 +29,7 @@ import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.CirChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.PlotArcLabelInfo;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -59,14 +61,19 @@ public class PieChart extends CirChart{
 	private Paint mPaintArc = null;  
 	
 	protected RectF mRectF = null;		
-	protected RectF mArcRF0 = null;
 	
 	//扇形边框
 	protected Paint mPaintArcBorder = null;
-
+	
+	//是否需要保存标签的位置
+	private boolean mSaveLabelsPosition = false;	
+	private XEnum.LabelSaveType mLabelSaveType = XEnum.LabelSaveType.ONLYPOSITION;
+	//保存标签的坐标信息
+	protected ArrayList<PlotArcLabelInfo> mLstLabels = null;
+	
 	public PieChart()
 	{
-				
+		if(null == mLstLabels) mLstLabels = new ArrayList<PlotArcLabelInfo>();
 	}
 	
 	@Override
@@ -109,6 +116,31 @@ public class PieChart extends CirChart{
 		return mDataset;
 	}
 	
+	/**
+	 *  是否保存标签显示位置并设置标签信息的保存类型 <br/>
+	 * 	ONLYPOSITION : 保存坐标信息，但不显示标签 <br/>
+	 *  ALL : 保存坐标信息，也显示标签 <br/>
+	 *  用来在其上绘图片之类操作 <br/>
+	 * @param type 类型
+	 */
+	public void saveLabelsPosition(XEnum.LabelSaveType type)
+	{
+		mLabelSaveType = type;
+		if(XEnum.LabelSaveType.NONE == type)
+		{
+			mSaveLabelsPosition = false;
+		}else
+			mSaveLabelsPosition = true;
+	}
+	
+	/**
+	 * 返回保存的标签坐标点,前提是有指定saveLabelsPosition()，否则返回空
+	 * @return 标签坐标点集合
+	 */
+	public ArrayList<PlotArcLabelInfo> getLabelsPosition()
+	{
+		return mLstLabels;
+	}
 	
 	/**
 	 * 绘制扇形边框画笔
@@ -219,143 +251,37 @@ public class PieChart extends CirChart{
     		canvas.drawArc(rect, offsetAngle, currentAngle, true, mPaintArcBorder); 
     	}
 	}
-	
 		
-	/**
-	 * 绘制指定角度扇区
-	 * @param paintArc 画笔
-	 * @param arcRF0   范围
-	 * @param cData  数据集
-	 * @param cirX   中心点X坐标
-	 * @param cirY   中心点Y坐标
-	 * @param radius  半径
-	 * @param offsetAngle 偏移角度
-	 * @param currentAngle 当前绘制角度
-	 * @throws Exception  例外处理
-	 */
-	protected boolean drawSlice(Canvas canvas, Paint paintArc,RectF arcRF0,
-							PieData cData,
-							 float cirX,
-							 float cirY,
-							 float radius,
-							 float offsetAngle,
-							 float currentAngle) throws Exception
-	{
-		try{
-			
-			// 绘制环形渐变
-			if(getGradient())
-				paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
-	        
-			//在饼图中显示所占比例  
-        	canvas.drawArc(arcRF0, offsetAngle, currentAngle, true, paintArc);      
-        	
-        	//边框
-        	renderArcBorder(canvas,arcRF0, offsetAngle, currentAngle);
-        	
-		}catch( Exception e){
-			throw e;
-		}
-		return true;
+	protected void initRectF(float left,float top,float right,float bottom)
+	{		
+		if(null == mRectF)
+        {
+			mRectF = new RectF(left ,top,right,bottom);
+        }else{
+        	mRectF.set(left ,top,right,bottom);
+        }				
 	}
-	
-
-	protected void initRectF(String type,float left,float top,float right,float bottom)
-	{
-		if(type.equalsIgnoreCase("mRectF"))
+			
+	protected boolean renderLabels(Canvas canvas)
+	{		
+		if(null == mLstLabels) return false;
+		
+		boolean showLabel = true;
+		
+		if(mSaveLabelsPosition)
 		{
-			if(null == mRectF)
-	        {
-				mRectF = new RectF(left ,top,right,bottom);
-	        }else{
-	        	mRectF.set(left ,top,right,bottom);
-	        }
-		}else if(type.equalsIgnoreCase("mArcRF0")){
-			if(null == mArcRF0)
-	        {
-				mArcRF0 = new RectF(left ,top,right,bottom);
-	        }else{
-	        	mArcRF0.set(left ,top,right,bottom);
-	        }
-		}else{
-			Log.e(TAG,"未知的RectF.");
-		}						
-	}
-		
-	
-	/**
-	 * 绘制指定角度扇区
-	 * @param paintArc 画笔
-	 * @param cData 数据集
-	 * @param cirX  中心点X坐标
-	 * @param cirY  中心点Y坐标
-	 * @param radius 半径
-	 * @param offsetAngle 偏移角度
-	 * @param currentAngle 当前绘制角度
-	 * @throws Exception  例外处理
-	 */
-	protected boolean drawSelectedSlice(Canvas canvas, Paint paintArc,
-									PieData cData,
-									 float cirX,
-									 float cirY,
-									 float radius,
-									 float offsetAngle,
-									 float currentAngle) throws Exception
-	{
-		try{			
-			
-			//偏移圆心点位置(默认偏移半径的1/10)
-	    	float newRadius = div(radius , mSelectedOffset);
-	    	
-	    	 //计算百分比标签
-	    	PointF point = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
-	    							newRadius,
-	    							add(offsetAngle , currentAngle/2f)); 	
-	        	       
-	        initRectF("mRectF",sub(point.x , radius) ,sub(point.y , radius),
-	        				   add(point.x , radius),add(point.y , radius));   	        
-	        
-	        //绘制环形渐变  
-	        if(getGradient())
-	        	paintArc.setShader(renderRadialGradient(paintArc,cirX,cirY,radius));
-	        
-	        //在饼图中显示所占比例  
-	        canvas.drawArc(mRectF, offsetAngle, currentAngle, true, paintArc);
-	        
-	        //边框
-        	renderArcBorder(canvas,mRectF, offsetAngle, currentAngle);
-	        
-	        return true;	        
-		}catch( Exception e){
-			 throw e;
+			if( XEnum.LabelSaveType.ONLYPOSITION == mLabelSaveType ) showLabel = false;
 		}
-	}
-	
-	protected boolean renderLabels(Canvas canvas,float offset,float radius,PointF[] arrPoint )
-	{
-		int i = 0;
-		float currentAngle = 0.0f,offsetAngle = offset;
+						
+		int count = mLstLabels.size();
+		for(int i=0 ;i<count; i++ )
+		{
+			 PlotArcLabelInfo info = mLstLabels.get(i);			
+			 renderLabel(canvas,mDataset.get(info.getID()),info,mSaveLabelsPosition,showLabel);	
+		}
 		
-		if(null == arrPoint) return false;
+		if(!mSaveLabelsPosition)mLstLabels.clear();
 		
-		for(PieData cData : mDataset)
-		{						
-			currentAngle = cData.getSliceAngle();		
-			if(!validateAngle(currentAngle)) continue;	
-			
-			if( arrPoint.length > i) 
-			{						
-				 renderLabel(canvas,cData,
-						 	arrPoint[i].x, 
-						 	arrPoint[i].y,
-		        			radius,offsetAngle,currentAngle);	
-				 
-			}
-			 		    
-			 //下次的起始角度  
-		    offsetAngle = add(offsetAngle, currentAngle);
-            i++;
-		}	
 		return true;
 	}
 	
@@ -375,44 +301,56 @@ public class PieChart extends CirChart{
 			float cirX = plotArea.getCenterX();
 		    float cirY = plotArea.getCenterY();		     
 	        float radius = getRadius();
-	              
-	        //确定饼图范围
-	        initRectF("mArcRF0",sub(cirX , radius) ,
-	        					sub(cirY , radius),
-	        					add(cirX , radius),
-	        					add(cirY , radius));
-			
+	   
 			//用于存放当前百分比的圆心角度
 			float currentAngle = 0.0f;				
 			float offsetAngle = mOffsetAngle;		
 			int i = 0;
-			PointF[] arrPoint = new PointF[mDataset.size()];
-			
+						
+			mLstLabels.clear();			
+			float left = sub(cirX , radius) ;
+	        float top = sub(cirY , radius) ;        
+			float right = add(cirX , radius) ;
+			float bottom = add(cirY , radius);
+								
 			for(PieData cData : mDataset)
 			{							
 				currentAngle = cData.getSliceAngle();		
 				if(!validateAngle(currentAngle)) continue;
 				geArcPaint().setColor(cData.getSliceColor());	
 								
+				// 绘制环形渐变
+    			if(getGradient())
+    				geArcPaint().setShader(renderRadialGradient(geArcPaint(),cirX,cirY,radius));
+    											
 			    if(cData.getSelected()) //指定突出哪个块
-	            {			    	            		            	
-	            	if(!drawSelectedSlice(canvas,geArcPaint(),cData,
-	            			cirX,cirY,radius,
-	            			offsetAngle,currentAngle))return false;	
-	            	
-	            	 arrPoint[i] = new PointF(MathHelper.getInstance().getPosX(), 
-			        						  MathHelper.getInstance().getPosY());	            	 	            	 
-	            }else{
-	            	if(!drawSlice(canvas,geArcPaint(),mArcRF0,cData,
-	            			cirX,cirY,radius,
-	            			offsetAngle,(float) currentAngle))return false;	  
-	            	
-	            	arrPoint[i] = new PointF(cirX,cirY);
+	            {			    	   			    	
+	            	//偏移圆心点位置(默认偏移半径的1/10)
+	     	    	float newRadius = div(radius , mSelectedOffset);
+	     	    	
+	     	    	 //计算百分比标签
+	     	    	PointF point = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
+	     	    							newRadius,
+	     	    							add(offsetAngle , currentAngle/2f)); 	
+	     	        	       
+	     	        initRectF(sub(point.x , radius),sub(point.y , radius),
+	     	        		  add(point.x , radius),add(point.y , radius)); 
+	     	        
+	     	        mLstLabels.add(new PlotArcLabelInfo(i,point.x, point.y,radius,offsetAngle, currentAngle));
+	            }else{	            	
+	            	initRectF(left,top,right,bottom); 	            	 
+	    	        mLstLabels.add(new PlotArcLabelInfo(i,cirX,cirY,radius,offsetAngle, currentAngle));
 	            }
 			    
+			    //在饼图中显示所占比例  
+            	canvas.drawArc(mRectF, offsetAngle, currentAngle, true, geArcPaint());    
+			    
+			    //边框
+            	renderArcBorder(canvas,mRectF, offsetAngle, currentAngle);
+			    			    
 			    //保存角度
 			    saveArcRecord(i,cirX + this.mTranslateXY[0],cirY + this.mTranslateXY[1],
-			    				radius,offsetAngle,currentAngle,mSelectedOffset);
+			    				radius,offsetAngle,currentAngle,mSelectedOffset);			  
 			
 			    //下次的起始角度  
 			    offsetAngle = add(offsetAngle, currentAngle);
@@ -420,7 +358,7 @@ public class PieChart extends CirChart{
 			}				
 			
 			//绘制Label
-			renderLabels(canvas,mOffsetAngle,radius,arrPoint );	
+			renderLabels(canvas);	
 			
 			//图KEY
 			plotLegend.renderPieKey(canvas,this.mDataset);
@@ -473,7 +411,6 @@ public class PieChart extends CirChart{
 	{		
 		return getArcRecord(x,y);
 	}		
-
 	
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 

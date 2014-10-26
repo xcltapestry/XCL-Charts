@@ -192,14 +192,34 @@ public class RdChart extends EventChart {
 		try {
 				if (null == canvas)
 						return false;								
-				canvas.save();
-				//设置原点位置
-				canvas.translate(mTranslateXY[0],mTranslateXY[1]);
-			
-				super.render(canvas);
 				
-				//还原								
-				canvas.restore();
+				
+				if(getPanModeStatus())
+				{											
+					canvas.save();
+					//设置原点位置					
+					switch(this.getPlotPanMode())
+					{
+					case HORIZONTAL:
+						canvas.translate(mTranslateXY[0],0);		
+						break;
+					case VERTICAL:
+						canvas.translate(0,mTranslateXY[1]);		
+						break;
+					default:
+						canvas.translate(mTranslateXY[0],mTranslateXY[1]);
+						break;
+					}
+					
+					//绘制图表
+					super.render(canvas);
+						
+					//还原								
+					canvas.restore();			
+				}else{
+					//绘制图表
+					super.render(canvas);
+				}
 				
 				return true;				
 		} catch (Exception e) {

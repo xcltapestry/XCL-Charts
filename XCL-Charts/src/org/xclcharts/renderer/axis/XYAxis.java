@@ -133,7 +133,7 @@ public class XYAxis extends Axis {
 	 */
 	protected void renderHorizontalTick(XChart xchart,Canvas canvas, 
 											float centerX, float centerY,
-			String text) {
+			String text,boolean isTickVisible) {
 		
 		//Log.e("XYAxis","XYAxis renderHorizontalTick");
 		
@@ -182,7 +182,7 @@ public class XYAxis extends Axis {
 		}
 
 		//横轴刻度线
-		if (isShowTickMarks()) 
+		if (isShowTickMarks() && isTickVisible) 
 		{				
 				canvas.drawLine(marksStartX, centerY, 
 						MathHelper.getInstance().add(markeStopX, 
@@ -230,7 +230,7 @@ public class XYAxis extends Axis {
 	 * @param text		标签文本
 	 */
 	protected void renderVerticalTick(Canvas canvas, 
-									 float centerX, float centerY, String text) {
+									 float centerX, float centerY, String text,boolean isTickVisible) {
 		if (false == isShow())
 			return;
 
@@ -284,7 +284,7 @@ public class XYAxis extends Axis {
 		}
 
 		
-		if (isShowTickMarks()) {
+		if (isShowTickMarks() && isTickVisible) {
 			float mstartX = MathHelper.getInstance().sub(marksStartY,  getAxisPaint().getStrokeWidth() /2 ) ;
 			
 			//if( Float.compare(mstartX, xchart.getPlotArea().getLeft()) == -1) ||

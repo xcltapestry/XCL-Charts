@@ -1,0 +1,11 @@
+package org.xclcharts.renderer.plot;
+
+public class ArcLabelInfo {
+	
+	
+	
+	public ArcLabelInfo(){};
+	
+	
+
+}

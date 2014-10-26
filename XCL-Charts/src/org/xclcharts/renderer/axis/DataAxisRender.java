@@ -131,12 +131,12 @@ public class DataAxisRender extends DataAxis {
 	 * @param text		文本
 	 */
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
-								float centerX,float centerY,String text)
+								float centerX,float centerY,String text,boolean isTickVisible)
 	{				
 		if(isShow())
 		{
 			//if(isShowAxisDetailModeLabels())
-				renderHorizontalTick(xchart,canvas, centerX,centerY,text);
+				renderHorizontalTick(xchart,canvas, centerX,centerY,text,isTickVisible);
 		}
 	}
 
@@ -148,12 +148,12 @@ public class DataAxisRender extends DataAxis {
 	 * @param centerY	中心点Y坐标
 	 * @param text		文本
 	 */
-	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text)
+	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text,boolean isTickVisible)
 	{
 		if(isShow())
 		{
 			//if(isShowAxisDetailModeLabels())
-					renderVerticalTick(canvas,centerX,centerY,text);
+					renderVerticalTick(canvas,centerX,centerY,text,isTickVisible);
 		}
 	}
 		

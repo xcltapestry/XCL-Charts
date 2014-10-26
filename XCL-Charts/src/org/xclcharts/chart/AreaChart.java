@@ -111,13 +111,11 @@ public class AreaChart extends LnChart{
 	{		
 		if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
-	
-	
+		
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);
-	}
-		
+	}		
 				
 	 /**
 	 * 分类轴的数据源
@@ -189,10 +187,9 @@ public class AreaChart extends LnChart{
          
 		float lineStartX = initX;
         float lineStartY = initY;
-        float lineStopX = 0.0f;   
-        float lineStopY = 0.0f;   
+        float lineStopX = 0.0f,lineStopY = 0.0f;     
         						
-		float axisScreenHeight = getAxisScreenHeight();
+		float axisScreenHeight = getPlotScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
 		float currLablesSteps = div(getPlotScreenWidth(), 
 										(categoryAxis.getDataSet().size() -1));
@@ -296,70 +293,60 @@ public class AreaChart extends LnChart{
 										AreaData areaData,
 										List<PointF> lstPathPoints)
 	{		        				
-		if(null == bezierPath)bezierPath = new Path();
-			
-		//start point
-		bezierPath.moveTo(plotArea.getLeft(), plotArea.getBottom());		
-		int count = lstPathPoints.size();
+		if(null == bezierPath)bezierPath = new Path();							
+		int count = lstPathPoints.size();		
+		if( count <= 1  ) return true; //没有或仅一个点就不需要了
 		
-		float x = 0.0f,y =0.0f;
-		switch(count)
-		{
-			case 0:
-				return false;
-			case 1:
-				bezierPath.lineTo(lstPathPoints.get(0).x, lstPathPoints.get(0).y);
-				break;
-			case 2:
-				x = (lstPathPoints.get(1).x + lstPathPoints.get(0).x) /2 ;
-				y = (lstPathPoints.get(1).y + lstPathPoints.get(0).y) /2 ;
-				bezierPath.quadTo(x, y,
-								  lstPathPoints.get(1).x, lstPathPoints.get(1).y);
-				break;		
-			case 3:
-				
-				x = (lstPathPoints.get(1).x + lstPathPoints.get(0).x) /2 ;
-				y = (lstPathPoints.get(1).y + lstPathPoints.get(0).y) /2 ;
-				bezierPath.quadTo(x, y,
-								  lstPathPoints.get(1).x, lstPathPoints.get(1).y);
-				
-				x = (lstPathPoints.get(2).x + lstPathPoints.get(1).x) /2 ;
-				y = (lstPathPoints.get(2).y + lstPathPoints.get(1).y) /2 ;
-				bezierPath.quadTo(x, y,
-								  lstPathPoints.get(2).x, lstPathPoints.get(2).y);
-				break;	
-			default:			
-				for(int i = 0;i<count;i++)
-				{
-					if(i<3) continue;
-					
-					CurveHelper.curve3( lstPathPoints.get(i-2),  
-							lstPathPoints.get(i-1), 
-							lstPathPoints.get(i-3),
-							lstPathPoints.get(i), 
-							mBezierControls);
-					
-					bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
-							mBezierControls[1].x, mBezierControls[1].y, 
-							lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
-				}			
+		if(count <= 3)
+		{			
+			bezierPath.moveTo(lstPathPoints.get(0).x, lstPathPoints.get(0).y);
+			bezierPath.lineTo(lstPathPoints.get(1).x, lstPathPoints.get(1).y);
 			
+			if(3 == count)
+				bezierPath.lineTo(lstPathPoints.get(2).x, lstPathPoints.get(2).y);
 			
-				//if(count > 3)
-				//{			
-					PointF stop  = lstPathPoints.get(lstPathPoints.size()-1);
-					//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
-					CurveHelper.curve3(lstPathPoints.get(lstPathPoints.size()-2),  
-												stop, 
-												lstPathPoints.get(lstPathPoints.size()-3),
-												stop, 
-												mBezierControls);
-					bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
-							mBezierControls[1].x, mBezierControls[1].y, 
-							lstPathPoints.get(lstPathPoints.size() -1 ).x, 
-							lstPathPoints.get(lstPathPoints.size() -1 ).y);							
-				//}						
+			bezierPath.close();
+			
+			paintAreaFill.setColor(areaData.getAreaFillColor());				
+			paintAreaFill.setAlpha(this.mAreaAlpha); 	
+		    canvas.drawPath(bezierPath, paintAreaFill);		
+			bezierPath.reset();					
+			return true;
 		}
+		
+		//start point
+		bezierPath.moveTo(plotArea.getLeft(), plotArea.getBottom());
+		
+		for(int i = 0;i<count;i++)
+		{					
+			if(i<3)continue;  //应当要用 quadTo
+											
+			CurveHelper.curve3( lstPathPoints.get(i-2),  
+					lstPathPoints.get(i-1), 
+					lstPathPoints.get(i-3),
+					lstPathPoints.get(i), 
+					mBezierControls);
+			
+			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+					mBezierControls[1].x, mBezierControls[1].y, 
+					lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
+		}			
+		
+		if(count > 3)
+		{			
+			PointF stop  = lstPathPoints.get(lstPathPoints.size()-1);
+			//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
+			CurveHelper.curve3(lstPathPoints.get(lstPathPoints.size()-2),  
+										stop, 
+										lstPathPoints.get(lstPathPoints.size()-3),
+										stop, 
+										mBezierControls);
+			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+					mBezierControls[1].x, mBezierControls[1].y, 
+					lstPathPoints.get(lstPathPoints.size() -1 ).x, 
+					lstPathPoints.get(lstPathPoints.size() -1 ).y);							
+		}						
+	
 		bezierPath.close();
 		paintAreaFill.setColor(areaData.getAreaFillColor());	
 		
@@ -368,10 +355,7 @@ public class AreaChart extends LnChart{
 	    bezierPath.reset();
 		return true;
 	}
-	
-	
-	
-	
+				
 	private boolean renderLine(Canvas canvas, AreaData areaData,
 								List<PointF> lstPoints)
 	{		        

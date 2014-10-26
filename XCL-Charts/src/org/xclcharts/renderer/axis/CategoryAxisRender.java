@@ -63,10 +63,10 @@ public class CategoryAxisRender extends CategoryAxis {
 	 * @param text	内容
 	 */	
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
-							float centerX,float centerY,String text)
+							float centerX,float centerY,String text,boolean isTickVisible)
 	{			
 		if(isShow())
-			renderHorizontalTick(xchart,canvas,centerX,centerY,text);
+			renderHorizontalTick(xchart,canvas,centerX,centerY,text,isTickVisible);
 	}
 	
 	
@@ -77,11 +77,11 @@ public class CategoryAxisRender extends CategoryAxis {
 	 * @param text	内容
 	 */
 	public void renderAxisVerticalTick(Canvas canvas,
-							float centerX,float centerY,String text)
+							float centerX,float centerY,String text,boolean isTickVisible)
 	{
 		
 		if(isShow())
-			renderVerticalTick(canvas,centerX,centerY,text);
+			renderVerticalTick(canvas,centerX,centerY,text,isTickVisible);
 	}
 	
 	/**

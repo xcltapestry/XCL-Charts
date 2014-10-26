@@ -24,19 +24,18 @@ package org.xclcharts.renderer;
 
 import java.util.ArrayList;
 
-import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.MathHelper;
-import org.xclcharts.renderer.axis.AxisTick;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.DataAxisRender;
+import org.xclcharts.renderer.info.PlotAxisTick;
 import org.xclcharts.renderer.plot.AxisTitle;
 import org.xclcharts.renderer.plot.AxisTitleRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName AxisChart
@@ -46,6 +45,8 @@ import android.graphics.Paint.Align;
  */
 
 public class AxisChart extends EventChart {
+	
+	//private static final String TAG = "AxisChart";
 		
 	//数据轴
 	protected DataAxisRender dataAxis  = null;
@@ -57,13 +58,12 @@ public class AxisChart extends EventChart {
 	//格式化柱形顶上或线交叉点的标签
 	private IFormatterDoubleCallBack mItemLabelFormatter;
 	
-	//平移模式下的可移动方向
-	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
-	private boolean mEnablePanMode = true;
-	
-	
 	// 确定是竖向柱形图(默认)还是横向
 	protected XEnum.Direction mDirection = XEnum.Direction.VERTICAL;
+	
+	//Pan模式下移动距离
+	protected float mMoveX = 0.0f;
+	protected float mMoveY = 0.0f;
 	
 	//数据轴显示在左边还是右边
 	private XEnum.DataAxisPosition mDataAxisPosition = 
@@ -78,9 +78,17 @@ public class AxisChart extends EventChart {
 	private float myMargin = 10.0f;
 	private float mxMargin = 15.0f;
 	
+	//轴刻度的位置信息
+	protected ArrayList<PlotAxisTick> mLstDataTick = null;
+	protected ArrayList<PlotAxisTick> mLstCateTick = null;
+	
 	
 	public AxisChart() {
-		// TODO Auto-generated constructor stub			
+		// TODO Auto-generated constructor stub		
+		
+		if(null == mLstDataTick)mLstDataTick = new  ArrayList<PlotAxisTick>();
+		if(null == mLstCateTick)mLstCateTick = new  ArrayList<PlotAxisTick>();
+		
 		initChart();		
 	}
 	
@@ -89,8 +97,7 @@ public class AxisChart extends EventChart {
 	 * 初始化设置
 	 */
 	private void initChart()
-	{				
-		
+	{						
 		//数据轴
 		if(null == dataAxis)initDataAxis(); 
 		
@@ -142,20 +149,22 @@ public class AxisChart extends EventChart {
 	}
 	
 	protected void drawCategoryAxisLabels(Canvas canvas,
-										  ArrayList<AxisTick> lstLabels)
+										  ArrayList<PlotAxisTick> lstLabels)
 	{
 		if(null == lstLabels) return ;
-		for(AxisTick t : lstLabels)
+		for(PlotAxisTick t : lstLabels)
 		{
 			switch(mCategoryAxisPosition)
 			{				 
 				case LEFT: //Y
-				case RIGHT:								
-					categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label);					
+				case RIGHT:				
+					  categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,
+							  								isDrawYAxisTickMarks(t.Y,mMoveY));					
 					break;							
 				case TOP: //X
 				case BOTTOM:		
-					categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label);		
+						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,
+															isDrawXAxisTickMarks(t.X,mMoveX));		
 					break;			
 			} //switch end
 			
@@ -163,23 +172,25 @@ public class AxisChart extends EventChart {
 	}
 	
 	protected void drawDataAxisLabels(Canvas canvas,
-									 ArrayList<AxisTick> lstLabels)
+									 ArrayList<PlotAxisTick> lstLabels)
 	{
 		
 		if(null == lstLabels) return ;		
-		for(AxisTick t : lstLabels)
+		for(PlotAxisTick t : lstLabels)
 		{
 			dataAxis.setAxisTickCurrentID(t.ID);
 			
 			switch(mDataAxisPosition)
 			{				 
 				case LEFT: //Y
-				case RIGHT:		
-					dataAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label);										
+				case RIGHT:							
+						dataAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,
+															isDrawYAxisTickMarks(t.Y,mMoveY));										
 					break;							
 				case TOP: //X
-				case BOTTOM:											
-					dataAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label);										
+				case BOTTOM:		
+						dataAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,
+															isDrawXAxisTickMarks(t.X,mMoveX));										
 					break;			
 			} //switch end
 		}
@@ -249,9 +260,7 @@ public class AxisChart extends EventChart {
 		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)			
 		return  (div(getPlotScreenWidth() ,tickCount)); 
 	}
-	
-	
-	
+		
 	/**
 	 * 设置标签显示格式
 	 * 
@@ -282,79 +291,58 @@ public class AxisChart extends EventChart {
 		
 	
 	/**
-	 * 检查竖图中数据轴的tick是否显示 
+	 * 检查Y轴的tickmark是否显示 
 	 * @param currentY	y坐标
 	 * @param moveY	y坐标平移值
 	 * @return	是否绘制
 	 */
 	
-	protected boolean isDrawVerticalDataTickMarks(float currentY,float moveY)
+	protected boolean isDrawYAxisTickMarks(float currentY,float moveY)
 	{
 		if(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
 				Float.compare(currentY, plotArea.getBottom()  - moveY) == 1 )
 		{
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
 			
 	/**
-	 *  检查竖图中分类轴的tick是否显示 
+	 *  检查X轴的tickmark是否显示 
 	 * @param currentX	x坐标
 	 * @param moveX	x坐标平移值
 	 * @return 是否绘制
 	 */
 	
-	protected boolean isDrawVerticalCategoryTickMarks(float currentX,float moveX)
+	protected boolean isDrawXAxisTickMarks(float currentX,float moveX)
 	{
 		if(Float.compare(currentX , plotArea.getLeft() - moveX ) == -1 || 
 				Float.compare(currentX , plotArea.getRight() - moveX) == 1 )				
 		{
-			return true;
+			return false;
 		}
-		return false;
+		return true;
 	}
 	
-	
-	/*
-	protected boolean isRenderHorizontalDataAxisTick(float currentX,float moveX)
-	{
-		if(Float.compare(currentX , plotArea.getLeft() - moveX ) == -1 || 
-				Float.compare(currentX , plotArea.getRight() - moveX) == 1 )				
-		{
-			return true;
-		}
-		return false;
-	}
-	
-	protected boolean isRenderHorizontalCategoryAxisTick(float currentY,float moveY)
-	{
-		if(categoryAxis.isShowAxisLabels() && 
-				(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
-				 Float.compare(currentY , plotArea.getBottom() - moveY) == 1 ))
-		{
-			return true;
-		}
-		return false;
-	}
-	*/
-			
 	//横向网格线
 	protected void drawHorizontalGridLines(Canvas canvas,float plotLeft,float plotRight,
 			int tickID ,int tickCount,
 			float YSteps,float currentY)
 	{
-		if(tickID <= 0 ) return;
+		if(tickID < 0 ) return; //tickID <= 0
 		
 		// 从左到右的横向网格线
-		if (tickID % 2 != 0) {
-			plotGrid.renderOddRowsFill(canvas,plotLeft, add(currentY , YSteps),plotRight, currentY);
-		} else {
-			plotGrid.renderEvenRowsFill(canvas,plotLeft,add(currentY , YSteps),plotRight, currentY);
+		if(tickID > 0)
+		{					
+			if (tickID % 2 != 0) {
+				plotGrid.renderOddRowsFill(canvas,plotLeft, add(currentY , YSteps),plotRight, currentY);
+			} else {
+				plotGrid.renderEvenRowsFill(canvas,plotLeft,add(currentY , YSteps),plotRight, currentY);
+			}
 		}
 	
-		if (tickID > 0 && tickID < tickCount){
+		if (tickID >= 0 && tickID < tickCount){
 			plotGrid.setPrimaryTickLine(dataAxis.isPrimaryTick(tickID));
 			plotGrid.renderGridLinesHorizontal(canvas,plotLeft, currentY,plotRight, currentY);
 		}		
@@ -496,127 +484,7 @@ public class AxisChart extends EventChart {
 		return mAxesClosed;
 	}
 	////////////////////////////
-	
-	protected float getDrawClipVerticalXMargin()
-	{
-		float xMargin = 0.0f;
 		
-		if(XEnum.DataAxisPosition.BOTTOM == mDataAxisPosition ||
-		   XEnum.DataAxisPosition.TOP == mDataAxisPosition	
-				)
-		{					
-			if(!dataAxis.isShowAxisLabels())return 0.0f;
-			
-			//默认一个数 1234567890
-			xMargin = DrawHelper.getInstance().getTextWidth(
-					   dataAxis.getTickLabelPaint(),"1234567890"); 						
-		}
-		
-		if(XEnum.CategoryAxisPosition.BOTTOM == mCategoryAxisPosition ||
-				   XEnum.CategoryAxisPosition.TOP == mCategoryAxisPosition	
-						)
-		{	
-			if(!categoryAxis.isShowAxisLabels())return 0.0f;
-			
-			int count = categoryAxis.getDataSet().size();
-			if(0 == count) return 0.0f;		
-			
-			String str = categoryAxis.getDataSet().get(0);					
-			xMargin = DrawHelper.getInstance().getTextWidth(
-									categoryAxis.getTickLabelPaint(), str); 
-		
-		}		
-		xMargin += this.mxMargin;		
-		return xMargin;
-	}
-	
-	protected float getDrawClipVerticalYMargin()
-	{
-		float yMargin = 0.0f;
-		if(XEnum.DataAxisPosition.LEFT == mDataAxisPosition ||
-		   XEnum.DataAxisPosition.RIGHT == mDataAxisPosition	
-				)
-		{					
-			//if(!dataAxis.isShowAxisLabels())return 1.0f;
-			yMargin = DrawHelper.getInstance().getPaintFontHeight(
-					dataAxis.getTickLabelPaint() ) / 2;	
-			
-		}
-		
-		if(XEnum.CategoryAxisPosition.LEFT == mCategoryAxisPosition ||
-				   XEnum.CategoryAxisPosition.RIGHT == mCategoryAxisPosition)
-		{	
-			//if(!categoryAxis.isShowAxisLabels())return 1.0f;
-			yMargin = DrawHelper.getInstance().getPaintFontHeight(
-					categoryAxis.getTickLabelPaint() ) / 2;	
-
-		}
-		
-		yMargin += this.myMargin;
-		return yMargin;
-	}
-	
-	
-	
-	/**
-	 * 设置手势平移模式
-	 * @param mode	平移模式
-	 */
-	public void setPlotPanMode(XEnum.PanMode mode)
-	{
-		 mPlotPanMode = mode;
-	}
-	
-	/**
-	 * 返回当前图表平移模式
-	 * @return 平移模式
-	 */
-	public XEnum.PanMode getPlotPanMode()
-	{
-		return mPlotPanMode;
-	}
-	
-	/**
-	 * 激活平移模式
-	 */
-	public void enablePanMode()
-	{
-		mEnablePanMode = true;		
-	}
-	
-	/**
-	 * 禁用平移模式
-	 */
-	public void disablePanMode()
-	{
-		mEnablePanMode = false;		
-	}
-	
-	/**
-	 * 返回当前图表的平移状态
-	 * @return
-	 */
-	public boolean getPanModeStatus()
-	{
-		return mEnablePanMode;
-	}	
-	/////////////////////////
-	
-	protected float getDrawClipYMargin()
-	{		
-		return getDrawClipVerticalYMargin();
-	}
-	
-	protected float getDrawClipXMargin()
-	{
-		return getDrawClipVerticalXMargin();
-	}
-	
-	//Pan模式下移动距离
-	protected float mMoveX = 0.0f;
-	protected float mMoveY = 0.0f;
-	
-	
 	protected void initMoveXY()
 	{
 		mMoveX = mMoveY = 0.0f;  	
@@ -637,18 +505,15 @@ public class AxisChart extends EventChart {
 	
 	
 	protected void drawClipCategoryAxisGridlines(Canvas canvas)
-	{
-		
+	{		
 	}
 	
 	protected void drawClipDataAxisGridlines(Canvas canvas)
 	{
-		
 	}
 	
 	protected void drawClipPlot(Canvas canvas)
-	{
-		
+	{		
 	}
 		
 	protected void drawClipAxisLine(Canvas canvas)
@@ -718,12 +583,14 @@ public class AxisChart extends EventChart {
 		
 	protected void drawClipDataAxisTickMarks(Canvas canvas)
 	{
-		
+		drawDataAxisLabels(canvas,mLstDataTick);	
+		mLstDataTick.clear();
 	}
 	
 	protected void drawClipCategoryAxisTickMarks(Canvas canvas)
 	{
-		
+		drawCategoryAxisLabels(canvas,mLstCateTick);	
+		mLstCateTick.clear();
 	}
 	
 	protected void drawClipLegend(Canvas canvas)
@@ -777,13 +644,13 @@ public class AxisChart extends EventChart {
 	
 		
 	protected float getClipYMargin()
-	{
-		return getDrawClipVerticalYMargin(); //myMargin; //
+	{	
+		return (this.myMargin + this.getBorderWidth());
 	}
 	
 	protected float getClipXMargin()
 	{
-		return getDrawClipVerticalXMargin(); //mxMargin; //
+		return (this.mxMargin + this.getBorderWidth());	
 	}
 	
 	
@@ -794,10 +661,9 @@ public class AxisChart extends EventChart {
 		float offsetY = mTranslateXY[1];  
 		initMoveXY();
 		
-		float yMargin = getClipYMargin(); // getDrawClipYMargin
+		float yMargin = getClipYMargin(); 
 		float xMargin = getClipXMargin();
-		float gWidth = 0.0f;
-			
+		float gWidth = 0.0f;			
 
 		//设置图显示范围
 		canvas.save();
@@ -838,8 +704,7 @@ public class AxisChart extends EventChart {
 				}else{
 					drawClipCategoryAxisGridlines(canvas);
 				}
-		
-		
+				
 					//设置绘图区显示范围
 					canvas.save();
 					canvas.clipRect(plotArea.getLeft()+ 0.5f , plotArea.getTop() + 0.5f, 
@@ -858,8 +723,7 @@ public class AxisChart extends EventChart {
 		canvas.restore(); //clip	
 			
 		//轴 线
-		drawClipAxisLine(canvas);		
-		
+		drawClipAxisLine(canvas);				
 		/////////////////////////////////////////
 	
 		//轴刻度
@@ -867,9 +731,9 @@ public class AxisChart extends EventChart {
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{			
 			//绘制Y轴tick和marks			
-			canvas.save();					
-				canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-								this.getRight(), plotArea.getBottom() + yMargin);
+			canvas.save();								
+				canvas.clipRect(this.getLeft() , this.getTop() + yMargin,   
+								this.getRight(), this.getBottom() - yMargin);
 					canvas.translate(0 , offsetY );					
 					drawClipDataAxisTickMarks(canvas);	
 			canvas.restore();	
@@ -883,8 +747,8 @@ public class AxisChart extends EventChart {
 		{				
 			//绘制X轴tick和marks			
 			canvas.save();				
-				canvas.clipRect(plotArea.getLeft() - xMargin, this.getTop(), 
-								plotArea.getRight() + xMargin, this.getBottom());
+				canvas.clipRect(this.getLeft() + xMargin, this.getTop(),  
+								this.getRight() + xMargin, this.getBottom());
 			
 					canvas.translate(offsetX,0);
 					drawClipCategoryAxisTickMarks(canvas);	
@@ -917,7 +781,23 @@ public class AxisChart extends EventChart {
 		//设置图显示范围
 		canvas.save();				
 		canvas.clipRect(this.getLeft() , this.getTop() , this.getRight(), this.getBottom());		
-				
+							
+		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
+				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
+		{									
+			if(getPlotGrid().isShowVerticalLines())
+				gWidth = this.getPlotGrid().getVerticalLinePaint().getStrokeWidth();
+			//绘制Y轴tick和marks			
+			canvas.save();					
+			canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
+					plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
+					canvas.translate(0 , offsetY );					
+					drawClipCategoryAxisGridlines(canvas);		
+			canvas.restore();	
+		}else{
+			drawClipCategoryAxisGridlines(canvas);
+		}
+		
 		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{								
@@ -934,22 +814,6 @@ public class AxisChart extends EventChart {
 			canvas.restore();	
 		}else{
 			drawClipDataAxisGridlines(canvas);			
-		}
-		
-		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
-				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
-		{									
-			if(getPlotGrid().isShowVerticalLines())
-				gWidth = this.getPlotGrid().getVerticalLinePaint().getStrokeWidth();
-			//绘制Y轴tick和marks			
-			canvas.save();					
-			canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
-					plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
-					canvas.translate(0 , offsetY );					
-					drawClipCategoryAxisGridlines(canvas);		
-			canvas.restore();	
-		}else{
-			drawClipCategoryAxisGridlines(canvas);
 		}
 		//////////////////////////////////////////////////
 		
@@ -969,7 +833,6 @@ public class AxisChart extends EventChart {
 			
 		//还原绘图区绘制
 		canvas.restore(); //clip							
-
 		//////////////////////////////////////////////////			
 		//轴线
 		drawClipAxisLine(canvas);
@@ -979,34 +842,31 @@ public class AxisChart extends EventChart {
 		{																	
 			//绘制X轴tick和marks			
 			canvas.save();	
-					canvas.clipRect(plotArea.getLeft() - xMargin, this.getTop(), 
-							plotArea.getRight()+ xMargin, this.getBottom());
-					
+			     //放开，排除掉border的宽度
+				canvas.clipRect(this.getLeft() + xMargin , this.getTop(), 
+								this.getRight() - xMargin, this.getBottom());
+										
 					canvas.translate(offsetX,0);
 					drawClipDataAxisTickMarks(canvas);
 			canvas.restore();	
 		}else{
 			drawClipDataAxisTickMarks(canvas);
 		}
-						
-		
+								
 		if( XEnum.PanMode.VERTICAL == this.getPlotPanMode()
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{													
 			//绘制Y轴tick和marks			
-			canvas.save();			
+			canvas.save();								
+					canvas.clipRect(this.getLeft() , this.getTop() + yMargin,  //this.getTop() - yMargin
+									this.getRight(), this.getBottom() - yMargin); // plotArea.getBottom() + yMargin
 					
-					canvas.clipRect(this.getLeft() , plotArea.getTop() - yMargin, 
-									this.getRight(), plotArea.getBottom() + yMargin);
-					
-					canvas.translate(0 , offsetY );					
-					
+					canvas.translate(0 , offsetY );										
 					drawClipCategoryAxisTickMarks(canvas);					
 			canvas.restore();	
 		}else{	
 			drawClipCategoryAxisTickMarks(canvas);
-		}
-		
+		}		
 		//////////////////////////////////////////////////
 		
 		//图例
@@ -1021,7 +881,7 @@ public class AxisChart extends EventChart {
 	protected boolean postRender(Canvas canvas) throws Exception
 	{		
 		try{			
-			super.postRender(canvas);	
+			super.postRender(canvas);				
 			
 			boolean ret = true;
 			
@@ -1060,12 +920,11 @@ public class AxisChart extends EventChart {
 			renderFocusShape(canvas);
 			//响应提示
 			renderToolTip(canvas);
-									
+											
 			return ret;
 		} catch (Exception e) {
 			throw e;
 		}
 	}
-	/////////////////////////////////////////
-	
+		
 }

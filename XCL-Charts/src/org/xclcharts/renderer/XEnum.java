@@ -271,6 +271,17 @@ public class XEnum {
 			NONE,BEGIN,END,ALL
 		}
 		
+		/**
+		 * 标签信息的保存类型 
+		 * 	ONLYPOSITION : 保存坐标信息，但不显示标签
+		 *  ALL : 保存坐标信息，也显示标签
+		 * @author XCL
+		 *
+		 */
+		public enum LabelSaveType{
+			NONE,ONLYPOSITION,ALL
+		}
+		
 		// 库支持哪些类型的图
 		public enum ChartType{
 			NONE,BAR,BAR3D,STACKBAR,PIE,PIE3D,DOUNT,LINE,SPLINE,AREA,

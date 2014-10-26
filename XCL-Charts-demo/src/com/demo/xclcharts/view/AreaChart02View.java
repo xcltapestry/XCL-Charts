@@ -178,7 +178,7 @@ public class AreaChart02View extends DemoView {
 		//将标签与对应的数据集分别绑定
 		//标签对应的数据集
 		List<Double> dataSeries1= new LinkedList<Double>();	
-		dataSeries1.add((double)0.001);  //25  0.001
+		dataSeries1.add((double)0);//0.001);  //25  0.001
 		dataSeries1.add((double)50); 
 		dataSeries1.add((double)51); 
 		dataSeries1.add((double)60);

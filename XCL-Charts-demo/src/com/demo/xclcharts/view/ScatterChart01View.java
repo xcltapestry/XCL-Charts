@@ -274,6 +274,7 @@ public class ScatterChart01View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{
+		
 		//交叉线
 		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);		
 		if(!chart.getListenItemClickStatus())
@@ -297,14 +298,6 @@ public class ScatterChart01View extends DemoView {
 					     Double xValue =(Double) entry.getKey();
 					     Double yValue =(Double) entry.getValue();	
 					     
-					     /*
-					     Toast.makeText(this.getContext(), 
-									record.getPointInfo() +
-									" Key:"+lData.getKey() +								
-									" Current Value(key,value):"+
-									Double.toString(xValue)+","+Double.toString(yValue), 
-									Toast.LENGTH_SHORT).show();
-					     */
 					     
 					   //在点击处显示tooltip
 						mPaintTooltips.setColor(Color.RED);				
@@ -318,6 +311,8 @@ public class ScatterChart01View extends DemoView {
 			        i++;
 				}//end while
 		} //end if		
+		
+		
 	}
 	
 }

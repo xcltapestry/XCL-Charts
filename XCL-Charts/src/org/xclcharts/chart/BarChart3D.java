@@ -27,7 +27,6 @@ import java.util.List;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.axis.AxisTick;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.Bar3D;
 
@@ -135,41 +134,8 @@ public class BarChart3D extends BarChart{
 		return mBar3D;
 	}
 	
-	/**
-	 * 3D时，隐藏旧那个刻度线标识
-	 */
-	//@Override
-	//protected void categoryAxisDefaultSetting()
-	//{
-	//	if(null != categoryAxis)categoryAxis.hideTickMarks();
-	//}	
+
 	
-	@Override
-	protected void renderHorizontalBarCategoryAxis(Canvas canvas) {
-		
-		if(null == categoryAxis) return;
-		// Y 轴
-		// 分类横向间距高度	
-		float YSteps = div(getAxisScreenHeight(), (categoryAxis.getDataSet().size() + 1)  );						
-		float currentY = 0.0f;
-		
-		if(null == categoryAxis.getDataSet()) return;	
-		for (int i = 0; i < categoryAxis.getDataSet().size(); i++) {
-			// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
-			currentY = sub(plotArea.getBottom(),mul( (i + 1) , YSteps ));
-									
-			// 横的grid线
-			plotGrid.renderGridLinesHorizontal(canvas, plotArea.getLeft(),
-												currentY, plotArea.getPlotRight(), currentY);
-							
-			// 分类			
-			double tfx = (mBar3D.getOffsetX() * 2);
-			float labelX = sub(plotArea.getLeft() ,dtof(tfx)); 						
-			mLstCateTick.add(new AxisTick(labelX,currentY, categoryAxis.getDataSet().get(i)  ));
-			
-		}
-	}
-				
 	@Override
 	protected boolean renderHorizontalBar(Canvas canvas)
 	{		
@@ -247,20 +213,23 @@ public class BarChart3D extends BarChart{
 			return true;
 	}
 	
+	protected float get3DOffsetX()// 分类		
+	{					
+		float tfx = (float) (mBar3D.getOffsetX() * 2);
+		return tfx;
+	}	
 	
-	@Override
-	protected void renderVerticalBarCategoryAxis(Canvas canvas) {
-		// 分类轴(X 轴)
-		float currentX = plotArea.getLeft();
-
-		// 得到分类轴数据集
-		List<String> dataSet = categoryAxis.getDataSet();
-		if(null == dataSet) return;	
-
-		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
-		// 总宽度 / 分类个数 = 间距长度
-		float XSteps = div(getPlotScreenWidth() , (dataSet.size() + 1));  //getAxisScreenWidth
+	protected float get3DBaseOffsetX()// 分类		
+	{						
+		double baseTickness = mBar3D.getAxis3DBaseThickness();
+		double baseAngle = mBar3D.getAngle();	
+		double baseOffsetX = mBar3D.getOffsetX(baseTickness,baseAngle);
 		
+		return (float) baseOffsetX;
+	}	
+	
+	protected float get3DBaseOffsetY()// 分类		
+	{							
 		//3D 偏移值		
 	    double baseTickness = mBar3D.getAxis3DBaseThickness();
 	    double baseAngle = mBar3D.getAngle();	
@@ -270,26 +239,13 @@ public class BarChart3D extends BarChart{
 		double labelHeight = DrawHelper.getInstance().getPaintFontHeight(
 								categoryAxis.getTickLabelPaint());
 		
-		for (int i = 0; i < dataSet.size(); i++) {
-			// 依初超始X坐标与分类间距算出当前刻度的X坐标			
-			currentX = add(plotArea.getLeft() , mul((i + 1) , XSteps));
-			
-			// 绘制横向网格线
-			if (plotGrid.isShowVerticalLines()) {
-				canvas.drawLine(currentX, plotArea.getBottom(),
-								currentX, plotArea.getTop(),
-								this.plotGrid.getVerticalLinePaint());
-			}
-			// 画上分类/刻度线
-			double th = MathHelper.getInstance().add(
-								MathHelper.getInstance().add(baseOffsetY, baseTickness) , labelHeight);			
-			float currentY = add(plotArea.getBottom(),dtof(th));
-				  currentX =  sub(currentX, dtof(baseOffsetX) );	
-						
-			mLstCateTick.add(new AxisTick(currentX,currentY, dataSet.get(i)));
-		}
-	}
 		
+		// 画上分类/刻度线
+		double th = MathHelper.getInstance().add(
+						MathHelper.getInstance().add(baseOffsetY, baseTickness) , labelHeight);	
+
+		return (float) th;
+	}	
 
 	@Override
 	protected boolean renderVerticalBar(Canvas canvas)
@@ -381,6 +337,7 @@ public class BarChart3D extends BarChart{
 		return true;
 	}
 	
+	
 	@Override
 	protected void drawClipAxisLine(Canvas canvas)
 	{				
@@ -408,54 +365,4 @@ public class BarChart3D extends BarChart{
 		}
 	}
 
-	@Override
-	protected float getDrawClipVerticalYMargin()
-	{
-		return 0.0f;
-	}
-	
-	@Override
-	protected float getDrawClipVerticalXMargin()
-	{
-		return 0.0f;
-	}
-	
-	@Override
-	protected float getDrawClipHorizontalBarXMargin()
-	{
-		return 0.0f;
-	}
-	
-	@Override
-	protected float getDrawClipHorizontalBarYMargin()
-	{
-		return 0.0f;
-	}
-	
-	@Override
-	protected boolean isDrawVerticalDataTickMarks(float currentY,float moveY)
-	{
-		return false;
-	}
-	
-	@Override
-	protected boolean isDrawVerticalCategoryTickMarks(float currentX,float moveX)
-	{
-		return false;
-	}
-	
-	/*
-	@Override
-	protected boolean isRenderHorizontalDataAxisTick(float currentX,float moveX)
-	{
-		return false;
-	}
-	
-	@Override
-	protected boolean isRenderHorizontalCategoryAxisTick(float currentY,float moveY)
-	{		
-		return false;
-	}
-	*/
-	
 }

@@ -89,33 +89,48 @@ public class GaugeChart extends CirChart{
 		getLabelPaint().setTextSize(18);
 		getLabelPaint().setColor(Color.BLUE);
 		
-		mPaintTick = new Paint();
-		mPaintTick.setStyle(Style.FILL);
-		mPaintTick.setAntiAlias(true);	
-		mPaintTick.setColor( (int)Color.rgb(50, 149, 222) ); 
-		mPaintTick.setStrokeWidth(1);
+		if(null == mPaintTick)
+		{
+			mPaintTick = new Paint();
+			mPaintTick.setStyle(Style.FILL);
+			mPaintTick.setAntiAlias(true);	
+			mPaintTick.setColor( (int)Color.rgb(50, 149, 222) ); 
+			mPaintTick.setStrokeWidth(1);
+		}
 		
-		mPaintPointerLine = new Paint();
-		mPaintPointerLine.setStyle(Style.FILL);
-		mPaintPointerLine.setAntiAlias(true);	
-		mPaintPointerLine.setColor(Color.BLACK);
-		mPaintPointerLine.setStrokeWidth(3);
+		if(null == mPaintPointerLine)
+		{
+			mPaintPointerLine = new Paint();
+			mPaintPointerLine.setStyle(Style.FILL);
+			mPaintPointerLine.setAntiAlias(true);	
+			mPaintPointerLine.setColor(Color.BLACK);
+			mPaintPointerLine.setStrokeWidth(3);
+		}
 		
-		mPaintPinterCircle = new Paint();
-		mPaintPinterCircle.setStyle(Style.FILL);
-		mPaintPinterCircle.setAntiAlias(true);	
-		mPaintPinterCircle.setColor(Color.BLACK);
-		mPaintPinterCircle.setStrokeWidth(8);
+		if(null == mPaintPinterCircle)
+		{
+			mPaintPinterCircle = new Paint();
+			mPaintPinterCircle.setStyle(Style.FILL);
+			mPaintPinterCircle.setAntiAlias(true);	
+			mPaintPinterCircle.setColor(Color.BLACK);
+			mPaintPinterCircle.setStrokeWidth(8);
+		}
 		
-		mPaintPartitionFill = new Paint();
-		mPaintPartitionFill.setStyle(Style.FILL);
-		mPaintPartitionFill.setAntiAlias(true);	
+		if(null == mPaintPartitionFill)
+		{
+			mPaintPartitionFill = new Paint();
+			mPaintPartitionFill.setStyle(Style.FILL);
+			mPaintPartitionFill.setAntiAlias(true);	
+		}
 		
-		mPaintDount = new Paint();		
-		mPaintDount.setStyle(Style.STROKE);
-		mPaintDount.setColor((int)Color.rgb(50, 149, 222));
-		mPaintDount.setAntiAlias(true);
-		mPaintDount.setStrokeWidth(2);
+		if(null == mPaintDount)
+		{
+			mPaintDount = new Paint();		
+			mPaintDount.setStyle(Style.STROKE);
+			mPaintDount.setColor((int)Color.rgb(50, 149, 222));
+			mPaintDount.setAntiAlias(true);
+			mPaintDount.setStrokeWidth(2);
+		}
 		
 	}
 	
@@ -161,7 +176,7 @@ public class GaugeChart extends CirChart{
 	 */
 	public Paint getDountPaint()
 	{
-	
+		
 		return mPaintDount;
 	}
 	
@@ -236,15 +251,23 @@ public class GaugeChart extends CirChart{
 	
 	private void renderLabels(Canvas canvas)
 	{		
+		if(null == mLabels) return ;
+		
 		float stepsAngle = Math.round(180/(mLabels.size() - 1 ));
-		//float calcRadius = this.getRadius()  + getRadius()/10f;				
-		float calcRadius =  add(this.getRadius(), div(getRadius(),10f) );
+		
+		float radius = getRadius();
+		//float calcRadius = radius  + radius/10f;				
+		// getRadius()
+        float calcRadius =  add(radius, div(radius,10f) );
 				 
+		
 		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
+		//float cirY = plotArea.getCenterY();
+		float cirY = getCirY() ; 
 		getLabelPaint().setTextAlign(Align.CENTER);	
 		int i = 0;
-		if(null == mLabels) return ;
+		
+        
 		for(String label : mLabels)
 		{							
 			if(0 == i) //开头
@@ -277,7 +300,7 @@ public class GaugeChart extends CirChart{
 		Double fd = new Double(mTickSteps);
 		float stepsAngle = div(180.0f,fd.floatValue());	
 		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
+		float cirY = getCirY(); //plotArea.getCenterY();
 		float tickRadius = mul(getRadius(),0.9f); 
 				
 		for(int i=0;i<mTickSteps;i++)
@@ -303,7 +326,7 @@ public class GaugeChart extends CirChart{
 	{		
 		float currentRadius = mul(getRadius() , 0.9f); 
 		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
+		float cirY = getCirY(); //plotArea.getCenterY();
 						
 		if(Float.compare(mPointerAngle, 180f) == 0 
 				|| Float.compare(mPointerAngle, 180f) == 1 ) //爆表了 
@@ -330,7 +353,7 @@ public class GaugeChart extends CirChart{
 	private void renderPinterCircle(Canvas canvas)
 	{
 		float cirX = plotArea.getCenterX();
-		float cirY = plotArea.getCenterY();
+		float cirY = getCirY(); //plotArea.getCenterY();
 		canvas.drawCircle(cirX, cirY, mul(this.getRadius() ,0.05f), mPaintPinterCircle);
 	}
 	
@@ -341,20 +364,23 @@ public class GaugeChart extends CirChart{
 	 */
 	private boolean renderPartitionFill(Canvas canvas) throws Exception
 	{		
-		 float totalAngle = 0.0f;		
-		 float newRadius = mul(getRadius() , 0.8f);
-						 
-	     RectF rect =new RectF();
-	     rect.left  = sub(plotArea.getCenterX() , newRadius);
-	     rect.top   = sub(plotArea.getCenterY() , newRadius);
-	     rect.right = add(plotArea.getCenterX() , newRadius);
-	     rect.bottom= add(plotArea.getCenterY() , newRadius);  
-	     
-	     if(null == mPartitionDataset||mPartitionDataset.size() == 0)
+		 if(null == mPartitionDataset||mPartitionDataset.size() == 0)
 	     {
 	    	 Log.e(TAG,"数据源为空.");
 	    	 return false;
 	     }
+		
+		 float totalAngle = 0.0f;		
+		 float newRadius = mul(getRadius() , 0.8f);
+		 
+		 float cy = getCirY();
+						 
+	     RectF rect =new RectF();
+	     rect.left  = sub(plotArea.getCenterX() , newRadius);
+	     rect.top   = sub(cy , newRadius);
+	     rect.right = add(plotArea.getCenterX() , newRadius);
+	     rect.bottom= add(cy , newRadius);  
+	     	     
 		 for(Pair pr : mPartitionDataset)
 		 {			
 			 Float AngleValue = (Float) pr.first;	
@@ -371,14 +397,33 @@ public class GaugeChart extends CirChart{
 			 canvas.drawArc(rect, add(totalAngle,180.0f), AngleValue, true, mPaintPartitionFill);		     
 		     totalAngle = add(totalAngle,AngleValue);
 		 }
+		 rect = null;
 		 return false;		 
+	}
+	
+	private float getCirY()
+	{		
+		float cirY = this.getBottom();
+		if(this.isShowBorder())
+        {
+        	cirY  -= this.getBorderWidth() / 2;
+        }  
+		
+		cirY -=  mul(getRadius() ,0.05f); //底圆		
+		return cirY;
 	}
 	
 	@Override
 	public float getRadius()
 	{
-		float r = super.getRadius();
-		
+		  //半圆， 宽应当是高的两倍
+        float r =  getWidth() / 2.f; 
+                                
+        if(this.isShowBorder())
+        {
+        	r -= this.getBorderWidth() ;        	
+        }  
+                       		
 		//找第一和最后一个标签
 		if(null != mLabels && mLabels.size() > 0)
 		{
@@ -388,7 +433,9 @@ public class GaugeChart extends CirChart{
 			float spadding = Math.max(left, right);			
 			r = sub(r, spadding);						
 			r = sub(r, this.getBorderWidth()/2);			
-		}				
+		}	
+		
+		 r -=  mul(r ,0.05f); //底圆		 
 		return r;
 	}
 
@@ -398,7 +445,7 @@ public class GaugeChart extends CirChart{
 	 */
 	private void renderDount(Canvas canvas) throws Exception
 	{		
-		 drawPercent(canvas, mPaintDount,plotArea.getCenterX(),plotArea.getCenterY(),
+		 drawPercent(canvas, mPaintDount,plotArea.getCenterX(),getCirY(),//plotArea.getCenterY(),
 				 			getRadius(),180, 180);
 		 		 
 	}
@@ -422,8 +469,7 @@ public class GaugeChart extends CirChart{
 			 renderPointerLine(canvas);
 			 //画上指针尾部的白色圆心
 			 renderPinterCircle(canvas);
-			
-				
+							
 		}catch( Exception e){
 			Log.e(TAG,e.toString());
 		}

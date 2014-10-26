@@ -381,12 +381,10 @@ public class SplineChart extends LnChart{
 			Log.e(TAG,"数据源为空.");
 			return false;
 		}
-					
-		//renderVerticalDataAxis(canvas);
-		//renderVerticalCategoryAxis(canvas);		
-		
+				
 		//开始处 X 轴 即分类轴              	
-		for(int i=0;i<mDataset.size();i++)
+		int count = mDataset.size();
+		for(int i=0;i<count;i++)
 		{															
 			SplineData spData = mDataset.get(i);			
 			calcAllPoints( spData,mLstDots,mLstPoints);					

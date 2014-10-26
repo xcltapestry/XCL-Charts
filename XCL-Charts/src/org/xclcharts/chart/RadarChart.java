@@ -295,7 +295,8 @@ public class RadarChart extends RdChart{
 		for(int i=0; i < dataAxisTickCount;i++)
 		{			
 			for(int j=0;j < labelsCount ;j++)
-			{											
+			{							
+				
 				//绘制最外围的标签
 				if(i == dataAxisTickCount - 1  )
 				{		
@@ -306,14 +307,16 @@ public class RadarChart extends RdChart{
 				    		 mArrayLabelX[i][j], mArrayLabelY[i][j], getLabelPaint());   					
 				}
 				
+				
 				//绘制主轴的刻度线与标签
 				if(0 == j){ //显示在第一轴线上(即270度的那根线)										
 					//绘制主轴(DataAxis)的刻度线				
 					double tick = this.dataAxis.getAxisSteps() * i + dataAxis.getAxisMin();										
 					dataAxis.renderAxisHorizontalTick(this,canvas,
 							 mArrayDotX[i][j], mArrayDotY[i][j],
-							 Double.toString(tick));
+							 Double.toString(tick),true);
 				}
+				
 			      
 			} //end for labels		
 									
@@ -403,11 +406,17 @@ public class RadarChart extends RdChart{
 				currAgent = MathHelper.getInstance().add(offsetAgent , pAngle);
 				
 				//计算位置
-				MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,mArrayRadius[i], currAgent); 				    
-		        //点的位置
-		        mArrayDotX[i][j] = MathHelper.getInstance().getPosX();
-		        mArrayDotY[i][j] = MathHelper.getInstance().getPosY();	
-		        		        		        
+				if( Float.compare(0.f,mArrayRadius[i]) == 0)
+				{
+					 mArrayDotX[i][j] = cirX;
+				     mArrayDotY[i][j] = cirY;	
+				}else{
+					MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,mArrayRadius[i], currAgent); 				    
+			        //点的位置
+			        mArrayDotX[i][j] = MathHelper.getInstance().getPosX();
+			        mArrayDotY[i][j] = MathHelper.getInstance().getPosY();	
+				}
+		          		        
 		        //记下每个标签对应的圆心角
 		        if(0 == i) mArrayLabelAgent[j] =  currAgent ;
 		        
@@ -616,6 +625,7 @@ public class RadarChart extends RdChart{
 		if(!validateParams()) return;
 		calcAllPoints();
 		renderGridLines(canvas);
+		
 		renderAxisLines(canvas);
 		renderDataArea(canvas);
 		renderAxisLabels(canvas);	

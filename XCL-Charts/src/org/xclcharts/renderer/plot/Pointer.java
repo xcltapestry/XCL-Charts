@@ -99,7 +99,7 @@ public class Pointer {
 			
 	/**
 	 * 开放指针画笔
-	 * @return
+	 * @return 指针画笔
 	 */
 	public Paint getPointerPaint()
 	{
@@ -186,7 +186,7 @@ public class Pointer {
 	
 	/**
 	 * 返回当前指针指向的比例
-	 * @return
+	 * @return 比例
 	 */
 	public float getPercentage()
 	{

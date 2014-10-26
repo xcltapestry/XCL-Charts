@@ -132,6 +132,9 @@ public class DountChart01View extends DemoView {
 			//设置附加信息
 			addAttrInfo();
 			
+			//保存标签位置
+			chart.saveLabelsPosition(XEnum.LabelSaveType.ALL);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -180,6 +183,33 @@ public class DountChart01View extends DemoView {
     public void render(Canvas canvas) {
         try{
             chart.render(canvas);
+            
+            /*
+             * 
+             * 在显示标签的位置显示图片:
+             * 
+             1.chart.saveLabelsPosition(XEnum.LabelSaveType.ONLYPOSITION);
+             2. 返回各标签位置
+	          
+    		*/
+            
+           
+            /*
+             * 贴图的例子代码：
+            Bitmap bmp = BitmapFactory.decodeResource(getResources(), R.drawable.pieaa);  
+            
+            ArrayList<PlotArcLabelInfo> mLstLabels = chart.getLabelsPosition();	    
+            for(PlotArcLabelInfo info: mLstLabels)
+    		{
+            	PointF pos = info.getLabelPointF();
+            	if(null == pos)continue;
+            	//String posXY = " x="+Float.toString(pos.x)+" y="+Float.toString(pos.y);
+            	//Log.e("Pie","label="+lPieData.get(info.getID())+" "+posXY);	   
+            	
+            	canvas.drawBitmap(bmp, pos.x, pos.y, null); 
+    		}
+            */
+            
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
@@ -193,13 +223,5 @@ public class DountChart01View extends DemoView {
 		return lst;
 	}
 	
-	/*
-	//重载掉，让其不能移动,实际应用时，可直接继承GraphicalView即可.
-	//此处是例子的权宜之计
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		return false;
-	}
-	*/
 
 }

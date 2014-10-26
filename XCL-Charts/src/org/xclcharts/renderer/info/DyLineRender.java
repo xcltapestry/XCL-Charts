@@ -22,7 +22,6 @@
 package org.xclcharts.renderer.info;
 
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.renderer.plot.PlotArea;
 
 import android.graphics.Canvas;
 
@@ -34,17 +33,15 @@ import android.graphics.Canvas;
  */
 public class DyLineRender extends DyLine{
 	
-	private PlotArea mArea = null;
+	
+	private float mLeft = 0.0f;
+	private float mTop = 0.0f;
+	private float mRight = 0.0f;
+	private float mBottom = 0.0f;
 	
 	public DyLineRender()
 	{
 	}
-	
-	public void setPlotArea(PlotArea area)
-	{				
-		mArea = area;
-	}
-
 		
 	// Cross 指定交叉的水平线和垂直线。
 	// BackwardDiagonal 从右上到左下的对角线的线条图案。
@@ -61,49 +58,36 @@ public class DyLineRender extends DyLine{
 	private void drawBackwardDiagonal(Canvas canvas)
 	{		
 		//竖线
-		float startX = mCenterXY.x;
-		float startY = mCenterXY.y;
-		float stopX = mCenterXY.x;
-		float stopY = mArea.getBottom();
-		
 		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
-				startX, startY, stopX, stopY,canvas,getLinePaint());	
+				mCenterXY.x, mCenterXY.y, mCenterXY.x, mBottom,canvas,getLinePaint());	
 		//横线
-		startX = mArea.getLeft();
-		startY = mCenterXY.y;
-		stopX = mCenterXY.x;
-		stopY = mCenterXY.y;
 		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
-				startX, startY, stopX, stopY,canvas,getLinePaint());	
+				mLeft, mCenterXY.y, mCenterXY.x, mCenterXY.y,canvas,getLinePaint());	
 	}
 	
-	private void drawVertical(Canvas canvas)
-	{	
-		//竖线
-		float startX = mCenterXY.x;
-		float startY = mArea.getTop();
-		float stopX = mCenterXY.x;
-		float stopY = mArea.getBottom();
-		
+	private void drawVertical(Canvas canvas) //竖线
+	{			
 		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
-				startX, startY, stopX, stopY,canvas,getLinePaint());	
+				mCenterXY.x, mTop, mCenterXY.x, mBottom,canvas,getLinePaint());	
 	}
 	
 	private void drawHorizontal(Canvas canvas)
 	{
-		float startX = mArea.getLeft();
-		float startY = mCenterXY.y;
-		float stopX = mArea.getRight();
-		float stopY = mCenterXY.y;
-
 		DrawHelper.getInstance().drawLine(getLineDrawStyle(), 
-				startX, startY, stopX, stopY,canvas,getLinePaint());	
+				mLeft, mCenterXY.y, mRight, mCenterXY.y,canvas,getLinePaint());	
 	}
-	
-	public void renderLine(Canvas canvas) 
-	{				
-		if(null == mArea) return;
+
+	public void renderLine(Canvas canvas,float left,float top,float right,float bottom) 
+	{						
 		if(null == mCenterXY) return;
+						
+		if(Float.compare(left, 0.0f) == 0 && Float.compare(top, 0.0f) == 0 &&
+			Float.compare(right, 0.0f) == 0 && Float.compare(bottom, 0.0f) == 0) return;
+		
+		mLeft = left;
+		mTop = top;
+		mRight = right;
+		mBottom = bottom;
 		
 		switch(getDyLineStyle())
 		{

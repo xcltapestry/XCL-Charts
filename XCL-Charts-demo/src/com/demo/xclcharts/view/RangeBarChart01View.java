@@ -198,6 +198,8 @@ public class RangeBarChart01View extends DemoView {
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
 			
+			chart.enablePanMode();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

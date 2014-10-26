@@ -25,6 +25,7 @@ package org.xclcharts.renderer;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.info.PlotArcLabelInfo;
 import org.xclcharts.renderer.plot.LabelBrokenLine;
 import org.xclcharts.renderer.plot.LabelBrokenLineRender;
 
@@ -56,10 +57,6 @@ public class CirChart extends EventChart{
 	private Paint mPaintLabel = null;
 	//初始偏移角度
 	protected float mOffsetAngle = 0.0f;//180;	
-	
-	//平移模式下的可移动方向
-	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
-	private boolean mEnablePanMode = true;
 	
 	//折线标签基类
 	private LabelBrokenLineRender mLabelLine = null;
@@ -181,8 +178,9 @@ public class CirChart extends EventChart{
 		return mLabelLine;
 	}
 	
-	protected void renderLabelInside(Canvas canvas,String text,float itemAngle,
-									 float cirX,float cirY,float radius,float calcAngle)
+	protected PointF renderLabelInside(Canvas canvas,String text,float itemAngle,
+									 float cirX,float cirY,float radius,float calcAngle,
+									 boolean showLabel)
 	{
 		//显示在扇形的中心
 		float calcRadius = MathHelper.getInstance().sub(radius , radius/2f);
@@ -191,12 +189,16 @@ public class CirChart extends EventChart{
 		PointF point = MathHelper.getInstance().calcArcEndPointXY(
 										cirX, cirY, calcRadius, calcAngle); 						 
 		//标识
-		DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
-											canvas, getLabelPaint());
+		if(showLabel)
+			DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+															canvas, getLabelPaint());
+		
+		return (new PointF(point.x, point.y));
 	}
 	
-	protected void renderLabelOutside(Canvas canvas,String text,float itemAngle,
-							float cirX,float cirY,float radius,float calcAngle)
+	protected PointF renderLabelOutside(Canvas canvas,String text,float itemAngle,
+							float cirX,float cirY,float radius,float calcAngle,
+							boolean showLabel)
 	{
 		//显示在扇形的外部
 		float calcRadius = MathHelper.getInstance().add(radius  , radius/10f);
@@ -205,14 +207,16 @@ public class CirChart extends EventChart{
 										cirX, cirY, calcRadius, calcAngle); 	
 			 
 		//标识
-		DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
-															canvas, getLabelPaint());
-	
+		if(showLabel)
+			DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+																canvas, getLabelPaint());
+		return (new PointF(point.x, point.y));
 	}
 	
 	//折线标签
-	protected void renderLabelLine(Canvas canvas,PieData cData,
-									float cirX,float cirY,float radius,float calcAngle)
+	protected PointF renderLabelLine(Canvas canvas,PieData cData,
+									float cirX,float cirY,float radius,float calcAngle,
+									boolean showLabel)
 	{		
 		if(null == mLabelLine)mLabelLine = new LabelBrokenLineRender();		
 		
@@ -221,8 +225,8 @@ public class CirChart extends EventChart{
 		if(mIsLabelPointSyncColor)
 			mLabelLine.getPointPaint().setColor(cData.getSliceColor());
 		
-		mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),
-									cirX,cirY,radius,calcAngle,canvas,getLabelPaint());
+		return ( mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),
+									cirX,cirY,radius,calcAngle,canvas,getLabelPaint(),showLabel) );
 	}
 	
 	/**
@@ -248,23 +252,20 @@ public class CirChart extends EventChart{
 	{
 		mIsLabelSyncColor = true;
 	}
-		
-	
+			
 	/**
 	 * 绘制标签
-	 * @param cData	PieData类
-	 * @param cirX	x坐标
-	 * @param cirY	y坐标
-	 * @param radius	半径
-	 * @param offsetAngle	偏移角度
-	 * @param curretAnglet	当前角度
+	 * @param canvas	画布
+	 * @param cData 	PieData类
+	 * @param info		信息类
+	 * @param savePosition	是否保存位置
+	 * @param showLabel	是否显示标签
+	 * @return 是否成功
 	 */
 	protected boolean renderLabel(Canvas canvas, PieData cData,
-			final float cirX,
-			final float cirY,
-			final float radius,		
-			final double offsetAngle,
-			final double curretAnglet)
+									PlotArcLabelInfo info,
+									boolean savePosition, 
+									boolean showLabel)
 	{				
 		if(XEnum.SliceLabelStyle.HIDE == mLabelStyle) return true;
 		
@@ -272,7 +273,12 @@ public class CirChart extends EventChart{
 		String text = cData.getLabel();
 		if(""==text||text.length()==0)return true;
 				
-	
+		float cirX = info.getX();
+		float cirY = info.getY();
+		float radius = info.getRadius();		
+		double offsetAngle = info.getOffsetAngle();
+		double curretAnglet = info.getCurrentAngle();
+					
 		float calcAngle = (float) MathHelper.getInstance().add(offsetAngle , curretAnglet/2);
 		if(Float.compare(calcAngle,0.0f) == 0 
 				|| Float.compare(calcAngle,0.0f) == -1 )
@@ -280,6 +286,8 @@ public class CirChart extends EventChart{
 			Log.e(TAG,"计算出来的圆心角等于0.");
 			return false;
 		}
+		
+		PointF position = null;
 		
 		//标签颜色与当地扇区颜色同步
 		if(mIsLabelSyncColor) this.getLabelPaint().setColor(cData.getSliceColor());
@@ -300,68 +308,27 @@ public class CirChart extends EventChart{
 		if(XEnum.SliceLabelStyle.INSIDE  == labelStyle)
 		{			 
 			//显示在扇形的内部
-			renderLabelInside(canvas,text,cData.getItemLabelRotateAngle(),
-												cirX,cirY,radius,calcAngle);
+			position = renderLabelInside(canvas,text,cData.getItemLabelRotateAngle(),
+												cirX,cirY,radius,calcAngle,showLabel);
 		}else if(XEnum.SliceLabelStyle.OUTSIDE == labelStyle){
 			//显示在扇形的外部
-			renderLabelOutside(canvas,text,cData.getItemLabelRotateAngle(),
-												cirX,cirY,radius,calcAngle);		
+			position = renderLabelOutside(canvas,text,cData.getItemLabelRotateAngle(),
+												cirX,cirY,radius,calcAngle,showLabel);		
 		}else if(XEnum.SliceLabelStyle.BROKENLINE == labelStyle){				
 			//显示在扇形的外部
 			//1/4处为起始点
-			renderLabelLine(canvas,cData,cirX,cirY,radius,calcAngle);
+			position = renderLabelLine(canvas,cData,cirX,cirY,radius,calcAngle,showLabel);
 		}else{
 			Log.e(TAG,"未知的标签处理类型.");
 			return false;
 		}						
 		getLabelPaint().setColor(color);
+		
+		if(savePosition)
+				info.setLabelPointF(position); //保存标签坐标位置
 		return true;
 	}
-			
-	/**
-	 * 设置手势平移模式
-	 * @param mode	平移模式
-	 */
-	public void setPlotPanMode(XEnum.PanMode mode)
-	{
-		 mPlotPanMode = mode;
-	}
-	
-	/**
-	 * 返回当前图表平移模式
-	 * @return 平移模式
-	 */
-	public XEnum.PanMode getPlotPanMode()
-	{
-		return mPlotPanMode;
-	}
-	
-	/**
-	 * 激活平移模式
-	 */
-	public void enablePanMode()
-	{
-		mEnablePanMode = true;		
-	}
-	
-	/**
-	 * 禁用平移模式
-	 */
-	public void disablePanMode()
-	{
-		mEnablePanMode = false;		
-	}
-	
-	/**
-	 * 返回当前图表的平移状态
-	 * @return
-	 */
-	public boolean getPanModeStatus()
-	{
-		return mEnablePanMode;
-	}
-	
-		
+				
 	@Override
 	protected boolean postRender(Canvas canvas) throws Exception 
 	{	
@@ -404,8 +371,8 @@ public class CirChart extends EventChart{
 						break;
 					}
 					
-						//绘制图表
-						super.render(canvas);
+					//绘制图表
+					super.render(canvas);
 						
 					//还原								
 					canvas.restore();			

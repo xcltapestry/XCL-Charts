@@ -215,18 +215,8 @@ public class LineChart extends LnChart{
 	                	{                		       	
 	                		PlotDot pDot = pLine.getPlotDot();	        
 	                		float radius = pDot.getDotRadius();
-	                		float rendEndX  = lineEndX  + radius;               		
-	            				      
-	                		/*
-	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
-	                				lineStartX ,lineStartY ,
-	                				lineEndX ,lineEndY,
-	                				pLine.getDotPaint()); //标识图形            		
-	                			                		
-	                		savePointRecord(dataID,childID, lineEndX  + mMoveX, lineEndY  + mMoveY,
-	                				lineEndX - radius + mMoveX,lineEndY - radius + mMoveY,
-	                				lineEndX + radius + mMoveX,lineEndY + radius + mMoveY);
-	                		*/
+	                		float rendEndX  = lineEndX  + radius;  
+	                		
 	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
 	                				lineEndX ,lineEndY,

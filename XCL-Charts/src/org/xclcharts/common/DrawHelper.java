@@ -345,8 +345,8 @@ public class DrawHelper {
 	 * @param cirX	x坐标
 	 * @param cirY	y坐标
 	 * @param radius	半径
-	 * @param offsetAgent	偏移角度
-	 * @param curretAgent	当前角度
+	 * @param startAngle	偏移角度
+	 * @param sweepAngle	当前角度
 	 * @throws Exception	例外
 	 */
 	public void drawPercent(Canvas canvas, Paint paintArc,

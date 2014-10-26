@@ -122,6 +122,7 @@ public class PieChart02View extends DemoView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
+			chart.disablePanMode();
 			
 			//显示图例
 			PlotLegend legend = chart.getPlotLegend();	
@@ -181,7 +182,7 @@ public class PieChart02View extends DemoView {
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub		
-		//super.onTouchEvent(event);		
+		super.onTouchEvent(event);		
 		if(event.getAction() == MotionEvent.ACTION_UP) 
 		{						
 			triggerClick(event.getX(),event.getY());
@@ -193,7 +194,7 @@ public class PieChart02View extends DemoView {
 	//触发监听
 	private void triggerClick(float x,float y)
 	{		
-		
+		if(!chart.getListenItemClickStatus())return;
 		ArcPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 		
@@ -210,8 +211,8 @@ public class PieChart02View extends DemoView {
 		//在点击处显示tooltip
 		mPaintToolTip.setColor(Color.RED);			
 		chart.getToolTip().setCurrentXY(x,y);		
-		chart.getToolTip().addToolTip(" key:" +  pData.getKey() +
-										" Label:" + pData.getLabel(),mPaintToolTip);		
+		chart.getToolTip().addToolTip(" key:" + pData.getKey() +
+							" Label:" + pData.getLabel(),mPaintToolTip);		
 		this.invalidate();
 				
 		

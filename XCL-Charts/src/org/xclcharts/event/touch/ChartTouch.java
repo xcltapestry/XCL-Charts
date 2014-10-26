@@ -90,14 +90,14 @@ public class ChartTouch implements IChartTouch {
                 	if(Float.compare(oldDist, 0.0f) == 0) return;                	
                 	scaleRate = newDist/oldDist ;		 
                 	/**
-                	 * 目前是采用在点那就以那范围为中心放大缩小.              
+                	 * 目前是采用焦点在那就以那范围为中心放大缩小.              
                 	 */                	
                 		mChart.setScale(scaleRate ,scaleRate, 
                 				event.getX() - halfDist,event.getY() - halfDist );		                    
                    
                 	if(null != mView)
                 		mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 
-           				 			 	(int)mChart.getRight(), (int)mChart.getBottom());
+           				 			 	 (int)mChart.getRight(), (int)mChart.getBottom());
                 }	        		        	
 		 		break;		 		
 			 default:

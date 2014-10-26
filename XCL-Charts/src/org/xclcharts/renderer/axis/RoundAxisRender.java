@@ -279,9 +279,9 @@ public class RoundAxisRender extends RoundAxis{
 	 	//fillAxis
 	/**
 	 * 绘制填充环形轴
-	 * @param canvas
-	 * @return
-	 * @throws Exception
+	 * @param canvas 画布
+	 * @return 是否成功
+	 * @throws Exception 例外
 	 */
 		public boolean renderFillAxis(Canvas canvas) throws Exception
 		{			
@@ -348,9 +348,9 @@ public class RoundAxisRender extends RoundAxis{
 		
 		/**
 		 * 绘制颜色块环形轴
-		 * @param canvas
-		 * @return
-		 * @throws Exception
+		 * @param canvas 画布
+		 * @return  结果
+		 * @throws Exception 例外
 		 */
 		public boolean renderRingAxis(Canvas canvas) throws Exception
 		{
@@ -451,9 +451,9 @@ public class RoundAxisRender extends RoundAxis{
 		
 		/**
 		 * 中心点的线轴
-		 * @param canvas
-		 * @return
-		 * @throws Exception
+		 * @param canvas 画布
+		 * @return	结果
+		 * @throws Exception 例外
 		 */
 		public boolean renderLineAxis(Canvas canvas) throws Exception
 		{
