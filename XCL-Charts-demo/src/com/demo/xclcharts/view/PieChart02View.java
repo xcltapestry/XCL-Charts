@@ -56,6 +56,8 @@ public class PieChart02View extends DemoView {
 	 private PieChart chart = new PieChart();	
 	 private LinkedList<PieData> chartData = new LinkedList<PieData>();
 	 Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	 
+	 private int mSelectedID = -1;
 	
 	 public PieChart02View(Context context) {
 		super(context);
@@ -198,7 +200,25 @@ public class PieChart02View extends DemoView {
 		ArcPosition record = chart.getPositionRecord(x,y);			
 		if( null == record) return;
 		
-		PieData pData = chartData.get(record.getDataID());						
+		PieData pData = chartData.get(record.getDataID());		
+		
+		boolean isInvaldate = true;		
+		for(int i=0;i < chartData.size();i++)
+		{	
+			PieData cData = chartData.get(i);
+			if(i == record.getDataID())
+			{
+				if(cData.getSelected()) 
+				{
+					isInvaldate = false;
+					break;
+				}else{
+					cData.setSelected(true);	
+				}
+			}else
+				cData.setSelected(false);			
+		}
+		
 		
 		//显示选中框
 		chart.showFocusArc(record,pData.getSelected());
@@ -212,10 +232,9 @@ public class PieChart02View extends DemoView {
 		mPaintToolTip.setColor(Color.RED);			
 		chart.getToolTip().setCurrentXY(x,y);		
 		chart.getToolTip().addToolTip(" key:" + pData.getKey() +
-							" Label:" + pData.getLabel(),mPaintToolTip);		
-		this.invalidate();
-				
-		
+							" Label:" + pData.getLabel(),mPaintToolTip);	
+											
+		this.invalidate();						
 	}
 	 
 }

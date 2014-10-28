@@ -182,22 +182,22 @@ public class AreaChart02View extends DemoView {
 		dataSeries1.add((double)50); 
 		dataSeries1.add((double)51); 
 		dataSeries1.add((double)60);
-		dataSeries1.add((double)45);
+		dataSeries1.add((double)0); //45
 		
 		List<Double> dataSeries2 = new LinkedList<Double>();			
-		dataSeries2.add((double)40); 
+		dataSeries2.add((double)40);  //40
 		dataSeries2.add((double)22); 
 		dataSeries2.add((double)30); 	
-		dataSeries2.add((double)30); 
-		dataSeries2.add((double)10); //15
+		dataSeries2.add((double)35); 
+		dataSeries2.add((double)15); //15
 		
 
 		List<Double> dataSeries3 = new LinkedList<Double>();			
-		dataSeries3.add((double)50); //50
-		dataSeries3.add((double)62); 
-		dataSeries3.add((double)70); 	
-		dataSeries3.add((double)80); 
-		dataSeries3.add((double)75); 
+		//dataSeries3.add((double)50); //50
+		//dataSeries3.add((double)62); 
+		dataSeries3.add((double)70);  //70	
+		dataSeries3.add((double)90); 
+		//dataSeries3.add((double)75); 
 		
 		
 		//设置每条线各自的显示属性
@@ -205,7 +205,9 @@ public class AreaChart02View extends DemoView {
 		AreaData line1 = new AreaData("小熊",dataSeries1,
 				Color.parseColor("#4CA200"),Color.parseColor("#80C007"));
 		//不显示点
-		line1.setDotStyle(XEnum.DotStyle.HIDE);
+		line1.setDotStyle(XEnum.DotStyle.HIDE);//隐藏图形
+		//line1.setDotStyle(XEnum.DotStyle.RECT);
+		//line1.setLabelVisible(true);
 		
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
 											(int)Color.rgb(182, 23, 123),	

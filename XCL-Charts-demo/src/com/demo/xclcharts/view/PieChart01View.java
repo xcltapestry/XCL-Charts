@@ -52,6 +52,7 @@ public class PieChart01View extends DemoView implements Runnable{
 	private String TAG = "PieChart01View";
 	private PieChart chart = new PieChart();	
 	private LinkedList<PieData> chartData = new LinkedList<PieData>();
+	private int mSelectedID = -1;
 	
 
 	public PieChart01View(Context context) {
@@ -249,7 +250,22 @@ public class PieChart01View extends DemoView implements Runnable{
 				" Label:" + pData.getLabel() ,
 				Toast.LENGTH_SHORT).show(); 
 		*/
+		
+		//用于处理点击时弹开，再点时弹回的效果
+		PieData pData = chartData.get(record.getDataID());		
+		if(record.getDataID() == mSelectedID ) 
+		{
+			boolean bStatus = chartData.get(mSelectedID).getSelected();
+			chartData.get(mSelectedID).setSelected(!bStatus);
+		}else{
+			if(mSelectedID >= 0)
+				chartData.get(mSelectedID).setSelected(false);
+			pData.setSelected(true);
+		}
+		mSelectedID = record.getDataID();
+		this.invalidate();		
 				
+		/*
 		boolean isInvaldate = true;		
 		for(int i=0;i < chartData.size();i++)
 		{	
@@ -267,6 +283,7 @@ public class PieChart01View extends DemoView implements Runnable{
 				cData.setSelected(false);			
 		}
 		if(isInvaldate)this.invalidate();
+		*/
 		
 	}
 	

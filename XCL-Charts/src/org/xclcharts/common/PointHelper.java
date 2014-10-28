@@ -51,9 +51,12 @@ public class PointHelper {
 
 		// 计算两点连线中的一点，这个点把这条线分成两段，比例是percent
 		public static PointF percent(PointF p1, PointF p2, float percent) {
-			float x = (p2.x - p1.x) * percent + p1.x;
-			float y = (p2.y - p1.y) * percent + p1.y;
-			return new PointF(x, y);
+			return percent(p1,percent,p2,percent);
 		}
 	
+		public static PointF percent(PointF p1,float percent1, PointF p2, float percent2) {
+			float x = (p2.x - p1.x) * percent1 + p1.x;
+			float y = (p2.y - p1.y) * percent2 + p1.y;
+			return new PointF(x, y);
+		}
 }

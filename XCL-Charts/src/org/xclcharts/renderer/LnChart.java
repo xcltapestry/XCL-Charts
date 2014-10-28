@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.common.PointHelper;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.info.PlotAxisTick;
 
@@ -128,7 +129,7 @@ public class LnChart extends AxisChart {
 		
 		mLstDataTick.clear();			
 		//绘制
-		for (int i = 0; i < tickCount; i++)
+		for (int i = 0; i < tickCount +1; i++)
 		{					
 			switch(pos)
 			{				 
@@ -139,11 +140,11 @@ public class LnChart extends AxisChart {
 								
 					// 从左到右的横向网格线
 					drawHorizontalGridLines(canvas,plotArea.getLeft(),plotArea.getRight(),
-																i,tickCount,YSteps,currentY);
+																i,tickCount + 1,YSteps,currentY);
 															
 					//这个有点问题，要处理下，
 					//  隐藏时应当不需要这个，但目前主明细模式下，会有问题，加 了一个都显示不出来
-					//  先省略，没心情弄了
+					//  先省略了
 					//if(!dataAxis.isShowAxisLabels())continue;
 					 
 					// 标签					
@@ -155,11 +156,11 @@ public class LnChart extends AxisChart {
 				case TOP: //X
 				case BOTTOM:	
 					 // 依初超始X坐标与标签间距算出当前刻度的X坐标
-					 currentX = add(plotArea.getLeft() , (i) * XSteps); 
+					 currentX = add(plotArea.getLeft() , i * XSteps); 
 								
 					 //绘制竖向网格线
 					 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
-													i ,tickCount,XSteps,currentX);
+													i ,tickCount + 1,XSteps,currentX);
 				
 					// if(!dataAxis.isShowAxisLabels())continue;
 					 
@@ -174,7 +175,27 @@ public class LnChart extends AxisChart {
 		} //end for	
 	}
 
-
+	
+	
+//	@Override
+	protected int getCategoryAxisCount()
+	{
+		int tickCount = categoryAxis.getDataSet().size();		
+		int labeltickCount = 0;
+		if( 0 == tickCount)
+		{
+			Log.e(TAG,"分类轴数据源为0!");
+			return labeltickCount;
+		}else if (1 == tickCount)  //label仅一个时右移
+		{
+			labeltickCount = tickCount ;
+			//j++;
+		}else{
+			labeltickCount = tickCount - 1 ;
+		}		
+		return labeltickCount;
+	}
+	
 	
 	/**
 	 * 绘制底部标签轴
@@ -188,17 +209,18 @@ public class LnChart extends AxisChart {
 		float XSteps = 0.0f,YSteps = 0.0f;
 		int j = 0;
 	
-		int tickCount = dataSet.size();
-		int labeltickCount = tickCount;
+		int tickCount = dataSet.size();		
 		if( 0 == tickCount)
 		{
 			Log.e(TAG,"分类轴数据源为0!");
 			return ;
-		}else if (1 == tickCount)  //label仅一个时右移
-		{
-			labeltickCount = tickCount - 1 ;
+		}
+		else if (1 == tickCount)  //label仅一个时右移
+		{			
 			j = 1;
 		}
+		int labeltickCount = getCategoryAxisCount();
+			 
 							
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
@@ -237,7 +259,7 @@ public class LnChart extends AxisChart {
 		mLstCateTick.clear();	
 		
 		//绘制
-		for (int i = 0; i < tickCount; i++) 
+		for (int i = 0; i < tickCount ; i++) 
 		{			
 			switch(pos)
 			{				 
@@ -299,7 +321,6 @@ public class LnChart extends AxisChart {
 	{		
 		return getPointRecord(x,y);
 	}
-		
 			
 	//遍历曲线
 	protected void renderBezierCurveLine(Canvas canvas,Paint paint,Path bezierPath ,
@@ -309,10 +330,12 @@ public class LnChart extends AxisChart {
 		paint.setStyle(Style.STROKE);
 		
 		int count = lstPoints.size();
-		if( count <= 1  ) return; //没有或仅一个点就不需要了
+		if( count <= 2  ) return; //没有或仅一个点就不需要了
 		
+		/*
 		if(count <= 3)
 		{			
+			if(null == bezierPath)bezierPath = new Path();
 			bezierPath.moveTo(lstPoints.get(0).x, lstPoints.get(0).y);
 			bezierPath.lineTo(lstPoints.get(1).x, lstPoints.get(1).y);
 			
@@ -323,7 +346,21 @@ public class LnChart extends AxisChart {
 			bezierPath.reset();					
 			return;
 		}
-	
+		*/
+		
+		if(count == 3)
+		{			
+			if(null == bezierPath)bezierPath = new Path();
+				bezierPath.moveTo(lstPoints.get(0).x, lstPoints.get(0).y);
+				
+				PointF ctl3 = PointHelper.percent(lstPoints.get(1),0.5f, lstPoints.get(2),0.8f) ;
+				bezierPath.quadTo(ctl3.x, ctl3.y, lstPoints.get(2).x, lstPoints.get(2).y);		
+			
+			canvas.drawPath(bezierPath, paint);
+			bezierPath.reset();					
+			return;
+		}
+		
 		for(int i = 0;i<count;i++)
 		{					
 			if(i<3) continue;
@@ -350,7 +387,7 @@ public class LnChart extends AxisChart {
 										BezierControls);
 			renderBezierCurvePath(canvas,paint,bezierPath,
 							lstPoints.get(lstPoints.size()-2), 
-							lstPoints.get(lstPoints.size() -1 ), 
+							lstPoints.get(lstPoints.size()-1), 
 							BezierControls );
 		}				
 		

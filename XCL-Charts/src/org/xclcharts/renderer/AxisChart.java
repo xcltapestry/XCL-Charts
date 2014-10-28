@@ -35,7 +35,6 @@ import org.xclcharts.renderer.plot.AxisTitleRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
-import android.util.Log;
 
 /**
  * @ClassName AxisChart

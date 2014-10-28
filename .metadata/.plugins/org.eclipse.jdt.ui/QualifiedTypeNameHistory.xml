@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.info.ToolTip"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDot"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.view.ChartView"/>
@@ -34,7 +33,6 @@
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLegend"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RectType"/>
@@ -60,4 +58,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CategoryAxisPosition"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAxisPosition"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.PointHelper"/>
 </qualifiedTypeNameHistroy>

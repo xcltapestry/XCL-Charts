@@ -13,18 +13,19 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="mArea" key="selection"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="mArea"/>
-			<item value="getPlotArea"/>
-			<item value="dataAxisDefaultSetting"/>
-			<item value="Log"/>
-			<item value="saveBarRectFRecord"/>
-			<item value="mLstDataTick"/>
-			<item value="drawDataAxisLabels"/>
-			<item value="drawClipDataAxisTickMarks"/>
+			<item value="没心"/>
+			<item value="mDataset"/>
+			<item value="getVerticalXSteps"/>
+			<item value="XSteps"/>
+			<item value="renderDotAndLabel"/>
+			<item value="percent"/>
+			<item value="renderBezierArea"/>
+			<item value="tickCount"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mDataSet"/>
 			<item value="PlotAxisTick"/>
 			<item value=".PlotAxisTick;"/>
 			<item value="drawClipDataAxisGridlines"/>
@@ -32,7 +33,6 @@
 			<item value="drawClipDataAxisTickMarks"/>
 			<item value="drawClipCategoryAxisTickMarks"/>
 			<item value="drawClipDataAxis"/>
-			<item value="CategoryAxisPosition"/>
 		</list>
 	</section>
 </section>

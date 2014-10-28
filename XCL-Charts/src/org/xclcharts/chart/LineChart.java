@@ -133,22 +133,19 @@ public class LineChart extends LnChart{
 			}
 			
 			float initX =  plotArea.getLeft();
-            float initY =  plotArea.getBottom();
-             
-			float lineStartX = initX;
-            float lineStartY = initY;
-            float lineEndX = 0.0f;
-            float lineEndY = 0.0f;
+            float initY =  plotArea.getBottom();             
+			float lineStartX = initX,lineStartY = initY;         
+            float lineStopX = 0.0f,lineStopY = 0.0f;        
             													
 			//得到分类轴数据集
 			List<String> dataSet =  categoryAxis.getDataSet();
-			if(null == dataSet){
+			if(null == dataSet ||dataSet.size() == 0){
 				Log.e(TAG,"分类轴数据为空.");
 				return false;
 			}		
 			//数据序列
 			List<Double> chartValues = bd.getLinePoint();
-			if(null == chartValues)
+			if(null == chartValues ||chartValues.size() == 0 )
 			{
 				Log.e(TAG,"当前分类的线数据序列值为空.");
 				return false;
@@ -159,13 +156,18 @@ public class LineChart extends LnChart{
 			float axisDataHeight = (float) dataAxis.getAxisRange();	
 			float XSteps = 0.0f;	
 			int j = 0,childID = 0;	
-			if (dataSet.size() == 1) //label仅一个时右移
+			int tickCount = dataSet.size();		
+			if( 0 == tickCount)
 			{
-				XSteps = div( getPlotScreenWidth(),(dataSet.size() ));
+				Log.e(TAG,"分类轴数据源为0!");
+				return false;
+			}else if (1 == tickCount)  //label仅一个时右移
+			{
 				j = 1;
-			}else{
-				XSteps = div( getPlotScreenWidth(),(dataSet.size() - 1));
-			}
+			}			
+			int labeltickCount = getCategoryAxisCount();
+			XSteps = getVerticalXSteps(labeltickCount);
+			
 			
 			float itemAngle = bd.getItemLabelRotateAngle();
 					
@@ -176,25 +178,22 @@ public class LineChart extends LnChart{
             	float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
 				float fvper = div( vaxlen,axisDataHeight );
 				float valuePostion = mul(axisScreenHeight, fvper);			    
-            		                	
-            	if(j == 0 )
-				{
-					lineStartX = initX;
-					lineStartY = sub(initY , valuePostion);
-					
-					lineEndX = lineStartX;
-					lineEndY = lineStartY;
-				}else{
-					lineEndX = initX + (j) * XSteps;
-					lineEndY = sub(initY , valuePostion);
-				}            	            	            	           	
+            
+            	lineStopX = add(initX , j * XSteps);        	
+            	lineStopY = sub(initY , valuePostion);  
+            	        	
+            	if(0 == j)
+            	{
+            		lineStartX = lineStopX;
+            		lineStartY = lineStopY;
+            	}
                         	
             	if( getLineAxisIntersectVisible() == false &&
             			Double.compare(bv, dataAxis.getAxisMin()) == 0 )
             	{
             		//如果值与最小值相等，即到了轴上，则忽略掉  
-            		lineStartX = lineEndX;
-    				lineStartY = lineEndY;
+            		lineStartX = lineStopX;
+    				lineStartY = lineStopY;
 
     				j++;
             	}else{
@@ -206,7 +205,7 @@ public class LineChart extends LnChart{
 	            					Float.compare(lineStartY, initY) != 0 )	
 	            		{	            		
 	            			DrawHelper.getInstance().drawLine(bd.getLineStyle(), 
-	            					lineStartX ,lineStartY ,lineEndX ,lineEndY,
+	            					lineStartX ,lineStartY ,lineStopX ,lineStopY,
 	            					canvas,pLine.getLinePaint());		            			
 	            		}
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
@@ -215,26 +214,26 @@ public class LineChart extends LnChart{
 	                	{                		       	
 	                		PlotDot pDot = pLine.getPlotDot();	        
 	                		float radius = pDot.getDotRadius();
-	                		float rendEndX  = lineEndX  + radius;  
+	                		float rendEndX  = lineStopX  + radius;  
 	                		
 	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
 	                				lineStartX ,lineStartY ,
-	                				lineEndX ,lineEndY,
+	                				lineStopX ,lineStopY,
 	                				pLine.getDotPaint()); //标识图形            		
 	                			                		
-	                		savePointRecord(dataID,childID, lineEndX  + mMoveX, lineEndY  + mMoveY,
-	                				lineEndX - radius + mMoveX,lineEndY - radius + mMoveY,
-	                				lineEndX + radius + mMoveX,lineEndY + radius + mMoveY);
+	                		savePointRecord(dataID,childID, lineStopX  + mMoveX, lineStopY  + mMoveY,
+	                				lineStopX - radius + mMoveX,lineStopY - radius + mMoveY,
+	                				lineStopX + radius + mMoveX,lineStopY + radius + mMoveY);
 	                		
 	                		childID++;
 	                		
-	            			lineEndX = rendEndX;	            			
+	            			lineStopX = rendEndX;	            			
 	                	}
 	            		
 	            		if(bd.getLabelVisible()) //标签
 	                	{	                	            			
 	            			DrawHelper.getInstance().drawRotateText(this.getFormatterItemLabel(bv), 
-	    										lineEndX, lineEndY, itemAngle, 
+	    										lineStopX, lineStopY, itemAngle, 
 	    										canvas, pLine.getDotLabelPaint());
 	                	}
 	            			            		
@@ -243,8 +242,8 @@ public class LineChart extends LnChart{
 	            		return false;
 	            	}      				
             	
-					lineStartX = lineEndX;
-					lineStartY = lineEndY;
+					lineStartX = lineStopX;
+					lineStartY = lineStopY;
 	
 					j++;
             	} //if(bv != dataAxis.getAxisMin())

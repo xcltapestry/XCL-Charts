@@ -29,6 +29,7 @@ import java.util.List;
 import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.common.PointHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -60,7 +61,7 @@ public class AreaChart extends LnChart{
   	protected Paint mPaintAreaFill =  null; 
   	
     //数据源
-  	protected List<AreaData> mDataset;
+  	protected List<AreaData> mDataSet;
   	
   	//透明度
   	private int mAreaAlpha = 100;  	
@@ -132,7 +133,7 @@ public class AreaChart extends LnChart{
 	 */
 	public void setDataSource(List<AreaData> dataset)
 	{				
-		this.mDataset = dataset;		
+		this.mDataSet = dataset;		
 	}
 	
 	/**
@@ -185,18 +186,13 @@ public class AreaChart extends LnChart{
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
          
-		float lineStartX = initX;
-        float lineStartY = initY;
+		float lineStartX = initX,lineStartY = initY;
         float lineStopX = 0.0f,lineStopY = 0.0f;     
         						
 		float axisScreenHeight = getPlotScreenHeight();
 		float axisDataHeight =  (float) dataAxis.getAxisRange();	
-		float currLablesSteps = div(getPlotScreenWidth(), 
-										(categoryAxis.getDataSet().size() -1));
-				
-		//path area
-		lstPathPoints.add( new PointF(initX,initY));
-		            
+		float currLablesSteps = div(getPlotScreenWidth(), (categoryAxis.getDataSet().size() -1));
+		  
         double dper = 0d;
 		int j = 0;	 
 		int count = chartValues.size();
@@ -211,56 +207,126 @@ public class AreaChart extends LnChart{
 			//首尾为0,path不能闭合，改成 0.001都可以闭合?
         	dper = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin()); 
         	float valuePosition = mul(axisScreenHeight, div(dtof(dper),axisDataHeight) );
-        	
-        	if(j == 0 )
-			{
-				lineStartX = initX;
-				lineStartY = sub(initY , valuePosition);
-				
-				lineStopX = lineStartX ;
-				lineStopY = lineStartY;	
-			}else{
-				lineStopX = add(initX , (j) * currLablesSteps);
-				lineStopY = sub(initY , valuePosition);
-			}        
-        	
-        	if(0 == j )
-    		{
-        		//line
-        		lstPoints.add( new PointF(lineStartX,lineStartY));
-        		lstPoints.add( new PointF(lineStopX,lineStopY));
-    			
-        		if(Double.compare( bv, dataAxis.getAxisMin())  != 0  ) // 0d
-        		{        			
-	        		//path area
-	        		lstPathPoints.add( new PointF(lineStartX,lineStartY));
+        	        	
+        	lineStopX = add(initX , j * currLablesSteps);        	
+        	lineStopY = sub(initY , valuePosition);  
+        	        	
+        	if(0 == j)
+        	{
+        		lineStartX = lineStopX;
+        		lineStartY = lineStopY;
+        				        		
+        		if(2 < count)
+        		{
+        			if(Double.compare( bv, dataAxis.getAxisMin() ) != 0  ) 
+        								lstPathPoints.add( new PointF(initX,initY));
         		}
-	        		lstPathPoints.add( new PointF(lineStopX,lineStopY));        		
-    		}else{     
-    			//line
-    			lstPoints.add( new PointF(lineStopX,lineStopY));
-    			//path area
-    			lstPathPoints.add( new PointF(lineStopX,lineStopY));
-    		}            		
-    
+        			
+        		lstPathPoints.add( new PointF(lineStartX,lineStartY));
+        		lstPoints.add( new PointF(lineStartX,lineStartY));
+        	}
+        	
+        	//path
+        	lstPathPoints.add( new PointF(lineStopX,lineStopY));    
+        	        	        	        
+        	//line
+    		lstPoints.add( new PointF(lineStopX,lineStopY));        	
+        	
         	//dot
         	lstDots.add(new RectF(lineStartX,lineStartY,lineStopX,lineStopY));
    	
         	lineStartX = lineStopX;
 			lineStartY = lineStopY;
-			j++;
-        }	
+        	
+        	j++;
+        }
 		
-		//path area
-		lstPathPoints.add( new PointF(lineStartX ,lineStartY));
-		
-		if(Double.compare( chartValues.get(count - 1), dataAxis.getAxisMin() )  != 0  ) // 0d
+		if(count > 2 )
 		{
-    		//path area
-			lstPathPoints.add( new PointF(lineStartX ,initY));
+			lstPathPoints.add( new PointF(lineStartX ,lineStartY));
+			
+			if(Double.compare( chartValues.get(count - 1), dataAxis.getAxisMin() ) != 0  )
+										lstPathPoints.add( new PointF(lineStartX ,initY));
 		}
 		return true;        
 	}
+	
+	
+	private boolean renderBezierArea(Canvas canvas, Paint paintAreaFill,
+			Path bezierPath,
+			AreaData areaData,
+			List<PointF> lstPathPoints)
+	{	
+	int count = lstPathPoints.size();		
+	if(count < 3) return false; //没有或仅一个点就不需要了
+	if(count == 3)
+	{						
+		if(null == bezierPath)bezierPath = new Path();
+	
+		bezierPath.moveTo(lstPathPoints.get(0).x, plotArea.getBottom());
+		bezierPath.lineTo(lstPathPoints.get(0).x, lstPathPoints.get(0).y);
+		
+		PointF ctl3 = PointHelper.percent(lstPathPoints.get(1),0.5f, lstPathPoints.get(2),0.8f) ;
+		bezierPath.quadTo(ctl3.x, ctl3.y, lstPathPoints.get(2).x, lstPathPoints.get(2).y);		
+		
+		//canvas.drawCircle(ctl3.x, ctl3.y, 10.f, paintAreaFill);		//显示控制点
+		
+		bezierPath.lineTo(lstPathPoints.get(2).x, plotArea.getBottom());
+		bezierPath.close();
+		
+		paintAreaFill.setColor(areaData.getAreaFillColor());				
+		paintAreaFill.setAlpha(this.mAreaAlpha); 	
+	    canvas.drawPath(bezierPath, paintAreaFill);		
+		bezierPath.reset();		
+		
+		return true;
+	}
+
+	//start point
+	bezierPath.moveTo(plotArea.getLeft(), plotArea.getBottom()); 
+	
+	for(int i = 0;i<count;i++)
+	{					
+		if(i<3)continue; 
+										
+		CurveHelper.curve3( lstPathPoints.get(i-2),  
+				lstPathPoints.get(i-1), 
+				lstPathPoints.get(i-3),
+				lstPathPoints.get(i), 
+				mBezierControls);
+		
+		bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+				mBezierControls[1].x, mBezierControls[1].y, 
+				lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
+	}			
+	
+	
+	PointF stop = lstPathPoints.get(count -1);	
+	if( Float.compare(stop.y, plotArea.getBottom()) == 0 ) 
+	{		
+		bezierPath.lineTo(stop.x, stop.y);	
+	}else{	
+		//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
+		CurveHelper.curve3(lstPathPoints.get(count -2),  
+									stop, 
+									lstPathPoints.get(count - 3),
+									stop, 
+									mBezierControls);
+		bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
+							mBezierControls[1].x, mBezierControls[1].y, 
+							stop.x, 
+							stop.y);		
+	}	
+
+	bezierPath.close();
+	paintAreaFill.setColor(areaData.getAreaFillColor());	
+	
+	paintAreaFill.setAlpha(this.mAreaAlpha); 	
+    canvas.drawPath(bezierPath, paintAreaFill);		
+    bezierPath.reset();
+   
+	return true;
+}
 	
 	private boolean renderArea(Canvas canvas,Paint paintAreaFill,Path pathArea,
 								AreaData areaData,
@@ -286,80 +352,12 @@ public class AreaChart extends LnChart{
 	    pathArea.reset();		
 		return true;
 	}
-	
-
-	private boolean renderBezierArea(Canvas canvas, Paint paintAreaFill,
-										Path bezierPath,
-										AreaData areaData,
-										List<PointF> lstPathPoints)
-	{		        				
-		if(null == bezierPath)bezierPath = new Path();							
-		int count = lstPathPoints.size();		
-		if( count <= 1  ) return true; //没有或仅一个点就不需要了
-		
-		if(count <= 3)
-		{			
-			bezierPath.moveTo(lstPathPoints.get(0).x, lstPathPoints.get(0).y);
-			bezierPath.lineTo(lstPathPoints.get(1).x, lstPathPoints.get(1).y);
-			
-			if(3 == count)
-				bezierPath.lineTo(lstPathPoints.get(2).x, lstPathPoints.get(2).y);
-			
-			bezierPath.close();
-			
-			paintAreaFill.setColor(areaData.getAreaFillColor());				
-			paintAreaFill.setAlpha(this.mAreaAlpha); 	
-		    canvas.drawPath(bezierPath, paintAreaFill);		
-			bezierPath.reset();					
-			return true;
-		}
-		
-		//start point
-		bezierPath.moveTo(plotArea.getLeft(), plotArea.getBottom());
-		
-		for(int i = 0;i<count;i++)
-		{					
-			if(i<3)continue;  //应当要用 quadTo
-											
-			CurveHelper.curve3( lstPathPoints.get(i-2),  
-					lstPathPoints.get(i-1), 
-					lstPathPoints.get(i-3),
-					lstPathPoints.get(i), 
-					mBezierControls);
-			
-			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
-					mBezierControls[1].x, mBezierControls[1].y, 
-					lstPathPoints.get(i -1 ).x, lstPathPoints.get(i -1 ).y);		
-		}			
-		
-		if(count > 3)
-		{			
-			PointF stop  = lstPathPoints.get(lstPathPoints.size()-1);
-			//PointF start = lstPathPoints.get(lstPathPoints.size()-2);						
-			CurveHelper.curve3(lstPathPoints.get(lstPathPoints.size()-2),  
-										stop, 
-										lstPathPoints.get(lstPathPoints.size()-3),
-										stop, 
-										mBezierControls);
-			bezierPath.cubicTo( mBezierControls[0].x, mBezierControls[0].y, 
-					mBezierControls[1].x, mBezierControls[1].y, 
-					lstPathPoints.get(lstPathPoints.size() -1 ).x, 
-					lstPathPoints.get(lstPathPoints.size() -1 ).y);							
-		}						
-	
-		bezierPath.close();
-		paintAreaFill.setColor(areaData.getAreaFillColor());	
-		
-		paintAreaFill.setAlpha(this.mAreaAlpha); 	
-	    canvas.drawPath(bezierPath, paintAreaFill);		
-	    bezierPath.reset();
-		return true;
-	}
 				
 	private boolean renderLine(Canvas canvas, AreaData areaData,
 								List<PointF> lstPoints)
-	{		        
-		for(int i=0;i<lstPoints.size();i++)
+	{		  
+		int count = lstPoints.size();
+		for(int i=0;i<count;i++)
         {	        	
         	if(0 == i)continue;
         	PointF pointStart = lstPoints.get(i - 1);
@@ -369,6 +367,7 @@ public class AreaChart extends LnChart{
   	    		  		pointStart.x ,pointStart.y ,pointStop.x ,pointStop.y,
   	    		  		canvas,areaData.getLinePaint());	
         }
+		
 		return true;
 	}
 	
@@ -443,7 +442,7 @@ public class AreaChart extends LnChart{
 						
 	private boolean renderVerticalPlot(Canvas canvas)
 	{								
-		if(null == mDataset)
+		if(null == mDataSet)
 		{
 			Log.e(TAG,"数据源为空.");
 			return false;
@@ -453,13 +452,13 @@ public class AreaChart extends LnChart{
 		if(null == mPathArea) mPathArea = new Path();
 								
 		//透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
-		//mPaintAreaFill.setAlpha( mAreaAlpha );  
+		//mPaintAreaFill.setAlpha( mAreaAlpha );  		
 						
 		//开始处 X 轴 即分类轴                  
-		int count = mDataset.size();
+		int count = mDataSet.size();
 		for(int i=0;i<count;i++)
 		{					
-			AreaData areaData = mDataset.get(i);
+			AreaData areaData = mDataSet.get(i);
 			
 			calcAllPoints( areaData,mLstDots,mLstPoints,mLstPathPoints);					
 			

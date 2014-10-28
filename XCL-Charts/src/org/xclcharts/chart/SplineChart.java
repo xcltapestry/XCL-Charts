@@ -54,7 +54,7 @@ public class SplineChart extends LnChart{
 	private static  String TAG="SplineChart";
 	
 	//数据源
-	private List<SplineData> mDataset;
+	private List<SplineData> mDataSet;
 	
 	//分类轴的最大，最小值
 	private double mMaxValue = 0d;
@@ -119,7 +119,7 @@ public class SplineChart extends LnChart{
 	 */
 	public void setDataSource( List<SplineData> dataSeries)
 	{		
-		this.mDataset = dataSeries;		
+		this.mDataSet = dataSeries;		
 	}	
 	
 	/**
@@ -205,10 +205,8 @@ public class SplineChart extends LnChart{
 		
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
-		float lineStartX = initX;
-        float lineStartY = initY;
-        float lineStopX = 0.0f;
-        float lineStopY = 0.0f;        
+		float lineStartX = initX,lineStartY = initY; 
+        float lineStopX = 0.0f,lineStopY = 0.0f;        
     	
     	float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
@@ -247,21 +245,15 @@ public class SplineChart extends LnChart{
 			    XvaluePostion = MathHelper.getInstance().round(XvaluePostion, 2);			    		
             	*/	  
 			  float XvaluePostion = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
-            
-            	if(j == 0 )
-				{	                		
-            		lineStartX = add(initX , XvaluePostion);
-					lineStartY = sub(initY , YvaluePostion);
-					
-					lineStopX = lineStartX ;
-					lineStopY = lineStartY;														
-				}else{
-					lineStopX =  add(initX , XvaluePostion);  
-					lineStopY =  sub(initY , YvaluePostion);
-				}
+           
+            	lineStopX = add(initX , XvaluePostion);  	
+            	lineStopY = sub(initY , YvaluePostion);
             	            	
             	if(0 == j )
         		{
+            		lineStartX = lineStopX;
+					lineStartY = lineStopY;
+					
             		//line
             		lstPoints.add( new PointF(lineStartX,lineStartY));
             		lstPoints.add( new PointF(lineStopX,lineStopY));        			
@@ -284,7 +276,8 @@ public class SplineChart extends LnChart{
 	private boolean renderLine(Canvas canvas, SplineData spData,
 												List<PointF> lstPoints)
 	{		        
-		for(int i=0;i<lstPoints.size();i++)
+		int count = lstPoints.size();
+		for(int i=0;i<count;i++)
 		{	        	
 			if(0 == i)continue;
 			PointF pointStart = lstPoints.get(i - 1);
@@ -371,22 +364,22 @@ public class SplineChart extends LnChart{
 	private boolean renderPlot(Canvas canvas)
 	{
 		//检查是否有设置分类轴的最大最小值		
-		if(mMaxValue == mMinValue && 0 == mMaxValue)
+		if(Double.compare(mMaxValue, mMinValue) == 0 && Double.compare(0d, mMaxValue) == 0)
 		{
 			Log.e(TAG,"请检查是否有设置分类轴的最大最小值。");
 			return false;
 		}
-		if(null == mDataset)
+		if(null == mDataSet)
 		{
 			Log.e(TAG,"数据源为空.");
 			return false;
 		}
 				
 		//开始处 X 轴 即分类轴              	
-		int count = mDataset.size();
+		int count = mDataSet.size();
 		for(int i=0;i<count;i++)
 		{															
-			SplineData spData = mDataset.get(i);			
+			SplineData spData = mDataSet.get(i);			
 			calcAllPoints( spData,mLstDots,mLstPoints);					
 			
 			switch(getCrurveLineStyle())
@@ -402,7 +395,7 @@ public class SplineChart extends LnChart{
 					continue;				
 			}								
 			renderDotAndLabel(canvas,spData,i,mLstDots);								
-			mLstKey.add(mDataset.get(i));
+			mLstKey.add(mDataSet.get(i));
 			
 			mLstPoints.clear();
 			mLstDots.clear();	
