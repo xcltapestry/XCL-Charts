@@ -28,6 +28,7 @@ import org.xclcharts.renderer.XEnum;
 import android.graphics.Canvas;
 import android.graphics.LinearGradient;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.Shader;
 import android.util.Log;
 
@@ -46,6 +47,9 @@ public class FlatBar extends Bar{
 	private int mFillAlpha = 255;
 	
 	private LinearGradient linearGradient = null;
+	private Path mPath = null;
+	
+	private final int radius = 5; //角半径
 	
 	public FlatBar()
 	{
@@ -117,6 +121,7 @@ public class FlatBar extends Bar{
 		getBarPaint().setShader(linearGradient);		
 	}
 	
+	
 	/**
 	 * 绘制柱形
 	 * @param left	左边X坐标
@@ -127,8 +132,9 @@ public class FlatBar extends Bar{
 	 */
 	public boolean renderBar(float left,float top,float right ,float bottom,Canvas canvas)
 	{				
+		 XEnum.BarStyle style = getBarStyle();
 		
-		if( XEnum.BarStyle.OUTLINE == getBarStyle())
+		if( XEnum.BarStyle.OUTLINE == style)
 		{
 			int barColor = getBarPaint().getColor();						
 			int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
@@ -145,32 +151,64 @@ public class FlatBar extends Bar{
 			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
 			getBarPaint().setStrokeWidth(pWidth);
 			return true;
-		}
+		}else if( XEnum.BarStyle.TRIANGLE == style){	
+			
+			float mid = 0.0f;				
+			if(null == mPath)mPath = new Path();						
+			switch(this.getBarDirection())
+			{
+			case HORIZONTAL:
+				mid = top + (bottom - top)/2;	
+				mPath.moveTo(left, top);
+				mPath.lineTo(right, mid);
+				mPath.lineTo(left, bottom);
+				mPath.close();		
+				canvas.drawPath(mPath, getBarPaint());
+				canvas.drawCircle(right, mid, radius, getBarPaint());
+				break;
+			default:
+				mid = left + (right - left)/2;	
+				mPath.moveTo(left, bottom);
+				mPath.lineTo(mid, top);
+				mPath.lineTo(right, bottom);
+				mPath.close();		
+				canvas.drawPath(mPath, getBarPaint());
+				canvas.drawCircle(mid, top, radius, getBarPaint());
+				break;
+			}			
+			mPath.reset();			
+			
+			return true;			
+		}else{				
+			//GRADIENT,FILL,STROKE
+			switch(style)
+			{
+			case GRADIENT:
+				setBarGradient(left,top,right,bottom);
+				break;
+			case FILL:
+				getBarPaint().setStyle(Style.FILL);
+				break;
+			case STROKE:						
+				if(Float.compare(1f,  getBarPaint().getStrokeWidth() ) == 0)
+											getBarPaint().setStrokeWidth(3);
+				getBarPaint().setStyle(Style.STROKE);
+				break;
+			case TRIANGLE:		
+			case OUTLINE:
+				break;
+			default:
+				Log.e(TAG,"不认识的柱形风格参数.");
+				return false;
+			} 
+			
+			if(getBarStyle() != XEnum.BarStyle.FILL)
+			{
+				setBarGradient(left,top,right,bottom);
+			}
+			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
 		
-		//GRADIENT,FILL,STROKE
-		switch(getBarStyle())
-		{
-		case GRADIENT:
-			setBarGradient(left,top,right,bottom);
-			break;
-		case FILL:
-			getBarPaint().setStyle(Style.FILL);
-			break;
-		case STROKE:						
-			if(Float.compare(1f,  getBarPaint().getStrokeWidth() ) == 0)
-										getBarPaint().setStrokeWidth(3);
-			getBarPaint().setStyle(Style.STROKE);
-			break;
-		default:
-			Log.e(TAG,"不认识的柱形风格参数.");
-			return false;
-		} 
-		
-		if(getBarStyle() != XEnum.BarStyle.FILL)
-		{
-			setBarGradient(left,top,right,bottom);
 		}
-		canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
 		return true;
 	}
 	

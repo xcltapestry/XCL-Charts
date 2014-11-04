@@ -39,6 +39,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -130,7 +131,7 @@ public class AreaChart02View extends DemoView {
 				chart.getAxisTitle().setLowerAxisTitle("(年份)");
 				
 				//透明度
-				chart.setAreaAlpha(130);
+				chart.setAreaAlpha(180);
 				//显示图例
 				chart.getPlotLegend().show();
 				
@@ -165,7 +166,7 @@ public class AreaChart02View extends DemoView {
 				
 				//扩大显示宽度
 				chart.getPlotArea().extWidth(100f);
-						
+				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,12 +204,16 @@ public class AreaChart02View extends DemoView {
 		//设置每条线各自的显示属性
 		//key,数据集,线颜色,区域颜色
 		AreaData line1 = new AreaData("小熊",dataSeries1,
-				Color.parseColor("#4CA200"),Color.parseColor("#80C007"));
+				Color.parseColor("#4CA200"),Color.WHITE,Color.parseColor("#80C007"));
 		//不显示点
 		line1.setDotStyle(XEnum.DotStyle.HIDE);//隐藏图形
 		//line1.setDotStyle(XEnum.DotStyle.RECT);
 		//line1.setLabelVisible(true);
+		line1.setApplayGradient(true);
+		line1.setAreaBeginColor(Color.WHITE);
+		line1.setAreaEndColor(Color.parseColor("#80C007"));
 		
+					
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
 											(int)Color.rgb(182, 23, 123),	
 											(int)Color.rgb(255, 191, 235)
@@ -217,12 +222,24 @@ public class AreaChart02View extends DemoView {
 		line2.getDotLabelPaint().setColor(Color.rgb(83, 148, 235));
 		//设置点标签
 		line2.setLabelVisible(true);
-		line2.getDotLabelPaint().setTextAlign(Align.LEFT);	
+		line2.getDotLabelPaint().setTextAlign(Align.CENTER);	
+		line2.getPlotLabel().showBox();
+		line2.getPlotLabel().setOffsetY(30.f);
+		line2.setApplayGradient(true);
+		line2.setGradientDirection(XEnum.Direction.HORIZONTAL);
+		line2.setAreaBeginColor(Color.WHITE);
+		line2.setAreaEndColor(Color.RED);
+		
+		//line2.setApplayGradient(true);
+		//line2.setGradientMode(Shader.TileMode.MIRROR);		
+		
+		//Color.RED,Color.WHITE  Color.WHITE,Color.RED
 	
 		
 		AreaData line3 = new AreaData("小小小熊",dataSeries3,
 				Color.parseColor("#B6D3FD"),Color.parseColor("#5394EB"));
 		line3.setDotStyle(XEnum.DotStyle.HIDE);
+		line3.setApplayGradient(true);
 	
 		mDataset.add(line3);		
 		mDataset.add(line1);
@@ -247,9 +264,6 @@ public class AreaChart02View extends DemoView {
         	Log.e(TAG, e.toString());
         }
     }
-
-
-
 
 	@Override
 	public List<XChart> bindChart() {

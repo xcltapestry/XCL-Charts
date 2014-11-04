@@ -24,10 +24,7 @@ package org.xclcharts.renderer.plot;
 import org.xclcharts.common.DrawHelper;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.RectF;
-import android.graphics.Paint.Style;
 /**
  * @ClassName BorderRender
  * @Description  图边框绘制类
@@ -38,8 +35,7 @@ public class BorderRender extends Border {
 	
 	private RectF mRect = new RectF();	
 	
-	//图背景画笔
-	private Paint mPaintBackground = null;
+	
 
 	public BorderRender()
 	{
@@ -54,21 +50,7 @@ public class BorderRender extends Border {
 		return mBorderSpadding;
 	}
 	
-	/**
-	 * 图的背景画笔
-	 * @return 画笔
-	 */
-	 public Paint getBackgroundPaint()
-		{
-			if(null == mPaintBackground)
-			{
-				mPaintBackground = new Paint();
-				mPaintBackground.setAntiAlias(true);
-				mPaintBackground.setStyle(Style.FILL);
-				mPaintBackground.setColor(Color.WHITE);
-			}
-			return mPaintBackground;
-		}
+	
 	 
 	 private void setPaintLineStyle()
 	 {
@@ -106,7 +88,8 @@ public class BorderRender extends Border {
 						canvas.drawRoundRect(rect, getRoundRadius(), 
 											 getRoundRadius(), getBackgroundPaint());	
 				if(showBoxBorder)
-					canvas.drawRoundRect(rect, getRoundRadius(), getRoundRadius(), getLinePaint());					
+					canvas.drawRoundRect(rect, getRoundRadius(), 
+											getRoundRadius(), getLinePaint());					
 			break;
 		}			
 	}
@@ -148,7 +131,8 @@ public class BorderRender extends Border {
 						canvas.drawRoundRect(mRect, getRoundRadius(), 
 								getRoundRadius(), mPaintBackground);	
 				}else{ //BORDER
-					canvas.drawRoundRect(mRect, getRoundRadius(), getRoundRadius(), getLinePaint());		
+					canvas.drawRoundRect(mRect, getRoundRadius(), 
+								getRoundRadius(), getLinePaint());		
 				}
 			break;
 		}

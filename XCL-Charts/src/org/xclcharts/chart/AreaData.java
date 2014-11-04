@@ -26,6 +26,9 @@ import java.util.List;
 
 import org.xclcharts.renderer.XEnum;
 
+import android.graphics.Color;
+import android.graphics.Shader;
+
 /**
  * @ClassName AreaData
  * @Description  面积图数据传输类
@@ -34,14 +37,20 @@ import org.xclcharts.renderer.XEnum;
  */
 public class AreaData extends LineData {
 	
-	//private Paint mPaintOutline = null;
-	
 	private int mAreaFillColor = -999; // 255;
+		
+	//是否应用渲染模式
+	private boolean mApplayGradient = false;
+		
+	private int mAreaBeginColor = Color.WHITE;
+    private int mAreaEndColor = Color.WHITE;
+	private Shader.TileMode mTileMode = Shader.TileMode.MIRROR;
+
+	private XEnum.Direction mDirection = XEnum.Direction.VERTICAL;
 	
 	public AreaData()
 	{
 		super();
-		init();
 	}
 	
 	/**
@@ -68,7 +77,25 @@ public class AreaData extends LineData {
 		setLinePoint(dataSeries);
 		setLineColor(lineColor);	
 		setAreaFillColor(areaColor);
+		
+		setAreaBeginColor(areaColor);
+		setAreaEndColor(Color.WHITE);
+		
 	}
+	
+	public AreaData(String key,List<Double> dataSeries,int lineColor,
+											int areaBeginColor,int areaEndColor) 
+	{
+		setLabel(key);	
+		setLinePoint(dataSeries);
+		setLineColor(lineColor);	
+		setAreaFillColor(areaBeginColor);
+
+		setApplayGradient(true);
+		setAreaBeginColor(areaBeginColor);
+		setAreaEndColor(areaEndColor);
+	}
+	
 	
 	/**
 	 * 
@@ -87,13 +114,11 @@ public class AreaData extends LineData {
 		setLinePoint(dataSeries);
 		setDotStyle(dotStyle);
 		setAreaFillColor(color);
+		
+		setAreaBeginColor(color);
+		setAreaEndColor(Color.WHITE);
 	}
 	
-	private void init()
-	{
-		//mPaintOutline = new Paint();
-		//mPaintOutline.setColor(Color.BLACK);
-	}
 	
 	/**
 	 * 设置区域填充颜色
@@ -111,6 +136,89 @@ public class AreaData extends LineData {
 	public int getAreaFillColor() {
 		return mAreaFillColor;
 	}
+	 		
+	/**
+	 * 设置 是否应用渲染模式
+	 */
+	public void setApplayGradient(boolean status)
+	{
+		mApplayGradient = status;
+	}
+	
+	/**
+	 * 返回是否应用渲染模式
+	 * @return 状态
+	 */
+	public boolean getApplayGradient()
+	{
+		return mApplayGradient;
+	}
 	
 	
+	
+	public void setGradientDirection(XEnum.Direction direction)
+	{
+		mDirection = direction;
+	}
+	
+	public XEnum.Direction getGradientDirection()
+	{
+		return mDirection;
+	}
+	
+	/**
+	 * 设置渲染模式
+	 * @param tm		渲染模式
+	 */
+	 public void setGradientMode(Shader.TileMode tm)
+	 {
+		 mTileMode = tm;
+	 }
+	 
+	 /**
+	  * 返回渲染模式
+	  * @return 渲染模式
+	  */
+	 public Shader.TileMode getGradientMode()
+	 {
+		 return mTileMode;
+	 }
+	 
+	 /**
+	  * 设置起始颜色
+	  * @param color	颜色
+	  */
+	 public void setAreaBeginColor(int color)
+	 {
+		 mAreaBeginColor = color;
+	 }
+	 
+	 /**
+	  * 设置结束颜色
+	  * @param color	颜色
+	  */
+	 public void setAreaEndColor(int color)
+	 {
+		 mAreaEndColor = color;
+	 }
+	 
+	 
+	 /**
+	  * 返回起始颜色
+	  * @return	颜色
+	  */
+	 public int getAreaBeginColor()
+	 {
+		 return mAreaBeginColor;
+	 }
+	 
+	 /**
+	  * 返回结束颜色
+	  * @return	颜色
+	  */
+	 public int getAreaEndColor()
+	 {
+		 return mAreaEndColor;
+	 }
+	 
 }

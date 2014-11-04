@@ -114,18 +114,19 @@ public class BarChart05View extends DemoView implements Runnable{
 			chart.getAxisTitle().setLowerAxisTitle("分数");
 			
 			//数据轴
-			chart.getDataAxis().setAxisMax(100);
+			chart.getDataAxis().setAxisMax(110);
 			chart.getDataAxis().setAxisMin(0);
 			chart.getDataAxis().setAxisSteps(5);		
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
 			
 			//背景网格
-			chart.getPlotGrid().showHorizontalLines();
+			//chart.getPlotGrid().showHorizontalLines();
 									
 			//横向显示柱形,横向显示效果
 			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
 			//chart.getPlotGrid().setVerticalLinesVisible(true);
+						
 			
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -144,7 +145,7 @@ public class BarChart05View extends DemoView implements Runnable{
 			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
-			chart.getBar().setBarStyle(XEnum.BarStyle.FILL);
+			chart.getBar().getItemLabelPaint().setTextSize(18);
 			
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
@@ -161,6 +162,10 @@ public class BarChart05View extends DemoView implements Runnable{
 			
 			 //禁用平移模式
 			 chart.disablePanMode();
+			 //竖向移动
+			// chart.setPlotPanMode(XEnum.PanMode.VERTICAL);
+			 //柱形设为outline风格
+			 chart.getBar().setBarStyle(XEnum.BarStyle.TRIANGLE);
 			 
 			 //轴
 			 chart.getCategoryAxis().setHorizontalTickAlign(Align.RIGHT);
@@ -172,6 +177,9 @@ public class BarChart05View extends DemoView implements Runnable{
 			 //chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);	
 			 //chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);		
 			 
+			 //留出显示箭头的空间
+			 chart.getClipExt().setExtTop(10.f);
+			 chart.getClipExt().setExtRight(100.f);
 			 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

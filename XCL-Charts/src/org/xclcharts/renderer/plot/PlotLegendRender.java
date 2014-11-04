@@ -479,11 +479,12 @@ public class PlotLegendRender extends PlotLegend{
 		}
 	}
 	
+
 	private void drawBox(Canvas canvas)
 	{				
 		if(!mShowBox)return;
 		
-		RectF rect = new RectF();		
+		RectF rect = new RectF();	
 		rect.left = mKeyLabelX ;
 		rect.right = mKeyLabelX + mRectWidth;
 		rect.top = mKeyLabelY;

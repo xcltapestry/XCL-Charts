@@ -65,6 +65,8 @@ public class ScatterChart extends LnChart{
 	{
 		categoryAxisDefaultSetting();
 		dataAxisDefaultSetting();
+		
+		this.setAxesClosed(true);
 	}
 	
 	@Override
@@ -173,8 +175,7 @@ public class ScatterChart extends LnChart{
         float initY =  plotArea.getBottom();
 		float lineStartX = initX;
         float lineStartY = initY;
-        float lineStopX = 0.0f;
-        float lineStopY = 0.0f;        
+        float lineStopX = 0.0f,lineStopY = 0.0f;    
     	
     	float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
@@ -246,7 +247,7 @@ public class ScatterChart extends LnChart{
                     		getFormatterDotLabel(
                     				Double.toString(xValue)+","+ Double.toString(yValue)),
         					lineStopX,lineStopY, itemAngle, 
-        					canvas,  bd.getDotLabelPaint());	                    
+        					canvas,  bd.getDotLabelPaint());
             	}              	
             	            	            	
 				lineStartX = lineStopX;

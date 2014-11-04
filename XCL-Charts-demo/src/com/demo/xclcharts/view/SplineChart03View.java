@@ -176,7 +176,6 @@ public class SplineChart03View  extends DemoView {
 		//把线弄细点
 		dataSeries1.getLinePaint().setStrokeWidth(2);
 		dataSeries1.setLabelVisible(true);	
-		dataSeries1.getDotLabelPaint().setTextAlign(Align.LEFT);
 		
 		//线2的数据集
 		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();

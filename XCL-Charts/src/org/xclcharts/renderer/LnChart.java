@@ -67,7 +67,7 @@ public class LnChart extends AxisChart {
 		categoryAxisDefaultSetting();
 		dataAxisDefaultSetting();
 		
-		setAxesClosed(true);		
+		//setAxesClosed(true);		
 	}
 		
 	
@@ -96,7 +96,7 @@ public class LnChart extends AxisChart {
 		// 标签
 		double currentTickLabel = 0d;
 		// 轴位置
-		XEnum.DataAxisPosition pos = getDataAxisPosition();
+		XEnum.Location pos = getDataAxisLocation();
 				
 		//步长
 		switch(pos)
@@ -105,7 +105,7 @@ public class LnChart extends AxisChart {
 			case RIGHT:			
 				YSteps = getVerticalYSteps(labeltickCount) ;	
 											
-				if( XEnum.DataAxisPosition.RIGHT  == pos)
+				if( XEnum.Location.RIGHT  == pos)
 				{    //显示在右边
 					currentX = axisX = plotArea.getRight();
 				}else{ //显示在左边
@@ -117,7 +117,7 @@ public class LnChart extends AxisChart {
 			case TOP: //X
 			case BOTTOM:
 				XSteps = getVerticalXSteps(labeltickCount);						
-				if(XEnum.DataAxisPosition.TOP == pos)
+				if(XEnum.Location.TOP == pos)
 				{
 					currentY = axisY = plotArea.getTop();
 				}else{
@@ -225,10 +225,10 @@ public class LnChart extends AxisChart {
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
-		XEnum.CategoryAxisPosition pos = getCategoryAxisPosition();
+		XEnum.Location pos = getCategoryAxisLocation();
 								
-		if( XEnum.CategoryAxisPosition.LEFT == pos || 
-				XEnum.CategoryAxisPosition.RIGHT == pos)
+		if( XEnum.Location.LEFT == pos || 
+				XEnum.Location.RIGHT == pos)
 		{						
 			YSteps = getVerticalYSteps( labeltickCount) ;
 			switch(pos) //Y

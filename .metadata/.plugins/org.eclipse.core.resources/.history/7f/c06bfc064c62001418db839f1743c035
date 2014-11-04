@@ -1,0 +1,154 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.0
+ */
+package org.xclcharts.chart;
+
+import java.util.LinkedList;
+import java.util.List;
+
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
+
+/**
+ * @ClassName AreaData
+ * @Description  面积图数据传输类
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * 
+ */
+public class AreaData extends LineData {
+	
+	//private Paint mPaintOutline = null;
+	
+	private int mAreaFillColor = -999; // 255;
+	
+	
+	//透明度
+	   private int mAreaAlpha = 100; 
+
+	   private Shader.TileMode mTileMode ;
+	   private int mColors[] ;
+
+	
+	public AreaData()
+	{
+		super();
+		init();
+	}
+	
+	/**
+	 * 
+	 * @param key		key值
+	 * @param linecolor 线颜色
+	 * @param dataSeries	数据序列
+	 */
+	public AreaData(String key,int linecolor,LinkedList<Double> dataSeries) 
+	{
+		 super();
+	}
+	
+	/**
+	 * 
+	 * @param key		key值
+	 * @param dataSeries	数据序列
+	 * @param lineColor	线颜色
+	 * @param areaColor	区域填充颜色
+	 */
+	public AreaData(String key,List<Double> dataSeries,int lineColor,int areaColor) 
+	{
+		setLabel(key);	
+		setLinePoint(dataSeries);
+		setLineColor(lineColor);	
+		setAreaFillColor(areaColor);
+	}
+	
+	/**
+	 * 
+	 * @param key		key值
+	 * @param dataSeries	数据序列
+	 * @param color		线颜色
+	 * @param dotStyle	坐标点绘制类型
+	 */
+	public AreaData(String key,					
+					List<Double> dataSeries,
+					int color,
+					XEnum.DotStyle  dotStyle) 
+	{
+		setLabel(key);		
+		setLineColor(color);
+		setLinePoint(dataSeries);
+		setDotStyle(dotStyle);
+		setAreaFillColor(color);
+	}
+	
+	private void init()
+	{
+		//mPaintOutline = new Paint();
+		//mPaintOutline.setColor(Color.BLACK);
+	}
+	
+	/**
+	 * 设置区域填充颜色
+	 * @param color 区域填充颜色
+	 */
+	public void setAreaFillColor(int color)
+	{
+		mAreaFillColor = color;
+	}
+	
+	/**
+	 * 返回区域填充颜色
+	 * @return 区域填充颜色
+	 */
+	public int getAreaFillColor() {
+		return mAreaFillColor;
+	}
+	
+	
+	public void setAreaAlpha(int alpha)
+	{	 
+	    mAreaAlpha = alpha;
+	}
+	 
+	private boolean mApplayGradient = false;
+	
+	/**
+	 * 设置 是否应用渲染模式
+	 */
+	public void setApplayGradient(boolean applay)
+	{
+		mApplayGradient = applay;
+	}
+	
+	
+	/**
+	 * 设置渲染模式
+	 * @param tm		渲染模式
+	 * @param colors	颜色数组
+	 */
+	 public void setGradient(Shader.TileMode tm ,int[] colors)
+	 {
+		 mTileMode = tm;
+		 mColors = colors;
+	 }
+}

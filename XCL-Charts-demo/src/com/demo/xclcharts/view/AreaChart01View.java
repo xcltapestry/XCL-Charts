@@ -136,7 +136,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 				chart.getAxisTitle().setLowerAxisTitle("(年份)");
 				*/
 				//透明度
-				chart.setAreaAlpha(100);
+				chart.setAreaAlpha(200);
 				
 				/*
 				//显示图例
@@ -209,6 +209,11 @@ public class AreaChart01View extends DemoView implements Runnable {
 		AreaData line1 = new AreaData("小熊",dataSeries1,Color.BLUE,Color.YELLOW);
 		//不显示点
 		line1.setDotStyle(XEnum.DotStyle.HIDE);
+		/*
+		line1.setApplayGradient(true);
+		line1.setAreaBeginColor(Color.WHITE);
+		line1.setAreaEndColor(Color.YELLOW);
+		*/
 		
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
 											(int)Color.rgb(79, 200, 100),Color.GREEN);
@@ -216,17 +221,18 @@ public class AreaChart01View extends DemoView implements Runnable {
 		line2.getDotLabelPaint().setColor(Color.RED);
 		//设置点标签
 		line2.setLabelVisible(true);
-		line2.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		
 		
 		AreaData line3 = new AreaData("小小小熊",dataSeries3,
 				Color.rgb(246, 134, 31),Color.rgb(213, 198, 126)); 
 		//设置线上每点对应标签的颜色
 		//line3.getDotLabelPaint().setColor(Color.YELLOW);
-		line3.setLineStyle(XEnum.LineStyle.DOT);
-		mDataset.add(line1);
-		mDataset.add(line2);	
+		line3.setLineStyle(XEnum.LineStyle.DOT);		
+		
+		
+		mDataset.add(line1);		
 		mDataset.add(line3);
+		mDataset.add(line2);	
 	}
 	
 	private void chartLabels()

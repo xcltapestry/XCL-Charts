@@ -1,0 +1,167 @@
+package org.xclcharts.renderer.plot;
+
+import org.xclcharts.renderer.XEnum;
+
+public class PlotLabel {
+	
+	
+	protected float mLabOffsetLeft = 0.0f;
+	protected float mLabOffsetTop = 0.0f;
+	protected float mLabOffsetRight = 0.0f;
+	protected float mLabOffsetBottom = 0.0f;
+	
+	//protected int mLabBoxColor = -1;
+	//protected boolean mLabBox = true;
+	
+	
+	//数据集的说明描述与图这间的空白间距
+	protected float mMargin  = 10f;	
+			
+	//行间距
+	protected float mRowSpan = 10.0f;		
+	protected float mColSpan = 10.0f;	
+	
+	//box
+	protected BorderRender mBorder = new BorderRender();
+	protected boolean mShowBox = true;
+	protected boolean mShowBoxBorder = true;
+	protected boolean mShowBackground = true;
+			
+	//标签起始偏移多少距离
+	protected float mOffsetX = 0.0f;
+	protected float mOffsetY = 0.0f;
+			
+	
+	public PlotLabel() {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public void setLabelsOffset(XEnum.Location location,float value)
+	{
+		switch(location)
+		{
+			case LEFT:
+					mLabOffsetLeft = value;
+					break;
+			case TOP:
+					mLabOffsetTop = value;
+					break;
+			case RIGHT:
+					mLabOffsetRight = value;
+					break;
+			case BOTTOM:
+					mLabOffsetBottom = value;
+					break;
+		}
+	}
+	
+	/*
+	
+	public void setLabelsBgColor(int color)
+	{
+		mLabBoxColor = color;
+	}
+	
+	public int getLabelsBgColor()
+	{
+		return mLabBoxColor;
+	}
+	
+	public void showLabelsBox()
+	{
+		mLabBox = true;
+	}
+	
+	public void hideLabelsBox()
+	{
+		mLabBox = false;
+	}
+	
+	public boolean isShowLabelsBox()
+	{
+		return mLabBox;
+	}
+	*/
+	
+	public float getLabOffsetLeft()
+	{
+		return mLabOffsetLeft;
+	}
+	
+	public float getLabOffsetTop()
+	{
+		return mLabOffsetTop;
+	}
+	
+	public float getLabOffsetRight()
+	{
+		return mLabOffsetRight;
+	}
+	
+	public float getLabOffsetBottom()
+	{
+		return mLabOffsetBottom;
+	}
+	
+	 /**
+	  * 开放标签框绘制基类
+	  * @return  框绘制类
+	  */
+	 public Border getBox()
+	 {		
+		 return mBorder;
+	 }
+
+	 /**
+	 * 不显示标签框		
+	 */
+	public void hideBox()
+	{
+		mShowBox = false;
+	}
+	
+	/**
+	 * 不显示标签边框		
+	 */
+	public void hideBorder()
+	{
+		mShowBoxBorder = false;
+	}
+	
+	/**
+	 * 不显示标签背景	
+	 */
+	public void hideBackground()
+	{
+		mShowBackground = false;
+	}
+	
+	/**
+	 * 显示标签框		
+	 */
+	public void showBox()
+	{
+		mShowBox = true;
+		showBorder();
+		showBackground();
+	}
+	
+	/**
+	 * 显示标签边框		
+	 */
+	public void showBorder()
+	{
+		mShowBoxBorder = true;
+	}
+	
+	/**
+	 * 显示图背景		
+	 */
+	public void showBackground()
+	{
+		mShowBackground = true;
+	}
+		
+		
+}

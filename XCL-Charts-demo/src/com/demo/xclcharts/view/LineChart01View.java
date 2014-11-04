@@ -140,11 +140,9 @@ public class LineChart01View extends DemoView {
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
 			
 			/*			
-			//想隐藏轴线的可以下面的四个函数来隐藏
-			chart.getDataAxis().setVisible(false);
-			chart.getCategoryAxis().setVisible(false);
-			chart.setTopAxisVisible(false);
-			chart.setRightAxisVisible(false);
+			//想隐藏轴的可以下面的函数来隐藏
+			chart.getDataAxis().hide();
+			chart.getCategoryAxis().hide();
 			//想设置刻度线属性的可用下面函数
 			chart.getDataAxis().getTickMarksPaint()
 			chart.getCategoryAxis().getTickMarksPaint()
@@ -156,10 +154,12 @@ public class LineChart01View extends DemoView {
 			chart.getPlotArea().extWidth(100.f);
 			
 			//调整轴显示位置
-			chart.setDataAxisPosition(XEnum.DataAxisPosition.RIGHT);
-			chart.setCategoryAxisPosition(XEnum.CategoryAxisPosition.TOP);
+			chart.setDataAxisLocation(XEnum.Location.RIGHT);
+			chart.setCategoryAxisLocation(XEnum.Location.TOP);
 			
-					
+			//收缩绘图区右边分割的范围，让绘图区的线不显示出来
+			chart.getClipExt().setExtRight(0.f);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -182,6 +182,7 @@ public class LineChart01View extends DemoView {
 		lineData1.getDotLabelPaint().setTextSize(22);
 		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		lineData1.setItemLabelRotateAngle(45.f);
+		lineData1.getPlotLabel().hideBox();
 		
 		//Line 2
 		LinkedList<Double> dataSeries2= new LinkedList<Double>();	
@@ -196,8 +197,7 @@ public class LineChart01View extends DemoView {
 		lineData2.setLabelVisible(true);		
 		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
 		lineData2.setLineStyle(XEnum.LineStyle.DASH);
-		
-		
+						
 		//Line 3
 		LinkedList<Double> dataSeries3= new LinkedList<Double>();	
 		dataSeries3.add(65d);
@@ -207,6 +207,9 @@ public class LineChart01View extends DemoView {
 		dataSeries3.add(95d);
 		LineData lineData3 = new LineData("圆点",dataSeries3,(int)Color.rgb(123, 89, 168));
 		lineData3.setDotStyle(XEnum.DotStyle.DOT);
+		//lineData3.setLabelVisible(true);
+		//lineData3.getDotLabelPaint().setTextAlign(Align.CENTER);
+		
 		//Line 4
 		LinkedList<Double> dataSeries4= new LinkedList<Double>();	
 		dataSeries4.add(50d);
@@ -216,6 +219,9 @@ public class LineChart01View extends DemoView {
 		dataSeries4.add(90d);
 		LineData lineData4 = new LineData("棱形",dataSeries4,(int)Color.rgb(84, 206, 231));		
 		lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
+		//把线弄细点
+		lineData4.getLinePaint().setStrokeWidth(2);
+		
 		//Line 5
 		LinkedList<Double> valuesE= new LinkedList<Double>();	
 		valuesE.add(0d);

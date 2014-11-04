@@ -323,12 +323,12 @@ public class SplineChart extends LnChart{
 			    Double yValue =(Double) entry.getValue();	
 			    			    
 			    RectF  dot = lstDots.get(i);
-			    			    
+			    float radius = 0.0f;			    
 			    if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
             	{
             		float rendEndX = dot.right;                		
             		PlotDot pDot = pLine.getPlotDot();
-            		float radius = pDot.getDotRadius();
+            		radius = pDot.getDotRadius();
             		rendEndX  = add(dot.right , radius);               		
         			
             		PlotDotRender.getInstance().renderDot(canvas,pDot,
@@ -348,9 +348,9 @@ public class SplineChart extends LnChart{
         		if(spData.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
-        			DrawHelper.getInstance().drawRotateText(getFormatterDotLabel(
-            				Double.toString(xValue)+","+ Double.toString(yValue)),
-            				dot.right ,dot.bottom,itemAngle, canvas, pLine.getDotLabelPaint());
+        			spData.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(), 
+        					Double.toString(xValue)+","+ Double.toString(yValue),
+        					dot.right - radius ,dot.bottom,itemAngle,spData.getLineColor());
             	}        	
         		i++;
 		}	

@@ -350,7 +350,8 @@ public class PieChart extends CirChart{
 			    			    
 			    //保存角度
 			    saveArcRecord(i,cirX + this.mTranslateXY[0],cirY + this.mTranslateXY[1],
-			    				radius,offsetAngle,currentAngle,mSelectedOffset);			  
+			    				radius,offsetAngle,currentAngle,
+			    				mSelectedOffset,getInitialAngle());			  
 			
 			    //下次的起始角度  
 			    offsetAngle = add(offsetAngle, currentAngle);

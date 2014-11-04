@@ -39,7 +39,6 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -172,6 +171,9 @@ public class LineChart02View extends DemoView implements Runnable{
 			//不封闭
 			chart.setAxesClosed(false);
 			
+			//扩展绘图区右边分割的范围，让定制线的说明文字能显示出来
+			chart.getClipExt().setExtRight(150.f);
+			
 			//chart.getDataAxis().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -213,8 +215,8 @@ public class LineChart02View extends DemoView implements Runnable{
 		lineData2.setDotStyle(XEnum.DotStyle.PRISMATIC);				
 		lineData2.getPlotLine().getDotPaint().setColor((int)Color.rgb(234, 142, 43));
 		lineData2.getDotLabelPaint().setColor((int)Color.rgb(234, 142, 43));
-		lineData2.setLabelVisible(true);		
-		lineData2.getDotLabelPaint().setTextAlign(Align.LEFT);			
+		lineData2.setLabelVisible(true);	
+		//lineData2.getPlotLabel().hideBox();
 	
 		//Line 3
 		LinkedList<Double> dataSeries3= new LinkedList<Double>();	

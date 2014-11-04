@@ -171,14 +171,14 @@ public class BarChart extends AxisChart {
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);
 					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 					
-					setCategoryAxisPosition(XEnum.CategoryAxisPosition.LEFT);
+					setCategoryAxisLocation(XEnum.Location.LEFT);
 				break;			
 			 case VERTICAL: 					
 					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
 					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
 					
-					setCategoryAxisPosition(XEnum.CategoryAxisPosition.BOTTOM);
+					setCategoryAxisLocation(XEnum.Location.BOTTOM);
 				break;		
 		}
 	}
@@ -194,14 +194,14 @@ public class BarChart extends AxisChart {
 					dataAxis.getTickLabelPaint().setTextAlign(Align.CENTER);
 					dataAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
 					
-					setDataAxisPosition(XEnum.DataAxisPosition.BOTTOM);
+					setDataAxisLocation(XEnum.Location.BOTTOM);
 				break;
 			case VERTICAL: 					
 					dataAxis.setHorizontalTickAlign(Align.LEFT);
 					dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
 					dataAxis.setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 					
-					setDataAxisPosition(XEnum.DataAxisPosition.LEFT);										
+					setDataAxisLocation(XEnum.Location.LEFT);										
 				break;
 		}
 	}
@@ -274,30 +274,33 @@ public class BarChart extends AxisChart {
 		
 		// 数据轴数据刻度总个数
 		int tickCount = dataAxis.getAixTickCount();
-		int labeltickCount = tickCount;
+		int labeltickCount = tickCount+1;
+		
 		
 		if( 0 == tickCount)
 		{
 			Log.e(TAG,"数据轴数据源为0!");
 			return ;
-		}else if (1 == tickCount)  //label仅一个时右移
-			    labeltickCount = tickCount - 1 ;
+		}
+		//}else if (1 == tickCount)  //label仅一个时右移
+		//	    labeltickCount = tickCount - 1 ;
+		
 					
 		// 标签轴(X 轴)		
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		// 标签
 		double currentTickLabel = 0d;
 		// 轴位置
-		XEnum.DataAxisPosition pos = getDataAxisPosition();
+		XEnum.Location pos = getDataAxisLocation();
 				
 		//步长
 		switch(pos)
 		{			 
 			case LEFT: //Y
 			case RIGHT:			
-				YSteps = getVerticalYSteps(labeltickCount) ;	
+				YSteps = getVerticalYSteps(tickCount); 	
 											
-				if( XEnum.DataAxisPosition.RIGHT  == pos)
+				if( XEnum.Location.RIGHT  == pos)
 				{    //显示在右边
 					currentX = axisX = plotArea.getRight();
 				}else{ //显示在左边
@@ -308,8 +311,8 @@ public class BarChart extends AxisChart {
 				break;						
 			case TOP: //X
 			case BOTTOM:
-				XSteps = getVerticalXSteps(labeltickCount);						
-				if(XEnum.DataAxisPosition.TOP == pos)
+				XSteps = getVerticalXSteps(tickCount);						
+				if(XEnum.Location.TOP == pos)
 				{
 					currentY = axisY = plotArea.getTop();
 				}else{
@@ -321,7 +324,7 @@ public class BarChart extends AxisChart {
 		
 		mLstDataTick.clear();			
 		//绘制
-		for (int i = 0; i < tickCount; i++)
+		for (int i = 0; i < labeltickCount; i++)
 		{					
 			switch(pos)
 			{				 
@@ -394,10 +397,10 @@ public class BarChart extends AxisChart {
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
-		XEnum.CategoryAxisPosition pos = getCategoryAxisPosition();
+		XEnum.Location pos = getCategoryAxisLocation();
 								
-		if( XEnum.CategoryAxisPosition.LEFT == pos || 
-				XEnum.CategoryAxisPosition.RIGHT == pos)
+		if( XEnum.Location.LEFT == pos || 
+				XEnum.Location.RIGHT == pos)
 		{		
 			//line
 			YSteps = getVerticalYSteps( labeltickCount) ;
@@ -431,7 +434,7 @@ public class BarChart extends AxisChart {
 		mLstCateTick.clear();	
 		
 		//绘制
-		for (int i = 0; i < tickCount; i++) 
+		for (int i = 0; i < tickCount; i++)  //tickCount
 		{			
 			switch(pos)
 			{				 
@@ -466,7 +469,7 @@ public class BarChart extends AxisChart {
 					 float currentY2 = add(axisY,get3DBaseOffsetY());
 					  currentX =  sub(currentX, get3DBaseOffsetX() );	
 					 
-					mLstCateTick .add(new PlotAxisTick( currentX,currentY2, dataSet.get(i)));	
+					mLstCateTick.add(new PlotAxisTick( currentX,currentY2, dataSet.get(i)));	
 																
 					break;			
 			} //switch end
@@ -526,7 +529,7 @@ public class BarChart extends AxisChart {
 		float valueWidth = (float) dataAxis.getAxisRange();
 		int barDefualtColor = 0,vSize = 0;
 		Double bv = 0d;
-
+		
 		for (int i = 0; i < barNumber; i++) {
 			// 得到分类对应的值数据集
 			BarData bd = mDataSet.get(i);
@@ -566,6 +569,10 @@ public class BarChart extends AxisChart {
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 												rightX, 
 												sub(drawBarButtomY , barHeight / 2),canvas);
+				
+				//显示焦点框
+				drawFocusRect(canvas,i,j,
+						barInitX,drawBarTopY,rightX ,drawBarButtomY);
 			}
 			currNumber++;
 		}
@@ -623,7 +630,8 @@ public class BarChart extends AxisChart {
 			mFlatBar.getBarPaint().setColor(barDefualtColor);
 						
 			// 画出分类对应的所有柱形
-			for (int j = 0; j < barValues.size(); j++) {
+			int countChild = barValues.size();
+			for (int j = 0; j < countChild; j++) {
 				Double bv = barValues.get(j);
 										
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
@@ -642,16 +650,21 @@ public class BarChart extends AxisChart {
 				
 				// 画出柱形
 				float topY = sub(plotArea.getBottom() , valuePostion);
-				mFlatBar.renderBar(drawBarStartX,plotArea.getBottom(),drawBarEndX, topY,
-									canvas);
+				mFlatBar.renderBar(drawBarStartX,topY,drawBarEndX, plotArea.getBottom(),canvas);
+				
 				//保存位置
 				saveBarRectFRecord(i,j,drawBarStartX + mMoveX,topY + mMoveY,
 									    drawBarEndX  + mMoveX,plotArea.getBottom() + mMoveY); 
+								
+				//显示焦点框
+				drawFocusRect(canvas,i,j,
+						drawBarStartX,topY,drawBarEndX ,plotArea.getBottom());
+						
 				
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 						add(drawBarStartX , barWidth / 2),
-						sub(plotArea.getBottom() , valuePostion), canvas);				
+						sub(plotArea.getBottom() , valuePostion), canvas);												
 			}
 			currNumber++;
 		}

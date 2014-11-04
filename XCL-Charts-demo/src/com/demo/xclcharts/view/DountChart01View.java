@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.xclcharts.chart.DountChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotLegend;
@@ -37,8 +38,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
 /**
  * @ClassName DountChart01View
@@ -88,9 +91,7 @@ public class DountChart01View extends DemoView {
 			//设置绘图区默认缩进px值
 			int [] ltrb = getPieDefaultSpadding();
 			chart.setPadding(ltrb[0], ltrb[1] + 100, ltrb[2], ltrb[3]);
-							
-			//设置起始偏移角度
-			chart.setInitialAngle(90);	
+		
 			
 			//数据源
 			chart.setDataSource(lPieData);
@@ -128,12 +129,19 @@ public class DountChart01View extends DemoView {
 			//可用这个修改环所占比例
 			//chart.setInnerRadius(0.6f);
 		
+			//chart.setInitialAngle(90.f);
 			
 			//设置附加信息
 			addAttrInfo();
 			
 			//保存标签位置
 			chart.saveLabelsPosition(XEnum.LabelSaveType.ALL);
+			
+			//激活点击监听
+			chart.ActiveListenItemClick();
+			chart.showClikedFocus();
+			
+			chart.setInnerRadius(0.6f);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -223,5 +231,46 @@ public class DountChart01View extends DemoView {
 		return lst;
 	}
 	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{						
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
+
+	//触发监听
+	private void triggerClick(float x,float y)
+	{		
+		if(!chart.getListenItemClickStatus())return;
+		ArcPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+		
+		PieData pData = lPieData.get(record.getDataID());		
+		
+		boolean isInvaldate = true;		
+		for(int i=0;i < lPieData.size();i++)
+		{	
+			PieData cData = lPieData.get(i);
+			if(i == record.getDataID())
+			{
+				if(cData.getSelected()) 
+				{
+					isInvaldate = false;
+					break;
+				}else{
+					cData.setSelected(true);	
+				}
+			}else
+				cData.setSelected(false);			
+		}
+					
+		if(isInvaldate)this.invalidate();	
+	}
+	 
 
 }

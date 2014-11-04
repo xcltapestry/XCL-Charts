@@ -58,6 +58,9 @@ public class EventChart extends XChart {
 	private int mClickRangeExtValue = 0;	
 	private ArrayList mRecordset = null;	
 	private int mSelectID = -1;
+	private int mSelectDataID = -1;
+	private int mSelectDataChildID = -1;
+	
 	private boolean mShowClikedFocus = false;
 	
 	private Paint mFocusPaint = null;
@@ -125,9 +128,16 @@ public class EventChart extends XChart {
 		 mSelectID = -1;
 	}
 	
-	private void saveSelected(int recordID)
+	private void saveSelected(int recordID,int dataID,int dataChildID)
 	{
 		mSelectID = recordID;
+		mSelectDataID = dataID;
+		mSelectDataChildID = dataChildID;
+	}
+	
+	protected int getSelected()
+	{
+		return mSelectID;
 	}
 	
 	protected void savePointRecord(final int dataID,final int childID,
@@ -184,7 +194,7 @@ public class EventChart extends XChart {
 	//保存角度 (半径)
 	protected void saveArcRecord(int dataID,float centerX,float centerY,
 								 float radius,float offsetAngle,float Angle,
-								 float selectedOffset)
+								 float selectedOffset,float initialAngle)
 	{
 		if(!getListenItemClickStatus())return;
 		if(null == mRecordset)mRecordset =  new ArrayList<PlotArcPosition>();	
@@ -192,7 +202,8 @@ public class EventChart extends XChart {
 		PlotArcPosition pRecord = new PlotArcPosition();			
 		pRecord.savePlotDataID(dataID);		
 		pRecord.savePlotCirXY(centerX,centerY);
-		pRecord.saveAngle(radius,offsetAngle,Angle,selectedOffset);	
+		pRecord.saveAngle(radius,offsetAngle,Angle,selectedOffset);			
+		pRecord.saveInitialAngle(initialAngle);
 		mRecordset.add(pRecord);		
 	}
 
@@ -238,14 +249,14 @@ public class EventChart extends XChart {
 		if(!isPlotClickArea(x,y))return null;
 		if(!getClikedScaleStatus())return null;
 		if(null == mRecordset) return null;
-			
+							
 		Iterator it = mRecordset.iterator();
 		while(it.hasNext())
 		{		
 			PlotArcPosition record = (PlotArcPosition)it.next();
 			if(record.compareF(x, y))
 			{
-				saveSelected(record.getRecordID());
+				saveSelected(record.getRecordID(),record.getDataID(),record.getDataChildID());
 				return record;
 			}
 		}		
@@ -266,7 +277,7 @@ public class EventChart extends XChart {
 			PlotBarPosition record = (PlotBarPosition)it.next();
 			if(record.compareF(x, y))
 			{
-				saveSelected(record.getRecordID());
+				saveSelected(record.getRecordID(),record.getDataID(),record.getDataChildID());
 				return record;			
 			}
 		}	
@@ -287,7 +298,7 @@ public class EventChart extends XChart {
 			PlotPointPosition record = (PlotPointPosition)it.next();
 			if(record.compareF(x,y))
 			{
-				saveSelected(record.getRecordID());
+				saveSelected(record.getRecordID(),record.getDataID(),record.getDataChildID()); 
 				return record;			
 			}
 		}			
@@ -302,7 +313,9 @@ public class EventChart extends XChart {
 			mRecordset.clear();
 			mRecordset = null;
 		}
-		mSelectID = -1;
+		//mSelectID = -1;
+		//mSelectDataID = -1;
+		//mSelectDataChildID = -1;
 	}
 	
 	/**
@@ -370,6 +383,36 @@ public class EventChart extends XChart {
 		mToolTip.renderInfo(canvas);
 	}	
 	
+	protected boolean drawFocusRect(Canvas canvas,int dataID,int childID,
+			float left,float top,float right ,float bottom)
+	{
+		if(!mShowClikedFocus) return true;
+		if(-1 == mSelectID) return false;
+		if(null == mFocusRect) return false;
+		
+		//Log.e("event","did="+Integer.toString(dataID)+" cid="+Integer.toString(childID));
+		
+		if( mSelectDataID == dataID &&
+				mSelectDataChildID == childID	)
+		{
+			
+			mFocusRect.left = left;
+			mFocusRect.top = top;
+			mFocusRect.right = right;
+			mFocusRect.bottom = bottom;
+					
+			canvas.drawRect(mFocusRect, getFocusPaint());
+			
+			mFocusRect = null;
+			
+			mSelectID = -1;
+			mSelectDataID = -1;
+			mSelectDataChildID = -1;
+		}		
+		
+		return true;
+	}
+	
 	/**
 	 * 绘制焦点形状
 	 * @param canvas 画布
@@ -385,13 +428,15 @@ public class EventChart extends XChart {
 					canvas.drawCircle(mFocusPoint.x, mFocusPoint.y, 
 									  mFocusRadius, getFocusPaint());	
 					mFocusPoint = null;
-				}else if(null != mFocusRect){		
+				}else if(null != mFocusRect){	
+					/*
 					canvas.save();
 					canvas.clipRect(plotArea.getLeft(),plotArea.getTop(),
 							plotArea.getRight(),plotArea.getBottom());
 						canvas.drawRect(mFocusRect, getFocusPaint());
 					canvas.restore();
 					mFocusRect = null;
+					*/
 				}else if(null != mFocusArcPosition){												
 						PointF pointCir = mFocusArcPosition.getPointF();
 						float cirX = pointCir.x,cirY = pointCir.y;

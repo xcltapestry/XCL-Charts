@@ -21,8 +21,6 @@
  */
 package org.xclcharts.event.click;
 
-import org.xclcharts.common.MathHelper;
-
 import android.graphics.RectF;
 
 /**

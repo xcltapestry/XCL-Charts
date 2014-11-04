@@ -1,7 +1,7 @@
 XCL-Charts
 ==========
 
-<b>XCL-Charts V2.0</b><br/>
+<b>XCL-Charts V2.1</b><br/>
  &nbsp;&nbsp;&nbsp;&nbsp;Android开源图表库(XCL-Charts is a free charting library for Android platform.) <br/>
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于Android原生Canvas来绘制各种图表,使用简便,定制灵活。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>3D/非3D柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
@@ -85,6 +85,8 @@ http://www.oschina.net/p/xcl-charts
  <img src="http://img.blog.csdn.net/20141026173520745?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast  " alt="mulbar chart1" />
  <img src="http://img.blog.csdn.net/20141026173558715?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="mulbar chart2" />
  <img src="http://img.blog.csdn.net/20141026173628714?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="mulstackedbar chart" />
+  
+  <img src="http://img.blog.csdn.net/20141104231452875" alt="area line pie chart" />
   
  <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="souce pie chart h" />
  <img src="http://img.blog.csdn.net/20141026174556664?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="bar chart h" />

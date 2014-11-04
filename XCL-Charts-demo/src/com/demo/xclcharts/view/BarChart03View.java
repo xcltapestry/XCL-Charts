@@ -114,7 +114,7 @@ public class BarChart03View extends DemoView implements Runnable{
 			chart.getAxisTitle().setLowerAxisTitle("科目");
 			
 			//数据轴
-			chart.getDataAxis().setAxisMax(100);
+			chart.getDataAxis().setAxisMax(105);
 			chart.getDataAxis().setAxisMin(0);
 			chart.getDataAxis().setAxisSteps(5);		
 			//指隔多少个轴刻度(即细刻度)后为主刻度
@@ -141,6 +141,9 @@ public class BarChart03View extends DemoView implements Runnable{
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
 			chart.getBar().setBarStyle(XEnum.BarStyle.OUTLINE);
+			//限制只能左右滑动
+			//chart.setPlotPanMode(XEnum.PanMode.FREE);	
+			chart.disablePanMode();
 			
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
@@ -154,6 +157,8 @@ public class BarChart03View extends DemoView implements Runnable{
 			
 			//隐藏Key
 			chart.getPlotLegend().hide();
+			
+			chart.getClipExt().setExtTop(150.f);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -166,8 +171,7 @@ public class BarChart03View extends DemoView implements Runnable{
 		dataSeriesA.add(98d); 
 		dataSeriesA.add(100d); 
 		dataSeriesA.add(95d); 
-		dataSeriesA.add(100d); 
-		
+		dataSeriesA.add(100d); 	
 	
 		//依数据值确定对应的柱形颜色.
 		List<Integer> dataColorA= new LinkedList<Integer>();

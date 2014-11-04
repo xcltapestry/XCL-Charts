@@ -35,8 +35,6 @@ public abstract class PositionRecord {
 		
 	protected int mDataID = -1;
 	protected int mDataChildID = -1;
-	//protected int mCategoryID = -1;	
-		
 		
 	public PositionRecord()
 	{

@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="167" key="DIALOG_Y_ORIGIN"/>
-		<item value="342" key="DIALOG_HEIGHT"/>
-		<item value="848" key="DIALOG_X_ORIGIN"/>
+		<item value="314" key="DIALOG_Y_ORIGIN"/>
+		<item value="346" key="DIALOG_HEIGHT"/>
+		<item value="920" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,26 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value=".getBar()" key="selection"/>
 		<list key="findhistory">
-			<item value="没心"/>
-			<item value="mDataset"/>
-			<item value="getVerticalXSteps"/>
-			<item value="XSteps"/>
-			<item value="renderDotAndLabel"/>
-			<item value="percent"/>
-			<item value="renderBezierArea"/>
-			<item value="tickCount"/>
+			<item value=".getBar()"/>
+			<item value="getBar"/>
+			<item value="bar"/>
+			<item value="getPositionRecord"/>
+			<item value="saveSelected"/>
+			<item value="mFocusRect"/>
+			<item value="mSelectID"/>
+			<item value="renderFocusShape"/>
 		</list>
 		<list key="replacehistory">
-			<item value="mDataSet"/>
-			<item value="PlotAxisTick"/>
-			<item value=".PlotAxisTick;"/>
-			<item value="drawClipDataAxisGridlines"/>
-			<item value="drawClipCategoryAxisGridlines"/>
-			<item value="drawClipDataAxisTickMarks"/>
-			<item value="drawClipCategoryAxisTickMarks"/>
-			<item value="drawClipDataAxis"/>
+			<item value="setDataAxisLocation"/>
+			<item value="setCategoryAxisLocation"/>
+			<item value="getDataAxisLocation"/>
+			<item value="mDataAxisLocation"/>
+			<item value="mCategoryAxisLocation"/>
+			<item value="getExtBottom"/>
+			<item value="getExtRight"/>
+			<item value="getExtTop"/>
 		</list>
 	</section>
 </section>

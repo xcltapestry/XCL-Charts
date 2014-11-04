@@ -45,7 +45,6 @@ import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 /**
  * @ClassName StackBarChart02View
  * @Description  堆叠图 的例子(横向)
@@ -166,6 +165,8 @@ public class StackBarChart02View extends DemoView {
 				}});	 
 			//定义柱形上标签显示颜色
 			chart.getBar().getItemLabelPaint().setColor(Color.rgb(225, 43, 44));
+			//柱形形标签字体大小
+			chart.getBar().getItemLabelPaint().setTextSize(18);
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();

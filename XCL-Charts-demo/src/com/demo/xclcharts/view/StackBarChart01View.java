@@ -248,9 +248,12 @@ public class StackBarChart01View extends DemoView {
 		if( null == record) return;
 		
 		if(record.getDataID() >= BarDataSet.size()) return;
-		BarData bData = BarDataSet.get(record.getDataID());					
-		Double bValue = bData.getDataSet().get(record.getDataChildID());			
-				
+		BarData bData = BarDataSet.get(record.getDataID());		
+		
+		int cid = record.getDataChildID();
+		Double bValue = bData.getDataSet().get(cid);	
+		String label = chartLabels.get(cid);		
+		
 		chart.showFocusRectF(record.getRectF());		
 		chart.getFocusPaint().setStyle(Style.FILL);
 		chart.getFocusPaint().setStrokeWidth(3);		
@@ -262,7 +265,7 @@ public class StackBarChart01View extends DemoView {
 		chart.getToolTip().setAlign(Align.LEFT);
 		chart.getToolTip().getBackgroundPaint().setColor(Color.BLACK);
 		chart.getToolTip().setCurrentXY(x,y);	
-		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(bValue),pToolTip);
+		chart.getToolTip().addToolTip(label+" Current Value:" +Double.toString(bValue),pToolTip);
 		
 		this.invalidate();
 		

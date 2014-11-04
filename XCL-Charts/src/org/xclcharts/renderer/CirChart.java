@@ -23,11 +23,12 @@
 package org.xclcharts.renderer;
 
 import org.xclcharts.chart.PieData;
-import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.info.PlotArcLabelInfo;
 import org.xclcharts.renderer.plot.LabelBrokenLine;
 import org.xclcharts.renderer.plot.LabelBrokenLineRender;
+import org.xclcharts.renderer.plot.PlotLabel;
+import org.xclcharts.renderer.plot.PlotLabelRender;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -65,6 +66,10 @@ public class CirChart extends EventChart{
 	private boolean mIsLabelLineSyncColor = false;
 	private boolean mIsLabelPointSyncColor = false;
 	private boolean mIsLabelSyncColor = false;
+	
+	//用于设置标签特性
+	private PlotLabelRender mPlotLabel = null;
+		
 		
 	public CirChart()
 	{		
@@ -105,7 +110,7 @@ public class CirChart extends EventChart{
 	 * 设置饼图(pie chart)起始偏移角度
 	 * @param Angle 偏移角度
 	 */
-	public void setInitialAngle(final int Angle)
+	public void setInitialAngle(float Angle)
 	{
 		mOffsetAngle = Angle;
 	}
@@ -190,8 +195,11 @@ public class CirChart extends EventChart{
 										cirX, cirY, calcRadius, calcAngle); 						 
 		//标识
 		if(showLabel)
-			DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
-															canvas, getLabelPaint());
+		{
+			//DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+			//												canvas, getLabelPaint());
+			getPlotLabel().drawLabel(canvas, getLabelPaint(), text, point.x, point.y, itemAngle);
+		}
 		
 		return (new PointF(point.x, point.y));
 	}
@@ -208,8 +216,11 @@ public class CirChart extends EventChart{
 			 
 		//标识
 		if(showLabel)
-			DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
-																canvas, getLabelPaint());
+		{
+			//DrawHelper.getInstance().drawRotateText(text, point.x, point.y, itemAngle, 
+			//													canvas, getLabelPaint());
+			getPlotLabel().drawLabel(canvas, getLabelPaint(), text, point.x, point.y, itemAngle);
+		}
 		return (new PointF(point.x, point.y));
 	}
 	
@@ -226,7 +237,7 @@ public class CirChart extends EventChart{
 			mLabelLine.getPointPaint().setColor(cData.getSliceColor());
 		
 		return ( mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),
-									cirX,cirY,radius,calcAngle,canvas,getLabelPaint(),showLabel) );
+									cirX,cirY,radius,calcAngle,canvas,getLabelPaint(),showLabel,mPlotLabel) );
 	}
 	
 	/**
@@ -252,6 +263,20 @@ public class CirChart extends EventChart{
 	{
 		mIsLabelSyncColor = true;
 	}
+	
+	/**
+	 * 用于设置标签显示属性
+	 * @return 标签属性类
+	 */
+	public PlotLabel getPlotLabel()
+	{
+		if(null == mPlotLabel)
+		{
+			mPlotLabel = new PlotLabelRender();
+		}
+		return mPlotLabel;
+	}
+	
 			
 	/**
 	 * 绘制标签

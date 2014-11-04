@@ -50,7 +50,7 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
 	public PointF renderLabelLine(String text,float itemAngle,
 			float cirX,float cirY,float radius,float calcAngle,
 			Canvas canvas,Paint paintLabel,
-			boolean showLabel)
+			boolean showLabel,PlotLabelRender plotLabel)
 	{
 		float pointRadius = 0.0f;
 		if(getLinePointStyle() == XEnum.LabelLinePoint.END 
@@ -127,8 +127,15 @@ public class LabelBrokenLineRender extends LabelBrokenLine{
     drawPoint(startX,startY,stopX, stopY, endX,pointRadius,canvas);
     
     if(showLabel) //标签    
-    	DrawHelper.getInstance().drawRotateText(text,endLabelX, stopY, itemAngle, 
+    {
+    	if(null == plotLabel)
+    	{
+    		DrawHelper.getInstance().drawRotateText(text,endLabelX, stopY, itemAngle, 
 													canvas, paintLabel);
+    	}else{
+    		plotLabel.drawLabel(canvas, paintLabel,text,endLabelX, stopY, itemAngle);
+    	}
+    }
     
     return (new PointF(endLabelX, stopY));
 }

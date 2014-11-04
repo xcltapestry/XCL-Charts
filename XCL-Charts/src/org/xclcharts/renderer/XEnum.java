@@ -113,7 +113,7 @@ public class XEnum {
 		 *
 		 */
 		public enum BarStyle {
-			GRADIENT,FILL,STROKE,OUTLINE
+			GRADIENT,FILL,STROKE,OUTLINE,TRIANGLE
 		}
 		
 		/**
@@ -172,22 +172,7 @@ public class XEnum {
 		public enum DotStyle {		
 			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC,X
 		}
-		
-		
-		/**
-		 * 线图，坐标轴的显示位置:左边轴,右边轴
-		 * @author XCL
-		 *
-		 */
-		public enum DataAxisPosition {  
-			LEFT, RIGHT,BOTTOM, TOP
-		}
-		
-		public enum CategoryAxisPosition {  
-			BOTTOM, TOP,LEFT, RIGHT
-		}
-		
-		
+			
 		/**
 		 * 雷达图数据区域的填充方式
 		 * @author XCL
@@ -270,6 +255,7 @@ public class XEnum {
 		public enum LabelLinePoint{
 			NONE,BEGIN,END,ALL
 		}
+		
 		
 		/**
 		 * 标签信息的保存类型 

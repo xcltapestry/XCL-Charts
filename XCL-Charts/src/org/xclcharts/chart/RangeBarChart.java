@@ -175,14 +175,14 @@ public class RangeBarChart  extends AxisChart {
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);
 					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 					
-					setCategoryAxisPosition(XEnum.CategoryAxisPosition.LEFT);
+					setCategoryAxisLocation(XEnum.Location.LEFT);
 				break;			
 			 case VERTICAL: 					
 					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
 					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
 					
-					setCategoryAxisPosition(XEnum.CategoryAxisPosition.BOTTOM);
+					setCategoryAxisLocation(XEnum.Location.BOTTOM);
 				break;		
 		}
 	}
@@ -198,14 +198,14 @@ public class RangeBarChart  extends AxisChart {
 					dataAxis.getTickLabelPaint().setTextAlign(Align.CENTER);
 					dataAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
 					
-					setDataAxisPosition(XEnum.DataAxisPosition.BOTTOM);
+					setDataAxisLocation(XEnum.Location.BOTTOM);
 				break;
 			case VERTICAL: 					
 					dataAxis.setHorizontalTickAlign(Align.LEFT);
 					dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
 					dataAxis.setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 					
-					setDataAxisPosition(XEnum.DataAxisPosition.LEFT);										
+					setDataAxisLocation(XEnum.Location.LEFT);										
 				break;
 		}
 	}
@@ -308,6 +308,10 @@ public class RangeBarChart  extends AxisChart {
 			saveBarRectFRecord(i,0,currentX - barWidthHalf + mMoveX, barMaxPos + mMoveY,
 								   currentX + barWidthHalf + mMoveX, barMinPos + mMoveY );
 			
+			 //显示焦点框
+       		drawFocusRect(canvas,i,0,currentX - barWidthHalf ,barMaxPos,
+					   currentX + barWidthHalf ,barMinPos);
+			
 			if(getLabelVisible())
 			{
 				//柱形标签
@@ -367,7 +371,7 @@ public class RangeBarChart  extends AxisChart {
 		// 标签
 		double currentTickLabel = 0d;
 		// 轴位置
-		XEnum.DataAxisPosition pos = getDataAxisPosition();
+		XEnum.Location pos = getDataAxisLocation();
 				
 		//步长
 		switch(pos)
@@ -376,7 +380,7 @@ public class RangeBarChart  extends AxisChart {
 			case RIGHT:			
 				YSteps = getVerticalYSteps(labeltickCount) ;	
 											
-				if( XEnum.DataAxisPosition.RIGHT  == pos)
+				if( XEnum.Location.RIGHT  == pos)
 				{    //显示在右边
 					currentX = axisX = plotArea.getRight();
 				}else{ //显示在左边
@@ -388,7 +392,7 @@ public class RangeBarChart  extends AxisChart {
 			case TOP: //X
 			case BOTTOM:
 				XSteps = getVerticalXSteps(labeltickCount);						
-				if(XEnum.DataAxisPosition.TOP == pos)
+				if(XEnum.Location.TOP == pos)
 				{
 					currentY = axisY = plotArea.getTop();
 				}else{
@@ -472,10 +476,10 @@ public class RangeBarChart  extends AxisChart {
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
-		XEnum.CategoryAxisPosition pos = getCategoryAxisPosition();
+		XEnum.Location pos = getCategoryAxisLocation();
 								
-		if( XEnum.CategoryAxisPosition.LEFT == pos || 
-				XEnum.CategoryAxisPosition.RIGHT == pos)
+		if( XEnum.Location.LEFT == pos || 
+				XEnum.Location.RIGHT == pos)
 		{		
 			//line
 			YSteps = getVerticalYSteps( labeltickCount) ;
@@ -540,9 +544,8 @@ public class RangeBarChart  extends AxisChart {
 													i ,tickCount,XSteps,currentX);
 				
 					 if(!categoryAxis.isShowAxisLabels()) continue;	
-					 	
-					 
-					mLstCateTick .add(new PlotAxisTick( currentX,axisY, dataSet.get(i)));	
+					 						 
+					mLstCateTick.add(new PlotAxisTick( currentX,axisY, dataSet.get(i)));	
 																
 					break;			
 			} //switch end

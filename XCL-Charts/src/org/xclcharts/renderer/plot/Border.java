@@ -38,13 +38,14 @@ public class Border {
 
 	//线的基类画笔	
 	private Paint mPaintBorderLine = null;
-	//图背景画笔
-	protected Paint mPaintChartBackground = null;
-	
+
 	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
 	private XEnum.RectType mRectType = XEnum.RectType.ROUNDRECT;	
 	private int mRaidus = 15;
 	protected static final int mBorderSpadding = 5;
+	
+	//背景画笔
+	protected Paint mPaintBackground = null;
 
 	public Border()
 	{							
@@ -144,6 +145,23 @@ public class Border {
 			width += getRoundRadius();
 		}		
 		return width;
+	}
+	
+	/**
+	 * 开放背景画笔
+	 * @return 画笔
+	 */
+	 public Paint getBackgroundPaint()
+	{
+		if(null == mPaintBackground)
+		{
+			mPaintBackground = new Paint();
+			mPaintBackground.setAntiAlias(true);
+			mPaintBackground.setStyle(Style.FILL);
+			mPaintBackground.setColor(Color.WHITE);
+			mPaintBackground.setAlpha(220);
+		}
+		return mPaintBackground;
 	}
 	
 }

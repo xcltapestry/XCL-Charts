@@ -1,0 +1,41 @@
+package org.xclcharts.chart;
+
+import org.xclcharts.renderer.XEnum;
+
+public class BaseData {
+	
+	
+	private float mLabOffsetLeft = 0.0f;
+	private float mLabOffsetTop = 0.0f;
+	private float mLabOffsetRight = 0.0f;
+	private float mLabOffsetBottom = 0.0f;
+	
+	private int mLabBoxColor = -1;
+	private boolean mLabBox = true;
+	
+	public BaseData() {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public void setLabelsOffset(XEnum.Location location,float value)
+	{
+		
+	}
+	
+	public void setLabelsBgColor(int color)
+	{
+		mLabBoxColor = color;
+	}
+	
+	public void showLabelsBox()
+	{
+		mLabBox = true;
+	}
+	
+	public void hideLabelsBox()
+	{
+		mLabBox = false;
+	}
+	
+}

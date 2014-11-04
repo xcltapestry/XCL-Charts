@@ -25,6 +25,7 @@
 	    <item>多轴混合图1</item>
 	    <item>多轴混合图2</item>
 	     <item>多柱形堆积效果图</item>
+	      <item>面积折线混合图</item>
 	    
         <item>饼图</item>
         <item>饼图</item>
@@ -82,7 +83,8 @@
 	  
 	   <item>MultiAxis Chart</item>
 	   <item>MultiAxis Chart</item>
-	   <item>MulBar chart + Stacked Bar</item>
+	   <item>MulBar Chart + Stacked Bar</item>
+	    <item>Area Chart+Line Chart+ Pie Chart +Spline Chart</item>
 	   
       <item>Pie Chart - 饼块渐显动画效果</item>
       <item>Pie Chart-另一种风格</item> 

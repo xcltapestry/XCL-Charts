@@ -53,6 +53,8 @@ public class PieData {
 	private boolean mCustLabelStyle = false;	
 	private int mCustLabelColor = 0 ;
 	
+	
+	
 	public PieData() {
 		// TODO Auto-generated constructor stub
 

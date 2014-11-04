@@ -127,6 +127,10 @@ public class StackBarChart  extends BarChart{
 				    //保存位置
 				    saveBarRectFRecord(i,r,currentX + mMoveX, topY + mMoveY,rightX + mMoveX, bottomY+ mMoveY); 
 					
+				    //显示焦点框
+	           		drawFocusRect(canvas,i,r,currentX ,topY,rightX,bottomY);
+	           		
+	           		
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 												add(currentX , valuePostion/2), currentY , canvas);							
@@ -202,9 +206,13 @@ public class StackBarChart  extends BarChart{
 						//保存位置
 						saveBarRectFRecord(i,r,leftX + mMoveX, topY + mMoveY,rightX + mMoveX, currentY + mMoveY); 
 						
+						//显示焦点框
+		           		drawFocusRect(canvas,i,r,leftX, topY, rightX, currentY);
+						
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
-													currentX, sub(currentY , valuePostion/2), canvas);							
+													currentX, sub(currentY , valuePostion/2), canvas);	
+						
 						currentY = sub(currentY,valuePostion);
 					 }
 					 //合计					 					 					  					 

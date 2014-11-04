@@ -65,11 +65,11 @@ public class AxisChart extends EventChart {
 	protected float mMoveY = 0.0f;
 	
 	//数据轴显示在左边还是右边
-	private XEnum.DataAxisPosition mDataAxisPosition = 
-									XEnum.DataAxisPosition.LEFT;
+	private XEnum.Location mDataAxisLocation = 
+									XEnum.Location.LEFT;
 	
-	private XEnum.CategoryAxisPosition mCategoryAxisPosition = 
-									XEnum.CategoryAxisPosition.BOTTOM;
+	private XEnum.Location mCategoryAxisLocation = 
+									XEnum.Location.BOTTOM;
 	
 	//是否将轴封闭
 	private boolean mAxesClosed = false;	
@@ -80,6 +80,8 @@ public class AxisChart extends EventChart {
 	//轴刻度的位置信息
 	protected ArrayList<PlotAxisTick> mLstDataTick = null;
 	protected ArrayList<PlotAxisTick> mLstCateTick = null;
+	
+	private ClipExt mClipExt = null;
 	
 	
 	public AxisChart() {
@@ -153,7 +155,7 @@ public class AxisChart extends EventChart {
 		if(null == lstLabels) return ;
 		for(PlotAxisTick t : lstLabels)
 		{
-			switch(mCategoryAxisPosition)
+			switch(mCategoryAxisLocation)
 			{				 
 				case LEFT: //Y
 				case RIGHT:				
@@ -179,7 +181,7 @@ public class AxisChart extends EventChart {
 		{
 			dataAxis.setAxisTickCurrentID(t.ID);
 			
-			switch(mDataAxisPosition)
+			switch(mDataAxisLocation)
 			{				 
 				case LEFT: //Y
 				case RIGHT:							
@@ -366,41 +368,41 @@ public class AxisChart extends EventChart {
 	 * 设置数据轴显示在哪边,默认是左边
 	 * @param position 显示位置
 	 */
-	public void setDataAxisPosition( XEnum.DataAxisPosition position)
+	public void setDataAxisLocation(XEnum.Location location)
 	{
-		mDataAxisPosition = position;	
+		mDataAxisLocation = location;	
 	}
 	
 	/**
 	 * 返回数据轴显示在哪边
 	 * @return 显示位置
 	 */
-	public XEnum.DataAxisPosition getDataAxisPosition()
+	public XEnum.Location getDataAxisLocation()
 	{
-		return mDataAxisPosition;
+		return mDataAxisLocation;
 	}
 	
 	/**
 	 * 设置分类轴显示在哪边,默认是底部
 	 * @param position 显示位置
 	 */
-	public void setCategoryAxisPosition( XEnum.CategoryAxisPosition position)
+	public void setCategoryAxisLocation( XEnum.Location position)
 	{
-		mCategoryAxisPosition = position;	
+		mCategoryAxisLocation = position;	
 	}
 	
 	/**
 	 * 返回分类轴显示在哪边
 	 * @return 显示位置
 	 */
-	public XEnum.CategoryAxisPosition getCategoryAxisPosition()
+	public XEnum.Location getCategoryAxisLocation()
 	{
-		return mCategoryAxisPosition;
+		return mCategoryAxisLocation;
 	}
 	
 	protected void categoryAxisDefaultSetting()
 	{		
-		if(null == mDataAxisPosition) return;
+		if(null == mDataAxisLocation) return;
 		
 		if(null == categoryAxis) return;
 		if(!categoryAxis.isShow())return;
@@ -409,17 +411,17 @@ public class AxisChart extends EventChart {
 		{
 			switch (mDirection) {
 				case HORIZONTAL: {		
-					this.setCategoryAxisPosition(XEnum.CategoryAxisPosition.LEFT);				
+					this.setCategoryAxisLocation(XEnum.Location.LEFT);				
 					break;
 				}
 				case VERTICAL: {
-					this.setCategoryAxisPosition(XEnum.CategoryAxisPosition.BOTTOM);			
+					this.setCategoryAxisLocation(XEnum.Location.BOTTOM);			
 					break;
 				}
 			}
 		}
 		
-		if(XEnum.DataAxisPosition.LEFT == mDataAxisPosition)
+		if(XEnum.Location.LEFT == mDataAxisLocation)
 		{
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 		}
@@ -430,7 +432,7 @@ public class AxisChart extends EventChart {
 	
 	protected void dataAxisDefaultSetting()
 	{		
-		if(null == mDataAxisPosition) return;
+		if(null == mDataAxisLocation) return;
 		
 		if(null == dataAxis) return;
 		if(!dataAxis.isShow())return;
@@ -439,17 +441,17 @@ public class AxisChart extends EventChart {
 		{
 			switch (mDirection) {
 				case HORIZONTAL: {		
-					this.setDataAxisPosition(XEnum.DataAxisPosition.BOTTOM);		
+					this.setDataAxisLocation(XEnum.Location.BOTTOM);		
 					break;
 				}
 				case VERTICAL: {
-					this.setDataAxisPosition(XEnum.DataAxisPosition.LEFT);					
+					this.setDataAxisLocation(XEnum.Location.LEFT);					
 					break;
 				}
 			}
 		}
 				
-		if(XEnum.DataAxisPosition.LEFT == mDataAxisPosition)
+		if(XEnum.Location.LEFT == mDataAxisLocation)
 		{
 			dataAxis.setHorizontalTickAlign(Align.LEFT);	
 		}else{
@@ -523,7 +525,7 @@ public class AxisChart extends EventChart {
 		float plotBottom = plotArea.getBottom();
 	
 		
-		switch(mDataAxisPosition)
+		switch(mDataAxisLocation)
 		{
 		case LEFT:
 			dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
@@ -551,7 +553,7 @@ public class AxisChart extends EventChart {
 			break;			
 		}		
 		
-		switch(mCategoryAxisPosition)
+		switch(mCategoryAxisLocation)
 		{
 		case LEFT:
 			categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
@@ -653,6 +655,13 @@ public class AxisChart extends EventChart {
 	}
 	
 	
+	public ClipExt getClipExt()
+	{
+		if(null == mClipExt) mClipExt = new ClipExt();
+		return mClipExt;
+	}
+	
+	
 	protected boolean drawClipVerticalPlot(Canvas canvas)
 	{				
 		//显示绘图区rect
@@ -705,10 +714,17 @@ public class AxisChart extends EventChart {
 				}
 				
 					//设置绘图区显示范围
-					canvas.save();
-					canvas.clipRect(plotArea.getLeft()+ 0.5f , plotArea.getTop() + 0.5f, 
-									plotArea.getRight() + 0.5f, plotArea.getBottom() + 0.5f );
-					
+					canvas.save();		
+										
+					getClipExt().calc(getType());					
+					canvas.clipRect(plotArea.getLeft()- getClipExt().getExtLeft() , 
+									plotArea.getTop() - getClipExt().getExtTop(), 
+									plotArea.getRight() + getClipExt().getExtRight(), 
+									plotArea.getBottom() + getClipExt().getExtBottom() );
+										
+					//canvas.clipRect(plotArea.getLeft()+ 0.5f , plotArea.getTop() + 0.5f, 
+					//		plotArea.getRight() + 0.5f, plotArea.getBottom() + 0.5f );
+								
 							canvas.save();					
 							canvas.translate(mMoveX, mMoveY);
 							//绘图
@@ -716,8 +732,7 @@ public class AxisChart extends EventChart {
 							
 							canvas.restore();
 					canvas.restore();	
-	
-		
+								
 		//还原绘图区绘制
 		canvas.restore(); //clip	
 			
@@ -819,8 +834,15 @@ public class AxisChart extends EventChart {
 			//////////////////////////////////////////////////								
 			//设置绘图区显示范围
 			canvas.save();
-			canvas.clipRect(plotArea.getLeft() , plotArea.getTop() ,
-							this.getRight(), plotArea.getBottom());			
+			
+			getClipExt().calc(getType());
+			canvas.clipRect(plotArea.getLeft()- getClipExt().getExtLeft() , 
+							plotArea.getTop() - getClipExt().getExtTop(), 
+							plotArea.getRight() + getClipExt().getExtRight(), 
+							plotArea.getBottom() + getClipExt().getExtBottom() );
+			
+			//canvas.clipRect(plotArea.getLeft() , plotArea.getTop() ,
+			//				this.getRight(), plotArea.getBottom());			
 					canvas.save();
 					canvas.translate(mMoveX, mMoveY);	
 					//绘图
@@ -857,8 +879,8 @@ public class AxisChart extends EventChart {
 		{													
 			//绘制Y轴tick和marks			
 			canvas.save();								
-					canvas.clipRect(this.getLeft() , this.getTop() + yMargin,  //this.getTop() - yMargin
-									this.getRight(), this.getBottom() - yMargin); // plotArea.getBottom() + yMargin
+					canvas.clipRect(this.getLeft() , this.getTop() + yMargin, 
+									this.getRight(), this.getBottom() - yMargin); 
 					
 					canvas.translate(0 , offsetY );										
 					drawClipCategoryAxisTickMarks(canvas);					
@@ -916,7 +938,7 @@ public class AxisChart extends EventChart {
 			}			
 			
 			//显示焦点
-			renderFocusShape(canvas);
+			//renderFocusShape(canvas);
 			//响应提示
 			renderToolTip(canvas);
 											
@@ -924,6 +946,140 @@ public class AxisChart extends EventChart {
 		} catch (Exception e) {
 			throw e;
 		}
+	}
+	
+	
+	public class ClipExt {
+		
+		//用于扩展clip绘图区范围				
+		private float mClipExtLeft = -1f;
+		private float mClipExtTop = -1f;
+		private float mClipExtRight = -1f;
+		private float mClipExtBottom = -1f;
+				
+		private float clipExtLeft = 0.5f;
+		private float clipExtTop = 0.5f;
+		private float clipExtRight = 0.5f;
+		private float clipExtBottom = 0.5f;
+		
+		public ClipExt(){}
+		
+		/**
+		 * 指定绘图区clip时向左扩展范围
+		 * @param value 范围值
+		 */
+		public void setExtLeft(float value)
+		{
+			mClipExtLeft = value;
+		}
+
+		/**
+		 * 指定绘图区clip时向上扩展范围
+		 * @param value 范围值
+		 */
+		public void setExtTop(float value)
+		{
+			mClipExtTop = value;
+		}
+
+		/**
+		 * 指定绘图区clip时向右扩展范围
+		 * @param value 范围值
+		 */
+		public void setExtRight(float value)
+		{
+			mClipExtRight = value;
+		}
+
+		/**
+		 * 指定绘图区clip时向下扩展范围
+		 * @param value 范围值
+		 */
+		public void setExtBottom(float value)
+		{
+			mClipExtBottom = value;
+		}
+		
+		/**
+		 * 用于计算实际扩展值
+		 * @param type 图类型
+		 */
+		public void calc(XEnum.ChartType type)
+		{
+			switch(type)
+			{
+				case LINE:
+				case SPLINE:
+				case AREA:							
+					if(Float.compare(mClipExtLeft, -1f) == 0)
+					{
+						clipExtLeft = 10.f;								
+					}else{
+						clipExtLeft = mClipExtLeft;
+					}
+					
+					if(Float.compare(mClipExtTop, -1f) == 0)
+					{
+						clipExtTop = 0.5f;								
+					}else{
+						clipExtTop = mClipExtTop;
+					}
+					
+					if(Float.compare(mClipExtRight, -1f) == 0)
+					{
+						clipExtRight = 10.f;								
+					}else{
+						clipExtRight = mClipExtRight;
+					}
+					
+					if(Float.compare(mClipExtBottom, -1f) == 0)
+					{
+						clipExtBottom = 10.f;								
+					}else{
+						clipExtBottom = mClipExtBottom;
+					}
+					break;
+				default:
+					break;
+			}
+		}
+		
+		/**
+		 * 返回绘图区clip时实际向左扩展范围
+		 * @return 扩展值
+		 */
+		public float getExtLeft()
+		{
+			return clipExtLeft;
+		}
+
+		/**
+		 * 返回绘图区clip时实际向上扩展范围
+		 * @return 扩展值
+		 */
+		public float getExtTop()
+		{
+			return clipExtTop;
+		}
+
+		/**
+		 * 返回绘图区clip时实际向右扩展范围
+		 * @return 扩展值
+		 */
+		public float getExtRight()
+		{
+			return clipExtRight;
+		}
+
+		/**
+		 * 返回绘图区clip时实际向下扩展范围
+		 * @return 扩展值
+		 */
+		public float getExtBottom()
+		{
+			return clipExtBottom;
+		}
+				
 	}
 		
 }

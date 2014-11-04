@@ -626,8 +626,8 @@ public class XChart implements IRender {
 	
 	/**
 	 * 激活图表缩放(但注意，图表缩放后，如果有同时激活click事件，
-	 * 	则所保留的clicked相关信息并不会随着缩放即会乱掉。
-	 * 	所以两个事件暂在图库中不能并存)
+	 * 	则缩放状态下，点击处理无效。
+	 * 	
 	 */
 	public void enableScale()
 	{

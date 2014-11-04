@@ -35,6 +35,7 @@ import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -158,9 +159,11 @@ public class BarChart04View extends DemoView {
 			
 			 //让柱子间没空白
 			 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
+			
 			 
 			 //禁用平移模式
 			 chart.disablePanMode();
+			 
 			 
 			// chart.showRoundBorder();
 		} catch (Exception e) {

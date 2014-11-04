@@ -38,6 +38,7 @@ import org.xclcharts.renderer.line.PlotLine;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
@@ -83,6 +84,8 @@ public class AreaChart extends LnChart{
   	//平滑曲线
   	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
   	
+  	private final int Y_MIN = 0;
+  	private final int Y_MAX = 1;
 			  	
 	public AreaChart()
 	{			
@@ -251,7 +254,7 @@ public class AreaChart extends LnChart{
 		return true;        
 	}
 	
-	
+		
 	private boolean renderBezierArea(Canvas canvas, Paint paintAreaFill,
 			Path bezierPath,
 			AreaData areaData,
@@ -259,6 +262,12 @@ public class AreaChart extends LnChart{
 	{	
 	int count = lstPathPoints.size();		
 	if(count < 3) return false; //没有或仅一个点就不需要了
+			
+				
+	//设置当前填充色
+	paintAreaFill.setColor(areaData.getAreaFillColor());			
+
+	//仅两点
 	if(count == 3)
 	{						
 		if(null == bezierPath)bezierPath = new Path();
@@ -274,11 +283,49 @@ public class AreaChart extends LnChart{
 		bezierPath.lineTo(lstPathPoints.get(2).x, plotArea.getBottom());
 		bezierPath.close();
 		
-		paintAreaFill.setColor(areaData.getAreaFillColor());				
-		paintAreaFill.setAlpha(this.mAreaAlpha); 	
+		
+		if(areaData.getApplayGradient())
+		{				
+			
+			LinearGradient  linearGradient ;
+			if(areaData.getGradientDirection() == XEnum.Direction.VERTICAL)
+			{
+				float lineMaxY = getLineMaxMinY(Y_MAX,lstPathPoints);
+				linearGradient = new LinearGradient(
+						0, 0, 0,lineMaxY,// 2 * h,
+						// plotArea.getLeft(),plotArea.getBottom(), lstPathPoints.get(count -1).x,lineMinY,
+						 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+						 areaData.getGradientMode());
+			}else{
+				float lineMinY = getLineMaxMinY(Y_MIN,lstPathPoints);
+				linearGradient = new LinearGradient(
+						 plotArea.getLeft(),plotArea.getBottom(), lstPathPoints.get(2).x,lineMinY,
+						 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+						 areaData.getGradientMode());
+			}
+			
+			/*
+			float lineMinY = getLineMinY(lstPathPoints);
+			
+			//float h = plotArea.getBottom() - lineMinY; 				
+			//if( areaData.getGradientMode() == Shader.TileMode.MIRROR) h = 2*h;
+			
+			LinearGradient  linearGradient = new LinearGradient(
+					//0, 0, 0, h,//2 * h,
+					plotArea.getLeft(), plotArea.getBottom(),lstPathPoints.get(2).x,lineMinY,
+					 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+					 areaData.getGradientMode());
+					//   areaData.getGradientColors(), null,areaData.getGradientMode());  	
+			*/
+			paintAreaFill.setShader(linearGradient);   
+			
+		}else{
+			paintAreaFill.setShader(null);
+		}
+		
+		
 	    canvas.drawPath(bezierPath, paintAreaFill);		
 		bezierPath.reset();		
-		
 		return true;
 	}
 
@@ -319,20 +366,66 @@ public class AreaChart extends LnChart{
 	}	
 
 	bezierPath.close();
-	paintAreaFill.setColor(areaData.getAreaFillColor());	
 	
-	paintAreaFill.setAlpha(this.mAreaAlpha); 	
-    canvas.drawPath(bezierPath, paintAreaFill);		
+	
+	//透明度
+	paintAreaFill.setAlpha(this.mAreaAlpha); 
+	
+	if(areaData.getApplayGradient())
+	{			
+		
+		LinearGradient  linearGradient ;
+		if(areaData.getGradientDirection() == XEnum.Direction.VERTICAL)
+		{
+			float lineMaxY = getLineMaxMinY(Y_MAX,lstPathPoints);
+			linearGradient = new LinearGradient(
+					0, 0, 0,lineMaxY,// 2 * h,
+					// plotArea.getLeft(),plotArea.getBottom(), lstPathPoints.get(count -1).x,lineMinY,
+					 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+					 areaData.getGradientMode());
+		}else{
+			float lineMinY = getLineMaxMinY(Y_MIN,lstPathPoints);
+			linearGradient = new LinearGradient(
+					 plotArea.getLeft(), plotArea.getBottom(),stop.x,lineMinY,
+					 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+					 areaData.getGradientMode());
+		}
+		
+		/*
+		float lineMinY = getLineMinY(lstPathPoints);
+		
+		//float h = plotArea.getBottom() - lineMinY; 				
+		//if( areaData.getGradientMode() == Shader.TileMode.MIRROR) h = 2*h;
+		
+		LinearGradient  linearGradient = new LinearGradient(
+				//0, 0, 0, h,//2 * h,
+				plotArea.getLeft(), plotArea.getBottom(),stop.x,lineMinY,
+				 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+				 areaData.getGradientMode());
+				//   areaData.getGradientColors(), null,areaData.getGradientMode());  	
+		*/
+		paintAreaFill.setShader(linearGradient);   
+		
+	}else{
+		paintAreaFill.setShader(null);
+	}
+	
+		
+    canvas.drawPath(bezierPath, paintAreaFill);	
     bezierPath.reset();
-   
+       
 	return true;
 }
+
 	
 	private boolean renderArea(Canvas canvas,Paint paintAreaFill,Path pathArea,
 								AreaData areaData,
 								List<PointF> lstPathPoints)
 	{		        		
-		for(int i = 0;i<lstPathPoints.size();i++)
+		int count = lstPathPoints.size();
+		if(count <= 0) return false;
+		
+		for(int i = 0;i<count;i++)
 		{
 			PointF point = lstPathPoints.get(i);
         	if(0 == i)
@@ -343,12 +436,51 @@ public class AreaChart extends LnChart{
         	}				
 		}							
 		pathArea.close();
-	
-        //设置当前填充色
-		paintAreaFill.setColor(areaData.getAreaFillColor());	
+			
+					
+		//设置当前填充色
+		paintAreaFill.setColor(areaData.getAreaFillColor());		
+		
+		if(areaData.getApplayGradient())
+		{			
+			//float h = plotArea.getBottom() - lineMinY; 		
+			//if( areaData.getGradientMode() == Shader.TileMode.MIRROR) h = 2*h;
+			
+			LinearGradient  linearGradient ;
+			if(areaData.getGradientDirection() == XEnum.Direction.VERTICAL)
+			{
+				float lineMaxY = getLineMaxMinY(Y_MAX,lstPathPoints);
+				linearGradient = new LinearGradient(
+						0, 0, 0,lineMaxY,// 2 * h,
+						// plotArea.getLeft(),plotArea.getBottom(), lstPathPoints.get(count -1).x,lineMinY,
+						 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+						 areaData.getGradientMode());
+			}else{
+				float lineMinY = getLineMaxMinY(Y_MIN,lstPathPoints);
+				linearGradient = new LinearGradient(
+						 plotArea.getLeft(),plotArea.getBottom(), lstPathPoints.get(count -1).x,lineMinY,
+						 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+						 areaData.getGradientMode());
+			}
+			
+			/*
+			LinearGradient  linearGradient = new LinearGradient(
+					0, 0, 0,lineMinY,// 2 * h,
+					// plotArea.getLeft(),plotArea.getBottom(), lstPathPoints.get(count -1).x,lineMinY,
+					 areaData.getAreaBeginColor(),areaData.getAreaEndColor(), 				 
+					 areaData.getGradientMode());
+					//   areaData.getGradientColors(), null,areaData.getGradientMode());  	
+			*/
+			
+			paintAreaFill.setShader(linearGradient);    
+		}else{
+			paintAreaFill.setShader(null);
+		}
+		//透明度
 		paintAreaFill.setAlpha(this.mAreaAlpha); 
+				
 		//绘制area
-	    canvas.drawPath(pathArea, paintAreaFill);	      
+	    canvas.drawPath(pathArea, paintAreaFill); //paintAreaFill);	      
 	    pathArea.reset();		
 		return true;
 	}
@@ -405,16 +537,17 @@ public class AreaChart extends LnChart{
 			return false;
 		}			
 		float itemAngle = bd.getItemLabelRotateAngle();
-		
-		for(int i=0;i<lstDots.size();i++)
+		int count = lstDots.size();
+		for(int i=0;i<count;i++)
 		{
 			Double dv = chartValues.get(i);			
 			RectF  dot = lstDots.get(i);
 			
+			float radius = 0.0f;
 			if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
         	{            	
         		PlotDot pDot = pLine.getPlotDot();	
-        		float radius = pDot.getDotRadius();
+        		radius = pDot.getDotRadius();
         		float rendEndX  = add(dot.right  , radius);    
         		            	      
         		PlotDotRender.getInstance().renderDot(canvas,pDot,
@@ -431,15 +564,47 @@ public class AreaChart extends LnChart{
         	}
     		
     		if(bd.getLabelVisible())
-        	{        			            		
-        		DrawHelper.getInstance().drawRotateText(getFormatterItemLabel(dv) ,
-        				dot.right ,dot.bottom,itemAngle, canvas, pLine.getDotLabelPaint());
-        		
+        	{  
+        		bd.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(),
+        						getFormatterItemLabel(dv),dot.right - radius ,dot.bottom,itemAngle,bd.getLineColor());        		
         	} 
 		}
 		return true;
 	}	
 						
+	
+	private float getLineMaxMinY(int type,List<PointF> lstPathPoints)
+	{		
+		//渲染高度
+		float lineMaxY = 0.0f;
+		
+		float lineMinY = 0.0f;	
+		int count = lstPathPoints.size();
+		
+		for(int i = 0;i<count;i++)
+		{				
+			if(Y_MAX == type)
+			{
+				if( lineMaxY < lstPathPoints.get(i).y )
+						lineMaxY = lstPathPoints.get(i).y;
+			}else if(Y_MIN == type){
+				if(0 == i)
+				{
+					lineMinY = lstPathPoints.get(0).y;
+				}else{
+					if( lineMinY > lstPathPoints.get(i).y )
+						lineMinY = lstPathPoints.get(i).y;
+				}
+			}
+		}		
+		if(Y_MAX == type)
+		{
+			return lineMaxY;
+		}else { // if(Y_MIN == type){
+			return lineMinY;
+		}
+	}
+	
 	private boolean renderVerticalPlot(Canvas canvas)
 	{								
 		if(null == mDataSet)
@@ -448,11 +613,12 @@ public class AreaChart extends LnChart{
 			return false;
 		}
 		
-		initPaint();
+		this.initPaint();
 		if(null == mPathArea) mPathArea = new Path();
 								
 		//透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
 		//mPaintAreaFill.setAlpha( mAreaAlpha );  		
+		
 						
 		//开始处 X 轴 即分类轴                  
 		int count = mDataSet.size();
@@ -460,8 +626,8 @@ public class AreaChart extends LnChart{
 		{					
 			AreaData areaData = mDataSet.get(i);
 			
-			calcAllPoints( areaData,mLstDots,mLstPoints,mLstPathPoints);					
-			
+			calcAllPoints( areaData,mLstDots,mLstPoints,mLstPathPoints);	
+					
 			switch(getCrurveLineStyle())
 			{
 				case BEZIERCURVE:
@@ -481,9 +647,8 @@ public class AreaChart extends LnChart{
 			
 			mLstDots.clear();
 			mLstPoints.clear();
-			mLstPathPoints.clear();
-		}							
-		
+			mLstPathPoints.clear();						
+		}					
 		return true;
 	}
 

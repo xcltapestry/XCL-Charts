@@ -90,6 +90,8 @@ public class BubbleChart extends LnChart{
 		
 		categoryAxisDefaultSetting();
 		dataAxisDefaultSetting();
+		
+		this.setAxesClosed(true);
 	}
 	
 	protected void categoryAxisDefaultSetting()

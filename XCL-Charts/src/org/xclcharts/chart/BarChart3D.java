@@ -330,6 +330,10 @@ public class BarChart3D extends BarChart{
 			                		 add(drawBarStartX , barWidth/2) ,	
 			                		 topY, 
 			                		 canvas);
+           		
+           		//显示焦点框
+           		drawFocusRect(canvas,i,j,drawBarStartX, topY,drawBarEndX, barInitY);
+           		
            }	
 			currNumber ++;				
 		}

@@ -23,6 +23,8 @@ package org.xclcharts.chart;
 
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotLine;
+import org.xclcharts.renderer.plot.PlotLabel;
+import org.xclcharts.renderer.plot.PlotLabelRender;
 
 import android.graphics.Paint;
 
@@ -46,6 +48,9 @@ public class LnData {
 	//线的类型
 	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
 	
+	//用于设置标签特性
+	private PlotLabelRender mPlotLabel = null;
+	
 	public LnData()
 	{
 		mPlotLine = new PlotLine(); 
@@ -58,6 +63,9 @@ public class LnData {
 	public void setLabelVisible(boolean visible) 
 	{
 		mLabelVisible = visible;
+		
+		getPlotLabel().setOffsetY(15.f);
+		getPlotLabel().showBox();
 	}
 	
 	/**
@@ -201,5 +209,18 @@ public class LnData {
 	public void setLineStyle(XEnum.LineStyle style)
 	{
 		mLineStyle = style;
+	}
+	
+	/**
+	 * 用于设置标签显示属性
+	 * @return 标签属性类
+	 */
+	public PlotLabel getPlotLabel()
+	{
+		if(null == mPlotLabel)
+		{
+			mPlotLabel = new PlotLabelRender();
+		}
+		return mPlotLabel;
 	}
 }

@@ -118,6 +118,13 @@ public class ClickPieChart01View extends GraphicalView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			
+			//标签
+			chart.getPlotLabel().showBox();
+			
+			//显示标签框
+			chart.getPlotLabel().showBox();
+			chart.getPlotLabel().getBox().setBorderLineColor(Color.rgb(0, 126, 231));
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -128,9 +135,9 @@ public class ClickPieChart01View extends GraphicalView {
 	{
 		//设置图表数据源		
 		
-		chartData.add(new PieData("48","48%",48,(int)Color.rgb(215, 124, 124)));
+		chartData.add(new PieData("48","48%",45,(int)Color.rgb(215, 124, 124)));
 		chartData.add(new PieData("15","15%",15,(int)Color.rgb(253, 180, 90)));
-		chartData.add(new PieData("3","3%",2,(int)Color.rgb(77, 83, 97)));
+		chartData.add(new PieData("5","5%",5,(int)Color.rgb(77, 83, 97)));
 		chartData.add(new PieData("10","10%",10,(int)Color.rgb(253, 180, 90)));
 		
 		//将此比例块突出显示
