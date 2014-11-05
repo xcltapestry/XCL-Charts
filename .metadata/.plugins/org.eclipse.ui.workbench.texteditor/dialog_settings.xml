@@ -13,26 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value=".getBar()" key="selection"/>
+		<item value="axisMinValue" key="selection"/>
 		<list key="findhistory">
-			<item value=".getBar()"/>
-			<item value="getBar"/>
-			<item value="bar"/>
-			<item value="getPositionRecord"/>
-			<item value="saveSelected"/>
-			<item value="mFocusRect"/>
-			<item value="mSelectID"/>
-			<item value="renderFocusShape"/>
+			<item value="axisMinValue"/>
+			<item value="renderBezierCurveLine"/>
+			<item value="getAreaBeginColor"/>
+			<item value="getAreaEndColor"/>
+			<item value="mAreaEndColor"/>
+			<item value="mAreaBeginColor"/>
+			<item value="getGradientDirection"/>
+			<item value="mFocusPoint"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getBeginColor"/>
+			<item value="getEndColor"/>
+			<item value="mEndColor"/>
+			<item value="mBeginColor"/>
 			<item value="setDataAxisLocation"/>
 			<item value="setCategoryAxisLocation"/>
 			<item value="getDataAxisLocation"/>
 			<item value="mDataAxisLocation"/>
-			<item value="mCategoryAxisLocation"/>
-			<item value="getExtBottom"/>
-			<item value="getExtRight"/>
-			<item value="getExtTop"/>
 		</list>
 	</section>
 </section>

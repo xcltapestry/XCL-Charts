@@ -23,8 +23,10 @@ package org.xclcharts.renderer.plot;
 
 
 import org.xclcharts.renderer.IRender;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 
 /**
  * @ClassName PlotAreaRender
@@ -47,8 +49,30 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	{
 		if(null == canvas) return;
 		if(getBackgroundColorVisible())
+		{
+			if(getApplayGradient())
+			{			
+				LinearGradient  linearGradient ;
+				if(getGradientDirection() == XEnum.Direction.VERTICAL)
+				{
+					linearGradient = new LinearGradient(
+							0, 0, 0, getBottom() - getTop(),							
+							 getBeginColor(),getEndColor(), 				 
+							 getGradientMode());
+				}else{
+					linearGradient = new LinearGradient(
+							 getLeft(),getBottom(),getRight(),getTop(),
+							 getBeginColor(),getEndColor(), 				 
+							 getGradientMode());
+				}
+				getBackgroundPaint().setShader(linearGradient);    
+			}else{
+				getBackgroundPaint().setShader(null);
+			}
+			
 			canvas.drawRect(mLeft,mTop,
 					mRight,mBottom, getBackgroundPaint());
+		}
 	}		
 	
 	/**

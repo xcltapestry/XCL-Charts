@@ -26,7 +26,7 @@ import java.util.List;
 
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.BarPosition;
-import org.xclcharts.renderer.AxisChart;
+import org.xclcharts.renderer.AxesChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
@@ -45,7 +45,7 @@ import android.util.Log;
  *  
  */
 
-public class BarChart extends AxisChart {
+public class BarChart extends AxesChart {
 	
 	private static final String TAG = "BarChart";
 
@@ -650,8 +650,8 @@ public class BarChart extends AxisChart {
 				
 				// 画出柱形
 				float topY = sub(plotArea.getBottom() , valuePostion);
-				mFlatBar.renderBar(drawBarStartX,topY,drawBarEndX, plotArea.getBottom(),canvas);
-				
+				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),drawBarEndX,topY,canvas);
+								
 				//保存位置
 				saveBarRectFRecord(i,j,drawBarStartX + mMoveX,topY + mMoveY,
 									    drawBarEndX  + mMoveX,plotArea.getBottom() + mMoveY); 

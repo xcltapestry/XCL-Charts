@@ -31,6 +31,7 @@ import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.info.PlotAxisTick;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
@@ -46,7 +47,7 @@ import android.util.Log;
  *         
  */
 
-public class LnChart extends AxisChart {
+public class LnChart extends AxesChart {
 	
 	private static final String TAG = "LnChart";
 	
@@ -331,22 +332,7 @@ public class LnChart extends AxisChart {
 		
 		int count = lstPoints.size();
 		if( count <= 2  ) return; //没有或仅一个点就不需要了
-		
-		/*
-		if(count <= 3)
-		{			
-			if(null == bezierPath)bezierPath = new Path();
-			bezierPath.moveTo(lstPoints.get(0).x, lstPoints.get(0).y);
-			bezierPath.lineTo(lstPoints.get(1).x, lstPoints.get(1).y);
-			
-			if(3 == count)
-				bezierPath.lineTo(lstPoints.get(2).x, lstPoints.get(2).y);
-			
-			canvas.drawPath(bezierPath, paint);
-			bezierPath.reset();					
-			return;
-		}
-		*/
+				
 		
 		if(count == 3)
 		{			
@@ -361,34 +347,71 @@ public class LnChart extends AxisChart {
 			return;
 		}
 		
+		
+		float axisMinValue = plotArea.getBottom();
+		
 		for(int i = 0;i<count;i++)
 		{					
 			if(i<3) continue;
 			
+			//连续两个值都为0,控制点有可能会显示在轴以下，则此种情况下，将其处理为直线			
+			if(lstPoints.get(i - 1).y >= axisMinValue && lstPoints.get(i).y >= axisMinValue)
+			 {
+				
+				CurveHelper.curve3( lstPoints.get(i-2),  
+									lstPoints.get(i-1), 
+									lstPoints.get(i-3),
+									lstPoints.get(i), 
+									BezierControls);
+				
+				if(null == bezierPath)bezierPath = new Path();
+				bezierPath.reset();					
+				bezierPath.moveTo(lstPoints.get(i-2).x, lstPoints.get(i-2).y);
+				
+				bezierPath.quadTo(BezierControls[0].x, BezierControls[0].y,
+						lstPoints.get(i-1).x, lstPoints.get(i-1).y);
+				
+				canvas.drawPath(bezierPath, paint);		
+				bezierPath.reset();
+				
+				canvas.drawLine(lstPoints.get(i-1).x, lstPoints.get(i-1).y, 
+						         lstPoints.get(i).x, lstPoints.get(i).y, paint);
+					
+				continue;
+			 }
+									
 			CurveHelper.curve3( lstPoints.get(i-2),  
 								lstPoints.get(i-1), 
 								lstPoints.get(i-3),
 								lstPoints.get(i), 
 								BezierControls);
-			renderBezierCurvePath(canvas,paint,bezierPath,
+			
+			if(lstPoints.get(i - 1).y >= axisMinValue )
+			{
+				continue; 
+			}else{							 
+				renderBezierCurvePath(canvas,paint,bezierPath,
 							lstPoints.get(i-2), lstPoints.get(i -1 ), 
 							BezierControls );
+			}
+							
 		}			
 	
 	
 		if(count> 3)
 		{			
-			PointF stop  = lstPoints.get(lstPoints.size()-1);
+			PointF stop  = lstPoints.get(count-1);
 			//PointF start = lstPoints.get(lstPoints.size()-2);						
-			CurveHelper.curve3(lstPoints.get(lstPoints.size()-2),  
+			CurveHelper.curve3(lstPoints.get(count-2),  
 										stop, 
-										lstPoints.get(lstPoints.size()-3),
+										lstPoints.get(count-3),
 										stop, 
 										BezierControls);
+			
 			renderBezierCurvePath(canvas,paint,bezierPath,
-							lstPoints.get(lstPoints.size()-2), 
-							lstPoints.get(lstPoints.size()-1), 
-							BezierControls );
+								lstPoints.get(count-2), 
+								lstPoints.get(count-1), 
+								BezierControls );			 						
 		}				
 		
 	}
@@ -404,7 +427,7 @@ public class LnChart extends AxisChart {
 		bezierPath.cubicTo( bezierControls[0].x, bezierControls[0].y, 
 				bezierControls[1].x, bezierControls[1].y, 
 				stop.x, stop.y);	
-				
+						
 		canvas.drawPath(bezierPath, paint);		
 		bezierPath.reset();
 	}

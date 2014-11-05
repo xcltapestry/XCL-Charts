@@ -141,7 +141,7 @@ public class BarChart03View extends DemoView implements Runnable{
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
 			chart.getBar().setBarStyle(XEnum.BarStyle.OUTLINE);
-			//限制只能左右滑动
+		
 			//chart.setPlotPanMode(XEnum.PanMode.FREE);	
 			chart.disablePanMode();
 			

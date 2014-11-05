@@ -100,7 +100,7 @@ public class ScatterChart01View extends DemoView {
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);							
+			chart.setPadding(5, ltrb[1], 5, ltrb[3]);							
 			
 			//数据源	
 			chart.setCategories(labels);
@@ -158,7 +158,19 @@ public class ScatterChart01View extends DemoView {
 			chart.showDyLine();
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.BackwardDiagonal);
 			
-			//chart.getPlotArea().extWidth(500.f);
+			//背景渐变
+			chart.getPlotArea().setBackgroundColor(true, Color.rgb(83, 182, 203));
+			chart.getPlotArea().setApplayGradient(true);
+			chart.getPlotArea().setGradientDirection(XEnum.Direction.HORIZONTAL);
+			chart.getPlotArea().setBeginColor(Color.WHITE);
+			
+			//图例
+			chart.getPlotLegend().setType(XEnum.LegendType.COLUMN);
+			chart.getPlotLegend().setVerticalAlign(XEnum.VerticalAlign.MIDDLE);
+			chart.getPlotLegend().setHorizontalAlign(XEnum.HorizontalAlign.RIGHT);
+			chart.getPlotLegend().getBox().setBorderRectType(XEnum.RectType.RECT);
+			chart.getPlotLegend().showBox();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

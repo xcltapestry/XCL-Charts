@@ -154,13 +154,19 @@ public class AreaData extends LineData {
 		return mApplayGradient;
 	}
 	
-	
-	
+	/**
+	 * 设置渐变渲染方向	
+	 * @param direction 方向
+	 */
 	public void setGradientDirection(XEnum.Direction direction)
 	{
 		mDirection = direction;
 	}
 	
+	/**
+	 * 返回渐变渲染方向	
+	 * @return 方向	
+	 */
 	public XEnum.Direction getGradientDirection()
 	{
 		return mDirection;
@@ -168,7 +174,7 @@ public class AreaData extends LineData {
 	
 	/**
 	 * 设置渲染模式
-	 * @param tm		渲染模式
+	 * @param tm	渲染模式
 	 */
 	 public void setGradientMode(Shader.TileMode tm)
 	 {

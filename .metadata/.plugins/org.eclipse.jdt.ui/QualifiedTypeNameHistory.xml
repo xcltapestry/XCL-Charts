@@ -21,11 +21,8 @@
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLegend"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.DyLine"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LegendType"/>
 <fullyQualifiedTypeName name="android.graphics.Point"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.AxisTick"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.PlotDataInfo"/>
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
@@ -50,14 +47,17 @@
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLabelRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RectType"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LegendType"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RectType"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
 </qualifiedTypeNameHistroy>

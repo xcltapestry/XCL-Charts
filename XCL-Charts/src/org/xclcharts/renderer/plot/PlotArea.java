@@ -23,8 +23,11 @@
 package org.xclcharts.renderer.plot;
 
 
+import org.xclcharts.renderer.XEnum;
+
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Shader;
 import android.graphics.Paint.Style;
 
 /**
@@ -53,6 +56,14 @@ public class PlotArea {
 	
 	//扩展宽度
 	private float mExtWidth = 0.0f;
+	
+	//是否应用渲染模式
+	private boolean mApplayGradient = false;
+		
+	private int mBeginColor = Color.WHITE;
+    private int mEndColor = Color.WHITE;
+	private Shader.TileMode mTileMode = Shader.TileMode.MIRROR;
+	private XEnum.Direction mDirection = XEnum.Direction.VERTICAL;
 		
 	
 	public PlotArea()
@@ -109,6 +120,9 @@ public class PlotArea {
 	{
 		mBackgroundColorVisible = visible;
 		getBackgroundPaint().setColor(color);
+		
+		setBeginColor(color);
+		setEndColor(color);		
 	}	
 	
 
@@ -211,7 +225,95 @@ public class PlotArea {
 		return mExtWidth;
 	}
 	
+	/**
+	 * 设置 是否应用渲染模式
+	 */
+	public void setApplayGradient(boolean status)
+	{
+		mApplayGradient = status;
+	}
 	
+	/**
+	 * 返回是否应用渲染模式
+	 * @return 状态
+	 */
+	public boolean getApplayGradient()
+	{
+		return mApplayGradient;
+	}
+	
+	/**
+	 * 设置渐变渲染方向	
+	 * @param direction 方向
+	 */
+	public void setGradientDirection(XEnum.Direction direction)
+	{
+		mDirection = direction;
+	}
+	
+	/**
+	 * 返回渐变渲染方向	
+	 * @return 方向	
+	 */
+	public XEnum.Direction getGradientDirection()
+	{
+		return mDirection;
+	}
+	
+	/**
+	 * 设置渲染模式
+	 * @param tm	渲染模式
+	 */
+	 public void setGradientMode(Shader.TileMode tm)
+	 {
+		 mTileMode = tm;
+	 }
+	 
+	 /**
+	  * 返回渲染模式
+	  * @return 渲染模式
+	  */
+	 public Shader.TileMode getGradientMode()
+	 {
+		 return mTileMode;
+	 }
+	 
+	 /**
+	  * 设置起始颜色
+	  * @param color	颜色
+	  */
+	 public void setBeginColor(int color)
+	 {
+		 mBeginColor = color;
+	 }
+	 
+	 /**
+	  * 设置结束颜色
+	  * @param color	颜色
+	  */
+	 public void setEndColor(int color)
+	 {
+		 mEndColor = color;
+	 }
+	 
+	 
+	 /**
+	  * 返回起始颜色
+	  * @return	颜色
+	  */
+	 public int getBeginColor()
+	 {
+		 return mBeginColor;
+	 }
+	 
+	 /**
+	  * 返回结束颜色
+	  * @return	颜色
+	  */
+	 public int getEndColor()
+	 {
+		 return mEndColor;
+	 }
 	
 	
 }

@@ -33,6 +33,7 @@ import org.xclcharts.chart.BubbleData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -99,7 +100,7 @@ public class BubbleChart01View extends DemoView {
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			chart.setPadding(10, ltrb[1], 10, ltrb[3]);	
 			
 			//显示边框
 			chart.showRoundBorder();
@@ -178,6 +179,16 @@ public class BubbleChart01View extends DemoView {
 			//chart.showDyLine();
 			
 			//chart.getPlotArea().extWidth(500.f);
+						
+			//背景渐变
+			chart.getPlotArea().setBackgroundColor(true, Color.rgb(163, 69, 213));
+			chart.getPlotArea().setApplayGradient(true);
+			chart.getPlotArea().setEndColor(Color.WHITE);
+			
+			//图例
+			chart.getPlotLegend().setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			chart.getPlotLegend().setHorizontalAlign(XEnum.HorizontalAlign.RIGHT);			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -306,14 +317,13 @@ public class BubbleChart01View extends DemoView {
 	
 	//触发监听
 	private void triggerClick(float x,float y)
-	{
-		
+	{		
 		//交叉线
 		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);		
 		if(!chart.getListenItemClickStatus())
 		{
 			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();
-		}else{
+		}else{			
 			PointPosition record = chart.getPositionRecord(x,y);			
 			if( null == record) return;
 	
@@ -328,10 +338,10 @@ public class BubbleChart01View extends DemoView {
 				
 				if(pos == i)
 				{							 						
-				     Double xValue =(Double) entry.getKey();
-				     Double yValue =(Double) entry.getValue();	
+				     	Double xValue =(Double) entry.getKey();
+				     	Double yValue =(Double) entry.getValue();	
 				   				     
-				     	float r = record.getRadius();
+				     	float r = record.getRadius();		
 						chart.showFocusPointF(record.getPosition(),r + r*0.5f);		
 						chart.getFocusPaint().setStyle(Style.STROKE);
 						chart.getFocusPaint().setStrokeWidth(3);		
@@ -340,8 +350,7 @@ public class BubbleChart01View extends DemoView {
 							chart.getFocusPaint().setColor(Color.WHITE);
 						}else{
 							chart.getFocusPaint().setColor(Color.RED);
-						}		
-						
+						}	
 						
 						//在点击处显示tooltip
 						mPaintTooltips.setColor(Color.RED);				
@@ -350,8 +359,7 @@ public class BubbleChart01View extends DemoView {
 						chart.getToolTip().addToolTip(
 								Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);					
 						
-						this.invalidate();
-						
+						this.invalidate();						
 				     break;
 				}
 		        i++;

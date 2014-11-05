@@ -194,7 +194,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		dataSeries2.add((double)10); 
 		dataSeries2.add((double)22); 
 		dataSeries2.add((double)30); 	
-		dataSeries2.add((double)30); 
+		dataSeries2.add((double)30); //30 
 		dataSeries2.add((double)0); //15
 		
 		List<Double> dataSeries3 = new LinkedList<Double>();			
@@ -252,9 +252,6 @@ public class AreaChart01View extends DemoView implements Runnable {
         	Log.e(TAG, e.toString());
         }
     }
-
-
-
 
 	@Override
 	public List<XChart> bindChart() {

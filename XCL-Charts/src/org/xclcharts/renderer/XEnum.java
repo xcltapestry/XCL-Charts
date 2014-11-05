@@ -99,7 +99,7 @@ public class XEnum {
 		}
 		
 		/**
-		 * rect的类型
+		 * 框的类型
 		 * @author XCL
 		 *
 		 */
@@ -238,20 +238,34 @@ public class XEnum {
 			HORIZONTAL,VERTICAL,FREE
 		}
 		
-		//边框风格
+		
+		/**
+		 * 动态边框风格
+		 * @author XCL
+		 *
+		 */
 		public enum DyInfoStyle {			
 			RECT,ROUNDRECT
 		}
 		
-		// Cross 指定交叉的水平线和垂直线。
-		// BackwardDiagonal 从右上到左下的对角线的线条图案。
-		// Vertical		垂直线
-		// Horizontal 水平线
+		/**
+		 * 动态线类型 
+		 * Cross 指定交叉的水平线和垂直线。
+		 * BackwardDiagonal 从右上到左下的对角线的线条图案。
+		 * Vertical		垂直线
+		 * Horizontal 水平线
+		 * @author XCL
+		 *
+		 */
 		public enum DyLineStyle{
 			Cross,BackwardDiagonal,Vertical,Horizontal
 		}
 		
-		// 标签线是否显示圆点及显示风格
+		/**
+		 * 标签线是否显示圆点及显示风格
+		 * @author XCL
+		 *
+		 */
 		public enum LabelLinePoint{
 			NONE,BEGIN,END,ALL
 		}
@@ -267,8 +281,12 @@ public class XEnum {
 		public enum LabelSaveType{
 			NONE,ONLYPOSITION,ALL
 		}
-		
-		// 库支持哪些类型的图
+				
+		/**
+		 * 图的所属类型
+		 * @author XCL
+		 *
+		 */
 		public enum ChartType{
 			NONE,BAR,BAR3D,STACKBAR,PIE,PIE3D,DOUNT,LINE,SPLINE,AREA,
 			ROSE,RADAR,DIAL,RANGEBAR,ARCLINE,CIRCLE,SCATTER,BUBBLE,GAUGE

@@ -26,7 +26,7 @@ import java.util.List;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.BarPosition;
-import org.xclcharts.renderer.AxisChart;
+import org.xclcharts.renderer.AxesChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
@@ -44,7 +44,7 @@ import android.util.Log;
  *  
  */
 
-public class RangeBarChart  extends AxisChart {
+public class RangeBarChart  extends AxesChart {
 	
 	private static final String TAG = "RangeBarChart";
 
