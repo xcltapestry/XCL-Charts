@@ -126,6 +126,8 @@ public class EventChart extends XChart {
 	private void clearSelected()
 	{
 		 mSelectID = -1;
+		 mSelectDataID = -1;
+		 mSelectDataChildID = -1;
 	}
 	
 	private void saveSelected(int recordID,int dataID,int dataChildID)
@@ -390,8 +392,6 @@ public class EventChart extends XChart {
 		if(-1 == mSelectID) return false;
 		if(null == mFocusRect) return false;
 		
-		//Log.e("event","did="+Integer.toString(dataID)+" cid="+Integer.toString(childID));
-		
 		if( mSelectDataID == dataID &&
 				mSelectDataChildID == childID	)
 		{
@@ -404,10 +404,7 @@ public class EventChart extends XChart {
 			canvas.drawRect(mFocusRect, getFocusPaint());
 			
 			mFocusRect = null;
-			
-			mSelectID = -1;
-			mSelectDataID = -1;
-			mSelectDataChildID = -1;
+			clearSelected();
 		}		
 		
 		return true;
@@ -421,7 +418,12 @@ public class EventChart extends XChart {
 	protected boolean renderFocusShape(Canvas canvas)
 	{				
 		if(!mShowClikedFocus) return true;
-		
+		XEnum.ChartType ctype = this.getType();		
+		if( XEnum.ChartType.BAR == ctype ||  XEnum.ChartType.BAR3D == ctype
+			|| XEnum.ChartType.STACKBAR == ctype )
+		{
+			return true;
+		}
 		try{
 				if(null != mFocusPoint)
 				{									
