@@ -650,7 +650,7 @@ public class BarChart extends AxisChart {
 				
 				// 画出柱形
 				float topY = sub(plotArea.getBottom() , valuePostion);
-				mFlatBar.renderBar(drawBarStartX,topY,drawBarEndX, plotArea.getBottom(),canvas);
+				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),drawBarEndX,topY,canvas);
 				
 				//保存位置
 				saveBarRectFRecord(i,j,drawBarStartX + mMoveX,topY + mMoveY,
