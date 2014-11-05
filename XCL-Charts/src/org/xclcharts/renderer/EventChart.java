@@ -388,17 +388,17 @@ public class EventChart extends XChart {
 		if(!mShowClikedFocus) return true;
 		if(-1 == mSelectID) return false;
 		if(null == mFocusRect) return false;
+
 		if( mSelectDataID == dataID &&
 				mSelectDataChildID == childID	)
-		{
-			
+		{			
 			mFocusRect.left = left;
 			mFocusRect.top = top;
 			mFocusRect.right = right;
 			mFocusRect.bottom = bottom;
 					
 			canvas.drawRect(mFocusRect, getFocusPaint());
-			
+
 			mFocusRect = null;			
 			clearSelected();
 		}		
