@@ -938,7 +938,7 @@ public class AxisChart extends EventChart {
 			}			
 			
 			//显示焦点
-			//renderFocusShape(canvas);
+			renderFocusShape(canvas);
 			//响应提示
 			renderToolTip(canvas);
 											
