@@ -32,6 +32,8 @@ import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
+import org.xclcharts.renderer.plot.PlotQuadrant;
+import org.xclcharts.renderer.plot.PlotQuadrantRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -71,6 +73,9 @@ public class BubbleChart extends LnChart{
 	private PlotDot mPlotDot = new PlotDot();
 	
 	private Paint mPaintBorderPoint = null;	
+	
+	//四象限类
+	private PlotQuadrantRender mPlotQuadrant = null;
 
 	public BubbleChart()
 	{
@@ -212,6 +217,18 @@ public class BubbleChart extends LnChart{
 	
 	
 	/**
+	 * 返回四象限绘制类
+	 * @return
+	 */
+	public PlotQuadrant getPlotQuadrant()
+	{
+		if(null == mPlotQuadrant) mPlotQuadrant = new PlotQuadrantRender();
+		return mPlotQuadrant;
+	}
+	
+	
+	
+	/**
 	 * 绘制点的画笔
 	 * @return
 	 */
@@ -234,8 +251,33 @@ public class BubbleChart extends LnChart{
 		}
 		return mPaintBorderPoint;
 	}
-			
 	
+	/**
+	 * 绘制象限
+	 * @param canvas 画布
+	 */
+	private void drawQuadrant(Canvas canvas )
+	{
+		if(!getPlotQuadrant().isShow())return;
+		
+		float axisScreenWidth = getPlotScreenWidth(); 
+    	float axisScreenHeight = getPlotScreenHeight();
+		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
+						
+		Double xValue = getPlotQuadrant().getQuadrantXValue();
+	    Double yValue = getPlotQuadrant().getQuadrantYValue();	    
+	    	   
+	    //对应的Y坐标
+	    float centerY = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
+	                	
+    	//对应的X坐标	  	  
+	    float centerX = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
+    	    	   
+	    mPlotQuadrant.drawQuadrant(canvas, centerX, centerY, 
+			   plotArea.getLeft(), plotArea.getPlotTop(), plotArea.getRight(), plotArea.getBottom());	    
+	}
+			
+				
 	private void renderPoints( Canvas canvas, BubbleData bd ,int dataID)
 	{			
 		float initX =  plotArea.getLeft();
@@ -377,6 +419,9 @@ public class BubbleChart extends LnChart{
 			return false;
 		}		
 		
+		//绘制四象限
+		drawQuadrant(canvas);
+				
 		//开始处 X 轴 即分类轴              	
 		int size = mDataset.size();
 		for(int i=0;i<size;i++)

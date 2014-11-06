@@ -53,7 +53,7 @@ public class BubbleData {
 	
 	//标签文字旋转角度
 	private float mItemLabelRotateAngle = 0.0f;	
-	
+
 	
 	public BubbleData(){}
 	
@@ -230,5 +230,7 @@ public class BubbleData {
 	public void setItemLabelRotateAngle(float rotateAngle) {
 		this.mItemLabelRotateAngle = rotateAngle;
 	}
+		
 	
+		
 }

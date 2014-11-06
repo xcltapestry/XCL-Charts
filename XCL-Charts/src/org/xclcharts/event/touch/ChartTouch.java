@@ -49,6 +49,8 @@ public class ChartTouch implements IChartTouch {
 	private int action = 0;
 	private float newX = 0.0f, newY = 0.0f;
 	
+	private final float FIXED_RANGE = 8.0f;
+	
 	public ChartTouch(View view, XChart chart) {
 		this.mChart = chart;
 		this.mView = view;
@@ -116,8 +118,8 @@ public class ChartTouch implements IChartTouch {
 				        newX = event.getX(0);
 				        newY = event.getY(0);		        
 				        
-			        	if(Float.compare(Math.abs(newX - oldX ) , 5.f ) == 1 
-				        		|| Float.compare(Math.abs(newY - oldY), 5.f) == 1)
+			        	if(Float.compare(Math.abs(newX - oldX ) , FIXED_RANGE ) == 1 
+				        		|| Float.compare(Math.abs(newY - oldY), FIXED_RANGE) == 1)
 				        {
 				        	setLocation(oldX,oldY,newX,newY );			          				        
 					        oldX = newX;

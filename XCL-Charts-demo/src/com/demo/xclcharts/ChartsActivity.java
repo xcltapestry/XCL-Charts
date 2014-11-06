@@ -57,6 +57,7 @@ import com.demo.xclcharts.view.MultiBarChart01View;
 import com.demo.xclcharts.view.PieChart01View;
 import com.demo.xclcharts.view.PieChart02View;
 import com.demo.xclcharts.view.PieChart3D01View;
+import com.demo.xclcharts.view.QuadrantChart01View;
 import com.demo.xclcharts.view.RadarChart01View;
 import com.demo.xclcharts.view.RadarChart02View;
 import com.demo.xclcharts.view.RadarChart03View;
@@ -151,7 +152,9 @@ public class ChartsActivity extends Activity {
 			new ArcLineChart01View(this),
 			new ScatterChart01View(this),
 			new BubbleChart01View(this),
-			new RangeBarChart01View(this) 				
+			new RangeBarChart01View(this), 	
+			
+			new QuadrantChart01View(this)
 		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  

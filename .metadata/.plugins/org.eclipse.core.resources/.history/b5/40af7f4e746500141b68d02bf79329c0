@@ -1,0 +1,24 @@
+package org.xclcharts.renderer.plot;
+
+import android.graphics.Color;
+
+public class PlotQuadrant {
+	
+	private int mFirstColor = -1;
+	private int mSecondColor= -1;
+	private int mThird = -1;
+	private int mFourth = -1;
+	
+	private boolean mShowBgColor = false;
+	private boolean mShowVertical = true;
+	private boolean mShowHorizontalLine = true;
+
+	public PlotQuadrant()
+	{
+	}
+	
+	
+	
+	
+
+}

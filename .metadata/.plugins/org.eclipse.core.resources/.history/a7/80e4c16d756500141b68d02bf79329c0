@@ -1,0 +1,100 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 2.1
+ */
+package org.xclcharts.renderer.plot;
+
+import android.graphics.Color;
+import android.graphics.Paint;
+
+public class PlotQuadrant {
+	
+	private int mFirstColor = Color.WHITE;
+	private int mSecondColor= Color.WHITE;
+	private int mThirdColor = Color.WHITE;
+	private int mFourthColor = Color.WHITE;
+	
+	private boolean mShowBgColor = true;
+	private boolean mShowVerticalLine = true;
+	private boolean mShowHorizontalLine = true;
+	
+	private Paint mPaintVerticalLine = null;
+	private Paint mPaintHorizontalLine = null;
+
+	public PlotQuadrant()
+	{
+	}
+	
+	public void showBgColor()
+	{
+		mShowBgColor = true;
+	}
+	
+	public void hideBgColor()
+	{
+		mShowBgColor = false;
+	}
+	
+	public void showVerticalLine()
+	{
+		mShowVerticalLine = true;
+	}
+	
+	public void hideVerticalLine()
+	{
+		mShowVerticalLine = false;
+	}
+	
+	public void showHorizontalLine()
+	{
+		mShowHorizontalLine = true;
+	}
+	
+	public void hideHorizontalLine()
+	{
+		mShowHorizontalLine = false;
+	}
+	
+	public void setBgColor(int first,int second,int third,int fourth)
+	{
+		mFirstColor = first;
+		mSecondColor = second;
+		mThirdColor = third;
+		mFourthColor = fourth;
+	}
+		
+	public Paint  getVerticalLinePaint()
+	{
+		if(null == mPaintVerticalLine)
+			mPaintVerticalLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+		
+		return mPaintVerticalLine;
+	}
+	
+	public Paint  getHorizontalLinePaint()
+	{
+		if(null == mPaintHorizontalLine)
+			mPaintHorizontalLine = new Paint(Paint.ANTI_ALIAS_FLAG);
+		
+		return mPaintHorizontalLine;		
+	}
+	
+
+}

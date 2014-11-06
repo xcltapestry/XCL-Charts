@@ -28,8 +28,6 @@ import org.xclcharts.renderer.line.PlotDot;
 
 import android.graphics.Paint;
 
-
-
 /**
  * @ClassName ScatterData
  * @Description 散点图数据类
@@ -54,6 +52,8 @@ public class ScatterData {
 	
 	//标签文字旋转角度
 	private float mItemLabelRotateAngle = 0.0f;
+	
+
 
 		
 	public ScatterData(){}
@@ -206,5 +206,6 @@ public class ScatterData {
 	public void setItemLabelRotateAngle(float rotateAngle) {
 		this.mItemLabelRotateAngle = rotateAngle;
 	}
+
 	
 }

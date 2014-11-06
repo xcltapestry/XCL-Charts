@@ -14,6 +14,7 @@ import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.DensityUtil;
+import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotGrid;
@@ -21,13 +22,15 @@ import org.xclcharts.renderer.plot.PlotGrid;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.MotionEvent;
 
 public class MultiAxisChart03View extends DemoView {
-private String TAG = "MultiAxisChart03View";
+	private String TAG = "MultiAxisChart03View";
 	
 	//用来显示面积图，左边及底部的轴
 	private AreaChart chart = new AreaChart();	
@@ -48,6 +51,8 @@ private String TAG = "MultiAxisChart03View";
 	//饼图
 	private PieChart chartPie = new PieChart();	
 	private LinkedList<PieData> chartDataPie = new LinkedList<PieData>();
+	
+	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
 		
 	public MultiAxisChart03View(Context context) {
 		super(context);
@@ -164,6 +169,13 @@ private String TAG = "MultiAxisChart03View";
 						plot.getHorizontalLinePaint().getColor());
 			
 				plot.hideHorizontalLines();
+				
+				
+
+				//激活点击监听
+				chart.ActiveListenItemClick();
+				//为了让触发更灵敏，可以扩大5px的点击监听范围
+				chart.extPointClickRange(10);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -486,6 +498,42 @@ private String TAG = "MultiAxisChart03View";
 		//lst.add(chartLnAxes);
 		//lst.add(chartPie);
 		return lst;
+	}
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		super.onTouchEvent(event);		
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{		
+		PointPosition record = chart.getPositionRecord(x,y);			
+		if( null == record) return;
+
+		AreaData lData = mDataset.get(record.getDataID());
+		Double lValue = lData.getLinePoint().get(record.getDataChildID());	
+		
+	
+		
+		//在点击处显示tooltip
+		mPaintTooltips.setColor(Color.rgb(240, 73, 119));			
+		chart.getToolTip().getBackgroundPaint().setColor(Color.GREEN);
+		chart.getToolTip().setCurrentXY(x,y);
+		chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);
+		chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),mPaintTooltips);		
+		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),mPaintTooltips);
+		chart.getToolTip().setAlign(Align.LEFT);
+					
+		this.invalidate();
+		
 	}
 
 

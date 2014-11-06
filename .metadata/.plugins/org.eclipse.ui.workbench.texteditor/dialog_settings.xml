@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="314" key="DIALOG_Y_ORIGIN"/>
+		<item value="330" key="DIALOG_Y_ORIGIN"/>
 		<item value="346" key="DIALOG_HEIGHT"/>
-		<item value="920" key="DIALOG_X_ORIGIN"/>
+		<item value="1027" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,16 +13,16 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="axisMinValue" key="selection"/>
+		<item value="showClikedFocus" key="selection"/>
 		<list key="findhistory">
+			<item value="showClikedFocus"/>
+			<item value="new Rect"/>
+			<item value="mTotalLabelVisible"/>
+			<item value="drawQuadrant"/>
+			<item value="renderPoints"/>
 			<item value="axisMinValue"/>
 			<item value="renderBezierCurveLine"/>
 			<item value="getAreaBeginColor"/>
-			<item value="getAreaEndColor"/>
-			<item value="mAreaEndColor"/>
-			<item value="mAreaBeginColor"/>
-			<item value="getGradientDirection"/>
-			<item value="mFocusPoint"/>
 		</list>
 		<list key="replacehistory">
 			<item value="getBeginColor"/>

@@ -54,7 +54,7 @@ import android.view.MotionEvent;
  */
 public class BubbleChart01View extends DemoView {
 
-	private String TAG = "ScatterChart01View";
+	private String TAG = "BubbleChart01View";
 	private BubbleChart chart = new BubbleChart();
 	//分类轴标签集合
 	private LinkedList<String> labels = new LinkedList<String>();

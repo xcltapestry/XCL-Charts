@@ -56,7 +56,7 @@ public class StackBarChart  extends BarChart{
 	
 	/**
 	 * 是否在柱形的最上方，显示汇总标签
-	 * @param visible
+	 * @param visible 是否显示
 	 */
 	public void setTotalLabelVisible(boolean visible)
 	{
@@ -215,11 +215,15 @@ public class StackBarChart  extends BarChart{
 						
 						currentY = sub(currentY,valuePostion);
 					 }
-					 //合计					 					 					  					 
+					 
+					//合计		
+				 if(mTotalLabelVisible)
+				 {			 					 					  					 
 					 double per =  MathHelper.getInstance().sub(total , dataAxis.getAxisMin());					 
 					 float totalPostion =  MathHelper.getInstance().mul(div(axisScreenHeight,axisDataHeight) , dtof(per));					 					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					currentX, sub(plotArea.getBottom() , totalPostion), canvas);
+				 }
 			 }			 
 		
 			 return true;
