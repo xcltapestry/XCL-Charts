@@ -75,7 +75,7 @@ http://www.oschina.net/p/xcl-charts
 
 <img src="http://img.blog.csdn.net/20140929205933317" alt="ScatterChartt" />
 <img src="http://img.blog.csdn.net/20140929210328035" alt="area chart" />  
-<img src="http://img.blog.csdn.net/20141106220544740 " alt="Quadrant chart" />  
+<img src="http://img.blog.csdn.net/20141106220544740" alt="Quadrant chart" />  
 
 
 <img src="http://img.blog.csdn.net/20141020201349022" alt="piechart2d" />
