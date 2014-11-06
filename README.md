@@ -75,8 +75,6 @@ http://www.oschina.net/p/xcl-charts
 
 <img src="http://img.blog.csdn.net/20140929205933317" alt="ScatterChartt" />
 <img src="http://img.blog.csdn.net/20140929210328035" alt="area chart" />  
-<img src="http://img.blog.csdn.net/20141106220544740" alt="Quadrant chart" />  
-
 
 <img src="http://img.blog.csdn.net/20141020201349022" alt="piechart2d" />
 <img src="http://img.blog.csdn.net/20141026173927656?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="radarchart_round" />
@@ -93,3 +91,4 @@ http://www.oschina.net/p/xcl-charts
  <img src="http://img.blog.csdn.net/20140611214102109?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="souce pie chart h" />
  <img src="http://img.blog.csdn.net/20141026174556664?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="bar chart h" />
  <img src="http://img.blog.csdn.net/20141026174630595?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="stacked chart h" />
+<img src="http://img.blog.csdn.net/20141106220544740" alt="Quadrant chart" />  
