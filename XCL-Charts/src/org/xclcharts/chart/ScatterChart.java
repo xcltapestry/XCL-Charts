@@ -198,7 +198,7 @@ public class ScatterChart extends LnChart{
 	    float centerX = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
     
 	    mPlotQuadrant.drawQuadrant(canvas, centerX, centerY, 
-			   plotArea.getLeft(), plotArea.getPlotTop(), plotArea.getRight(), plotArea.getBottom());	    
+			   plotArea.getLeft(), plotArea.getPlotTop(), plotArea.getPlotRight(), plotArea.getBottom());	    
 	}
 			
 				
