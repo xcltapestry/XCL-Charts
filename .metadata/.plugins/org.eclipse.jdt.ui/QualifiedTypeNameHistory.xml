@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLine"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.CrossLineRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrossLineStyle"/>
@@ -41,8 +40,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLabel"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLabelRender"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
@@ -59,5 +56,8 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotQuadrantRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotQuadrant"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.QuadrantChart01View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisTitleStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 </qualifiedTypeNameHistroy>

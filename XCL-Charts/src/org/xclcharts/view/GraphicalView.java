@@ -67,13 +67,18 @@ public abstract class GraphicalView extends View {
 	 }
 	 
 	 /**
+	  * 刷新图表
+	  */
+	 public void refresh(){
+		 this.invalidate();
+	 }	 
+	 
+	 /**
 	  * 绘制图表
 	  * @param canvas	画布
 	  */
 	 public abstract void render(Canvas canvas);
-	 
-
-	
+	 			 
 	 public void onDraw(Canvas canvas)
 	  {		 
 		  try {								  			  

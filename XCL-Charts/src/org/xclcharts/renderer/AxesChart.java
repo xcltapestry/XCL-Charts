@@ -292,7 +292,7 @@ public class AxesChart extends EventChart {
 		
 	
 	/**
-	 * 检查Y轴的tickmark是否显示 
+	 * 检查Y轴的刻度是否显示 
 	 * @param currentY	y坐标
 	 * @param moveY	y坐标平移值
 	 * @return	是否绘制
@@ -310,7 +310,7 @@ public class AxesChart extends EventChart {
 	
 			
 	/**
-	 *  检查X轴的tickmark是否显示 
+	 *  检查X轴的刻度是否显示 
 	 * @param currentX	x坐标
 	 * @param moveX	x坐标平移值
 	 * @return 是否绘制

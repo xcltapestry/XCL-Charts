@@ -65,6 +65,10 @@ public class CircleChart extends CirChart {
 
     //数据源
     protected List<PieData> mDataSet;
+    
+    private float moRadius = 0.9f;
+    private float miRadius = 0.8f;
+        
 
     public CircleChart() {
     
@@ -217,6 +221,25 @@ public class CircleChart extends CirChart {
     {
     	return mShowInnerBG;
     }
+    
+    /**
+     * 外环
+     * @param radius  半径比例
+     */
+    public void setORadius(float radius)
+    {
+    	moRadius = radius;
+    }
+    
+    /**
+     * 内环
+     * @param radius 半径比例
+     */
+    public void setIRadius(float radius)
+    {
+    	miRadius = radius;
+    }
+    
 
     /**
      * 依比例绘制扇区
@@ -293,8 +316,8 @@ public class CircleChart extends CirChart {
                     	hCirY  -= this.getBorderWidth() / 2;
                     }                   
                     
-                    float oRadius = MathHelper.getInstance().round(mul(hRadius , 0.9f),2);
-                    float iRadius = MathHelper.getInstance().round( mul(hRadius , 0.8f),2);
+                    float oRadius = MathHelper.getInstance().round(mul(hRadius , moRadius),2);
+                    float iRadius = MathHelper.getInstance().round( mul(hRadius , miRadius ),2);
                                        
                     if(isShowInnerBG()) //内部背景填充
                     {
@@ -332,14 +355,14 @@ public class CircleChart extends CirChart {
                     
                     if(isShowInnerFill())
                     	canvas.drawCircle(cirX, cirY, 
-                    					MathHelper.getInstance().round(mul(radius , 0.9f),2), getFillCirclePaint());
+                    					MathHelper.getInstance().round(mul(radius , moRadius),2), getFillCirclePaint());
                     
 
                     canvas.drawArc(arcRF0, mOffsetAngle, currentAngle, true, paintArc);
                     
                     if(isShowInnerFill())
                     	canvas.drawCircle(cirX, cirY, 
-                    					MathHelper.getInstance().round(mul(radius , 0.8f),2), getFillCirclePaint());
+                    					MathHelper.getInstance().round(mul(radius , miRadius ),2), getFillCirclePaint());
                     
                     if("" != cData.getLabel())
                        canvas.drawText(cData.getLabel(), cirX, cirY, getLabelPaint());

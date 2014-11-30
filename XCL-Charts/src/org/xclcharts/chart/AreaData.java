@@ -74,7 +74,7 @@ public class AreaData extends LineData {
 	public AreaData(String key,List<Double> dataSeries,int lineColor,int areaColor) 
 	{
 		setLabel(key);	
-		setLinePoint(dataSeries);
+		setDataSet(dataSeries);
 		setLineColor(lineColor);	
 		setAreaFillColor(areaColor);
 		
@@ -87,7 +87,7 @@ public class AreaData extends LineData {
 											int areaBeginColor,int areaEndColor) 
 	{
 		setLabel(key);	
-		setLinePoint(dataSeries);
+		setDataSet(dataSeries);
 		setLineColor(lineColor);	
 		setAreaFillColor(areaBeginColor);
 
@@ -111,7 +111,7 @@ public class AreaData extends LineData {
 	{
 		setLabel(key);		
 		setLineColor(color);
-		setLinePoint(dataSeries);
+		setDataSet(dataSeries);
 		setDotStyle(dotStyle);
 		setAreaFillColor(color);
 		

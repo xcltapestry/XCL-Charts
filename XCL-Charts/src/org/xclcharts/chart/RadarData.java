@@ -59,7 +59,7 @@ public class RadarData extends LineData{
 	{
 		setLabel(key);		
 		setLineColor(color);
-		setLinePoint(dataSeries);
+		setDataSet(dataSeries);
 		setAreaStyle(areaStyle);
 		getPlotLine().setDotStyle(XEnum.DotStyle.HIDE);
 	}

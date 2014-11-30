@@ -78,40 +78,48 @@ public class LineChart03View_left extends GraphicalView {
 	{
 	
 		LinkedList<Double> dataSeries1= new LinkedList<Double>();	
-		dataSeries1.add(0d); 
+		dataSeries1.add(-100d); 
 		LineData lineData1 = new LineData("方块",dataSeries1,(int)Color.rgb(234, 83, 71));
 		//chartData.add(lineData1);
-		
-		
-		
+		lineData1.setLabelVisible(false);
+		//lineData1.setDotStyle(XEnum.DotStyle.HIDE);
+						
 		//Line 2
-				LinkedList<Double> dataSeries2= new LinkedList<Double>();	
-				dataSeries2.add((double)0);
-				LineData lineData2 = new LineData("圆环",dataSeries2,(int)Color.rgb(75, 166, 51));
-				lineData2.setDotStyle(XEnum.DotStyle.RING);				
-				lineData2.getPlotLine().getDotPaint().setColor(Color.BLACK);
-				lineData2.setLabelVisible(true);		
-				//Line 3
-				LinkedList<Double> dataSeries3= new LinkedList<Double>();	
-				dataSeries3.add(0d);
-				LineData lineData3 = new LineData("圆点",dataSeries3,(int)Color.rgb(123, 89, 168));
-				lineData3.setDotStyle(XEnum.DotStyle.DOT);
-				//Line 4
-				LinkedList<Double> dataSeries4= new LinkedList<Double>();	
-				dataSeries4.add(0d);
-				LineData lineData4 = new LineData("棱形",dataSeries4,(int)Color.rgb(84, 206, 231));		
-				lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
-				//Line 5
-				LinkedList<Double> valuesE= new LinkedList<Double>();	
-				valuesE.add(0d);
-				LineData lineData5 = new LineData("定制",valuesE,(int)Color.rgb(234, 142, 43));
-				lineData5.setDotRadius(15);
+		LinkedList<Double> dataSeries2= new LinkedList<Double>();	
+		dataSeries2.add(-100d);
+		LineData lineData2 = new LineData("圆环",dataSeries2,(int)Color.rgb(75, 166, 51));
+		lineData2.setDotStyle(XEnum.DotStyle.RING);				
+		lineData2.getPlotLine().getDotPaint().setColor(Color.BLACK);
+		lineData2.setLabelVisible(false);
+		//lineData2.setDotStyle(XEnum.DotStyle.HIDE);
+		//Line 3
+		LinkedList<Double> dataSeries3= new LinkedList<Double>();	
+		dataSeries3.add(-100d);
+		LineData lineData3 = new LineData("圆点",dataSeries3,(int)Color.rgb(123, 89, 168));
+		lineData3.setDotStyle(XEnum.DotStyle.DOT);
+		lineData3.setLabelVisible(false);
+		//lineData3.setDotStyle(XEnum.DotStyle.HIDE);
+		//Line 4
+		LinkedList<Double> dataSeries4= new LinkedList<Double>();	
+		dataSeries4.add(-100d);
+		LineData lineData4 = new LineData("棱形",dataSeries4,(int)Color.rgb(84, 206, 231));		
+		lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
+		lineData4.setLabelVisible(false);
+		//lineData4.setDotStyle(XEnum.DotStyle.HIDE);
+		//Line 5
+		LinkedList<Double> valuesE= new LinkedList<Double>();	
+		valuesE.add(-100d);
+		LineData lineData5 = new LineData("定制",valuesE,(int)Color.rgb(234, 142, 43));
+		lineData5.setDotRadius(15);
+		lineData5.setLabelVisible(false);
+		//lineData5.setDotStyle(XEnum.DotStyle.HIDE);
+		
+		chartData.add(lineData1);
+		chartData.add(lineData2);
+		chartData.add(lineData3);
+		chartData.add(lineData4);
+		chartData.add(lineData5);
 				
-				chartData.add(lineData1);
-				chartData.add(lineData2);
-				chartData.add(lineData3);
-				chartData.add(lineData4);
-				chartData.add(lineData5);
 	}
 	
 	private void chartLabels()

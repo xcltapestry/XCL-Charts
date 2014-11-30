@@ -143,12 +143,13 @@ public class BarChart02View extends DemoView {
 			chart.setChartDirection(XEnum.Direction.HORIZONTAL);
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
+			chart.getBar().getItemLabelPaint().setTextSize(22);
 			
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
 				@Override
 				public String doubleFormatter(Double value) {
 					// TODO Auto-generated method stub
-					DecimalFormat df=new DecimalFormat("#0.00");					 
+					DecimalFormat df=new DecimalFormat("[#0]");					 
 					String label = df.format(value).toString();
 					return label;
 				}});	 

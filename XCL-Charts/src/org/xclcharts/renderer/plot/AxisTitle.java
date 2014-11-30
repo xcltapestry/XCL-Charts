@@ -21,6 +21,8 @@
  */
 package org.xclcharts.renderer.plot;
 
+import org.xclcharts.renderer.XEnum;
+
 import android.graphics.Color;
 import android.graphics.Paint;
 //import android.graphics.Paint.Align;
@@ -42,6 +44,9 @@ public class AxisTitle {
 	 private String mLeftAxisTitle = "";
 	 private String mLowerAxisTitle = "";
 	 private String mRightAxisTitle = "";	 
+	 
+	 protected XEnum.AxisTitleStyle mAxisTitleStyle = XEnum.AxisTitleStyle.NORMAL;
+	 protected String mCrossPointTitle = "";
 	
 	public AxisTitle()
 	{							
@@ -115,27 +120,27 @@ public class AxisTitle {
 
 	/**
 	 * 设置左边图例内容
-	 * @param text 图例内容
+	 * @param title 图例内容
 	 */
-	public void setLeftAxisTitle(String text) {
-		this.mLeftAxisTitle = text;
+	public void setLeftAxisTitle(String title) {
+		this.mLeftAxisTitle = title;
 	}
 
 	/**
 	 * 设置底部图例内容
-	 * @param text 图例内容
+	 * @param title 图例内容
 	 */
-	public void setLowerAxisTitle(String text) {
-		this.mLowerAxisTitle = text;
+	public void setLowerAxisTitle(String title) {
+		this.mLowerAxisTitle = title;
 	}
 
 
 	/**
 	 * 设置右边图例内容
-	 * @param text 图例内容
+	 * @param title 图例内容
 	 */
-	public void setRightAxisTitle(String text) {
-		this.mRightAxisTitle = text;
+	public void setRightAxisTitle(String title) {
+		this.mRightAxisTitle = title;
 	}
 	
 	/**
@@ -160,6 +165,23 @@ public class AxisTitle {
 	 */
 	public String getRightAxisTitle() {
 		return mRightAxisTitle;
+	}
+	
+	/**
+	 * 设置轴标题显示风格
+	 * @param style
+	 */
+	public void setAxisTitleStyle(XEnum.AxisTitleStyle style)
+	{
+		mAxisTitleStyle = style;
+	}
+	
+	/**
+	 * 设置 交叉点轴标题
+	 * @param title  标题
+	 */
+	public void setCrossPointTitle(String title) {
+		this.mCrossPointTitle = title;
 	}
 	
 

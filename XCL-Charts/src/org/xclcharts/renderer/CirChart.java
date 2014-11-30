@@ -237,7 +237,8 @@ public class CirChart extends EventChart{
 			mLabelLine.getPointPaint().setColor(cData.getSliceColor());
 		
 		return ( mLabelLine.renderLabelLine(cData.getLabel(),cData.getItemLabelRotateAngle(),
-									cirX,cirY,radius,calcAngle,canvas,getLabelPaint(),showLabel,mPlotLabel) );
+									cirX,cirY,radius,calcAngle,
+									canvas,getLabelPaint(),showLabel,mPlotLabel) );
 	}
 	
 	/**

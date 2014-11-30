@@ -118,7 +118,7 @@ public class QuadrantChart01View extends DemoView {
 				chart.setPadding(10, ltrb[1], 10, ltrb[3]);	
 				
 				//显示边框
-				chart.showRoundBorder();
+				//chart.showRoundBorder();
 				
 				//数据源	
 				chart.setCategories(labels);
@@ -352,7 +352,7 @@ public class QuadrantChart01View extends DemoView {
 				chartSp.setPadding(10, ltrb[1], 10, ltrb[3]);	
 				
 				//显示边框
-				chartSp.showRoundBorder();
+				//chartSp.showRoundBorder();
 				
 				//数据源	
 				chartSp.setCategories(labels);

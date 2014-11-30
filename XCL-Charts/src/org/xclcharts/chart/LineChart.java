@@ -128,7 +128,7 @@ public class LineChart extends LnChart{
 			
 			if(null == bd)
 			{
-				Log.e(TAG,"传入的线的数据序列参数为空.");
+				//Log.e(TAG,"传入的线的数据序列参数为空.");
 				return false;
 			}
 			
@@ -140,14 +140,14 @@ public class LineChart extends LnChart{
 			//得到分类轴数据集
 			List<String> dataSet =  categoryAxis.getDataSet();
 			if(null == dataSet ||dataSet.size() == 0){
-				Log.e(TAG,"分类轴数据为空.");
+				//Log.e(TAG,"分类轴数据为空.");
 				return false;
 			}		
 			//数据序列
 			List<Double> chartValues = bd.getLinePoint();
 			if(null == chartValues ||chartValues.size() == 0 )
 			{
-				Log.e(TAG,"当前分类的线数据序列值为空.");
+				//Log.e(TAG,"当前分类的线数据序列值为空.");
 				return false;
 			}
 				
@@ -159,7 +159,7 @@ public class LineChart extends LnChart{
 			int tickCount = dataSet.size();		
 			if( 0 == tickCount)
 			{
-				Log.e(TAG,"分类轴数据源为0!");
+				//Log.e(TAG,"分类轴数据源为0!");
 				return false;
 			}else if (1 == tickCount)  //label仅一个时右移
 			{
@@ -258,7 +258,7 @@ public class LineChart extends LnChart{
 		{											
 			if(null == mDataSet) 
 			{
-				Log.e(TAG,"数据轴数据为空.");
+				//Log.e(TAG,"数据轴数据为空.");
 				return false;
 			}			
 			

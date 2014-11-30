@@ -281,6 +281,18 @@ public class XEnum {
 		public enum LabelSaveType{
 			NONE,ONLYPOSITION,ALL
 		}
+		
+		/**
+		 * 轴标题显示几格.
+		 * NORMAL 显示在轴中间
+		 * ENDPOINT 显示在轴的结束点及交叉点(仅支持左下点)位置
+		 * @author XCL
+		 *
+		 */
+		public enum AxisTitleStyle{
+			NORMAL,ENDPOINT
+		}
+		
 				
 		/**
 		 * 图的所属类型

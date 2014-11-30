@@ -275,11 +275,10 @@ public class BarChart extends AxesChart {
 		// 数据轴数据刻度总个数
 		int tickCount = dataAxis.getAixTickCount();
 		int labeltickCount = tickCount+1;
-		
-		
+				
 		if( 0 == tickCount)
 		{
-			Log.e(TAG,"数据轴数据源为0!");
+			//Log.e(TAG,"数据轴数据源为0!");
 			return ;
 		}
 		//}else if (1 == tickCount)  //label仅一个时右移
@@ -390,7 +389,7 @@ public class BarChart extends AxesChart {
 		int labeltickCount = tickCount + 1;
 		if( 0 == tickCount)
 		{
-			Log.e(TAG,"分类轴数据源为0!");
+			//Log.e(TAG,"分类轴数据源为0!");
 			return ;
 		}
 			

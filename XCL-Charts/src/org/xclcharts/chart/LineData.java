@@ -55,7 +55,7 @@ public class LineData extends LnData{
 			{
 				setLabel(key);	
 				setLineKey(key);
-				setLinePoint(dataSeries);
+				setDataSet(dataSeries);
 				setLineColor(color);				
 			}
 			
@@ -74,7 +74,7 @@ public class LineData extends LnData{
 				setLabel(key);	
 				setLineKey(key);
 				setLineColor(color);
-				setLinePoint(dataSeries);
+				setDataSet(dataSeries);
 				setDotStyle(dotStyle);
 			}
 							
@@ -82,7 +82,7 @@ public class LineData extends LnData{
 			 * 设置绘制线的数据序列
 			 * @param dataSeries 数据序列
 			 */
-			public void setLinePoint(List<Double> dataSeries) 
+			public void setDataSet(List<Double> dataSeries) 
 			{
 				mLinePoint = dataSeries;
 			}
