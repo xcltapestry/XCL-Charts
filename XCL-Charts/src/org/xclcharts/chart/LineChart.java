@@ -170,6 +170,10 @@ public class LineChart extends LnChart{
 			
 			
 			float itemAngle = bd.getItemLabelRotateAngle();
+			PlotLine pLine = bd.getPlotLine();   
+			PlotDot pDot = pLine.getPlotDot();	        
+			float radius = pDot.getDotRadius();	
+			
 					
 		    //画线
 			for(Double bv : chartValues)
@@ -197,7 +201,7 @@ public class LineChart extends LnChart{
 
     				j++;
             	}else{
-	            	PlotLine pLine = bd.getPlotLine();           
+	            	        
 	            	if(type.equalsIgnoreCase("LINE"))
 	            	{
 	            		
@@ -210,31 +214,28 @@ public class LineChart extends LnChart{
 	            		}
 	            	}else if(type.equalsIgnoreCase("DOT2LABEL")){
 	            		
-	            		float radius = 0.0f;
 	            		if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
-	                	{                		       	
-	                		PlotDot pDot = pLine.getPlotDot();	        
-	                		radius = pDot.getDotRadius();
-	                		float rendEndX  = lineStopX  + radius;  
-	                		
+	                	{          
 	                		PlotDotRender.getInstance().renderDot(canvas,pDot,
-	                				lineStartX ,lineStartY ,
 	                				lineStopX ,lineStopY,
 	                				pLine.getDotPaint()); //标识图形            		
 	                			                		
-	                		savePointRecord(dataID,childID, lineStopX  + mMoveX, lineStopY  + mMoveY,
-	                				lineStopX - radius + mMoveX,lineStopY - radius + mMoveY,
-	                				lineStopX + radius + mMoveX,lineStopY + radius + mMoveY);
-	                		
+	                		savePointRecord(dataID,childID, lineStopX  + mMoveX, lineStopY  + mMoveY,	                		
+					                		lineStopX - radius + mMoveX, 
+					                		lineStopY - radius + mMoveY,
+					    					lineStopX + radius + mMoveX, 
+					    					lineStopY + radius + mMoveY);  
+	    						                	
 	                		childID++;
 	                		
-	            			lineStopX = rendEndX;	            			
+	            			lineStopX = lineStopX  + radius;           			
 	                	}
 	            		
 	            		if(bd.getLabelVisible()) //标签
 	                	{	                	            
 	            			bd.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(), 
-	            					getFormatterItemLabel(bv), lineStopX - radius, lineStopY, itemAngle,bd.getLineColor());
+	            					getFormatterItemLabel(bv), lineStopX, lineStopY, // lineStopX - radius, lineStopY
+	            					itemAngle,bd.getLineColor());
 	                	}
 	            			            		
 	            	}else{

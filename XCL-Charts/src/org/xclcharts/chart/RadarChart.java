@@ -595,12 +595,10 @@ public class RadarChart extends RdChart{
     	{                		       	
     		PlotDot pDot = plotLine.getPlotDot();	
     		float radius = pDot.getDotRadius();
-    		PlotDotRender.getInstance().renderDot(canvas,pDot,
-    				currentX - radius , currentY - radius,
-    				currentX , currentY,
-    				lineData.getPlotLine().getDotPaint()); //标识图形         
     		
-    		//savePointRecord(dataID,childID,currentX, currentY,rect);    
+    		PlotDotRender.getInstance().renderDot(canvas,pDot,
+    				currentX , currentY,
+    				lineData.getPlotLine().getDotPaint());
     		
     		savePointRecord(dataID,childID, currentX, currentY,
     				currentX - radius ,currentY - radius ,

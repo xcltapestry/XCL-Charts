@@ -114,9 +114,9 @@ public class ScatterChart01View extends DemoView {
 			chart.getDataAxis().setAxisSteps(10);
 			
 			//标签轴最大值
-			chart.setCategoryAxisMax(100);	
+			chart.setCategoryAxisMax(7); 
 			//标签轴最小值
-			chart.setCategoryAxisMin(0);	
+			chart.setCategoryAxisMin(1);	
 			
 			chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
 			chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);
@@ -129,6 +129,8 @@ public class ScatterChart01View extends DemoView {
 			
 			chart.getDataAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
 			chart.getCategoryAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+			
+			chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 			
 			
 			//定义交叉点标签显示格式,特别备注,因曲线图的特殊性，所以返回格式为:  x值,y值
@@ -150,7 +152,7 @@ public class ScatterChart01View extends DemoView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			//为了让触发更灵敏，可以扩大5px的点击监听范围
-			chart.extPointClickRange(5);
+			chart.extPointClickRange(10);
 			
 			chart.getPointPaint().setStrokeWidth(6);
 			
@@ -171,6 +173,9 @@ public class ScatterChart01View extends DemoView {
 			chart.getPlotLegend().getBox().setBorderRectType(XEnum.RectType.RECT);
 			chart.getPlotLegend().showBox();
 			
+			//chart.disablePanMode();
+			chart.disableScale();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -181,15 +186,13 @@ public class ScatterChart01View extends DemoView {
 	{
 		//线1的数据集
 		LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-		linePoint1.put(5d, 8d);
 		
-		linePoint1.put(12d, 12d);
-		linePoint1.put(25d, 15d);
-		linePoint1.put(30d, 30d);
-		linePoint1.put(45d, 25d);
-		
-		linePoint1.put(55d, 33d);
-		linePoint1.put(62d, 45d);
+		linePoint1.put(2d, 10d);		
+		linePoint1.put(6d, 10d);			
+		linePoint1.put(5d, 10d);		
+		linePoint1.put(3d, 10d);
+		linePoint1.put(4d, 10d);
+				
 		ScatterData dataSeries1 = new ScatterData("青菜萝卜够吃",linePoint1,
 				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.DOT );	
 		dataSeries1.setLabelVisible(true);	
@@ -198,47 +201,53 @@ public class ScatterChart01View extends DemoView {
 		
 		//线2的数据集
 		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
-		linePoint2.put(40d, 50d);
-		linePoint2.put(55d, 55d);
-		linePoint2.put(60d, 65d);
-		linePoint2.put(65d, 85d);		
 		
-		linePoint2.put(72d, 70d);	
-		linePoint2.put(85d, 68d);	
+		linePoint2.put(2d, 5d);
+		linePoint2.put(5d, 5d);
+		linePoint2.put(6d, 5d);
+		linePoint2.put(3d, 5d);		
+		
+		linePoint2.put(7d, 5d);	
+		linePoint2.put(4d, 5d);	
+				
 		ScatterData dataSeries2 = new ScatterData("饭管够",linePoint2,
 				(int)Color.rgb(155, 187, 90),XEnum.DotStyle.PRISMATIC );
-						
-			
-		//dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
-		//dataSeries2.getDotLabelPaint().setColor(Color.RED);
 		
 		LinkedHashMap<Double,Double> linePoint3 = new LinkedHashMap<Double,Double>();
-		linePoint3.put(25d, 28d);
+		linePoint3.put(3d, 20d);
 		
-		linePoint3.put(32d, 42d);
-		linePoint3.put(55d, 65d);
+		linePoint3.put(5d, 20d);
+		linePoint3.put(6d, 20d);
 		ScatterData dataSeries3 = new ScatterData("哈哈",linePoint3,
-				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.DOT );	
+				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.RING );	
 		
 		dataSeries3.setLabelVisible(true);
-		dataSeries3.setDotStyle(XEnum.DotStyle.RING);	
 		dataSeries3.getPlotDot().setRingInnerColor((int)Color.rgb(242, 167, 69));
 		dataSeries3.getDotLabelPaint().setTextAlign(Align.CENTER);
 		
 		LinkedHashMap<Double,Double> linePoint4 = new LinkedHashMap<Double,Double>();
-		linePoint4.put(20d, 30d);
-		linePoint4.put(35d, 49d);
-		linePoint4.put(50d, 75d);
-		linePoint4.put(78d, 95d);				
+		linePoint4.put(2d, 70d);
+		linePoint4.put(3d, 79d);
+		linePoint4.put(5d, 75d);
+		linePoint4.put(7d, 75d);				
 		ScatterData dataSeries4 = new ScatterData("XXX",linePoint4,
 				(int)Color.rgb(60, 173, 213),XEnum.DotStyle.X );		
 		
 			
+		LinkedHashMap<Double,Double> linePoint5 = new LinkedHashMap<Double,Double>();
+		linePoint5.put(2d, 40d);
+		linePoint5.put(3d, 40d);
+		linePoint5.put(5d, 55d);
+		linePoint5.put(7d, 55d);				
+		ScatterData dataSeries5 = new ScatterData("Cross",linePoint5,
+				Color.RED,XEnum.DotStyle.CROSS );		
+		
 		//设定数据源		
 		chartData.add(dataSeries1);				
 		chartData.add(dataSeries2);	
 		chartData.add(dataSeries3);	
 		chartData.add(dataSeries4);
+		chartData.add(dataSeries5);
 	}
 	
 	private void chartLabels()

@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -281,11 +282,9 @@ public class BubbleChart extends LnChart{
 	private void renderPoints( Canvas canvas, BubbleData bd ,int dataID)
 	{			
 		float initX =  plotArea.getLeft();
-        float initY =  plotArea.getBottom();
-		float lineStartX = initX;
-        float lineStartY = initY;
-        float lineStopX = 0.0f;
-        float lineStopY = 0.0f;        
+        float initY =  plotArea.getBottom();		
+        //float lineStopX = 0.0f;
+       // float lineStopY = 0.0f;        
     	
     	float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
@@ -298,7 +297,7 @@ public class BubbleChart extends LnChart{
 	    //画出数据集对应的线条				
 		int j = 0;
 		int childID = 0;
-		float YvaluePostion = 0.0f,XvaluePostion = 0.0f;
+		float YvaluePos = 0.0f,XvaluePos = 0.0f;
 
 		if(Float.compare(mBubbleScaleMax, mBubbleScaleMin)  == 0  ) 
 		{
@@ -311,6 +310,19 @@ public class BubbleChart extends LnChart{
 			Log.e(TAG,"没有指定气泡本身，最大最小半径。");
 			return;
 		}
+		
+		if( Double.compare(mMaxValue, mMinValue) == -1)
+		{
+			Log.e(TAG,"轴最大值小于最小值.");
+			return ;
+		}
+		
+		if( Double.compare(mMaxValue, mMinValue) == 0)
+		{
+			Log.e(TAG,"轴最大值与最小值相等.");
+			return ;
+		}
+		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
 		
 		float scale =  mBubbleScaleMax - mBubbleScaleMin;
 		float size = mBubbleMaxSize - mBubbleMinSize;
@@ -334,23 +346,25 @@ public class BubbleChart extends LnChart{
 			    Double yValue =(Double) entry.getValue();	
 			    			    
 			    //对应的Y坐标
-			    YvaluePostion = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
+			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
 			                	
             	//对应的X坐标	  	  
-			    XvaluePostion = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
-            
-            	if(j == 0 )
-				{	                		
-            		lineStartX = add(initX , XvaluePostion);
-					lineStartY = sub(initY , YvaluePostion);
-					
-					lineStopX = lineStartX ;
-					lineStopY = lineStartY;														
-				}else{
-					lineStopX =  add(initX , XvaluePostion);  
-					lineStopY =  sub(initY , YvaluePostion);
-				}            
-            	            	
+			    //XvaluePos = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
+			    
+			    //对应的Y坐标  			                	
+			    double yScale = MathHelper.getInstance().div( 
+			    								MathHelper.getInstance().sub(yValue,dataAxis.getAxisMin()),
+			    								axisDataHeight );			    
+			    YvaluePos =  mul( axisScreenHeight , (float)yScale );
+			    
+            	//对应的X坐标	  	              
+			    double xScale = MathHelper.getInstance().div(
+					   				MathHelper.getInstance().sub(xValue,mMinValue),xMM);
+			    XvaluePos = mul(axisScreenWidth,(float)xScale);	
+			    
+			    XvaluePos = add(plotArea.getLeft() , XvaluePos);
+			    YvaluePos = sub(plotArea.getBottom() , YvaluePos);
+			                
         		if(j >= bubbleSize )
         		{
         			continue;
@@ -369,18 +383,17 @@ public class BubbleChart extends LnChart{
 
         		mPlotDot.setDotRadius( curRadius); 
         		
-            	PlotDotRender.getInstance().renderDot(
-            			canvas,mPlotDot,
-            			lineStartX,lineStartY,lineStopX,lineStopY,
-            			getPointPaint());
-            	                        	
-            	savePointRecord(dataID,childID, lineStopX + mMoveX ,lineStopY + mMoveY,
-				            	lineStopX  - 2*curRadius + mMoveX , lineStopY - curRadius + mMoveY,
-				            	lineStopX  + curRadius + mMoveX, lineStopY + curRadius + mMoveY);
+        		PlotDotRender.getInstance().renderDot(
+            			canvas, mPlotDot,XvaluePos,YvaluePos,getPointPaint());
+        		            		
+            	savePointRecord(dataID,childID, XvaluePos + mMoveX,YvaluePos + mMoveY,
+            			XvaluePos - curRadius + mMoveX , YvaluePos - curRadius + mMoveY,
+            			XvaluePos + curRadius + mMoveX , YvaluePos + curRadius + mMoveY);
+        		
             	            	
             	if(bd.getBorderColor() != -1)
             	{
-            		canvas.drawCircle(lineStopX,lineStopY, curRadius, getPointBorderPaint());
+            		canvas.drawCircle(XvaluePos,YvaluePos, curRadius, getPointBorderPaint());
             	}
             	            	            
     			childID++;
@@ -391,11 +404,9 @@ public class BubbleChart extends LnChart{
                     DrawHelper.getInstance().drawRotateText(getFormatterDotLabel(
                             Double.toString(xValue)+","+ Double.toString(yValue)
                             +" : "+Double.toString(bubble)),
-                            lineStopX,lineStopY, itemAngle, canvas, bd.getDotLabelPaint());
+                            XvaluePos,YvaluePos, itemAngle, 
+                            canvas, bd.getDotLabelPaint()); //lineStopX,lineStopY
             	}  
-            	            	            	
-				lineStartX = lineStopX;
-				lineStartY = lineStopY;
 
 				j++;	              								
 		}								

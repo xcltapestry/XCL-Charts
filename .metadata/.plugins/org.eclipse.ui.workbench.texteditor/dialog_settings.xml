@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="330" key="DIALOG_Y_ORIGIN"/>
-		<item value="1027" key="DIALOG_X_ORIGIN"/>
+		<item value="390" key="DIALOG_Y_ORIGIN"/>
 		<item value="346" key="DIALOG_HEIGHT"/>
+		<item value="763" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="Log.e" key="selection"/>
+		<item value="valuePos" key="selection"/>
 		<list key="findhistory">
+			<item value="valuePostion"/>
+			<item value="renderDotAndLabel"/>
+			<item value="SpDotInfo"/>
+			<item value="mLstDots"/>
+			<item value="X"/>
+			<item value="XSteps"/>
 			<item value="Log.e"/>
 			<item value="showRoundBorder"/>
-			<item value="drawCrossAxisTitle"/>
-			<item value="axisTitleTextHeight"/>
-			<item value="drawLowerAxisTitle"/>
-			<item value="drawAxisTitleLower"/>
-			<item value="0.8"/>
-			<item value="0.9"/>
 		</list>
 		<list key="replacehistory">
+			<item value="valuePos"/>
+			<item value="valuePostion"/>
+			<item value="DotInfo"/>
 			<item value="drawLowerAxisTitle"/>
 			<item value="getBeginColor"/>
 			<item value="getEndColor"/>
 			<item value="mEndColor"/>
 			<item value="mBeginColor"/>
-			<item value="setDataAxisLocation"/>
-			<item value="setCategoryAxisLocation"/>
-			<item value="getDataAxisLocation"/>
 		</list>
 	</section>
 </section>

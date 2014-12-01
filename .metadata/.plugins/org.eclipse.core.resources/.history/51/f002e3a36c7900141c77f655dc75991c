@@ -1,0 +1,26 @@
+package org.xclcharts.renderer.line;
+
+public class DotInfo {
+	
+	public Double mXValue = 0d;
+	public Double mYValue = 0d;
+			
+	public float mX = 0.f;
+	public float mY = 0.f;
+	
+	public DotInfo(){}
+	
+	public DotInfo(Double xValue,Double yValue,float x,float y)
+	{
+		 mXValue = xValue ;
+		 mYValue = yValue ;
+		 mX = x ;
+		 mY = y ;			
+	}
+	
+	public String getLabel()
+	{
+		return Double.toString(mXValue)+","+ Double.toString(mYValue);
+	}
+
+}

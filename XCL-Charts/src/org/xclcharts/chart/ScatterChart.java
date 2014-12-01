@@ -28,6 +28,7 @@ import java.util.Map.Entry;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -211,16 +212,30 @@ public class ScatterChart extends LnChart{
 			return ;
 		}
 		
-		float initX =  plotArea.getLeft();
-        float initY =  plotArea.getBottom();
-		float lineStartX = initX;
-        float lineStartY = initY;
-        float lineStopX = 0.0f,lineStopY = 0.0f;    
-    	
+		if( Double.compare(mMaxValue, mMinValue) == -1)
+		{
+			Log.e(TAG,"轴最大值小于最小值.");
+			return ;
+		}
+		
+		if( Double.compare(mMaxValue, mMinValue) == 0)
+		{
+			Log.e(TAG,"轴最大值与最小值相等.");
+			return ;
+		}
+		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
+				   	
     	float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
+		Double axisDataHeight = dataAxis.getAxisRange(); 
 		
+		if( Double.compare(axisDataHeight, 0.0f) == 0 
+				|| Double.compare(axisDataHeight, 0.0f) == -1)
+		{
+			Log.e(TAG,"数据轴高度小于或等于0.");
+			return ;
+		}
+	
 		//得到标签对应的值数据集		
 		LinkedHashMap<Double,Double> chartValues = bd.getDataSet();	
 		if(null == chartValues) return ;
@@ -229,52 +244,47 @@ public class ScatterChart extends LnChart{
 		int j = 0;
 		int childID = 0;
 		
-		float YvaluePostion = 0.0f,XvaluePostion =0.0f;
-		float itemAngle = bd.getItemLabelRotateAngle();
-		
+		float YvaluePos = 0.0f,XvaluePos =0.0f;
+		float itemAngle = bd.getItemLabelRotateAngle();		
+		PlotDot dot = bd.getPlotDot(); 
+		float radius = dot.getDotRadius();
+								
 		Iterator iter = chartValues.entrySet().iterator();
 		while(iter.hasNext()){
 			    Entry  entry=(Entry)iter.next();
 			
 			    Double xValue =(Double) entry.getKey();
 			    Double yValue =(Double) entry.getValue();	
-			    			    
+			   			    			   
 			    //对应的Y坐标
-			    YvaluePostion = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
-			                	
+			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  			                	
+			    double yScale = MathHelper.getInstance().div( 
+			    								MathHelper.getInstance().sub(yValue,dataAxis.getAxisMin()),
+			    								axisDataHeight );			    
+			    YvaluePos =  mul( axisScreenHeight , (float)yScale );
+			    
             	//对应的X坐标	  	  
-			    XvaluePostion = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
-            
-            	if(j == 0 )
-				{	                		
-            		lineStartX = add(initX , XvaluePostion);
-					lineStartY = sub(initY , YvaluePostion);
-					
-					lineStopX = lineStartX ;
-					lineStopY = lineStartY;														
-				}else{
-					lineStopX =  add(initX , XvaluePostion);  
-					lineStopY =  sub(initY , YvaluePostion);
-				}            
-            	
-            	PlotDot dot = bd.getPlotDot();            	       
+			   // XvaluePos = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;              
+			   double xScale = MathHelper.getInstance().div(
+					   				MathHelper.getInstance().sub(xValue,mMinValue),xMM);
+			   XvaluePos = mul(axisScreenWidth,(float)xScale);			  
+			   
+			   XvaluePos = add(plotArea.getLeft() , XvaluePos);
+			   YvaluePos = sub(plotArea.getBottom() , YvaluePos);
+						                	
+            	           	       
             	if(!dot.getDotStyle().equals(XEnum.DotStyle.HIDE))
-             	{          		
-            		
+             	{          		            		
             		getPointPaint().setColor(dot.getColor());
             		getPointPaint().setAlpha(dot.getAlpha());
             		
-	            	PlotDotRender.getInstance().renderDot(
-	            			canvas, bd.getPlotDot(),
-	            			lineStartX,lineStartY,lineStopX,lineStopY,
-	            			getPointPaint());
-	            	
-	            	
-	            	float radius = dot.getDotRadius();
-	            	savePointRecord(dataID,childID, lineStopX + mMoveX,lineStopY + mMoveY,
-	            			lineStopX  - radius + mMoveX , lineStopY - radius + mMoveY,
-	            			lineStopX  + radius + mMoveX , lineStopY + radius + mMoveY);
-	            		            		            	
+            		PlotDotRender.getInstance().renderDot(
+	            			canvas, dot,XvaluePos,YvaluePos,getPointPaint());
+            		            		
+	            	savePointRecord(dataID,childID, XvaluePos + mMoveX,YvaluePos + mMoveY,
+	            			XvaluePos - radius + mMoveX , YvaluePos - radius + mMoveY,
+	            			XvaluePos + radius + mMoveX , YvaluePos + radius + mMoveY);
+	            
 	    			childID++;
              	}
     			            	
@@ -282,16 +292,12 @@ public class ScatterChart extends LnChart{
             	if(bd.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
-                    DrawHelper.getInstance().drawRotateText(
+            		DrawHelper.getInstance().drawRotateText(
                     		getFormatterDotLabel(
                     				Double.toString(xValue)+","+ Double.toString(yValue)),
-        					lineStopX,lineStopY, itemAngle, 
-        					canvas,  bd.getDotLabelPaint());
+                    				XvaluePos,YvaluePos, itemAngle,
+                    				canvas,  bd.getDotLabelPaint());            		
             	}              	
-            	            	            	
-				lineStartX = lineStopX;
-				lineStartY = lineStopY;
-
 				j++;	              								
 		}								
 	}

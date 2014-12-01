@@ -32,6 +32,7 @@ import org.xclcharts.common.MathHelper;
 import org.xclcharts.common.PointHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.line.DotInfo;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
@@ -44,7 +45,6 @@ import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.RectF;
 import android.util.Log;
 
 
@@ -78,8 +78,8 @@ public class AreaChart extends LnChart{
 	//line
   	private List<PointF> mLstPoints = new ArrayList<PointF>();	
 	
-	//dots
-  	private List<RectF> mLstDots =new ArrayList<RectF>();
+	//dots 	
+  	private List<DotInfo> mLstDotInfo = new ArrayList<DotInfo>();	
   	
   	//平滑曲线
   	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
@@ -168,7 +168,7 @@ public class AreaChart extends LnChart{
 	}
 	
 	private boolean calcAllPoints(AreaData bd,
-			List<RectF> lstDots,
+			List<DotInfo> lstDotInfo, //List<RectF> lstDots,
 			List<PointF> lstPoints,
 			List<PointF> lstPathPoints)
 	{
@@ -236,7 +236,7 @@ public class AreaChart extends LnChart{
     		lstPoints.add( new PointF(lineStopX,lineStopY));        	
         	
         	//dot
-        	lstDots.add(new RectF(lineStartX,lineStartY,lineStopX,lineStopY));
+        	lstDotInfo.add(new DotInfo(bv,lineStopX,lineStopY));
    	
         	lineStartX = lineStopX;
 			lineStartY = lineStopY;
@@ -435,9 +435,7 @@ public class AreaChart extends LnChart{
 	}else{
 		paintAreaFill.setShader(null);
 	}
-	
-	
-		
+				
     canvas.drawPath(bezierPath, paintAreaFill);	
     bezierPath.reset();
        
@@ -546,9 +544,9 @@ public class AreaChart extends LnChart{
 	 * @param alpha 透明度
 	 */
 	private boolean renderDotAndLabel(Canvas canvas, AreaData bd,int dataID,
-										List<RectF> lstDots)
+			List<DotInfo> lstDotInfo)
 	{
-		
+		 float itemAngle = bd.getItemLabelRotateAngle();
 		 PlotLine pLine = bd.getPlotLine();
 		 if(pLine.getDotStyle().equals(XEnum.DotStyle.HIDE) == true 
 				 					&&bd.getLabelVisible() == false )
@@ -556,51 +554,36 @@ public class AreaChart extends LnChart{
     	   return true;
 		 }
 		 int childID = 0;
-
-		//数据源
-		List<Double> chartValues = bd.getLinePoint();
-		if(null == chartValues)
-		{
-			Log.e(TAG,"线数据集合为空.");
-			return false;
-		}			
-		float itemAngle = bd.getItemLabelRotateAngle();
-		int count = lstDots.size();
-		for(int i=0;i<count;i++)
-		{
-			Double dv = chartValues.get(i);			
-			RectF  dot = lstDots.get(i);
-			
-			float radius = 0.0f;
+		 PlotDot pDot = pLine.getPlotDot();	
+		 float radius = pDot.getDotRadius();
+		 				
+		 int count = lstDotInfo.size();
+		 for(int i=0;i<count;i++)
+		 {			
+			DotInfo dotInfo = lstDotInfo.get(i);
 			if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
-        	{            	
-        		PlotDot pDot = pLine.getPlotDot();	
-        		radius = pDot.getDotRadius();
-        		float rendEndX  = add(dot.right  , radius);    
-        		            	      
+        	{            	        		        		
         		PlotDotRender.getInstance().renderDot(canvas,pDot,
-        				dot.left ,dot.top ,
-        				dot.right ,dot.bottom,
-        				pLine.getDotPaint()); //标识图形            			                	
-        		dot.right = rendEndX;
-    			
-    			savePointRecord(dataID,childID, dot.right - radius+ mMoveX, dot.bottom + mMoveY,
-    					dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
-    					dot.right  + mMoveX			  , dot.bottom + radius + mMoveY);
-    			
+        				dotInfo.mX ,dotInfo.mY,
+        				pLine.getDotPaint()); 
+    			savePointRecord(dataID,childID, dotInfo.mX + mMoveX, dotInfo.mY + mMoveY,
+					    					dotInfo.mX - radius + mMoveX, 
+					    					dotInfo.mY - radius + mMoveY,
+					    					dotInfo.mX + radius + mMoveX, 
+					    					dotInfo.mY + radius + mMoveY);    			
     			childID++;
         	}
     		
     		if(bd.getLabelVisible())
         	{  
         		bd.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(),
-        						getFormatterItemLabel(dv),dot.right - radius ,
-        						dot.bottom,itemAngle,bd.getLineColor());        		
+        						getFormatterItemLabel(dotInfo.mValue),
+        						dotInfo.mX ,dotInfo.mY,itemAngle,bd.getLineColor());        		
         	} 
-		}
+		 }		
 		return true;
 	}	
-						
+	
 	
 	private float getLineMaxMinY(int type,List<PointF> lstPathPoints)
 	{		
@@ -655,7 +638,7 @@ public class AreaChart extends LnChart{
 		{					
 			AreaData areaData = mDataSet.get(i);
 			
-			calcAllPoints( areaData,mLstDots,mLstPoints,mLstPathPoints);	
+			calcAllPoints( areaData,mLstDotInfo,mLstPoints,mLstPathPoints);	
 					
 			switch(getCrurveLineStyle())
 			{
@@ -671,10 +654,10 @@ public class AreaChart extends LnChart{
 					Log.e(TAG,"未知的枚举类型.");
 					continue;				
 			}								
-			renderDotAndLabel(canvas,areaData,i,mLstDots);						
+			renderDotAndLabel(canvas,areaData,i,mLstDotInfo);						
 			mLstKey.add(areaData);
 			
-			mLstDots.clear();
+			mLstDotInfo.clear();
 			mLstPoints.clear();
 			mLstPathPoints.clear();						
 		}					

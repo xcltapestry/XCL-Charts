@@ -29,19 +29,21 @@ import java.util.Map.Entry;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
+import org.xclcharts.renderer.line.DotInfo;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
 import android.graphics.PointF;
-import android.graphics.RectF;
 import android.util.Log;
+
 
 /**
  * @ClassName SplineChart
@@ -69,12 +71,11 @@ public class SplineChart extends LnChart{
 	//平滑曲线
 	private List<PointF> mLstPoints = new ArrayList<PointF>(); 
 	private Path mBezierPath = new Path();
-	
-	//dots
-	private List<RectF> mLstDots =new ArrayList<RectF>();
-		
+			
 	//key
 	private List<LnData> mLstKey = new ArrayList<LnData>();	
+	
+	private List<DotInfo> mLstDotInfo = new ArrayList<DotInfo>();	
 	
 	//平滑曲线
   	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
@@ -194,7 +195,7 @@ public class SplineChart extends LnChart{
 	}
 	
 				
-	private void calcAllPoints( SplineData bd,List<RectF> lstDots,List<PointF> lstPoints)
+	private void calcAllPoints( SplineData bd,List<PointF> lstPoints,List<DotInfo> lstDotInfo)
 	{
 		
 		if(null == bd)
@@ -202,6 +203,18 @@ public class SplineChart extends LnChart{
 			Log.e(TAG,"传入的数据序列参数为空.");
 			return;
 		}
+		if( Double.compare(mMaxValue, mMinValue) == -1)
+		{
+			Log.e(TAG,"轴最大值小于最小值.");
+			return ;
+		}
+		
+		if( Double.compare(mMaxValue, mMinValue) == 0)
+		{
+			Log.e(TAG,"轴最大值与最小值相等.");
+			return ;
+		}
+		
 		
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
@@ -215,6 +228,8 @@ public class SplineChart extends LnChart{
 		//得到标签对应的值数据集		
 		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();	
 		if(null == chartValues) return ;
+		
+		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
 															
 	    //画出数据集对应的线条				
 		int j = 0;
@@ -225,29 +240,18 @@ public class SplineChart extends LnChart{
 			    Double xValue =(Double) entry.getKey();
 			    Double yValue =(Double) entry.getValue();	
 			    			    
-			    //对应的Y坐标
-			    /*
-			     *精度较高
-			    float ylen = (float) MathHelper.getInstance().sub(yValue, dataAxis.getAxisMin());			    
-			    float YvaluePostion =  mul(axisScreenHeight, div(ylen,axisDataHeight));
-			    YvaluePostion = MathHelper.getInstance().round(YvaluePostion, 2);							    			    			    
-			  */
-			    float YvaluePostion = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
-			    
-            	
-            	//对应的X坐标	      
-			   /*
-			    *精度较高
-			    float tpostion = (float) MathHelper.getInstance().div(  
-			    										  MathHelper.getInstance().sub(xValue, mMinValue) 
-			    		    							, MathHelper.getInstance().sub(mMaxValue, mMinValue) ,2);
-			    float XvaluePostion = mul(axisScreenWidth , tpostion);  
-			    XvaluePostion = MathHelper.getInstance().round(XvaluePostion, 2);			    		
-            	*/	  
-			  float XvaluePostion = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
-           
-            	lineStopX = add(initX , XvaluePostion);  	
-            	lineStopY = sub(initY , YvaluePostion);
+			    //对应的Y坐标		            	   
+			    double yScale = MathHelper.getInstance().div( 
+						MathHelper.getInstance().sub(yValue,dataAxis.getAxisMin()),
+						axisDataHeight );			    
+			    float YvaluePos =  mul( axisScreenHeight , (float)yScale );
+			    //对应的X坐标	 
+			    double xScale = MathHelper.getInstance().div(
+		   				MathHelper.getInstance().sub(xValue,mMinValue),xMM);
+			    float XvaluePos = mul(axisScreenWidth,(float)xScale);	
+
+            	lineStopX = add(initX , XvaluePos);  	
+            	lineStopY = sub(initY , YvaluePos);
             	            	
             	if(0 == j )
         		{
@@ -263,7 +267,7 @@ public class SplineChart extends LnChart{
         		}            		
         
             	//dot
-            	lstDots.add(new RectF(lineStartX,lineStartY,lineStopX,lineStopY));
+            	lstDotInfo.add(new DotInfo(xValue,yValue,lineStopX,lineStopY));
                          					
 				lineStartX = lineStopX;
 				lineStartY = lineStopY;
@@ -298,7 +302,7 @@ public class SplineChart extends LnChart{
 	}
 	
 	private boolean renderDotAndLabel(Canvas canvas, SplineData spData,int dataID,
-										List<RectF> lstDots)
+										List<PointF> lstPoints)
 	{	
 		PlotLine pLine = spData.getPlotLine();
 		if(pLine.getDotStyle().equals(XEnum.DotStyle.HIDE) == true 
@@ -307,53 +311,38 @@ public class SplineChart extends LnChart{
 			return true;
 		}
 		int childID = 0;
-		
-		//得到标签对应的值数据集		
-		LinkedHashMap<Double,Double> chartValues = spData.getLineDataSet();	
-		if(null == chartValues) return false;
-		
 		float itemAngle = spData.getItemLabelRotateAngle();
 		
-		int i = 0;
-		Iterator iter = chartValues.entrySet().iterator();
-		while(iter.hasNext()){
-			    Entry  entry=(Entry)iter.next();
-			
-			    Double xValue =(Double) entry.getKey();
-			    Double yValue =(Double) entry.getValue();	
-			    			    
-			    RectF  dot = lstDots.get(i);
-			    float radius = 0.0f;			    
-			    if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
-            	{
-            		float rendEndX = dot.right;                		
-            		PlotDot pDot = pLine.getPlotDot();
-            		radius = pDot.getDotRadius();
-            		rendEndX  = add(dot.right , radius);               		
-        			
-            		PlotDotRender.getInstance().renderDot(canvas,pDot,
-            				dot.left ,dot.top ,
-    	    				dot.right ,dot.bottom,
-            				pLine.getDotPaint()); //标识图形            			                	
-            		dot.right = rendEndX;
-        			
-            		savePointRecord(dataID,childID, 
-        					dot.right - radius + mMoveX, dot.bottom + mMoveY,
-        					dot.right  - 2*radius + mMoveX, dot.bottom - radius + mMoveY,
-        					dot.right  + mMoveX			  , dot.bottom + radius + mMoveY);
-        		
-        			childID++;
-            	}
-        		
-        		if(spData.getLabelVisible())
-            	{            			
-            		//请自行在回调函数中处理显示格式
-        			spData.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(), 
-        					Double.toString(xValue)+","+ Double.toString(yValue),
-        					dot.right - radius ,dot.bottom,itemAngle,spData.getLineColor());
-            	}        	
-        		i++;
-		}	
+		PlotDot pDot = pLine.getPlotDot();	
+		float radius = pDot.getDotRadius();
+		int count =  mLstDotInfo.size();		
+		for(int i=0;i < count;i++)
+		{
+			DotInfo dotInfo = mLstDotInfo.get(i);						   
+		    if(!pLine.getDotStyle().equals(XEnum.DotStyle.HIDE))
+        	{		    	
+		    	PlotDotRender.getInstance().renderDot(canvas,pDot,
+		    			dotInfo.mX ,dotInfo.mY,pLine.getDotPaint()); //标识图形            			                	
+        			    			    	
+		    	savePointRecord(dataID,childID, 
+		    			dotInfo.mX + mMoveX, dotInfo.mY + mMoveY,		    			
+		    			dotInfo.mX - radius + mMoveX, 
+		    			dotInfo.mY - radius + mMoveY,
+		    			dotInfo.mX + radius + mMoveX, 
+		    			dotInfo.mY + radius + mMoveY);		 
+		    			    			    	
+		    	childID++;
+        	}
+		    
+		    if(spData.getLabelVisible())
+        	{            			
+        		//请自行在回调函数中处理显示格式
+    			spData.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(), 
+    					dotInfo.getLabel(),
+    					dotInfo.mX ,dotInfo.mY,itemAngle,spData.getLineColor());
+        	}   			
+		}
+				
 		return true;
 	}
 		
@@ -380,7 +369,7 @@ public class SplineChart extends LnChart{
 		for(int i=0;i<count;i++)
 		{															
 			SplineData spData = mDataSet.get(i);			
-			calcAllPoints( spData,mLstDots,mLstPoints);					
+			calcAllPoints( spData,mLstPoints,mLstDotInfo);					
 			
 			switch(getCrurveLineStyle())
 			{
@@ -393,13 +382,13 @@ public class SplineChart extends LnChart{
 				default:
 					Log.e(TAG,"未知的枚举类型.");
 					continue;				
-			}								
-			renderDotAndLabel(canvas,spData,i,mLstDots);								
+			}	
+			renderDotAndLabel(canvas,spData,i,mLstPoints);
 			mLstKey.add(mDataSet.get(i));
 			
+			mLstDotInfo.clear();
 			mLstPoints.clear();
-			mLstDots.clear();	
-			mBezierPath.reset();
+			mBezierPath.reset();			
 		}	
 		
 		return true;

@@ -1,0 +1,5 @@
+package org.xclcharts.renderer.line;
+
+public class DotInfo {
+
+}

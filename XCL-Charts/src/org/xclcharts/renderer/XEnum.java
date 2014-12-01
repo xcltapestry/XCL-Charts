@@ -170,7 +170,7 @@ public class XEnum {
 		 * @param PRISMATIC	棱形
 		 */
 		public enum DotStyle {		
-			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC,X
+			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC,X,CROSS
 		}
 			
 		/**
