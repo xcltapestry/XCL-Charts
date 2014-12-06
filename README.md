@@ -78,7 +78,7 @@ http://www.oschina.net/p/xcl-charts
 
 <img src="http://img.blog.csdn.net/20141020201349022" alt="piechart2d" />
 <img src="http://img.blog.csdn.net/20141026173927656?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="radarchart_round" />
-<img src="http://img.blog.csdn.net/20141026173932576?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="wind_rose_chart" />
+<img src="http://img.blog.csdn.net/20141206213652312" alt="wind_rose_chart" />
 <img src="http://img.blog.csdn.net/20140830204725581" alt="areachart_bz" />
 <img src="http://img.blog.csdn.net/20140927224825199" alt="rangebarchart" />
 

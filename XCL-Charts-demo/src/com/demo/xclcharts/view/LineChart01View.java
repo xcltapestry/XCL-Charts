@@ -184,6 +184,9 @@ public class LineChart01View extends DemoView {
 		lineData1.setItemLabelRotateAngle(45.f);
 		lineData1.getPlotLabel().hideBox();
 		
+		//lineData1.setDataSet(dataSeries);
+		//this.invalidate();
+		
 		//Line 2
 		LinkedList<Double> dataSeries2= new LinkedList<Double>();	
 		dataSeries2.add((double)30); 

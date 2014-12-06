@@ -46,7 +46,6 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 /**
  * @ClassName StackBarChart01View
  * @Description  堆叠图 的例子

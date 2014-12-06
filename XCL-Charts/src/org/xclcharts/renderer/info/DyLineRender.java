@@ -81,8 +81,18 @@ public class DyLineRender extends DyLine{
 	{						
 		if(null == mCenterXY) return;
 						
-		if(Float.compare(left, 0.0f) == 0 && Float.compare(top, 0.0f) == 0 &&
-			Float.compare(right, 0.0f) == 0 && Float.compare(bottom, 0.0f) == 0) return;
+		//if(Float.compare(left, 0.0f) == 0 && Float.compare(top, 0.0f) == 0 &&
+		//	Float.compare(right, 0.0f) == 0 && Float.compare(bottom, 0.0f) == 0) return;
+		
+		if(Float.compare(mCenterXY.x, left) == 0 ||
+		  Float.compare(mCenterXY.x, left) == -1 ||
+		  Float.compare(mCenterXY.x, right) == 0 ||
+		  Float.compare(mCenterXY.x, right) == 1 ||				  
+		  Float.compare(mCenterXY.y, top) == 0 ||
+		  Float.compare(mCenterXY.y, top) == -1 ||
+		  Float.compare(mCenterXY.y, bottom) == 0 ||
+		  Float.compare(mCenterXY.y, bottom) == 1 ) return;
+		
 		
 		mLeft = left;
 		mTop = top;

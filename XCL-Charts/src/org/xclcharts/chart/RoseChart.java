@@ -22,6 +22,7 @@
 package org.xclcharts.chart;
 
 import java.util.List;
+import java.util.Map;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
@@ -47,6 +48,18 @@ public class RoseChart extends PieChart{
 	private  static final  String TAG="PieChart";
 	
 	private Paint mPaintInner = null;
+	private boolean mShowInner = true;
+	
+	private int mIntervalAngle = 0;
+	
+	private Paint mPaintBg = null;
+	private boolean mShowBgLines = false;
+	private boolean mShowBgCircle = false;
+	private Map<Float,Integer> mListBgSeg = null; 
+	private int mShowBgLineColor = Color.BLACK;
+	
+	private boolean mShowOuterLabels = false ;
+	
 
 	public RoseChart() {
 		// TODO Auto-generated constructor stub
@@ -62,17 +75,7 @@ public class RoseChart extends PieChart{
 	
 	
 	private void initChart()
-	{										
-		//深色内环
-		if(null == mPaintInner)
-		{
-			mPaintInner = new Paint();
-			//mPaintInner.setColor(Color.DKGRAY);
-			mPaintInner.setColor(Color.rgb(68, 68, 68));
-			mPaintInner.setStyle(Style.FILL);		
-			mPaintInner.setAntiAlias(true);		
-		}
-				
+	{														
 		//白色标签
 		if(null != getLabelPaint())
 		{
@@ -87,9 +90,112 @@ public class RoseChart extends PieChart{
 	 * @return 画笔
 	 */
 	public Paint getInnerPaint()
-	{
+	{		
+		//深色内环
+		if(null == mPaintInner)
+		{
+			mPaintInner = new Paint();
+			//mPaintInner.setColor(Color.DKGRAY);
+			mPaintInner.setColor(Color.rgb(68, 68, 68));
+			mPaintInner.setStyle(Style.FILL);		
+			mPaintInner.setAntiAlias(true);		
+		}
+				
 		return mPaintInner;
 	}
+	
+	/**
+	 * 设置各扇区间隔角度
+	 * @param angle	角度
+	 */
+	public void setIntervalAngle(int angle)
+	{
+		mIntervalAngle = angle;
+	}
+	
+	/**
+	 * 显示背景环
+	 */
+	public void showInner()
+	{
+		mShowInner = true;
+	}
+	
+	/**
+	 * 隐藏背景环
+	 */
+	public void hideInner()
+	{
+		mShowInner = false;
+	}
+	
+	/**
+	 * 标签显示在外环上
+	 */
+	public void showOuterLabels()
+	{
+		mShowOuterLabels = true;
+	}
+	
+	/**
+	 * 标签不显示在外环
+	 */
+	public void hideOuterLabels()
+	{
+		mShowOuterLabels = false;
+	}
+	
+	/**
+	 * 用于绘制背景线，圈的画笔
+	 * @return 画笔
+	 */
+	public Paint getBgPaint()
+	{
+		 if(mPaintBg == null)
+		 {
+			 mPaintBg = new Paint(Paint.ANTI_ALIAS_FLAG);	
+			 mPaintBg.setStyle(Style.STROKE);
+			 mPaintBg.setAntiAlias(true);
+		 }
+		return mPaintBg;
+	}
+	
+	/**
+	 * 显示背景线，并指定线的颜色
+	 * @param color 颜色
+	 */
+	public void showBgLines(int color)
+	{
+		mShowBgLines = true;
+		mShowBgLineColor = color;
+	}
+	
+	/**
+	 * 依map传入的比例来设定显示几个圈,并指定各自的颜色
+	 * 
+	 * @param bgSeg  比例,线颜色
+	 */
+	public void showBgCircle(Map<Float,Integer>  bgSeg)
+	{
+		mShowBgCircle = true;
+		mListBgSeg = bgSeg;
+	}
+	
+	/**
+	 * 显示背景直线
+	 */
+	public void hideBgLines()
+	{
+		mShowBgLines = false;
+	}
+	
+	/**
+	 * 不显示背景直线
+	 */
+	public void hideBgCircle()
+	{
+		mShowBgCircle = true;
+	}	
 	
 	@Override 
 	protected boolean validateParams()
@@ -98,18 +204,39 @@ public class RoseChart extends PieChart{
 	}
 	
 	/**
+	 * 绘制背景直线与圈
+	 * @param canvas 画布
+	 */
+	private void drawBGCircle(Canvas canvas)
+	{
+		if(mListBgSeg == null)return ;
+	
+		float radius = getRadius();		
+		for(Map.Entry<Float,Integer> entry:mListBgSeg.entrySet()){    
+			 float newRadius =  mul(radius, entry.getKey());
+			 if(Float.compare(newRadius, 0.0f) == 0 
+					 || Float.compare(newRadius, 0.0f) == -1)
+			 {
+				 continue;
+			 }
+			
+			 getBgPaint().setColor(entry.getValue());
+			 canvas.drawCircle(plotArea.getCenterX(), plotArea.getCenterY(), newRadius, getBgPaint());
+		}   
+	}
+	
+	
+	/**
 	 * 绘制图
 	 */
+	@Override
 	protected boolean renderPlot(Canvas canvas)
 	{			 							
 			//计算中心点坐标
 			float cirX = plotArea.getCenterX();
 		    float cirY = plotArea.getCenterY();
 	        float radius = getRadius();
-	    	        
-	        //外环
-			canvas.drawCircle(cirX,cirY,radius,mPaintInner); 
-	    
+	    	        	      	        	       	    
 	        float percentage = 0.0f;		 		
 	 		float newRaidus = 0.0f;		
 	 		
@@ -120,11 +247,30 @@ public class RoseChart extends PieChart{
 	 			Log.e(TAG,"数据源为空.");
 	 			return false;
 	 		}
+	 		
+	 		 //内环
+			if(mShowInner)canvas.drawCircle(cirX,cirY,radius,getInnerPaint()); 
 			
-			//依参数个数，算出总个要算多少个扇区的角度
-			percentage = 360 / chartDataSource.size();
+			 //画背景
+	        if(mShowBgCircle)drawBGCircle(canvas);
+			
+			//依参数个数，算出总个要算多少个扇区的角度	 		
+	 		int totalAngle =  360 - mIntervalAngle * chartDataSource.size();
+	 		
+	 		percentage = totalAngle / chartDataSource.size();
+	 		
+			//percentage = 360 / chartDataSource.size();
 			//percentage = (float)(Math.round(percentage *100))/100; 		
 			percentage = div(mul(percentage,100),100);
+			
+			float labelRadius = 0.f;
+		
+			if(mShowOuterLabels)
+        	{
+				labelRadius = radius + DrawHelper.getInstance().getPaintFontHeight(this.getLabelPaint());			
+        	}else{        		
+        		labelRadius = radius - radius/2/2;
+        	}
 			
 	        for(PieData cData : chartDataSource)
 			{
@@ -137,19 +283,31 @@ public class RoseChart extends PieChart{
 				
 				//newRaidus = (float) (radius * (cData.getPercentage()/ 100));  
 	            //newRaidus = (float)(Math.round(newRaidus *100))/100;    
-	            
+	     				
+				//计算百分比标签  
+	            PointF pointbg = MathHelper.getInstance().calcArcEndPointXY(
+	            			cirX, cirY, radius, mOffsetAngle+ mIntervalAngle + percentage/2); 
+	          
+	          
+	            if( mShowBgLines )
+	            {
+	            	getBgPaint().setColor(mShowBgLineColor);
+	            	canvas.drawLine(plotArea.getCenterX(), plotArea.getCenterY(),
+	            				pointbg.x, pointbg.y, getBgPaint());
+	            }
+	        				
 	            //在饼图中显示所占比例   
 	            RectF nRF = new RectF(sub(cirX , newRaidus),sub(cirY , newRaidus),
 	            					  add(cirX , newRaidus),add(cirY , newRaidus));  
-	            canvas.drawArc(nRF, mOffsetAngle, percentage, true, geArcPaint());       
+	            canvas.drawArc(nRF, mOffsetAngle + mIntervalAngle, percentage, true, geArcPaint());       
 					       	            
 	            //标识  
 	            String label = cData.getLabel();	            
 	            if("" != label)
             	{            			            
-	            	//计算百分比标签  
+	            	//计算百分比标签 
 		            PointF point = MathHelper.getInstance().calcArcEndPointXY(
-		            			cirX, cirY, radius - radius/2/2, mOffsetAngle + percentage/2); 
+		            			cirX, cirY, labelRadius, mOffsetAngle + mIntervalAngle + percentage/2); 
 		            
             		//请自行在回调函数中处理显示格式
                     DrawHelper.getInstance().drawRotateText( label,
@@ -158,8 +316,8 @@ public class RoseChart extends PieChart{
             	}               
 	         
 	          //下次的起始角度  
-	            mOffsetAngle = add(mOffsetAngle,percentage);
-			}			
+	            mOffsetAngle = add(add(mOffsetAngle,percentage),mIntervalAngle);
+			}
 	        return true;
 	}
 		

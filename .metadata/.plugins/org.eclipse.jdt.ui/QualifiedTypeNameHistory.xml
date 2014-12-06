@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CrossLineStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyLineStyle"/>
 <fullyQualifiedTypeName name="android.view.View"/>
 <fullyQualifiedTypeName name="android.graphics.Matrix"/>
@@ -9,7 +7,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.LabelLineRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelSyncColor"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelLinePoint"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SliceLabelStyle"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="java.util.LinkedList"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
@@ -19,7 +16,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.AxisTick"/>
 <fullyQualifiedTypeName name="java.util.LinkedHashMap"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.PlotDataInfo"/>
-<fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.PlotArcLabelInfo"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelSaveType"/>
 <fullyQualifiedTypeName name="android.graphics.PointF"/>
@@ -60,4 +56,8 @@
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.DotInfo"/>
+<fullyQualifiedTypeName name="java.util.Map"/>
+<fullyQualifiedTypeName name="java.util.HashMap"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SliceLabelStyle"/>
+<fullyQualifiedTypeName name="java.util.ArrayList"/>
 </qualifiedTypeNameHistroy>

@@ -601,8 +601,8 @@ public class RadarChart extends RdChart{
     				lineData.getPlotLine().getDotPaint());
     		
     		savePointRecord(dataID,childID, currentX, currentY,
-    				currentX - radius ,currentY - radius ,
-    				currentX + radius ,currentY + radius );  		    		
+    				currentX - radius  ,currentY - radius  ,
+    				currentX + radius  ,currentY + radius );  		    		
     	}
 		//是否显示标签
 		if(lineData.getLabelVisible())

@@ -23,8 +23,10 @@
 package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RoseChart;
@@ -102,8 +104,7 @@ public class RoseChart01View extends DemoView {
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
 			chart.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
-			
-			
+									
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

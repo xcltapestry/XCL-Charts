@@ -23,8 +23,10 @@ package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RadarChart;
@@ -52,20 +54,21 @@ import android.util.Log;
 
 public class RadarChart03View extends DemoView {
 
-	private String TAG = "RadarChart03View";
-	private RadarChart chart = new RadarChart();
-	
+	private String TAG = "RadarChart03View";	
 	private RoseChart chartRose = new RoseChart();	
 	LinkedList<PieData> roseData = new LinkedList<PieData>();
 	
 	private RoseChart chartRose3 = new RoseChart();	
 	LinkedList<PieData> roseData3 = new LinkedList<PieData>();
 	
+	private RoseChart chartRose1 = new RoseChart();	
+	LinkedList<PieData> roseData1 = new LinkedList<PieData>();	
 	
 	//标签集合
 	private List<String> labels = new LinkedList<String>();
-	private List<RadarData> chartData = new LinkedList<RadarData>();
 	
+	//private RadarChart chart = new RadarChart();
+//	private List<RadarData> chartData = new LinkedList<RadarData>();
 	
 	public RadarChart03View(Context context) {
 		super(context);
@@ -86,8 +89,9 @@ public class RadarChart03View extends DemoView {
 	 private void initView()
 	 {
 		 	chartLabels();
-			chartDataSet();	
-			chartRender();
+		 				
+			chartRender1();
+			chartDataSet1();
 			
 			chartRender2();
 			chartDataSet2();
@@ -95,102 +99,27 @@ public class RadarChart03View extends DemoView {
 			chartRender3();
 			chartDataSet3();
 	 }
-	 
-	 
+	 	 
 	
 	@Override  
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-        chart.setChartRange(w,h);
         chartRose.setChartRange(w,h);
         chartRose3.setChartRange(w,h);
+        chartRose1.setChartRange(w,h);
     }  	
-	
-	private void chartRender()
-	{
-		try{				
-			//设置绘图区默认缩进px值
-			int [] ltrb = getPieDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
-			chart.setTitle("玫瑰风向图");
-			chart.addSubtitle("(XCL-Charts Demo)");
-			
-
-			//设定数据源
-			chart.setCategories(labels);								
-			chart.setDataSource(chartData);
-			//圆形雷达图
-			chart.setChartType(XEnum.RadarChartType.ROUND);
-		
-			
-			//数据轴最大值
-			chart.getDataAxis().setAxisMax(100);
-			//数据轴刻度间隔
-			chart.getDataAxis().setAxisSteps(20);
-			
-			chart.getLinePaint().setColor(Color.parseColor("#7579C3"));
-			chart.getLabelPaint().setColor(Color.parseColor("#3EABEF"));
-			chart.getLabelPaint().setFakeBoldText(true);
-			chart.getDataAxis().hideAxisLabels();
-			
-			//定义数据轴标签显示格式
-			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
-	
-				@Override
-				public String textFormatter(String value) {
-					// TODO Auto-generated method stub		
-					Double tmp = Double.parseDouble(value);
-					DecimalFormat df=new DecimalFormat("#0");
-					String label = df.format(tmp).toString();				
-					return (label);
-				}
-				
-			});
-			
-			//定义数据点标签显示格式
-			chart.setDotLabelFormatter(new IFormatterDoubleCallBack() {
-				@Override
-				public String doubleFormatter(Double value) {
-					// TODO Auto-generated method stub
-					DecimalFormat df= new DecimalFormat("#0");					 
-					String label = "["+df.format(value).toString()+"]";
-					return label;
-				}});
-			
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			Log.e(TAG, e.toString());
-		}
-		
-	}
-	
-	private void chartDataSet()
-	{
-		LinkedList<Double> dataSeriesA= new LinkedList<Double>();	
-		dataSeriesA.add(0d); 
-		dataSeriesA.add(0d);
-		dataSeriesA.add(0d);
-		dataSeriesA.add(0d);
-		dataSeriesA.add(0d);
-		
-		RadarData lineData1 = new RadarData("",dataSeriesA,
-					(int)Color.rgb(234, 83, 71),XEnum.RadarDataAreaStyle.FILL);
-		lineData1.setLabelVisible(false);	
-		lineData1.getPlotLine().getDotLabelPaint().setTextAlign(Align.LEFT);
-		
-		chartData.add(lineData1);
-		
-	}
-    
 	private void chartLabels()
 	{
-		labels.add("说");
-		labels.add("的");
-		labels.add("就");
-		labels.add("是");
-		labels.add("你");
+		labels.add("A1");
+		labels.add("A2");
+		labels.add("A3");
+		labels.add("A4");
+		labels.add("A5");
+		labels.add("A6");
+		labels.add("A7");
+		labels.add("A8");
 		
 	}
 	
@@ -208,7 +137,20 @@ public class RadarChart03View extends DemoView {
 			chartRose.setInitialAngle(270 + 72/2);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chartRose.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
+			//chartRose.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
+			
+			chartRose.setIntervalAngle(3);
+			
+			//--------------------------------------
+			Map<Float,Integer>  mapBgSeg = new HashMap<Float,Integer>();
+			mapBgSeg.put(0.8f, Color.rgb(39, 161, 237));  
+			mapBgSeg.put(0.6f, Color.rgb(246, 137, 31));  
+			chartRose.showBgCircle(mapBgSeg);
+			
+			chartRose.showBgLines(Color.BLUE);
+			//chartRose.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
+			
+			chartRose.showOuterLabels();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -222,14 +164,17 @@ public class RadarChart03View extends DemoView {
 		//设置图表数据源
 							
 		//PieData(标签，百分比，在饼图中对应的颜色)
-		roseData.add(new PieData("",70,(int)Color.rgb(77, 83, 97) ));
-		roseData.add(new PieData(""	,80,(int)Color.rgb(148, 159, 181)));
-		roseData.add(new PieData(""	,90,(int)Color.rgb(253, 180, 90)));
-		roseData.add(new PieData(""	,65,(int)Color.rgb(52, 194, 188)));
-		roseData.add(new PieData("",90,(int)Color.rgb(39, 51, 72)));
-
+		
+		roseData.add(new PieData("",40,Color.rgb(149, 206, 255)));  //(int)Color.rgb(39, 51, 72)));		
+		roseData.add(new PieData("",50,Color.rgb(149, 206, 255)));  //(int)Color.rgb(39, 51, 72)));
+		roseData.add(new PieData("",60,Color.rgb(149, 206, 255)));  //(int)Color.rgb(39, 51, 72)));
+				
+		roseData.add(new PieData("",70,Color.rgb(149, 206, 255)));  //(int)Color.rgb(77, 83, 97) ));
+		roseData.add(new PieData(""	,80,Color.rgb(149, 206, 255)));  //(int)Color.rgb(148, 159, 181)));
+		roseData.add(new PieData(""	,90,Color.rgb(149, 206, 255)));  //(int)Color.rgb(253, 180, 90)));
+		roseData.add(new PieData(""	,95,Color.rgb(149, 206, 255)));  //(int)Color.rgb(52, 194, 188)));
+		roseData.add(new PieData("",97,Color.rgb(149, 206, 255)));  //(int)Color.rgb(39, 51, 72)));		
 	}
-	
 	
 	private void chartRender3()
 	{
@@ -244,10 +189,15 @@ public class RadarChart03View extends DemoView {
 			chartRose3.setInitialAngle(270 + 72/2);
 			
 			//设置标签显示位置,当前设置标签显示在扇区中间
-			chartRose3.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
+			//chartRose3.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
 			
 			chartRose3.getLabelPaint().setColor(Color.parseColor("#D92222"));
 			
+			chartRose3.setIntervalAngle(3);
+			//chartRose3.setLabelStyle(XEnum.SliceLabelStyle.OUTSIDE);
+			
+			chartRose3.showOuterLabels();
+						
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -260,21 +210,80 @@ public class RadarChart03View extends DemoView {
 		//设置图表数据源
 							
 		//PieData(标签，百分比，在饼图中对应的颜色)
+		/*
 		roseData3.add(new PieData("看",40,(int)Color.rgb(31, 59, 123) ));
 		roseData3.add(new PieData("图"	 ,50,(int)Color.rgb(173, 214, 224)));
 		roseData3.add(new PieData("的"		 ,60,(int)Color.rgb(233, 77, 67)));
 		roseData3.add(new PieData("那" ,45,(int)Color.rgb(191, 225, 84)));
 		roseData3.add(new PieData("个",70,(int)Color.rgb(0, 156, 214)));
+	*/
+		
+		roseData3.add(new PieData("A1",10,(int)Color.rgb(92, 92, 97) ));
+		roseData3.add(new PieData("A2",20,(int)Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A3",30,(int)Color.rgb(92, 92, 97)));
+		
+		roseData3.add(new PieData("A4",40,(int)Color.rgb(92, 92, 97) ));
+		roseData3.add(new PieData("A5",50,(int)Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A6",60,(int)Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A7",70,(int)Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A8",80,(int)Color.rgb(92, 92, 97)));
+		
+	}
 	
+	
+	private void chartDataSet1()
+	{
+		//设置图表数据源							
+		//PieData(标签，百分比，在饼图中对应的颜色)		
+		roseData1.add(new PieData("",7,Color.rgb(190, 254, 175)));  //(int)Color.rgb(39, 51, 72)));		
+		roseData1.add(new PieData("",12,Color.rgb(190, 254, 175)));  //(int)Color.rgb(39, 51, 72)));
+		roseData1.add(new PieData("",13,Color.rgb(190, 254, 175)));  //(int)Color.rgb(39, 51, 72)));
+				
+		roseData1.add(new PieData("",15,Color.rgb(190, 254, 175)));  //(int)Color.rgb(77, 83, 97) ));
+		roseData1.add(new PieData("",27,Color.rgb(190, 254, 175)));  //(int)Color.rgb(148, 159, 181)));
+		roseData1.add(new PieData("",32,Color.rgb(190, 254, 175)));  //(int)Color.rgb(253, 180, 90)));
+		roseData1.add(new PieData("",55,Color.rgb(190, 254, 175)));  //(int)Color.rgb(52, 194, 188)));
+		roseData1.add(new PieData("",35,Color.rgb(190, 254, 175)));  //(int)Color.rgb(39, 51, 72)));		
+	}
+	
+	private void chartRender1()
+	{
+		try {						
+			
+			//设置绘图区默认缩进px值
+			int [] ltrb = getPieDefaultSpadding();
+			chartRose1.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
+			//数据源
+			chartRose1.setDataSource(roseData1);							
+			chartRose1.getInnerPaint().setStyle(Style.STROKE);			
+			chartRose1.setInitialAngle(270 + 72/2);
+			
+			//设置标签显示位置,当前设置标签显示在扇区中间
+			//chartRose1.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
+			
+			chartRose1.getLabelPaint().setColor(Color.parseColor("#D92222"));
+			
+			chartRose1.setIntervalAngle(3);
+			chartRose1.showOuterLabels();
+			//chartRose1.hideOuterLabels();
+			
+			chartRose1.setTitle("玫瑰风向图");
+			chartRose1.addSubtitle("(XCL-Charts Demo)");
+								
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, e.toString());
+		}
 	}
 	
 	
 	@Override
     public void render(Canvas canvas) {
         try{
-            chart.render(canvas);
+        	
             chartRose.render(canvas);
             chartRose3.render(canvas);
+            chartRose1.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
@@ -284,9 +293,10 @@ public class RadarChart03View extends DemoView {
 	public List<XChart> bindChart() {
 		// TODO Auto-generated method stub		
 		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
+		
 		lst.add(chartRose);
 		lst.add(chartRose3);
+		lst.add(chartRose1);
 		return lst;
 	}
 	
