@@ -152,7 +152,6 @@ public class RadarChart03View extends DemoView {
 			
 			chartRose.showOuterLabels();
 			
-			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -268,7 +267,6 @@ public class RadarChart03View extends DemoView {
 			chartRose1.showOuterLabels();
 			//chartRose1.hideOuterLabels();
 			
-			
 			chartRose1.setTitle("玫瑰风向图");
 			chartRose1.addSubtitle("(XCL-Charts Demo)");
 								
@@ -282,7 +280,7 @@ public class RadarChart03View extends DemoView {
 	@Override
     public void render(Canvas canvas) {
         try{
-        	chartRose.setBgLines(roseData.size());
+        	
             chartRose.render(canvas);
             chartRose3.render(canvas);
             chartRose1.render(canvas);

@@ -282,7 +282,7 @@ public class RadarChart03View extends DemoView {
 	@Override
     public void render(Canvas canvas) {
         try{
-        	chartRose.setBgLines(roseData.size());
+        	
             chartRose.render(canvas);
             chartRose3.render(canvas);
             chartRose1.render(canvas);

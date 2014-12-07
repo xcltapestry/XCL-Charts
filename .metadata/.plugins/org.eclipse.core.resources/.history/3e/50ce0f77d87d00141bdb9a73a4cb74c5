@@ -59,7 +59,7 @@ public class RoseChart extends PieChart{
 	private int mShowBgLineColor = Color.BLACK;
 	
 	private boolean mShowOuterLabels = false ;
-	private int mBgLines = 0;
+	private int mBgLinesCount = 0;
 
 	public RoseChart() {
 		// TODO Auto-generated constructor stub
@@ -168,7 +168,6 @@ public class RoseChart extends PieChart{
 	{
 		mShowBgLines = true;
 		mShowBgLineColor = color;
-		
 	}
 	
 	/**
@@ -198,15 +197,6 @@ public class RoseChart extends PieChart{
 		mShowBgCircle = true;
 	}	
 	
-	/**
-	 * 指定要显示的线个数
-	 * @param count 总个数
-	 */
-	public void setBgLines(int count)
-	{
-		mBgLines = count;
-	}
-	
 	@Override 
 	protected boolean validateParams()
 	{
@@ -219,7 +209,6 @@ public class RoseChart extends PieChart{
 	 */
 	private void drawBGCircle(Canvas canvas)
 	{
-		if(!mShowBgCircle)return;
 		if(mListBgSeg == null)return ;
 	
 		float radius = getRadius();		
@@ -238,26 +227,31 @@ public class RoseChart extends PieChart{
 	
 	private void drawBGLines(Canvas canvas)
 	{
-		if(!mShowBgLines)return;
-		if(0 == mBgLines)return ;
 		
-		int totalAngle =  360 - mIntervalAngle * mBgLines;
+		if(0 == mBgLinesCount)return ;
+		
+		int totalAngle =  360 - mIntervalAngle * mBgLinesCount;
  		
- 		float currAngle = totalAngle / mBgLines;
+ 		float currAngle = totalAngle / mBgLinesCount;
  		float radius = getRadius();
  		float offsetAngle = mOffsetAngle;
  		
-		for(int i=0;i < mBgLines;i++)
-		{			
+		for(int i=0;i < mBgLinesCount;i++)
+		{
+			
 			   PointF pointbg = MathHelper.getInstance().calcArcEndPointXY(
 					   plotArea.getCenterX(), plotArea.getCenterY(),
 					   radius, offsetAngle+ mIntervalAngle + currAngle/2); 
          
-            	getBgPaint().setColor(mShowBgLineColor);
-            	canvas.drawLine(plotArea.getCenterX(), plotArea.getCenterY(),
-            				pointbg.x, pointbg.y, getBgPaint());
-	          			   
-			   offsetAngle = add(add(offsetAngle,currAngle),mIntervalAngle);			
+			   if( mShowBgLines )
+	            {
+	            	getBgPaint().setColor(mShowBgLineColor);
+	            	canvas.drawLine(plotArea.getCenterX(), plotArea.getCenterY(),
+	            				pointbg.x, pointbg.y, getBgPaint());
+	            }
+			   
+			   offsetAngle = add(add(offsetAngle,currAngle),mIntervalAngle);
+			
 		}
 	}
 	
@@ -288,7 +282,7 @@ public class RoseChart extends PieChart{
 			if(mShowInner)canvas.drawCircle(cirX,cirY,radius,getInnerPaint()); 
 			
 			 //画背景
-	        drawBGCircle(canvas);
+	        if(mShowBgCircle)drawBGCircle(canvas);
 	        
 	        drawBGLines(canvas);
 			

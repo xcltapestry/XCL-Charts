@@ -3,28 +3,29 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
 		<item value="375" key="DIALOG_Y_ORIGIN"/>
-		<item value="346" key="DIALOG_HEIGHT"/>
 		<item value="548" key="DIALOG_X_ORIGIN"/>
+		<item value="346" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="roseData3" key="selection"/>
+		<item value="showBgLines" key="selection"/>
 		<list key="findhistory">
+			<item value="showBgLines"/>
+			<item value="mBgLinesCount"/>
 			<item value="roseData3"/>
 			<item value="chart"/>
 			<item value="mShowOuterLabels"/>
 			<item value="showOuterLabels"/>
 			<item value="labels"/>
 			<item value="setLabelStyle"/>
-			<item value="renderPlot"/>
-			<item value="renderLabels"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mBgLines"/>
 			<item value="mPaintInner"/>
 			<item value="mPaintOuter"/>
 			<item value="outer"/>
@@ -32,7 +33,6 @@
 			<item value="valuePostion"/>
 			<item value="DotInfo"/>
 			<item value="drawLowerAxisTitle"/>
-			<item value="getBeginColor"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -198,10 +198,6 @@ public class RoseChart extends PieChart{
 		mShowBgCircle = true;
 	}	
 	
-	/**
-	 * 指定要显示的线个数
-	 * @param count 总个数
-	 */
 	public void setBgLines(int count)
 	{
 		mBgLines = count;
