@@ -350,7 +350,11 @@ public class PlotCustomLine {
 		mDot.setDotStyle(line.getCustomeLineCap());		
 		PlotDotRender.getInstance().renderDot(canvas,mDot,
 				left + (right - left )/2, top + (bottom - top)/2,
-				line.getCustomLinePaint()); //标识图形          	
+				line.getCustomLinePaint()); //标识图形          
+		//left ,top ,
+		//right ,bottom,
+		
+		
 	} 
 	
 	private void initPlotDot()

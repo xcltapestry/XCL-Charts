@@ -232,7 +232,8 @@ public class RoseChart extends PieChart{
 			 }
 			
 			 getBgPaint().setColor(entry.getValue());
-			 canvas.drawCircle(plotArea.getCenterX(), plotArea.getCenterY(), newRadius, getBgPaint());
+			 canvas.drawCircle(plotArea.getCenterX(), plotArea.getCenterY(), 
+					 		   newRadius, getBgPaint());
 		}   
 	}
 	
@@ -259,6 +260,19 @@ public class RoseChart extends PieChart{
 	          			   
 			   offsetAngle = add(add(offsetAngle,currAngle),mIntervalAngle);			
 		}
+	}
+	
+	private float getLabelRadius()
+	{
+		float labelRadius = 0.f;
+		float radius = getRadius();
+		if(mShowOuterLabels)
+    	{
+			labelRadius = radius + DrawHelper.getInstance().getPaintFontHeight(this.getLabelPaint());			
+    	}else{        		
+    		labelRadius = radius - radius/2/2;
+    	}
+		return labelRadius;
 	}
 	
 	
@@ -289,7 +303,7 @@ public class RoseChart extends PieChart{
 			
 			 //画背景
 	        drawBGCircle(canvas);
-	        
+	        //画背景直线
 	        drawBGLines(canvas);
 			
 			//依参数个数，算出总个要算多少个扇区的角度	 		
@@ -301,14 +315,7 @@ public class RoseChart extends PieChart{
 			//percentage = (float)(Math.round(percentage *100))/100; 		
 			percentage = div(mul(percentage,100),100);
 			
-			float labelRadius = 0.f;
-		
-			if(mShowOuterLabels)
-        	{
-				labelRadius = radius + DrawHelper.getInstance().getPaintFontHeight(this.getLabelPaint());			
-        	}else{        		
-        		labelRadius = radius - radius/2/2;
-        	}
+			float labelRadius = getLabelRadius();
 			
 	        for(PieData cData : chartDataSource)
 			{
@@ -321,19 +328,7 @@ public class RoseChart extends PieChart{
 				
 				//newRaidus = (float) (radius * (cData.getPercentage()/ 100));  
 	            //newRaidus = (float)(Math.round(newRaidus *100))/100;    
-	     				
-				//计算百分比标签  
-	            PointF pointbg = MathHelper.getInstance().calcArcEndPointXY(
-	            			cirX, cirY, radius, mOffsetAngle+ mIntervalAngle + percentage/2); 
-	          
-	          
-	            if( mShowBgLines )
-	            {
-	            	//getBgPaint().setColor(mShowBgLineColor);
-	            	//canvas.drawLine(plotArea.getCenterX(), plotArea.getCenterY(),
-	            	//			pointbg.x, pointbg.y, getBgPaint());
-	            }
-	        				
+	     		        				
 	            //在饼图中显示所占比例   
 	            RectF nRF = new RectF(sub(cirX , newRaidus),sub(cirY , newRaidus),
 	            					  add(cirX , newRaidus),add(cirY , newRaidus));  

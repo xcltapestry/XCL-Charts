@@ -276,7 +276,8 @@ public class DyInfo {
 					//						currDotsX, currRowY, 
 					//						currDotsX + textHeight, currRowY + textHeight, 
 					//						paint);		
-					PlotDotRender.getInstance().renderDot(canvas,plot, 						 
+					PlotDotRender.getInstance().renderDot(canvas,plot, 
+						 
 							(currDotsX + textHeight) / 2, 
 							(currRowY + textHeight) / 2, 
 							paint);		

@@ -97,6 +97,64 @@ public class PlotDotRender {
 	 * @param paint	画笔
 	 */	
 	public RectF renderDot(Canvas canvas, PlotDot pDot, 
+						  float left, float top, float right,float bottom, Paint paint) {
+				
+		float radius = pDot.getDotRadius();		
+		//mRect.setEmpty();		
+		mRect.left =  0.0f;
+		mRect.top =  0.0f;
+		mRect.right =  0.0f;
+		mRect.bottom = 0.0f;		
+		
+		if(Float.compare(radius, 0.0f) == 0 
+				|| Float.compare(radius, 0.0f) == -1){			
+			return mRect;
+		}						
+		
+		float cX = 0.0f;
+		if(XEnum.DotStyle.DOT == pDot.getDotStyle() ||
+				XEnum.DotStyle.RING == pDot.getDotStyle() ||
+						XEnum.DotStyle.X == pDot.getDotStyle()	)
+		{			
+			cX =  left + Math.abs(right - left);
+			
+			mRect.left =  (cX - radius);
+			mRect.top =   (bottom - radius);
+			mRect.right =  (cX + radius);
+			mRect.bottom =  (bottom + radius);			
+		}
+		
+		switch (pDot.getDotStyle()) {
+		case DOT:										
+			canvas.drawCircle(cX, bottom,radius, paint);			
+			break;
+		case RING:					
+			renderRing(canvas,paint,radius,pDot,cX ,bottom);
+			break;
+		case TRIANGLE: // 等腰三角形
+			renderTriangle(canvas,paint,radius,right,bottom);			
+			break;
+		case PRISMATIC: // 棱形 Prismatic			
+			renderPrismatic(canvas,paint,radius,right,bottom,left );            
+			break;
+		case RECT:
+			renderRect(canvas,paint,radius,right,bottom );			
+			break;
+		case X:
+			renderX(canvas,paint);			    
+			break;
+		case CROSS:
+			renderCross(canvas,paint,radius,right,bottom);			    
+			break;						
+		case HIDE:
+		default:
+		}						
+		return mRect;
+	}
+	
+	
+	
+	public RectF renderDot(Canvas canvas, PlotDot pDot, 
 			  float cirX, float cirY, Paint paint) {
 		
 		float radius = pDot.getDotRadius();
@@ -105,7 +163,10 @@ public class PlotDotRender {
 				|| Float.compare(radius, 0.0f) == -1){			
 			return new RectF(0.0f,0.0f,0.0f,0.0f);
 		}	
-	
+		//return renderDot(canvas,  pDot, 
+		//		cirX - radius , cirY - radius, 
+		//		cirX + radius , cirY + radius, paint);
+		
 		float left = cirX - radius ;
 		float top = cirY - radius; 
 		float right = cirX + radius ;
@@ -208,7 +269,24 @@ public class PlotDotRender {
 		mRect.bottom =  bottom;
 	}
 	
-
+	private void renderPrismatic(Canvas canvas,Paint paint,
+								float radius,float right,float bottom,float left )
+	{
+		initPath();
+		mPath.moveTo(right - radius, bottom);
+		mPath.lineTo(right, bottom - radius);
+		mPath.lineTo(right + radius, bottom);
+		mPath.lineTo(left + (right - left), bottom + radius);
+		mPath.close();
+        canvas.drawPath(mPath, paint);
+        mPath.reset();
+        
+    	mRect.left = ( right -  radius  );
+		mRect.top =  ( bottom - radius);
+		mRect.right =  ( right + radius);
+		mRect.bottom =  (bottom + radius);
+	}
+	
 	
 	private void renderRect(Canvas canvas,Paint paint,float radius,float cirX,float cirY )
 	{

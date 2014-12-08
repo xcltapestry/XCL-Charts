@@ -208,7 +208,24 @@ public class PlotDotRender {
 		mRect.bottom =  bottom;
 	}
 	
-
+	private void renderPrismatic(Canvas canvas,Paint paint,
+								float radius,float right,float bottom,float left )
+	{
+		initPath();
+		mPath.moveTo(right - radius, bottom);
+		mPath.lineTo(right, bottom - radius);
+		mPath.lineTo(right + radius, bottom);
+		mPath.lineTo(left + (right - left), bottom + radius);
+		mPath.close();
+        canvas.drawPath(mPath, paint);
+        mPath.reset();
+        
+    	mRect.left = ( right -  radius  );
+		mRect.top =  ( bottom - radius);
+		mRect.right =  ( right + radius);
+		mRect.bottom =  (bottom + radius);
+	}
+	
 	
 	private void renderRect(Canvas canvas,Paint paint,float radius,float cirX,float cirY )
 	{
