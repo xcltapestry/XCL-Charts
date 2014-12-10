@@ -433,11 +433,15 @@ public class PlotLegendRender extends PlotLegend{
 								        this.mPaintLine);
 						
 						PlotDotRender.getInstance().renderDot(canvas,plot, 
-								currRowX + rectWidth/2,
-								currRowY + rowHeight/2,
+								currRowX + rectWidth/2, //(rectWidth/4 * 2 - currRowX + rectWidth/4 ),
+								currRowY + rowHeight/2, //(currRowY + rowHeight/2 - currRowY ), 
 								this.getPaint());
+						
+						//currRowX + rectWidth/4, currRowY, 
+						//currRowX + rectWidth/4 * 2, currRowY + rowHeight/2, 
+						
 						currRowX += rectWidth + mColSpan;	
-																	
+																		
 						//currRowX = MathHelper.getInstance().add(currRowX,
 						//		MathHelper.getInstance().add(rectWidth,mColSpan) );
 						
@@ -446,9 +450,14 @@ public class PlotLegendRender extends PlotLegend{
 						{			
 						
 							PlotDotRender.getInstance().renderDot(canvas,plot, 
-									currRowX + rectWidth/2 ,
-									currRowY + rowHeight/2 , 
-									this.getPaint());																				
+									//currRowX, currRowY, 
+									currRowX + rectWidth/2 ,// (rectWidth/2 - currRowX), 
+									currRowY + rowHeight/2 , //(currRowY + rowHeight/2 - currRowY), 
+									this.getPaint());						
+							
+							//currRowX, currRowY, 
+							//currRowX + rectWidth/2, currRowY + rowHeight/2, 
+							
 							currRowX += rectWidth + mColSpan;		
 							
 							//currRowX = MathHelper.getInstance().add(currRowX,

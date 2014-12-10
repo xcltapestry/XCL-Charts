@@ -137,7 +137,7 @@ public class ChartsActivity extends Activity {
 			new AreaChart02View(this),	//平滑区域图
 			new MultiAxisChart01View(this),
 			new MultiAxisChart02View(this),
-			new MultiBarChart01View(this),	//多柱形堆积效果图
+			new MultiBarChart01View(this),
 			new MultiAxisChart03View(this),	//面积折线混合图
 			
 			new PieChart01View(this),	//饼图
@@ -149,11 +149,12 @@ public class ChartsActivity extends Activity {
 			new RadarChart02View(this),	//圆形雷达图
 			new RadarChart03View(this),	//玫瑰风向图
 			new BarChart06View(this),
-			new ArcLineChart01View(this),	//弧线比较图
-			new ScatterChart01View(this),	//散点图
-			new BubbleChart01View(this),	//气泡图
-			new RangeBarChart01View(this), 	//范围条形图			
-			new QuadrantChart01View(this)	//象限图
+			new ArcLineChart01View(this),
+			new ScatterChart01View(this),
+			new BubbleChart01View(this),
+			new RangeBarChart01View(this), 	
+			
+			new QuadrantChart01View(this)
 		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  

@@ -428,31 +428,30 @@ public class PlotLegendRender extends PlotLegend{
 					
 					if( mIsLnChart) //line
 					{																			
-						canvas.drawLine(currRowX            , currRowY + rowHeight/2, 
-								        currRowX + rectWidth, currRowY + rowHeight/2,  
-								        this.mPaintLine);
+						canvas.drawLine(currRowX, currRowY + rowHeight/2, 
+								currRowX + rectWidth, currRowY + rowHeight/2,  this.mPaintLine);
 						
 						PlotDotRender.getInstance().renderDot(canvas,plot, 
-								currRowX + rectWidth/2,
-								currRowY + rowHeight/2,
+								currRowX + rectWidth/4, currRowY, 
+								currRowX + rectWidth/4 * 2, currRowY + rowHeight/2, 
 								this.getPaint());
-						currRowX += rectWidth + mColSpan;	
-																	
-						//currRowX = MathHelper.getInstance().add(currRowX,
-						//		MathHelper.getInstance().add(rectWidth,mColSpan) );
 						
+						currRowX += rectWidth + mColSpan;	
 					}else{
 						if( plot.getDotStyle() !=  XEnum.DotStyle.HIDE )
 						{			
 						
 							PlotDotRender.getInstance().renderDot(canvas,plot, 
-									currRowX + rectWidth/2 ,
-									currRowY + rowHeight/2 , 
-									this.getPaint());																				
+									currRowX, currRowY, 
+									currRowX + rectWidth/2, currRowY + rowHeight/2, 
+									this.getPaint());																					
 							currRowX += rectWidth + mColSpan;		
 							
-							//currRowX = MathHelper.getInstance().add(currRowX,
-							//		MathHelper.getInstance().add(rectWidth,mColSpan) );														
+							currRowX = MathHelper.getInstance().add(currRowX,
+									MathHelper.getInstance().add(rectWidth,rectWidth) );
+							
+							//currRowX, currRowY, 
+							//currRowX + rectWidth/2, currRowY + rowHeight/2, 
 						}
 					}
 				}

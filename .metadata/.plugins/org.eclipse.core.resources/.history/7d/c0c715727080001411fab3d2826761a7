@@ -137,7 +137,7 @@ public class ChartsActivity extends Activity {
 			new AreaChart02View(this),	//平滑区域图
 			new MultiAxisChart01View(this),
 			new MultiAxisChart02View(this),
-			new MultiBarChart01View(this),	//多柱形堆积效果图
+			new MultiBarChart01View(this),
 			new MultiAxisChart03View(this),	//面积折线混合图
 			
 			new PieChart01View(this),	//饼图

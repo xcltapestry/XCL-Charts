@@ -128,32 +128,33 @@ public class ChartsActivity extends Activity {
 			new BarChart3D02View(this),	//横向3D柱形图
 			new StackBarChart01View(this),	//竖向堆积柱形图
 			new StackBarChart02View(this),	//横向堆积柱形图
-			new LineChart01View(this),	//折线图(封闭式)
-			new LineChart02View(this),	//折线图(开放式)
-			new SplineChart03View(this),	//平滑曲线图
-			new SplineChart01View(this),	//普通曲线图
-			new SplineChart02View(this),	//三角函数曲线图
-			new AreaChart01View(this),	//区域图
-			new AreaChart02View(this),	//平滑区域图
+			new LineChart01View(this),
+			new LineChart02View(this),
+			new SplineChart03View(this),
+			new SplineChart01View(this),
+			new SplineChart02View(this),
+			new AreaChart01View(this),
+			new AreaChart02View(this),
 			new MultiAxisChart01View(this),
 			new MultiAxisChart02View(this),
-			new MultiBarChart01View(this),	//多柱形堆积效果图
-			new MultiAxisChart03View(this),	//面积折线混合图
+			new MultiBarChart01View(this),
+			new MultiAxisChart03View(this),
 			
-			new PieChart01View(this),	//饼图
+			new PieChart01View(this),
 			new PieChart02View(this),
-			new PieChart3D01View(this),	//3D饼图
-			new DountChart01View(this),	//环形图
-			new RoseChart01View(this),	//南丁格尔玫瑰图
-			new RadarChart01View(this),	//蜘蛛网雷达图
-			new RadarChart02View(this),	//圆形雷达图
-			new RadarChart03View(this),	//玫瑰风向图
+			new PieChart3D01View(this),
+			new DountChart01View(this),
+			new RoseChart01View(this),
+			new RadarChart01View(this),
+			new RadarChart02View(this),
+			new RadarChart03View(this),
 			new BarChart06View(this),
-			new ArcLineChart01View(this),	//弧线比较图
-			new ScatterChart01View(this),	//散点图
-			new BubbleChart01View(this),	//气泡图
-			new RangeBarChart01View(this), 	//范围条形图			
-			new QuadrantChart01View(this)	//象限图
+			new ArcLineChart01View(this),
+			new ScatterChart01View(this),
+			new BubbleChart01View(this),
+			new RangeBarChart01View(this), 	
+			
+			new QuadrantChart01View(this)
 		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  
