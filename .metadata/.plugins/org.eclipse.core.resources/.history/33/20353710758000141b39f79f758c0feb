@@ -271,10 +271,14 @@ public class DyInfo {
 				PlotDot plot = mClickedDotStyle.get(i);
 				
 				if(plot.getDotStyle() !=  XEnum.DotStyle.HIDE )//画dot
-				{			
+				{					
+					//PlotDotRender.getInstance().renderDot(canvas,plot, 
+					//						currDotsX, currRowY, 
+					//						currDotsX + textHeight, currRowY + textHeight, 
+					//						paint);		
 					PlotDotRender.getInstance().renderDot(canvas,plot, 						 
-							currDotsX + (textHeight / 2), 
-							currRowY + (textHeight / 2), 
+							(currDotsX + textHeight) / 2, 
+							(currRowY + textHeight) / 2, 
 							paint);		
 					
 					currTextX = currDotsX + textHeight + mColSpan;

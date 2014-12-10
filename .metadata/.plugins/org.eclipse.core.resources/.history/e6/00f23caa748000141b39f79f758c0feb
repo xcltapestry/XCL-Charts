@@ -437,15 +437,28 @@ public class PlotLegendRender extends PlotLegend{
 								currRowY + rowHeight/2,
 								this.getPaint());
 						currRowX += rectWidth + mColSpan;	
+																	
+						//currRowX = MathHelper.getInstance().add(currRowX,
+						//		MathHelper.getInstance().add(rectWidth,mColSpan) );
 						
 					}else{
 						if( plot.getDotStyle() !=  XEnum.DotStyle.HIDE )
-						{		
+						{			
+							
+							//PlotDotRender.getInstance().renderDot(canvas,plot, 
+							//		currRowX, currRowY, 
+							//		currRowX + rectWidth/2, currRowY + rowHeight/2, 
+							//		this.getPaint());	
+							
+						
 							PlotDotRender.getInstance().renderDot(canvas,plot, 
-									currRowX + rectWidth/2,
-									currRowY + rowHeight/2 , 
+									currRowX + (currRowX + rectWidth/2 - currRowX ),
+									currRowY + ( currRowY + rowHeight/2 - currRowY) , 
 									this.getPaint());																				
-							currRowX += rectWidth + mColSpan;															
+							currRowX += rectWidth + mColSpan;		
+							
+							//currRowX = MathHelper.getInstance().add(currRowX,
+							//		MathHelper.getInstance().add(rectWidth,mColSpan) );														
 						}
 					}
 				}
