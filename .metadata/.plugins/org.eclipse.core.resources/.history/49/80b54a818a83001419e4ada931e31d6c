@@ -1,0 +1,20 @@
+package org.xclcharts.chart;
+
+
+public class PointD {
+	
+	double mX = 0d;
+	double mY = 0d;
+	
+	public PointD()
+	{	
+	}
+
+	public PointD(double x,double y)
+	{	
+		this.mX = x;
+		this.mY = y;
+	}
+	
+	public double 
+}

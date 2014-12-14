@@ -1,0 +1,21 @@
+package org.xclcharts.chart;
+
+import org.xclcharts.renderer.line.PlotLine;
+
+public class PointD {
+	
+	Double mX = 0d;
+	Double mY = 0d;
+	
+	public PointD()
+	{	
+	}
+
+	public PointD(Double x,Double y)
+	{	
+		this.mX = x;
+		this.mY = y;
+	}
+	
+	
+}
