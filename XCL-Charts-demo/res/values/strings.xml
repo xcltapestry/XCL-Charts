@@ -22,5 +22,6 @@
     <string name="title_activity_dial_chart2">DialChart2Activity</string>
     <string name="title_activity_dial_chart3">DialChart3Activity</string>
     <string name="title_activity_dial_chart4">DialChart4Activity</string>
+    <string name="title_activity_dy_sp">DySpActivity</string>
 
 </resources>

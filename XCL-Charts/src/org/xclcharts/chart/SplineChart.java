@@ -23,20 +23,18 @@ package org.xclcharts.chart;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.line.DotInfo;
 import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
-import org.xclcharts.renderer.line.DotInfo;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
@@ -214,8 +212,7 @@ public class SplineChart extends LnChart{
 			Log.e(TAG,"轴最大值与最小值相等.");
 			return ;
 		}
-		
-		
+				
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
 		float lineStartX = initX,lineStartY = initY; 
@@ -226,19 +223,19 @@ public class SplineChart extends LnChart{
 		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
 		
 		//得到标签对应的值数据集		
-		LinkedHashMap<Double,Double> chartValues = bd.getLineDataSet();	
+		List<PointD> chartValues = bd.getLineDataSet();	
 		if(null == chartValues) return ;
 		
 		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
 															
 	    //画出数据集对应的线条				
 		int j = 0;
-		Iterator iter = chartValues.entrySet().iterator();
+		Iterator iter = chartValues.iterator();
 		while(iter.hasNext()){
-			    Entry  entry=(Entry)iter.next();
+			PointD  entry=(PointD)iter.next();
 			
-			    Double xValue =(Double) entry.getKey();
-			    Double yValue =(Double) entry.getValue();	
+			    Double xValue = entry.x;
+			    Double yValue = entry.y;	
 			    			    
 			    //对应的Y坐标		            	   
 			    double yScale = MathHelper.getInstance().div( 

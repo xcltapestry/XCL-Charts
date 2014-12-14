@@ -291,7 +291,7 @@ public class BubbleChart extends LnChart{
 		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
 		
 		//得到标签对应的值数据集		
-		LinkedHashMap<Double,Double> chartValues = bd.getDataSet();	
+		List<PointD> chartValues = bd.getDataSet();	
 		if(null == chartValues) return ;
 															
 	    //画出数据集对应的线条				
@@ -338,12 +338,12 @@ public class BubbleChart extends LnChart{
 		
 		float itemAngle = bd.getItemLabelRotateAngle();
 				
-		Iterator iter = chartValues.entrySet().iterator();
+		Iterator iter = chartValues.iterator();
 		while(iter.hasNext()){
-			    Entry  entry=(Entry)iter.next();
+			PointD  entry=(PointD)iter.next();
 			
-			    Double xValue =(Double) entry.getKey();
-			    Double yValue =(Double) entry.getValue();	
+			    Double xValue = entry.x;
+			    Double yValue = entry.y;
 			    			    
 			    //对应的Y坐标
 			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  

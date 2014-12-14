@@ -48,14 +48,15 @@
         </activity>
         <activity
             android:name="com.demo.xclcharts.HBARScrollActivity"
-            android:label="@string/title_activity_hbarscroll"
-            android:hardwareAccelerated="false">
+            android:hardwareAccelerated="false"
+            android:label="@string/title_activity_hbarscroll" >
         </activity>
         <activity
             android:name="com.demo.xclcharts.HLNScrollActivity"
-            android:label="@string/title_activity_hlnscroll" 
-            android:hardwareAccelerated="false">
-             <!--2014-9-30  pand   解决了scrollview超过450dp不显示的问题 -->
+            android:hardwareAccelerated="false"
+            android:label="@string/title_activity_hlnscroll" >
+
+            <!-- 2014-9-30  pand   解决了scrollview超过450dp不显示的问题 -->
         </activity>
         <activity
             android:name="com.demo.xclcharts.CircleChartActivity"
@@ -84,6 +85,10 @@
         <activity
             android:name="com.demo.xclcharts.DialChart4Activity"
             android:label="@string/title_activity_dial_chart4" >
+        </activity>
+        <activity
+            android:name="com.demo.xclcharts.DySpActivity"
+            android:label="@string/title_activity_dy_sp" >
         </activity>
     </application>
 

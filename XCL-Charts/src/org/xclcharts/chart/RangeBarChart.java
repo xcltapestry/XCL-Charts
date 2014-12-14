@@ -175,14 +175,14 @@ public class RangeBarChart  extends AxesChart {
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);
 					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 					
-					setCategoryAxisLocation(XEnum.Location.LEFT);
+					setCategoryAxisLocation(XEnum.AxisLocation.LEFT);
 				break;			
 			 case VERTICAL: 					
 					categoryAxis.setHorizontalTickAlign(Align.CENTER);			
 					categoryAxis.getTickLabelPaint().setTextAlign(Align.CENTER);					
 					categoryAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
 					
-					setCategoryAxisLocation(XEnum.Location.BOTTOM);
+					setCategoryAxisLocation(XEnum.AxisLocation.BOTTOM);
 				break;		
 		}
 	}
@@ -198,14 +198,14 @@ public class RangeBarChart  extends AxesChart {
 					dataAxis.getTickLabelPaint().setTextAlign(Align.CENTER);
 					dataAxis.setVerticalTickPosition(XEnum.VerticalAlign.BOTTOM);
 					
-					setDataAxisLocation(XEnum.Location.BOTTOM);
+					setDataAxisLocation(XEnum.AxisLocation.BOTTOM);
 				break;
 			case VERTICAL: 					
 					dataAxis.setHorizontalTickAlign(Align.LEFT);
 					dataAxis.getTickLabelPaint().setTextAlign(Align.RIGHT);	
 					dataAxis.setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 					
-					setDataAxisLocation(XEnum.Location.LEFT);										
+					setDataAxisLocation(XEnum.AxisLocation.LEFT);										
 				break;
 		}
 	}
@@ -371,33 +371,23 @@ public class RangeBarChart  extends AxesChart {
 		// 标签
 		double currentTickLabel = 0d;
 		// 轴位置
-		XEnum.Location pos = getDataAxisLocation();
+		XEnum.AxisLocation pos = getDataAxisLocation();
 				
 		//步长
 		switch(pos)
 		{			 
 			case LEFT: //Y
-			case RIGHT:			
-				YSteps = getVerticalYSteps(labeltickCount) ;	
-											
-				if( XEnum.Location.RIGHT  == pos)
-				{    //显示在右边
-					currentX = axisX = plotArea.getRight();
-				}else{ //显示在左边
-					currentX = axisX = plotArea.getLeft();
-				}			
-				
+			case RIGHT:		
+			case VERTICAL_CENTER:	
+				YSteps = getVerticalYSteps(labeltickCount) ;
+				currentX = axisX =getAxisXPos(pos);
 				currentY = axisY = plotArea.getBottom();
 				break;						
 			case TOP: //X
 			case BOTTOM:
-				XSteps = getVerticalXSteps(labeltickCount);						
-				if(XEnum.Location.TOP == pos)
-				{
-					currentY = axisY = plotArea.getTop();
-				}else{
-					currentY = axisY = plotArea.getBottom();
-				}
+			case HORIZONTAL_CENTER:	
+				XSteps = getVerticalXSteps(labeltickCount);	
+				currentY = axisY = getAxisYPos(pos);
 				currentX = axisX = plotArea.getLeft();
 				break;			
 		}
@@ -410,7 +400,7 @@ public class RangeBarChart  extends AxesChart {
 			{				 
 				case LEFT: //Y
 				case RIGHT:								
-					
+				case VERTICAL_CENTER:	
 					// 依起始数据坐标与数据刻度间距算出上移高度
 					currentY = sub(plotArea.getBottom(), mul(i,YSteps));
 					
@@ -429,7 +419,7 @@ public class RangeBarChart  extends AxesChart {
 					break;							
 				case TOP: //X
 				case BOTTOM:	
-					
+				case HORIZONTAL_CENTER:		
 					//bar
 					// 依起始数据坐标与数据刻度间距算出上移高度
 					currentX = add(axisX , mul(i , XSteps));
@@ -476,37 +466,21 @@ public class RangeBarChart  extends AxesChart {
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
-		XEnum.Location pos = getCategoryAxisLocation();
+		XEnum.AxisLocation pos = getCategoryAxisLocation();
 								
-		if( XEnum.Location.LEFT == pos || 
-				XEnum.Location.RIGHT == pos)
+		if( XEnum.AxisLocation.LEFT == pos || 
+				XEnum.AxisLocation.RIGHT == pos|| 
+				XEnum.AxisLocation.VERTICAL_CENTER == pos)
 		{		
 			//line
 			YSteps = getVerticalYSteps( labeltickCount) ;
-			
-			switch(pos) //Y
-			{				 
-				case LEFT:
-					currentX = axisX = plotArea.getLeft();
-					break;
-				case RIGHT:	
-					currentX = axisX = plotArea.getRight();
-					break;
-			}
+			currentX = axisX = getAxisXPos(pos);
 			currentY = axisY = plotArea.getBottom();										
 		}else{ //TOP BOTTOM																	
 			// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 			// 总宽度 / 分类个数 = 间距长度    //getAxisScreenWidth() 			
 			XSteps = getVerticalXSteps(labeltickCount);
-			switch(pos) //Y
-			{				 
-				case TOP:
-					currentY = axisY = plotArea.getTop();
-					break;
-				case BOTTOM:	
-					currentY = axisY = plotArea.getBottom();					
-					break;
-			}		
+			currentY = axisY = getAxisYPos(pos);
 			currentX = axisX = plotArea.getLeft();
 		}
 					
@@ -519,7 +493,7 @@ public class RangeBarChart  extends AxesChart {
 			{				 
 				case LEFT: //Y
 				case RIGHT:			
-										
+				case VERTICAL_CENTER:						
 					// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
 					currentY = sub(axisY, mul((i + 1) , YSteps));										
 																							
@@ -535,7 +509,7 @@ public class RangeBarChart  extends AxesChart {
 					break;							
 				case TOP: //X
 				case BOTTOM:			
-					
+				case HORIZONTAL_CENTER:	
 					 // 依初超始X坐标与分类间距算出当前刻度的X坐标
 					 currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
 															

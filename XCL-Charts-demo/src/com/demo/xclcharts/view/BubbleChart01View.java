@@ -30,6 +30,7 @@ import java.util.Map.Entry;
 
 import org.xclcharts.chart.BubbleChart;
 import org.xclcharts.chart.BubbleData;
+import org.xclcharts.chart.PointD;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
@@ -189,6 +190,8 @@ public class BubbleChart01View extends DemoView {
 			chart.getPlotLegend().setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
 			chart.getPlotLegend().setHorizontalAlign(XEnum.HorizontalAlign.RIGHT);			
 			
+			//不使用精确计算，忽略Java计算误差
+			chart.disableHighPrecision();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -198,16 +201,16 @@ public class BubbleChart01View extends DemoView {
 	private void chartDataSet()
 	{
 		//线1的数据集
-		LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-		linePoint1.put(5d, 8d);
+		List<PointD> linePoint1 = new ArrayList<PointD>();
+		linePoint1.add(new PointD(5d, 8d));
 		
-		linePoint1.put(12d, 12d);
-		linePoint1.put(25d, 15d);
-		linePoint1.put(30d, 30d);
-		linePoint1.put(45d, 25d);
+		linePoint1.add(new PointD(12d, 12d));
+		linePoint1.add(new PointD(25d, 15d));
+		linePoint1.add(new PointD(30d, 30d));
+		linePoint1.add(new PointD(45d, 25d));
 		
-		linePoint1.put(55d, 33d);
-		linePoint1.put(62d, 45d);
+		linePoint1.add(new PointD(55d, 33d));
+		linePoint1.add(new PointD(62d, 45d));
 		//气泡大小
 		ArrayList<Double> linePoint1_bubble = new ArrayList<Double>();		
 		linePoint1_bubble.add(55d);
@@ -225,13 +228,13 @@ public class BubbleChart01View extends DemoView {
 		dataSeries1.setBorderColor(Color.RED);
 		
 		//线2的数据集
-		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
-		linePoint2.put(40d, 50d);
-		linePoint2.put(55d, 55d);
-		linePoint2.put(60d, 65d);
-		linePoint2.put(65d, 85d);				
-		linePoint2.put(72d, 70d);	
-		linePoint2.put(85d, 68d);	
+		List<PointD> linePoint2 = new ArrayList<PointD>();
+		linePoint2.add(new PointD(40d, 50d));
+		linePoint2.add(new PointD(55d, 55d));
+		linePoint2.add(new PointD(60d, 65d));
+		linePoint2.add(new PointD(65d, 85d));				
+		linePoint2.add(new PointD(72d, 70d));	
+		linePoint2.add(new PointD(85d, 68d));	
 		
 		ArrayList<Double> linePoint2_bubble = new ArrayList<Double>();		
 		linePoint2_bubble.add(55d);
@@ -251,10 +254,10 @@ public class BubbleChart01View extends DemoView {
 		dataSeries2.getDotLabelPaint().setColor(Color.rgb(69, 199, 101));
 		dataSeries2.setItemLabelRotateAngle(45.f);
 		
-		LinkedHashMap<Double,Double> linePoint3= new LinkedHashMap<Double,Double>();
-		linePoint3.put(10d, 70d);
-		linePoint3.put(25d, 85d);
-		linePoint3.put(30d, 95d);
+		List<PointD> linePoint3= new ArrayList<PointD>();
+		linePoint3.add(new PointD(10d, 70d));
+		linePoint3.add(new PointD(25d, 85d));
+		linePoint3.add(new PointD(30d, 95d));
 		
 		ArrayList<Double> linePoint3_bubble = new ArrayList<Double>();		
 		linePoint3_bubble.add(55d);
@@ -328,18 +331,18 @@ public class BubbleChart01View extends DemoView {
 			if( null == record) return;
 	
 			BubbleData lData = chartData.get(record.getDataID());
-			LinkedHashMap<Double,Double> mapPoint =  lData.getDataSet();	
+			List<PointD> mapPoint =  lData.getDataSet();	
 			int pos = record.getDataChildID();
 			int i = 0;
-			Iterator it = mapPoint.entrySet().iterator();
+			Iterator it = mapPoint.iterator();
 			while(it.hasNext())
 			{
-				Entry  entry=(Entry)it.next();	
+				PointD  entry=(PointD)it.next();	
 				
 				if(pos == i)
 				{							 						
-				     	Double xValue =(Double) entry.getKey();
-				     	Double yValue =(Double) entry.getValue();	
+				     	Double xValue = entry.x;
+				     	Double yValue = entry.y;
 				   				     
 				     	float r = record.getRadius();		
 						chart.showFocusPointF(record.getPosition(),r + r*0.5f);		

@@ -29,7 +29,7 @@
 	</section>
 	<section name="JavaSearchPage">
 		<item value="false" key="CASE_SENSITIVE"/>
-		<item value="11" key="INCLUDE_MASK"/>
+		<item value="15" key="INCLUDE_MASK"/>
 		<item value="1" key="HISTORY_SIZE"/>
 		<section name="HISTORY0">
 			<item value="11" key="includeMask"/>
@@ -76,7 +76,7 @@
 		<item value="true" key="author"/>
 		<item value="" key="docletname"/>
 		<item value="1.6" key="source"/>
-		<item value="XCL-Charts 图表库2014-11-30" key="doctitle"/>
+		<item value="XCL-Charts 图表库2014-12-14" key="doctitle"/>
 		<item value="false" key="openinbrowser"/>
 		<item value="false" key="noindex"/>
 		<item value="" key="docletpath"/>
@@ -86,13 +86,13 @@
 		<section name="projects">
 			<section name="XCL-Charts">
 				<item value="E:\GitHub\GitHub\XCL-Charts\doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts\javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 			<section name="XCL-Charts-demo">
 				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\doc" key="destdir"/>
-				<item value="" key="href"/>
 				<item value="E:\GitHub\GitHub\XCL-Charts\XCL-Charts-demo\javadoc.xml" key="antpath"/>
+				<item value="" key="href"/>
 			</section>
 		</section>
 	</section>

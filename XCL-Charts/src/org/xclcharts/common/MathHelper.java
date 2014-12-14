@@ -43,7 +43,10 @@ public class MathHelper {
 	private PointF mPointF = new PointF();
 	
 	//除法运算精度
-	private static final int DEFAULT_DIV_SCALE = 10;	
+	private static final int DEFAULT_DIV_SCALE = 10;
+	
+	//
+	private boolean mHighPrecision = true;
 
 	public MathHelper()
 	{	
@@ -192,6 +195,17 @@ public class MathHelper {
           
       	return Math.hypot(nx, ny);
     }	
+    
+        
+    public void disableHighPrecision()
+    {
+    	mHighPrecision = false;
+    }
+    
+    public void enabledHighPrecision()
+    {
+    	mHighPrecision = true;
+    }
 	 
 	/**
 	 * 加法运算
@@ -201,12 +215,15 @@ public class MathHelper {
 	 */
 	 public float add(float v1, float v2) 
 	 {
-		 
-		 // BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		
-		 BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
-		  
-		 BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
-		  return bgNum1.add(bgNum2).floatValue();
+		 if(!mHighPrecision)
+		 {
+			 return (v1+v2);	 
+		 }else{
+			 // BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		
+			 BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		 
+		 	 BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+		 	 return bgNum1.add(bgNum2).floatValue();
+		 }
 	 }
 		 
 	 /**
@@ -217,9 +234,14 @@ public class MathHelper {
 	  */
 	 public float sub(float v1, float v2) 
 	 {
-		 BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		 		 
-		 BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
-		 return bgNum1.subtract(bgNum2).floatValue();
+		 if(!mHighPrecision)
+		 {
+			 return (v1 - v2);	 
+		 }else{
+			 BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));		 		 
+			 BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+			 return bgNum1.subtract(bgNum2).floatValue();
+		 }
 	 }
 		 
 	 /**
@@ -230,9 +252,14 @@ public class MathHelper {
 	  */
 	 public float mul(float v1, float v2) 
 	 {		
-		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
-		  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
-		  return bgNum1.multiply(bgNum2).floatValue();
+		 if(!mHighPrecision)
+		 {
+			 return (v1 * v2);	 
+		 }else{
+			  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
+			  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+			  return bgNum1.multiply(bgNum2).floatValue();
+		 }
 	 }
 		 
 	 /**
@@ -242,8 +269,8 @@ public class MathHelper {
 	  * @return 运算结果
 	  */
 	 public float div(float v1, float v2)
-	 {
-		  return div(v1, v2, DEFAULT_DIV_SCALE);
+	 {		
+		return div(v1, v2, DEFAULT_DIV_SCALE);		 
 	 }
 		 
 	 /**
@@ -254,15 +281,20 @@ public class MathHelper {
 	  * @return 运算结果
 	  */
 	 public float div(float v1, float v2, int scale) 
-	 {
+	 {		 		 
 		  if (scale < 0) 
 		   throw new IllegalArgumentException("The scale must be a positive integer or zero");
 		
 		  if( Float.compare(v2, 0.0f) == 0)return 0.0f;
-			  							 
-		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
-		  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
-		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
+		  
+		  if(!mHighPrecision)
+		  {
+			 return (v1 / v2);	 
+		  }else{		  							
+			  BigDecimal bgNum1 = new BigDecimal(Float.toString(v1));
+			  BigDecimal bgNum2 = new BigDecimal(Float.toString(v2));
+			  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();
+		  }
 	 }
 		 
 	 /**
@@ -275,7 +307,7 @@ public class MathHelper {
 	 {
 		  if (scale < 0) 
 			  throw new IllegalArgumentException("The scale must be a positive integer or zero");
-				
+			
 		  BigDecimal bgNum1 = new BigDecimal(Float.toString(v));
 		  BigDecimal bgNum2 = new BigDecimal("1");
 		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).floatValue();		  
@@ -304,17 +336,26 @@ public class MathHelper {
 	
 	 public double add(double v1, double v2) 
 	 {
-		 
-		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
-		  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
-		  return bgNum1.add(bgNum2).doubleValue();
+		 if(!mHighPrecision)
+		  {
+			 return (v1 + v2);	 
+		  }else{
+			  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+			  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+			  return bgNum1.add(bgNum2).doubleValue();
+		  }
 	 }
 	 
 	 public double sub(double v1, double v2) 
 	 {		 
-		 BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
-		 BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
-		 return bgNum1.subtract(bgNum2).doubleValue();
+		 if(!mHighPrecision)
+		  {
+			 return (v1 - v2);	 
+		  }else{
+			 BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+			 BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+			 return bgNum1.subtract(bgNum2).doubleValue();
+		  }
 	 }
 	 
 	 
@@ -343,8 +384,13 @@ public class MathHelper {
 		
 		  if(Double.compare(v2, 0d) == 0) return 0d;
 		  
-		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
-		  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
-		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+		  if(!mHighPrecision)
+		  {
+			 return (v1 / v2);	 
+		  }else{		  
+			  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+			  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+			  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
+		  }
 	 }	 	 	
 }

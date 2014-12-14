@@ -24,11 +24,10 @@ package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
+import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.ScatterChart;
 import org.xclcharts.chart.ScatterData;
 import org.xclcharts.common.IFormatterTextCallBack;
@@ -44,7 +43,6 @@ import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-
 
 /**
  * @ClassName ScatterChart01View
@@ -83,6 +81,7 @@ public class ScatterChart01View extends DemoView {
 		chartLabels();
 		chartDataSet();	
 		chartRender();
+		
 	 }
 	 
 	 
@@ -176,6 +175,9 @@ public class ScatterChart01View extends DemoView {
 			//chart.disablePanMode();
 			chart.disableScale();
 			
+			//不使用精确计算，忽略Java计算误差
+			chart.disableHighPrecision();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,13 +187,13 @@ public class ScatterChart01View extends DemoView {
 	private void chartDataSet()
 	{
 		//线1的数据集
-		LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
+		ArrayList<PointD> linePoint1 = new ArrayList<PointD>();
 		
-		linePoint1.put(2d, 10d);		
-		linePoint1.put(6d, 10d);			
-		linePoint1.put(5d, 10d);		
-		linePoint1.put(3d, 10d);
-		linePoint1.put(4d, 10d);
+		linePoint1.add(new PointD(2d, 10d));		
+		linePoint1.add(new PointD(6d, 10d));			
+		linePoint1.add(new PointD(5d, 10d));		
+		linePoint1.add(new PointD(3d, 10d));
+		linePoint1.add(new PointD(4d, 10d));
 				
 		ScatterData dataSeries1 = new ScatterData("青菜萝卜够吃",linePoint1,
 				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.DOT );	
@@ -200,24 +202,24 @@ public class ScatterChart01View extends DemoView {
 		
 		
 		//线2的数据集
-		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
+		ArrayList<PointD> linePoint2 = new ArrayList<PointD>();
 		
-		linePoint2.put(2d, 5d);
-		linePoint2.put(5d, 5d);
-		linePoint2.put(6d, 5d);
-		linePoint2.put(3d, 5d);		
+		linePoint2.add(new PointD(2d, 5d));
+		linePoint2.add(new PointD(5d, 5d));
+		linePoint2.add(new PointD(6d, 5d));
+		linePoint2.add(new PointD(3d, 5d));		
 		
-		linePoint2.put(7d, 5d);	
-		linePoint2.put(4d, 5d);	
+		linePoint2.add(new PointD(7d, 5d));	
+		linePoint2.add(new PointD(4d, 5d));	
 				
 		ScatterData dataSeries2 = new ScatterData("饭管够",linePoint2,
 				(int)Color.rgb(155, 187, 90),XEnum.DotStyle.PRISMATIC );
 		
-		LinkedHashMap<Double,Double> linePoint3 = new LinkedHashMap<Double,Double>();
-		linePoint3.put(3d, 20d);
+		ArrayList<PointD> linePoint3 = new ArrayList<PointD>();
+		linePoint3.add(new PointD(3d, 20d));
 		
-		linePoint3.put(5d, 20d);
-		linePoint3.put(6d, 20d);
+		linePoint3.add(new PointD(5d, 20d));
+		linePoint3.add(new PointD(6d, 20d));
 		ScatterData dataSeries3 = new ScatterData("哈哈",linePoint3,
 				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.RING );	
 		
@@ -225,22 +227,33 @@ public class ScatterChart01View extends DemoView {
 		dataSeries3.getPlotDot().setRingInnerColor((int)Color.rgb(242, 167, 69));
 		dataSeries3.getDotLabelPaint().setTextAlign(Align.CENTER);
 		
-		LinkedHashMap<Double,Double> linePoint4 = new LinkedHashMap<Double,Double>();
-		linePoint4.put(2d, 70d);
-		linePoint4.put(3d, 79d);
-		linePoint4.put(5d, 75d);
-		linePoint4.put(7d, 75d);				
+		ArrayList<PointD> linePoint4 = new ArrayList<PointD>();
+		linePoint4.add(new PointD(2d, 70d));
+		linePoint4.add(new PointD(3d, 79d));
+		linePoint4.add(new PointD(5d, 75d));
+		linePoint4.add(new PointD(7d, 75d));				
 		ScatterData dataSeries4 = new ScatterData("XXX",linePoint4,
 				(int)Color.rgb(60, 173, 213),XEnum.DotStyle.X );		
 		
 			
-		LinkedHashMap<Double,Double> linePoint5 = new LinkedHashMap<Double,Double>();
-		linePoint5.put(2d, 40d);
-		linePoint5.put(3d, 40d);
-		linePoint5.put(5d, 55d);
-		linePoint5.put(7d, 55d);				
+		ArrayList<PointD> linePoint5 = new ArrayList<PointD>();
+		
+		linePoint5.add(new PointD(2d, 40d));
+		linePoint5.add(new PointD(2d, 50d));
+		linePoint5.add(new PointD(2d, 60d));
+		
+		linePoint5.add(new PointD(2.5d, 43d));
+		linePoint5.add(new PointD(2.5d, 51d));
+		linePoint5.add(new PointD(2.5d, 60d));
+		
+					
+		linePoint5.add(new PointD(3d, 73d));
+		linePoint5.add(new PointD(3d, 40d));
+		linePoint5.add(new PointD(5d, 55d));
+		linePoint5.add(new PointD(7d, 55d));				
+								
 		ScatterData dataSeries5 = new ScatterData("Cross",linePoint5,
-				Color.RED,XEnum.DotStyle.CROSS );		
+				Color.RED,XEnum.DotStyle.CROSS );	
 		
 		//设定数据源		
 		chartData.add(dataSeries1);				
@@ -306,19 +319,18 @@ public class ScatterChart01View extends DemoView {
 				if( null == record) return;
 		
 				ScatterData lData = chartData.get(record.getDataID());
-				LinkedHashMap<Double,Double> linePoint =  lData.getDataSet();	
+				List<PointD> linePoint =  lData.getDataSet();	
 				int pos = record.getDataChildID();
 				int i = 0;
-				Iterator it = linePoint.entrySet().iterator();
+				Iterator it = linePoint.iterator();
 				while(it.hasNext())
 				{
-					Entry  entry=(Entry)it.next();	
+					PointD  entry=(PointD)it.next();	
 					
 					if(pos == i)
 					{							 						
-					     Double xValue =(Double) entry.getKey();
-					     Double yValue =(Double) entry.getValue();	
-					     
+					     Double xValue = entry.x;
+					     Double yValue = entry.y;					     
 					     
 					   //在点击处显示tooltip
 						mPaintTooltips.setColor(Color.RED);				

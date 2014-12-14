@@ -89,11 +89,10 @@ public class PlotDotRender {
 	/**
 	 * 绘制线上的坐标点
 	 * 
+	 * @param canvas 画布
 	 * @param pDot	点类型
-	 * @param left	左边x坐标
-	 * @param top	左边Y坐标
-	 * @param right	右边x坐标
-	 * @param bottom 右边Y坐标
+	 * @param cirX	x坐标
+	 * @param cirY	Y坐标
 	 * @param paint	画笔
 	 */	
 	public RectF renderDot(Canvas canvas, PlotDot pDot, 

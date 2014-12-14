@@ -175,5 +175,11 @@ public class DataAxisRender extends DataAxis {
 			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
 		}
 	}	
+	
+	public void renderAxisLine(Canvas canvas, float startX,float startY,float stopX,float stopY)
+	{
+		canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+	}	
+	
 
 }

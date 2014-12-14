@@ -7,6 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterTextCallBack;
@@ -153,22 +154,22 @@ public class SplineChart03View  extends DemoView {
 	private void chartDataSet()
 	{
 		//线1的数据集
-		LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-		linePoint1.put(5d, 8d);
+		List<PointD> linePoint1 = new ArrayList<PointD>();
+		linePoint1.add(new PointD(5d, 8d));
 		
-		linePoint1.put(12d, 12d);
-		linePoint1.put(25d, 15d);
-		linePoint1.put(30d, 30d);
-		linePoint1.put(45d, 25d);
+		linePoint1.add(new PointD(12d, 12d));
+		linePoint1.add(new PointD(25d, 15d));
+		linePoint1.add(new PointD(30d, 30d));
+		linePoint1.add(new PointD(45d, 25d));
 		
-		linePoint1.put(55d, 33d);
-		linePoint1.put(62d, 45d);
+		linePoint1.add(new PointD(55d, 33d));
+		linePoint1.add(new PointD(62d, 45d));
 		
 		
-		linePoint1.put(75d, 43d);
-		linePoint1.put(82d, 55d);
-		linePoint1.put(90d, 60d);
-		linePoint1.put(96d, 68d);
+		linePoint1.add(new PointD(75d, 43d));
+		linePoint1.add(new PointD(82d, 55d));
+		linePoint1.add(new PointD(90d, 60d));
+		linePoint1.add(new PointD(96d, 68d));
 		
 		SplineData dataSeries1 = new SplineData("线一",linePoint1,
 				(int)Color.rgb(54, 141, 238) );	
@@ -177,15 +178,15 @@ public class SplineChart03View  extends DemoView {
 		dataSeries1.setLabelVisible(true);	
 		
 		//线2的数据集
-		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
-		linePoint2.put(40d, 50d);
-		linePoint2.put(55d, 55d);
+		List<PointD> linePoint2 = new ArrayList<PointD>();
+		linePoint2.add(new PointD(40d, 50d));
+		linePoint2.add(new PointD(55d, 55d));
 	
-		linePoint2.put(60d, 65d);
-		linePoint2.put(65d, 85d);		
+		linePoint2.add(new PointD(60d, 65d));
+		linePoint2.add(new PointD(65d, 85d));		
 		
-		linePoint2.put(72d, 70d);	
-		linePoint2.put(85d, 68d);	
+		linePoint2.add(new PointD(72d, 70d));	
+		linePoint2.add(new PointD(85d, 68d));	
 	
 		
 		SplineData dataSeries2 = new SplineData("线二",linePoint2,
@@ -197,12 +198,12 @@ public class SplineChart03View  extends DemoView {
 		
 		
 		//线2的数据集
-		LinkedHashMap<Double,Double> linePoint3 = new LinkedHashMap<Double,Double>();
-		linePoint3.put(30d, 60d);
-		linePoint3.put(45d, 65d);
+		List<PointD> linePoint3 = new ArrayList<PointD>();
+		linePoint3.add(new PointD(30d, 60d));
+		linePoint3.add(new PointD(45d, 65d));
 	
-		linePoint3.put(50d, 75d);
-		linePoint3.put(65d, 95d);		
+		linePoint3.add(new PointD(50d, 75d));
+		linePoint3.add(new PointD(65d, 95d));		
 			
 		SplineData dataSeries3 = new SplineData("线三",linePoint3,
 				(int)Color.rgb(84, 206, 231) );
@@ -270,18 +271,18 @@ public class SplineChart03View  extends DemoView {
 	
 		if(record.getDataID() >= chartData.size()) return;
 		SplineData lData = chartData.get(record.getDataID());
-		LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
+		List<PointD> linePoint =  lData.getLineDataSet();	
 		int pos = record.getDataChildID();
 		int i = 0;
-		Iterator it = linePoint.entrySet().iterator();
+		Iterator it = linePoint.iterator();
 		while(it.hasNext())
 		{
-			Entry  entry=(Entry)it.next();	
+			PointD  entry=(PointD)it.next();	
 			
 			if(pos == i)
 			{							 						
-			     Double xValue =(Double) entry.getKey();
-			     Double yValue =(Double) entry.getValue();	
+				Double xValue = entry.x;
+				Double yValue = entry.y;	
 			    	     			     
 			     	float r = record.getRadius();
 					chart.showFocusPointF(record.getPosition(),r + r*0.8f);		

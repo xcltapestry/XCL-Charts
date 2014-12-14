@@ -30,6 +30,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterTextCallBack;
@@ -120,9 +121,7 @@ public class SplineChart02View extends DemoView {
 			chart.setCategoryAxisMax(360);	
 			//标签轴最小值
 			chart.setCategoryAxisMin(0);	
-			
-		
-			
+										
 			//设置图的背景色
 			//chart.setBackgroupColor(true,Color.BLACK);
 			//设置绘图区的背景色
@@ -176,6 +175,9 @@ public class SplineChart02View extends DemoView {
 			//chart.extPointClickRange(5);
 			//chart.showClikedFocus();
 			
+			//不使用精确误差计算，速度提升明显
+			chart.disableHighPrecision();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -185,8 +187,8 @@ public class SplineChart02View extends DemoView {
 	private void chartDataSet()
 	{
 
-		LinkedHashMap<Double,Double> lineSin = new LinkedHashMap<Double,Double>();
-		LinkedHashMap<Double,Double> lineCos = new LinkedHashMap<Double,Double>();
+		List<PointD> lineSin = new ArrayList<PointD>();
+		List<PointD> lineCos = new ArrayList<PointD>();
 		
 		int step = 2;
 		int count = 360 / step + 1;
@@ -195,8 +197,8 @@ public class SplineChart02View extends DemoView {
 			int angle = i * step; 
 			double rAngle = Math.toRadians(angle);
 			
-			lineSin.put((double) angle, Math.sin(rAngle));	
-			lineCos.put((double) angle, Math.cos(rAngle));	
+			lineSin.add(new PointD((double) angle, Math.sin(rAngle)));	
+			lineCos.add(new PointD((double) angle, Math.cos(rAngle)));	
 		}
 		
 		SplineData dataSeriesSin = new SplineData("Sin",lineSin,(int)Color.rgb(54, 141, 238) );						
@@ -264,18 +266,18 @@ public class SplineChart02View extends DemoView {
 		if(record.getDataID() >= chartData.size()) return;
 		
 		SplineData lData = chartData.get(record.getDataID());
-		LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
+		List<PointD> linePoint =  lData.getLineDataSet();	
 		int pos = record.getDataChildID();
 		int i = 0;
-		Iterator it = linePoint.entrySet().iterator();
+		Iterator it = linePoint.iterator();
 		while(it.hasNext())
 		{
-			Entry  entry=(Entry)it.next();	
+			PointD  entry=(PointD)it.next();	
 			
 			if(pos == i)
 			{							 						
-			     Double xValue =(Double) entry.getKey();
-			     Double yValue =(Double) entry.getValue();	
+				Double xValue = entry.x;
+				Double yValue = entry.y;	
 			     
 			     Toast.makeText(this.getContext(), 
 							record.getPointInfo() +

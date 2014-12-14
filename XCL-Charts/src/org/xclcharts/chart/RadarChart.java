@@ -508,7 +508,7 @@ public class RadarChart extends RdChart{
 		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
 		
-		PointF[] array = new PointF[arrayDataX.length];
+		//PointF[] array = new PointF[arrayDataX.length];
 		
 		for(int p=0;p< arrayDataX.length;p++)
 		{

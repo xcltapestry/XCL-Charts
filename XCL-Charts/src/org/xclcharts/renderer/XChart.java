@@ -707,7 +707,7 @@ public class XChart implements IRender {
 		
 		return mDyLegend;
 	}
-	
+		
 	/**
 	 * 禁用在图库中执行System.gc()
 	 */
@@ -843,6 +843,24 @@ public class XChart implements IRender {
 
 	
 	//math计算类函数 ----------------------------------------------------------------
+	
+	/**
+	 * Java是无法精确计算小数后面的，在此
+	 * 忽略Java数据计算时的误差。(饼图类图表慎用)
+	 */
+	public void disableHighPrecision()
+    {
+		 MathHelper.getInstance().disableHighPrecision();
+    }
+    
+	/**
+	 * 激活Java数据精确计算，考虑计算的误差。
+	 */
+    public void enabledHighPrecision()
+    {
+    	 MathHelper.getInstance().enabledHighPrecision();
+    }
+    
 	/**
 	 * 加法运算
 	 * @param v1 参数1

@@ -45,6 +45,7 @@
          <item>范围条形图</item>
      	 <item>象限图</item>
         
+     	 <item>双线图</item> 
         <item>仪表盘-混合图</item> 
          <item>仪表盘-测试网速</item> 
          <item>仪表盘-速率</item> 
@@ -104,6 +105,7 @@
         <item>RangeBar Chart</item>     
         <item>Bubble Chart + Scatter Chart + Spline chart</item>
        
+        <item>Activity传值，自动刷新</item> 
        <item>Dial Chart</item> 
         <item>Dial Chart</item>  
         <item>Dial Chart</item>        

@@ -21,7 +21,7 @@
  */
 package org.xclcharts.chart;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.xclcharts.renderer.XEnum;
 
@@ -36,7 +36,7 @@ public class SplineData extends LnData{
 
 	
 			//线上每个点的值
-			private LinkedHashMap<Double,Double> mLinePointMap ;	
+			private List<PointD> mLinePointMap ;	
 			
 			//标签文字旋转角度
 			private float mItemLabelRotateAngle = 0.0f;	
@@ -50,7 +50,7 @@ public class SplineData extends LnData{
 			 * @param color  线条颜色
 			 */
 			public SplineData(String lineKey,					
-							LinkedHashMap<Double,Double> dataSeries,
+							List<PointD> dataSeries,
 							int color ) {
 				// TODO Auto-generated constructor stub
 			
@@ -67,7 +67,7 @@ public class SplineData extends LnData{
 			 * @param dotStyle  坐标点绘制类型
 			 */
 			public SplineData(String lineKey,					
-							LinkedHashMap<Double,Double> dataSeries,
+							List<PointD> dataSeries,
 							int color,
 							XEnum.DotStyle  dotStyle) {
 				// TODO Auto-generated constructor stub
@@ -83,7 +83,7 @@ public class SplineData extends LnData{
 			 * 设置绘制线的数据序列,由x与y坐标构建
 			 * @param dataSeries <X坐标值，Y坐标值>
 			 */
-			public void setLineDataSet( LinkedHashMap<Double,Double>  dataSeries) 
+			public void setLineDataSet( List<PointD>  dataSeries) 
 			{
 				mLinePointMap = dataSeries;
 			}
@@ -92,7 +92,7 @@ public class SplineData extends LnData{
 			 * 返回绘制线的数据序列
 			 * @return 线的数据序列<X坐标值，Y坐标值>
 			 */
-			public LinkedHashMap<Double,Double> getLineDataSet() {
+			public List<PointD> getLineDataSet() {
 				return mLinePointMap;
 			}
 			

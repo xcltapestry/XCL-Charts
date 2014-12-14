@@ -31,7 +31,6 @@ import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.info.PlotAxisTick;
 
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
@@ -97,35 +96,28 @@ public class LnChart extends AxesChart {
 		// 标签
 		double currentTickLabel = 0d;
 		// 轴位置
-		XEnum.Location pos = getDataAxisLocation();
+		XEnum.AxisLocation pos = getDataAxisLocation();
 				
 		//步长
 		switch(pos)
 		{			 
 			case LEFT: //Y
 			case RIGHT:			
+			case VERTICAL_CENTER:
 				YSteps = getVerticalYSteps(labeltickCount) ;	
-											
-				if( XEnum.Location.RIGHT  == pos)
-				{    //显示在右边
-					currentX = axisX = plotArea.getRight();
-				}else{ //显示在左边
-					currentX = axisX = plotArea.getLeft();
-				}			
 				
+				currentX = axisX = getAxisXPos(pos);
 				currentY = axisY = plotArea.getBottom();
 				break;						
 			case TOP: //X
 			case BOTTOM:
-				XSteps = getVerticalXSteps(labeltickCount);						
-				if(XEnum.Location.TOP == pos)
-				{
-					currentY = axisY = plotArea.getTop();
-				}else{
-					currentY = axisY = plotArea.getBottom();
-				}
+			case HORIZONTAL_CENTER:
+				XSteps = getVerticalXSteps(labeltickCount);	
+				currentY = axisY = getAxisYPos(pos);
 				currentX = axisX = plotArea.getLeft();
-				break;			
+				break;	
+			default:
+				Log.e(TAG,"未知的枚举类型 .");
 		}
 		
 		mLstDataTick.clear();			
@@ -135,7 +127,8 @@ public class LnChart extends AxesChart {
 			switch(pos)
 			{				 
 				case LEFT: //Y
-				case RIGHT:								
+				case RIGHT:			
+				case VERTICAL_CENTER:
 					// 依起始数据坐标与数据刻度间距算出上移高度	
 					currentY =  sub(plotArea.getBottom(), i * YSteps);
 								
@@ -156,6 +149,7 @@ public class LnChart extends AxesChart {
 					break;							
 				case TOP: //X
 				case BOTTOM:	
+				case HORIZONTAL_CENTER:
 					 // 依初超始X坐标与标签间距算出当前刻度的X坐标
 					 currentX = add(plotArea.getLeft() , i * XSteps); 
 								
@@ -226,34 +220,20 @@ public class LnChart extends AxesChart {
 		// 标签轴(X 轴)
 		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
 		
-		XEnum.Location pos = getCategoryAxisLocation();
+		XEnum.AxisLocation pos = getCategoryAxisLocation();
 								
-		if( XEnum.Location.LEFT == pos || 
-				XEnum.Location.RIGHT == pos)
+		if( XEnum.AxisLocation.LEFT == pos || 
+				XEnum.AxisLocation.RIGHT == pos|| 
+				XEnum.AxisLocation.VERTICAL_CENTER == pos)
 		{						
 			YSteps = getVerticalYSteps( labeltickCount) ;
-			switch(pos) //Y
-			{				 
-				case LEFT:
-					currentX = axisX = plotArea.getLeft();
-					break;
-				case RIGHT:	
-					currentX = axisX = plotArea.getRight();
-					break;
-			}
+			
+			currentX = axisX = getAxisXPos(pos);
 			currentY = axisY = plotArea.getBottom();										
 		}else{ //TOP BOTTOM														
 			
 			XSteps = getVerticalXSteps(labeltickCount);
-			switch(pos) //Y
-			{				 
-				case TOP:
-					currentY = axisY = plotArea.getTop();
-					break;
-				case BOTTOM:	
-					currentY = axisY = plotArea.getBottom();					
-					break;
-			}		
+			currentY = axisY = getAxisYPos(pos);	
 			currentX = axisX = plotArea.getLeft();
 		}
 					
@@ -266,7 +246,7 @@ public class LnChart extends AxesChart {
 			{				 
 				case LEFT: //Y
 				case RIGHT:			
-					
+				case VERTICAL_CENTER:	
 					// 依起始数据坐标与数据刻度间距算出上移高度									
 					currentY = sub(plotArea.getBottom(), j * YSteps);
 																							
@@ -279,7 +259,8 @@ public class LnChart extends AxesChart {
 					
 					break;							
 				case TOP: //X
-				case BOTTOM:			
+				case BOTTOM:		
+				case HORIZONTAL_CENTER:
 					// 依初超始X坐标与标签间距算出当前刻度的X坐标			
 					currentX = add(plotArea.getLeft() , (j) * XSteps); 
 										

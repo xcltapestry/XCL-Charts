@@ -194,13 +194,23 @@ public class XEnum {
 		
 
 		/**
-		 * 附加信息位置
+		 * 位置
 		 * @author XCL
 		 *
 		 */
 		public enum Location {  
 			TOP,BOTTOM,LEFT,RIGHT
 		}
+		
+		/**
+		 * 轴位置
+		 * @author XCL
+		 *
+		 */
+		public enum AxisLocation {  
+			TOP,BOTTOM,LEFT,RIGHT,HORIZONTAL_CENTER, VERTICAL_CENTER
+		}
+		
 		
 		/**
 		 * 指针类型

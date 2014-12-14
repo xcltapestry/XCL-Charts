@@ -21,7 +21,6 @@
  */
 package org.xclcharts.chart;
 
-import java.util.LinkedHashMap;
 import java.util.List;
 
 import android.graphics.Paint;
@@ -37,7 +36,7 @@ import android.graphics.Paint;
 public class BubbleData {
 	
 	//线上每个点的值
-	private LinkedHashMap<Double,Double> mPointMap ;
+	private List<PointD> mPointMap ;
 	private List<Double> mBubble ;	
 	
 	//标签画笔
@@ -65,7 +64,7 @@ public class BubbleData {
 	 * @param color			气泡颜色
 	 */
 	public BubbleData(String key,					
-						LinkedHashMap<Double,Double> dataSeries, 
+						List<PointD> dataSeries, 
 						List<Double> bubble,
 						int color) {
 		// TODO Auto-generated constructor stub
@@ -81,7 +80,7 @@ public class BubbleData {
 	 * 设置绘制线的数据序列,由x与y坐标构建
 	 * @param dataSeries <X坐标值，Y坐标值>
 	 */
-	public void setDataSet( LinkedHashMap<Double,Double>  dataSeries) 
+	public void setDataSet( List<PointD>  dataSeries) 
 	{
 		mPointMap = dataSeries;
 	}
@@ -90,7 +89,7 @@ public class BubbleData {
 	 * 返回绘制线的数据序列
 	 * @return 线的数据序列<X坐标值，Y坐标值>
 	 */
-	public LinkedHashMap<Double,Double> getDataSet() {
+	public List<PointD> getDataSet() {
 		return mPointMap;
 	}
 	

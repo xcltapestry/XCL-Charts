@@ -21,7 +21,7 @@
  */
 package org.xclcharts.chart;
 
-import java.util.LinkedHashMap;
+import java.util.List;
 
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -43,7 +43,11 @@ public class ScatterData {
 	private boolean mLabelVisible = false;
 
 	//线上每个点的值
-	private LinkedHashMap<Double,Double> mPointMap ;
+	//private LinkedHashMap<Double,Double> mPointMap ;
+	
+	//线上每个点的值
+	private List<PointD> mPointMap;
+			
 	
 	//标签画笔
 	private Paint mLabelPaint = null;
@@ -53,8 +57,6 @@ public class ScatterData {
 	//标签文字旋转角度
 	private float mItemLabelRotateAngle = 0.0f;
 	
-
-
 		
 	public ScatterData(){}
 	
@@ -65,7 +67,7 @@ public class ScatterData {
 	 * @param color  线条颜色
 	 */
 	public ScatterData(String key,					
-						LinkedHashMap<Double,Double> dataSeries,
+						List<PointD> dataSeries,
 						int color,
 						XEnum.DotStyle  dotStyle) {
 		// TODO Auto-generated constructor stub
@@ -81,7 +83,7 @@ public class ScatterData {
 	 * 设置绘制线的数据序列,由x与y坐标构建
 	 * @param dataSeries <X坐标值，Y坐标值>
 	 */
-	public void setDataSet( LinkedHashMap<Double,Double>  dataSeries) 
+	public void setDataSet( List<PointD>  dataSeries) 
 	{
 		mPointMap = dataSeries;
 	}
@@ -90,7 +92,7 @@ public class ScatterData {
 	 * 返回绘制线的数据序列
 	 * @return 线的数据序列<X坐标值，Y坐标值>
 	 */
-	public LinkedHashMap<Double,Double> getDataSet() {
+	public List<PointD> getDataSet() {
 		return mPointMap;
 	}
 	

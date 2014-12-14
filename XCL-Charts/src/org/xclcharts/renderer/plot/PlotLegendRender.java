@@ -35,7 +35,6 @@ import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RadarData;
 import org.xclcharts.chart.ScatterData;
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -525,6 +524,7 @@ public class PlotLegendRender extends PlotLegend{
 		for (LnData cData : dataSet) {
 			key = cData.getLineKey();				
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getLineColor());
@@ -540,6 +540,7 @@ public class PlotLegendRender extends PlotLegend{
 		for (BarData cData : dataSet) {
 			key = cData.getKey();				
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getColor());
@@ -559,6 +560,7 @@ public class PlotLegendRender extends PlotLegend{
 		for(PieData cData : dataSet){
 			key = cData.getKey();				
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getSliceColor());
@@ -577,6 +579,7 @@ public class PlotLegendRender extends PlotLegend{
 		for(RadarData cData : dataSet){
 			key = cData.getLineKey();				
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getLineColor());			
@@ -593,6 +596,7 @@ public class PlotLegendRender extends PlotLegend{
 		for (ScatterData cData : dataSet) {
 			key = cData.getKey();				
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getPlotDot().getColor());
@@ -608,6 +612,7 @@ public class PlotLegendRender extends PlotLegend{
 		for (BubbleData cData : dataSet) {
 			key = cData.getKey();				
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getColor());
@@ -626,6 +631,7 @@ public class PlotLegendRender extends PlotLegend{
 		for (ArcLineData cData : dataSet) {
 			key = cData.getKey();	
 			if(!isDrawKey(key))continue;
+			if("" == key)continue;
 			
 			mLstKey.add(key);
 			mLstColor.add(cData.getBarColor());

@@ -128,6 +128,11 @@ public class MainActivity extends Activity {
 					 position = chartsTitleCurr.length - 11 - position;
 					 intent.setClass(MainActivity.this,DialChart4Activity.class);		
 				
+				 }else if(position >= chartsTitleCurr.length - 12) //倒数9  dial chart
+				 {
+					 position = chartsTitleCurr.length - 12 - position;
+					 intent.setClass(MainActivity.this,DySpActivity.class);		
+				
 				 }else{
 					 intent.setClass(MainActivity.this,ChartsActivity.class);	
 				 }
@@ -180,12 +185,9 @@ public class MainActivity extends Activity {
 	        startActivity(intent2);  
 	        finish();
 	        
-	        
-	        
 	        //Intent intent2 = new Intent();  
     		//intent2.setClass(MainActivity.this,GradientActivity.class);    				
     		//startActivity(intent2); 
-    		
     		
             break;
         case Menu.FIRST+2:

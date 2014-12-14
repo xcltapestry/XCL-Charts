@@ -31,6 +31,7 @@ import java.util.Map.Entry;
 
 import org.xclcharts.chart.BubbleChart;
 import org.xclcharts.chart.BubbleData;
+import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.ScatterChart;
 import org.xclcharts.chart.ScatterData;
 import org.xclcharts.chart.SplineChart;
@@ -208,14 +209,15 @@ public class QuadrantChart01View extends DemoView {
 		}
 		private void chartDataSet()
 		{
-			//线1的数据集
-			LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-	
-			linePoint1.put(30d, 30d);
-			linePoint1.put(45d, 25d);
 			
-			linePoint1.put(55d, 33d);
-			linePoint1.put(62d, 45d);
+			//线1的数据集
+			List<PointD> linePoint1 = new ArrayList<PointD>();
+	
+			linePoint1.add(new PointD(30d, 30d));
+			linePoint1.add(new PointD(45d, 25d));
+			
+			linePoint1.add(new PointD(55d, 33d));
+			linePoint1.add(new PointD(62d, 45d));
 			//气泡大小
 			ArrayList<Double> linePoint1_bubble = new ArrayList<Double>();		
 			linePoint1_bubble.add(55d);
@@ -233,13 +235,13 @@ public class QuadrantChart01View extends DemoView {
 			dataSeries1.setBorderColor(Color.RED);
 			
 			//线2的数据集
-			LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
-			linePoint2.put(40d, 50d);
-			linePoint2.put(55d, 55d);
-			linePoint2.put(60d, 65d);
-			linePoint2.put(65d, 85d);				
-			linePoint2.put(72d, 70d);	
-			linePoint2.put(85d, 68d);	
+			List<PointD> linePoint2 = new ArrayList<PointD>();
+			linePoint2.add(new PointD(40d, 50d));
+			linePoint2.add(new PointD(55d, 55d));
+			linePoint2.add(new PointD(60d, 65d));
+			linePoint2.add(new PointD(65d, 85d));				
+			linePoint2.add(new PointD(72d, 70d));	
+			linePoint2.add(new PointD(85d, 68d));	
 			
 			ArrayList<Double> linePoint2_bubble = new ArrayList<Double>();		
 			linePoint2_bubble.add(55d);
@@ -258,10 +260,10 @@ public class QuadrantChart01View extends DemoView {
 			dataSeries2.getDotLabelPaint().setColor(Color.rgb(69, 199, 101));
 			dataSeries2.setItemLabelRotateAngle(45.f);
 			
-			LinkedHashMap<Double,Double> linePoint3= new LinkedHashMap<Double,Double>();
-			linePoint3.put(10d, 70d);
-			linePoint3.put(25d, 85d);
-			linePoint3.put(30d, 95d);
+			List<PointD> linePoint3= new ArrayList<PointD>();
+			linePoint3.add(new PointD(10d, 70d));
+			linePoint3.add(new PointD(25d, 85d));
+			linePoint3.add(new PointD(30d, 95d));
 			
 			ArrayList<Double> linePoint3_bubble = new ArrayList<Double>();		
 			linePoint3_bubble.add(55d);
@@ -278,6 +280,7 @@ public class QuadrantChart01View extends DemoView {
 			chartData.add(dataSeries1);				
 			chartData.add(dataSeries2);	
 			chartData.add(dataSeries3);	
+		
 		}
 		
 		
@@ -316,13 +319,14 @@ public class QuadrantChart01View extends DemoView {
 		}
 		private void chartDataSetScat()
 		{
+		
 			//线1的数据集
-			LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-			linePoint1.put(15d, 68d);
+			List<PointD> linePoint1 = new ArrayList<PointD>();
+			linePoint1.add(new PointD(15d, 68d));
 			
-			linePoint1.put(32d, 62d);
-			linePoint1.put(25d, 55d);
-			linePoint1.put(60d, 80d);
+			linePoint1.add(new PointD(32d, 62d));
+			linePoint1.add(new PointD(25d, 55d));
+			linePoint1.add(new PointD(60d, 80d));
 			ScatterData dataSeries1 = new ScatterData("散点1",linePoint1,
 					Color.rgb(41, 161, 64),XEnum.DotStyle.DOT );	
 			dataSeries1.setLabelVisible(true);	
@@ -330,16 +334,17 @@ public class QuadrantChart01View extends DemoView {
 			
 			
 			//线2的数据集
-			LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
-			linePoint2.put(43d,70d);
-			linePoint2.put(56d, 85d);
-			linePoint2.put(37d, 65d);
+			List<PointD> linePoint2 = new ArrayList<PointD>();
+			linePoint2.add(new PointD(43d,70d));
+			linePoint2.add(new PointD(56d, 85d));
+			linePoint2.add(new PointD(37d, 65d));
 			ScatterData dataSeries2 = new ScatterData("散点2",linePoint2,
 					Color.YELLOW,XEnum.DotStyle.PRISMATIC );
 							
 			//设定数据源		
-			chartDataScat .add(dataSeries1);				
-			chartDataScat .add(dataSeries2);	
+			chartDataScat.add(dataSeries1);				
+			chartDataScat.add(dataSeries2);	
+			
 		}
 		
 				
@@ -384,18 +389,19 @@ public class QuadrantChart01View extends DemoView {
 		private void chartDataSetSp()
 		{
 			//线1的数据集
-			LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();		
-			
-			linePoint1.put(25d, 15d);
-			linePoint1.put(45d, 35d);
-			linePoint1.put(50d, 40d);
+			List<PointD> linePoint1 = new ArrayList<PointD>();		
+		
+			linePoint1.add(new PointD(25d, 15d));
+			linePoint1.add(new PointD(45d, 35d));
+			linePoint1.add(new PointD(50d, 40d));
 						
-			linePoint1.put(65d, 45d);
-			linePoint1.put(70d, 50d);
-			linePoint1.put(75d, 65d);
+			linePoint1.add(new PointD(65d, 45d));
+			linePoint1.add(new PointD(70d, 50d));
+			linePoint1.add(new PointD(75d, 65d));
 			
-			linePoint1.put(85d, 73d);
-			linePoint1.put(92d, 85d);
+			linePoint1.add(new PointD(85d, 73d));
+			linePoint1.add(new PointD(92d, 85d));
+			
 			SplineData dataSeries1 = new SplineData("指向线",linePoint1,
 					Color.RED );	 //(int)Color.rgb(54, 141, 238)
 			//把线弄细点
@@ -403,7 +409,7 @@ public class QuadrantChart01View extends DemoView {
 			dataSeries1.setDotStyle(XEnum.DotStyle.HIDE);
 						
 			//设定数据源		
-			chartDataSp.add(dataSeries1);		
+			chartDataSp.add(dataSeries1);	
 		}
 						
 		private void chartLabels()
@@ -465,18 +471,18 @@ public class QuadrantChart01View extends DemoView {
 				if( null == record) return;
 		
 				BubbleData lData = chartData.get(record.getDataID());
-				LinkedHashMap<Double,Double> mapPoint =  lData.getDataSet();	
+				List<PointD> mapPoint =  lData.getDataSet();	
 				int pos = record.getDataChildID();
 				int i = 0;
-				Iterator it = mapPoint.entrySet().iterator();
+				Iterator it = mapPoint.iterator();
 				while(it.hasNext())
 				{
-					Entry  entry=(Entry)it.next();	
+					PointD  entry=(PointD)it.next();	
 					
 					if(pos == i)
 					{							 						
-					     	Double xValue =(Double) entry.getKey();
-					     	Double yValue =(Double) entry.getValue();	
+					     	Double xValue = entry.x;
+					     	Double yValue = entry.y;
 					   				     
 					     	float r = record.getRadius();		
 							chart.showFocusPointF(record.getPosition(),r + r*0.5f);		

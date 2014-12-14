@@ -11,6 +11,7 @@ import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
+import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.DensityUtil;
@@ -262,8 +263,8 @@ public class MultiAxisChart03View extends DemoView {
 			chartLn.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 			
 			//调整轴显示位置
-			chartLn.setDataAxisLocation(XEnum.Location.RIGHT);
-			chartLn.setCategoryAxisLocation(XEnum.Location.TOP);
+			chartLn.setDataAxisLocation(XEnum.AxisLocation.RIGHT);
+			chartLn.setCategoryAxisLocation(XEnum.AxisLocation.TOP);
 			
 			
 			
@@ -406,8 +407,8 @@ public class MultiAxisChart03View extends DemoView {
 			chartLnAxes.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 					
 			//调整轴显示位置
-			chartLnAxes.setDataAxisLocation(XEnum.Location.RIGHT);
-			chartLnAxes.setCategoryAxisLocation(XEnum.Location.LEFT);
+			chartLnAxes.setDataAxisLocation(XEnum.AxisLocation.RIGHT);
+			chartLnAxes.setCategoryAxisLocation(XEnum.AxisLocation.LEFT);
 			
 				
 		} catch (Exception e) {
@@ -431,8 +432,8 @@ public class MultiAxisChart03View extends DemoView {
 	private void chartDataSetAxes()
 	{
 		//线1的数据集
-		LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-		linePoint1.put(0d, 0d);
+		List<PointD> linePoint1 = new ArrayList<PointD>();
+		linePoint1.add(new PointD(0d, 0d));
 		
 		SplineData dataSeries1 = new SplineData("",linePoint1,
 				(int)Color.rgb(54, 141, 238) );	

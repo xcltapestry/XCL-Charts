@@ -22,9 +22,7 @@
 package org.xclcharts.chart;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
@@ -237,7 +235,7 @@ public class ScatterChart extends LnChart{
 		}
 	
 		//得到标签对应的值数据集		
-		LinkedHashMap<Double,Double> chartValues = bd.getDataSet();	
+		List<PointD> chartValues = bd.getDataSet();	
 		if(null == chartValues) return ;
 															
 	    //画出数据集对应的线条				
@@ -249,12 +247,12 @@ public class ScatterChart extends LnChart{
 		PlotDot dot = bd.getPlotDot(); 
 		float radius = dot.getDotRadius();
 								
-		Iterator iter = chartValues.entrySet().iterator();
+		Iterator iter = chartValues.iterator();
 		while(iter.hasNext()){
-			    Entry  entry=(Entry)iter.next();
+			PointD  entry=(PointD)iter.next();
 			
-			    Double xValue =(Double) entry.getKey();
-			    Double yValue =(Double) entry.getValue();	
+			    Double xValue = entry.x;
+			    Double yValue = entry.y;
 			   			    			   
 			    //对应的Y坐标
 			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  			                	

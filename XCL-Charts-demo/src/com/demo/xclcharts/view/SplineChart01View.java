@@ -29,8 +29,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map.Entry;
 
+import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
@@ -41,6 +43,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -100,6 +103,10 @@ public class SplineChart01View extends DemoView {
 			int [] ltrb = getBarLnDefaultSpadding();
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
+			//平移时收缩下
+			float margin = DensityUtil.dip2px(getContext(), 20);
+			chart.setXTickMarksOffsetMargin(margin);
+			
 			//显示边框
 			chart.showRoundBorder();
 			
@@ -134,20 +141,26 @@ public class SplineChart01View extends DemoView {
 		
 			
 			//把轴线设成和横向网络线一样和大小和颜色,演示下定制性，这块问得人较多
-			chart.getDataAxis().getAxisPaint().setStrokeWidth(
-					plot.getHorizontalLinePaint().getStrokeWidth());
-			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(
-					plot.getHorizontalLinePaint().getStrokeWidth());
+			//chart.getDataAxis().getAxisPaint().setStrokeWidth(
+			//		plot.getHorizontalLinePaint().getStrokeWidth());
+			//chart.getCategoryAxis().getAxisPaint().setStrokeWidth(
+			//		plot.getHorizontalLinePaint().getStrokeWidth());
 			
-			chart.getDataAxis().getAxisPaint().setColor(
-					plot.getHorizontalLinePaint().getColor());
-			chart.getCategoryAxis().getAxisPaint().setColor(
-					plot.getHorizontalLinePaint().getColor());
+			chart.getDataAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
 			
-			chart.getDataAxis().getTickMarksPaint().setColor(
-					plot.getHorizontalLinePaint().getColor());
-			chart.getCategoryAxis().getTickMarksPaint().setColor(
-					plot.getHorizontalLinePaint().getColor());
+			chart.getDataAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
+			
+			//居中
+			chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
+			chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);
+			
+			//居中显示轴 
+			//plot.hideHorizontalLines();
+			//plot.hideVerticalLines();	
+			//chart.setDataAxisLocation(XEnum.AxisLocation.VERTICAL_CENTER);
+			//chart.setCategoryAxisLocation(XEnum.AxisLocation.HORIZONTAL_CENTER);
 			
 			
 			//定义交叉点标签显示格式,特别备注,因曲线图的特殊性，所以返回格式为:  x值,y值
@@ -178,6 +191,14 @@ public class SplineChart01View extends DemoView {
 			//扩大实际绘制宽度
 			chart.getPlotArea().extWidth(500.f);
 			
+			//封闭轴
+			chart.setAxesClosed(true);
+			
+			//将线显示为直线，而不是平滑的
+			chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEELINE);
+			
+			//不使用精确计算，忽略Java计算误差
+			chart.disableHighPrecision();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,38 +208,37 @@ public class SplineChart01View extends DemoView {
 	private void chartDataSet()
 	{
 		//线1的数据集
-		LinkedHashMap<Double,Double> linePoint1 = new LinkedHashMap<Double,Double>();
-		linePoint1.put(5d, 8d);
+		List<PointD> linePoint1 = new ArrayList<PointD>();
+		linePoint1.add(new PointD(5d, 8d));
 		
-		linePoint1.put(12d, 12d);
-		linePoint1.put(25d, 15d);
-		linePoint1.put(30d, 30d);
-		linePoint1.put(45d, 25d);
+		linePoint1.add(new PointD(12d, 12d));
+		linePoint1.add(new PointD(25d, 15d));
+		linePoint1.add(new PointD(30d, 30d));
+		linePoint1.add(new PointD(45d, 25d));
 		
-		linePoint1.put(55d, 33d);
-		linePoint1.put(62d, 45d);
+		linePoint1.add(new PointD(55d, 33d));
+		linePoint1.add(new PointD(62d, 45d));
 		SplineData dataSeries1 = new SplineData("青菜萝卜够吃",linePoint1,
 				(int)Color.rgb(54, 141, 238) );	
 		//把线弄细点
 		dataSeries1.getLinePaint().setStrokeWidth(2);
 		
 		//线2的数据集
-		LinkedHashMap<Double,Double> linePoint2 = new LinkedHashMap<Double,Double>();
-		linePoint2.put(40d, 50d);
-		linePoint2.put(55d, 55d);
-		linePoint2.put(60d, 65d);
-		linePoint2.put(65d, 85d);		
+		List<PointD> linePoint2 = new ArrayList<PointD>();
+		linePoint2.add(new PointD(40d, 50d));
+		linePoint2.add(new PointD(55d, 55d));
+		linePoint2.add(new PointD(60d, 65d));
+		linePoint2.add(new PointD(65d, 85d));		
 		
-		linePoint2.put(72d, 70d);	
-		linePoint2.put(85d, 68d);	
+		linePoint2.add(new PointD(72d, 70d));	
+		linePoint2.add(new PointD(85d, 68d));	
 		SplineData dataSeries2 = new SplineData("饭管够",linePoint2,
 				(int)Color.rgb(255, 165, 132) );
 		
 				
 		dataSeries2.setLabelVisible(true);		
 		dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
-		dataSeries2.getDotLabelPaint().setColor(Color.RED);
-			
+		dataSeries2.getDotLabelPaint().setColor(Color.RED);	
 			
 		//设定数据源		
 		chartData.add(dataSeries1);				
@@ -281,18 +301,18 @@ public class SplineChart01View extends DemoView {
 	
 			if(record.getDataID() >= chartData.size()) return;
 			SplineData lData = chartData.get(record.getDataID());
-			LinkedHashMap<Double,Double> linePoint =  lData.getLineDataSet();	
+			List<PointD> linePoint =  lData.getLineDataSet();	
 			int pos = record.getDataChildID();
 			int i = 0;
-			Iterator it = linePoint.entrySet().iterator();
+			Iterator it = linePoint.iterator();
 			while(it.hasNext())
 			{
-				Entry  entry=(Entry)it.next();	
+				PointD  entry=(PointD)it.next();	
 				
 				if(pos == i)
 				{							 						
-				     Double xValue =(Double) entry.getKey();
-				     Double yValue =(Double) entry.getValue();	
+				     Double xValue = entry.x;
+				     Double yValue = entry.y;	
 				  
 				        float r = record.getRadius();
 						chart.showFocusPointF(record.getPosition(),r * 2);		

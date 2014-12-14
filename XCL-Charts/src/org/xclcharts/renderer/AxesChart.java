@@ -65,11 +65,11 @@ public class AxesChart extends EventChart {
 	protected float mMoveY = 0.0f;
 	
 	//数据轴显示在左边还是右边
-	private XEnum.Location mDataAxisLocation = 
-									XEnum.Location.LEFT;
+	private XEnum.AxisLocation mDataAxisLocation = 
+									XEnum.AxisLocation.LEFT;
 	
-	private XEnum.Location mCategoryAxisLocation = 
-									XEnum.Location.BOTTOM;
+	private XEnum.AxisLocation mCategoryAxisLocation = 
+									XEnum.AxisLocation.BOTTOM;
 	
 	//是否将轴封闭
 	private boolean mAxesClosed = false;	
@@ -158,15 +158,18 @@ public class AxesChart extends EventChart {
 			switch(mCategoryAxisLocation)
 			{				 
 				case LEFT: //Y
-				case RIGHT:				
+				case RIGHT:			
+				case VERTICAL_CENTER:
 					  categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,
 							  								isDrawYAxisTickMarks(t.Y,mMoveY));					
 					break;							
 				case TOP: //X
 				case BOTTOM:		
+				case HORIZONTAL_CENTER:
 						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,
 															isDrawXAxisTickMarks(t.X,mMoveX));		
 					break;			
+			
 			} //switch end
 			
 		}
@@ -184,12 +187,14 @@ public class AxesChart extends EventChart {
 			switch(mDataAxisLocation)
 			{				 
 				case LEFT: //Y
-				case RIGHT:							
+				case RIGHT:			
+				case VERTICAL_CENTER:
 						dataAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,
 															isDrawYAxisTickMarks(t.Y,mMoveY));										
 					break;							
 				case TOP: //X
-				case BOTTOM:		
+				case BOTTOM:	
+				case HORIZONTAL_CENTER:
 						dataAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,
 															isDrawXAxisTickMarks(t.X,mMoveX));										
 					break;			
@@ -368,7 +373,7 @@ public class AxesChart extends EventChart {
 	 * 设置数据轴显示在哪边,默认是左边
 	 * @param position 显示位置
 	 */
-	public void setDataAxisLocation(XEnum.Location location)
+	public void setDataAxisLocation(XEnum.AxisLocation location)
 	{
 		mDataAxisLocation = location;	
 	}
@@ -377,7 +382,7 @@ public class AxesChart extends EventChart {
 	 * 返回数据轴显示在哪边
 	 * @return 显示位置
 	 */
-	public XEnum.Location getDataAxisLocation()
+	public XEnum.AxisLocation getDataAxisLocation()
 	{
 		return mDataAxisLocation;
 	}
@@ -386,18 +391,47 @@ public class AxesChart extends EventChart {
 	 * 设置分类轴显示在哪边,默认是底部
 	 * @param position 显示位置
 	 */
-	public void setCategoryAxisLocation( XEnum.Location position)
+	public void setCategoryAxisLocation( XEnum.AxisLocation location)
 	{
-		mCategoryAxisLocation = position;	
+		mCategoryAxisLocation = location;	
 	}
 	
 	/**
 	 * 返回分类轴显示在哪边
 	 * @return 显示位置
 	 */
-	public XEnum.Location getCategoryAxisLocation()
+	public XEnum.AxisLocation getCategoryAxisLocation()
 	{
 		return mCategoryAxisLocation;
+	}
+	
+	
+	protected float getAxisXPos(XEnum.AxisLocation location)
+	{
+		if( XEnum.AxisLocation.RIGHT  == location)
+		{    //显示在右边
+			return plotArea.getRight();
+		}else if(XEnum.AxisLocation.LEFT  == location){
+			//显示在左边
+			return plotArea.getLeft();
+		}else if(XEnum.AxisLocation.VERTICAL_CENTER  == location){
+			//显示在中间
+			return plotArea.getCenterX();
+		}		
+		return 0;
+	}
+	
+	protected float getAxisYPos(XEnum.AxisLocation location)
+	{
+		if(XEnum.AxisLocation.TOP == location)
+		{
+			return plotArea.getTop();
+		}else if(XEnum.AxisLocation.BOTTOM == location){
+			return plotArea.getBottom();
+		}else if(XEnum.AxisLocation.HORIZONTAL_CENTER == location){
+			return plotArea.getCenterY();
+		}
+		return 0;
 	}
 	
 	protected void categoryAxisDefaultSetting()
@@ -411,17 +445,17 @@ public class AxesChart extends EventChart {
 		{
 			switch (mDirection) {
 				case HORIZONTAL: {		
-					this.setCategoryAxisLocation(XEnum.Location.LEFT);				
+					this.setCategoryAxisLocation(XEnum.AxisLocation.LEFT);				
 					break;
 				}
 				case VERTICAL: {
-					this.setCategoryAxisLocation(XEnum.Location.BOTTOM);			
+					this.setCategoryAxisLocation(XEnum.AxisLocation.BOTTOM);			
 					break;
 				}
 			}
 		}
 		
-		if(XEnum.Location.LEFT == mDataAxisLocation)
+		if(XEnum.AxisLocation.LEFT == mDataAxisLocation)
 		{
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 		}
@@ -441,17 +475,17 @@ public class AxesChart extends EventChart {
 		{
 			switch (mDirection) {
 				case HORIZONTAL: {		
-					this.setDataAxisLocation(XEnum.Location.BOTTOM);		
+					this.setDataAxisLocation(XEnum.AxisLocation.BOTTOM);		
 					break;
 				}
 				case VERTICAL: {
-					this.setDataAxisLocation(XEnum.Location.LEFT);					
+					this.setDataAxisLocation(XEnum.AxisLocation.LEFT);					
 					break;
 				}
 			}
 		}
 				
-		if(XEnum.Location.LEFT == mDataAxisLocation)
+		if(XEnum.AxisLocation.LEFT == mDataAxisLocation)
 		{
 			dataAxis.setHorizontalTickAlign(Align.LEFT);	
 		}else{
@@ -516,6 +550,49 @@ public class AxesChart extends EventChart {
 	protected void drawClipPlot(Canvas canvas)
 	{		
 	}
+	
+	protected void drawClipAxisClosed(Canvas canvas)
+	{
+		if(!getAxesClosedStatus())return;
+			
+		float plotLeft = plotArea.getLeft();
+		float plotTop = plotArea.getTop();
+		float plotRight = plotArea.getRight();
+		float plotBottom = plotArea.getBottom();
+		
+		switch(mDataAxisLocation)
+		{
+		case LEFT:
+		case RIGHT:		
+		case VERTICAL_CENTER:			
+			dataAxis.renderAxisLine(canvas,plotLeft, plotTop, plotLeft, plotBottom);	
+			dataAxis.renderAxisLine(canvas,plotRight, plotTop, plotRight, plotBottom);				
+			break;								
+		case TOP:
+		case BOTTOM:		
+		case HORIZONTAL_CENTER:						
+			dataAxis.renderAxisLine(canvas,plotLeft, plotTop, plotRight, plotTop); 
+			dataAxis.renderAxisLine(canvas,plotLeft, plotBottom, plotRight, plotBottom);			
+			break;
+		}		
+		
+		switch(mCategoryAxisLocation)
+		{
+		case LEFT:
+		case RIGHT:
+		case VERTICAL_CENTER:
+				categoryAxis.renderAxisLine(canvas,plotLeft, plotBottom, plotLeft, plotTop);
+				categoryAxis.renderAxisLine(canvas,plotRight, plotBottom, plotRight, plotTop);
+			break;					
+		case TOP:
+		case BOTTOM:	
+		case HORIZONTAL_CENTER:
+				categoryAxis.renderAxisLine(canvas,plotLeft, plotTop, plotRight, plotTop);
+				categoryAxis.renderAxisLine(canvas,plotLeft, plotBottom, plotRight,plotBottom);		
+			break;		
+		}
+		
+	}
 		
 	protected void drawClipAxisLine(Canvas canvas)
 	{
@@ -524,60 +601,51 @@ public class AxesChart extends EventChart {
 		float plotRight = plotArea.getRight();
 		float plotBottom = plotArea.getBottom();
 	
+		float vcX = plotLeft + ( plotRight - plotLeft )/2;	
+		float hcY = plotTop + ( plotBottom - plotTop )/2;	
 		
 		switch(mDataAxisLocation)
 		{
 		case LEFT:
 			dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
-			
-			if(getAxesClosedStatus()) 
-				dataAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom); 
 			break;
 		case RIGHT:
 			dataAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom); 
-			
-			if(getAxesClosedStatus()) 
-				dataAxis.renderAxis(canvas,plotLeft, plotTop, plotLeft, plotBottom);			
 			break;			
+		case VERTICAL_CENTER:			
+			dataAxis.renderAxis(canvas,vcX, plotTop, vcX, plotBottom); 		
+			break;								
 		case TOP:
-			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); 
-			
-			if(getAxesClosedStatus())
-				dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotRight, plotBottom); 
+			dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); 			
 			break;
 		case BOTTOM:
 			dataAxis.renderAxis(canvas,plotLeft, plotBottom, plotRight, plotBottom); 
-			
-			if(getAxesClosedStatus())
-				dataAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); 
-			break;			
+			break;		
+		case HORIZONTAL_CENTER:								
+			dataAxis.renderAxis(canvas,plotLeft, hcY, plotRight, hcY); 
+			break;
 		}		
 		
 		switch(mCategoryAxisLocation)
 		{
 		case LEFT:
-			categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
-			
-			if(getAxesClosedStatus())
-				categoryAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom); 
+			categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop); 
 			break;
 		case RIGHT:
 			categoryAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom); 
-			
-			if(getAxesClosedStatus())
-				categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop);
 			break;
-			
+		case VERTICAL_CENTER:
+			categoryAxis.renderAxis(canvas,vcX, plotTop, vcX, plotBottom); 
+			break;					
 		case TOP:
 			categoryAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop); 
-			if(getAxesClosedStatus())
-				categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotRight, plotBottom); 
 			break;
 		case BOTTOM:
 			categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotRight, plotBottom); 
-			if(getAxesClosedStatus())
-				categoryAxis.renderAxis(canvas,plotLeft, plotTop, plotRight, plotTop);
-			break;			
+			break;		
+		case HORIZONTAL_CENTER:
+			categoryAxis.renderAxis(canvas,plotLeft, hcY, plotRight, hcY);
+			break;		
 		}
 		
 	}
@@ -613,7 +681,9 @@ public class AxesChart extends EventChart {
 		drawClipPlot(canvas);
 		
 		//轴 线
-		drawClipAxisLine(canvas);				
+		drawClipAxisClosed(canvas);
+		drawClipAxisLine(canvas);	
+		
 			
 		//轴刻度
 		drawClipDataAxisTickMarks(canvas);	
@@ -626,7 +696,7 @@ public class AxesChart extends EventChart {
 	
 	
 	/**
-	 * X方向的轴刻度平移扩展间距
+	 * X方向的轴刻度平移扩展间距,即控制刻度标签在移绘图区后可多显示范围。
 	 * @param margin 间距
 	 */
 	public void setXTickMarksOffsetMargin(float margin)
@@ -635,7 +705,7 @@ public class AxesChart extends EventChart {
 	}
 	
 	/**
-	 * Y方向的轴刻度平移扩展间距
+	 * Y方向的轴刻度平移扩展间距,即控制刻度标签在移绘图区后可多显示范围。
 	 * @param margin 间距
 	 */
 	public void setYTickMarksOffsetMargin(float margin)
@@ -671,7 +741,9 @@ public class AxesChart extends EventChart {
 		
 		float yMargin = getClipYMargin(); 
 		float xMargin = getClipXMargin();
-		float gWidth = 0.0f;			
+		float gWidth = 0.0f;	
+		
+		drawClipAxisClosed(canvas);
 
 		//设置图显示范围
 		canvas.save();
@@ -736,7 +808,7 @@ public class AxesChart extends EventChart {
 		//还原绘图区绘制
 		canvas.restore(); //clip	
 			
-		//轴 线
+		//轴 线		
 		drawClipAxisLine(canvas);				
 		/////////////////////////////////////////
 	
@@ -762,7 +834,7 @@ public class AxesChart extends EventChart {
 			//绘制X轴tick和marks			
 			canvas.save();				
 				canvas.clipRect(this.getLeft() + xMargin, this.getTop(),  
-								this.getRight() + xMargin, this.getBottom());
+								this.getRight() - xMargin, this.getBottom()); //this.getRight() + xMargin
 			
 					canvas.translate(offsetX,0);
 					drawClipCategoryAxisTickMarks(canvas);	
@@ -791,6 +863,8 @@ public class AxesChart extends EventChart {
 		float yMargin = getClipYMargin();
 		float xMargin = getClipXMargin();
 		float gWidth = 0.0f;
+		
+		drawClipAxisClosed(canvas);
 	
 		//设置图显示范围
 		canvas.save();				
@@ -855,7 +929,7 @@ public class AxesChart extends EventChart {
 		//还原绘图区绘制
 		canvas.restore(); //clip							
 		//////////////////////////////////////////////////			
-		//轴线
+		//轴线		
 		drawClipAxisLine(canvas);
 				
 		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()

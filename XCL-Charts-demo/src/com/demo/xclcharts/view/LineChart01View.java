@@ -154,8 +154,8 @@ public class LineChart01View extends DemoView {
 			chart.getPlotArea().extWidth(100.f);
 			
 			//调整轴显示位置
-			chart.setDataAxisLocation(XEnum.Location.RIGHT);
-			chart.setCategoryAxisLocation(XEnum.Location.TOP);
+			chart.setDataAxisLocation(XEnum.AxisLocation.RIGHT);
+			chart.setCategoryAxisLocation(XEnum.AxisLocation.TOP);
 			
 			//收缩绘图区右边分割的范围，让绘图区的线不显示出来
 			chart.getClipExt().setExtRight(0.f);
