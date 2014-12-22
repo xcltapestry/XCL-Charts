@@ -287,7 +287,7 @@ public class RoseChart extends PieChart{
 		    float cirY = plotArea.getCenterY();
 	        float radius = getRadius();
 	    	        	      	        	       	    
-	        float percentage = 0.0f;		 		
+	        float arcAngle = 0.0f;		 		
 	 		float newRaidus = 0.0f;		
 	 		
 	 		//数据源
@@ -309,12 +309,16 @@ public class RoseChart extends PieChart{
 			//依参数个数，算出总个要算多少个扇区的角度	 		
 	 		int totalAngle =  360 - mIntervalAngle * chartDataSource.size();
 	 		
-	 		percentage = totalAngle / chartDataSource.size();
+	 		arcAngle = totalAngle / chartDataSource.size();
 	 		
 			//percentage = 360 / chartDataSource.size();
 			//percentage = (float)(Math.round(percentage *100))/100; 		
-			percentage = div(mul(percentage,100),100);
-			
+	 		arcAngle = div(mul(arcAngle,100),100);			
+			if(!validateAngle(arcAngle))
+			{
+				Log.e(TAG,"计算出来的扇区角度小于等于0度,不能绘制.");
+	 			return false;
+			}						
 			float labelRadius = getLabelRadius();
 			
 	        for(PieData cData : chartDataSource)
@@ -332,7 +336,7 @@ public class RoseChart extends PieChart{
 	            //在饼图中显示所占比例   
 	            RectF nRF = new RectF(sub(cirX , newRaidus),sub(cirY , newRaidus),
 	            					  add(cirX , newRaidus),add(cirY , newRaidus));  
-	            canvas.drawArc(nRF, mOffsetAngle + mIntervalAngle, percentage, true, geArcPaint());       
+	            canvas.drawArc(nRF, mOffsetAngle + mIntervalAngle, arcAngle, true, geArcPaint());       
 					       	            
 	            //标识  
 	            String label = cData.getLabel();	            
@@ -340,7 +344,7 @@ public class RoseChart extends PieChart{
             	{            			            
 	            	//计算百分比标签 
 		            PointF point = MathHelper.getInstance().calcArcEndPointXY(
-		            			cirX, cirY, labelRadius, mOffsetAngle + mIntervalAngle + percentage/2); 
+		            			cirX, cirY, labelRadius, mOffsetAngle + mIntervalAngle + arcAngle/2); 
 		            
             		//请自行在回调函数中处理显示格式
                     DrawHelper.getInstance().drawRotateText( label,
@@ -349,7 +353,7 @@ public class RoseChart extends PieChart{
             	}               
 	         
 	          //下次的起始角度  
-	            mOffsetAngle = add(add(mOffsetAngle,percentage),mIntervalAngle);
+	            mOffsetAngle = add(add(mOffsetAngle,arcAngle),mIntervalAngle);
 			}
 	        return true;
 	}

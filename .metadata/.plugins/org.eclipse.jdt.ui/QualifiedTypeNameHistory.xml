@@ -46,7 +46,6 @@
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SliceLabelStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLocation"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="java.util.ArrayList"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.PointD"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 </qualifiedTypeNameHistroy>

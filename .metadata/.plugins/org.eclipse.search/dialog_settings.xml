@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
-	<section name="org.eclipse.jdt.ui.JavaSearchResultPage">
+	<section name="">
 		<item value="TRUE" key="org.eclipse.jdt.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
 	</section>
@@ -9,11 +9,15 @@
 		<item value="TRUE" key="org.eclipse.jdt.search.resultpage.limit_enabled"/>
 		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
 	</section>
+	<section name="org.eclipse.jdt.ui.JavaSearchResultPage">
+		<item value="TRUE" key="org.eclipse.jdt.search.resultpage.limit_enabled"/>
+		<item value="1000" key="org.eclipse.jdt.search.resultpage.limit"/>
+	</section>
 	<section name="DialogBounds_SearchDialog">
-		<item value="559" key="DIALOG_WIDTH"/>
+		<item value="595" key="DIALOG_WIDTH"/>
 		<item value="68" key="DIALOG_Y_ORIGIN"/>
-		<item value="412" key="DIALOG_X_ORIGIN"/>
 		<item value="478" key="DIALOG_HEIGHT"/>
+		<item value="412" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="Search">
@@ -35,14 +39,20 @@
 	<section name="org.eclipse.search.text.FileSearchResultPage">
 		<item value="1000" key="org.eclipse.search.resultpage.limit"/>
 	</section>
+	<section name="DialogBounds_SearchHistorySelectionDialog">
+		<item value="486" key="DIALOG_WIDTH"/>
+		<item value="449" key="DIALOG_HEIGHT"/>
+		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
+	</section>
 	<section name="TextSearchPage">
 		<item value="false" key="CASE_SENSITIVE"/>
 		<item value="true" key="REG_EX_SEARCH"/>
 		<item value="false" key="SEARCH_DERIVED"/>
 		<item value="1" key="HISTORY_SIZE"/>
 		<section name="EXTENSIONS">
-			<item value="*.java" key="1"/>
-			<item value="*" key="0"/>
+			<item value="*.java" key="2"/>
+			<item value="*" key="1"/>
+			<item value="" key="0"/>
 		</section>
 		<section name="HISTORY0">
 			<item value="true" key="isRegExSearch"/>
@@ -55,11 +65,6 @@
 			<list key="workingSets">
 			</list>
 		</section>
-	</section>
-	<section name="DialogBounds_SearchHistorySelectionDialog">
-		<item value="486" key="DIALOG_WIDTH"/>
-		<item value="449" key="DIALOG_HEIGHT"/>
-		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="SearchDialog.ScopePart">
 		<item value="3" key="scope"/>

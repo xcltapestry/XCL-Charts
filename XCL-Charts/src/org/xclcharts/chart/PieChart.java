@@ -277,7 +277,7 @@ public class PieChart extends CirChart{
 		for(int i=0 ;i<count; i++ )
 		{
 			 PlotArcLabelInfo info = mLstLabels.get(i);			
-			 renderLabel(canvas,mDataset.get(info.getID()),info,mSaveLabelsPosition,showLabel);	
+			 renderLabel(canvas,mDataset.get(info.getID()),info,mSaveLabelsPosition,showLabel);			
 		}
 		
 		if(!mSaveLabelsPosition)mLstLabels.clear();
@@ -290,7 +290,6 @@ public class PieChart extends CirChart{
 	 */
 	protected boolean renderPlot(Canvas canvas)
 	{
-	
 		try{				
 			if(null == mDataset)
 			{
@@ -305,18 +304,19 @@ public class PieChart extends CirChart{
 			//用于存放当前百分比的圆心角度
 			float currentAngle = 0.0f;				
 			float offsetAngle = mOffsetAngle;		
-			int i = 0;
-						
+							
 			mLstLabels.clear();			
 			float left = sub(cirX , radius) ;
 	        float top = sub(cirY , radius) ;        
 			float right = add(cirX , radius) ;
 			float bottom = add(cirY , radius);
 								
-			for(PieData cData : mDataset)
-			{							
+			int count = mDataset.size();
+			for(int i=0;i<count;i++)			
+			{					
+				PieData cData = mDataset.get(i);
 				currentAngle = cData.getSliceAngle();		
-				if(!validateAngle(currentAngle)) continue;
+				if(!validateAngle(currentAngle))continue;			
 				geArcPaint().setColor(cData.getSliceColor());	
 								
 				// 绘制环形渐变
@@ -354,8 +354,7 @@ public class PieChart extends CirChart{
 			    				mSelectedOffset,getInitialAngle());			  
 			
 			    //下次的起始角度  
-			    offsetAngle = add(offsetAngle, currentAngle);
-	            i++;
+			    offsetAngle = add(offsetAngle, currentAngle);	    
 			}				
 			
 			//绘制Label
@@ -390,7 +389,7 @@ public class PieChart extends CirChart{
 						+Float.toString(totalAngle)
 						+" 当前圆心角:"+Float.toString( currentValue )
 						+" 当前百分比:"+Double.toString( cData.getPercentage() ));
-				return false;
+				//return false;
 			}else if( Float.compare(totalAngle, 360.1f) == 1) 
 			{
 				//圆心角总计大于360度

@@ -90,6 +90,7 @@ public class AxesChart extends EventChart {
 		if(null == mLstDataTick)mLstDataTick = new  ArrayList<PlotAxisTick>();
 		if(null == mLstCateTick)mLstCateTick = new  ArrayList<PlotAxisTick>();
 		
+		enabledHighPrecision();
 		initChart();		
 	}
 	

@@ -30,6 +30,7 @@ import java.util.List;
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -48,6 +49,7 @@ import android.view.MotionEvent;
  * @ClassName PieChart02View
  * @Description  平面饼图的例子
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * 
  */
 
 public class PieChart02View extends DemoView {
@@ -140,7 +142,10 @@ public class PieChart02View extends DemoView {
 	}
 
 	private void chartDataSet()
-	{
+	{				
+		// 因为Java中Float和double的计算误差问题，所以建议
+		//用图库中的MathHelper.getInstance()来做运算,以保证总值为100%
+		
 		//设置图表数据源				
 		PieData pieData = new PieData("芝麻","芝麻:15%",15,(int)Color.rgb(77, 83, 97)) ;
 		pieData.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.WHITE);		
@@ -157,10 +162,9 @@ public class PieChart02View extends DemoView {
 		pdOther.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.BLACK);		
 		chartData.add(pdOther);
 		
-		PieData pdTea = new PieData("茶叶","茶叶(305%)",30,(int)Color.rgb(253, 180, 90));		
+		PieData pdTea = new PieData("茶叶","茶叶(30%)",30,(int)Color.rgb(253, 180, 90));		
 		pdTea.setCustLabelStyle(XEnum.SliceLabelStyle.OUTSIDE,(int)Color.rgb(253, 180, 90));
-		chartData.add(pdTea);
-	
+		chartData.add(pdTea);			
 	}
 	@Override
 	public void render(Canvas canvas) {

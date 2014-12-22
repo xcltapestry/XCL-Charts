@@ -72,8 +72,7 @@ public class CirChart extends EventChart{
 		
 		
 	public CirChart()
-	{		
-		
+	{				
 		//初始化图例
 		if(null != plotLegend)
 		{

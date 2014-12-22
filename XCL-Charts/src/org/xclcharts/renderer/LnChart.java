@@ -67,7 +67,7 @@ public class LnChart extends AxesChart {
 		categoryAxisDefaultSetting();
 		dataAxisDefaultSetting();
 		
-		//setAxesClosed(true);		
+		enabledHighPrecision();	
 	}
 		
 	

@@ -40,7 +40,6 @@ import org.xclcharts.renderer.line.PlotLine;
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
 import android.graphics.Path;
-import android.graphics.PointF;
 import android.util.Log;
 
 
@@ -390,7 +389,6 @@ public class RadarChart extends RdChart{
 		
 		mArrayRadius = new Float[dataAxisTickCount];
 		
-
 		int labelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
 		float labelRadius = this.getRadius() + labelHeight + mLabelOffset;
 		float currAgent = 0.0f;

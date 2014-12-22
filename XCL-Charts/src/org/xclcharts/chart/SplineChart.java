@@ -176,7 +176,7 @@ public class SplineChart extends LnChart{
 	
 	/**
 	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
-	 * @param style
+	 * @param style 曲线显示风格
 	 */
 	public void setCrurveLineStyle(XEnum.CrurveLineStyle style)
 	{
@@ -185,7 +185,7 @@ public class SplineChart extends LnChart{
 	
 	/**
 	 * 返回曲线显示风格
-	 * @return 显示风格
+	 * @return 曲线显示风格
 	 */
 	public XEnum.CrurveLineStyle getCrurveLineStyle()
 	{

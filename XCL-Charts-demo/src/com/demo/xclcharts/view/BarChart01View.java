@@ -177,8 +177,6 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//数据轴居中显示
 			//chart.setDataAxisLocation(XEnum.AxisLocation.VERTICAL_CENTER);
 			
-			//不使用精确计算，忽略Java计算误差
-			chart.disableHighPrecision();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
