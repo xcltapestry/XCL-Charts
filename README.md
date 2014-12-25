@@ -23,6 +23,9 @@ https://github.com/xcltapestry/XCL-Charts <br/>
 http://www.oschina.net/p/xcl-charts
 <br/>
  <b>部份例图:</b><br/> 
+ 
+![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/area_ln_pie_chart.png)
+![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/spinnerBarChart2.png)
 
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/stackedchart.png)
@@ -62,14 +65,9 @@ http://www.oschina.net/p/xcl-charts
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/mulaxischart2.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/mulbarchart.png)
 
-![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/area_ln_pie_chart.png)
-![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/spinnerBarChart2.png)
-
-
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/QuadrantChart.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/lines.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/spinnerPieChart.png)
-
 
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart8.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart9.png)
