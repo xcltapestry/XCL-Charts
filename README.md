@@ -74,4 +74,4 @@ http://www.oschina.net/p/xcl-charts
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/dydialchart4.gif)
 
 <img src="http://img.blog.csdn.net/20140628212318281" alt="bar chart(高密度)" /> 
-<img src="http://img.blog.csdn.net/20140706140637953" alt="同源 pie chart" />
+<img src="http://img.blog.csdn.net/20141026174630595?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQveGNsMTY4/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt="bar chart(横向堆叠)" /> 
