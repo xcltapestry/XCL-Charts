@@ -152,6 +152,7 @@ public class BarChart06View extends DemoView implements Runnable{
 			
 			//隐藏Key
 			 chart.getPlotLegend().hide();
+			 chart.disableHighPrecision();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

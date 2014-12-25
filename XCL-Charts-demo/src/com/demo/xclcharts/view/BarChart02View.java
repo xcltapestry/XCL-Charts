@@ -39,7 +39,6 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -118,7 +117,7 @@ public class BarChart02View extends DemoView {
 			chart.getDataAxis().setAxisMax(500);
 			chart.getDataAxis().setAxisMin(100);
 			chart.getDataAxis().setAxisSteps(100);
-									
+											
 			chart.getDataAxis().getTickLabelPaint().
 									setColor((int)Color.rgb(199, 88, 122));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){

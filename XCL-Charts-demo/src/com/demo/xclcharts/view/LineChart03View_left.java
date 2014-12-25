@@ -62,12 +62,12 @@ public class LineChart03View_left extends GraphicalView {
 			chart.getDataAxis().setAxisMax(100);
 			//数据轴刻度间隔
 			chart.getDataAxis().setAxisSteps(10);
-			
-			
-		//chart.getCategoryAxis().setHorizontalTickAlign(align)
+						
 			chart.getCategoryAxis().hide();		
-			//chart.hideTopAxis();
-			//chart.hideRightAxis();
+			
+			
+			//忽略Java的float计算误差
+			chart.disableHighPrecision();
 									
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

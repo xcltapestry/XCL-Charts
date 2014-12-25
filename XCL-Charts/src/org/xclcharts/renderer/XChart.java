@@ -694,9 +694,7 @@ public class XChart implements IRender {
 	{
 		return mEnablePanMode;
 	}
-	
-	
-	
+			
 	/**
 	 * 返回动态图例类，当默认的图例不合需求时，可以用来应付一些特殊格式
 	 * @return 动态图例
@@ -707,30 +705,7 @@ public class XChart implements IRender {
 		
 		return mDyLegend;
 	}
-		
-	/**
-	 * 禁用在图库中执行System.gc()
-	 */
-	public void disableGC()
-	{
-		mEnableGC = false;
-	}
-	
-	/**
-	 * 在图绘制完后执行System.gc()
-	 */
-	public void enableGC()
-	{
-		mEnableGC = true;
-	}	
-	
-	/**
-	 * 执行System.gc()
-	 */
-	protected void execGC()
-	{
-		if(mEnableGC)System.gc();
-	}
+			
 		
 	/**
 	 * 绘制十字交叉线
@@ -845,8 +820,8 @@ public class XChart implements IRender {
 	//math计算类函数 ----------------------------------------------------------------
 	
 	/**
-	 * Java是无法精确计算小数后面的，在此
-	 * 忽略Java数据计算时的误差。(饼图类图表慎用)
+	 * Java是无法精确计算小数后面的，激活后会
+	 * 忽略Java数据计算时的误差。能提高绘制性能，(但饼图类图表慎用)
 	 */
 	public void disableHighPrecision()
     {

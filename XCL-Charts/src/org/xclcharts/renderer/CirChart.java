@@ -302,9 +302,8 @@ public class CirChart extends EventChart{
 		float cirY = info.getY();
 		float radius = info.getRadius();		
 		double offsetAngle = info.getOffsetAngle();
-		double curretAnglet = info.getCurrentAngle();
-					
-		float calcAngle = (float) MathHelper.getInstance().add(offsetAngle , curretAnglet/2);
+				
+		float calcAngle = (float) MathHelper.getInstance().add(offsetAngle , info.getCurrentAngle()/2);
 		if(Float.compare(calcAngle,0.0f) == 0 
 				|| Float.compare(calcAngle,0.0f) == -1 )
 		{

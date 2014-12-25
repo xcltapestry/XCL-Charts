@@ -25,6 +25,7 @@ package org.xclcharts.renderer;
 import java.util.ArrayList;
 
 import org.xclcharts.common.IFormatterDoubleCallBack;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.axis.DataAxis;
@@ -90,7 +91,7 @@ public class AxesChart extends EventChart {
 		if(null == mLstDataTick)mLstDataTick = new  ArrayList<PlotAxisTick>();
 		if(null == mLstCateTick)mLstCateTick = new  ArrayList<PlotAxisTick>();
 		
-		enabledHighPrecision();
+		
 		initChart();		
 	}
 	
@@ -236,7 +237,8 @@ public class AxesChart extends EventChart {
 		return( Math.abs(plotArea.getPlotBottom() - plotArea.getPlotTop()));
 	}
 	
-	
+
+			
 	/**
 	 * 轴所占的屏幕高度
 	 * @return 屏幕高度
@@ -591,11 +593,10 @@ public class AxesChart extends EventChart {
 				categoryAxis.renderAxisLine(canvas,plotLeft, plotTop, plotRight, plotTop);
 				categoryAxis.renderAxisLine(canvas,plotLeft, plotBottom, plotRight,plotBottom);		
 			break;		
-		}
-		
+		}		
 	}
-		
-	protected void drawClipAxisLine(Canvas canvas)
+	
+	protected void drawClipDataAxisLine(Canvas canvas)
 	{
 		float plotLeft = plotArea.getLeft();
 		float plotTop = plotArea.getTop();
@@ -625,7 +626,18 @@ public class AxesChart extends EventChart {
 		case HORIZONTAL_CENTER:								
 			dataAxis.renderAxis(canvas,plotLeft, hcY, plotRight, hcY); 
 			break;
-		}		
+		}	
+	}
+	
+	protected void drawClipCategoryAxisLine(Canvas canvas)
+	{		
+		float plotLeft = plotArea.getLeft();
+		float plotTop = plotArea.getTop();
+		float plotRight = plotArea.getRight();
+		float plotBottom = plotArea.getBottom();
+	
+		float vcX = plotLeft + ( plotRight - plotLeft )/2;	
+		float hcY = plotTop + ( plotBottom - plotTop )/2;
 		
 		switch(mCategoryAxisLocation)
 		{
@@ -648,7 +660,12 @@ public class AxesChart extends EventChart {
 			categoryAxis.renderAxis(canvas,plotLeft, hcY, plotRight, hcY);
 			break;		
 		}
+	}
 		
+	protected void drawClipAxisLine(Canvas canvas)
+	{		
+		drawClipDataAxisLine(canvas);
+		drawClipCategoryAxisLine(canvas);
 	}
 		
 	protected void drawClipDataAxisTickMarks(Canvas canvas)
@@ -848,8 +865,6 @@ public class AxesChart extends EventChart {
 			
 		//图例
 		drawClipLegend(canvas);
-		
-		execGC();
 		return true;
 	 }
 	
@@ -967,8 +982,6 @@ public class AxesChart extends EventChart {
 		
 		//图例
 		drawClipLegend(canvas);	
-		
-		execGC();
 		return true;
 	 }
 	/////////////////////////

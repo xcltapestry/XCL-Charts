@@ -34,6 +34,8 @@ public class CategoryAxis extends XYAxis {
 	//分类轴分隔值	
 	private double  mAxisSteps = 0.0d;
 	
+	private boolean mAxisBindStd = false;
+	
 	public CategoryAxis()
 	{
 		
@@ -56,5 +58,25 @@ public class CategoryAxis extends XYAxis {
 	{
 		return mAxisSteps;
 	}
+	
+	/**
+	 * 是否将分类轴与数据轴的正负标准值绑定, 
+	 * 如绑定，则轴会显示在标准值所在位置
+	 * @param status 设置状态
+	 */
+	public void setAxisBuildStd(boolean status)
+	{
+		mAxisBindStd = status;
+	}
+	
+	/**
+	 * 分类轴与数据轴的正负标准值绑定状态 
+	 * @return 状态
+	 */
+	public boolean getAxisBuildStdStatus()
+	{
+		return mAxisBindStd;
+	}
+	
 
 }

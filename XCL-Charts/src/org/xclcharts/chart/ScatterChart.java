@@ -225,10 +225,10 @@ public class ScatterChart extends LnChart{
 				   	
     	float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
-		Double axisDataHeight = dataAxis.getAxisRange(); 
+    	float axisDataHeight = dataAxis.getAxisRange(); 
 		
-		if( Double.compare(axisDataHeight, 0.0f) == 0 
-				|| Double.compare(axisDataHeight, 0.0f) == -1)
+		if( Float.compare(axisDataHeight, 0.0f) == 0 
+				|| Float.compare(axisDataHeight, 0.0f) == -1)
 		{
 			Log.e(TAG,"数据轴高度小于或等于0.");
 			return ;

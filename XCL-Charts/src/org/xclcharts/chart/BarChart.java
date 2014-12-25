@@ -24,6 +24,7 @@ package org.xclcharts.chart;
 
 import java.util.List;
 
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.AxesChart;
@@ -484,8 +485,7 @@ public class BarChart extends AxesChart {
 		float YSteps = getHorizontalYSteps();
 		float barInitX = plotArea.getLeft() ;
 		float barInitY = plotArea.getBottom() ;
-		
-		// 画柱形
+			
 		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度
 		int barNumber = getDatasetSize(mDataSet); 
 		int currNumber = 0;
@@ -500,11 +500,13 @@ public class BarChart extends AxesChart {
 		float barInnerMargin = ret[1];
 		float labelBarUseHeight = add(mul(barNumber , barHeight) ,
 									  mul(sub(barNumber , 1) , barInnerMargin));		
-
-		float scrWidth = getPlotScreenWidth(); //getAxisScreenWidth();
-		float valueWidth = (float) dataAxis.getAxisRange();
-		int barDefualtColor = 0,vSize = 0;
-		Double bv = 0d;
+	
+		Double bv = 0d;		
+		float dataAxisStd = getHPDataAxisStdX();		
+		float itemLabelWidth = 0.f;										
+		float barLeft = 0.0f,barBottom = 0.0f,barTop = 0.f,barRight =0.f;
+	
+		float currLableY,drawBarButtomY,rightX,labelLeftX;
 		
 		for (int i = 0; i < barNumber; i++) {
 			// 得到分类对应的值数据集
@@ -514,41 +516,60 @@ public class BarChart extends AxesChart {
 			
 			List<Integer> barDataColor = bd.getDataColor();
 			// 设置成对应的颜色
-			barDefualtColor = bd.getColor();
-			mFlatBar.getBarPaint().setColor(barDefualtColor);		
-			
+			mFlatBar.getBarPaint().setColor(bd.getColor());		
+																		
 			// 画同分类下的所有柱形
-			vSize = barValues.size();
+			int vSize = barValues.size();
 			for (int j = 0; j < vSize; j++) {
 				bv = barValues.get(j);							
-				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,bd.getColor());
 											
-				float currLableY = sub(barInitY , mul((j + 1) , YSteps));		
-				float drawBarButtomY = add(currLableY,labelBarUseHeight / 2);					
+				currLableY = sub(barInitY , mul((j + 1) , YSteps));		
+				drawBarButtomY = add(currLableY,labelBarUseHeight / 2);					
 				drawBarButtomY = sub(drawBarButtomY, add(barHeight,barInnerMargin) * currNumber);			
-				float drawBarTopY = sub(drawBarButtomY,barHeight);			
-
-				// 宽度								
-				double vaxlen = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
-				float valuePostion = mul(scrWidth, div(dtof(vaxlen) ,valueWidth) );
-																			
+			
+				labelLeftX = rightX = getHPValPosition(bv);
+				
+				String label = getFormatterItemLabel(bv);				
+				if(mFlatBar.getItemLabelsVisible())
+					itemLabelWidth = DrawHelper.getInstance().getTextWidth(
+														mFlatBar.getItemLabelPaint(), label);
+				
+				if(dataAxis.getAxisStdStatus())
+				{	
+					if(bv < dataAxis.getAxisStd()) //反向
+					{						 											
+						 barLeft = rightX ;
+						 barTop = sub(drawBarButtomY,barHeight);						
+						 barRight = dataAxisStd;
+						 barBottom = drawBarButtomY ;		
+						 						 
+						 labelLeftX = rightX - itemLabelWidth;
+					}else{						
+						 barLeft = dataAxisStd;
+						 barTop = sub(drawBarButtomY,barHeight);						
+						 barRight = rightX;
+						 barBottom = drawBarButtomY ;
+					}
+				}else{							
+					 barLeft = barInitX;
+					 barTop = sub(drawBarButtomY,barHeight);						
+					 barRight = rightX;
+					 barBottom = drawBarButtomY ;
+				}			
 				// 画出柱形
-				float rightX = add(barInitX , valuePostion);
-				mFlatBar.renderBar(barInitX,drawBarTopY  ,rightX, drawBarButtomY,
-									canvas);
+				mFlatBar.renderBar(barLeft,barBottom,barRight,barTop,canvas);
 				
 				//保存位置
-				saveBarRectFRecord(i,j,barInitX + mMoveX,drawBarTopY  + mMoveY,
-									rightX  + mMoveX, drawBarButtomY + mMoveY);
+				saveBarRectFRecord(i,j,barLeft + mMoveX,barTop  + mMoveY,
+										barRight  + mMoveX, barBottom + mMoveY);
 			
 				// 柱形顶端标识
-				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-												rightX, 
-												sub(drawBarButtomY , barHeight / 2),canvas);
+				mFlatBar.renderBarItemLabel(label,
+						labelLeftX, sub(barBottom , barHeight / 2),canvas);
 				
 				//显示焦点框
-				drawFocusRect(canvas,i,j,
-						barInitX,drawBarTopY,rightX ,drawBarButtomY);
+				drawFocusRect(canvas,i,j,barLeft,barTop,barRight ,barBottom);
 			}
 			currNumber++;
 		}
@@ -563,6 +584,91 @@ public class BarChart extends AxesChart {
 	}		
 	
 	/**
+	 * 返回指定数据在图中的坐标位置
+	 * @param bv 数据
+	 * @return 坐标位置
+	 */
+	public float getHPValPosition(double bv)
+	{							
+		double vaxlen = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
+		float valuePostion = mul(getPlotScreenWidth(), div(dtof(vaxlen) ,dataAxis.getAxisRange()) );		
+		return (add(plotArea.getLeft() , valuePostion));						
+	}
+	
+	private float getHPDataAxisStdX()
+	{
+		if(dataAxis.getAxisStdStatus())
+		{		
+			return getHPValPosition(dataAxis.getAxisStd());
+		}else{
+			return plotArea.getLeft();
+		}
+	}
+		
+	private float getVPDataAxisStdY()
+	{
+		if(dataAxis.getAxisStdStatus())
+		{
+			return getVPValPosition(dataAxis.getAxisStd());
+		}else{
+			return plotArea.getBottom();
+		}
+	}
+	
+	/**
+	 * 返回指定数据在图中的坐标位置
+	 * @param bv 数据
+	 * @return 坐标位置
+	 */
+	public float getVPValPosition(double bv)
+	{
+		float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
+		float valuePostion = mul(getPlotScreenHeight(), div( vaxlen,dataAxis.getAxisRange() ) );
+		return (sub(plotArea.getBottom() , valuePostion));
+	}
+
+	@Override
+	protected float getAxisXPos(XEnum.AxisLocation location)
+	{		
+		if(XEnum.Direction.HORIZONTAL == mDirection &&
+				dataAxis.getAxisStdStatus() && categoryAxis.getAxisBuildStdStatus())
+		{
+			return getHPDataAxisStdX();
+		}else{
+			return super.getAxisXPos(location);
+		}	
+	}
+	
+	@Override
+	protected float getAxisYPos(XEnum.AxisLocation location)
+	{						 		
+		if(XEnum.Direction.VERTICAL == mDirection &&
+				dataAxis.getAxisStdStatus() && categoryAxis.getAxisBuildStdStatus())
+		{
+			return getVPDataAxisStdY();
+		}else{
+			return super.getAxisYPos(location);
+		}		
+	}		
+	
+	@Override
+	protected void drawClipCategoryAxisLine(Canvas canvas)
+	{
+		if(XEnum.Direction.VERTICAL == mDirection &&
+				dataAxis.getAxisStdStatus() && categoryAxis.getAxisBuildStdStatus())
+		{
+		   float y =  getVPDataAxisStdY();			
+			categoryAxis.renderAxis(canvas,plotArea.getLeft(), y, plotArea.getRight(), y); 	
+		}else if(XEnum.Direction.HORIZONTAL == mDirection &&
+				dataAxis.getAxisStdStatus() && categoryAxis.getAxisBuildStdStatus()){		
+			float x = getHPDataAxisStdX();
+			categoryAxis.renderAxis(canvas,x, plotArea.getTop(), x, plotArea.getBottom()); 			
+		}else{
+			super.drawClipCategoryAxisLine(canvas);
+		}
+	}
+	
+	/**
 	 * 绘制竖向柱形图
 	 */
 	protected boolean renderVerticalBar(Canvas canvas) {
@@ -571,11 +677,14 @@ public class BarChart extends AxesChart {
 		// 得到分类轴数据集
 		List<String> dataSet = categoryAxis.getDataSet();
 		if(null == dataSet) return false;	
-
-		float axisScreenHeight = getPlotScreenHeight(); // getAxisScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange();		
-		float XSteps = getVerticalXSteps(dataSet.size() + 1);
-
+		
+		float XSteps = getVerticalXSteps(dataSet.size() + 1);		
+		float dataAxisStd = getVPDataAxisStdY();		
+		float itemFontHeight = 0.f;		
+		if(mFlatBar.getItemLabelsVisible())
+			itemFontHeight = DrawHelper.getInstance().getPaintFontHeight(
+												mFlatBar.getItemLabelPaint());
+					
 		int barNumber = getDatasetSize(mDataSet); 
 		int currNumber = 0;
 		float[] ret = mFlatBar.getBarWidthAndMargin(XSteps, barNumber);
@@ -588,6 +697,9 @@ public class BarChart extends AxesChart {
 		float barInnerMargin = ret[1];
 		float labelBarUseWidth = add(mul(barNumber , barWidth) , 
 									 mul(sub(barNumber , 1) , barInnerMargin));
+		
+		float barLeft = 0.0f,barBottom = 0.0f,barTop = 0.f,barRight =0.f;
+		float currLableX,drawBarStartX,topY,labelTopY;
 		
 		// X 轴 即分类轴
 		int size = mDataSet.size();
@@ -602,45 +714,56 @@ public class BarChart extends AxesChart {
 			List<Integer> barDataColor = bd.getDataColor();		
 			
 			// 设成对应的颜色
-			int barDefualtColor = bd.getColor();
-			mFlatBar.getBarPaint().setColor(barDefualtColor);
-						
+			mFlatBar.getBarPaint().setColor(bd.getColor());
+												
 			// 画出分类对应的所有柱形
 			int countChild = barValues.size();
 			for (int j = 0; j < countChild; j++) {
 				Double bv = barValues.get(j);
-										
-				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,barDefualtColor);
-			
-				float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
-				float valuePostion = mul(axisScreenHeight, div( vaxlen,axisDataHeight ) );
-						
-				float currLableX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
-				float drawBarStartX = sub(currLableX , labelBarUseWidth / 2);				
+					
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,bd.getColor());
+				
+				currLableX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
+				drawBarStartX = sub(currLableX , labelBarUseWidth / 2);				
 
 				// 计算同分类多柱 形时，新柱形的起始X坐标
-				drawBarStartX = add(drawBarStartX , add(barWidth,barInnerMargin)  * currNumber);		
+				drawBarStartX = add(drawBarStartX , add(barWidth,barInnerMargin)  * currNumber);											
+				labelTopY = topY = getVPValPosition(bv);	
 				
-				// 计算同分类多柱 形时，新柱形的结束X坐标
-				float drawBarEndX = add(drawBarStartX , barWidth);
-				
+				if(dataAxis.getAxisStdStatus())
+				{	
+					if(bv < dataAxis.getAxisStd()) //反向
+					{						 											
+						 barLeft = drawBarStartX;
+						 barTop = dataAxisStd;						
+						 barRight = add(drawBarStartX , barWidth);
+						 barBottom = topY ;						 
+						 labelTopY = labelTopY + itemFontHeight;
+					}else{						
+						 barLeft = drawBarStartX;
+						 barTop = topY;						
+						 barRight = add(drawBarStartX , barWidth);
+						 barBottom = dataAxisStd ;
+					}
+				}else{							
+					 barLeft = drawBarStartX;
+					 barTop = topY;						
+					 barRight = add(drawBarStartX , barWidth);
+					 barBottom = plotArea.getBottom() ;
+				}				
 				// 画出柱形
-				float topY = sub(plotArea.getBottom() , valuePostion);
-				mFlatBar.renderBar(drawBarStartX, plotArea.getBottom(),drawBarEndX,topY,canvas);
-
+				mFlatBar.renderBar(barLeft,barBottom,barRight,barTop,canvas);
+				
 				//保存位置
-				saveBarRectFRecord(i,j,drawBarStartX + mMoveX,topY + mMoveY,
-									    drawBarEndX  + mMoveX,plotArea.getBottom() + mMoveY); 
-								
+				saveBarRectFRecord(i,j,barLeft + mMoveX,barTop + mMoveY,
+						barRight  + mMoveX,barBottom + mMoveY); 
+				
 				//显示焦点框
-				drawFocusRect(canvas,i,j,
-						drawBarStartX,topY,drawBarEndX ,plotArea.getBottom());
-						
+				drawFocusRect(canvas,i,j,barLeft,barTop,barRight ,barBottom);
 				
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-						add(drawBarStartX , barWidth / 2),
-						sub(plotArea.getBottom() , valuePostion), canvas);												
+						add(drawBarStartX , barWidth / 2),labelTopY, canvas);												
 			}
 			currNumber++;
 		}
@@ -653,7 +776,7 @@ public class BarChart extends AxesChart {
 		}
 		return true;
 	}
-
+	
 	
 	@Override
 	protected void drawClipPlot(Canvas canvas)

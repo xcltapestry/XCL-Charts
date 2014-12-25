@@ -76,7 +76,8 @@ public class LineChart03View  extends GraphicalView {
 			
 			chart.getPlotLegend().hide();			
 			
-			
+			//忽略Java的float计算误差
+			chart.disableHighPrecision();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

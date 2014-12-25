@@ -43,6 +43,8 @@ import com.demo.xclcharts.view.BarChart03View;
 import com.demo.xclcharts.view.BarChart04View;
 import com.demo.xclcharts.view.BarChart05View;
 import com.demo.xclcharts.view.BarChart06View;
+import com.demo.xclcharts.view.BarChart08View;
+import com.demo.xclcharts.view.BarChart09View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.BubbleChart01View;
@@ -126,6 +128,10 @@ public class ChartsActivity extends Activity {
 			
 			new BarChart3D01View(this),	//竖向3D柱形图
 			new BarChart3D02View(this),	//横向3D柱形图
+			
+			new BarChart08View(this),	//正负背向式图
+			new BarChart09View(this),	//正负背向式图(横向)
+			
 			new StackBarChart01View(this),	//竖向堆积柱形图
 			new StackBarChart02View(this),	//横向堆积柱形图
 			new LineChart01View(this),	//折线图(封闭式)

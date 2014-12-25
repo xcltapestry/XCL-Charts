@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="386" key="DIALOG_Y_ORIGIN"/>
-		<item value="324" key="DIALOG_HEIGHT"/>
-		<item value="519" key="DIALOG_X_ORIGIN"/>
+		<item value="242" key="DIALOG_Y_ORIGIN"/>
+		<item value="272" key="DIALOG_HEIGHT"/>
+		<item value="943" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,26 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="validateParams" key="selection"/>
+		<item value="PanM" key="selection"/>
 		<list key="findhistory">
-			<item value="validateParams"/>
-			<item value="drawClipAxisClosed"/>
-			<item value="extw"/>
-			<item value="ext"/>
-			<item value="array"/>
-			<item value="LinkedHashMap&lt;Double,Double&gt;"/>
-			<item value=".put("/>
-			<item value=".hasNext())"/>
+			<item value="panm"/>
+			<item value="BarChart02View"/>
+			<item value="BarChart04View"/>
+			<item value="BarChart08View"/>
+			<item value="BarChart01View"/>
+			<item value="renderVerticalBar"/>
+			<item value="getAxisYPos"/>
+			<item value="getVPDataAxisBottom"/>
 		</list>
 		<list key="replacehistory">
+			<item value="BarChart09View"/>
+			<item value="BarChart08View"/>
+			<item value="getVPDataAxisStdY"/>
+			<item value="getVPDataAxisBottom"/>
 			<item value="List&lt;PointD&gt;"/>
 			<item value=".add(new PointD("/>
 			<item value="add(new PointD("/>
 			<item value=".add(new("/>
-			<item value="chart1."/>
-			<item value="mBgLines"/>
-			<item value="mPaintInner"/>
-			<item value="mPaintOuter"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -163,7 +163,7 @@ public class LabelBrokenLine {
 	 * 折线转折起始点(1 - 10)比例
 	 * @param ratio  比例(1-10)
 	 */
-	public void setBrokenStartPoin(float ratio)
+	public void setBrokenStartPoint(float ratio)
 	{
 		if(Float.compare(ratio, 1) == -1 || Float.compare(ratio, 10) == 1)
 		{

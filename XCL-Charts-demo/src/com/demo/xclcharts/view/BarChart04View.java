@@ -163,7 +163,7 @@ public class BarChart04View extends DemoView {
 			 //禁用平移模式
 			 chart.disablePanMode();
 			 
-			 
+			 chart.disableHighPrecision();
 			// chart.showRoundBorder();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

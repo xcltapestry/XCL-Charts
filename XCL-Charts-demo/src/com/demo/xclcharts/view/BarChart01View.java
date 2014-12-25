@@ -108,8 +108,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//数据源
 			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
-			
-			
+						
 			//轴标题
 			chart.getAxisTitle().setLeftAxisTitle("数据库");
 			chart.getAxisTitle().setLowerAxisTitle("分布位置");
@@ -117,7 +116,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//数据轴
 			chart.getDataAxis().setAxisMax(100);
 			chart.getDataAxis().setAxisMin(0);
-			chart.getDataAxis().setAxisSteps(5);
+			chart.getDataAxis().setAxisSteps(5);						
 			
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
@@ -177,6 +176,9 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//数据轴居中显示
 			//chart.setDataAxisLocation(XEnum.AxisLocation.VERTICAL_CENTER);
 			
+			//忽略Java的float计算误差
+			chart.disableHighPrecision();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -194,7 +196,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add(32d);
-		dataSeriesB.add(22d);
+		dataSeriesB.add(25d);
 		dataSeriesB.add(18d);
 		BarData BarDataB = new BarData("SQL Server",dataSeriesB,(int)Color.rgb(1, 188, 242));
 		

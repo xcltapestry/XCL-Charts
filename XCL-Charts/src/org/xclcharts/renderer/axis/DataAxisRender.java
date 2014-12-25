@@ -49,10 +49,10 @@ public class DataAxisRender extends DataAxis {
 	 * 返回轴值的范围(即最大-最小值).
 	 * @return 轴值范围
 	 */
-	public double getAxisRange()
+	public float getAxisRange()
 	{
 		//return (int) Math.abs(getAxisMax() - getAxisMin());		
-		return MathHelper.getInstance().sub(getAxisMax(), getAxisMin());
+		return (float) MathHelper.getInstance().sub(getAxisMax(), getAxisMin());
 	}
 	
 	

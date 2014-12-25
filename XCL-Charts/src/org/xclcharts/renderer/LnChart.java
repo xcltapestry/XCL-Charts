@@ -65,9 +65,7 @@ public class LnChart extends AxesChart {
 		} 
 		
 		categoryAxisDefaultSetting();
-		dataAxisDefaultSetting();
-		
-		enabledHighPrecision();	
+		dataAxisDefaultSetting();	
 	}
 		
 	

@@ -22,8 +22,6 @@
 
 package org.xclcharts.renderer.axis;
 
-
-
 /**
  * @ClassName DataAxis
  * @Description 数据轴(Data Axis)基类，主要用于设置步长及最大，最小值
@@ -42,12 +40,59 @@ public class DataAxis extends XYAxis {
 	//是否显示第一个序号的标签文本
 	 protected boolean mShowFirstTick = true;
 	 
+	 private float mDataAxisStd = 0.0f;
+	 private boolean mAxisStdStatus = false;
+	
+	
 	//轴范围分区数据集
 	//private LinkedHashMap<Double,Double> mRangeMap ;	 
 	//private ArrayList<Integer> mRangeColor ;	
 	 
 	public DataAxis()
 	{		
+	}
+	
+	/**
+	 * 激活正负标准值处理，激活后，数据与标准值比较后，依大小向各自方向绘制
+	 */
+	public void enabledAxisStd(){
+		mAxisStdStatus = true;
+	}
+	
+	/**
+	 * 禁掉正负标准值处理
+	 */
+	public void disableddAxisStd(){
+		mAxisStdStatus = false;
+	}
+	
+	/**
+	 * 设置具体的标准值
+	 * @param std 标准值
+	 */
+	public void setAxisStd(float std){
+		mDataAxisStd = std;
+	}
+				
+	/**
+	 * 返回正负标准值处理状态
+	 * @return 状态
+	 */
+	public boolean getAxisStdStatus(){
+		return mAxisStdStatus;
+	}
+	
+	/**
+	 * 返回当前正负标准值，如没设则默认为轴的最小值
+	 * @return 标准值
+	 */
+	public float getAxisStd(){
+		if(mAxisStdStatus)
+		{
+			return mDataAxisStd;
+		}else{
+			return (float) mDataAxisMin;
+		}
 	}
 	 
 	/**
@@ -58,6 +103,7 @@ public class DataAxis extends XYAxis {
 	 {
 		 mDataAxisMin = min;
 	 }
+	 
 	 /**
 	  * 设置数据轴最大值
 	  * @param max 最大值
@@ -90,16 +136,16 @@ public class DataAxis extends XYAxis {
 	  * 返回数据轴最小值
 	  * @return 最小值
 	  */
-	 public double getAxisMin() {
-		return mDataAxisMin;
+	 public float getAxisMin() {
+		return (float) mDataAxisMin;
 	 }
 
 	/**
 	 * 返回数据轴最大值
 	 * @return 最大值
 	 */
-	 public double getAxisMax() {
-		return mDataAxisMax;
+	 public float getAxisMax() {
+		return (float)mDataAxisMax;
 	 }
 
 	/**

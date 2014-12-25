@@ -148,6 +148,10 @@ public class DySplineChart extends ChartView{
 			
 			//chart2.getCategoryAxis().hide();
 			chart2.setAxesClosed(true);
+			
+			//忽略Java的float计算误差
+			chart1.disableHighPrecision();
+			chart2.disableHighPrecision();
 	 }
 	 
 	 
