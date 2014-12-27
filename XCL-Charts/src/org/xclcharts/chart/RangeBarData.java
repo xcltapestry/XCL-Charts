@@ -54,11 +54,7 @@ public class RangeBarData {
 			setMax(max);			
 			setMin(min);			
 		}
-		
-		
-		
-		
-		
+				
 		/**
 		 * 最大值				
 		 * @param max 最大值

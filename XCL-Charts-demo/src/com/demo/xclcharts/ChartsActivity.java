@@ -50,6 +50,8 @@ import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.BubbleChart01View;
 import com.demo.xclcharts.view.DemoView;
 import com.demo.xclcharts.view.DountChart01View;
+import com.demo.xclcharts.view.FunnelChart01View;
+import com.demo.xclcharts.view.FunnelChart02View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
@@ -159,7 +161,10 @@ public class ChartsActivity extends Activity {
 			new ScatterChart01View(this),	//散点图
 			new BubbleChart01View(this),	//气泡图
 			new RangeBarChart01View(this), 	//范围条形图			
-			new QuadrantChart01View(this)	//象限图
+			new QuadrantChart01View(this),	//象限图
+			
+			new FunnelChart01View(this), //漏斗图(Desc)
+			new FunnelChart02View(this) //漏斗图(Asc)
 		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  

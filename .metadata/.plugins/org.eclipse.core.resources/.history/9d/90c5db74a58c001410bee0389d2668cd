@@ -1,0 +1,20 @@
+package org.xclcharts.chart;
+
+import java.util.List;
+
+
+public class FunnelData {
+	
+	private String mLabel;
+	private String mKey;
+	
+	private List<Double> mArea;
+	private List<Integer> mAreaColor;
+	
+	public FunnelData()
+	{
+		
+	}
+	
+
+}

@@ -1,0 +1,105 @@
+package org.xclcharts.chart;
+
+import java.util.List;
+
+
+
+public class FunnelData implements Comparable<FunnelData> {
+	
+	private String mLabel;
+	private String mKey;
+	
+//	private List<float> mDataSet;
+	//private List<Integer> mAreaColor;
+	
+	
+	private float mData;
+	private int mColor;
+	
+	//透明度
+  	private int mAreaAlpha = 100;  
+  	
+  	
+	
+	public FunnelData()
+	{
+		
+	}
+	
+	public FunnelData(String key,String label,float percent,int color) 
+	{
+		setLabel(label);	
+		setKey(key);
+		setData(percent);
+		setColor(color);				
+	}
+	
+	
+	/**
+	 * 设置数据源
+	 * @param percent 百分比
+	 */
+	public void setData(float percent) //List<float> dataSeries) 
+	{
+		//if(null != mDataSet)mDataSet.clear();
+	//	mDataSet = dataSeries;
+		
+		mData = percent;
+	}
+	
+	
+	
+	public void setLabel(String value) 
+	{
+		mLabel = value;
+	}
+	
+	
+	/**
+	 * 设置Key值
+	 * @param value Key值
+	 */
+	public void setKey(String value) 
+	{
+		mKey = value;
+	}
+	
+	/**
+	 * 设置颜色
+	 * @param value 颜色
+	 */
+	public void setColor(int value) 
+	{
+		mColor = value;
+	}
+	
+	public int getColor()
+	{
+		return mColor;
+	}
+
+	/**
+	 * 返回数据集合序列
+	 * @return 集合序列
+	 */
+	public float  getData() { //List<float>
+		return mData;
+	}
+
+
+	/**
+	 * 返回Key值
+	 * @return Key值
+	 */
+	public String getKey() {
+		return mKey;
+	}
+
+	@Override
+    public int compareTo(FunnelData arg0) {
+		 Float a = this.getData();
+		 Float b = arg0.getData();
+		 return Float.compare(a, b);
+    }
+
+}

@@ -1,0 +1,8 @@
+package org.xclcharts.event.click;
+
+public class RegPosition extends RectPosition {
+	
+	public RegPosition()
+	{	
+	}	
+}

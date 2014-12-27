@@ -48,6 +48,9 @@
          <item>气泡图</item>
          <item>范围条形图</item>
      	 <item>象限图</item>
+     	 
+     	 <item>漏斗图(Desc)</item>
+     	 <item>漏斗图(Asc)</item>
         
      	 <item>双线图</item> 
         <item>仪表盘-混合图</item> 
@@ -83,7 +86,7 @@
 	  <item>Stacked Bar Chart</item>
 	  <item>Line Chart</item>
 	   <item>Line Chart - 线条渐绘动画效果</item>
-	     	<item>Spline Chart</item>
+	   <item>Spline Chart</item>
 	     	
 	  <item>Spline Chart </item>
 	  <item>Spline Chart </item>
@@ -93,8 +96,8 @@
 	   <item>MultiAxis Chart</item>
 	   <item>MultiAxis Chart</item>
 	   <item>MulBar Chart + Stacked Bar</item>
-	    <item>Area Chart+Line Chart+ Pie Chart +Spline Chart</item>
-	   
+	   <item>Area Chart+Line Chart+ Pie Chart +Spline Chart</item>
+	    	   	   
       <item>Pie Chart - 饼块渐显动画效果</item>
       <item>Pie Chart-另一种风格</item> 
       <item>3D Pie Chart - 由远及近的动画效果</item>     
@@ -112,6 +115,8 @@
         <item>Bubble Chart</item>
         <item>RangeBar Chart</item>     
         <item>Bubble Chart + Scatter Chart + Spline chart</item>
+         <item>Funnel Chart</item>
+          <item>Funnel Chart</item>
        
         <item>Activity传值，自动刷新</item> 
        <item>Dial Chart</item> 

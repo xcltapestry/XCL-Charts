@@ -186,6 +186,7 @@ public class BarChart05View extends DemoView implements Runnable{
 			e.printStackTrace();
 		}
 	}
+	
 	private void chartDataSet()
 	{
 		//标签对应的柱形数据集
@@ -195,8 +196,7 @@ public class BarChart05View extends DemoView implements Runnable{
 		dataSeriesA.add(95d); 
 		dataSeriesA.add(100d); 
 		BarData BarDataA = new BarData("",dataSeriesA,(int)Color.rgb(53, 169, 239));
-		
-		
+				
 		chartData.add(BarDataA);
 	}
 	

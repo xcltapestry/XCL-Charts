@@ -1,0 +1,67 @@
+package org.xclcharts.chart;
+
+import java.util.List;
+
+
+public class FunnelData {
+	
+	private String mLabel;
+	private String mKey;
+	
+	private List<Double> mDataSet;
+	private List<Integer> mAreaColor;
+	
+	public FunnelData()
+	{
+		
+	}
+	
+	/**
+	 * 设置数据源
+	 * @param dataSeries 数据集合序列
+	 */
+	public void setDataSet(List<Double> dataSeries) 
+	{
+		if(null != mDataSet)mDataSet.clear();
+		mDataSet = dataSeries;
+	}
+	
+	
+	/**
+	 * 设置Key值
+	 * @param value Key值
+	 */
+	public void setKey(String value) 
+	{
+		mKey = value;
+	}
+	
+	/**
+	 * 设置颜色
+	 * @param value 颜色
+	 */
+	public void setColor(Integer value) 
+	{
+		//mColor = value;
+	}
+
+	/**
+	 * 返回数据集合序列
+	 * @return 集合序列
+	 */
+	public List<Double> getDataSet() {
+		return mDataSet;
+	}
+
+
+	/**
+	 * 返回Key值
+	 * @return Key值
+	 */
+	public String getKey() {
+		return mKey;
+	}
+
+	
+
+}

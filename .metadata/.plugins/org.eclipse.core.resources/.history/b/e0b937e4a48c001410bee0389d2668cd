@@ -1,0 +1,12 @@
+package org.xclcharts.chart;
+
+
+public class FunnelData {
+	
+	public FunnelData()
+	{
+		
+	}
+	
+
+}

@@ -6,7 +6,7 @@ XCL-Charts
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于Android原生Canvas来绘制各种图表,使用简便,定制灵活。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>(3D/非3D,背向式)柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、
  折线图(Line Chart)、曲线图(Spline Chart)、环形图(Dount Chart)、南丁格尔玫瑰图(Rose Chart)、仪表盘(Dial Chart)、刻度盘(Gauge Chart)、雷达图(Radar Chart)、
- 圆形图(Circle Chart)、弧线比较图、散点图(Scatter Chart)、气泡图(Bubble Chart)、范围条形图(RangeBar Chart)、玫瑰风向图(Wind Rose)、象限图(Quadrant chart)等图表。<br/>
+ 圆形图(Circle Chart)、弧线比较图、散点图(Scatter Chart)、气泡图(Bubble Chart)、范围条形图(RangeBar Chart)、玫瑰风向图(Wind Rose)、象限图(Quadrant chart)、漏斗图(Funnel Chart)等图表。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;其它特性还包括手势缩放、图表滑动、点击交互、动画效果、多XY轴显示、轴线任意方位显示、动态图例、图表参考线、混合图表及同数据源图表类型切换等。</b><br/> 
  
  <b>License</b><br/>

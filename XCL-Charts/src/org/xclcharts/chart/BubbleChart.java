@@ -22,9 +22,7 @@
 package org.xclcharts.chart;
 
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
@@ -377,7 +375,7 @@ public class BubbleChart extends LnChart{
         		if(Float.compare(curRadius, 0.0f) == 0 
         				|| Float.compare(curRadius, 0.0f) == -1) 
         		{
-        			//Log.e(TAG,"当前气泡半径小于或等于0。");
+        			//Log.e(TAG,"当前气泡半径小于或等于0。");        	
         			continue;
         		}
 

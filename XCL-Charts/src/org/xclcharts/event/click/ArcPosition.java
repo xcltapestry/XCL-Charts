@@ -24,7 +24,6 @@ package org.xclcharts.event.click;
 import org.xclcharts.common.MathHelper;
 
 import android.graphics.PointF;
-import android.util.Log;
 
 /**
  * @ClassName ArcPosition

@@ -22,7 +22,6 @@
 package org.xclcharts.event.click;
 
 import android.graphics.PointF;
-import android.util.Log;
 
 
 /**
