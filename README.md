@@ -34,6 +34,7 @@ http://www.oschina.net/p/xcl-charts
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/dydialchart1.gif)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/dydialchart2.gif)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/dydialchart3.gif)
+![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/dydialchart4.gif)
 
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/bar3dchart.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/linechart.png)
@@ -71,7 +72,8 @@ http://www.oschina.net/p/xcl-charts
 
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart8.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart9.png)
-![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/dydialchart4.gif)
+![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/FunnelChart_desc.png)
+![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/FunnelChart_asc.png)
 
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart_m.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart_hh.png)
