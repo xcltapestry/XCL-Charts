@@ -172,13 +172,23 @@ public class XEnum {
 		public enum DotStyle {		
 			HIDE,TRIANGLE,RECT,DOT,RING,PRISMATIC,X,CROSS
 		}
-			
+		
 		/**
-		 * 雷达图数据区域的填充方式
+		 * 批注形状类型 
 		 * @author XCL
 		 *
 		 */
-		public enum RadarDataAreaStyle {
+		public enum AnchorStyle{
+			RECT,CIRCLE,DOT
+		}
+		
+		
+		/**
+		 * 数据区域的填充方式(雷达图/批注)
+		 * @author XCL
+		 *
+		 */
+		public enum DataAreaStyle {
 			FILL,STROKE
 		}
 		

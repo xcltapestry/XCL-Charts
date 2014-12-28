@@ -36,7 +36,11 @@ package org.xclcharts.renderer;
  * 
  */
 
+import java.util.List;
+
 import org.xclcharts.common.MathHelper;
+import org.xclcharts.renderer.info.AnchorDataPoint;
+import org.xclcharts.renderer.info.AnchorRender;
 import org.xclcharts.renderer.info.DyLine;
 import org.xclcharts.renderer.info.DyLineRender;
 import org.xclcharts.renderer.info.Legend;
@@ -98,10 +102,7 @@ public class XChart implements IRender {
 	private boolean mEnableScale = true;
 	private float mXScale = 0.0f, mYScale = 0.0f;
 	private float mCenterX  = 0.0f, mCenterY  = 0.0f;
-	
-	//是否充许gc
-	private boolean mEnableGC = false;
-	
+		
 	//是否显示十字交叉线
 	private boolean mDyLineVisible = false;
 	private DyLineRender mDyLine = null;
@@ -429,6 +430,38 @@ public class XChart implements IRender {
 		this.plotTitle.renderTitle(
 				mLeft + borderWidth, mRight - borderWidth, mTop + borderWidth,
 				mWidth, this.plotArea.getTop(), canvas);
+	}
+	
+	
+	/**
+	 * 绘制批注
+	 * @param anchorSet
+	 * @param dataID
+	 * @param childID
+	 * @param canvas
+	 * @param x
+	 * @param y
+	 * @return 是否有绘制
+	 */
+	protected boolean drawAnchor(List<AnchorDataPoint> anchorSet,
+								int dataID,int childID,Canvas canvas,float x,float y)
+	{
+		if(null == anchorSet || -1 == dataID)return false;
+		int count = anchorSet.size();
+		for(int i=0;i<count;i++)
+		{
+			AnchorDataPoint an = anchorSet.get(i);
+			if(an.getDataSeriesID() == dataID )
+			{
+				if( (-1 == childID || -1 == an.getDataChildID() ) 
+					|| ( -1 != childID && an.getDataChildID() == childID))
+				{
+					AnchorRender.getInstance().renderAnchor(canvas, an, x, y);
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	

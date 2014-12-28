@@ -163,7 +163,7 @@ public class RadarChart01View extends DemoView {
 		dataSeriesA.add(20d);
 		
 		RadarData lineData1 = new RadarData("现状",dataSeriesA,
-					(int)Color.rgb(234, 83, 71),XEnum.RadarDataAreaStyle.FILL);
+					(int)Color.rgb(234, 83, 71),XEnum.DataAreaStyle.FILL);
 		lineData1.setLabelVisible(true);	
 		lineData1.getPlotLine().getDotLabelPaint().setTextAlign(Align.LEFT);
 		
@@ -174,7 +174,7 @@ public class RadarChart01View extends DemoView {
 		dataSeriesB.add((double)30); 
 		dataSeriesB.add((double)40); 
 		RadarData lineData2 = new RadarData("短期目标",dataSeriesB,
-					(int)Color.rgb(75, 166, 51),XEnum.RadarDataAreaStyle.STROKE);
+					(int)Color.rgb(75, 166, 51),XEnum.DataAreaStyle.STROKE);
 		//lineData2.setDotStyle(XEnum.DotStyle.RING);				
 		lineData2.getPlotLine().getDotPaint().setColor(Color.BLACK);
 		
@@ -187,7 +187,7 @@ public class RadarChart01View extends DemoView {
 		dataSeriesC.add(45d);
 		
 		RadarData lineData3 = new RadarData("长期目标",dataSeriesC,
-					(int)Color.rgb(224, 53, 49),XEnum.RadarDataAreaStyle.STROKE);
+					(int)Color.rgb(224, 53, 49),XEnum.DataAreaStyle.STROKE);
 		lineData3.setLineStyle(XEnum.LineStyle.DASH);	
 		lineData3.getPlotLine().setDotStyle(XEnum.DotStyle.RING);
 		

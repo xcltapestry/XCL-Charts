@@ -22,7 +22,6 @@
 
 package org.xclcharts.common;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 import org.xclcharts.renderer.XEnum;
@@ -31,10 +30,10 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.DashPathEffect;
 import android.graphics.Paint;
-import android.graphics.RectF;
 import android.graphics.Paint.FontMetrics;
 import android.graphics.Path;
 import android.graphics.PathEffect;
+import android.graphics.RectF;
 
 /**
  * @ClassName DrawHelper

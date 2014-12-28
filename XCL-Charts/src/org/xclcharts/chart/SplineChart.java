@@ -22,7 +22,6 @@
 package org.xclcharts.chart;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
@@ -229,28 +228,26 @@ public class SplineChart extends LnChart{
 		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
 															
 	    //画出数据集对应的线条				
-		int j = 0;
-		Iterator iter = chartValues.iterator();
-		while(iter.hasNext()){
-			PointD  entry=(PointD)iter.next();
-			
-			    Double xValue = entry.x;
-			    Double yValue = entry.y;	
+		
+		int count = chartValues.size();
+		for(int i=0;i<count;i++)
+		{
+				PointD  entry = chartValues.get(i);
 			    			    
 			    //对应的Y坐标		            	   
 			    double yScale = MathHelper.getInstance().div( 
-						MathHelper.getInstance().sub(yValue,dataAxis.getAxisMin()),
+						MathHelper.getInstance().sub(entry.y,dataAxis.getAxisMin()),
 						axisDataHeight );			    
 			    float YvaluePos =  mul( axisScreenHeight , (float)yScale );
 			    //对应的X坐标	 
 			    double xScale = MathHelper.getInstance().div(
-		   				MathHelper.getInstance().sub(xValue,mMinValue),xMM);
+		   				MathHelper.getInstance().sub(entry.x,mMinValue),xMM);
 			    float XvaluePos = mul(axisScreenWidth,(float)xScale);	
 
             	lineStopX = add(initX , XvaluePos);  	
             	lineStopY = sub(initY , YvaluePos);
             	            	
-            	if(0 == j )
+            	if(0 == i )
         		{
             		lineStartX = lineStopX;
 					lineStartY = lineStopY;
@@ -264,12 +261,10 @@ public class SplineChart extends LnChart{
         		}            		
         
             	//dot
-            	lstDotInfo.add(new DotInfo(xValue,yValue,lineStopX,lineStopY));
+            	lstDotInfo.add(new DotInfo(entry.x,entry.y,lineStopX,lineStopY));
                          					
 				lineStartX = lineStopX;
-				lineStartY = lineStopY;
-
-				j++;	              								
+				lineStartY = lineStopY;       								
 		}								
 	}
 	

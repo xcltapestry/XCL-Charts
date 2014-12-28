@@ -21,7 +21,6 @@
  */
 package org.xclcharts.chart;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.renderer.XEnum;
@@ -59,7 +58,7 @@ public class AreaData extends LineData {
 	 * @param linecolor 线颜色
 	 * @param dataSeries	数据序列
 	 */
-	public AreaData(String key,int linecolor,LinkedList<Double> dataSeries) 
+	public AreaData(String key,int linecolor,List<Double> dataSeries) 
 	{
 		 super();
 	}

@@ -51,9 +51,7 @@ public class PieData {
 	//标签注释显示位置 [隐藏,Default,Inside,Ouside,Line]
 	private XEnum.SliceLabelStyle mLabelStyle  = XEnum.SliceLabelStyle.INSIDE;	
 	private boolean mCustLabelStyle = false;	
-	private int mCustLabelColor = 0 ;
-	
-	
+	private int mCustLabelColor = 0 ;		
 	
 	public PieData() {
 		// TODO Auto-generated constructor stub

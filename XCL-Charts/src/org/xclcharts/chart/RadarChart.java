@@ -548,21 +548,18 @@ public class RadarChart extends RdChart{
 			RadarData lineData,
 			Float[] arrayDataX,Float[] arrayDataY ,int dataID)
 	{
-		float startX = 0.0f,startY = 0.0f;
 		float initX = 0.0f,initY = 0.0f;
 	
 		mRdPath.reset();
 		for(int p=0;p< arrayDataX.length;p++)
 		{
 			if(0 == p){
-				initX = startX = arrayDataX[p];
-				initY = startY = arrayDataY[p];
+				initX = arrayDataX[p];
+				initY =  arrayDataY[p];
 				
 				mRdPath.moveTo(initX,initY);
 			}else{
 				mRdPath.lineTo(arrayDataX[p] , arrayDataY[p]);   
-				startX = arrayDataX[p];
-				startY = arrayDataY[p];
 			} 
 		}
 		//收尾

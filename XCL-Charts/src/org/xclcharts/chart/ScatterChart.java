@@ -21,7 +21,6 @@
  */
 package org.xclcharts.chart;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
@@ -239,32 +238,27 @@ public class ScatterChart extends LnChart{
 		if(null == chartValues) return ;
 															
 	    //画出数据集对应的线条				
-		int j = 0;
-		int childID = 0;
-		
 		float YvaluePos = 0.0f,XvaluePos =0.0f;
 		float itemAngle = bd.getItemLabelRotateAngle();		
 		PlotDot dot = bd.getPlotDot(); 
 		float radius = dot.getDotRadius();
 								
-		Iterator iter = chartValues.iterator();
-		while(iter.hasNext()){
-			PointD  entry=(PointD)iter.next();
-			
-			    Double xValue = entry.x;
-			    Double yValue = entry.y;
+		int count = chartValues.size();
+		for(int i=0;i<count;i++)
+		{
+			   PointD  entry = chartValues.get(i);
 			   			    			   
 			    //对应的Y坐标
-			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  			                	
+			    // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  			                	
 			    double yScale = MathHelper.getInstance().div( 
-			    								MathHelper.getInstance().sub(yValue,dataAxis.getAxisMin()),
+			    								MathHelper.getInstance().sub(entry.y,dataAxis.getAxisMin()),
 			    								axisDataHeight );			    
 			    YvaluePos =  mul( axisScreenHeight , (float)yScale );
 			    
             	//对应的X坐标	  	  
 			   // XvaluePos = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;              
 			   double xScale = MathHelper.getInstance().div(
-					   				MathHelper.getInstance().sub(xValue,mMinValue),xMM);
+					   				MathHelper.getInstance().sub(entry.x,mMinValue),xMM);
 			   XvaluePos = mul(axisScreenWidth,(float)xScale);			  
 			   
 			   XvaluePos = add(plotArea.getLeft() , XvaluePos);
@@ -279,11 +273,9 @@ public class ScatterChart extends LnChart{
             		PlotDotRender.getInstance().renderDot(
 	            			canvas, dot,XvaluePos,YvaluePos,getPointPaint());
             		            		
-	            	savePointRecord(dataID,childID, XvaluePos + mMoveX,YvaluePos + mMoveY,
+	            	savePointRecord(dataID,i, XvaluePos + mMoveX,YvaluePos + mMoveY,
 	            			XvaluePos - radius + mMoveX , YvaluePos - radius + mMoveY,
-	            			XvaluePos + radius + mMoveX , YvaluePos + radius + mMoveY);
-	            
-	    			childID++;
+	            			XvaluePos + radius + mMoveX , YvaluePos + radius + mMoveY);	            
              	}
     			            	
 	    		
@@ -292,11 +284,10 @@ public class ScatterChart extends LnChart{
             		//请自行在回调函数中处理显示格式
             		DrawHelper.getInstance().drawRotateText(
                     		getFormatterDotLabel(
-                    				Double.toString(xValue)+","+ Double.toString(yValue)),
+                    				Double.toString(entry.x)+","+ Double.toString(entry.y)),
                     				XvaluePos,YvaluePos, itemAngle,
                     				canvas,  bd.getDotLabelPaint());            		
-            	}              	
-				j++;	              								
+            	}                   								
 		}								
 	}
 		

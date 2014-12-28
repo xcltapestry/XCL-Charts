@@ -233,7 +233,7 @@ public class BarChart3D extends BarChart{
 		//3D 偏移值		
 	    double baseTickness = mBar3D.getAxis3DBaseThickness();
 	    double baseAngle = mBar3D.getAngle();	
-		double baseOffsetX = mBar3D.getOffsetX(baseTickness,baseAngle);
+		//double baseOffsetX = mBar3D.getOffsetX(baseTickness,baseAngle);
 		double baseOffsetY = mBar3D.getOffsetY(baseTickness,baseAngle);	
 		
 		double labelHeight = DrawHelper.getInstance().getPaintFontHeight(
@@ -287,7 +287,7 @@ public class BarChart3D extends BarChart{
 		for(int i=0;i<barNumber;i++)
 		{
 		    //依初超始X坐标与分类间距算出当前刻度的X坐标
-			float currentX = add(barInitX, mul((i+1), XSteps) );
+			//float currentX = add(barInitX, mul((i+1), XSteps) );
 			
 			//得到分类对应的值数据集				
 			BarData bd = chartDataSource.get(i);

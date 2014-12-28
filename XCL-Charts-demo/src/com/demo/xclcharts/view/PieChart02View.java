@@ -30,7 +30,6 @@ import java.util.List;
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;

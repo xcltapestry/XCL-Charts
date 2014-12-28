@@ -35,7 +35,7 @@ import org.xclcharts.renderer.XEnum;
 public class RadarData extends LineData{
 	
 	//数据填充区域显示风格
-	private XEnum.RadarDataAreaStyle mAreaStyle = XEnum.RadarDataAreaStyle.FILL;
+	private XEnum.DataAreaStyle mAreaStyle = XEnum.DataAreaStyle.FILL;
 	//网格线绘制风格 Solid、Dot、Dash。
 	private XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
 	
@@ -55,7 +55,7 @@ public class RadarData extends LineData{
 	public RadarData(String key,					
 					List<Double> dataSeries,
 					int color,
-					XEnum.RadarDataAreaStyle  areaStyle) 
+					XEnum.DataAreaStyle  areaStyle) 
 	{
 		setLabel(key);		
 		setLineColor(color);
@@ -68,7 +68,7 @@ public class RadarData extends LineData{
 	 * 设置雷达图数据填充区域显示风格
 	 * @param style 填满或为空(即只显示线)
 	 */
-	public void setAreaStyle(XEnum.RadarDataAreaStyle style){
+	public void setAreaStyle(XEnum.DataAreaStyle style){
 		mAreaStyle = style;
 	}
 	
@@ -76,7 +76,7 @@ public class RadarData extends LineData{
 	 * 返回雷达图数据当前的填充区域显示风格
 	 * @return 填充区域显示风格
 	 */
-	public XEnum.RadarDataAreaStyle getAreaStyle()
+	public XEnum.DataAreaStyle getAreaStyle()
 	{
 		return mAreaStyle;
 	}

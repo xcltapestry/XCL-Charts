@@ -21,7 +21,6 @@
  */
 package org.xclcharts.chart;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
@@ -278,12 +277,7 @@ public class BubbleChart extends LnChart{
 			
 				
 	private void renderPoints( Canvas canvas, BubbleData bd ,int dataID)
-	{			
-		float initX =  plotArea.getLeft();
-        float initY =  plotArea.getBottom();		
-        //float lineStopX = 0.0f;
-       // float lineStopY = 0.0f;        
-    	
+	{	
     	float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
 		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
@@ -292,9 +286,7 @@ public class BubbleChart extends LnChart{
 		List<PointD> chartValues = bd.getDataSet();	
 		if(null == chartValues) return ;
 															
-	    //画出数据集对应的线条				
-		int j = 0;
-		int childID = 0;
+	    //画出数据集对应的线条	
 		float YvaluePos = 0.0f,XvaluePos = 0.0f;
 
 		if(Float.compare(mBubbleScaleMax, mBubbleScaleMin)  == 0  ) 
@@ -336,12 +328,10 @@ public class BubbleChart extends LnChart{
 		
 		float itemAngle = bd.getItemLabelRotateAngle();
 				
-		Iterator iter = chartValues.iterator();
-		while(iter.hasNext()){
-			PointD  entry=(PointD)iter.next();
-			
-			    Double xValue = entry.x;
-			    Double yValue = entry.y;
+		int count = chartValues.size();
+		for(int i=0;i<count;i++)
+		{
+			PointD  entry = chartValues.get(i);
 			    			    
 			    //对应的Y坐标
 			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
@@ -351,23 +341,23 @@ public class BubbleChart extends LnChart{
 			    
 			    //对应的Y坐标  			                	
 			    double yScale = MathHelper.getInstance().div( 
-			    								MathHelper.getInstance().sub(yValue,dataAxis.getAxisMin()),
+			    								MathHelper.getInstance().sub(entry.y,dataAxis.getAxisMin()),
 			    								axisDataHeight );			    
 			    YvaluePos =  mul( axisScreenHeight , (float)yScale );
 			    
             	//对应的X坐标	  	              
 			    double xScale = MathHelper.getInstance().div(
-					   				MathHelper.getInstance().sub(xValue,mMinValue),xMM);
+					   				MathHelper.getInstance().sub(entry.x,mMinValue),xMM);
 			    XvaluePos = mul(axisScreenWidth,(float)xScale);	
 			    
 			    XvaluePos = add(plotArea.getLeft() , XvaluePos);
 			    YvaluePos = sub(plotArea.getBottom() , YvaluePos);
 			                
-        		if(j >= bubbleSize )
+        		if(i >= bubbleSize ) //j
         		{
         			continue;
         		}else{
-        			bubble = lstBubble.get(j);
+        			bubble = lstBubble.get(i);//j
         		}
         		
         		curRadius = calcRaidus(scale, size, (float) bubble);
@@ -384,7 +374,7 @@ public class BubbleChart extends LnChart{
         		PlotDotRender.getInstance().renderDot(
             			canvas, mPlotDot,XvaluePos,YvaluePos,getPointPaint());
         		            		
-            	savePointRecord(dataID,childID, XvaluePos + mMoveX,YvaluePos + mMoveY,
+            	savePointRecord(dataID,i, XvaluePos + mMoveX,YvaluePos + mMoveY, //childID
             			XvaluePos - curRadius + mMoveX , YvaluePos - curRadius + mMoveY,
             			XvaluePos + curRadius + mMoveX , YvaluePos + curRadius + mMoveY);
         		
@@ -392,21 +382,16 @@ public class BubbleChart extends LnChart{
             	if(bd.getBorderColor() != -1)
             	{
             		canvas.drawCircle(XvaluePos,YvaluePos, curRadius, getPointBorderPaint());
-            	}
-            	            	            
-    			childID++;
-             	    			            	
+            	}          	
             	if(bd.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
                     DrawHelper.getInstance().drawRotateText(getFormatterDotLabel(
-                            Double.toString(xValue)+","+ Double.toString(yValue)
+                            Double.toString(entry.x)+","+ Double.toString(entry.y)
                             +" : "+Double.toString(bubble)),
                             XvaluePos,YvaluePos, itemAngle, 
                             canvas, bd.getDotLabelPaint()); //lineStopX,lineStopY
-            	}  
-
-				j++;	              								
+            	}                								
 		}								
 	}
 		

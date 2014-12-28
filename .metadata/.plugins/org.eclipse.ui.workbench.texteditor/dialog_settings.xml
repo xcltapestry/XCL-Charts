@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="245" key="DIALOG_Y_ORIGIN"/>
+		<item value="327" key="DIALOG_Y_ORIGIN"/>
+		<item value="587" key="DIALOG_X_ORIGIN"/>
 		<item value="272" key="DIALOG_HEIGHT"/>
-		<item value="827" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="FunnelChart02View" key="selection"/>
+		<item value="mBgColor" key="selection"/>
 		<list key="findhistory">
-			<item value="FunnelChart01View"/>
-			<item value="save"/>
-			<item value="mPaintFunnelLine"/>
-			<item value="getPaintLabelLine"/>
-			<item value="mIsLabelLineSyncColor"/>
-			<item value="mPaintLabel"/>
-			<item value="swtich"/>
-			<item value="mAreaAlpha"/>
+			<item value="mAnchorBgColor"/>
+			<item value="renderRect"/>
+			<item value="mAnchorSet"/>
+			<item value="mDataSet"/>
+			<item value="saveLabelsPosition"/>
+			<item value="LabelSaveType"/>
+			<item value="labelsa"/>
+			<item value="renderAxesTick"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mBgColor"/>
+			<item value="ArrayList"/>
 			<item value="FunnelChart02View"/>
 			<item value="getLabelLinePaint"/>
 			<item value="float"/>
 			<item value="BarChart09View"/>
 			<item value="BarChart08View"/>
 			<item value="getVPDataAxisStdY"/>
-			<item value="getVPDataAxisBottom"/>
-			<item value="List&lt;PointD&gt;"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

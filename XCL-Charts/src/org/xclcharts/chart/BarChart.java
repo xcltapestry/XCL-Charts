@@ -31,6 +31,8 @@ import org.xclcharts.renderer.AxesChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
+import org.xclcharts.renderer.info.AnchorDataPoint;
+import org.xclcharts.renderer.info.AnchorRender;
 import org.xclcharts.renderer.info.PlotAxisTick;
 import org.xclcharts.renderer.line.PlotCustomLine;
 
@@ -57,6 +59,9 @@ public class BarChart extends AxesChart {
 	
 	//用于绘制定制线(分界线)
 	private PlotCustomLine mCustomLine = null;	
+	
+	//批注
+	private List<AnchorDataPoint> mAnchorSet;
 	
 	
 	public BarChart() {
@@ -98,6 +103,14 @@ public class BarChart extends AxesChart {
 	 */
 	public void setCategories( List<String> categories) {	
 		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
+	}
+	
+	/**
+	 * 设置批注
+	 * @param anchor 批注
+	 */
+	public void setAnchorDataPoint( List<AnchorDataPoint> anchor) {	
+		mAnchorSet = anchor;
 	}
 
 	/**
@@ -699,7 +712,8 @@ public class BarChart extends AxesChart {
 									 mul(sub(barNumber , 1) , barInnerMargin));
 		
 		float barLeft = 0.0f,barBottom = 0.0f,barTop = 0.f,barRight =0.f;
-		float currLableX,drawBarStartX,topY,labelTopY;
+		float currLableX,drawBarStartX,topY,labelTopX,labelTopY;
+
 		
 		// X 轴 即分类轴
 		int size = mDataSet.size();
@@ -761,9 +775,14 @@ public class BarChart extends AxesChart {
 				//显示焦点框
 				drawFocusRect(canvas,i,j,barLeft,barTop,barRight ,barBottom);
 				
+				labelTopX = add(drawBarStartX , barWidth / 2);
+				
+				//在柱形的顶端显示上柱形的批注形状
+				drawAnchor(this.mAnchorSet,i,j,canvas,labelTopX,labelTopY);
+								
 				// 在柱形的顶端显示上柱形的当前值
 				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-						add(drawBarStartX , barWidth / 2),labelTopY, canvas);												
+						labelTopX,labelTopY, canvas);												
 			}
 			currNumber++;
 		}

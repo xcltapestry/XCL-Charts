@@ -277,7 +277,7 @@ public class RangeBarChart  extends AxesChart {
 		List<String> cateDataSet = categoryAxis.getDataSet();
 		if(null == cateDataSet) return false;
 		
-		float XSteps = getVerticalXSteps(cateDataSet.size() + 1 );	
+		//float XSteps = getVerticalXSteps(cateDataSet.size() + 1 );	
 		float currentX = 0.0f,barMaxPos = 0.0f,barMinPos = 0.0f;
 		 		 				
 		float barWidthHalf = mBarWidth/2;
@@ -328,6 +328,7 @@ public class RangeBarChart  extends AxesChart {
 	
 	
 	//轴刻度
+	/*
 	private void renderAxesTick(Canvas canvas)
 	{				
 		drawCategoryAxisLabels(canvas,mLstCateTick);		
@@ -337,6 +338,7 @@ public class RangeBarChart  extends AxesChart {
 		mLstDataTick.clear();
 	}
 	
+	*/
 	
 	/**
 	 * 返回当前点击点的信息

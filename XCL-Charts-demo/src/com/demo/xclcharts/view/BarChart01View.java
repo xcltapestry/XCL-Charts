@@ -24,7 +24,6 @@ package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.chart.BarChart;
@@ -34,6 +33,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.AnchorDataPoint;
 import org.xclcharts.renderer.info.DyLine;
 import org.xclcharts.renderer.info.Legend;
 import org.xclcharts.renderer.line.PlotDot;
@@ -60,8 +60,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	private BarChart chart = new BarChart();
 	
 	//标签轴
-	private List<String> chartLabels = new LinkedList<String>();
-	private List<BarData> chartData = new LinkedList<BarData>();
+	private List<String> chartLabels = new ArrayList<String>();
+	private List<BarData> chartData = new ArrayList<BarData>();
 	
 	Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	PlotDot mDotToolTip = new PlotDot();
@@ -187,26 +187,26 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	private void chartDataSet()
 	{
 		//标签对应的柱形数据集
-		List<Double> dataSeriesA= new LinkedList<Double>();	
+		List<Double> dataSeriesA= new ArrayList<Double>();	
 		dataSeriesA.add(66d); 
 		dataSeriesA.add(33d); 
 		dataSeriesA.add(50d);
 		BarData BarDataA = new BarData("Oracle",dataSeriesA,(int)Color.rgb(186, 20, 26));
 		
 		
-		List<Double> dataSeriesB= new LinkedList<Double>();	
+		List<Double> dataSeriesB= new ArrayList<Double>();	
 		dataSeriesB.add(32d);
 		dataSeriesB.add(25d);
 		dataSeriesB.add(18d);
 		BarData BarDataB = new BarData("SQL Server",dataSeriesB,(int)Color.rgb(1, 188, 242));
 		
-		List<Double> dataSeriesC= new LinkedList<Double>();	
+		List<Double> dataSeriesC= new ArrayList<Double>();	
 		dataSeriesC.add(79d);
 		dataSeriesC.add(91d);
 		dataSeriesC.add(65d);
 		BarData BarDataC = new BarData("MySQL",dataSeriesC,(int)Color.rgb(0, 75, 106)); 
 		
-		List<Double> dataSeriesD= new LinkedList<Double>();	
+		List<Double> dataSeriesD= new ArrayList<Double>();	
 		dataSeriesD.add(52d);
 		dataSeriesD.add(45d);
 		dataSeriesD.add(35d);
@@ -313,7 +313,28 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		*/
 		
 		chart.getDataAxis().show();		 
-		chart.getPlotLegend().show();				
+		chart.getPlotLegend().show();	
+		
+		
+		//批注
+		List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
+		
+		AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.RECT);
+		an1.setAlpha(200);
+		an1.setBgColor(Color.RED);
+		an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
+		
+		AnchorDataPoint an2 = new AnchorDataPoint(1,1,XEnum.AnchorStyle.CIRCLE);
+		an2.setBgColor(Color.GRAY);
+		
+		AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
+		an3.setBgColor(Color.BLUE);
+		
+		
+		mAnchorSet.add(an1);
+		mAnchorSet.add(an2);
+		mAnchorSet.add(an3);
+		chart.setAnchorDataPoint(mAnchorSet);		
 	}
 	
 	private void drawDyLegend()

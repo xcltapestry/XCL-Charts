@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.R"/>
-<fullyQualifiedTypeName name="com.demo.xclcharts.R"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CategoryAxisPosition"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAxisPosition"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.PointHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Shader"/>
 <fullyQualifiedTypeName name="android.graphics.Rect"/>
@@ -21,15 +17,12 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotQuadrant"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.QuadrantChart01View"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisTitleStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.DotInfo"/>
 <fullyQualifiedTypeName name="java.util.Map"/>
 <fullyQualifiedTypeName name="java.util.HashMap"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SliceLabelStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLocation"/>
 <fullyQualifiedTypeName name="java.util.Map.Entry"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.view.ChartView"/>
 <fullyQualifiedTypeName name="android.os.Handler"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.DySplineChart"/>
@@ -52,7 +45,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.chart.FunnelData"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SortType"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
@@ -60,4 +52,12 @@
 <fullyQualifiedTypeName name="android.graphics.Region"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.FunnelChart02View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.info.AnchorDataPoint"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDotRender"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.info.AnchorRender"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAreaStyle"/>
 </qualifiedTypeNameHistroy>

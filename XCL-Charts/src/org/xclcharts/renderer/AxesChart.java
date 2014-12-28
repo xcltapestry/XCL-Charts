@@ -25,7 +25,6 @@ package org.xclcharts.renderer;
 import java.util.ArrayList;
 
 import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.axis.CategoryAxis;
 import org.xclcharts.renderer.axis.CategoryAxisRender;
 import org.xclcharts.renderer.axis.DataAxis;
