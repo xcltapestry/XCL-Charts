@@ -229,28 +229,27 @@ public class XYAxis extends Axis {
 	 * @param text		标签文本
 	 */
 	protected void renderVerticalTick(Canvas canvas, 
-									 float centerX, float centerY, String text,boolean isTickVisible) {
-		if (false == isShow())
-			return;
+									 float centerX, float centerY,  
+									 String text,float labelX, float labelY, 
+									 boolean isTickVisible) {
+		if (!isShow())return;
 
 		float marksStartY = centerY;
 		float marksStopY = centerY;
-		float labelsStartY = centerY;
+		float labelsStartY = labelY;
 
 		
 		switch (getVerticalTickPosition()) {
 		case TOP: {
+			
 			if (isShowTickMarks()) 
 			{
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
 				marksStopY = centerY;				
 			}
 			
-			if(this.isShowAxisLabels())
-			{		
-				//DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint()) / 2 
-				labelsStartY = MathHelper.getInstance().sub(marksStartY,  getTickLabelMargin() ); 
-			}
+				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
+				marksStopY = centerY;	
 			
 			break;
 		}
@@ -303,12 +302,15 @@ public class XYAxis extends Axis {
 
 			//定制化显示格式			
 			DrawHelper.getInstance().drawRotateText(getFormatterLabel(text),
-					centerX, labelsStartY,
+					labelX, labelsStartY,
 					getTickLabelRotateAngle(), canvas,
 					getTickLabelPaint());
 		}
 		
 	}
+	
+	
+
 	
 	
 	

@@ -489,7 +489,7 @@ public class FunnelChart extends EventChart {
 					break;
 			}							
 		}
-		float labelX = 0.f;		
+		float labelX = 0.f,labelY = 0.f;		
 		switch(getLabelAlign())
 		{
 			case LEFT:
@@ -504,7 +504,8 @@ public class FunnelChart extends EventChart {
 			default:	
 				labelX = cx;
 		}		
-		canvas.drawText(label, labelX, y ,getLabelPaint());		
+		labelY = y + ( DrawHelper.getInstance().getPaintFontHeight(getLabelPaint()) /3);
+		canvas.drawText(label, labelX,labelY ,getLabelPaint());		
 	}
 	
 	protected void renderPlot(Canvas canvas)

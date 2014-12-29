@@ -29,6 +29,7 @@ import java.util.List;
 
 import org.xclcharts.chart.AreaChart;
 import org.xclcharts.chart.AreaData;
+import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
@@ -39,7 +40,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-import android.graphics.Shader;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -60,6 +60,8 @@ public class AreaChart02View extends DemoView {
 	private LinkedList<String> mLabels = new LinkedList<String>();
 	//数据集合
 	private LinkedList<AreaData> mDataset = new LinkedList<AreaData>();
+	
+	private List<CustomLineData> mCustomLineDataset = new LinkedList<CustomLineData>();
 	
 
 	public AreaChart02View(Context context) {
@@ -168,6 +170,14 @@ public class AreaChart02View extends DemoView {
 				//chart.getPlotArea().extWidth(100f);
 				
 				//chart.disablePanMode(); //test
+				
+				CustomLineData line1 = new CustomLineData("标识线",60d,(int)Color.RED,7);
+				line1.setCustomLineCap(XEnum.DotStyle.CROSS);		
+				line1.setLabelHorizontalPostion(Align.CENTER);
+				line1.setLabelOffset(15);	
+				line1.getLineLabelPaint().setColor(Color.RED);
+				mCustomLineDataset.add(line1);
+				chart.setCustomLines(mCustomLineDataset);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

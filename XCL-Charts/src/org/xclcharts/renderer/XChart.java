@@ -435,12 +435,12 @@ public class XChart implements IRender {
 	
 	/**
 	 * 绘制批注
-	 * @param anchorSet
-	 * @param dataID
-	 * @param childID
-	 * @param canvas
-	 * @param x
-	 * @param y
+	 * @param anchorSet 批注集合
+	 * @param dataID    主数据集id
+	 * @param childID   子数据集id
+	 * @param canvas	画布
+	 * @param x			X坐标点
+	 * @param y			y坐标点
 	 * @return 是否有绘制
 	 */
 	protected boolean drawAnchor(List<AnchorDataPoint> anchorSet,

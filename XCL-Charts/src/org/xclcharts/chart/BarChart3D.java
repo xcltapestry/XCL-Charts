@@ -200,13 +200,20 @@ public class BarChart3D extends BarChart{
 	                							mBar3D.getBarPaint().getColor(), canvas);
 	                
 	                //保存位置
-	                saveBarRectFRecord(i,j,barInitX + mMoveX, //plotArea.getLeft(),
+	                saveBarRectFRecord(i,j,barInitX + mMoveX, 
 	                						topY  + mMoveY,rightX  + mMoveX, drawBarButtomY  + mMoveY); 	                	             
-                	                               	
-                	//在柱形的顶端显示上柱形的当前值	                
-	                mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
-	                		 rightX, // add(plotArea.getLeft() , valuePostion)  , 
-	                		 sub(drawBarButtomY , barHeight/2), canvas);
+                	           
+	                float labelTopY = sub(drawBarButtomY , barHeight/2);
+					
+					//在柱形的顶端显示上批注形状
+					drawAnchor(this.getAnchorDataPoint(),i,j,canvas,rightX,labelTopY);
+	                
+                	//在柱形的顶端显示上柱形的当前值	  
+					if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
+					{					
+					}else{
+		                mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),rightX, labelTopY, canvas);
+					}
                 }
 				currNumber ++;
 			}	
@@ -260,7 +267,7 @@ public class BarChart3D extends BarChart{
 				
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度					
-		float XSteps = div(plotArea.getPlotWidth() , (dataSet.size() + 1 ) );	//plotArea.getWidth()
+		float XSteps = div(plotArea.getPlotWidth() , (dataSet.size() + 1 ) );
 		
 			
 		//得到数据源
@@ -323,13 +330,16 @@ public class BarChart3D extends BarChart{
         
 				//保存位置
 				saveBarRectFRecord(i,j,drawBarStartX  + mMoveX,topY  + mMoveY,
-										drawBarEndX  + mMoveX, plotArea.getBottom()  + mMoveY); 				
+										drawBarEndX  + mMoveX, plotArea.getBottom()  + mMoveY); 
+				
+				
+				float labelTopX = add(drawBarStartX , barWidth/2);
+				
+				//在柱形的顶端显示上批注形状
+				drawAnchor(this.getAnchorDataPoint(),i,j,canvas,labelTopX,topY);
 				
            		//在柱形的顶端显示上柱形的当前值
-           		mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),
-			                		 add(drawBarStartX , barWidth/2) ,	
-			                		 topY, 
-			                		 canvas);
+           		mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),labelTopX ,	topY, canvas);
            		
            		//显示焦点框
            		drawFocusRect(canvas,i,j,drawBarStartX, topY,drawBarEndX, barInitY);

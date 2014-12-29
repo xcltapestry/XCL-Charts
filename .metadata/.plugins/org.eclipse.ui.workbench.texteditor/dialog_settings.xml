@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="327" key="DIALOG_Y_ORIGIN"/>
-		<item value="587" key="DIALOG_X_ORIGIN"/>
-		<item value="272" key="DIALOG_HEIGHT"/>
+		<item value="282" key="DIALOG_WIDTH"/>
+		<item value="229" key="DIALOG_Y_ORIGIN"/>
+		<item value="247" key="DIALOG_X_ORIGIN"/>
+		<item value="383" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,26 +13,26 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="mBgColor" key="selection"/>
+		<item value="YSteps" key="selection"/>
 		<list key="findhistory">
-			<item value="mAnchorBgColor"/>
-			<item value="renderRect"/>
-			<item value="mAnchorSet"/>
-			<item value="mDataSet"/>
-			<item value="saveLabelsPosition"/>
-			<item value="LabelSaveType"/>
-			<item value="labelsa"/>
-			<item value="renderAxesTick"/>
+			<item value="YSteps"/>
+			<item value="mBarCenterStyle"/>
+			<item value="CoordsCenterStyle"/>
+			<item value="mCoordsCenterStyle"/>
+			<item value="labelsStartY"/>
+			<item value="isTickVisible"/>
+			<item value="PlotAxisTick"/>
+			<item value="mLstCateTick"/>
 		</list>
 		<list key="replacehistory">
+			<item value="BarCenterStyle"/>
+			<item value="currLabelX"/>
+			<item value="maxminRange"/>
+			<item value="currLabelY"/>
 			<item value="mBgColor"/>
 			<item value="ArrayList"/>
 			<item value="FunnelChart02View"/>
 			<item value="getLabelLinePaint"/>
-			<item value="float"/>
-			<item value="BarChart09View"/>
-			<item value="BarChart08View"/>
-			<item value="getVPDataAxisStdY"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

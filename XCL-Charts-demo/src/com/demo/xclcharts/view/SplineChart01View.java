@@ -24,10 +24,8 @@ package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
@@ -37,6 +35,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.AnchorDataPoint;
 import org.xclcharts.renderer.plot.PlotGrid;
 
 import android.content.Context;
@@ -197,8 +196,29 @@ public class SplineChart01View extends DemoView {
 			//将线显示为直线，而不是平滑的
 			chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEELINE);
 			
-			//不使用精确计算，忽略Java计算误差
+			//不使用精确计算，忽略Java计算误差,提高性能
 			chart.disableHighPrecision();
+			
+			
+			//批注
+			List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
+			
+			AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.RECT);
+			an1.setAlpha(200);
+			an1.setBgColor(Color.RED);
+			an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
+			
+			AnchorDataPoint an2 = new AnchorDataPoint(1,1,XEnum.AnchorStyle.CIRCLE);
+			an2.setBgColor(Color.GRAY);
+			
+			AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
+			an3.setBgColor(Color.BLUE);
+					
+			mAnchorSet.add(an1);
+			mAnchorSet.add(an2);
+			mAnchorSet.add(an3);
+			chart.setAnchorDataPoint(mAnchorSet);	
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

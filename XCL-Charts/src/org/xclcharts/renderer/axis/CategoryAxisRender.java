@@ -77,12 +77,14 @@ public class CategoryAxisRender extends CategoryAxis {
 	 * @param text	内容
 	 */
 	public void renderAxisVerticalTick(Canvas canvas,
-							float centerX,float centerY,String text,boolean isTickVisible)
-	{
-		
-		if(isShow())
-			renderVerticalTick(canvas,centerX,centerY,text,isTickVisible);
+							float centerX,float centerY,
+							String text,float labelX, float labelY, 
+							boolean isTickVisible)
+	{		
+			renderVerticalTick(canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
 	}
+	
+	
 	
 	/**
 	 * 绘制轴线

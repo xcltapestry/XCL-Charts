@@ -148,7 +148,7 @@ public class BarChart06View extends DemoView implements Runnable{
 				}});
 			
 			 //让柱子间不留空白
-			 chart.getBar().setBarInnerMargin(0d);
+			 chart.getBar().setBarInnerMargin(0f);
 			
 			//隐藏Key
 			 chart.getPlotLegend().hide();

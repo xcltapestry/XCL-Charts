@@ -23,19 +23,19 @@
 
 package org.xclcharts.chart;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.Paint.Align;
-import android.graphics.RectF;
-import android.util.Log;
+import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.CirChart;
 import org.xclcharts.renderer.XEnum;
 
-import java.util.List;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.RectF;
+import android.util.Log;
 
 
 /**    
@@ -270,6 +270,16 @@ public class CircleChart extends CirChart {
             throw e;
         }
     }
+    
+    private float getCirY(float cirY,int labelHeight)
+    {
+    	float txtY = cirY;
+    	if("" == mDataInfo )
+    	{    		
+    		txtY = cirY + labelHeight/3 ;
+    	}
+    	return txtY;
+    }
 
 
     /**
@@ -341,8 +351,9 @@ public class CircleChart extends CirChart {
                     	drawPercent(canvas, getFillCirclePaint(), cirX, hCirY ,iRadius, 180f, 180f);
                     }
                     
-                    if("" != cData.getLabel())
-                    	canvas.drawText(cData.getLabel(), cirX, hCirY - textHeight, getLabelPaint());
+                    if("" != cData.getLabel()) { //getCirY(hCirY,textHeight)
+                    	canvas.drawText(cData.getLabel(), cirX, sub(hCirY,textHeight), getLabelPaint());
+                    }
                     if("" != mDataInfo )
                     	canvas.drawText(mDataInfo, cirX, hCirY - infoHeight, getDataInfoPaint());
 
@@ -365,10 +376,10 @@ public class CircleChart extends CirChart {
                     					MathHelper.getInstance().round(mul(radius , miRadius ),2), getFillCirclePaint());
                     
                     if("" != cData.getLabel())
-                       canvas.drawText(cData.getLabel(), cirX, cirY, getLabelPaint());
+                       canvas.drawText(cData.getLabel(), cirX, getCirY(cirY,LabelHeight), getLabelPaint());
 
                     if ("" != mDataInfo)
-                        canvas.drawText(mDataInfo, cirX, add(cirY , LabelHeight), getDataInfoPaint());
+                        canvas.drawText(mDataInfo, cirX, add(cirY , infoHeight), getDataInfoPaint());
                 }
 
                 break;

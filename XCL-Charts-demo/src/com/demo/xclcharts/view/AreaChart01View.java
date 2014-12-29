@@ -34,6 +34,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.AnchorDataPoint;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -361,7 +362,24 @@ public class AreaChart01View extends DemoView implements Runnable {
 		chart.ActiveListenItemClick();
 		//为了让触发更灵敏，可以扩大5px的点击监听范围
 		chart.extPointClickRange(5);		
-		chart.showClikedFocus();				
+		chart.showClikedFocus();		
+						
+		//批注
+		List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
+		
+		AnchorDataPoint an2 = new AnchorDataPoint(1,3,XEnum.AnchorStyle.CIRCLE);
+		an2.setBgColor(Color.GRAY);
+		
+		AnchorDataPoint an3 = new AnchorDataPoint(1,4,XEnum.AnchorStyle.CIRCLE);
+		an3.setBgColor(Color.RED);
+		an3.setAnchorStyle(XEnum.AnchorStyle.RECT);
+		an3.setAreaStyle(XEnum.DataAreaStyle.STROKE);
+	
+		mAnchorSet.add(an2);
+		mAnchorSet.add(an3);
+		chart.setAnchorDataPoint(mAnchorSet);		
+				
+				
 	}
 	
 }

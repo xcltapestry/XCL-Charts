@@ -161,8 +161,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.getDataAxis().setDetailModeSteps(5);
 			
 			//扩展横向显示范围,当数据太多时可用这个扩展实际绘图面积
-			chart.getPlotArea().extWidth(200f);
-		  			
+			chart.getPlotArea().extWidth(200f);		  			
   			
 			//显示十字交叉线
 			chart.showDyLine();
@@ -176,8 +175,11 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//数据轴居中显示
 			//chart.setDataAxisLocation(XEnum.AxisLocation.VERTICAL_CENTER);
 			
-			//忽略Java的float计算误差
+			//忽略Java的float计算误差，提高性能
 			chart.disableHighPrecision();
+			
+			//柱形和标签居中方式
+			// chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -195,7 +197,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		
 		
 		List<Double> dataSeriesB= new ArrayList<Double>();	
-		dataSeriesB.add(32d);
+		dataSeriesB.add(0.d); //32
 		dataSeriesB.add(25d);
 		dataSeriesB.add(18d);
 		BarData BarDataB = new BarData("SQL Server",dataSeriesB,(int)Color.rgb(1, 188, 242));
@@ -315,6 +317,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		chart.getDataAxis().show();		 
 		chart.getPlotLegend().show();	
 		
+		//当值与轴最小值相等时，不显示轴
+		chart.hideEqualAxisMinBar();
 		
 		//批注
 		List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
@@ -329,8 +333,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		
 		AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
 		an3.setBgColor(Color.BLUE);
-		
-		
+				
 		mAnchorSet.add(an1);
 		mAnchorSet.add(an2);
 		mAnchorSet.add(an3);

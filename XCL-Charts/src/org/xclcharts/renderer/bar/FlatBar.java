@@ -132,7 +132,8 @@ public class FlatBar extends Bar{
 	 */
 	public boolean renderBar(float left,float top,float right ,float bottom,Canvas canvas)
 	{				
-		 XEnum.BarStyle style = getBarStyle();
+		 XEnum.BarStyle style = getBarStyle();		 
+		 if(Float.compare(top, bottom)==0) return true;
 		
 		if( XEnum.BarStyle.OUTLINE == style)
 		{

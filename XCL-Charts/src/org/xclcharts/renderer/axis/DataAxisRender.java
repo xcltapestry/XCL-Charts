@@ -148,13 +148,11 @@ public class DataAxisRender extends DataAxis {
 	 * @param centerY	中心点Y坐标
 	 * @param text		文本
 	 */
-	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,String text,boolean isTickVisible)
-	{
-		if(isShow())
-		{
-			//if(isShowAxisDetailModeLabels())
-					renderVerticalTick(canvas,centerX,centerY,text,isTickVisible);
-		}
+	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,
+			String text,
+			boolean isTickVisible)
+	{		
+		renderVerticalTick(canvas,centerX,centerY,text,centerX,centerY,isTickVisible);		
 	}
 		
 

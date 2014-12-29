@@ -161,6 +161,10 @@ public class BarChart03View extends DemoView implements Runnable{
 			chart.getPlotLegend().hide();
 			
 			chart.getClipExt().setExtTop(150.f);
+			
+			//柱形和标签居中方式
+			chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

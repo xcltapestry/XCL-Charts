@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="org.xclcharts.common.PointHelper"/>
-<fullyQualifiedTypeName name="android.graphics.Shader"/>
-<fullyQualifiedTypeName name="android.graphics.Rect"/>
-<fullyQualifiedTypeName name="android.graphics.LinearGradient"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.MultiAxisChart03View"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.SplineChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLabel"/>
@@ -52,12 +48,16 @@
 <fullyQualifiedTypeName name="android.graphics.Region"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.FunnelChart02View"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DotStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.AnchorDataPoint"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDotRender"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.AnchorRender"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AnchorStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAreaStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.centerStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CoordsCenterStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
 </qualifiedTypeNameHistroy>

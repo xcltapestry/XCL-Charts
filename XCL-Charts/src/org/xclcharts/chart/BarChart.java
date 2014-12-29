@@ -32,7 +32,6 @@ import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.bar.Bar;
 import org.xclcharts.renderer.bar.FlatBar;
 import org.xclcharts.renderer.info.AnchorDataPoint;
-import org.xclcharts.renderer.info.AnchorRender;
 import org.xclcharts.renderer.info.PlotAxisTick;
 import org.xclcharts.renderer.line.PlotCustomLine;
 
@@ -63,7 +62,13 @@ public class BarChart extends AxesChart {
 	//批注
 	private List<AnchorDataPoint> mAnchorSet;
 	
+	//值与轴最小值相等
+	protected boolean mEqualAxisMin  = false;
 	
+	//标签和对象依哪种风格居中显示
+	private XEnum.BarCenterStyle mBarCenterStyle = XEnum.BarCenterStyle.SPACE;
+		
+		
 	public BarChart() {
 		
 		//默认为竖向设置
@@ -75,6 +80,24 @@ public class BarChart extends AxesChart {
 	{
 		return XEnum.ChartType.BAR;
 	}
+	
+	/**
+	 * 设置柱形居中位置,依刻度线居中或依刻度中间点居中。
+	 * @param style 居中风格
+	 */
+	public void setBarCenterStyle(XEnum.BarCenterStyle style)
+	{
+		mBarCenterStyle = style;
+	}
+	
+	/**
+	 * 返回柱形居中位置,依刻度线居中或依刻度中间点居中。
+	 * @return 居中风格
+	 */
+	public XEnum.BarCenterStyle getBarCenterStyle()
+	{
+		return mBarCenterStyle;
+	}
 
 	/**
 	 * 开放柱形绘制类
@@ -84,6 +107,21 @@ public class BarChart extends AxesChart {
 		return mFlatBar;
 	}
 	
+	/**
+	 * 当值与轴最小值相等时，不显示柱形及标签
+	 */
+	public void hideEqualAxisMinBar()
+	{
+		mEqualAxisMin = false;
+	}
+	
+	/**
+	 *  当值与轴最小值相等时，正常显示柱形及标签
+	 */
+	public void showEqualAxisMinBar()
+	{
+		mEqualAxisMin = true;
+	}	
 
 	/**
 	 * 设置定制线值
@@ -111,6 +149,15 @@ public class BarChart extends AxesChart {
 	 */
 	public void setAnchorDataPoint( List<AnchorDataPoint> anchor) {	
 		mAnchorSet = anchor;
+	}
+	
+	/**
+	 * 返回批注
+	 * @return 批注
+	 */
+	public List<AnchorDataPoint> getAnchorDataPoint()
+	{
+		return mAnchorSet;
 	}
 
 	/**
@@ -248,6 +295,8 @@ public class BarChart extends AxesChart {
 		int count = categoryAxis.getDataSet().size() + 1;		
 		return div(getPlotScreenHeight() , count );		
 	}	
+	
+	
 		
 
 	/**
@@ -271,6 +320,8 @@ public class BarChart extends AxesChart {
 		for (int i = 0; i < tickCount; i++) {
 			// 依初超始X坐标与分类间距算出当前刻度的X坐标
 			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
+			
+			currentX = sub(currentX,div(XSteps,2));
 			
 			 //绘制竖向网格线
 			 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
@@ -360,8 +411,7 @@ public class BarChart extends AxesChart {
 					//bar
 					// 依起始数据坐标与数据刻度间距算出上移高度
 					currentX = add(axisX , mul(i , XSteps));
-					
-								
+																	
 					 //绘制竖向网格线
 					 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
 													i ,tickCount,XSteps,currentX);
@@ -423,6 +473,8 @@ public class BarChart extends AxesChart {
 					
 		mLstCateTick.clear();	
 		
+		float labelX,labelY;
+		
 		//绘制
 		for (int i = 0; i < tickCount; i++)  //tickCount
 		{			
@@ -432,23 +484,27 @@ public class BarChart extends AxesChart {
 				case RIGHT:			
 				case VERTICAL_CENTER:								
 					// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
-					currentY = sub(axisY, mul((i + 1) , YSteps));										
-																							
+					currentY = sub(axisY, mul((i + 1) , YSteps));		
+					
+					
 					// 从左到右的横向网格线
 					drawHorizontalGridLines(canvas,plotArea.getLeft(),plotArea.getRight(),
 																i,tickCount,YSteps,currentY);
 					
 					if(!categoryAxis.isShowAxisLabels()) continue;	
-										 
+					
+					labelY = currentY;
+					labelX = sub(axisX ,get3DOffsetX());
+					if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle) labelY = add(currentY,div(YSteps,2));						  					 					 
+																																	 
 					// 分类
-					mLstCateTick.add(new PlotAxisTick(	sub(axisX ,get3DOffsetX()),
-														currentY, categoryAxis.getDataSet().get(i) ));					
+					mLstCateTick.add(new PlotAxisTick(labelX,currentY,categoryAxis.getDataSet().get(i) ,labelX,labelY));					
 					break;							
 				case TOP: //X
 				case BOTTOM:			
 				case HORIZONTAL_CENTER:	
 					 // 依初超始X坐标与分类间距算出当前刻度的X坐标
-					 currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
+					 currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 					 					
 															
 					 //绘制竖向网格线
 					 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
@@ -458,8 +514,11 @@ public class BarChart extends AxesChart {
 					 	
 					 float currentY2 = add(axisY,get3DBaseOffsetY());
 					  currentX =  sub(currentX, get3DBaseOffsetX() );	
-					 
-					mLstCateTick.add(new PlotAxisTick( currentX,currentY2, dataSet.get(i)));	
+					  					  
+					 labelX = currentX;
+					 if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle) labelX = sub(currentX,div(XSteps,2));
+						  					 
+					  mLstCateTick.add(new PlotAxisTick( currentX,currentY2, dataSet.get(i),labelX,currentY2));	
 																
 					break;			
 			} //switch end
@@ -488,7 +547,7 @@ public class BarChart extends AxesChart {
 
 	/**
 	 * 绘制横向柱形图
-	 * @throws InterruptedException 
+	 * @throws InterruptedException 例外
 	 */
 	protected boolean renderHorizontalBar(Canvas canvas) {
 		
@@ -517,9 +576,8 @@ public class BarChart extends AxesChart {
 		Double bv = 0d;		
 		float dataAxisStd = getHPDataAxisStdX();		
 		float itemLabelWidth = 0.f;										
-		float barLeft = 0.0f,barBottom = 0.0f,barTop = 0.f,barRight =0.f;
-	
-		float currLableY,drawBarButtomY,rightX,labelLeftX;
+		float barLeft = 0.0f,barBottom = 0.0f,barTop = 0.f,barRight =0.f;	
+		float labelLeftX,labelLeftY,currLabelY,drawBarButtomY,rightX;
 		
 		for (int i = 0; i < barNumber; i++) {
 			// 得到分类对应的值数据集
@@ -537,9 +595,16 @@ public class BarChart extends AxesChart {
 				bv = barValues.get(j);							
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,bd.getColor());
 											
-				currLableY = sub(barInitY , mul((j + 1) , YSteps));		
-				drawBarButtomY = add(currLableY,labelBarUseHeight / 2);					
-				drawBarButtomY = sub(drawBarButtomY, add(barHeight,barInnerMargin) * currNumber);			
+				currLabelY = sub(barInitY , mul((j + 1) , YSteps));		
+				
+				if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle)
+				{										
+					drawBarButtomY = add(add(currLabelY,div(YSteps,2)) ,labelBarUseHeight / 2);		
+				}else{
+					drawBarButtomY = add(currLabelY,labelBarUseHeight / 2);										
+				}
+				drawBarButtomY = sub(drawBarButtomY, add(barHeight,barInnerMargin) * currNumber);	
+							
 			
 				labelLeftX = rightX = getHPValPosition(bv);
 				
@@ -569,17 +634,27 @@ public class BarChart extends AxesChart {
 					 barTop = sub(drawBarButtomY,barHeight);						
 					 barRight = rightX;
 					 barBottom = drawBarButtomY ;
-				}			
+				}	
+				
+				
 				// 画出柱形
 				mFlatBar.renderBar(barLeft,barBottom,barRight,barTop,canvas);
 				
 				//保存位置
 				saveBarRectFRecord(i,j,barLeft + mMoveX,barTop  + mMoveY,
-										barRight  + mMoveX, barBottom + mMoveY);
+										barRight + mMoveX, barBottom + mMoveY);
 			
+				labelLeftY = sub(barBottom , barHeight / 2);
+				
+				//在柱形的顶端显示上柱形的批注形状
+				drawAnchor(this.mAnchorSet,i,j,canvas,labelLeftX,labelLeftY);				
+				
 				// 柱形顶端标识
-				mFlatBar.renderBarItemLabel(label,
-						labelLeftX, sub(barBottom , barHeight / 2),canvas);
+				if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
+				{					
+				}else{
+					mFlatBar.renderBarItemLabel(label,labelLeftX, labelLeftY,canvas);
+				}
 				
 				//显示焦点框
 				drawFocusRect(canvas,i,j,barLeft,barTop,barRight ,barBottom);
@@ -633,7 +708,7 @@ public class BarChart extends AxesChart {
 	 * @param bv 数据
 	 * @return 坐标位置
 	 */
-	public float getVPValPosition(double bv)
+	private float getVPValPosition(double bv)
 	{
 		float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
 		float valuePostion = mul(getPlotScreenHeight(), div( vaxlen,dataAxis.getAxisRange() ) );
@@ -712,7 +787,7 @@ public class BarChart extends AxesChart {
 									 mul(sub(barNumber , 1) , barInnerMargin));
 		
 		float barLeft = 0.0f,barBottom = 0.0f,barTop = 0.f,barRight =0.f;
-		float currLableX,drawBarStartX,topY,labelTopX,labelTopY;
+		float currLabelX,drawBarStartX,topY,labelTopX,labelTopY;
 
 		
 		// X 轴 即分类轴
@@ -735,10 +810,16 @@ public class BarChart extends AxesChart {
 			for (int j = 0; j < countChild; j++) {
 				Double bv = barValues.get(j);
 					
-				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,bd.getColor());
-				
-				currLableX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
-				drawBarStartX = sub(currLableX , labelBarUseWidth / 2);				
+				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,bd.getColor());				
+				currLabelX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
+												
+				 if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle)
+				 {
+					 drawBarStartX = sub(currLabelX ,div(XSteps,2)); 
+					 drawBarStartX = sub(drawBarStartX , labelBarUseWidth / 2);
+				 }else{
+					 drawBarStartX = sub(currLabelX , labelBarUseWidth / 2);	
+				 }
 
 				// 计算同分类多柱 形时，新柱形的起始X坐标
 				drawBarStartX = add(drawBarStartX , add(barWidth,barInnerMargin)  * currNumber);											
@@ -770,19 +851,23 @@ public class BarChart extends AxesChart {
 				
 				//保存位置
 				saveBarRectFRecord(i,j,barLeft + mMoveX,barTop + mMoveY,
-						barRight  + mMoveX,barBottom + mMoveY); 
+									barRight  + mMoveX,barBottom + mMoveY); 
 				
 				//显示焦点框
 				drawFocusRect(canvas,i,j,barLeft,barTop,barRight ,barBottom);
 				
 				labelTopX = add(drawBarStartX , barWidth / 2);
 				
-				//在柱形的顶端显示上柱形的批注形状
+				//在柱形的顶端显示批注
 				drawAnchor(this.mAnchorSet,i,j,canvas,labelTopX,labelTopY);
 								
-				// 在柱形的顶端显示上柱形的当前值
-				mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-						labelTopX,labelTopY, canvas);												
+				// 在柱形的顶端显示上柱形当前值
+				if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
+				{					
+				}else{
+					mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
+												labelTopX,labelTopY, canvas);	
+				}
 			}
 			currNumber++;
 		}
@@ -795,8 +880,7 @@ public class BarChart extends AxesChart {
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	protected void drawClipPlot(Canvas canvas)
 	{		

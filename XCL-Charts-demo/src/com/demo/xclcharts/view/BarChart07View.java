@@ -101,7 +101,7 @@ public class BarChart07View  extends GraphicalView {
 				chart.getPlotLegend().hide();
 				
 				 //让柱子间近似没空白
-				 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
+				 chart.getBar().setBarInnerMargin(0.1f); //可尝试0.1或0.5各有啥效果噢
 		
 				 
 				 //背景网格颜色

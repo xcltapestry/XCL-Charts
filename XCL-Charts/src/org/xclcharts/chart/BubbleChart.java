@@ -25,7 +25,6 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.PlotDot;
@@ -278,10 +277,6 @@ public class BubbleChart extends LnChart{
 				
 	private void renderPoints( Canvas canvas, BubbleData bd ,int dataID)
 	{	
-    	float axisScreenWidth = getPlotScreenWidth(); 
-    	float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
-		
 		//得到标签对应的值数据集		
 		List<PointD> chartValues = bd.getDataSet();	
 		if(null == chartValues) return ;
@@ -312,7 +307,7 @@ public class BubbleChart extends LnChart{
 			Log.e(TAG,"轴最大值与最小值相等.");
 			return ;
 		}
-		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
+		//double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
 		
 		float scale =  mBubbleScaleMax - mBubbleScaleMin;
 		float size = mBubbleMaxSize - mBubbleMinSize;
@@ -331,27 +326,9 @@ public class BubbleChart extends LnChart{
 		int count = chartValues.size();
 		for(int i=0;i<count;i++)
 		{
-			PointD  entry = chartValues.get(i);
-			    			    
-			    //对应的Y坐标
-			   // YvaluePos = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
-			                	
-            	//对应的X坐标	  	  
-			    //XvaluePos = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
-			    
-			    //对应的Y坐标  			                	
-			    double yScale = MathHelper.getInstance().div( 
-			    								MathHelper.getInstance().sub(entry.y,dataAxis.getAxisMin()),
-			    								axisDataHeight );			    
-			    YvaluePos =  mul( axisScreenHeight , (float)yScale );
-			    
-            	//对应的X坐标	  	              
-			    double xScale = MathHelper.getInstance().div(
-					   				MathHelper.getInstance().sub(entry.x,mMinValue),xMM);
-			    XvaluePos = mul(axisScreenWidth,(float)xScale);	
-			    
-			    XvaluePos = add(plotArea.getLeft() , XvaluePos);
-			    YvaluePos = sub(plotArea.getBottom() , YvaluePos);
+				PointD  entry = chartValues.get(i);
+			    XvaluePos = getLnXValPosition(entry.x,mMaxValue,mMinValue);	
+			    YvaluePos = getVPValPosition(entry.y);			    
 			                
         		if(i >= bubbleSize ) //j
         		{
@@ -383,6 +360,11 @@ public class BubbleChart extends LnChart{
             	{
             		canvas.drawCircle(XvaluePos,YvaluePos, curRadius, getPointBorderPaint());
             	}          	
+            	
+            	
+            	//显示批注形状
+				drawAnchor(getAnchorDataPoint(),dataID,i,canvas,XvaluePos,YvaluePos);
+            	
             	if(bd.getLabelVisible())
             	{            			
             		//请自行在回调函数中处理显示格式
@@ -428,10 +410,18 @@ public class BubbleChart extends LnChart{
 	}	
 
 	/////////////////////////////////////////////
-	
+	@Override
 	protected void drawClipPlot(Canvas canvas)
 	{
-		renderPlot(canvas);
+		if(renderPlot(canvas) == true)
+		{				
+			//画横向定制线
+			if(null != mCustomLine)
+			{
+				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);		
+			}
+		}		
 	}
 	
 	protected void drawClipLegend(Canvas canvas)

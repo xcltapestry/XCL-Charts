@@ -82,14 +82,13 @@ public class AxesChart extends EventChart {
 	protected ArrayList<PlotAxisTick> mLstCateTick = null;
 	
 	private ClipExt mClipExt = null;
-	
+		
 	
 	public AxesChart() {
 		// TODO Auto-generated constructor stub		
 		
 		if(null == mLstDataTick)mLstDataTick = new  ArrayList<PlotAxisTick>();
 		if(null == mLstCateTick)mLstCateTick = new  ArrayList<PlotAxisTick>();
-		
 		
 		initChart();		
 	}
@@ -115,8 +114,7 @@ public class AxesChart extends EventChart {
 			plotLegend.setVerticalAlign(XEnum.VerticalAlign.TOP);
 			plotLegend.hideBox();
 		}		
-	}
-		
+	}		
 
 	 /**
 	  * 开放数据轴绘制类
@@ -167,7 +165,7 @@ public class AxesChart extends EventChart {
 				case TOP: //X
 				case BOTTOM:		
 				case HORIZONTAL_CENTER:
-						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,
+						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
 															isDrawXAxisTickMarks(t.X,mMoveX));		
 					break;			
 			

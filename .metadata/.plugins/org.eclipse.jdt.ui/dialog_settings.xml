@@ -23,8 +23,8 @@
 	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
 		<item value="587" key="DIALOG_WIDTH"/>
 		<item value="-2" key="DIALOG_Y_ORIGIN"/>
-		<item value="728" key="DIALOG_HEIGHT"/>
 		<item value="273" key="DIALOG_X_ORIGIN"/>
+		<item value="728" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="JavaSearchPage">
@@ -35,10 +35,10 @@
 			<item value="11" key="includeMask"/>
 			<item value="2" key="limitTo"/>
 			<item value="0" key="scope"/>
-			<item value="disableHighPrecision" key="pattern"/>
 			<item value="" key="javaElement"/>
-			<item value="0" key="searchFor"/>
+			<item value="disableHighPrecision" key="pattern"/>
 			<item value="0" key="matchLocations"/>
+			<item value="0" key="searchFor"/>
 			<item value="false" key="isCaseSensitive"/>
 			<list key="workingSets">
 			</list>
@@ -47,25 +47,25 @@
 			<item value="11" key="includeMask"/>
 			<item value="2" key="limitTo"/>
 			<item value="3" key="scope"/>
-			<item value="\n" key="pattern"/>
 			<item value="" key="javaElement"/>
-			<item value="0" key="searchFor"/>
+			<item value="\n" key="pattern"/>
 			<item value="0" key="matchLocations"/>
+			<item value="0" key="searchFor"/>
 			<item value="false" key="isCaseSensitive"/>
 			<list key="workingSets">
 			</list>
 		</section>
 	</section>
-	<section name="quick_assist_proposal_size">
-	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
-		<item value="false" key="create_main"/>
 		<item value="true" key="create_unimplemented"/>
+		<item value="false" key="create_main"/>
+	</section>
+	<section name="quick_assist_proposal_size">
 	</section>
 	<section name="SourceActionDialog.methods">
-		<item value="false" key="Comments"/>
 		<item value="1" key="VisibilityModifier"/>
+		<item value="false" key="Comments"/>
 		<item value="false" key="SynchronizedModifier"/>
 		<item value="false" key="FinalModifier"/>
 	</section>
@@ -88,7 +88,7 @@
 		<item value="true" key="author"/>
 		<item value="" key="docletname"/>
 		<item value="1.6" key="source"/>
-		<item value="XCL-Charts 图表库2014-12-27" key="doctitle"/>
+		<item value="XCL-Charts 图表库2014-12-29" key="doctitle"/>
 		<item value="false" key="openinbrowser"/>
 		<item value="false" key="noindex"/>
 		<item value="" key="docletpath"/>
@@ -111,8 +111,8 @@
 	<section name="JavadocWizardDialog">
 		<item value="616" key="DIALOG_WIDTH"/>
 		<item value="8" key="DIALOG_Y_ORIGIN"/>
-		<item value="29" key="DIALOG_X_ORIGIN"/>
 		<item value="659" key="DIALOG_HEIGHT"/>
+		<item value="29" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="NewPackageWizardPage">

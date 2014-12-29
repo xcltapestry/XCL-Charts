@@ -22,14 +22,11 @@
 package org.xclcharts.chart;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
@@ -49,14 +46,13 @@ public class LineChart extends LnChart{
 	
 	//数据源
 	protected List<LineData> mDataSet;
-
-	//用于绘制定制线(分界线)
-	private PlotCustomLine mCustomLine = null;
+	
 	//当线与轴交叉时是否不断开连接
 	private boolean mLineAxisIntersectVisible = true;
-	//图例
-	private List<LnData> mLstKey = new ArrayList<LnData>();			
 	
+	//图例
+	private List<LnData> mLstKey = new ArrayList<LnData>();		
+			
 	public LineChart()
 	{
 		
@@ -67,8 +63,7 @@ public class LineChart extends LnChart{
 	{
 		return XEnum.ChartType.LINE;
 	}
-
-	 
+			 
 		/**
 		 * 分类轴的数据源
 		 * @param categories 标签集
@@ -82,22 +77,12 @@ public class LineChart extends LnChart{
 		 *  设置数据轴的数据源
 		 * @param dataSet 数据源
 		 */
-		public void setDataSource( LinkedList<LineData> dataSet)
+		public void setDataSource( List<LineData> dataSet)
 		{										
 			this.mDataSet = dataSet;		
 		}			
 						
-		/**
-		 * 设置定制线值
-		 * @param customLineDataset 定制线数据集合
-		 */
-		public void setDesireLines( List<CustomLineData> customLineDataset)
-		{
-			if(null == mCustomLine) mCustomLine = new PlotCustomLine();
-			mCustomLine.setCustomLines(customLineDataset);
-		}
-		
-		
+						
 		/**
 		 *  设置当值与底轴的最小值相等时，线是否与轴连结显示. 默认为False
 		 * @param visible 是否连接
@@ -114,8 +99,8 @@ public class LineChart extends LnChart{
 		public boolean getLineAxisIntersectVisible()
 		{
 			return mLineAxisIntersectVisible;
-		}
-		
+		}						
+				
 		/**
 		 * 绘制线
 		 * @param canvas	画布
@@ -151,11 +136,9 @@ public class LineChart extends LnChart{
 				return false;
 			}
 				
-			//步长
-			float axisScreenHeight = getPlotScreenHeight();
-			float axisDataHeight = (float) dataAxis.getAxisRange();	
+			//步长	
 			float XSteps = 0.0f;	
-			int j = 0,childID = 0;	
+			int j = 0; //,childID = 0;	
 			int tickCount = dataSet.size();		
 			if( 0 == tickCount)
 			{
@@ -173,18 +156,15 @@ public class LineChart extends LnChart{
 			PlotLine pLine = bd.getPlotLine();   
 			PlotDot pDot = pLine.getPlotDot();	        
 			float radius = pDot.getDotRadius();	
-			
+			double bv = 0.d;
 					
 		    //画线
-			for(Double bv : chartValues)
-            {																	
-				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                             	
-            	float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
-				float fvper = div( vaxlen,axisDataHeight );
-				float valuePostion = mul(axisScreenHeight, fvper);			    
-            
-            	lineStopX = add(initX , j * XSteps);        	
-            	lineStopY = sub(initY , valuePostion);  
+			int count = chartValues.size();
+			for(int i=0;i<count;i++)
+            {								
+				bv = chartValues.get(i);            	
+            	lineStopY = getVPValPosition(bv);			            
+            	lineStopX = add(initX , j * XSteps);        	            	
             	        	
             	if(0 == j)
             	{
@@ -220,16 +200,16 @@ public class LineChart extends LnChart{
 	                				lineStopX ,lineStopY,
 	                				pLine.getDotPaint()); //标识图形            		
 	                			                		
-	                		savePointRecord(dataID,childID, lineStopX  + mMoveX, lineStopY  + mMoveY,	                		
+	                		savePointRecord(dataID,i, lineStopX  + mMoveX, lineStopY  + mMoveY,	                		
 					                		lineStopX - radius + mMoveX, 
 					                		lineStopY - radius + mMoveY,
 					    					lineStopX + radius + mMoveX, 
 					    					lineStopY + radius + mMoveY);  
-	    						                	
-	                		childID++;
-	                		
 	            			lineStopX = lineStopX  + radius;           			
 	                	}
+	            		
+	            		//显示批注形状
+	    				drawAnchor(getAnchorDataPoint(),dataID,i,canvas,lineStopX - radius,lineStopY);
 	            		
 	            		if(bd.getLabelVisible()) //标签
 	                	{	                	            

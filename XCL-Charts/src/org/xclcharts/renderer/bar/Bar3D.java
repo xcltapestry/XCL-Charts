@@ -303,6 +303,8 @@ public class Bar3D extends Bar{
 			  int color,
 			  Canvas canvas)
 	{
+		 if(Float.compare(barTop, barBottom) == 0)return;		 
+		 
 		//浅色
 		int lightColor =  DrawHelper.getInstance().getLightColor(color,mAlpha);
 		

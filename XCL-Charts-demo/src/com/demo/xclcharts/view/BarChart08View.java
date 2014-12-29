@@ -134,7 +134,7 @@ public class BarChart08View extends DemoView{
 			chart.getPlotLegend().hide();
 			
 			 //让柱子间没空白
-			 chart.getBar().setBarInnerMargin(0.1d); //可尝试0.1或0.5各有啥效果噢
+			 chart.getBar().setBarInnerMargin(0.1f); //可尝试0.1或0.5各有啥效果噢
 			
 			 
 			 //禁用平移模式

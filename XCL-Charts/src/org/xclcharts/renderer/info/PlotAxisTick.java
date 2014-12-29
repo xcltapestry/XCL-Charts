@@ -30,6 +30,8 @@ package org.xclcharts.renderer.info;
  */
 public class PlotAxisTick extends PlotDataInfo{
 	
+	
+	
 	public PlotAxisTick(){}
 	
 	
@@ -38,6 +40,8 @@ public class PlotAxisTick extends PlotDataInfo{
 		 X = x;
 		 Y = y;
 		 Label = label;
+		 labelX = x;
+		 labelY = y;
 	};
 	
 	public PlotAxisTick(int id,float x,float y,String label)
@@ -46,8 +50,42 @@ public class PlotAxisTick extends PlotDataInfo{
 		 X = x;
 		 Y = y;
 		 Label = label;
+		 
+		 labelX = x;
+		 labelY = y;
+	}
+	
+	public PlotAxisTick(float x,float y,String label,float lx,float ly)
+	{
+		// ID = id;
+		 X = x;
+		 Y = y;
+		 Label = label;
+		 
+		 labelX = lx;
+		 labelY = ly;
 	}
 	
 	
+	
+	public float getLabelX() 
+	{
+		return labelX;
+	}
+
+	public void setLabelX(float x) 
+	{
+		labelX = x;
+	}
+
+	public float getLabelY() 
+	{
+		return labelY;
+	}
+
+	public void setLabelY(float y) 
+	{
+		labelY = y;
+	}
 
 }

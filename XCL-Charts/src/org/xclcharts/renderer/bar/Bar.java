@@ -66,6 +66,9 @@ public class Bar {
 	//FlatBar类的有效，3D柱形无效
 	private XEnum.BarStyle mBarStyle = XEnum.BarStyle.GRADIENT;
 	
+	//柱形所占总比例
+	private float mBarTickSpacePercent = 0.7f;
+	
 	public Bar()
 	{				
 		
@@ -160,21 +163,41 @@ public class Bar {
 	}
 	
 	/**
-	 * 设置柱形间空白所占的百分比
-	 * @param percentage 百分比
+	 * 设置所有柱形间占刻度间总空间的百分比(默认为0.7即70%)
+	 * @param percent 百分比
 	 */
-	public boolean setBarInnerMargin(double percentage)
+	public boolean setBarTickSpacePercent(float percent)
 	{		
-		if(Double.compare(percentage, 0d) == -1)
+		if(Float.compare(percent, 0.f) == -1)
 		{
 			Log.e(TAG, "此比例不能为负数噢!");
 			return false;
-		}if( Double.compare(percentage, 0.9d) ==  1 
-				|| Double.compare(percentage, 0.9d) ==  0 ){  
+		}if( Float.compare(percent, 0.f) ==  0  ){  
+			Log.e(TAG, "此比例不能等于0!");
+			return false;
+		}else{
+			mBarTickSpacePercent = percent;
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * 设置柱形间空白所占的百分比
+	 * @param percent 百分比
+	 */
+	public boolean setBarInnerMargin(float percent)
+	{		
+		if(Float.compare(percent, 0.f) == -1)
+		{
+			Log.e(TAG, "此比例不能为负数噢!");
+			return false;
+		}if( Float.compare(percent, 0.9f) ==  1 
+				|| Float.compare(percent, 0.9f) ==  0 ){  
 			Log.e(TAG, "此比例不能大于等于0.9,要给柱形留下点显示空间!");
 			return false;
 		}else{
-			this.mBarInnerMargin = percentage;
+			this.mBarInnerMargin = percent;
 		}
 		return true;
 	}
@@ -211,7 +234,7 @@ public class Bar {
 				Log.e(TAG,"柱形个数为零.");
 				return null;		
 			}					
-			float labelBarTotalHeight = MathHelper.getInstance().mul(YSteps , 0.9f);						
+			float labelBarTotalHeight = MathHelper.getInstance().mul(YSteps , mBarTickSpacePercent);						
 			float barTotalInnerMargin = MathHelper.getInstance().mul(
 											labelBarTotalHeight ,
 											MathHelper.getInstance().dtof(mBarInnerMargin) ); 
@@ -241,7 +264,7 @@ public class Bar {
 				Log.e(TAG,"柱形个数为零.");
 				return null;		
 			}
-			float labelBarTotalWidth = MathHelper.getInstance().mul(XSteps , 0.9f); 				
+			float labelBarTotalWidth = MathHelper.getInstance().mul(XSteps , mBarTickSpacePercent); 				
 			float barTotalInnerMargin = MathHelper.getInstance().mul(labelBarTotalWidth , 
 					 							MathHelper.getInstance().dtof(mBarInnerMargin));
 			

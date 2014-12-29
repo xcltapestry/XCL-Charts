@@ -124,7 +124,7 @@ public class MultiBarChart01View extends DemoView {
 			chart.getDataAxis().setAxisSteps(500);
 			
 			 //让柱子间没空白
-			 chart.getBar().setBarInnerMargin(0d);
+			 chart.getBar().setBarInnerMargin(0.f);
 		
 			 //隐藏轴
 			 chart.getDataAxis().hide();
@@ -199,7 +199,7 @@ public class MultiBarChart01View extends DemoView {
 				}});
 			
 			 //让柱子间没空白
-			 chart2.getBar().setBarInnerMargin(0d);
+			 chart2.getBar().setBarInnerMargin(0.f);
 					
 			//轴颜色					
 			chart2.getDataAxis().getAxisPaint().setColor(axisColor);

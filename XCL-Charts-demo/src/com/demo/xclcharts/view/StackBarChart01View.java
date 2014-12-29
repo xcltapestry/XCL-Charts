@@ -178,6 +178,8 @@ public class StackBarChart01View extends DemoView {
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
 			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
+			
+			chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

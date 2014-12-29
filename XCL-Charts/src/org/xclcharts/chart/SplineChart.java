@@ -26,11 +26,9 @@ import java.util.List;
 
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.DotInfo;
-import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
@@ -60,10 +58,7 @@ public class SplineChart extends LnChart{
 	private double mMinValue = 0d;
 		
 	//用于格式化标签的回调接口
-	private IFormatterTextCallBack mLabelFormatter;
-	
-	//用于绘制定制线(分界线)
-	private PlotCustomLine mCustomLine = null;
+	private IFormatterTextCallBack mLabelFormatter;	
 	
 	//平滑曲线
 	private List<PointF> mLstPoints = new ArrayList<PointF>(); 
@@ -161,17 +156,7 @@ public class SplineChart extends LnChart{
 		}
 		return itemLabel;
 	}
-	
-	
-	/**
-	 * 设置定制线值
-	 * @param customLineDataset 定制线数据集合
-	 */
-	public void setCustomLines( List<CustomLineData> customLineDataset)
-	{
-		if(null == mCustomLine) mCustomLine = new PlotCustomLine();
-		mCustomLine.setCustomLines(customLineDataset);
-	}
+		
 	
 	/**
 	 * 设置曲线显示风格:直线(NORMAL)或平滑曲线(BEZIERCURVE)
@@ -215,37 +200,19 @@ public class SplineChart extends LnChart{
 		float initX =  plotArea.getLeft();
         float initY =  plotArea.getBottom();
 		float lineStartX = initX,lineStartY = initY; 
-        float lineStopX = 0.0f,lineStopY = 0.0f;        
-    	
-    	float axisScreenWidth = getPlotScreenWidth(); 
-    	float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
-		
+        float lineStopX = 0.0f,lineStopY = 0.0f;       
+        
 		//得到标签对应的值数据集		
 		List<PointD> chartValues = bd.getLineDataSet();	
 		if(null == chartValues) return ;
-		
-		double xMM  = MathHelper.getInstance().sub(mMaxValue , mMinValue);
-															
-	    //画出数据集对应的线条				
-		
+											
+	    //画出数据集对应的线条						
 		int count = chartValues.size();
 		for(int i=0;i<count;i++)
 		{
 				PointD  entry = chartValues.get(i);
-			    			    
-			    //对应的Y坐标		            	   
-			    double yScale = MathHelper.getInstance().div( 
-						MathHelper.getInstance().sub(entry.y,dataAxis.getAxisMin()),
-						axisDataHeight );			    
-			    float YvaluePos =  mul( axisScreenHeight , (float)yScale );
-			    //对应的X坐标	 
-			    double xScale = MathHelper.getInstance().div(
-		   				MathHelper.getInstance().sub(entry.x,mMinValue),xMM);
-			    float XvaluePos = mul(axisScreenWidth,(float)xScale);	
-
-            	lineStopX = add(initX , XvaluePos);  	
-            	lineStopY = sub(initY , YvaluePos);
+            	lineStopX = getLnXValPosition(entry.x,mMaxValue,mMinValue);
+            	lineStopY = getVPValPosition(entry.y);
             	            	
             	if(0 == i )
         		{
@@ -302,7 +269,7 @@ public class SplineChart extends LnChart{
 		{
 			return true;
 		}
-		int childID = 0;
+		
 		float itemAngle = spData.getItemLabelRotateAngle();
 		
 		PlotDot pDot = pLine.getPlotDot();	
@@ -316,15 +283,17 @@ public class SplineChart extends LnChart{
 		    	PlotDotRender.getInstance().renderDot(canvas,pDot,
 		    			dotInfo.mX ,dotInfo.mY,pLine.getDotPaint()); //标识图形            			                	
         			    			    	
-		    	savePointRecord(dataID,childID, 
+		    	savePointRecord(dataID,i, 
 		    			dotInfo.mX + mMoveX, dotInfo.mY + mMoveY,		    			
 		    			dotInfo.mX - radius + mMoveX, 
 		    			dotInfo.mY - radius + mMoveY,
 		    			dotInfo.mX + radius + mMoveX, 
-		    			dotInfo.mY + radius + mMoveY);		 
-		    			    			    	
-		    	childID++;
+		    			dotInfo.mY + radius + mMoveY);		 		    			    			    
+		    	//childID++;
         	}
+		    
+		   //显示批注形状
+			drawAnchor(getAnchorDataPoint(),dataID,i,canvas,dotInfo.mX,dotInfo.mY);
 		    
 		    if(spData.getLabelVisible())
         	{            			

@@ -30,7 +30,7 @@ package org.xclcharts.renderer;
  */
 
 public class XEnum {
-
+	
 		/**
 		 * 横向显示位置,靠左，中间，还是靠右(如图标题......)
 		 * @author XCL
@@ -117,6 +117,15 @@ public class XEnum {
 		}
 		
 		/**
+		 * 柱形居中位置,依刻度线居中或依刻度中间点居中。
+		 * @author XCL
+		 *
+		 */
+		public enum BarCenterStyle {
+			TICKMARKS, SPACE
+		}	
+		
+		/**
 		 * 横向或竖向网格线
 		 * @author XCL
 		 *
@@ -174,12 +183,12 @@ public class XEnum {
 		}
 		
 		/**
-		 * 批注形状类型 
+		 * 批注背景形状
 		 * @author XCL
 		 *
 		 */
 		public enum AnchorStyle{
-			RECT,CIRCLE,DOT
+			RECT,CIRCLE
 		}
 		
 		

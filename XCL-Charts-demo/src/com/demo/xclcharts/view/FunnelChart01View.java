@@ -35,6 +35,12 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 import android.util.Log;
 
+/**
+ * @ClassName FunnelChart01View
+ * @Description  漏斗图例子 
+ *  
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ */
 public class FunnelChart01View extends DemoView {
 	
 	private String TAG = "FunnelChart01View";
@@ -74,7 +80,7 @@ public class FunnelChart01View extends DemoView {
 			
 						
 				//标题
-				chart.setTitle("漏斗图");
+				chart.setTitle("营销漏斗");
 				chart.addSubtitle("(XCL-Charts Demo)");	
 				//数据源
 				chart.setDataSource(chartData);
@@ -103,12 +109,12 @@ public class FunnelChart01View extends DemoView {
 	private void chartDataSet()
 	{	
 		 
-		 FunnelData fd1 = new FunnelData("车(80%)",80,Color.RED);		 
+		 FunnelData fd1 = new FunnelData("客户意识",80,Color.RED);		 
 		 chartData.add(fd1);
-		 chartData.add(new FunnelData("载(60%)",60,Color.rgb(243, 75, 125)));
-		 chartData.add(new FunnelData("斗-40%",40,Color.rgb(77, 180, 123)));
-		 chartData.add(new FunnelData("量-100%",100,Color.BLUE));
-		 chartData.add(new FunnelData("20%",20,Color.rgb(117, 197, 141)));		 		 
+		 chartData.add(new FunnelData("考量方面",60,Color.rgb(243, 75, 125)));
+		 chartData.add(new FunnelData("客户喜好",40,Color.rgb(77, 180, 123)));
+		 chartData.add(new FunnelData("客户体验历程",100,Color.BLUE));
+		 chartData.add(new FunnelData("诉诸行动",20,Color.rgb(117, 197, 141)));		 		 
 	}
 	 
 	@Override  

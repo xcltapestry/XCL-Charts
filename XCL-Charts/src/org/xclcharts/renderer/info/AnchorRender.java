@@ -76,9 +76,9 @@ public class AnchorRender {
 		getBgPaint().setColor(pAnchor.getBgColor());
 		
 		switch (pAnchor.getAnchorStyle()) {
-		case DOT:										
-			canvas.drawCircle(cx, cy, radius, getBgPaint());	
-			break;
+		//case DOT:										
+		//	canvas.drawCircle(cx, cy, radius, getBgPaint());	
+		//	break;
 		case RECT:	
 			renderRect(canvas,getBgPaint(),radius,cx, cy);			
 			break;

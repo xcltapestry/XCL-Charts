@@ -28,7 +28,6 @@ import java.util.List;
 
 import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.common.PointHelper;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
@@ -85,7 +84,8 @@ public class AreaChart extends LnChart{
   	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
   	
   	private final int Y_MIN = 0;
-  	private final int Y_MAX = 1;
+  	private final int Y_MAX = 1;  	
+  	
 			  	
 	public AreaChart()
 	{			
@@ -119,7 +119,7 @@ public class AreaChart extends LnChart{
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);
-	}		
+	}			
 				
 	 /**
 	 * 分类轴的数据源
@@ -168,7 +168,7 @@ public class AreaChart extends LnChart{
 	}
 	
 	private boolean calcAllPoints(AreaData bd,
-			List<DotInfo> lstDotInfo, //List<RectF> lstDots,
+			List<DotInfo> lstDotInfo,
 			List<PointF> lstPoints,
 			List<PointF> lstPathPoints)
 	{
@@ -186,35 +186,22 @@ public class AreaChart extends LnChart{
 			return false;
 		}				
 				
-		float initX =  plotArea.getLeft();
-        float initY =  plotArea.getBottom();
-         
-		float lineStartX = initX,lineStartY = initY;
-        float lineStopX = 0.0f,lineStopY = 0.0f;     
-        						
-		float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight =  (float) dataAxis.getAxisRange();	
+		float lineStartX = plotArea.getLeft(),lineStartY =  plotArea.getBottom();
+        float lineStopX = 0.0f,lineStopY = 0.0f;             						
 		float currLablesSteps = div(getPlotScreenWidth(), (categoryAxis.getDataSet().size() -1));
-		  
-        double dper = 0d;
-		int j = 0;	 
+	 
 		int count = chartValues.size();
 		if(count <= 0) return false;
 								
-		for(Double bv : chartValues)
-        {								
-			//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来 	                                
-        	//float valuePosition = (float) Math.round(
-			//		axisScreenHeight * ( (bv - dataAxis.getAxisMin() ) / axisDataHeight)) ;    
-		
+		for(int i=0; i<count ;i++)
+        {		
+			double bv = chartValues.get(i);
+			
 			//首尾为0,path不能闭合，改成 0.001都可以闭合?
-        	dper = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin()); 
-        	float valuePosition = mul(axisScreenHeight, div(dtof(dper),axisDataHeight) );
+        	lineStopX = add(plotArea.getLeft() , i * currLablesSteps);        	
+        	lineStopY = getVPValPosition(bv);
         	        	
-        	lineStopX = add(initX , j * currLablesSteps);        	
-        	lineStopY = sub(initY , valuePosition);  
-        	        	
-        	if(0 == j)
+        	if(0 == i)
         	{
         		lineStartX = lineStopX;
         		lineStartY = lineStopY;
@@ -222,7 +209,7 @@ public class AreaChart extends LnChart{
         		if(2 < count)
         		{
         			if(Double.compare( bv, dataAxis.getAxisMin() ) != 0  ) 
-        								lstPathPoints.add( new PointF(initX,initY));
+        					lstPathPoints.add( new PointF(plotArea.getLeft(),plotArea.getBottom()));
         		}
         			
         		lstPathPoints.add( new PointF(lineStartX,lineStartY));
@@ -240,8 +227,6 @@ public class AreaChart extends LnChart{
    	
         	lineStartX = lineStopX;
 			lineStartY = lineStopY;
-        	
-        	j++;
         }
 		
 		if(count > 2 )
@@ -249,7 +234,7 @@ public class AreaChart extends LnChart{
 			lstPathPoints.add( new PointF(lineStartX ,lineStartY));
 			
 			if(Double.compare( chartValues.get(count - 1), dataAxis.getAxisMin() ) != 0  )
-										lstPathPoints.add( new PointF(lineStartX ,initY));
+							lstPathPoints.add( new PointF(lineStartX ,plotArea.getBottom()));
 		}
 		return true;        
 	}
@@ -553,7 +538,7 @@ public class AreaChart extends LnChart{
 		 {
     	   return true;
 		 }
-		 int childID = 0;
+
 		 PlotDot pDot = pLine.getPlotDot();	
 		 float radius = pDot.getDotRadius();
 		 				
@@ -566,13 +551,16 @@ public class AreaChart extends LnChart{
         		PlotDotRender.getInstance().renderDot(canvas,pDot,
         				dotInfo.mX ,dotInfo.mY,
         				pLine.getDotPaint()); 
-    			savePointRecord(dataID,childID, dotInfo.mX + mMoveX, dotInfo.mY + mMoveY,
+    			savePointRecord(dataID,i, dotInfo.mX + mMoveX, dotInfo.mY + mMoveY,
 					    					dotInfo.mX - radius + mMoveX, 
 					    					dotInfo.mY - radius + mMoveY,
 					    					dotInfo.mX + radius + mMoveX, 
 					    					dotInfo.mY + radius + mMoveY);    			
-    			childID++;
+    		
         	}
+			
+			//显示批注形状
+			drawAnchor(getAnchorDataPoint(),dataID,i,canvas,dotInfo.mX ,dotInfo.mY);
     		
     		if(bd.getLabelVisible())
         	{  
@@ -630,8 +618,7 @@ public class AreaChart extends LnChart{
 								
 		//透明度。其取值范围是0---255,数值越小，越透明，颜色上表现越淡             
 		//mPaintAreaFill.setAlpha( mAreaAlpha );  		
-		
-						
+								
 		//开始处 X 轴 即分类轴                  
 		int count = mDataSet.size();
 		for(int i=0;i<count;i++)
@@ -656,11 +643,18 @@ public class AreaChart extends LnChart{
 			}								
 			renderDotAndLabel(canvas,areaData,i,mLstDotInfo);						
 			mLstKey.add(areaData);
-			
+											
 			mLstDotInfo.clear();
 			mLstPoints.clear();
 			mLstPathPoints.clear();						
-		}					
+		}
+		
+		//画竖向图的定制线	
+		//if(null != mCustomLine)
+	//	{
+		//	mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+		//	mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
+		//}	
 		return true;
 	}
 
@@ -672,8 +666,11 @@ public class AreaChart extends LnChart{
 		if(renderVerticalPlot(canvas) == true)
 		{				
 			//画横向定制线
-			////mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-			////ret = mCustomLine.renderVerticalCustomlinesDataAxis(canvas);													
+			if(null != mCustomLine)
+			{
+				mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
+				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);		
+			}
 		}
 	}
 

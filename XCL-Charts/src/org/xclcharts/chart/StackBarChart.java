@@ -84,13 +84,22 @@ public class StackBarChart  extends BarChart{
 		 
 		 int cateSize = categoryAxis.getDataSet().size();
 		 int dataSize = 0;
+		 float labelY = 0.f;
 				
 		//分类轴	
 		 for(int r=0;r < cateSize ;r++)
 		 {				 
 			 	 float currentX = plotArea.getLeft();
 				 float currentY = sub(plotArea.getBottom() , mul((r+1) , YSteps));				 
-				 double total = 0d;				 
+				 double total = 0d;				
+				 
+				 labelY = currentY;
+				 if(XEnum.BarCenterStyle.SPACE == this.getBarCenterStyle())
+				 {
+					 labelY = add(currentY ,div(YSteps,2)); 
+					 currentY = labelY;
+				 }
+				 
 				 
 				//得到数据源
 				List<BarData> chartDataSource = this.getDataSource();
@@ -130,10 +139,13 @@ public class StackBarChart  extends BarChart{
 				    //显示焦点框
 	           		drawFocusRect(canvas,i,r,currentX ,topY,rightX,bottomY);
 	           		
+	           		float labelLeftX = add(currentX , valuePostion/2);
+	           		
+	           		//在柱形的顶端显示上批注形状
+					drawAnchor(this.getAnchorDataPoint(),i,r,canvas,labelLeftX,labelY);
 	           		
 					//柱形的当前值
-					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),
-												add(currentX , valuePostion/2), currentY , canvas);							
+					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),labelLeftX, labelY , canvas);							
 					currentX = add(currentX,valuePostion);
 				 }
 				
@@ -165,7 +177,7 @@ public class StackBarChart  extends BarChart{
 			float axisDataHeight =  (float) dataAxis.getAxisRange(); 			
 			float barWidht = mul(XSteps,0.5f);	
 			
-			 float currentX = 0.0f,currentY = 0.0f;
+			 float currentX = 0.0f,currentY = 0.0f,labelX = 0.f;
 			
 			 int dataSize = dataSet.size();	
 			 int sourceSize = 0;
@@ -174,6 +186,13 @@ public class StackBarChart  extends BarChart{
 				 	 currentX = add(plotArea.getLeft() , mul( (r+1) , XSteps));				 	 
 					 currentY = plotArea.getBottom() ;
 					 Double total = 0d;
+					 
+					 labelX = currentX;
+					 if(XEnum.BarCenterStyle.SPACE == this.getBarCenterStyle())
+					 {
+						 labelX = sub(currentX ,div(XSteps,2)); 
+						 currentX = labelX;
+					 }
 					 
 					 sourceSize = chartDataSource.size();
 					 for(int i=0; i < sourceSize;i++) //各自所占的高度
@@ -209,9 +228,14 @@ public class StackBarChart  extends BarChart{
 						//显示焦点框
 		           		drawFocusRect(canvas,i,r,leftX, topY, rightX, currentY);
 						
+		           		float labelLeftY = sub(currentY , valuePostion/2);
+		           		
+		           		//在柱形的顶端显示上批注形状
+						drawAnchor(this.getAnchorDataPoint(),i,r,canvas,labelX,labelLeftY);
+						
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 
-													currentX, sub(currentY , valuePostion/2), canvas);	
+								labelX,labelLeftY, canvas);	
 						
 						currentY = sub(currentY,valuePostion);
 					 }

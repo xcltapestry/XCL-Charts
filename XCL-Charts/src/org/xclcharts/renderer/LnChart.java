@@ -24,11 +24,14 @@ package org.xclcharts.renderer;
 
 import java.util.List;
 
+import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.CurveHelper;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.common.PointHelper;
 import org.xclcharts.event.click.PointPosition;
+import org.xclcharts.renderer.info.AnchorDataPoint;
 import org.xclcharts.renderer.info.PlotAxisTick;
+import org.xclcharts.renderer.line.PlotCustomLine;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -51,6 +54,13 @@ public class LnChart extends AxesChart {
 	private static final String TAG = "LnChart";
 	
 	private PointF[] BezierControls ;		
+	
+	//批注
+	private List<AnchorDataPoint> mAnchorSet;
+	
+	//用于绘制定制线(分界线)
+	protected PlotCustomLine mCustomLine = null;
+		
 				
 	public LnChart() {
 		
@@ -68,7 +78,60 @@ public class LnChart extends AxesChart {
 		dataAxisDefaultSetting();	
 	}
 		
+	/**
+	 * 返回指定数据在图中的坐标位置
+	 * @param bv 数据
+	 * @return 坐标位置
+	 */
+	protected float getVPValPosition(double bv)
+	{			
+		float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
+		float valuePostion = mul(getPlotScreenHeight(), div( vaxlen,dataAxis.getAxisRange() ) );
+		return (sub(plotArea.getBottom() , valuePostion));
+	}
 	
+	protected float getLnXValPosition( double xValue,double maxValue,double minValue) 
+	{			
+		//对应的X坐标	 
+	   double maxminRange  = MathHelper.getInstance().sub(maxValue , minValue);				   
+	   double xScale = MathHelper.getInstance().div(
+			   				MathHelper.getInstance().sub(xValue,minValue),maxminRange);
+	   float XvaluePos = mul(getPlotScreenWidth(),(float)xScale);			   
+	   return add(plotArea.getLeft() , XvaluePos);
+	}	
+	
+	private float getVPDataAxisStdY()
+	{
+		if(dataAxis.getAxisStdStatus())
+		{
+			return getVPValPosition(dataAxis.getAxisStd());
+		}else{
+			return plotArea.getBottom();
+		}
+	}
+			
+	@Override
+	protected float getAxisYPos(XEnum.AxisLocation location)
+	{						 		
+		if(dataAxis.getAxisStdStatus() && categoryAxis.getAxisBuildStdStatus())
+		{
+			return getVPDataAxisStdY();
+		}else{
+			return super.getAxisYPos(location);
+		}		
+	}	
+	
+	/**
+	 * 设置定制线值
+	 * @param customLineDataset 定制线数据集合
+	 */
+	public void setCustomLines( List<CustomLineData> customLineDataset)
+	{
+		if(null == mCustomLine) mCustomLine = new PlotCustomLine();
+		mCustomLine.setCustomLines(customLineDataset);
+	}
+	
+		
 	/**
 	 * 绘制底部标签轴
 	 */
@@ -84,7 +147,7 @@ public class LnChart extends AxesChart {
 		
 		if( 0 == tickCount)
 		{
-			Log.e(TAG,"数据库数据源为0!");
+			Log.e(TAG,"数据源个数为0!");
 			return ;
 		}else if (1 == tickCount)  //label仅一个时右移
 			    labeltickCount = tickCount - 1 ;
@@ -143,7 +206,8 @@ public class LnChart extends AxesChart {
 					currentTickLabel = MathHelper.getInstance().add(
 										dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
 					
-					mLstDataTick.add(new PlotAxisTick(i,axisX , currentY, Double.toString(currentTickLabel)));
+					mLstDataTick.add(new PlotAxisTick(i,axisX , currentY, 
+												Double.toString(currentTickLabel)));
 					break;							
 				case TOP: //X
 				case BOTTOM:	
@@ -161,7 +225,8 @@ public class LnChart extends AxesChart {
 					currentTickLabel = MathHelper.getInstance().add(
 											dataAxis.getAxisMin(),i * dataAxis.getAxisSteps());	
 										
-					mLstDataTick.add(new PlotAxisTick(i,currentX, axisY, Double.toString(currentTickLabel)));
+					mLstDataTick.add(new PlotAxisTick(i,currentX, axisY, 
+														Double.toString(currentTickLabel)));
 															
 					break;	
 			} //switch end						
@@ -212,12 +277,10 @@ public class LnChart extends AxesChart {
 		{			
 			j = 1;
 		}
-		int labeltickCount = getCategoryAxisCount();
-			 
+		int labeltickCount = getCategoryAxisCount();			 
 							
 		// 标签轴(X 轴)
-		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;
-		
+		float axisX = 0.0f,axisY = 0.0f,currentX = 0.0f,currentY = 0.0f;		
 		XEnum.AxisLocation pos = getCategoryAxisLocation();
 								
 		if( XEnum.AxisLocation.LEFT == pos || 
@@ -412,5 +475,22 @@ public class LnChart extends AxesChart {
 	}
 	
 	/////////////////////////////////////////
+	
+	/**
+	 * 设置批注
+	 * @param anchor 批注
+	 */
+	public void setAnchorDataPoint( List<AnchorDataPoint> anchor) {	
+		mAnchorSet = anchor;
+	}
+	
+	/**
+	 * 返回批注
+	 * @return 批注
+	 */
+	public List<AnchorDataPoint> getAnchorDataPoint()
+	{
+		return mAnchorSet;
+	}
 	/////////////////////////////////////////	
 }
