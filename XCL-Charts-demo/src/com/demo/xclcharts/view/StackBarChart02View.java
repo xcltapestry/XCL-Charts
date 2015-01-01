@@ -123,7 +123,7 @@ public class StackBarChart02View extends DemoView {
 			chart.setTitleAlign(XEnum.HorizontalAlign.CENTER);
 			
 			//图例
-			chart.getAxisTitle().setLowerAxisTitle("单位为(W)");
+			chart.getAxisTitle().setLowerTitle("单位为(W)");
 			
 			//背景网格			
 			chart.getPlotGrid().showVerticalLines();

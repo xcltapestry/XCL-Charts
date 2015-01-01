@@ -79,7 +79,7 @@ public class StackBarChart  extends BarChart{
 		 float valueWidth = axisDataRange; 
 		 
 		//步长
-		 float YSteps = getHorizontalYSteps();		
+		 float YSteps = getVerticalYSteps(getCateTickCount());	
 		 int   barHeight = (int) MathHelper.getInstance().round(mul(YSteps,0.5f),2);		 
 		 
 		 int cateSize = categoryAxis.getDataSet().size();

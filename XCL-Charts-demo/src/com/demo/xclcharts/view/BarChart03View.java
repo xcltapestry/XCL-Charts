@@ -110,9 +110,9 @@ public class BarChart03View extends DemoView implements Runnable{
 			chart.setCustomLines(mCustomLineDataset);
 			
 			//图例
-			chart.getAxisTitle().setAxisTitleStyle(XEnum.AxisTitleStyle.ENDPOINT);
-			chart.getAxisTitle().setLeftAxisTitle("分数");
-			chart.getAxisTitle().setLowerAxisTitle("科目");
+			chart.getAxisTitle().setTitleStyle(XEnum.AxisTitleStyle.ENDPOINT);
+			chart.getAxisTitle().setLeftTitle("分数");
+			chart.getAxisTitle().setLowerTitle("科目");
 			chart.getAxisTitle().setCrossPointTitle("(一班)");
 			
 			//数据轴

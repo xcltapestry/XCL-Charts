@@ -132,20 +132,15 @@ public class XYAxis extends Axis {
 	 */
 	protected void renderHorizontalTick(XChart xchart,Canvas canvas, 
 											float centerX, float centerY,
-			String text,boolean isTickVisible) {
-		
-		//Log.e("XYAxis","XYAxis renderHorizontalTick");
+									String text,float labelX, float labelY,
+									boolean isTickVisible) {
 		
 		if (false == isShow())return;
-
-		//Log.e("XYAxis","XYAxis renderHorizontalTick  isShow == true");
-		
-		
 		float marksStartX = centerX;
 		float markeStopX = centerX;
 
-		float labelStartX = centerX;
-		float labelStartY = centerY;
+		float labelStartX = labelX;
+		float labelStartY = labelY;
 
 		switch (getHorizontalTickAlign()) {
 		case LEFT: {
@@ -236,8 +231,7 @@ public class XYAxis extends Axis {
 
 		float marksStartY = centerY;
 		float marksStopY = centerY;
-		float labelsStartY = labelY;
-
+		float labelsStartY = labelY;				
 		
 		switch (getVerticalTickPosition()) {
 		case TOP: {

@@ -163,8 +163,8 @@ public class MultiBarChart01View extends DemoView {
 			chart2.setCategories(chartLabels);	
 			
 			//轴标题
-			chart2.getAxisTitle().setLeftAxisTitle("金额");
-			chart2.getAxisTitle().setLowerAxisTitle("资产负债率");
+			chart2.getAxisTitle().setLeftTitle("金额");
+			chart2.getAxisTitle().setLowerTitle("资产负债率");
 			
 			//数据轴
 			chart2.getDataAxis().setAxisMax(2500);
@@ -210,8 +210,8 @@ public class MultiBarChart01View extends DemoView {
 			chart2.getDataAxis().getTickLabelPaint().setColor(axisColor);
 			chart2.getCategoryAxis().getTickLabelPaint().setColor(axisColor);
 			
-			chart2.getAxisTitle().getLeftAxisTitlePaint().setColor(axisColor);
-			chart2.getAxisTitle().getLowerAxisTitlePaint().setColor(axisColor);
+			chart2.getAxisTitle().getLeftTitlePaint().setColor(axisColor);
+			chart2.getAxisTitle().getLowerTitlePaint().setColor(axisColor);
 			
 			//隐藏图例
 			chart2.getPlotLegend().hide();			

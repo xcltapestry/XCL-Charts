@@ -28,6 +28,10 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
+import org.xclcharts.chart.CustomLineData;
+import org.xclcharts.chart.PieChart;
+import org.xclcharts.chart.PieData;
+import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
@@ -42,6 +46,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -65,7 +70,21 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	
 	Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	PlotDot mDotToolTip = new PlotDot();
-			
+	
+	private List<CustomLineData> mCustomLineDataset = new ArrayList<CustomLineData>();
+
+	private int colorORACLE = (int)Color.rgb(186, 20, 26);
+	private int colorMSSQL = (int)Color.rgb(1, 188, 242);
+	private int colorMYSQL = (int)Color.rgb(0, 75, 106);
+	private int colorOTHER = (int)Color.rgb(27, 188, 155);		
+	
+	private int colorTitalAxes = (int)Color.rgb(244, 109, 67);
+	private int colorPlotArea = Color.rgb(254, 224, 144); 
+	
+	
+	private PieChart chartPie = new PieChart();	
+	private ArrayList<PieData> chartDataPie = new ArrayList<PieData>();
+	
 	
 	public BarChart01View(Context context) {
 		super(context);
@@ -88,6 +107,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		 	chartLabels();
 			chartDataSet();
 			chartRender();
+			
+			//饼图
+			chartPieDataSet();
+			chartPieRender();	
 			new Thread(this).start();
 	 }
 	
@@ -95,8 +118,9 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
         super.onSizeChanged(w, h, oldw, oldh);  
        //图所占范围大小
-        chart.setChartRange(w,h); // + w * 0.5f
+        chart.setChartRange(w,h); // + w * 0.5f                        
     }  
+	
 		 	
 	private void chartRender()
 	{
@@ -108,10 +132,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//数据源
 			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
-						
+												
 			//轴标题
-			chart.getAxisTitle().setLeftAxisTitle("数据库");
-			chart.getAxisTitle().setLowerAxisTitle("分布位置");
+			chart.getAxisTitle().setLeftTitle("数据库");
+			chart.getAxisTitle().setLowerTitle("分布位置");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(100);
@@ -150,18 +174,24 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			 //chart.getBar().setBarInnerMargin(0d);
 		
 			
-			//轴颜色
-			int axisColor = Color.BLUE; // Color.rgb(222, 136, 166);			
-			chart.getDataAxis().getAxisPaint().setColor(axisColor);
-			chart.getCategoryAxis().getAxisPaint().setColor(axisColor);			
-			chart.getDataAxis().getTickMarksPaint().setColor(axisColor);
-			chart.getCategoryAxis().getTickMarksPaint().setColor(axisColor);
+			//轴颜色			
+			chart.getDataAxis().getAxisPaint().setColor(colorTitalAxes);
+			chart.getCategoryAxis().getAxisPaint().setColor(colorTitalAxes);			
+			chart.getDataAxis().getTickMarksPaint().setColor(colorTitalAxes);
+			chart.getCategoryAxis().getTickMarksPaint().setColor(colorTitalAxes);
+			
+			chart.getDataAxis().getTickLabelPaint().setColor(colorTitalAxes);
+			chart.getCategoryAxis().getTickLabelPaint().setColor(colorTitalAxes);
+			
+			chart.getAxisTitle().getLeftTitlePaint().setColor(colorTitalAxes);	
+			chart.getAxisTitle().getLowerTitlePaint().setColor(colorTitalAxes);	
+			
+			chart.getBar().getItemLabelPaint().setColor(Color.rgb(246, 133, 39));	
+			chart.getBar().getItemLabelPaint().setTextSize(15);
+		
 								
 			//指隔多少个轴刻度(即细刻度)后为主刻度
-			chart.getDataAxis().setDetailModeSteps(5);
-			
-			//扩展横向显示范围,当数据太多时可用这个扩展实际绘图面积
-			chart.getPlotArea().extWidth(200f);		  			
+			chart.getDataAxis().setDetailModeSteps(5);						  			
   			
 			//显示十字交叉线
 			chart.showDyLine();
@@ -176,16 +206,18 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//chart.setDataAxisLocation(XEnum.AxisLocation.VERTICAL_CENTER);
 			
 			//忽略Java的float计算误差，提高性能
-			chart.disableHighPrecision();
+			//chart.disableHighPrecision();
 			
 			//柱形和标签居中方式
 			// chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Log.e(TAG, e.toString());
+			Log.e(TAG, "chartRender():"+e.toString());
 		}
 	}
+	
+			
 	private void chartDataSet()
 	{
 		//标签对应的柱形数据集
@@ -193,28 +225,27 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		dataSeriesA.add(66d); 
 		dataSeriesA.add(33d); 
 		dataSeriesA.add(50d);
-		BarData BarDataA = new BarData("Oracle",dataSeriesA,(int)Color.rgb(186, 20, 26));
+		BarData BarDataA = new BarData("Oracle",dataSeriesA,colorORACLE);
 		
 		
 		List<Double> dataSeriesB= new ArrayList<Double>();	
 		dataSeriesB.add(0.d); //32
 		dataSeriesB.add(25d);
 		dataSeriesB.add(18d);
-		BarData BarDataB = new BarData("SQL Server",dataSeriesB,(int)Color.rgb(1, 188, 242));
+		BarData BarDataB = new BarData("SQL Server",dataSeriesB,colorMSSQL);
 		
 		List<Double> dataSeriesC= new ArrayList<Double>();	
 		dataSeriesC.add(79d);
 		dataSeriesC.add(91d);
 		dataSeriesC.add(65d);
-		BarData BarDataC = new BarData("MySQL",dataSeriesC,(int)Color.rgb(0, 75, 106)); 
+		BarData BarDataC = new BarData("MySQL",dataSeriesC,colorMYSQL); 
 		
 		List<Double> dataSeriesD= new ArrayList<Double>();	
 		dataSeriesD.add(52d);
 		dataSeriesD.add(45d);
 		dataSeriesD.add(35d);
-		BarData BarDataD = new BarData("Other",dataSeriesD,(int)Color.rgb(17, 3, 111)); 
-		
-		
+		BarData BarDataD = new BarData("其它类型",dataSeriesD,colorOTHER);
+				
 		chartData.add(BarDataA);
 		chartData.add(BarDataB);
 		chartData.add(BarDataC);
@@ -230,8 +261,11 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		
 	@Override
     public void render(Canvas canvas) {
-        try{        	            
-            chart.render(canvas);         
+        try{        	
+           chart.render(canvas);    
+           
+           chartPie.render(canvas); 
+           
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
@@ -241,7 +275,8 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	public List<XChart> bindChart() {
 		// TODO Auto-generated method stub		
 		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
+		lst.add(chart);	
+		lst.add(chartPie);	
 		return lst;
 	}
 
@@ -270,7 +305,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
           		
           		if(1 == i)
           		{          			
-          			drawTitle();
+          			drawLast();
           			drawDyLegend();
           		}
           		postInvalidate();    
@@ -282,37 +317,28 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
           }            
 	}
 	
-	private void drawTitle()
+	private void drawLast()
 	{		
 		//标题
-		chart.setTitle("主要数据库分布情况");
+		chart.setTitle("数据库统计");
 		chart.addSubtitle("(XCL-Charts Demo)");	
-		chart.getPlotTitle().getTitlePaint().setColor(Color.BLUE);
-		chart.getPlotTitle().getSubtitlePaint().setColor(Color.BLUE);
+		chart.getPlotTitle().getTitlePaint().setColor(colorTitalAxes);
+		chart.getPlotTitle().getSubtitlePaint().setColor(colorTitalAxes); 
 		
 		//激活点击监听
 		chart.ActiveListenItemClick();
 		chart.showClikedFocus();
 		
+		//扩展横向显示范围,当数据太多时可用这个扩展实际绘图面积
+		//chart.getPlotArea().extWidth(200f);		
+		
 		//禁用平移模式
-		//chart.disablePanMode();
+		chart.disablePanMode();
 		//限制只能左右滑动
-		chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);	
-		
-		
+		//chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);	
+				
 		//禁用双指缩放
 		//chart.disableScale();
-		
-		/*
-		//显示十字交叉线
-		chart.showDyLine();
-		DyLine dyl = chart.getDyLine();
-		if( null != dyl)
-		{
-			dyl.setDyLineStyle(XEnum.DyLineStyle.Horizontal);
-			dyl.setLineDrawStyle(XEnum.LineStyle.DASH);
-		}
-		*/
 		
 		chart.getDataAxis().show();		 
 		chart.getPlotLegend().show();	
@@ -323,21 +349,48 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		//批注
 		List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
 		
-		AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.RECT);
+		AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.CIRCLE);
 		an1.setAlpha(200);
-		an1.setBgColor(Color.RED);
-		an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
+		an1.setBgColor(Color.rgb(203, 189, 231));
+		//an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
 		
 		AnchorDataPoint an2 = new AnchorDataPoint(1,1,XEnum.AnchorStyle.CIRCLE);
 		an2.setBgColor(Color.GRAY);
 		
 		AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
-		an3.setBgColor(Color.BLUE);
+		an3.setBgColor(Color.rgb(255, 145, 126));
 				
 		mAnchorSet.add(an1);
 		mAnchorSet.add(an2);
 		mAnchorSet.add(an3);
-		chart.setAnchorDataPoint(mAnchorSet);		
+		chart.setAnchorDataPoint(mAnchorSet);	
+				
+		chart.setApplyBackgroundColor(true); 
+		chart.setBackgroundColor(XEnum.Direction.VERTICAL,Color.rgb(69, 117, 180),Color.rgb(224, 243, 248));  //Color.rgb(17, 162, 255),Color.rgb(163, 219, 254));//Color.WHITE);				
+		chart.getBorder().setBorderLineColor(Color.rgb(181, 64, 1));
+		chart.getBorder().getLinePaint().setStrokeWidth(3);
+								
+		chart.getPlotArea().setBackgroundColor(true, colorPlotArea);
+		
+		//chart.getPlotArea().setApplayGradient(true);
+		//chart.getPlotArea().setGradientDirection(XEnum.Direction.VERTICAL);
+		//chart.getPlotArea().setBeginColor(Color.rgb(116, 174, 210)); 		
+		//chart.getPlotArea().setEndColor(Color.WHITE);
+		chart.showRoundBorder();
+		
+		CustomLineData line1 = new CustomLineData("分界",60d,Color.rgb(218, 198, 61),7);
+		line1.setCustomLineCap(XEnum.DotStyle.HIDE);		
+		line1.setLabelHorizontalPostion(Align.RIGHT);
+		//line1.setLabelOffset(15);	
+		line1.getLineLabelPaint().setColor(Color.RED);
+		mCustomLineDataset.add(line1);
+		chart.setCustomLines(mCustomLineDataset);
+		
+		
+		//饼图 
+		float pieWH = DensityUtil.dip2px(getContext(), 70);	
+		float pieX = chart.getPlotArea().getRight() - pieWH * 3;	
+		chartPie.setChartRange(pieX,pieWH, pieWH,pieWH);			
 	}
 	
 	private void drawDyLegend()
@@ -345,8 +398,12 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		
 		Legend dyLegend = chart.getDyLegend();		
 		if(null == dyLegend) return;
-		dyLegend.setPosition(0.7f,0.3f);
-		dyLegend.setColSpan(30.f);
+		dyLegend.setPosition(0.8f,0.5f);
+		if(chart.getPlotArea().getHeight() > chart.getPlotArea().getWidth())
+		{
+			dyLegend.setPosition(0.6f,0.5f);
+		}
+		//dyLegend.setColSpan(30.f);
 		dyLegend.getBackgroundPaint().setColor(Color.BLACK);
 		dyLegend.getBackgroundPaint().setAlpha(100);
 		dyLegend.setRowSpan(20.f);
@@ -357,19 +414,20 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		pDyLegend.setColor(Color.GREEN);			
 		PlotDot dotDyLegend = new PlotDot();
 		dotDyLegend.setDotStyle(XEnum.DotStyle.RECT);		
-		dyLegend.addLegend(dotDyLegend, "动态图例一", pDyLegend);
+		dyLegend.addLegend(dotDyLegend, "库可用xxx(PB)", pDyLegend);
 		
 		Paint pDyLegend2 = new Paint(Paint.ANTI_ALIAS_FLAG);
 		pDyLegend2.setColor(Color.RED);
-		dyLegend.addLegend(dotDyLegend, "动态图例二", pDyLegend2);
+		dyLegend.addLegend(dotDyLegend, "库已用xxx(PB)", pDyLegend2);
 		
 		Paint pDyLegend3 = new Paint(Paint.ANTI_ALIAS_FLAG);
 		pDyLegend3.setColor(Color.CYAN);	
-		dyLegend.addLegend(dotDyLegend,"动态图例三", pDyLegend3);
+		dyLegend.addLegend(dotDyLegend,"未分配xxx(PB)", pDyLegend3);
 		
 		Paint pDyLegend4 = new Paint(Paint.ANTI_ALIAS_FLAG);
-		pDyLegend4.setColor(Color.YELLOW);
-		dyLegend.addLegend(dotDyLegend,"动态图例四", pDyLegend4);
+		pDyLegend4.setColor(Color.YELLOW);		
+		dyLegend.addLegend("总计:xxx(PB)", pDyLegend4);
+			
 	}
 	
 	
@@ -416,19 +474,46 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.getFocusPaint().setColor(Color.GREEN);							
 			
 			//在点击处显示tooltip
-			mPaintToolTip.setColor(Color.RED);		
+			mPaintToolTip.setColor(colorTitalAxes);		
 			mDotToolTip.setDotStyle(XEnum.DotStyle.RECT);		
 			chart.getToolTip().setCurrentXY(x,y);
 			chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);		
-			chart.getToolTip().addToolTip(mDotToolTip, bData.getKey(), mPaintToolTip);
+			chart.getToolTip().addToolTip(mDotToolTip,bData.getKey(), mPaintToolTip);
 			chart.getToolTip().addToolTip(
-						" Current Value:" +Double.toString(bValue),mPaintToolTip);
+						"数量:" +Double.toString(bValue),mPaintToolTip);
 			chart.getToolTip().getBackgroundPaint().setAlpha(100);
 			this.invalidate();
 		}
 		
 	}
 	
+	private void chartPieRender()
+	{
+		try {				
+			//标签显示(隐藏，显示在中间，显示在扇区外面)
+			chartPie.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
+			chartPie.getLabelPaint().setColor(Color.WHITE);
+			
+			chartPie.setDataSource(chartDataPie);
+			
+			chartPie.getPlotLegend().hide();
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.e(TAG, "chartPieRender():"+e.toString());
+		}
+	}
+	
 
+	private void chartPieDataSet()
+	{
+		//演示用，不精准计算，生产环境应使用MathHelper相关类来时行计算				
+		//随便弄的
+		chartDataPie.clear();
+		chartDataPie.add(new PieData("ORACLE","27%" , 0.27f,colorORACLE));
+		chartDataPie.add(new PieData("SQL Server","8%" ,0.08f,colorMSSQL));
+		chartDataPie.add(new PieData("MySQL","42%" ,0.42f,colorMYSQL));
+		chartDataPie.add(new PieData("其它","23%" ,0.23f,colorOTHER));
+	}
 	
 }

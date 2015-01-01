@@ -236,7 +236,7 @@ public class PieChart extends CirChart{
 		if(Float.compare(Angle, 0.0f) == 0 
 				|| Float.compare(Angle, 0.0f) == -1)
 		{
-			//Log.w(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(Angle));
+			Log.w(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(Angle));
 			return false;
 		}
 		return true;
@@ -293,13 +293,17 @@ public class PieChart extends CirChart{
 		try{				
 			if(null == mDataset)
 			{
-	 			Log.e(TAG,"数据源为空.");
+	 			//Log.e(TAG,"数据源为空.");
 	 			return false;
 			}
 			//中心点坐标
 			float cirX = plotArea.getCenterX();
 		    float cirY = plotArea.getCenterY();		     
 	        float radius = getRadius();
+	        if(Float.compare(radius, 0.0f) == 0 || Float.compare(radius, 0.0f) == -1)
+	        {
+	        	return false;
+	        }
 	   
 			//用于存放当前百分比的圆心角度
 			float currentAngle = 0.0f;				
@@ -382,20 +386,21 @@ public class PieChart extends CirChart{
 		for(PieData cData : mDataset)
 		{			
 			currentValue = cData.getSliceAngle();			
-			totalAngle = add(totalAngle,currentValue);					
+			totalAngle = add(totalAngle,currentValue);				
+			//Log.e(TAG,"圆心角:"+Float.toString(currentValue)+" 合计:"+Float.toString(totalAngle));						
 			if( Float.compare(totalAngle,0.0f) == -1)
 			{
-				Log.e(TAG,"传入参数不合理，圆心角总计小于等于0度. 现有圆心角合计:"
+				Log.w(TAG,"传入参数不合理，圆心角总计小于等于0度. 现有圆心角合计:"
 						+Float.toString(totalAngle)
 						+" 当前圆心角:"+Float.toString( currentValue )
-						+" 当前百分比:"+Double.toString( cData.getPercentage() ));
+						+" 当前百分比:"+Float.toString( cData.getPercentage() ));
 				//return false;
-			}else if( Float.compare(totalAngle, 360.1f) == 1) 
+			}else if( Float.compare(totalAngle, 360.5f) == 1) 
 			{
-				//圆心角总计大于360度
-				Log.e(TAG,"传入参数不合理，圆心角总计大于360.1度. 现有圆心角合计:"
+			//	//圆心角总计大于360度
+				Log.w(TAG,"传入参数不合理，圆心角总计大于360.5度. 现有圆心角合计:"
 							+Float.toString(totalAngle));
-				return false;
+				//return false;
 			}
 		}				
 		return true;

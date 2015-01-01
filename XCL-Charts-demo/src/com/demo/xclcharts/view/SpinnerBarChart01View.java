@@ -74,7 +74,7 @@ public class SpinnerBarChart01View extends DemoView {
 		case 0: //竖向柱形图
 			mChart = new BarChart();
 			//图例
-			mChart.getAxisTitle().setLeftAxisTitle("百分比");			
+			mChart.getAxisTitle().setLeftTitle("百分比");			
 			break;
 		case 1:	//横向柱形图
 			mChart = new BarChart();

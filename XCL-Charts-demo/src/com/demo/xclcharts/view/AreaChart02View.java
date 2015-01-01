@@ -130,7 +130,7 @@ public class AreaChart02View extends DemoView {
 				chart.setTitle("平滑区域图");
 				chart.addSubtitle("(XCL-Charts Demo)");	
 				//轴标题
-				chart.getAxisTitle().setLowerAxisTitle("(年份)");
+				chart.getAxisTitle().setLowerTitle("(年份)");
 				
 				//透明度
 				chart.setAreaAlpha(180);

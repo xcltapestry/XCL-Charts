@@ -57,8 +57,10 @@ import org.xclcharts.renderer.plot.PlotTitle;
 import org.xclcharts.renderer.plot.PlotTitleRender;
 
 import android.graphics.Canvas;
+import android.graphics.LinearGradient;
 import android.graphics.Paint;
 import android.graphics.PointF;
+import android.graphics.Shader;
 
 public class XChart implements IRender {
 		
@@ -487,6 +489,42 @@ public class XChart implements IRender {
 		if(null == mBorder)mBorder = new BorderRender();
 		mBorder.getBackgroundPaint().setColor(color);		
 	}
+	
+	/**
+	 * 设置图的渐变背景色
+	 * @param direction	渐变方向
+	 * @param beginColor 起始颜色
+	 * @param endColor	结束颜色
+	 */
+	public void setBackgroundColor(XEnum.Direction direction, int beginColor,int endColor) {
+		
+		//getPlotArea().getBackgroundPaint().setColor(areaColor);
+		
+		if(beginColor == endColor)
+		{
+			getBackgroundPaint().setColor(beginColor);
+		}else{
+						
+			LinearGradient  linearGradient ;
+			if(direction == XEnum.Direction.VERTICAL)
+			{
+				linearGradient = new LinearGradient(
+						0, 0, 0, getBottom() - getTop(),							
+						beginColor,endColor, 				 
+						 Shader.TileMode.MIRROR);
+			}else{
+				linearGradient = new LinearGradient(
+						 getLeft(),getBottom(),getRight(),getTop(),
+						 beginColor,endColor, 				 
+						 Shader.TileMode.CLAMP);
+			}
+			getBackgroundPaint().setShader(linearGradient);    
+		}
+		
+		if(null == mBorder)mBorder = new BorderRender();
+		mBorder.getBackgroundPaint().setColor(endColor);		
+	}
+
 	
 	/**
 	 * 开放背景画笔

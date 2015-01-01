@@ -110,8 +110,8 @@ public class BarChart05View extends DemoView implements Runnable{
 			chart.setCustomLines(mCustomLineDataset);
 			
 			//图例
-			chart.getAxisTitle().setLeftAxisTitle("科目");
-			chart.getAxisTitle().setLowerAxisTitle("分数");
+			chart.getAxisTitle().setLeftTitle("科目");
+			chart.getAxisTitle().setLowerTitle("分数");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(110);

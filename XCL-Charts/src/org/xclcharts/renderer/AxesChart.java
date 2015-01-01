@@ -152,6 +152,8 @@ public class AxesChart extends EventChart {
 										  ArrayList<PlotAxisTick> lstLabels)
 	{
 		if(null == lstLabels) return ;
+		
+		boolean showTicks = true;
 		for(PlotAxisTick t : lstLabels)
 		{
 			switch(mCategoryAxisLocation)
@@ -159,14 +161,16 @@ public class AxesChart extends EventChart {
 				case LEFT: //Y
 				case RIGHT:			
 				case VERTICAL_CENTER:
-					  categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,
-							  								isDrawYAxisTickMarks(t.Y,mMoveY));					
+					if( !t.isShowTickMarks() || !isDrawYAxisTickMarks(t.Y,mMoveY)) showTicks = false;
+					  categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
+							  showTicks);					
 					break;							
 				case TOP: //X
 				case BOTTOM:		
 				case HORIZONTAL_CENTER:
+					if( !t.isShowTickMarks() || !isDrawXAxisTickMarks(t.X,mMoveX) ) showTicks = false;
 						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
-															isDrawXAxisTickMarks(t.X,mMoveX));		
+								showTicks);		
 					break;			
 			
 			} //switch end

@@ -1,7 +1,6 @@
 package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -471,10 +470,19 @@ public class MultiAxisChart03View extends DemoView {
 	
 	private void chartDataSetPie()
 	{
+		/*
 		chartDataPie.add(new PieData("closed","25%" ,   (0.25*100),(int)Color.rgb(155, 187, 90)));
 		chartDataPie.add(new PieData("inspect","45%" ,   (0.45*100),(int)Color.rgb(191, 79, 75)));
 		chartDataPie.add(new PieData("workdone","15%" , (0.15*100),(int)Color.rgb(60, 173, 213)));
 		chartDataPie.add(new PieData("dispute","15%" ,  (0.15*100),(int)Color.rgb(90, 79, 88)));	
+		*/
+		
+		
+		chartDataPie.add(new PieData("closed","25%" ,   0.25f,(int)Color.rgb(155, 187, 90)));
+		chartDataPie.add(new PieData("inspect","45%" ,   0.45f,(int)Color.rgb(191, 79, 75)));
+		chartDataPie.add(new PieData("workdone","15%" , 0.15f,(int)Color.rgb(60, 173, 213)));
+		chartDataPie.add(new PieData("dispute","15%" ,  0.15f,(int)Color.rgb(90, 79, 88)));
+		
 	}
 	
 	

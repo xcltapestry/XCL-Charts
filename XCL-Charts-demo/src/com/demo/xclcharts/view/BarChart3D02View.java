@@ -115,8 +115,8 @@ public class BarChart3D02View extends DemoView {
 			chart.addSubtitle("(XCL-Charts Demo)");		
 			
 			//轴标题
-			chart.getAxisTitle().setLeftAxisTitle("原料");
-			chart.getAxisTitle().setLowerAxisTitle("进货量");
+			chart.getAxisTitle().setLeftTitle("原料");
+			chart.getAxisTitle().setLowerTitle("进货量");
 			
 			//背景网格
 			chart.getPlotGrid().showHorizontalLines();

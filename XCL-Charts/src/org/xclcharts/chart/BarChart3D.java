@@ -50,6 +50,8 @@ public class BarChart3D extends BarChart{
 	public BarChart3D()
 	{			
 		if(null != categoryAxis)categoryAxis.hideTickMarks();
+		
+		setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 	}
 	
 	@Override
@@ -144,7 +146,7 @@ public class BarChart3D extends BarChart{
 		 if(null == chartDataSource) return false;	
 			 					
 			//得到Y 轴分类横向间距高度
-			 float YSteps = getHorizontalYSteps();	
+			 float YSteps = getVerticalYSteps(getCateTickCount()); //getHorizontalYSteps();	
 			 
 			 float barInitX = plotArea.getLeft() + this.mMoveX;
 			 float barInitY =  plotArea.getBottom() ;// + this.mMoveY;

@@ -82,9 +82,9 @@ public class BarChart09View extends DemoView{
 			chart.setCategories(chartLabels);	
 			
 			//轴标题
-			chart.getAxisTitle().setLeftAxisTitle("小于230");
-			chart.getAxisTitle().setLowerAxisTitle("营收");
-			chart.getAxisTitle().setRightAxisTitle("超出230");
+			chart.getAxisTitle().setLeftTitle("小于230");
+			chart.getAxisTitle().setLowerTitle("营收");
+			chart.getAxisTitle().setRightTitle("超出230");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(500);

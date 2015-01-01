@@ -110,8 +110,8 @@ public class MultiAxisChart02View extends DemoView {
 			//因为太长缩小标题字体
 			//chart.getPlotTitle().getChartTitlePaint().setTextSize(20);
 			//图例
-			chart.getAxisTitle().setLeftAxisTitle("Orders Per Minute (OPM)");
-			chart.getAxisTitle().setRightAxisTitle("Average Response Time (RT)");			
+			chart.getAxisTitle().setLeftTitle("Orders Per Minute (OPM)");
+			chart.getAxisTitle().setRightTitle("Average Response Time (RT)");			
 			
 			//标签轴
 			chart.setCategories(chartLabels);				
@@ -167,6 +167,8 @@ public class MultiAxisChart02View extends DemoView {
 			chart.getPlotGrid().showOddRowBgColor();
 			//隐藏Key值
 			chart.getPlotLegend().hide();
+			
+			chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());			

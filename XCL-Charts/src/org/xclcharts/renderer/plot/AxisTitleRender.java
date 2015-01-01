@@ -78,19 +78,19 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 			bottom = mChart.getBottom();
 		}
 								
-		if(this.getLeftAxisTitle().length() > 0)
+		if(this.getLeftTitle().length() > 0)
 		{
-			drawLeftAxisTitle(canvas,getLeftAxisTitle(),left,top,right,bottom);
+			drawLeftAxisTitle(canvas,getLeftTitle(),left,top,right,bottom);
 		}
 		
-		if(this.getLowerAxisTitle().length() > 0 )
+		if(this.getLowerTitle().length() > 0 )
 		{						
-			drawLowerAxisTitle(canvas,getLowerAxisTitle(),left,top,right,bottom);
+			drawLowerAxisTitle(canvas,getLowerTitle(),left,top,right,bottom);
 		}
 		
-		if(this.getRightAxisTitle().length() > 0)
+		if(this.getRightTitle().length() > 0)
 		{
-			drawRightAxisTitle(canvas,getRightAxisTitle(),left,top,right,bottom);
+			drawRightAxisTitle(canvas,getRightTitle(),left,top,right,bottom);
 		}
 		
 		
@@ -124,10 +124,10 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 		
 		 //计算图列宽度		 
 		 double axisTitleTextHeight = DrawHelper.getInstance().getTextWidth(
-				 										getLeftAxisTitlePaint(),axisTitle);
+				 										getLeftTitlePaint(),axisTitle);
          
 		 //画布与图表1/3的地方显示
-		 float axisTitleTextStartX = (float) Math.round(left + getLeftAxisTitlePaint().getTextSize()) ; 		 
+		 float axisTitleTextStartX = (float) Math.round(left + getLeftTitlePaint().getTextSize()) ; 		 
 		 
          //轴标题Y坐标
 		 float axisTitleTextStartY = 0.0f;
@@ -145,12 +145,12 @@ public class AxisTitleRender extends AxisTitle implements IRender{
          for(int i= 0; i< axisTitle.length();i++)
          {        	 
         	 axisTitleCharHeight = DrawHelper.getInstance().getTextWidth(
-        			 						getLeftAxisTitlePaint(),axisTitle.substring(i, i+1));        	 
+        			 						getLeftTitlePaint(),axisTitle.substring(i, i+1));        	 
         	 //绘制文字，旋转-90得到横向效果
         	 DrawHelper.getInstance().drawRotateText(axisTitle.substring(i, i+1),
 					        			 axisTitleTextStartX,axisTitleTextStartY,
 					        			 -90,
-					        			 canvas, getLeftAxisTitlePaint() );
+					        			 canvas, getLeftTitlePaint() );
         	 axisTitleTextStartY -= axisTitleCharHeight;
          }
 	}
@@ -172,7 +172,7 @@ public class AxisTitleRender extends AxisTitle implements IRender{
  	
  		 //计算轴标题文字宽度		 
  		 double axisTitleTextHeight = DrawHelper.getInstance().getPaintFontHeight(
- 				 												getLowerAxisTitlePaint());     
+ 				 												getLowerTitlePaint());     
  		  	
  		 float axisTitleTextStartX = 0.0f;
  		 float axisTitleY = (float) MathHelper.getInstance().sub(mChart.getBottom(),axisTitleTextHeight/2); 			 	
@@ -183,16 +183,16 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 			 //左下角交叉点绘制
 			 if(mCrossPointTitle.length() > 0) 
 			 {
-				 getLowerAxisTitlePaint().setTextAlign(Align.LEFT);
+				 getLowerTitlePaint().setTextAlign(Align.LEFT);
 				 DrawHelper.getInstance().drawRotateText(mCrossPointTitle,
-						 		(float) left,axisTitleY,0,canvas, getLowerAxisTitlePaint());					 
+						 		(float) left,axisTitleY,0,canvas, getLowerTitlePaint());					 
 			 }
-			 getLowerAxisTitlePaint().setTextAlign(Align.RIGHT);
+			 getLowerTitlePaint().setTextAlign(Align.RIGHT);
 		 }else{
 			 axisTitleTextStartX =  (float) Math.round(left +  (right - left) / 2) ;  
 		 }	  		
  		DrawHelper.getInstance().drawRotateText(axisTitle,
- 	       		 axisTitleTextStartX,axisTitleY,0,canvas, getLowerAxisTitlePaint());
+ 	       		 axisTitleTextStartX,axisTitleY,0,canvas, getLowerTitlePaint());
 		
 	}
 
@@ -216,9 +216,9 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 		
 		//计算图列高度，超过最大高度要用...表示,这个后面再加		 
 		 float axisTitleTextHeight = DrawHelper.getInstance().getTextWidth(
-				 										getRightAxisTitlePaint(),axisTitle);         
+				 										getRightTitlePaint(),axisTitle);         
 		 //画布与图表1/3的地方显示
-		 float axisTitleTextStartX =  (float) Math.round(right - getRightAxisTitlePaint().getTextSize()) ;         
+		 float axisTitleTextStartX =  (float) Math.round(right - getRightTitlePaint().getTextSize()) ;         
          //轴标题Y坐标
 		 float axisTitleTextStartY = (float) Math.round(top + (bottom - top -  axisTitleTextHeight) /2 );	          
          //得到单个轴标题文字高度     		
@@ -226,10 +226,10 @@ public class AxisTitleRender extends AxisTitle implements IRender{
          for(int i= 0; i< axisTitle.length();i++)
          {        	 
         	 axisTitleCharHeight = DrawHelper.getInstance().getTextWidth(
-        			 						getRightAxisTitlePaint(),axisTitle.substring(i, i+1));        	 
+        			 						getRightTitlePaint(),axisTitle.substring(i, i+1));        	 
         	 //绘制文字，旋转-90得到横向效果
         	 DrawHelper.getInstance().drawRotateText(axisTitle.substring(i, i+1),
-        			 axisTitleTextStartX,axisTitleTextStartY,90,canvas, getRightAxisTitlePaint() );
+        			 axisTitleTextStartX,axisTitleTextStartY,90,canvas, getRightTitlePaint() );
         	 axisTitleTextStartY += axisTitleCharHeight;
          }
 	

@@ -284,52 +284,19 @@ public class BarChart extends AxesChart {
 		return dsetMaxSize;
 	}
 
-		
-	/**
-	 * 横向柱形图,Y轴显示分类
-	 * Y轴的屏幕高度/(分类轴的刻度标记总数+1) = 步长
-	 * @return Y轴步长
-	 */
-	protected float getHorizontalYSteps() {		
-		if(categoryAxis.getDataSet() == null)return 0;
-		int count = categoryAxis.getDataSet().size() + 1;		
-		return div(getPlotScreenHeight() , count );		
-	}	
 	
+	protected int getDataTickCount()
+	{
+		int tickCount = dataAxis.getAixTickCount();
+		return tickCount +1;
+	}
 	
-		
-
-	/**
-	 * 绘制竖向柱形图中的底部分类轴
-	 */	
-	protected void renderVerticalBarCategoryAxis(Canvas canvas) {
-		
-		if(null == categoryAxis)return;
-		// 得到分类轴数据集
-		List<String> dataSet = categoryAxis.getDataSet();
-		if(null == dataSet) return ;
-		
-		// 分类轴(X 轴)
-		float currentX = 0.0f;
-
-		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
-		// 总宽度 / 分类个数 = 间距长度    //getAxisScreenWidth() 
-		float XSteps = div(getPlotScreenWidth() , (dataSet.size() + 1));
-		
-		int tickCount = dataSet.size();
-		for (int i = 0; i < tickCount; i++) {
-			// 依初超始X坐标与分类间距算出当前刻度的X坐标
-			currentX = add(plotArea.getLeft(),mul((i + 1) , XSteps)); 
-			
-			currentX = sub(currentX,div(XSteps,2));
-			
-			 //绘制竖向网格线
-			 drawVerticalGridLines(canvas,plotArea.getTop(),plotArea.getBottom(),
-									i ,tickCount,XSteps,currentX);
-		
-			// 画上分类/刻度线
-			mLstCateTick.add(new PlotAxisTick(currentX,plotArea.getBottom(), dataSet.get(i)));
-		}
+	protected int getCateTickCount()
+	{
+		int count = categoryAxis.getDataSet().size() ;
+		if( XEnum.BarCenterStyle.SPACE != mBarCenterStyle)
+											count +=1;
+		return count;
 	}
 	
 	@Override
@@ -443,7 +410,8 @@ public class BarChart extends AxesChart {
 		float XSteps = 0.0f,YSteps = 0.0f;		
 	
 		int tickCount = dataSet.size() ;
-		int labeltickCount = tickCount + 1;
+		int labeltickCount = getCateTickCount();
+			
 		if( 0 == tickCount)
 		{
 			//Log.e(TAG,"分类轴数据源为0!");
@@ -474,6 +442,7 @@ public class BarChart extends AxesChart {
 		mLstCateTick.clear();	
 		
 		float labelX,labelY;
+		boolean showTicks = true;
 		
 		//绘制
 		for (int i = 0; i < tickCount; i++)  //tickCount
@@ -494,11 +463,20 @@ public class BarChart extends AxesChart {
 					if(!categoryAxis.isShowAxisLabels()) continue;	
 					
 					labelY = currentY;
-					labelX = sub(axisX ,get3DOffsetX());
-					if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle) labelY = add(currentY,div(YSteps,2));						  					 					 
+					labelX = currentX = sub(axisX ,get3DOffsetX());
+					if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle)
+					{						
+						//if(i == tickCount - 1)continue;
+						 if(i == tickCount - 1)
+						 {
+							 showTicks = false;
+						 }
+						 
+						labelY = add(currentY,div(YSteps,2));
+					}
 																																	 
 					// 分类
-					mLstCateTick.add(new PlotAxisTick(labelX,currentY,categoryAxis.getDataSet().get(i) ,labelX,labelY));					
+					mLstCateTick.add(new PlotAxisTick(currentX,currentY,categoryAxis.getDataSet().get(i) ,labelX,labelY,showTicks));					
 					break;							
 				case TOP: //X
 				case BOTTOM:			
@@ -516,9 +494,16 @@ public class BarChart extends AxesChart {
 					  currentX =  sub(currentX, get3DBaseOffsetX() );	
 					  					  
 					 labelX = currentX;
-					 if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle) labelX = sub(currentX,div(XSteps,2));
-						  					 
-					  mLstCateTick.add(new PlotAxisTick( currentX,currentY2, dataSet.get(i),labelX,currentY2));	
+					 labelY = currentY2;
+					 if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle) 
+					 {
+						 if(i == tickCount - 1)
+						 {
+							 showTicks = false;
+						 }
+						 labelX = sub(currentX,div(XSteps,2));
+					 }				
+					 mLstCateTick.add(new PlotAxisTick( currentX,currentY2, dataSet.get(i),labelX,labelY,showTicks));	
 																
 					break;			
 			} //switch end
@@ -554,7 +539,7 @@ public class BarChart extends AxesChart {
 		if(null == mDataSet) return false;				
 
 		// 得到Y 轴分类横向间距高度
-		float YSteps = getHorizontalYSteps();
+		float YSteps = getVerticalYSteps(getCateTickCount()); 
 		float barInitX = plotArea.getLeft() ;
 		float barInitY = plotArea.getBottom() ;
 			
@@ -765,8 +750,8 @@ public class BarChart extends AxesChart {
 		// 得到分类轴数据集
 		List<String> dataSet = categoryAxis.getDataSet();
 		if(null == dataSet) return false;	
-		
-		float XSteps = getVerticalXSteps(dataSet.size() + 1);		
+				
+		float XSteps = getVerticalXSteps(getCateTickCount());	
 		float dataAxisStd = getVPDataAxisStdY();		
 		float itemFontHeight = 0.f;		
 		if(mFlatBar.getItemLabelsVisible())

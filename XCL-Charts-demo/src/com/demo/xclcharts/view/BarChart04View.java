@@ -111,8 +111,8 @@ public class BarChart04View extends DemoView {
 			chart.setCustomLines(mCustomLineDataset);
 			
 			//图例
-			chart.getAxisTitle().setLeftAxisTitle("参考成年男性标准值");
-			chart.getAxisTitle().setLowerAxisTitle("(请不要忽视您的健康)");
+			chart.getAxisTitle().setLeftTitle("参考成年男性标准值");
+			chart.getAxisTitle().setLowerTitle("(请不要忽视您的健康)");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(40);

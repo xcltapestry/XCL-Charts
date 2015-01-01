@@ -127,7 +127,7 @@ public class LineChart01View extends DemoView {
 			chart.setTitle("折线图(Line Chart)");
 			chart.addSubtitle("(XCL-Charts Demo)");
 			
-			chart.getAxisTitle().setLowerAxisTitle("(年份)");
+			chart.getAxisTitle().setLowerTitle("(年份)");
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();

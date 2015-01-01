@@ -353,7 +353,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		chart.setTitle("区域图(Area Chart)");
 		chart.addSubtitle("(XCL-Charts Demo)");	
 		//轴标题
-		chart.getAxisTitle().setLowerAxisTitle("(年份)");
+		chart.getAxisTitle().setLowerTitle("(年份)");
 		
 		//显示图例
 		chart.getPlotLegend().show();

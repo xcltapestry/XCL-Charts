@@ -126,7 +126,7 @@ public class StackBarChart01View extends DemoView {
 			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
 			
 			//轴标题
-			chart.getAxisTitle().setLeftAxisTitle("单位(TB)");
+			chart.getAxisTitle().setLeftTitle("单位(TB)");
 			
 			//背景网格
 			chart.getPlotGrid().showEvenRowBgColor();

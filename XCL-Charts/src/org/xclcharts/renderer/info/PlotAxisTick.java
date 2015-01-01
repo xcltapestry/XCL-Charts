@@ -30,7 +30,7 @@ package org.xclcharts.renderer.info;
  */
 public class PlotAxisTick extends PlotDataInfo{
 	
-	
+	private boolean mHideTickMarks = false;
 	
 	public PlotAxisTick(){}
 	
@@ -66,6 +66,19 @@ public class PlotAxisTick extends PlotDataInfo{
 		 labelY = ly;
 	}
 	
+	public PlotAxisTick(float x,float y,String label,float lx,float ly,boolean tickMarks)
+	{
+		// ID = id;
+		 X = x;
+		 Y = y;
+		 Label = label;
+		 
+		 labelX = lx;
+		 labelY = ly;
+		 
+		 mHideTickMarks = tickMarks;
+	}
+	
 	
 	
 	public float getLabelX() 
@@ -86,6 +99,11 @@ public class PlotAxisTick extends PlotDataInfo{
 	public void setLabelY(float y) 
 	{
 		labelY = y;
+	}
+	
+	public boolean isShowTickMarks()
+	{
+		return mHideTickMarks;
 	}
 
 }

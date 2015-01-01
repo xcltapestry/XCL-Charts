@@ -23,7 +23,6 @@
 package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.chart.PieChart;
@@ -51,7 +50,7 @@ public class PieChart01View extends DemoView implements Runnable{
 	
 	private String TAG = "PieChart01View";
 	private PieChart chart = new PieChart();	
-	private LinkedList<PieData> chartData = new LinkedList<PieData>();
+	private ArrayList<PieData> chartData = new ArrayList<PieData>();
 	private int mSelectedID = -1;
 	
 
@@ -142,11 +141,11 @@ public class PieChart01View extends DemoView implements Runnable{
 		chartData.add(new PieData("EMC","40%",40,(int)Color.rgb(60, 173, 213),false));
 		*/
 
-		chartData.add(new PieData("closed","9%" ,   (0.09*100),(int)Color.rgb(155, 187, 90)));
-		chartData.add(new PieData("inspect","3%" ,   (0.03*100),(int)Color.rgb(191, 79, 75)));
-		chartData.add(new PieData("open","76%" ,  (0.76*100),(int)Color.rgb(242, 167, 69)));
-		chartData.add(new PieData("workdone","6%" , (0.06*100),(int)Color.rgb(60, 173, 213)));
-		chartData.add(new PieData("dispute","6%" ,  (0.06*100),(int)Color.rgb(90, 79, 88)));
+		chartData.add(new PieData("closed","9%" ,   0.09f,(int)Color.rgb(155, 187, 90)));
+		chartData.add(new PieData("inspect","3%" ,   0.03f,(int)Color.rgb(191, 79, 75)));
+		chartData.add(new PieData("open","76%" ,  0.76f,(int)Color.rgb(242, 167, 69)));
+		chartData.add(new PieData("workdone","6%" , 0.06f,(int)Color.rgb(60, 173, 213)));
+		chartData.add(new PieData("dispute","6%" ,  0.06f,(int)Color.rgb(90, 79, 88)));
 	
 	}
 
@@ -187,7 +186,7 @@ public class PieChart01View extends DemoView implements Runnable{
 	          	for(int i=0;i< count ;i++)
 	          	{
 	          		Thread.sleep(150);
-	          		LinkedList<PieData> animationData = new LinkedList<PieData>();
+	          		ArrayList<PieData> animationData = new ArrayList<PieData>();
 	        
 	          		sum = 0.0f;
 	          		for(int j=0;j<=i;j++)

@@ -77,7 +77,7 @@ public class BarChart07View_left  extends GraphicalView {
 				chart.setCustomLines(mCustomLineDataset);
 				
 				//图例
-				chart.getAxisTitle().setLeftAxisTitle("参考成年男性标准值");
+				chart.getAxisTitle().setLeftTitle("参考成年男性标准值");
 				
 				
 				//数据轴

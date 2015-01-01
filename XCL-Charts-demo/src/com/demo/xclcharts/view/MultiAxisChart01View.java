@@ -109,8 +109,8 @@ public class MultiAxisChart01View extends DemoView {
 				chart.addSubtitle("(XCL-Charts Demo)");				
 				chart.getPlotTitle().getTitlePaint().setTextSize(20);
 				//图例
-				chart.getAxisTitle().setLeftAxisTitle("Orders Per Minute (OPM)");
-				chart.getAxisTitle().setRightAxisTitle("Average Response Time (RT)");			
+				chart.getAxisTitle().setLeftTitle("Orders Per Minute (OPM)");
+				chart.getAxisTitle().setRightTitle("Average Response Time (RT)");			
 				
 				//轴
 				renderBarAxis();
@@ -123,6 +123,8 @@ public class MultiAxisChart01View extends DemoView {
 				chart.getPlotGrid().showOddRowBgColor();			
 				//隐蔽图例			
 				chart.getPlotLegend().hide();
+				
+				chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 				
 				
 			} catch (Exception e) {

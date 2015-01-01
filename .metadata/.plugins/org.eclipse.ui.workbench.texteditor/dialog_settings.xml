@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="282" key="DIALOG_WIDTH"/>
-		<item value="229" key="DIALOG_Y_ORIGIN"/>
-		<item value="247" key="DIALOG_X_ORIGIN"/>
-		<item value="383" key="DIALOG_HEIGHT"/>
+		<item value="293" key="DIALOG_WIDTH"/>
+		<item value="327" key="DIALOG_Y_ORIGIN"/>
+		<item value="958" key="DIALOG_X_ORIGIN"/>
+		<item value="409" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,26 +13,26 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="YSteps" key="selection"/>
+		<item value="" key="selection"/>
 		<list key="findhistory">
-			<item value="YSteps"/>
-			<item value="mBarCenterStyle"/>
-			<item value="CoordsCenterStyle"/>
-			<item value="mCoordsCenterStyle"/>
-			<item value="labelsStartY"/>
-			<item value="isTickVisible"/>
-			<item value="PlotAxisTick"/>
-			<item value="mLstCateTick"/>
+			<item value="rd"/>
+			<item value="raidus"/>
+			<item value="raidu"/>
+			<item value="public void render(Canvas canvas) {"/>
+			<item value="chartPieDataSet"/>
+			<item value="chartPie"/>
+			<item value="LinkedList"/>
+			<item value="getRightAxisTitle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="ArrayList"/>
+			<item value="getRightTitle"/>
+			<item value="getLowerTitle"/>
+			<item value="getLeftTitle"/>
+			<item value="float"/>
+			<item value="colorTitalAxes"/>
 			<item value="BarCenterStyle"/>
 			<item value="currLabelX"/>
-			<item value="maxminRange"/>
-			<item value="currLabelY"/>
-			<item value="mBgColor"/>
-			<item value="ArrayList"/>
-			<item value="FunnelChart02View"/>
-			<item value="getLabelLinePaint"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

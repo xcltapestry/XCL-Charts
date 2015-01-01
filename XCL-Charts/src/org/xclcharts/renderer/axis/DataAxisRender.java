@@ -132,12 +132,8 @@ public class DataAxisRender extends DataAxis {
 	 */
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
 								float centerX,float centerY,String text,boolean isTickVisible)
-	{				
-		if(isShow())
-		{
-			//if(isShowAxisDetailModeLabels())
-				renderHorizontalTick(xchart,canvas, centerX,centerY,text,isTickVisible);
-		}
+	{						
+		renderHorizontalTick(xchart,canvas, centerX,centerY,text,centerX,centerY,isTickVisible);	
 	}
 
 

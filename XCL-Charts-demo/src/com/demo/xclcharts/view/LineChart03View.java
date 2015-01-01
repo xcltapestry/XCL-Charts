@@ -72,7 +72,7 @@ public class LineChart03View  extends GraphicalView {
 			chart.getCategoryAxis().setTickLabelRotateAngle(90);
 			
 			
-			chart.getAxisTitle().setLowerAxisTitle("(年份)");	
+			chart.getAxisTitle().setLowerTitle("(年份)");	
 			
 			//chart.hideRightAxis();
 			//chart.hideTopAxis();

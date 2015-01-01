@@ -144,6 +144,8 @@ public class BarChart08View extends DemoView{
 			 
 			//限制只能左右滑动
 			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);	
+			
+			chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
 			 
 			// chart.showRoundBorder();
 		} catch (Exception e) {

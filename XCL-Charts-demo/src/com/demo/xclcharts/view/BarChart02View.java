@@ -109,9 +109,9 @@ public class BarChart02View extends DemoView {
 			chart.setCategories(chartLabels);	
 			
 			//轴标题
-			chart.getAxisTitle().setLeftAxisTitle("所售商品");
-			chart.getAxisTitle().setLowerAxisTitle("纯利润(天)");
-			chart.getAxisTitle().setRightAxisTitle("生意兴隆通四海,财源茂盛达三江。");
+			chart.getAxisTitle().setLeftTitle("所售商品");
+			chart.getAxisTitle().setLowerTitle("纯利润(天)");
+			chart.getAxisTitle().setRightTitle("生意兴隆通四海,财源茂盛达三江。");
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(500);

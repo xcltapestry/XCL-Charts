@@ -95,7 +95,7 @@ public class AxisTitle {
 	 * 开放左边图例画笔
 	 * @return 画笔
 	 */
-	public Paint getLeftAxisTitlePaint() {
+	public Paint getLeftTitlePaint() {
 		initLeftAxisTitlePaint();
 		return mPaintLeftAxisTitle;
 	}
@@ -104,7 +104,7 @@ public class AxisTitle {
 	 * 开放底部图例画笔
 	 * @return 画笔
 	 */
-	public Paint getLowerAxisTitlePaint() {
+	public Paint getLowerTitlePaint() {
 		initLowerAxisTitlePaint();
 		return mPaintLowerAxisTitle;
 	}
@@ -113,7 +113,7 @@ public class AxisTitle {
 	 * 开放右边图例画笔
 	 * @return 画笔
 	 */
-	public Paint getRightAxisTitlePaint() {
+	public Paint getRightTitlePaint() {
 		initRightAxisTitlePaint();
 		return mPaintRightAxisTitle;
 	}
@@ -122,7 +122,7 @@ public class AxisTitle {
 	 * 设置左边图例内容
 	 * @param title 图例内容
 	 */
-	public void setLeftAxisTitle(String title) {
+	public void setLeftTitle(String title) {
 		this.mLeftAxisTitle = title;
 	}
 
@@ -130,7 +130,7 @@ public class AxisTitle {
 	 * 设置底部图例内容
 	 * @param title 图例内容
 	 */
-	public void setLowerAxisTitle(String title) {
+	public void setLowerTitle(String title) {
 		this.mLowerAxisTitle = title;
 	}
 
@@ -139,7 +139,7 @@ public class AxisTitle {
 	 * 设置右边图例内容
 	 * @param title 图例内容
 	 */
-	public void setRightAxisTitle(String title) {
+	public void setRightTitle(String title) {
 		this.mRightAxisTitle = title;
 	}
 	
@@ -147,7 +147,7 @@ public class AxisTitle {
 	 * 返回左边图例内容
 	 * @return 图例内容
 	 */
-	public String getLeftAxisTitle() {
+	public String getLeftTitle() {
 		return mLeftAxisTitle;
 	}
 	
@@ -155,7 +155,7 @@ public class AxisTitle {
 	 * 返回底部图例内容
 	 * @return 图例内容
 	 */
-	public String getLowerAxisTitle() {
+	public String getLowerTitle() {
 		return mLowerAxisTitle;
 	}
 	
@@ -163,7 +163,7 @@ public class AxisTitle {
 	 * 返回右边图例内容
 	 * @return 图例内容
 	 */
-	public String getRightAxisTitle() {
+	public String getRightTitle() {
 		return mRightAxisTitle;
 	}
 	
@@ -171,7 +171,7 @@ public class AxisTitle {
 	 * 设置轴标题显示风格
 	 * @param style
 	 */
-	public void setAxisTitleStyle(XEnum.AxisTitleStyle style)
+	public void setTitleStyle(XEnum.AxisTitleStyle style)
 	{
 		mAxisTitleStyle = style;
 	}
