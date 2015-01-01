@@ -664,7 +664,7 @@ public class BarChart extends AxesChart {
 	public float getHPValPosition(double bv)
 	{							
 		double vaxlen = MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
-		float valuePostion = mul(getPlotScreenWidth(), div(dtof(vaxlen) ,dataAxis.getAxisRange()) );		
+		float valuePostion = mul(getPlotScreenWidth(), div((float) (vaxlen) ,dataAxis.getAxisRange()) );		
 		return (add(plotArea.getLeft() , valuePostion));						
 	}
 	

@@ -265,7 +265,7 @@ public class Bar {
 			}
 			float labelBarTotalWidth = MathHelper.getInstance().mul(XSteps , mBarTickSpacePercent); 				
 			float barTotalInnerMargin = MathHelper.getInstance().mul(labelBarTotalWidth , 
-					(float) mBarInnerMargin);
+					 							MathHelper.getInstance().dtof(mBarInnerMargin));
 			
 			float barTotalWidth = MathHelper.getInstance().sub(labelBarTotalWidth , barTotalInnerMargin);			
 			float barInnerMargin = MathHelper.getInstance().div(barTotalInnerMargin , barNumber);

@@ -114,7 +114,7 @@ public class StackBarChart  extends BarChart{
 					 if(bd.getDataSet().size() < r+1) continue; 						 
 					 
 					//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来	
-					double bv = bd.getDataSet().get(r);											
+					Double bv = bd.getDataSet().get(r);											
 					total = MathHelper.getInstance().add(total, bv);
 					
 					float valuePostion = 0.0f;
@@ -123,7 +123,7 @@ public class StackBarChart  extends BarChart{
 						double t = MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );							
 						valuePostion = mul( axisScreenWidth,div((float) (t),valueWidth) );																												
 					}else{										
-						float t2 =  div((float) bv , valueWidth) ; 
+						float t2 =  div((float) (bv) , valueWidth) ; 
 						valuePostion =  mul( axisScreenWidth , t2);							
 					}
 					

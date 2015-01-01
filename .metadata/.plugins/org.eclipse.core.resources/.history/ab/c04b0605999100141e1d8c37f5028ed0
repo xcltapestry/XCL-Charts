@@ -114,16 +114,16 @@ public class StackBarChart  extends BarChart{
 					 if(bd.getDataSet().size() < r+1) continue; 						 
 					 
 					//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来	
-					double bv = bd.getDataSet().get(r);											
+					Double bv = bd.getDataSet().get(r);											
 					total = MathHelper.getInstance().add(total, bv);
 					
 					float valuePostion = 0.0f;
 					if(i == 0 )
 					{											
 						double t = MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );							
-						valuePostion = mul( axisScreenWidth,div((float) (t),valueWidth) );																												
+						valuePostion = mul( axisScreenWidth,div(dtof(t),valueWidth) );																												
 					}else{										
-						float t2 =  div((float) bv , valueWidth) ; 
+						float t2 =  div(dtof(bv) , valueWidth) ; 
 						valuePostion =  mul( axisScreenWidth , t2);							
 					}
 					
@@ -153,7 +153,7 @@ public class StackBarChart  extends BarChart{
 				 if(mTotalLabelVisible)
 				 {
 					 double t = MathHelper.getInstance().sub(total , dataAxis.getAxisMin());
-					 float totalPostion = mul(div(axisScreenWidth,axisDataRange),(float) (t));				 
+					 float totalPostion = mul(div(axisScreenWidth,axisDataRange),dtof(t));				 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					add(plotArea.getLeft() , totalPostion), currentY, canvas);
 				 }				 
@@ -211,10 +211,10 @@ public class StackBarChart  extends BarChart{
 						if(i == 0 )
 						{													
 							double t = MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );	
-							valuePostion = mul( axisScreenHeight,div( (float) (t),axisDataHeight) );							 								 							 
+							valuePostion = mul( axisScreenHeight,div( dtof(t),axisDataHeight) );							 								 							 
 						}else{												
 							double t2 =  MathHelper.getInstance().div(bv, axisDataHeight) ; 							
-							valuePostion =  mul( axisScreenHeight , (float) (t2));		
+							valuePostion =  mul( axisScreenHeight , dtof(t2));		
 						}
 						
 						//柱形
@@ -244,7 +244,7 @@ public class StackBarChart  extends BarChart{
 				 if(mTotalLabelVisible)
 				 {			 					 					  					 
 					 double per =  MathHelper.getInstance().sub(total , dataAxis.getAxisMin());					 
-					 float totalPostion =  MathHelper.getInstance().mul(div(axisScreenHeight,axisDataHeight) , (float) (per));					 					 
+					 float totalPostion =  MathHelper.getInstance().mul(div(axisScreenHeight,axisDataHeight) , dtof(per));					 					 
 					 flatBar.renderBarItemLabel(getFormatterItemLabel(total), 
 							 					currentX, sub(plotArea.getBottom() , totalPostion), canvas);
 				 }

@@ -951,6 +951,16 @@ public class XChart implements IRender {
 		 return MathHelper.getInstance().div(v1, v2);
 	 }
 	 
+	 /**
+	  * double转float
+	  * @param d double参数
+	  * @return float
+	  */
+	 protected float dtof(double d)
+	 {
+		 return MathHelper.getInstance().dtof(d);
+	 }
+	 
 	//math计算类函数 ----------------------------------------------------------------
 	 
 }

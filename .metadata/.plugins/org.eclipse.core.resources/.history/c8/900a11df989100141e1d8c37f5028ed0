@@ -192,7 +192,7 @@ public class BarChart3D extends BarChart{
 																				
                 	//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来
                 	double tlen =  MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());
-                	float valuePostion = mul(scrWidth, div((float) (tlen),valueWidth) );                			
+                	float valuePostion = mul(scrWidth, div(dtof(tlen),valueWidth) );                			
                             	        
                 	//画出柱形                	 	
                 	float topY = sub(drawBarButtomY , barHeight);
@@ -314,7 +314,7 @@ public class BarChart3D extends BarChart{
 			   
 				//参数值与最大值的比例  照搬到 y轴高度与矩形高度的比例上来					   
 				double tlen = MathHelper.getInstance().sub(bv, axisMin);				
-			    float valuePostion = (float) ( MathHelper.getInstance().div(tlen,axisRange) );
+			    float valuePostion = dtof( MathHelper.getInstance().div(tlen,axisRange) );
 			    valuePostion =  mul( plotArea.getPlotHeight() , valuePostion);     	   					
 				
 				//计算同分类多柱 形时，新柱形的起始X坐标

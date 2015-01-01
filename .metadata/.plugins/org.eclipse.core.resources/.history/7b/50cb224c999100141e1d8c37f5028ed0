@@ -314,6 +314,29 @@ public class MathHelper {
 		 // return b.setScale(scale, BigDecimal.ROUND_HALF_UP).floatValue();
 	 }
 	
+	 /**
+	  * float(4字节)转double(8字节),防止 补位误差.
+	  * @param f
+	  * @return
+	  */
+	 /*
+	public double ftod(float f)
+	{
+		return(new Float(f).doubleValue());
+	}*/
+	
+	/**
+	 * double转float
+	 * @param d
+	 * @return
+	 */
+	/*
+	public float dtof(double d)
+	{
+		return (new Double(d).floatValue());
+	}
+	*/
+	
 	 public double add(double v1, double v2) 
 	 {
 		 if(!mHighPrecision)

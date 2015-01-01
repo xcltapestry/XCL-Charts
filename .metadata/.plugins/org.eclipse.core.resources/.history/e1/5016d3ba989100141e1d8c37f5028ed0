@@ -371,9 +371,9 @@ public class Bar3D extends Bar{
 		mPaintBase3D.setColor(baseLightColor);
 		
 		//水平偏移量
-		float offsetX = (float) (getOffsetX());
+		float offsetX = MathHelper.getInstance().dtof(getOffsetX());
 		//垂直偏移量
-		float offsetY= (float) (getOffsetY()) ;		
+		float offsetY= MathHelper.getInstance().dtof(getOffsetY()) ;		
 	
 		//Shadow
 		float baseLeft2 = MathHelper.getInstance().sub(baseLeft , offsetX);

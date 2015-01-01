@@ -128,8 +128,7 @@ public class PlotCustomLine {
 								MathHelper.getInstance().sub( 
 										line.getValue() , mDataAxis.getAxisMin()),
 								axisHeight  );			
-			float  postion = MathHelper.getInstance().mul(mAxisScreenHeight ,  
-															MathHelper.getInstance().dtof(per)); 		
+			float  postion = MathHelper.getInstance().mul(mAxisScreenHeight ,  (float) per); 		
 			
 			//float currentY = (float) (mPlotArea.getBottom() - postion); 			
 			float currentY =  MathHelper.getInstance().sub(mPlotArea.getBottom(),postion);

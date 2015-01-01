@@ -327,7 +327,7 @@ public class RoseChart extends PieChart{
 				
 				//将百分比转换为新扇区的半径    
 				double p = cData.getPercentage()/ 100;					
-				newRaidus = mul(radius,dtof(p));				
+				newRaidus = mul(radius,(float) (p));				
 				newRaidus = div(mul(newRaidus,100),100);
 				
 				//newRaidus = (float) (radius * (cData.getPercentage()/ 100));  

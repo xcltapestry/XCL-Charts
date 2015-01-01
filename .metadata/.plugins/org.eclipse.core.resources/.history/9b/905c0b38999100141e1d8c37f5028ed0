@@ -123,7 +123,7 @@ public class StackBarChart  extends BarChart{
 						double t = MathHelper.getInstance().sub( bv , dataAxis.getAxisMin() );							
 						valuePostion = mul( axisScreenWidth,div((float) (t),valueWidth) );																												
 					}else{										
-						float t2 =  div((float) bv , valueWidth) ; 
+						float t2 =  div(bv , valueWidth) ; 
 						valuePostion =  mul( axisScreenWidth , t2);							
 					}
 					
