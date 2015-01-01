@@ -174,6 +174,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			 //chart.getBar().setBarInnerMargin(0d);
 		
 			
+			
 			//轴颜色			
 			chart.getDataAxis().getAxisPaint().setColor(colorTitalAxes);
 			chart.getCategoryAxis().getAxisPaint().setColor(colorTitalAxes);			
@@ -510,10 +511,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		//演示用，不精准计算，生产环境应使用MathHelper相关类来时行计算				
 		//随便弄的
 		chartDataPie.clear();
-		chartDataPie.add(new PieData("ORACLE","27%" , 0.27f,colorORACLE));
-		chartDataPie.add(new PieData("SQL Server","8%" ,0.08f,colorMSSQL));
-		chartDataPie.add(new PieData("MySQL","42%" ,0.42f,colorMYSQL));
-		chartDataPie.add(new PieData("其它","23%" ,0.23f,colorOTHER));
+		chartDataPie.add(new PieData("ORACLE","27%" , 27,colorORACLE));
+		chartDataPie.add(new PieData("SQL Server","8%" ,8,colorMSSQL));
+		chartDataPie.add(new PieData("MySQL","42%" ,42,colorMYSQL));
+		chartDataPie.add(new PieData("其它","23%" ,23,colorOTHER));
 	}
 	
 }

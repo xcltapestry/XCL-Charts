@@ -38,7 +38,7 @@ public class PieData {
 
 	private String mPieKey = "";
 	private String mPieLabel = "";
-	private float mPieValue = 0.0f;
+	private double mPieValue = 0.0f;
 	private int mPieColor = 0 ;
 	//private int mSliceAngle = 0;
 	
@@ -61,10 +61,10 @@ public class PieData {
 	/**
 	 * 
 	 * @param label		标签
-	 * @param percent	比例(0-1)
+	 * @param percent	比例(0-100)
 	 * @param color		显示颜色
 	 */
-	public PieData(String label,float percent,int color)
+	public PieData(String label,double percent,int color)
 	{
 		setLabel(label);
 		setPercentage(percent);
@@ -74,11 +74,11 @@ public class PieData {
 	/**
 	 * 
 	 * @param label		标签
-	 * @param percent	比例(0-1)
+	 * @param percent	比例(0-100)
 	 * @param color		显示颜色
 	 * @param selected	是否突出显示
 	 */
-	public PieData(String label,float percent,int color,boolean selected)
+	public PieData(String label,double percent,int color,boolean selected)
 	{
 		setLabel(label);
 		setPercentage(percent);
@@ -90,10 +90,10 @@ public class PieData {
 	 * 
 	 * @param key		键值
 	 * @param label		标签
-	 * @param percent	比例(0-1)
+	 * @param percent	比例(0-100)
 	 * @param color		显示颜色
 	 */
-	public PieData(String key,String label,float percent,int color)
+	public PieData(String key,String label,double percent,int color)
 	{
 		setLabel(label);
 		setPercentage(percent);
@@ -105,11 +105,11 @@ public class PieData {
 	 * 
 	 * @param key		键值
 	 * @param label		标签
-	 * @param percent	比例(0-1)
+	 * @param percent	比例(0-100)
 	 * @param color		显示颜色
 	 * @param selected	是否突出显示
 	 */
-	public PieData(String key,String label,float percent,int color,boolean selected)
+	public PieData(String key,String label,double percent,int color,boolean selected)
 	{
 		setLabel(label);
 		setPercentage(percent);
@@ -149,7 +149,7 @@ public class PieData {
 	 * 设置比例 (0-1),绘制时，会将其转换为对应的圆心角
 	 * @param value 比例 
 	 */
-	public void setPercentage(float value)
+	public void setPercentage(double value)
 	{
 		mPieValue = value;
 	}
@@ -181,10 +181,10 @@ public class PieData {
 	}
 	
 	/**
-	 * 返回当前比例(0-1)
+	 * 返回当前比例(0-100)
 	 * @return 比例 
 	 */
-	public float getPercentage()
+	public double getPercentage()
 	{
 		return mPieValue;
 	}
@@ -215,7 +215,7 @@ public class PieData {
 	{			
 		float Angle = 0.0f;
 		try{
-			/*
+			
 			float currentValue = (float) this.getPercentage();
 			if(currentValue >= 101f || currentValue < 0.0f)
 			{
@@ -226,8 +226,9 @@ public class PieData {
 									MathHelper.getInstance().div(currentValue,100f) ) ,2);												
 				//Angle =  MathHelper.getInstance().round(360f *  (currentValue / 100f),2) ; //rint
 			}
-			*/
 			
+			
+			/*
 			float currentValue = this.getPercentage();			
 			if(currentValue >= 1.01f || currentValue < 0.0f)
 			{
@@ -236,6 +237,7 @@ public class PieData {
 				Angle =  MathHelper.getInstance().round( 
 								MathHelper.getInstance().mul( 360f,currentValue ) ,2);	
 			}
+			*/
 		}catch(Exception ex)
 		{
 			Angle = -1f;

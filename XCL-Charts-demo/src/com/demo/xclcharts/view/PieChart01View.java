@@ -141,11 +141,11 @@ public class PieChart01View extends DemoView implements Runnable{
 		chartData.add(new PieData("EMC","40%",40,(int)Color.rgb(60, 173, 213),false));
 		*/
 
-		chartData.add(new PieData("closed","9%" ,   0.09f,(int)Color.rgb(155, 187, 90)));
-		chartData.add(new PieData("inspect","3%" ,   0.03f,(int)Color.rgb(191, 79, 75)));
-		chartData.add(new PieData("open","76%" ,  0.76f,(int)Color.rgb(242, 167, 69)));
-		chartData.add(new PieData("workdone","6%" , 0.06f,(int)Color.rgb(60, 173, 213)));
-		chartData.add(new PieData("dispute","6%" ,  0.06f,(int)Color.rgb(90, 79, 88)));
+		chartData.add(new PieData("closed","9%" ,   9,(int)Color.rgb(155, 187, 90)));
+		chartData.add(new PieData("inspect","3%" ,   3,(int)Color.rgb(191, 79, 75)));
+		chartData.add(new PieData("open","76%" ,  76f,(int)Color.rgb(242, 167, 69)));
+		chartData.add(new PieData("workdone","6%" , 6,(int)Color.rgb(60, 173, 213)));
+		chartData.add(new PieData("dispute","6%" ,  6,(int)Color.rgb(90, 79, 88)));
 	
 	}
 

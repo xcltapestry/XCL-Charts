@@ -5,7 +5,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLabel"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotLabelRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Location"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LegendType"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.RectType"/>
 <fullyQualifiedTypeName name="android.graphics.Canvas"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
 </qualifiedTypeNameHistroy>

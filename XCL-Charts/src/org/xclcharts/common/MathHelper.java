@@ -373,4 +373,40 @@ public class MathHelper {
 			  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();
 		  }
 	 }	 	 	
+	 
+	 /**
+	  * 乘法运算
+	  * @param v1
+	  * @param v2
+	  * @return 运算结果
+	  */
+	 public double mul(double v1, double v2) 
+	 {		
+		 if(!mHighPrecision)
+		 {
+			 return (v1 * v2);	 
+		 }else{
+			  BigDecimal bgNum1 = new BigDecimal(Double.toString(v1));
+			  BigDecimal bgNum2 = new BigDecimal(Double.toString(v2));
+			  return bgNum1.multiply(bgNum2).doubleValue();
+		 }
+	 }
+	 
+	 /**
+	  * 四舍五入到小数点后scale位
+	  * @param v
+	  * @param scale
+	  * @return 
+	  */
+	 public double round(double v, int scale) 
+	 {
+		  if (scale < 0) 
+			  throw new IllegalArgumentException("The scale must be a positive integer or zero");
+			
+		  BigDecimal bgNum1 = new BigDecimal(Double.toString(v));
+		  BigDecimal bgNum2 = new BigDecimal("1");
+		  return bgNum1.divide(bgNum2, scale, BigDecimal.ROUND_HALF_UP).doubleValue();		  
+		 // return b.setScale(scale, BigDecimal.ROUND_HALF_UP).floatValue();
+	 }
+	 
 }

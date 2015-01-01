@@ -478,10 +478,10 @@ public class MultiAxisChart03View extends DemoView {
 		*/
 		
 		
-		chartDataPie.add(new PieData("closed","25%" ,   0.25f,(int)Color.rgb(155, 187, 90)));
-		chartDataPie.add(new PieData("inspect","45%" ,   0.45f,(int)Color.rgb(191, 79, 75)));
-		chartDataPie.add(new PieData("workdone","15%" , 0.15f,(int)Color.rgb(60, 173, 213)));
-		chartDataPie.add(new PieData("dispute","15%" ,  0.15f,(int)Color.rgb(90, 79, 88)));
+		chartDataPie.add(new PieData("closed","25%" ,   25,(int)Color.rgb(155, 187, 90)));
+		chartDataPie.add(new PieData("inspect","45%" ,   45,(int)Color.rgb(191, 79, 75)));
+		chartDataPie.add(new PieData("workdone","15%" , 15,(int)Color.rgb(60, 173, 213)));
+		chartDataPie.add(new PieData("dispute","15%" ,  15,(int)Color.rgb(90, 79, 88)));
 		
 	}
 	

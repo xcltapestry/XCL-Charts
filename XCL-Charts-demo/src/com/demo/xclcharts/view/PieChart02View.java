@@ -146,22 +146,22 @@ public class PieChart02View extends DemoView {
 		//用图库中的MathHelper.getInstance()来做运算,以保证总值为100%
 		
 		//设置图表数据源				
-		PieData pieData = new PieData("芝麻","芝麻:15%",0.15f,(int)Color.rgb(77, 83, 97)) ;
+		PieData pieData = new PieData("芝麻","芝麻:15%",15,(int)Color.rgb(77, 83, 97)) ;
 		pieData.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.WHITE);		
 		chartData.add(pieData);
 				
-		chartData.add(new PieData("白糖","白糖(5%)",0.05f,(int)Color.rgb(75, 132, 1)));
+		chartData.add(new PieData("白糖","白糖(5%)",5,(int)Color.rgb(75, 132, 1)));
 		
 		//将此比例块突出显示		
-		PieData pd = new PieData("花生","花生:35%",0.35f,(int)Color.rgb(180, 205, 230),true);
+		PieData pd = new PieData("花生","花生:35%",35,(int)Color.rgb(180, 205, 230),true);
 		pd.setItemLabelRotateAngle(45.f);
 		chartData.add(pd);
 		
-		PieData pdOther = new PieData("其它","其它(炒米，炒花生之类)",0.15f,(int)Color.rgb(148, 159, 181));
+		PieData pdOther = new PieData("其它","其它(炒米，炒花生之类)",15,(int)Color.rgb(148, 159, 181));
 		pdOther.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.BLACK);		
 		chartData.add(pdOther);
 		
-		PieData pdTea = new PieData("茶叶","茶叶(30%)",0.30f,(int)Color.rgb(253, 180, 90));		
+		PieData pdTea = new PieData("茶叶","茶叶(30%)",30,(int)Color.rgb(253, 180, 90));		
 		pdTea.setCustLabelStyle(XEnum.SliceLabelStyle.OUTSIDE,(int)Color.rgb(253, 180, 90));
 		chartData.add(pdTea);			
 	}

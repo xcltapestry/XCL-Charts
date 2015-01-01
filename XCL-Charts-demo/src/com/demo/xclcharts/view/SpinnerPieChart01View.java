@@ -96,14 +96,16 @@ public class SpinnerPieChart01View extends DemoView {
 	}
 	private void chartDataSet()
 	{
-		//设置图表数据源		
-		chartData.add(new PieData("User1","15%",15,(int)Color.rgb(203, 183, 60)));
-		chartData.add(new PieData("User2","25%",25,(int)Color.rgb(214, 222, 207),false));
-		chartData.add(new PieData("User3","10%",10,(int)Color.rgb(164, 202, 81)));
-		//将此比例块突出显示
-		chartData.add(new PieData("User4","18%",18,(int)Color.rgb(1, 172, 241),true));
-		chartData.add(new PieData("User5","22%",22,(int)Color.rgb(99, 179, 150),true));
-		chartData.add(new PieData("User6","10%",10,(int)Color.rgb(52, 97, 138)));
+		
+			//设置图表数据源		
+			chartData.add(new PieData("User1","15%",15,(int)Color.rgb(203, 183, 60)));
+			chartData.add(new PieData("User2","25%",25,(int)Color.rgb(214, 222, 207),false));
+			chartData.add(new PieData("User3","10%",10,(int)Color.rgb(164, 202, 81)));
+			//将此比例块突出显示
+			chartData.add(new PieData("User4","18%",18,(int)Color.rgb(1, 172, 241),true));
+			chartData.add(new PieData("User5","22%",22,(int)Color.rgb(99, 179, 150),true));
+			chartData.add(new PieData("User6","10%",10,(int)Color.rgb(52, 97, 138)));
+		
 	}
 	
 	@Override

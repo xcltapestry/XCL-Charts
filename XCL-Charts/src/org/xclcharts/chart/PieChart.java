@@ -393,7 +393,7 @@ public class PieChart extends CirChart{
 				Log.w(TAG,"传入参数不合理，圆心角总计小于等于0度. 现有圆心角合计:"
 						+Float.toString(totalAngle)
 						+" 当前圆心角:"+Float.toString( currentValue )
-						+" 当前百分比:"+Float.toString( cData.getPercentage() ));
+						+" 当前百分比:"+Double.toString( cData.getPercentage() ));
 				//return false;
 			}else if( Float.compare(totalAngle, 360.5f) == 1) 
 			{
