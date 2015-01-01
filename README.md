@@ -19,8 +19,8 @@ XCL-Charts
 GitHub代码托管地址:
 https://github.com/xcltapestry/XCL-Charts <br/>		
 
-开源中国项目地址:
-http://www.oschina.net/p/xcl-charts
+图表库简要教程
+http://blog.csdn.net/xcl168/article/details/42318669 <br/>	
 <br/>
  <b>部份例图:</b><br/> 
  
