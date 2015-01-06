@@ -121,15 +121,15 @@ public class PieChart3D01View extends DemoView implements Runnable{
 		//PieData(标签，百分比，在饼图中对应的颜色)
 		
 		chartData.add(new PieData("test","PHP(15%)",15,
-								(int)Color.rgb(1, 170, 255)));
+								Color.rgb(1, 170, 255)));
 		chartData.add(new PieData("Other",10,
-								(int)Color.rgb(148, 42, 133),false));	
-		chartData.add(new PieData("Oracle",40,(int)Color.rgb(241, 62, 1)));
-		chartData.add(new PieData("Java",15,(int)Color.rgb(242, 167, 69)));	
+								Color.rgb(148, 42, 133),false));	
+		chartData.add(new PieData("Oracle",40,Color.rgb(241, 62, 1)));
+		chartData.add(new PieData("Java",15,Color.rgb(242, 167, 69)));	
 		
 		//将此比例块突出显示
 		chartData.add(new PieData("C++(20%)",20,
-								(int)Color.rgb(164, 233, 0),true));
+								Color.rgb(164, 233, 0),true));
 	
 		
 	}

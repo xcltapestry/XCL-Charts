@@ -128,9 +128,9 @@ public class GaugeChart01View  extends GraphicalView {
 	private void chartDataSet()
 	{
 		int Angle = 180/3;
-		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, (int)Color.rgb(73, 172, 72)));
-		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, (int)Color.rgb(247, 156, 27)));
-		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, (int)Color.rgb(224, 62, 54)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(73, 172, 72)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(247, 156, 27)));
+		mPartitionSet.add(new Pair<Float,Integer>((float)Angle, Color.rgb(224, 62, 54)));
 	}
 	
 	private void chartLabels()

@@ -99,7 +99,7 @@ public class BarChart09View extends DemoView{
 			
 									
 			chart.getDataAxis().getTickLabelPaint().
-									setColor((int)Color.rgb(199, 88, 122));
+									setColor(Color.rgb(199, 88, 122));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 
 				@Override
@@ -166,14 +166,14 @@ public class BarChart09View extends DemoView{
 		dataSeriesA.add((double)200); 
 		dataSeriesA.add((double)250); 
 		dataSeriesA.add((double)400);
-		BarData BarDataA = new BarData("小熊",dataSeriesA,(int)Color.rgb(0, 0,255));
+		BarData BarDataA = new BarData("小熊",dataSeriesA,Color.rgb(0, 0,255));
 		
 		
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add((double)300);
 		dataSeriesB.add((double)150);
 		dataSeriesB.add((double)450);
-		BarData BarDataB = new BarData("小周",dataSeriesB,(int)Color.rgb(255, 0, 0));
+		BarData BarDataB = new BarData("小周",dataSeriesB,Color.rgb(255, 0, 0));
 		
 		
 		chartData.add(BarDataA);

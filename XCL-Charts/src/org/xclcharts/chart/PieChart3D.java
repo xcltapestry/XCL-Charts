@@ -137,7 +137,7 @@ public class PieChart3D extends PieChart{
 		 	currentAngle = cData.getSliceAngle();
 		 	if(!validateAngle(currentAngle)) continue;		  
 		 	geArcPaint().setColor( DrawHelper.getInstance().getDarkerColor(
-		 												(int)cData.getSliceColor()) ); 						
+		 												cData.getSliceColor()) ); 						
 		  	
 		    if(cData.getSelected()) //指定突出哪个块
             {					    					    	

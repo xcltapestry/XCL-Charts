@@ -202,8 +202,8 @@ public class MultiAxisChart03View extends DemoView {
 		line2.getDotLabelPaint().setColor(Color.rgb(83, 148, 235));
 		//设置点标签
 		line2.setLabelVisible(true);
-		line2.getPlotLabel().showBox();
-		line2.getPlotLabel().setOffsetY(20.f);
+		line2.getLabelOptions().showBox();
+		line2.getLabelOptions().setOffsetY(20.f);
 		
 		line2.setApplayGradient(true);
 		line2.setGradientMode(Shader.TileMode.MIRROR);
@@ -300,11 +300,11 @@ public class MultiAxisChart03View extends DemoView {
 		
 		LinkedList<Double> dataSeries0= new LinkedList<Double>();	
 		dataSeries0.add(0d); 
-		LineData line2 = new LineData("Area圆环",dataSeries0,(int)Color.rgb(224, 65, 10)); //(int)Color.rgb(48, 145, 255)); 
+		LineData line2 = new LineData("Area圆环",dataSeries0,Color.rgb(224, 65, 10)); //(int)Color.rgb(48, 145, 255)); 
 		line2.setDotStyle(XEnum.DotStyle.RING);				
 		line2.getPlotLine().getDotPaint().setColor(Color.WHITE);	
 		line2.getPlotLine().getPlotDot().setRingInnerColor(Color.RED);
-		//line2.getPlotLabel().hideBox();
+		//line2.getLabelOptions().hideBox();
 		
 		
 		//Line 1
@@ -314,7 +314,7 @@ public class MultiAxisChart03View extends DemoView {
 		dataSeries1.add(50d); 
 		dataSeries1.add(60d);
 		dataSeries1.add(55d);
-		LineData lineData1 = new LineData("直线",dataSeries1,(int)Color.rgb(106, 218, 92));
+		LineData lineData1 = new LineData("直线",dataSeries1,Color.rgb(106, 218, 92));
 		lineData1.setLabelVisible(true);		
 		lineData1.setDotStyle(XEnum.DotStyle.HIDE);		
 		
@@ -322,7 +322,7 @@ public class MultiAxisChart03View extends DemoView {
 		lineData1.getDotLabelPaint().setTextSize(22);
 		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		lineData1.setItemLabelRotateAngle(45.f);
-		lineData1.getPlotLabel().hideBox();
+		lineData1.getLabelOptions().hideBox();
 		
 		//Line 2
 		LinkedList<Double> dataSeries2= new LinkedList<Double>();	
@@ -331,12 +331,12 @@ public class MultiAxisChart03View extends DemoView {
 		dataSeries2.add((double)55); 	
 		dataSeries2.add((double)65); 
 		dataSeries2.add((double)58); 
-		LineData lineData2 = new LineData("圆环",dataSeries2,(int)Color.rgb(48, 145, 255));
+		LineData lineData2 = new LineData("圆环",dataSeries2,Color.rgb(48, 145, 255));
 		lineData2.setDotStyle(XEnum.DotStyle.RING);				
 		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);
 		lineData2.setLabelVisible(true);		
 		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
-		lineData2.getPlotLabel().showBox();
+		lineData2.getLabelOptions().showBox();
 		//lineData2.setLineStyle(XEnum.LineStyle.DASH);
 		
 		
@@ -345,9 +345,9 @@ public class MultiAxisChart03View extends DemoView {
 		dataSeries3.add((double)42); 
 		dataSeries3.add((double)65); 	
 		dataSeries3.add((double)45);  
-		LineData lineData3 = new LineData("角",dataSeries3,(int)Color.rgb(199, 64, 219));
+		LineData lineData3 = new LineData("角",dataSeries3,Color.rgb(199, 64, 219));
 		lineData3.setDotStyle(XEnum.DotStyle.TRIANGLE);				
-		lineData3.getPlotLabel().hideBox();
+		lineData3.getLabelOptions().hideBox();
 	
 		chartData.add(line2);
 		chartData.add(lineData1);
@@ -399,9 +399,9 @@ public class MultiAxisChart03View extends DemoView {
 			
 			
 			chartLnAxes.getDataAxis().setTickLabelRotateAngle(-90);
-			chartLnAxes.getDataAxis().getTickLabelPaint().setColor((int)Color.rgb(48, 145, 255));
+			chartLnAxes.getDataAxis().getTickLabelPaint().setColor(Color.rgb(48, 145, 255));
 			
-			chartLnAxes.getCategoryAxis().getTickLabelPaint().setColor((int)Color.rgb(199, 64, 219));
+			chartLnAxes.getCategoryAxis().getTickLabelPaint().setColor(Color.rgb(199, 64, 219));
 			chartLnAxes.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
 			chartLnAxes.getDataAxis().getTickLabelPaint().setTextAlign(Align.LEFT);
 					
@@ -435,7 +435,7 @@ public class MultiAxisChart03View extends DemoView {
 		linePoint1.add(new PointD(0d, 0d));
 		
 		SplineData dataSeries1 = new SplineData("",linePoint1,
-				(int)Color.rgb(54, 141, 238) );	
+				Color.rgb(54, 141, 238) );	
 		dataSeries1.setDotStyle(XEnum.DotStyle.HIDE);
 					
 		//设定数据源		
@@ -478,10 +478,10 @@ public class MultiAxisChart03View extends DemoView {
 		*/
 		
 		
-		chartDataPie.add(new PieData("closed","25%" ,   25,(int)Color.rgb(155, 187, 90)));
-		chartDataPie.add(new PieData("inspect","45%" ,   45,(int)Color.rgb(191, 79, 75)));
-		chartDataPie.add(new PieData("workdone","15%" , 15,(int)Color.rgb(60, 173, 213)));
-		chartDataPie.add(new PieData("dispute","15%" ,  15,(int)Color.rgb(90, 79, 88)));
+		chartDataPie.add(new PieData("closed","25%" ,   25,Color.rgb(155, 187, 90)));
+		chartDataPie.add(new PieData("inspect","45%" ,   45,Color.rgb(191, 79, 75)));
+		chartDataPie.add(new PieData("workdone","15%" , 15,Color.rgb(60, 173, 213)));
+		chartDataPie.add(new PieData("dispute","15%" ,  15,Color.rgb(90, 79, 88)));
 		
 	}
 	

@@ -171,18 +171,18 @@ public class BarChart08View extends DemoView{
 			
 			if(v <= -5d ) //适中
 			{
-				dataColorA.add((int)Color.rgb(77, 184, 73));				
+				dataColorA.add(Color.rgb(77, 184, 73));				
 			}else if(v <= 5d){ //超重
-				dataColorA.add((int)Color.rgb(252, 210, 9));
+				dataColorA.add(Color.rgb(252, 210, 9));
 			}else if(v <= 10d){ //偏胖
-				dataColorA.add((int)Color.rgb(171, 42, 96));	
+				dataColorA.add(Color.rgb(171, 42, 96));	
 			}else{  //肥胖
-				dataColorA.add((int)Color.RED);
+				dataColorA.add(Color.RED);
 			}
 		}  
 		//此地的颜色为Key值颜色及柱形的默认颜色
 		BarData BarDataA = new BarData("",dataSeriesA,dataColorA,
-										(int)Color.rgb(53, 169, 239));
+										Color.rgb(53, 169, 239));
 		
 		chartData.add(BarDataA);
 	}
@@ -205,10 +205,10 @@ public class BarChart08View extends DemoView{
 	 */
 	private void chartDesireLines()
 	{							
-		mCustomLineDataset.add(new CustomLineData("损失",-5d,(int)Color.rgb(77, 184, 73),3));		
+		mCustomLineDataset.add(new CustomLineData("损失",-5d,Color.rgb(77, 184, 73),3));		
 		//mCustomLineDataset.add(new CustomLineData("超重",6d,(int)Color.rgb(252, 210, 9),4));
-		mCustomLineDataset.add(new CustomLineData("平衡",10d,(int)Color.rgb(171, 42, 96),5));	
-		mCustomLineDataset.add(new CustomLineData("良好",15d,(int)Color.RED,6));
+		mCustomLineDataset.add(new CustomLineData("平衡",10d,Color.rgb(171, 42, 96),5));	
+		mCustomLineDataset.add(new CustomLineData("良好",15d,Color.RED,6));
 								
 	}
 	

@@ -185,7 +185,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		//将标签与对应的数据集分别绑定
 		//标签对应的数据集
 		List<Double> dataSeries1= new LinkedList<Double>();	
-		dataSeries1.add((double)0.01); //55
+		dataSeries1.add(0.01); //55
 		dataSeries1.add((double)60); 
 		dataSeries1.add((double)71); 
 		dataSeries1.add((double)40);
@@ -217,7 +217,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		*/
 		
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
-											(int)Color.rgb(79, 200, 100),Color.GREEN);
+											Color.rgb(79, 200, 100),Color.GREEN);
 		//设置线上每点对应标签的颜色
 		line2.getDotLabelPaint().setColor(Color.RED);
 		//设置点标签

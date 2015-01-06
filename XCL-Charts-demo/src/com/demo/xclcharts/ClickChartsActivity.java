@@ -35,6 +35,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -49,7 +50,7 @@ public class ClickChartsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		mCharts = new ClickPieChart01View(this);			
-		Bundle bunde = this.getIntent().getExtras();  
+		//Bundle bunde = this.getIntent().getExtras();  
 		initActivity();
 		setTitle("图表点击事件(View -> Activity)");
 	}
@@ -63,7 +64,7 @@ public class ClickChartsActivity extends Activity {
 	       
 	       //缩放控件放置在FrameLayout的上层，用于放大缩小图表
 		   FrameLayout.LayoutParams frameParm = new FrameLayout.LayoutParams(
-		   FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);  
+		   LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);  
 		   frameParm.gravity = Gravity.BOTTOM|Gravity.RIGHT;  
 		
 		 

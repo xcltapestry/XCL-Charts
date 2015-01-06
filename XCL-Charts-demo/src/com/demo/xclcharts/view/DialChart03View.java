@@ -88,7 +88,7 @@ public class DialChart03View extends GraphicalView {
 							
 				//设置标题背景			
 				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor( (int)Color.rgb(28, 129, 243) );
+				chart.setBackgroundColor( Color.rgb(28, 129, 243) );
 				//绘制边框
 				chart.showRoundBorder();
 						
@@ -125,10 +125,10 @@ public class DialChart03View extends GraphicalView {
 			ringPercentage.add(rper);
 			
 			List<Integer> rcolor  = new ArrayList<Integer>();			
-			rcolor.add((int)Color.rgb(242, 110, 131));
-			rcolor.add((int)Color.rgb(238, 204, 71));
-			rcolor.add((int)Color.rgb(42, 231, 250));
-			rcolor.add((int)Color.rgb(140, 196, 27));						
+			rcolor.add(Color.rgb(242, 110, 131));
+			rcolor.add(Color.rgb(238, 204, 71));
+			rcolor.add(Color.rgb(42, 231, 250));
+			rcolor.add(Color.rgb(140, 196, 27));						
 			chart.addStrokeRingAxis(0.95f,0.8f, ringPercentage, rcolor);
 			
 			
@@ -145,15 +145,15 @@ public class DialChart03View extends GraphicalView {
 			chart.addInnerTicksAxis(0.8f, rlabels);
 			
 						
-			chart.getPlotAxis().get(0).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
-			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
+			chart.getPlotAxis().get(0).getFillAxisPaint().setColor(Color.rgb(28, 129, 243));
+			chart.getPlotAxis().get(1).getFillAxisPaint().setColor(Color.rgb(28, 129, 243));
 			chart.getPlotAxis().get(1).getTickLabelPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(1).getTickMarksPaint().setColor(Color.WHITE);
 			chart.getPlotAxis().get(1).hideAxisLine();
 			chart.getPlotAxis().get(1).setDetailModeSteps(3);
 			
 			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);
-			chart.getPointer().getPointerPaint().setColor((int)Color.rgb(217, 34, 34) );
+			chart.getPointer().getPointerPaint().setColor(Color.rgb(217, 34, 34) );
 			chart.getPointer().getPointerPaint().setStrokeWidth(3);			
 			chart.getPointer().getPointerPaint().setStyle(Style.STROKE);			
 			chart.getPointer().hideBaseCircle();

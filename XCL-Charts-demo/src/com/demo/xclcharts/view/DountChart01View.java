@@ -162,14 +162,14 @@ public class DountChart01View extends DemoView {
 		Paint paintLR = new Paint();		
 		paintLR.setTextAlign(Align.CENTER);
 		paintLR.setTextSize(25);
-		paintLR.setColor((int)Color.rgb(191, 79, 75));			
+		paintLR.setColor(Color.rgb(191, 79, 75));			
 		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.LEFT, "性能高!", 0.5f, paintLR);			
 		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.RIGHT, "诱惑大!", 0.5f, paintLR);
 		
 		Paint paintBase = new Paint();		
 		paintBase.setTextAlign(Align.CENTER);
 		paintBase.setTextSize(25);
-		paintBase.setColor((int)Color.rgb(242, 167, 69));
+		paintBase.setColor(Color.rgb(242, 167, 69));
 		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, 
 								"一个肾,", 0.3f, paintBase);		
 		/////////////////////////////////////////////////////////////
@@ -180,10 +180,10 @@ public class DountChart01View extends DemoView {
 	{
 		//设置图表数据源				
 		//PieData(标签，百分比，在饼图中对应的颜色)
-		lPieData.add(new PieData("Solaris","20%",20,(int)Color.rgb(77, 83, 97)));
-		lPieData.add(new PieData("Aix","30%",30,(int)Color.rgb(148, 159, 181)));
-		lPieData.add(new PieData("HP-UX","10%",10,(int)Color.rgb(253, 180, 90)));		
-		lPieData.add(new PieData("Linux","40%",40,(int)Color.rgb(52, 194, 188)));
+		lPieData.add(new PieData("Solaris","20%",20,Color.rgb(77, 83, 97)));
+		lPieData.add(new PieData("Aix","30%",30,Color.rgb(148, 159, 181)));
+		lPieData.add(new PieData("HP-UX","10%",10,Color.rgb(253, 180, 90)));		
+		lPieData.add(new PieData("Linux","40%",40,Color.rgb(52, 194, 188)));
 	}
 	
 	@Override

@@ -109,11 +109,11 @@ public class PlotTitleRender extends PlotTitle{
 			break;
 		case CENTER:
 			
-			titleX = (float)Math.round(chartLeft + chartWidth / 2);
+			titleX = Math.round(chartLeft + chartWidth / 2);
 			titleY = titleInitY;
 			
 			subtitleX = titleX;
-			subtitleY = (float) (titleY + subtitleHeight);
+			subtitleY = titleY + subtitleHeight;
 			
 			getTitlePaint().setTextAlign(Align.CENTER);			
 			getSubtitlePaint().setTextAlign(Align.CENTER);	

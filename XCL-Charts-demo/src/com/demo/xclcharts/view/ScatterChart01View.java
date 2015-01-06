@@ -196,9 +196,9 @@ public class ScatterChart01View extends DemoView {
 		linePoint1.add(new PointD(4d, 10d));
 				
 		ScatterData dataSeries1 = new ScatterData("青菜萝卜够吃",linePoint1,
-				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.DOT );	
+				Color.rgb(54, 141, 238),XEnum.DotStyle.DOT );	
 		dataSeries1.setLabelVisible(true);	
-		dataSeries1.getDotLabelPaint().setColor((int)Color.rgb(191, 79, 75));
+		dataSeries1.getDotLabelPaint().setColor(Color.rgb(191, 79, 75));
 		
 		
 		//线2的数据集
@@ -213,7 +213,7 @@ public class ScatterChart01View extends DemoView {
 		linePoint2.add(new PointD(4d, 5d));	
 				
 		ScatterData dataSeries2 = new ScatterData("饭管够",linePoint2,
-				(int)Color.rgb(155, 187, 90),XEnum.DotStyle.PRISMATIC );
+				Color.rgb(155, 187, 90),XEnum.DotStyle.PRISMATIC );
 		
 		ArrayList<PointD> linePoint3 = new ArrayList<PointD>();
 		linePoint3.add(new PointD(3d, 20d));
@@ -221,10 +221,10 @@ public class ScatterChart01View extends DemoView {
 		linePoint3.add(new PointD(5d, 20d));
 		linePoint3.add(new PointD(6d, 20d));
 		ScatterData dataSeries3 = new ScatterData("哈哈",linePoint3,
-				(int)Color.rgb(54, 141, 238),XEnum.DotStyle.RING );	
+				Color.rgb(54, 141, 238),XEnum.DotStyle.RING );	
 		
 		dataSeries3.setLabelVisible(true);
-		dataSeries3.getPlotDot().setRingInnerColor((int)Color.rgb(242, 167, 69));
+		dataSeries3.getPlotDot().setRingInnerColor(Color.rgb(242, 167, 69));
 		dataSeries3.getDotLabelPaint().setTextAlign(Align.CENTER);
 		
 		ArrayList<PointD> linePoint4 = new ArrayList<PointD>();
@@ -233,7 +233,7 @@ public class ScatterChart01View extends DemoView {
 		linePoint4.add(new PointD(5d, 75d));
 		linePoint4.add(new PointD(7d, 75d));				
 		ScatterData dataSeries4 = new ScatterData("XXX",linePoint4,
-				(int)Color.rgb(60, 173, 213),XEnum.DotStyle.X );		
+				Color.rgb(60, 173, 213),XEnum.DotStyle.X );		
 		
 			
 		ArrayList<PointD> linePoint5 = new ArrayList<PointD>();

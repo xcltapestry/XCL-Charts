@@ -35,17 +35,13 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.line.PlotDot;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.widget.Toast;
 
 /**
  * @ClassName Bar3DChart01View
@@ -138,7 +134,7 @@ public class BarChart3D01View extends DemoView {
 			//定义数据轴标签显示格式		
 			chart.getDataAxis().setTickLabelRotateAngle(-45);
 			chart.getDataAxis().getTickMarksPaint().
-					setColor((int)Color.rgb(186, 20, 26));
+					setColor(Color.rgb(186, 20, 26));
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 	
 				@Override
@@ -212,8 +208,8 @@ public class BarChart3D01View extends DemoView {
 		dataSeriesB.add(480d); 
 		dataSeriesB.add(200d);
 		
-		BarDataset.add(new BarData("左边店",dataSeriesA,(int)Color.rgb(252, 210, 9)));
-		BarDataset.add(new BarData("右边店",dataSeriesB,(int)Color.rgb(55, 144, 206)));
+		BarDataset.add(new BarData("左边店",dataSeriesA,Color.rgb(252, 210, 9)));
+		BarDataset.add(new BarData("右边店",dataSeriesB,Color.rgb(55, 144, 206)));
 		
 		
 		List<Double> dataSeriesC= new LinkedList<Double>();	
@@ -222,7 +218,7 @@ public class BarChart3D01View extends DemoView {
 		//dataSeriesC.add(450d); 
 		//dataSeriesC.add(380d); 
 		//dataSeriesC.add(230d);
-		BarDataset.add(new BarData("右边店2",dataSeriesC,(int)Color.rgb(155, 144, 206)));
+		BarDataset.add(new BarData("右边店2",dataSeriesC,Color.rgb(155, 144, 206)));
 	}
 	
 	private void chartLabels()

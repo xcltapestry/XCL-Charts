@@ -84,11 +84,11 @@ public class CircleChart02View extends GraphicalView {
 			chart.setDataSource(mlPieData);
 			
 			//背景色
-			chart.getBgCirclePaint().setColor((int)Color.rgb(117, 197, 141));
+			chart.getBgCirclePaint().setColor(Color.rgb(117, 197, 141));
 			//深色
-			chart.getFillCirclePaint().setColor((int)Color.rgb(77, 180, 123));
+			chart.getFillCirclePaint().setColor(Color.rgb(77, 180, 123));
 			//信息颜色
-			chart.getDataInfoPaint().setColor((int)Color.rgb(243, 75, 125));
+			chart.getDataInfoPaint().setColor(Color.rgb(243, 75, 125));
 			//显示边框
 			chart.showRoundBorder();
 			
@@ -103,16 +103,16 @@ public class CircleChart02View extends GraphicalView {
 	{					
 		//PieData(标签，百分比，在饼图中对应的颜色)
 		mlPieData.clear();	
-		int color = (int)Color.rgb(72, 201, 176);
+		int color = Color.rgb(72, 201, 176);
 		if(per < 40)
 		{
 			mDataInfo = "容易容易";
 		}else if(per < 60){
 			mDataInfo = "严肃认真";
-			color = (int)Color.rgb(246, 202, 13);
+			color = Color.rgb(246, 202, 13);
 		}else{
 			mDataInfo = "压力山大";
-			color = (int)Color.rgb(243, 75, 125);
+			color = Color.rgb(243, 75, 125);
 		}
 		mlPieData.add(new PieData(Integer.toString(per)+"%",per,color));		
 			

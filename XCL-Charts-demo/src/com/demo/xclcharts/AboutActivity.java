@@ -48,14 +48,14 @@ public class AboutActivity extends Activity {
 
 		GradientDrawable grad = new GradientDrawable(// 渐变色 WHITE
 				Orientation.TOP_BOTTOM, new int[] {
-						(int) Color.rgb(133, 224, 224),
-						(int) Color.rgb(51, 136, 103) });
+						Color.rgb(133, 224, 224),
+						Color.rgb(51, 136, 103) });
 		getWindow().setBackgroundDrawable(grad);
 	
 		TextView tv_title = (TextView) findViewById(R.id.tv_title);
 		String html = "<big><font color ='red'>XCL-Charts</font></big><br/>"			
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;版本: 2.2<br/>"
-				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2015-01-01<br/>"
+				+ "&nbsp;&nbsp;&nbsp;&nbsp;最后更新: 2015-01-05<br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;QQ交流群: 374780627<br/>"
 					+ "<big><font color ='red'>License</font></big><br/>"
 				+ "&nbsp;&nbsp;&nbsp;&nbsp;Apache v2 License开源协议。"

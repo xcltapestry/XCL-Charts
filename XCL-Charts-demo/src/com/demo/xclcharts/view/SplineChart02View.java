@@ -25,10 +25,8 @@ package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
 
 import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
@@ -132,7 +130,7 @@ public class SplineChart02View extends DemoView {
 			plot.showHorizontalLines();
 			plot.showVerticalLines();			
 			plot.getHorizontalLinePaint().setStrokeWidth(3);
-			plot.getHorizontalLinePaint().setColor((int)Color.rgb(127, 204, 204));			
+			plot.getHorizontalLinePaint().setColor(Color.rgb(127, 204, 204));			
 			plot.setHorizontalLineStyle(XEnum.LineStyle.DOT);
 		
 			
@@ -197,12 +195,12 @@ public class SplineChart02View extends DemoView {
 			int angle = i * step; 
 			double rAngle = Math.toRadians(angle);
 			
-			lineSin.add(new PointD((double) angle, Math.sin(rAngle)));	
-			lineCos.add(new PointD((double) angle, Math.cos(rAngle)));	
+			lineSin.add(new PointD(angle, Math.sin(rAngle)));	
+			lineCos.add(new PointD(angle, Math.cos(rAngle)));	
 		}
 		
-		SplineData dataSeriesSin = new SplineData("Sin",lineSin,(int)Color.rgb(54, 141, 238) );						
-		SplineData dataSeriesCos = new SplineData("Cos",lineCos,(int)Color.rgb(255, 165, 132) );
+		SplineData dataSeriesSin = new SplineData("Sin",lineSin,Color.rgb(54, 141, 238) );						
+		SplineData dataSeriesCos = new SplineData("Cos",lineCos,Color.rgb(255, 165, 132) );
 		
 		dataSeriesSin.setDotStyle(XEnum.DotStyle.HIDE);
 		dataSeriesCos.setDotStyle(XEnum.DotStyle.HIDE);

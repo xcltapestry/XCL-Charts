@@ -55,9 +55,9 @@ public class SpinnerPieChart01View extends DemoView {
  			mChart = new RoseChart();
  			//mChart.setBackgroundColor(true, (int)Color.rgb(115, 153, 0)); 			
  			mChart.setApplyBackgroundColor(true);
- 			mChart.setBackgroundColor((int)Color.rgb(115, 153, 0));
+ 			mChart.setBackgroundColor(Color.rgb(115, 153, 0));
 			
- 			((RoseChart) mChart).getInnerPaint().setColor((int)Color.rgb(153, 204, 0));
+ 			((RoseChart) mChart).getInnerPaint().setColor(Color.rgb(153, 204, 0));
  			mChart.getLabelPaint().setColor(Color.WHITE);
  			mChart.setLabelStyle(XEnum.SliceLabelStyle.INSIDE);
  			break;		
@@ -98,13 +98,13 @@ public class SpinnerPieChart01View extends DemoView {
 	{
 		
 			//设置图表数据源		
-			chartData.add(new PieData("User1","15%",15,(int)Color.rgb(203, 183, 60)));
-			chartData.add(new PieData("User2","25%",25,(int)Color.rgb(214, 222, 207),false));
-			chartData.add(new PieData("User3","10%",10,(int)Color.rgb(164, 202, 81)));
+			chartData.add(new PieData("User1","15%",15,Color.rgb(203, 183, 60)));
+			chartData.add(new PieData("User2","25%",25,Color.rgb(214, 222, 207),false));
+			chartData.add(new PieData("User3","10%",10,Color.rgb(164, 202, 81)));
 			//将此比例块突出显示
-			chartData.add(new PieData("User4","18%",18,(int)Color.rgb(1, 172, 241),true));
-			chartData.add(new PieData("User5","22%",22,(int)Color.rgb(99, 179, 150),true));
-			chartData.add(new PieData("User6","10%",10,(int)Color.rgb(52, 97, 138)));
+			chartData.add(new PieData("User4","18%",18,Color.rgb(1, 172, 241),true));
+			chartData.add(new PieData("User5","22%",22,Color.rgb(99, 179, 150),true));
+			chartData.add(new PieData("User6","10%",10,Color.rgb(52, 97, 138)));
 		
 	}
 	

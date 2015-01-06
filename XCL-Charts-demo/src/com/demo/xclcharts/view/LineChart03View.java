@@ -115,7 +115,7 @@ public class LineChart03View  extends GraphicalView {
 		dataSeries1.add(31d); 
 		dataSeries1.add(40d);
 		dataSeries1.add(0d);
-		LineData lineData1 = new LineData("方块",dataSeries1,(int)Color.rgb(234, 83, 71));
+		LineData lineData1 = new LineData("方块",dataSeries1,Color.rgb(234, 83, 71));
 		lineData1.setLabelVisible(true);		
 		lineData1.setDotStyle(XEnum.DotStyle.RECT);				
 		lineData1.getDotLabelPaint().setColor(Color.BLUE);
@@ -128,7 +128,7 @@ public class LineChart03View  extends GraphicalView {
 		dataSeries2.add((double)50); 	
 		dataSeries2.add((double)60); 
 		dataSeries2.add((double)40); 
-		LineData lineData2 = new LineData("圆环",dataSeries2,(int)Color.rgb(75, 166, 51));
+		LineData lineData2 = new LineData("圆环",dataSeries2,Color.rgb(75, 166, 51));
 		lineData2.setDotStyle(XEnum.DotStyle.RING);				
 		lineData2.getPlotLine().getDotPaint().setColor(Color.BLACK);
 		lineData2.setLabelVisible(true);		
@@ -139,7 +139,7 @@ public class LineChart03View  extends GraphicalView {
 		dataSeries3.add(55d);
 		dataSeries3.add(65d);
 		dataSeries3.add(95d);
-		LineData lineData3 = new LineData("圆点",dataSeries3,(int)Color.rgb(123, 89, 168));
+		LineData lineData3 = new LineData("圆点",dataSeries3,Color.rgb(123, 89, 168));
 		lineData3.setDotStyle(XEnum.DotStyle.DOT);
 		//Line 4
 		LinkedList<Double> dataSeries4= new LinkedList<Double>();	
@@ -148,7 +148,7 @@ public class LineChart03View  extends GraphicalView {
 		dataSeries4.add(80d);
 		dataSeries4.add(84d);
 		dataSeries4.add(90d);
-		LineData lineData4 = new LineData("棱形",dataSeries4,(int)Color.rgb(84, 206, 231));		
+		LineData lineData4 = new LineData("棱形",dataSeries4,Color.rgb(84, 206, 231));		
 		lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
 		//Line 5
 		LinkedList<Double> valuesE= new LinkedList<Double>();	
@@ -156,7 +156,7 @@ public class LineChart03View  extends GraphicalView {
 		valuesE.add(80d);
 		valuesE.add(85d);
 		valuesE.add(90d);
-		LineData lineData5 = new LineData("定制",valuesE,(int)Color.rgb(234, 142, 43));
+		LineData lineData5 = new LineData("定制",valuesE,Color.rgb(234, 142, 43));
 		lineData5.setDotRadius(15);
 		
 		chartData.add(lineData1);

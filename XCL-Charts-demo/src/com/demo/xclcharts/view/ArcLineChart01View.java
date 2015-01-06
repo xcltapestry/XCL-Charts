@@ -123,11 +123,11 @@ public class ArcLineChart01View extends DemoView {
 	{
 		
 		//设置图表数据源			
-		chartData.add(new ArcLineData("closed","29% - closed" ,   (0.29*100),(int)Color.rgb(155, 187, 90)));
-		chartData.add(new ArcLineData("inspect","53% - inspect" ,   (0.53*100),(int)Color.rgb(191, 79, 75)));
-		chartData.add(new ArcLineData("open","76%" ,  (0.76*100),(int)Color.rgb(242, 167, 69)));
-		chartData.add(new ArcLineData("workdone","86%" , (0.86*100),(int)Color.rgb(60, 173, 213)));
-		chartData.add(new ArcLineData("dispute","36%" ,  (0.36*100),(int)Color.rgb(90, 79, 88)));	
+		chartData.add(new ArcLineData("closed","29% - closed" ,   (0.29*100),Color.rgb(155, 187, 90)));
+		chartData.add(new ArcLineData("inspect","53% - inspect" ,   (0.53*100),Color.rgb(191, 79, 75)));
+		chartData.add(new ArcLineData("open","76%" ,  (0.76*100),Color.rgb(242, 167, 69)));
+		chartData.add(new ArcLineData("workdone","86%" , (0.86*100),Color.rgb(60, 173, 213)));
+		chartData.add(new ArcLineData("dispute","36%" ,  (0.36*100),Color.rgb(90, 79, 88)));	
 	}
 	
 	private void addAttrInfo()
@@ -146,7 +146,7 @@ public class ArcLineChart01View extends DemoView {
 		paintSrc.setTextAlign(Align.CENTER);
 		paintSrc.setTextSize(25);
 		paintSrc.setAntiAlias(true);
-		paintSrc.setColor((int)Color.rgb(41, 34, 102));
+		paintSrc.setColor(Color.rgb(41, 34, 102));
 		chart.getPlotAttrInfo().addAttributeInfo(XEnum.Location.BOTTOM, 
 								"ExcelPro", 0.2f, paintSrc);		
 		/////////////////////////////////////////////////////////////

@@ -23,11 +23,8 @@ package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
-
 import org.xclcharts.chart.BubbleChart;
 import org.xclcharts.chart.BubbleData;
 import org.xclcharts.chart.PointD;
@@ -147,11 +144,11 @@ public class BubbleChart01View extends DemoView {
 			chart.getDataAxis().getAxisPaint().setStrokeWidth(3);
 			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(3);
 			
-			chart.getDataAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
-			chart.getCategoryAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
+			chart.getDataAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
 			
-			chart.getDataAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
-			chart.getCategoryAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
+			chart.getDataAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
 								
 			
 			//定义交叉点标签显示格式,特别备注,因曲线图的特殊性，所以返回格式为:  x值,y值
@@ -222,7 +219,7 @@ public class BubbleChart01View extends DemoView {
 		
 		
 		BubbleData dataSeries1 = new BubbleData("青菜萝卜够吃",linePoint1,linePoint1_bubble,
-				(int)Color.rgb(54, 141, 238) );			
+				Color.rgb(54, 141, 238) );			
 		dataSeries1.setLabelVisible(true);	
 		dataSeries1.getDotLabelPaint().setTextAlign(Align.CENTER);		
 		dataSeries1.setBorderColor(Color.RED);
@@ -245,7 +242,7 @@ public class BubbleChart01View extends DemoView {
 		linePoint2_bubble.add(78d);	
 				
 		BubbleData dataSeries2 = new BubbleData("饭管够",
-				linePoint2,linePoint2_bubble,(int)Color.rgb(255, 165, 132));
+				linePoint2,linePoint2_bubble,Color.rgb(255, 165, 132));
 		
 		//dataSeries2.setBorderColor(Color.BLUE);
 					
@@ -265,7 +262,7 @@ public class BubbleChart01View extends DemoView {
 		linePoint3_bubble.add(65d);
 		
 		BubbleData dataSeries3 = new BubbleData("钱不够花",
-				linePoint2,linePoint3_bubble,(int)Color.rgb(247, 178, 79));
+				linePoint2,linePoint3_bubble,Color.rgb(247, 178, 79));
 		
 		dataSeries3.setBorderColor(Color.rgb(47, 254, 225));
 					

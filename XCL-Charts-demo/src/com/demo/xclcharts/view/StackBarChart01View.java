@@ -117,7 +117,7 @@ public class StackBarChart01View extends DemoView {
 			chart.getCategoryAxis().setTickLabelRotateAngle(-45f);	
 			Paint labelPaint = chart.getCategoryAxis().getTickLabelPaint();			
 			labelPaint.setTextAlign(Align.RIGHT);
-			labelPaint.setColor((int)Color.rgb(0, 75, 106));
+			labelPaint.setColor(Color.rgb(0, 75, 106));
 			
 			//标题
 			chart.setTitle("文件服务器空间使用情况");
@@ -192,16 +192,16 @@ public class StackBarChart01View extends DemoView {
 		List<Double> dataSeriesA= new LinkedList<Double>();	
 		dataSeriesA.add((double)212);
 		dataSeriesA.add((double)234);
-		dataSeriesA.add((double)400.123); 
+		dataSeriesA.add(400.123); 
 
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add((double)300);
 		dataSeriesB.add((double)150); 
-		dataSeriesB.add((double)450.456); 
+		dataSeriesB.add(450.456); 
 
 		
-		BarDataSet.add(new BarData("已用空间",dataSeriesA,(int)Color.rgb(0, 0,255)));
-		BarDataSet.add(new BarData("空闲空间",dataSeriesB,(int)Color.rgb(255, 0, 0)));
+		BarDataSet.add(new BarData("已用空间",dataSeriesA,Color.rgb(0, 0,255)));
+		BarDataSet.add(new BarData("空闲空间",dataSeriesB,Color.rgb(255, 0, 0)));
 	}
 	private void chartLabels()
 	{

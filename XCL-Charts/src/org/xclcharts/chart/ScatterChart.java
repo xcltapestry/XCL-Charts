@@ -77,12 +77,14 @@ public class ScatterChart extends LnChart{
 		return XEnum.ChartType.SCATTER;
 	}
 
+	@Override
 	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);					
 	}
 	
+	@Override
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)
@@ -106,6 +108,15 @@ public class ScatterChart extends LnChart{
 	{		
 		this.mDataset = dataSeries;		
 	}	
+	
+	/**
+	 * 返回数据轴的数据源
+	 * @return 数据源
+	 */
+	public List<ScatterData> getDataSource()
+	{
+		return this.mDataset;
+	}
 	
 	/**
 	 *  显示数据的数据轴最大值
@@ -183,7 +194,7 @@ public class ScatterChart extends LnChart{
 		
 		float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
+		float axisDataHeight = dataAxis.getAxisRange(); 	
 						
 		Double xValue = getPlotQuadrant().getQuadrantXValue();
 	    Double yValue = getPlotQuadrant().getQuadrantYValue();	    
@@ -204,19 +215,19 @@ public class ScatterChart extends LnChart{
 		
 		if(null == bd)
 		{
-			Log.e(TAG,"传入的数据序列参数为空.");
+			Log.w(TAG,"传入的数据序列参数为空.");
 			return ;
 		}
 		
 		if( Double.compare(mMaxValue, mMinValue) == -1)
 		{
-			Log.e(TAG,"轴最大值小于最小值.");
+			Log.w(TAG,"轴最大值小于最小值.");
 			return ;
 		}
 		
 		if( Double.compare(mMaxValue, mMinValue) == 0)
 		{
-			Log.e(TAG,"轴最大值与最小值相等.");
+			Log.w(TAG,"轴最大值与最小值相等.");
 			return ;
 		}
 	
@@ -224,7 +235,7 @@ public class ScatterChart extends LnChart{
 		if( Float.compare(axisDataHeight, 0.0f) == 0 
 				|| Float.compare(axisDataHeight, 0.0f) == -1)
 		{
-			Log.e(TAG,"数据轴高度小于或等于0.");
+			Log.w(TAG,"数据轴高度小于或等于0.");
 			return ;
 		}
 	
@@ -281,12 +292,12 @@ public class ScatterChart extends LnChart{
 		//检查是否有设置分类轴的最大最小值		
 		if(mMaxValue == mMinValue && 0 == mMaxValue)
 		{
-			Log.e(TAG,"请检查是否有设置分类轴的最大最小值。");
+			Log.w(TAG,"请检查是否有设置分类轴的最大最小值。");
 			return false;
 		}
 		if(null == mDataset)
 		{
-			Log.e(TAG,"数据源为空.");
+			Log.w(TAG,"数据源为空.");
 			return false;
 		}
 		
@@ -323,6 +334,7 @@ public class ScatterChart extends LnChart{
 		}
 	}
 		
+	@Override
 	protected void drawClipLegend(Canvas canvas)
 	{
 		//图例

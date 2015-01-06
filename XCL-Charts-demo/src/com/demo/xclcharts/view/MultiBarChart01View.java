@@ -233,7 +233,7 @@ public class MultiBarChart01View extends DemoView {
 		dataSeriesA.add(2400d);
 		dataSeriesA.add(2400d); 
 		dataSeriesA.add(2400d);
-		BarData BarDataA = new BarData("流动资产",dataSeriesA,(int)Color.rgb(58, 191, 247));
+		BarData BarDataA = new BarData("流动资产",dataSeriesA,Color.rgb(58, 191, 247));
 				
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add(2000d);
@@ -241,7 +241,7 @@ public class MultiBarChart01View extends DemoView {
 		dataSeriesB.add(2000d);
 		dataSeriesB.add(2000d);
 		dataSeriesB.add(2000d);
-		BarData BarDataB = new BarData("非流动资产",dataSeriesB,(int)Color.rgb(20, 181, 251));
+		BarData BarDataB = new BarData("非流动资产",dataSeriesB,Color.rgb(20, 181, 251));
 		
 	
 		chartData.add(BarDataA);
@@ -250,11 +250,11 @@ public class MultiBarChart01View extends DemoView {
 		
 		List<Double> dataSeriesAA= new LinkedList<Double>();	
 		dataSeriesAA.add(0d); 
-		BarData BarDataAA = new BarData("负债",dataSeriesAA,(int)Color.rgb(38, 137, 176));
+		BarData BarDataAA = new BarData("负债",dataSeriesAA,Color.rgb(38, 137, 176));
 		
 		List<Double> dataSeriesBB= new LinkedList<Double>();	
 		dataSeriesBB.add(0d);
-		BarData BarDataBB = new BarData("所有者权益",dataSeriesBB,(int)Color.rgb(13, 116, 161));
+		BarData BarDataBB = new BarData("所有者权益",dataSeriesBB,Color.rgb(13, 116, 161));
 		
 		chartData.add(BarDataAA);
 		chartData.add(BarDataBB);
@@ -270,7 +270,7 @@ public class MultiBarChart01View extends DemoView {
 		dataSeriesA.add(1800d);
 		dataSeriesA.add(1800d); 
 		dataSeriesA.add(1500d);
-		BarData BarDataA = new BarData("负债",dataSeriesA,(int)Color.rgb(38, 137, 176));
+		BarData BarDataA = new BarData("负债",dataSeriesA,Color.rgb(38, 137, 176));
 				
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add(1500d);
@@ -278,7 +278,7 @@ public class MultiBarChart01View extends DemoView {
 		dataSeriesB.add(1400d);
 		dataSeriesB.add(1200d);
 		dataSeriesB.add(1600d);
-		BarData BarDataB = new BarData("所有者权益",dataSeriesB,(int)Color.rgb(13, 116, 161));
+		BarData BarDataB = new BarData("所有者权益",dataSeriesB,Color.rgb(13, 116, 161));
 			
 		chartData2.add(BarDataA);
 		chartData2.add(BarDataB);	

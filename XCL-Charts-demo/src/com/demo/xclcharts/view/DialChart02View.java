@@ -85,7 +85,7 @@ public class DialChart02View extends GraphicalView {
 							
 				//设置标题背景			
 				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor( (int)Color.rgb(47, 199, 140) );
+				chart.setBackgroundColor( Color.rgb(47, 199, 140) );
 				//绘制边框
 				chart.showRoundBorder();
 						
@@ -131,8 +131,8 @@ public class DialChart02View extends GraphicalView {
 			ringPercentage.add( rper);
 			
 			List<Integer> rcolor  = new ArrayList<Integer>();				
-			rcolor.add((int)Color.rgb(222, 248, 239));
-			rcolor.add((int)Color.rgb(99, 214, 173));						
+			rcolor.add(Color.rgb(222, 248, 239));
+			rcolor.add(Color.rgb(99, 214, 173));						
 			chart.addStrokeRingAxis(0.8f,0.7f, ringPercentage, rcolor);
 			
 			
@@ -159,10 +159,10 @@ public class DialChart02View extends GraphicalView {
 			
 			chart.getPlotAxis().get(0).getAxisPaint().setColor(Color.WHITE );
 			chart.getPlotAxis().get(0).getAxisPaint().setStrokeWidth(2);
-			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(47, 199, 140) );
+			chart.getPlotAxis().get(1).getFillAxisPaint().setColor(Color.rgb(47, 199, 140) );
 		
-			chart.addCircleAxis(0.2f,(int)Color.rgb(62, 175, 135)); 
-			chart.addCircleAxis(0.15f,(int)Color.rgb(28, 111, 84)); 
+			chart.addCircleAxis(0.2f,Color.rgb(62, 175, 135)); 
+			chart.addCircleAxis(0.15f,Color.rgb(28, 111, 84)); 
 		}
 		
 		

@@ -141,8 +141,8 @@ public class MultiAxisChart01View extends DemoView {
 			List<Double> dataSeries2= new LinkedList<Double>();	
 			dataSeries2.add(45000d); 
 			dataSeries2.add(85000d); 
-			BarData BarDataA = new BarData("Virtual OPM",dataSeries1,(int)Color.rgb(0, 221, 177));	
-			BarData BarDataB = new BarData("Physical OPM",dataSeries2,(int)Color.rgb(238, 28, 161));		
+			BarData BarDataA = new BarData("Virtual OPM",dataSeries1,Color.rgb(0, 221, 177));	
+			BarData BarDataB = new BarData("Physical OPM",dataSeries2,Color.rgb(238, 28, 161));		
 						
 			chartDataset.add(BarDataA);
 			chartDataset.add(BarDataB);			
@@ -242,9 +242,9 @@ public class MultiAxisChart01View extends DemoView {
 			dataAxis.setAxisMax(135);
 			dataAxis.setAxisMin(0);
 			dataAxis.setAxisSteps(5);			
-			dataAxis.getTickMarksPaint().setColor((int)Color.rgb(51, 204, 204));
+			dataAxis.getTickMarksPaint().setColor(Color.rgb(51, 204, 204));
 			dataAxis.getTickLabelPaint().setTextAlign(Align.LEFT);
-			dataAxis.getTickLabelPaint().setColor((int)Color.rgb(51, 204, 204));
+			dataAxis.getTickLabelPaint().setColor(Color.rgb(51, 204, 204));
 		
 			//把折线图默认的顶上的轴线隐藏
 			//lnChart.hideTopAxis();
@@ -272,8 +272,8 @@ public class MultiAxisChart01View extends DemoView {
 			LinkedList<Double> BarKey2= new LinkedList<Double>();				
 			BarKey2.add(0d); 
 			
-			LineData lineDataBarKey1 = new LineData("Virtual OPM",BarKey1,(int)Color.rgb(0, 221, 177));
-			LineData lineDataBarKey2 = new LineData("Physical OPM",BarKey2,(int)Color.rgb(238, 28, 161));
+			LineData lineDataBarKey1 = new LineData("Virtual OPM",BarKey1,Color.rgb(0, 221, 177));
+			LineData lineDataBarKey2 = new LineData("Physical OPM",BarKey2,Color.rgb(238, 28, 161));
 			lineDataBarKey1.setDotStyle(XEnum.DotStyle.RECT);
 			lineDataBarKey2.setDotStyle(XEnum.DotStyle.RECT);
 			chartDatasetLn.add(lineDataBarKey1);
@@ -295,10 +295,10 @@ public class MultiAxisChart01View extends DemoView {
 			physical.add(0d); 
 			
 			//将标签与对应的数据集分别绑定
-			LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
-			LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
+			LineData lineData1 = new LineData("Virtual RT",virtual,Color.rgb(234, 83, 71));
+			LineData lineData2 = new LineData("Physical RT",physical,Color.rgb(75, 166, 51));
 			lineData1.setDotStyle(XEnum.DotStyle.TRIANGLE);
-			lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
+			lineData1.getDotPaint().setColor(Color.rgb(234, 83, 71));
 						
 			chartDatasetLn.add(lineData1);
 			chartDatasetLn.add(lineData2);	

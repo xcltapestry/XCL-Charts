@@ -198,7 +198,7 @@ public class LineChart02View extends DemoView implements Runnable{
 		dataSeries1.add(480d); 
 		dataSeries1.add(500d); 
 		dataSeries1.add(560d); 
-		LineData lineData1 = new LineData("单间(5层光线好)",dataSeries1,(int)Color.rgb(234, 83, 71));				
+		LineData lineData1 = new LineData("单间(5层光线好)",dataSeries1,Color.rgb(234, 83, 71));				
 		lineData1.setDotStyle(XEnum.DotStyle.DOT);			
 	
 		//Line 2
@@ -211,10 +211,10 @@ public class LineChart02View extends DemoView implements Runnable{
 		dataSeries2.add((double)950); 
 		dataSeries2.add((double)1200); 	
 		
-		LineData lineData2 = new LineData("一房一厅(3层无光线)",dataSeries2,(int)Color.rgb(75, 166, 51));
+		LineData lineData2 = new LineData("一房一厅(3层无光线)",dataSeries2,Color.rgb(75, 166, 51));
 		lineData2.setDotStyle(XEnum.DotStyle.PRISMATIC);				
-		lineData2.getPlotLine().getDotPaint().setColor((int)Color.rgb(234, 142, 43));
-		lineData2.getDotLabelPaint().setColor((int)Color.rgb(234, 142, 43));
+		lineData2.getPlotLine().getDotPaint().setColor(Color.rgb(234, 142, 43));
+		lineData2.getDotLabelPaint().setColor(Color.rgb(234, 142, 43));
 		lineData2.setLabelVisible(true);	
 		//lineData2.getPlotLabel().hideBox();
 	
@@ -230,7 +230,7 @@ public class LineChart02View extends DemoView implements Runnable{
 		dataSeries3.add(630d);
 		dataSeries3.add(710d);
 		
-		LineData lineData3 = new LineData("单间(9层无电梯)",dataSeries3,(int)Color.rgb(123, 89, 168));
+		LineData lineData3 = new LineData("单间(9层无电梯)",dataSeries3,Color.rgb(123, 89, 168));
 		lineData3.setDotStyle(XEnum.DotStyle.DOT);
 		
 		//轴上分界线的交叉点
@@ -241,11 +241,11 @@ public class LineChart02View extends DemoView implements Runnable{
 		LinkedList<Double> dataSeries6= new LinkedList<Double>();	
 		dataSeries6.add(calcAvg());		
 		
-		LineData lineData4 = new LineData("",dataSeries4,(int)Color.rgb(35, 172, 57));
+		LineData lineData4 = new LineData("",dataSeries4,Color.rgb(35, 172, 57));
 		lineData4.setDotStyle(XEnum.DotStyle.RECT);
-		LineData lineData5 = new LineData("",dataSeries5,(int)Color.rgb(69, 181, 248));
+		LineData lineData5 = new LineData("",dataSeries5,Color.rgb(69, 181, 248));
 		lineData5.setDotStyle(XEnum.DotStyle.RECT);
-		LineData lineData6 = new LineData("",dataSeries6,(int)Color.rgb(251, 79, 128));
+		LineData lineData6 = new LineData("",dataSeries6,Color.rgb(251, 79, 128));
 		lineData6.setDotStyle(XEnum.DotStyle.TRIANGLE);
 	
 		chartData.add(lineData1);
@@ -275,9 +275,9 @@ public class LineChart02View extends DemoView implements Runnable{
 	 */
 	private void chartDesireLines()
 	{				
-		mCustomLineDataset.add(new CustomLineData("稍好",1500d,(int)Color.rgb(35, 172, 57),5));
-		mCustomLineDataset.add(new CustomLineData("舒适",3000d,(int)Color.rgb(69, 181, 248),5));						
-		mCustomLineDataset.add(new CustomLineData("[个人均线]",calcAvg(),(int)Color.rgb(251, 79, 128),6));						
+		mCustomLineDataset.add(new CustomLineData("稍好",1500d,Color.rgb(35, 172, 57),5));
+		mCustomLineDataset.add(new CustomLineData("舒适",3000d,Color.rgb(69, 181, 248),5));						
+		mCustomLineDataset.add(new CustomLineData("[个人均线]",calcAvg(),Color.rgb(251, 79, 128),6));						
 	}
 	
 	@Override

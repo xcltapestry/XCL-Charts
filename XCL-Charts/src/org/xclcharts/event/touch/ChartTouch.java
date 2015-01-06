@@ -57,20 +57,26 @@ public class ChartTouch implements IChartTouch {
 	}
 				
 	@Override
-	 public void handleTouch(MotionEvent event) {  
-		
-			if (event.getPointerCount() == 1)
+	 public void handleTouch(MotionEvent event) 
+	{  		
+			switch(event.getPointerCount())
 			{
-				handleTouch_PanMode(event);
-			}else if (event.getPointerCount() == 2){
-				if(null != mChart && mChart.getScaleStatus())
-										handleTouch_Scale(event);
+				case 1:
+					handleTouch_PanMode(event);
+					break;
+				case 2:
+					handleTouch_Scale(event);
+					break;
+				default:
+					break;
 			}		   			
 	    }  
 	
 	
 	 public void handleTouch_Scale(MotionEvent event) 
-	 {  		 
+	 {  		 		 
+		 if(null == mChart || !mChart.getScaleStatus())return;			 
+			 
 		 switch(event.getActionMasked())
 		 {
 		 	case MotionEvent.ACTION_DOWN:  //单点触碰	
@@ -92,7 +98,7 @@ public class ChartTouch implements IChartTouch {
                 	if(Float.compare(oldDist, 0.0f) == 0) return;                	
                 	scaleRate = newDist/oldDist ;		 
                 	/**
-                	 * 目前是采用焦点在那就以那范围为中心放大缩小.              
+                	 * 目前是采用焦点在哪就以哪范围为中心放大缩小.              
                 	 */                	
                 		mChart.setScale(scaleRate ,scaleRate, 
                 				event.getX() - halfDist,event.getY() - halfDist );		                    
@@ -106,8 +112,7 @@ public class ChartTouch implements IChartTouch {
 				break;
 		 }
 	 }
-	 	 
-
+	
 	 public void handleTouch_PanMode(MotionEvent event) {  
 			
 		    action = event.getAction();
@@ -162,10 +167,24 @@ public class ChartTouch implements IChartTouch {
 	        
 	        //if(newX < oldX || newY < oldY)	 //加上这个，向右下移时会有没反应
 	        //{
-	      	  xx = (float) (txy[0] + newX - oldX) ;
-	      	  yy = (float) (txy[1] + newY - oldY) ;
+	      	  xx = txy[0] + newX - oldX ;
+	      	  yy = txy[1] + newY - oldY ;
 	       // }
 	      	  
+	   
+	    	 //不让其滑动出可显示范围
+	    	 if(mChart.getCtlPanRangeStatus())
+	    	 {
+		      	  if( Float.compare( Math.abs(xx), mChart.getPlotArea().getPlotWidth()/2) == 1)
+		      	  {
+		      		  return;
+		      	  }
+		      	  
+		      	  if( Float.compare( Math.abs(yy), mChart.getHeight()/2) == 1)
+		      	  {
+		      		  return;
+		      	  }
+	    	 }
 	    	        
 	        mChart.setTranslateXY(xx, yy);        
 	        mView.invalidate((int)mChart.getLeft(), (int)mChart.getTop(), 

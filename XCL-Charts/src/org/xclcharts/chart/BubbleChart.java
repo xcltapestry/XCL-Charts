@@ -96,12 +96,14 @@ public class BubbleChart extends LnChart{
 		this.setAxesClosed(true);
 	}
 	
+	@Override
 	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
 	
+	@Override
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)
@@ -259,7 +261,7 @@ public class BubbleChart extends LnChart{
 		
 		float axisScreenWidth = getPlotScreenWidth(); 
     	float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight = (float) dataAxis.getAxisRange(); 	
+		float axisDataHeight = dataAxis.getAxisRange(); 	
 						
 		Double xValue = getPlotQuadrant().getQuadrantXValue();
 	    Double yValue = getPlotQuadrant().getQuadrantYValue();	    
@@ -424,6 +426,7 @@ public class BubbleChart extends LnChart{
 		}		
 	}
 	
+	@Override
 	protected void drawClipLegend(Canvas canvas)
 	{
 		plotLegend.renderBubbleKey(canvas,mDataset);		

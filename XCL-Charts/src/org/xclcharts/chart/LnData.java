@@ -64,8 +64,8 @@ public class LnData {
 	{
 		mLabelVisible = visible;
 		
-		getPlotLabel().setOffsetY(15.f);
-		getPlotLabel().showBox();
+		getLabelOptions().setOffsetY(15.f);
+		getLabelOptions().showBox();
 	}
 	
 	/**
@@ -215,7 +215,7 @@ public class LnData {
 	 * 用于设置标签显示属性
 	 * @return 标签属性类
 	 */
-	public PlotLabel getPlotLabel()
+	public PlotLabel getLabelOptions()
 	{
 		if(null == mPlotLabel)
 		{

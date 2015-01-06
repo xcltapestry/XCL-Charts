@@ -132,7 +132,7 @@ public class CircleChart extends CirChart {
     	if(null == mPaintFillCircle)
     	{
 	        mPaintFillCircle = new Paint();
-	        mPaintFillCircle.setColor((int) Color.rgb(77, 83, 97));
+	        mPaintFillCircle.setColor(Color.rgb(77, 83, 97));
 	        mPaintFillCircle.setAntiAlias(true);
     	}
         return mPaintFillCircle;
@@ -147,7 +147,7 @@ public class CircleChart extends CirChart {
     	if(null == mPaintBgCircle)
     	{
 	        mPaintBgCircle = new Paint();
-	        mPaintBgCircle.setColor((int) Color.rgb(148, 159, 181));
+	        mPaintBgCircle.setColor(Color.rgb(148, 159, 181));
 	        mPaintBgCircle.setAntiAlias(true);
     	}
         return mPaintBgCircle;

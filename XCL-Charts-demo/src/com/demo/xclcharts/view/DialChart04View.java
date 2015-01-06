@@ -60,7 +60,7 @@ public class DialChart04View extends GraphicalView {
 							
 				//设置标题背景			
 				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor( (int)Color.rgb(28, 129, 243) );
+				chart.setBackgroundColor( Color.rgb(28, 129, 243) );
 				//绘制边框
 				chart.showRoundBorder();
 						

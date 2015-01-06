@@ -80,7 +80,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	 * @return X坐标
 	 */
 	public float getCenterX() {			
-		return (float)Math.abs(mLeft + (mRight - mLeft)/2);
+		return Math.abs(mLeft + (mRight - mLeft)/2);
 	}
 
 	/**
@@ -88,7 +88,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	 * @return Y坐标
 	 */
 	public float getCenterY() {				
-		return ((float)Math.abs(mBottom - (mBottom - mTop)/2));	
+		return (Math.abs(mBottom - (mBottom - mTop)/2));	
 	}
 	
 	
@@ -129,6 +129,7 @@ public class PlotAreaRender extends PlotArea implements IRender{
 	 * 返回实际绘图区最右边X值，包含了扩展绘图区范围
 	 * @return 绘图区最右边X值
 	 */
+	@Override
 	public float getPlotRight() {
 		return mRight + getExtWidth();
 	}

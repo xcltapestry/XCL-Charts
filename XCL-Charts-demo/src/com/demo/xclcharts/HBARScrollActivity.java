@@ -13,7 +13,7 @@ import android.widget.HorizontalScrollView;
 @SuppressLint("NewApi")
 public class HBARScrollActivity extends Activity {
 	
-	private static final String TAG="HBARScrollActivity";
+	//private static final String TAG="HBARScrollActivity";
 	
 	
 	private HorizontalScrollView horiView;

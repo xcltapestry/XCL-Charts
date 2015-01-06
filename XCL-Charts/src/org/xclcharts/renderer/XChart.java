@@ -113,6 +113,9 @@ public class XChart implements IRender {
 	protected boolean mEnablePanMode = true;
 	//平移模式下的可移动方向
 	private XEnum.PanMode mPlotPanMode = XEnum.PanMode.FREE;
+	//限制图表滑动范围
+	private boolean mControlPanRange = true;
+		
 		
 	public XChart() {
 		initChart();		
@@ -756,6 +759,31 @@ public class XChart implements IRender {
 	{
 		mEnablePanMode = false;		
 	}
+	
+	 /**
+	  * 限制图表滑动范围,开启则图表不能滑动出可见范围
+	  */
+	 public void enabledCtlPanRange()
+	 {
+		 mControlPanRange = true;
+	 }
+	 
+	 /**
+	  * 不限制图表滑动范围
+	  */
+	 public void disabledCtlPanRange()
+	 {
+		 mControlPanRange = false;
+	 }
+	 
+	 /**
+	  * '是否有限制图表滑动范围
+	  * @return 状态
+	  */
+	 public boolean getCtlPanRangeStatus()
+	 {
+		 return mControlPanRange;
+	 }	 
 	
 	/**
 	 * 返回当前图表的平移状态

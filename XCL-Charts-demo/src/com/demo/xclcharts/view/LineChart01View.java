@@ -98,6 +98,11 @@ public class LineChart01View extends DemoView {
 			int [] ltrb = getBarLnDefaultSpadding();
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
+			//限制Tickmarks可滑动偏移范围
+			chart.setXTickMarksOffsetMargin(ltrb[2] - 20.f);
+			chart.setYTickMarksOffsetMargin(ltrb[3] - 20.f);
+			
+			
 			//显示边框
 			chart.showRoundBorder();
 			
@@ -137,7 +142,7 @@ public class LineChart01View extends DemoView {
 												
 			//绘制十字交叉线
 			chart.showDyLine();
-			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Horizontal);
+			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Vertical);
 			
 			/*			
 			//想隐藏轴的可以下面的函数来隐藏
@@ -160,6 +165,8 @@ public class LineChart01View extends DemoView {
 			//收缩绘图区右边分割的范围，让绘图区的线不显示出来
 			chart.getClipExt().setExtRight(0.f);
 			
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -175,14 +182,14 @@ public class LineChart01View extends DemoView {
 		dataSeries1.add(31d); 
 		dataSeries1.add(40d);
 		dataSeries1.add(0d);
-		LineData lineData1 = new LineData("方块",dataSeries1,(int)Color.rgb(234, 83, 71));
+		LineData lineData1 = new LineData("方块",dataSeries1,Color.rgb(234, 83, 71));
 		lineData1.setLabelVisible(true);		
 		lineData1.setDotStyle(XEnum.DotStyle.RECT);				
 		lineData1.getDotLabelPaint().setColor(Color.BLUE);
 		lineData1.getDotLabelPaint().setTextSize(22);
 		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		lineData1.setItemLabelRotateAngle(45.f);
-		lineData1.getPlotLabel().hideBox();
+		lineData1.getLabelOptions().hideBox();
 		
 		//lineData1.setDataSet(dataSeries);
 		//this.invalidate();
@@ -194,7 +201,7 @@ public class LineChart01View extends DemoView {
 		dataSeries2.add((double)0); 	
 		dataSeries2.add((double)60); 
 		dataSeries2.add((double)40); 
-		LineData lineData2 = new LineData("圆环",dataSeries2,(int)Color.rgb(75, 166, 51));
+		LineData lineData2 = new LineData("圆环",dataSeries2,Color.rgb(75, 166, 51));
 		lineData2.setDotStyle(XEnum.DotStyle.RING);				
 		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);
 		lineData2.setLabelVisible(true);		
@@ -208,7 +215,7 @@ public class LineChart01View extends DemoView {
 		dataSeries3.add(55d);
 		dataSeries3.add(65d);
 		dataSeries3.add(95d);
-		LineData lineData3 = new LineData("圆点",dataSeries3,(int)Color.rgb(123, 89, 168));
+		LineData lineData3 = new LineData("圆点",dataSeries3,Color.rgb(123, 89, 168));
 		lineData3.setDotStyle(XEnum.DotStyle.DOT);
 		//lineData3.setLabelVisible(true);
 		//lineData3.getDotLabelPaint().setTextAlign(Align.CENTER);
@@ -220,7 +227,7 @@ public class LineChart01View extends DemoView {
 		dataSeries4.add(80d);
 		dataSeries4.add(84d);
 		dataSeries4.add(90d);
-		LineData lineData4 = new LineData("棱形",dataSeries4,(int)Color.rgb(84, 206, 231));		
+		LineData lineData4 = new LineData("棱形",dataSeries4,Color.rgb(84, 206, 231));		
 		lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
 		//把线弄细点
 		lineData4.getLinePaint().setStrokeWidth(2);
@@ -231,7 +238,7 @@ public class LineChart01View extends DemoView {
 		valuesE.add(80d);
 		valuesE.add(85d);
 		valuesE.add(90d);
-		LineData lineData5 = new LineData("定制",valuesE,(int)Color.rgb(234, 142, 43));
+		LineData lineData5 = new LineData("定制",valuesE,Color.rgb(234, 142, 43));
 		lineData5.setDotRadius(15);
 		lineData5.setDotStyle(XEnum.DotStyle.TRIANGLE);
 		
@@ -321,6 +328,19 @@ public class LineChart01View extends DemoView {
 			chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),mPaintTooltips);		
 			chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),mPaintTooltips);
 						
+			//当前标签对应的其它点的值
+			int cid = record.getDataChildID();
+			String xLabels = "";			
+			for(LineData data : chartData)
+			{
+				if(cid < data.getLinePoint().size())
+				{
+					xLabels = Double.toString(data.getLinePoint().get(cid));					
+					chart.getToolTip().addToolTip("Line:"+data.getLabel()+","+ xLabels,mPaintTooltips);					
+				}
+			}
+			
+			
 			this.invalidate();
 		}
 		

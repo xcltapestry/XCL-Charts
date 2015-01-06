@@ -165,6 +165,7 @@ public class RangeBarChart  extends AxesChart {
 		return mLabelVisible;
 	}
 
+	@Override
 	protected void categoryAxisDefaultSetting()
 	{		
 		if(null == categoryAxis) return;
@@ -188,6 +189,7 @@ public class RangeBarChart  extends AxesChart {
 	}
 	
 
+	@Override
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null == dataAxis) return;
@@ -214,7 +216,7 @@ public class RangeBarChart  extends AxesChart {
 	private float[] cataPosition(double min,double max)
 	{
 		float[] pos = new float[2];
-		float axisDataHeight = (float) dataAxis.getAxisRange();	
+		float axisDataHeight = dataAxis.getAxisRange();	
 		float scrHeight = getAxisScreenHeight();
 		
 		double t = MathHelper.getInstance().sub( min , dataAxis.getAxisMin() );	

@@ -171,7 +171,7 @@ public class AreaChart02View extends DemoView {
 				
 				//chart.disablePanMode(); //test
 				
-				CustomLineData line1 = new CustomLineData("标识线",60d,(int)Color.RED,7);
+				CustomLineData line1 = new CustomLineData("标识线",60d,Color.RED,7);
 				line1.setCustomLineCap(XEnum.DotStyle.CROSS);		
 				line1.setLabelHorizontalPostion(Align.CENTER);
 				line1.setLabelOffset(15);	
@@ -229,16 +229,16 @@ public class AreaChart02View extends DemoView {
 		
 					
 		AreaData line2 = new AreaData("小小熊",dataSeries2,
-											(int)Color.rgb(182, 23, 123),	
-											(int)Color.rgb(255, 191, 235)
+											Color.rgb(182, 23, 123),	
+											Color.rgb(255, 191, 235)
 											);
 		//设置线上每点对应标签的颜色
 		line2.getDotLabelPaint().setColor(Color.rgb(83, 148, 235));
 		//设置点标签
 		line2.setLabelVisible(true);
 		line2.getDotLabelPaint().setTextAlign(Align.CENTER);	
-		line2.getPlotLabel().showBox();
-		line2.getPlotLabel().setOffsetY(30.f);
+		line2.getLabelOptions().showBox();
+		line2.getLabelOptions().setOffsetY(30.f);
 		line2.setApplayGradient(true);
 		line2.setGradientDirection(XEnum.Direction.HORIZONTAL);
 		line2.setAreaBeginColor(Color.WHITE);

@@ -59,7 +59,7 @@ public class DialChart06View extends GraphicalView {
 							
 				//设置标题背景			
 				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor( (int)Color.rgb(28, 129, 243) );
+				chart.setBackgroundColor( Color.rgb(28, 129, 243) );
 				//绘制边框
 				chart.showRoundBorder();
 				
@@ -97,15 +97,15 @@ public class DialChart06View extends GraphicalView {
 			ringPercentage.add(rper);
 			
 			List<Integer> rcolor  = new ArrayList<Integer>();			
-			rcolor.add((int)Color.rgb(242, 110, 131));
-			rcolor.add((int)Color.rgb(238, 204, 71));
-			rcolor.add((int)Color.rgb(42, 231, 250));
-			rcolor.add((int)Color.rgb(140, 196, 27));						
+			rcolor.add(Color.rgb(242, 110, 131));
+			rcolor.add(Color.rgb(238, 204, 71));
+			rcolor.add(Color.rgb(42, 231, 250));
+			rcolor.add(Color.rgb(140, 196, 27));						
 			chart.addStrokeRingAxis(0.85f,0.7f, ringPercentage, rcolor);
 					
 			chart.addCircleAxis(0.6f, Color.WHITE);
 			chart.getPlotAxis().get(1).getAxisPaint().setStyle(Style.STROKE);						
-			chart.getPlotAxis().get(0).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243));
+			chart.getPlotAxis().get(0).getFillAxisPaint().setColor(Color.rgb(28, 129, 243));
 	
 	
 			chart.getPointer().setPointerStyle(XEnum.PointerStyle.TRIANGLE);			
@@ -114,16 +114,16 @@ public class DialChart06View extends GraphicalView {
 					
 			if( Float.compare(mPercentage, 0.25f) == -1 )
 			{
-				chart.getPointer().getPointerPaint().setColor((int)Color.rgb(242, 110, 131));
+				chart.getPointer().getPointerPaint().setColor(Color.rgb(242, 110, 131));
 			}else if(Float.compare(mPercentage,0.5f) == -1 
 					|| Float.compare(mPercentage, 0.5f) == 0  ) {
-				chart.getPointer().getPointerPaint().setColor((int)Color.rgb(238, 204, 71));
+				chart.getPointer().getPointerPaint().setColor(Color.rgb(238, 204, 71));
 			}else if(Float.compare(mPercentage, 0.75f) == -1 
 					|| Float.compare(mPercentage, 0.75f) == 0 ) {
-				chart.getPointer().getPointerPaint().setColor((int)Color.rgb(42, 231, 250));
+				chart.getPointer().getPointerPaint().setColor(Color.rgb(42, 231, 250));
 			}else if(Float.compare(mPercentage, 1f) == -1 
 					|| Float.compare(mPercentage, 1f) == 0    ) {
-				chart.getPointer().getPointerPaint().setColor((int)Color.rgb(140, 196, 27));	
+				chart.getPointer().getPointerPaint().setColor(Color.rgb(140, 196, 27));	
 			}else{
 				chart.getPointer().getPointerPaint().setColor(Color.YELLOW);
 			}

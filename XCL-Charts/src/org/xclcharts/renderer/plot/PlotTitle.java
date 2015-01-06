@@ -160,10 +160,5 @@ public class PlotTitle {
 		return mTitlePosition;
 	}
 	
-	//
-	//public void setOffsetSpacing(double offset)
-	//{
-		
-	//}
 	
 }

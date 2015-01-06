@@ -138,13 +138,11 @@ public class RoundAxis extends Axis{
 	 
 	
 	 public void setDetailModeSteps(int steps,
-			 						boolean isLongTickfakeBold) //,
-			 						//float shortTickPercentage)
+			 						boolean isLongTickfakeBold)
 	 {
 		 mDetailModeSteps = steps;
 		 
 		 mLongTickfakeBold = isLongTickfakeBold;
-		// mShortTickPercentage = shortTickPercentage;
 	 }
 	 
 	  public float getRadius()

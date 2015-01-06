@@ -106,16 +106,18 @@ public class AreaChart extends LnChart{
 			mPaintAreaFill = new Paint();
 			mPaintAreaFill.setStyle(Style.FILL);
 			mPaintAreaFill.setAntiAlias(true);
-			mPaintAreaFill.setColor((int)Color.rgb(73, 172, 72));	
+			mPaintAreaFill.setColor(Color.rgb(73, 172, 72));	
 		}
 	}
 	
 	
+	@Override
 	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
 		
+	@Override
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)dataAxis.setHorizontalTickAlign(Align.LEFT);
@@ -123,12 +125,12 @@ public class AreaChart extends LnChart{
 				
 	 /**
 	 * 分类轴的数据源
-	 * @param categories 分类集
+	 * @param categories 数据源
 	 */
 	public void setCategories(List<String> categories)
 	{				
 		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
-	}
+	}	
 	
 	/**
 	 *  设置数据轴的数据源
@@ -137,6 +139,15 @@ public class AreaChart extends LnChart{
 	public void setDataSource(List<AreaData> dataset)
 	{				
 		this.mDataSet = dataset;		
+	}
+	
+	/**
+	 * 返回数据轴的数据源
+	 * @return 数据源
+	 */
+	public List<AreaData> getDataSource()
+	{
+		return this.mDataSet;
 	}
 	
 	/**
@@ -564,7 +575,7 @@ public class AreaChart extends LnChart{
     		
     		if(bd.getLabelVisible())
         	{  
-        		bd.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(),
+        		bd.getLabelOptions().drawLabel(canvas, pLine.getDotLabelPaint(),
         						getFormatterItemLabel(dotInfo.mValue),
         						dotInfo.mX ,dotInfo.mY,itemAngle,bd.getLineColor());        		
         	} 
@@ -609,7 +620,7 @@ public class AreaChart extends LnChart{
 	{								
 		if(null == mDataSet)
 		{
-			Log.e(TAG,"数据源为空.");
+			Log.w(TAG,"数据源为空.");
 			return false;
 		}
 		
@@ -649,12 +660,6 @@ public class AreaChart extends LnChart{
 			mLstPathPoints.clear();						
 		}
 		
-		//画竖向图的定制线	
-		//if(null != mCustomLine)
-	//	{
-		//	mCustomLine.setVerticalPlot(dataAxis, plotArea, getAxisScreenHeight());
-		//	mCustomLine.renderVerticalCustomlinesDataAxis(canvas);
-		//}	
 		return true;
 	}
 

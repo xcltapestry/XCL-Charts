@@ -187,8 +187,8 @@ public class MultiAxisChart02View extends DemoView {
 		dataSeries2.add(85000d); 
 		//dataSeries2.add(450d); 		
 
-		BarData BarDataA = new BarData("Virtual OPM",dataSeries1,(int)Color.rgb(0, 221, 177));	
-		BarData BarDataB = new BarData("Physical OPM",dataSeries2,(int)Color.rgb(238, 28, 161));		
+		BarData BarDataA = new BarData("Virtual OPM",dataSeries1,Color.rgb(0, 221, 177));	
+		BarData BarDataB = new BarData("Physical OPM",dataSeries2,Color.rgb(238, 28, 161));		
 				
 		chartData.add(BarDataA);
 		chartData.add(BarDataB);	
@@ -221,11 +221,11 @@ public class MultiAxisChart02View extends DemoView {
 				
 		
 		//将标签与对应的数据集分别绑定
-		LineData lineData1 = new LineData("Virtual RT",virtual,(int)Color.rgb(234, 83, 71));
-		LineData lineData2 = new LineData("Physical RT",physical,(int)Color.rgb(75, 166, 51));
+		LineData lineData1 = new LineData("Virtual RT",virtual,Color.rgb(234, 83, 71));
+		LineData lineData2 = new LineData("Physical RT",physical,Color.rgb(75, 166, 51));
 		
 		lineData1.setDotStyle(XEnum.DotStyle.TRIANGLE);
-		lineData1.getDotPaint().setColor((int)Color.rgb(234, 83, 71));
+		lineData1.getDotPaint().setColor(Color.rgb(234, 83, 71));
 			
 		
 		LinkedList<Double> BarKey1= new LinkedList<Double>();				
@@ -233,8 +233,8 @@ public class MultiAxisChart02View extends DemoView {
 		LinkedList<Double> BarKey2= new LinkedList<Double>();				
 		BarKey2.add(0d); 
 		
-		LineData lineDataBarKey1 = new LineData("Virtual OPM",BarKey1,(int)Color.rgb(0, 221, 177));
-		LineData lineDataBarKey2 = new LineData("Physical OPM",BarKey2,(int)Color.rgb(238, 28, 161));
+		LineData lineDataBarKey1 = new LineData("Virtual OPM",BarKey1,Color.rgb(0, 221, 177));
+		LineData lineDataBarKey2 = new LineData("Physical OPM",BarKey2,Color.rgb(238, 28, 161));
 		
 		lineDataBarKey1.setDotStyle(XEnum.DotStyle.RECT);
 		lineDataBarKey2.setDotStyle(XEnum.DotStyle.RECT);
@@ -294,8 +294,8 @@ public class MultiAxisChart02View extends DemoView {
 		dataAxis.setAxisMax(135);
 		dataAxis.setAxisMin(0);
 		dataAxis.setAxisSteps(15);			
-		dataAxis.getAxisPaint().setColor((int)Color.rgb(51, 204, 204));	
-		dataAxis.getTickMarksPaint().setColor((int)Color.rgb(51, 204, 204));
+		dataAxis.getAxisPaint().setColor(Color.rgb(51, 204, 204));	
+		dataAxis.getTickMarksPaint().setColor(Color.rgb(51, 204, 204));
 	
 		//定制数据轴上的标签格式
 		lnChart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){

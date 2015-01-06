@@ -87,6 +87,7 @@ public class RadarData extends LineData{
 	 * 返回网格线当前绘制风格
 	 * @return 绘制风格
 	 */
+	@Override
 	public XEnum.LineStyle getLineStyle()
 	{
 		return mLineStyle;
@@ -96,6 +97,7 @@ public class RadarData extends LineData{
 	 * 设置网格线绘制风格 
 	 * @param style 绘制风格
 	 */
+	@Override
 	public void setLineStyle(XEnum.LineStyle style)
 	{
 		mLineStyle = style;

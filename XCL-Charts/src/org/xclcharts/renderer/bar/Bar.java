@@ -99,7 +99,7 @@ public class Bar {
 		if(null == mPaintBar)
 		{
 			mPaintBar  = new Paint(Paint.ANTI_ALIAS_FLAG);
-			mPaintBar.setColor((int)Color.rgb(252, 210, 9));
+			mPaintBar.setColor(Color.rgb(252, 210, 9));
 			mPaintBar.setStyle(Style.FILL);
 		}				
 		return mPaintBar;

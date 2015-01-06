@@ -113,13 +113,13 @@ public class RoseChart01View extends DemoView {
 		//设置图表数据源
 							
 		//PieData(标签，百分比，在饼图中对应的颜色)
-		roseData.add(new PieData("PostgreSQL",40,(int)Color.rgb(77, 83, 97) ));
-		roseData.add(new PieData("Sybase"	 ,50,(int)Color.rgb(148, 159, 181)));
-		roseData.add(new PieData("DB2"		 ,60,(int)Color.rgb(253, 180, 90)));
-		roseData.add(new PieData("国产及其它"	 ,35,(int)Color.rgb(52, 194, 188)));
-		roseData.add(new PieData("SQL Server",70,(int)Color.rgb(39, 51, 72)));
-		roseData.add(new PieData("DB2"		 ,80,(int)Color.rgb(255, 135, 195)));
-		roseData.add(new PieData("Oracle"    ,90,(int)Color.rgb(215, 124, 124)));	
+		roseData.add(new PieData("PostgreSQL",40,Color.rgb(77, 83, 97) ));
+		roseData.add(new PieData("Sybase"	 ,50,Color.rgb(148, 159, 181)));
+		roseData.add(new PieData("DB2"		 ,60,Color.rgb(253, 180, 90)));
+		roseData.add(new PieData("国产及其它"	 ,35,Color.rgb(52, 194, 188)));
+		roseData.add(new PieData("SQL Server",70,Color.rgb(39, 51, 72)));
+		roseData.add(new PieData("DB2"		 ,80,Color.rgb(255, 135, 195)));
+		roseData.add(new PieData("Oracle"    ,90,Color.rgb(215, 124, 124)));	
 	}
 	
 	@Override

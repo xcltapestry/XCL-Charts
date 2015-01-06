@@ -152,10 +152,10 @@ public class DialChart01View extends GraphicalView {
 			ringPercentage.add(rper);
 			
 			List<Integer> rcolor  = new ArrayList<Integer>();			
-			rcolor.add((int)Color.rgb(242, 110, 131));
-			rcolor.add((int)Color.rgb(238, 204, 71));
-			rcolor.add((int)Color.rgb(42, 231, 250));
-			rcolor.add((int)Color.rgb(140, 196, 27));						
+			rcolor.add(Color.rgb(242, 110, 131));
+			rcolor.add(Color.rgb(238, 204, 71));
+			rcolor.add(Color.rgb(42, 231, 250));
+			rcolor.add(Color.rgb(140, 196, 27));						
 			chart.addStrokeRingAxis(0.75f,0.6f, ringPercentage, rcolor);
 			
 			//轴4 -- 环下面的标签轴
@@ -169,13 +169,13 @@ public class DialChart01View extends GraphicalView {
 			chart.addOuterTicksAxis(0.6f, rlabels);
 			
 			//轴5 --  最里面的灰色底轴
-			chart.addFillAxis(0.5f,(int)Color.rgb(225, 230, 246)); 
+			chart.addFillAxis(0.5f,Color.rgb(225, 230, 246)); 
 			
 			//轴6  -- 最里面的红色百分比例的轴
 			List<Float> innerPercentage = new ArrayList<Float>();			
 			innerPercentage.add(mPercentage);						
 			List<Integer> innerColor  = new ArrayList<Integer>();			
-			innerColor.add((int)Color.rgb(227, 64, 167));
+			innerColor.add(Color.rgb(227, 64, 167));
 			chart.addFillRingAxis(0.5f,innerPercentage, innerColor);
 			
 			/////////////////////////////////////////////////////////////
@@ -222,7 +222,7 @@ public class DialChart01View extends GraphicalView {
 		Paint paintBase = new Paint();		
 		paintBase.setTextAlign(Align.CENTER);
 		paintBase.setTextSize(22);
-		paintBase.setColor((int)Color.rgb(56, 172, 240));
+		paintBase.setColor(Color.rgb(56, 172, 240));
 		plotAttrInfo.addAttributeInfo(XEnum.Location.BOTTOM, 
 								"百分比:"+Float.toString(mPercentage * 100), 0.3f, paintBase);		
 		/////////////////////////////////////////////////////////////

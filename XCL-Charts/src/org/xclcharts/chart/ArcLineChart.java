@@ -165,7 +165,7 @@ public class ArcLineChart  extends XChart{
 		if(null == mPaintLine)
 		{
 			mPaintLine = new Paint();
-			mPaintLine.setColor((int)Color.rgb(180, 205, 230));
+			mPaintLine.setColor(Color.rgb(180, 205, 230));
 			mPaintLine.setAntiAlias(true);
 			//mPaintLine.setStyle(Style.STROKE);
 			mPaintLine.setStrokeWidth(3);	

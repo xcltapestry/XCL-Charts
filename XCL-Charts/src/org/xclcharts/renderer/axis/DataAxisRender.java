@@ -52,7 +52,7 @@ public class DataAxisRender extends DataAxis {
 	public float getAxisRange()
 	{
 		//return (int) Math.abs(getAxisMax() - getAxisMin());		
-		return (float) MathHelper.getInstance().sub(getAxisMax(), getAxisMin());
+		return MathHelper.getInstance().sub(getAxisMax(), getAxisMin());
 	}
 	
 	

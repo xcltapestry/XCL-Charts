@@ -21,7 +21,6 @@
  */
 package com.demo.xclcharts.view;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -29,18 +28,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.xclcharts.chart.PieData;
-import org.xclcharts.chart.RadarChart;
-import org.xclcharts.chart.RadarData;
 import org.xclcharts.chart.RoseChart;
-import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
-import org.xclcharts.renderer.XEnum;
-
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -219,15 +211,15 @@ public class RadarChart03View extends DemoView {
 		roseData3.add(new PieData("个",70,(int)Color.rgb(0, 156, 214)));
 	*/
 		
-		roseData3.add(new PieData("A1",10,(int)Color.rgb(92, 92, 97) ));
-		roseData3.add(new PieData("A2",20,(int)Color.rgb(92, 92, 97)));
-		roseData3.add(new PieData("A3",30,(int)Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A1",10,Color.rgb(92, 92, 97) ));
+		roseData3.add(new PieData("A2",20,Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A3",30,Color.rgb(92, 92, 97)));
 		
-		roseData3.add(new PieData("A4",40,(int)Color.rgb(92, 92, 97) ));
-		roseData3.add(new PieData("A5",50,(int)Color.rgb(92, 92, 97)));
-		roseData3.add(new PieData("A6",60,(int)Color.rgb(92, 92, 97)));
-		roseData3.add(new PieData("A7",70,(int)Color.rgb(92, 92, 97)));
-		roseData3.add(new PieData("A8",80,(int)Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A4",40,Color.rgb(92, 92, 97) ));
+		roseData3.add(new PieData("A5",50,Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A6",60,Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A7",70,Color.rgb(92, 92, 97)));
+		roseData3.add(new PieData("A8",80,Color.rgb(92, 92, 97)));
 		
 	}
 	

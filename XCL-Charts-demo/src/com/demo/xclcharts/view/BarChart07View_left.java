@@ -120,11 +120,11 @@ public class BarChart07View_left  extends GraphicalView {
 			List<Integer> dataColorA= new LinkedList<Integer>();	
 			
 			dataSeriesA.add(0d);
-			dataColorA.add((int)Color.RED);
+			dataColorA.add(Color.RED);
 			
 			//此地的颜色为Key值颜色及柱形的默认颜色
 			BarData BarDataA = new BarData("",dataSeriesA,dataColorA,
-											(int)Color.rgb(53, 169, 239));
+											Color.rgb(53, 169, 239));
 			
 			chartData.add(BarDataA);
 		}
@@ -142,7 +142,7 @@ public class BarChart07View_left  extends GraphicalView {
 		 */
 		private void chartDesireLines()
 		{										
-			CustomLineData cl = new CustomLineData("适中",18.5d,(int)Color.rgb(77, 184, 73),3);
+			CustomLineData cl = new CustomLineData("适中",18.5d,Color.rgb(77, 184, 73),3);
 			cl.setLabelHorizontalPostion(Align.LEFT);
 			cl.hideLine();
 			mCustomLineDataset.add(cl);											

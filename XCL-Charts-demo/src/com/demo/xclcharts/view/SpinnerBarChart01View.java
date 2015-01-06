@@ -143,7 +143,7 @@ public class SpinnerBarChart01View extends DemoView {
 			});		
 			//定义柱形上标签显示格式
 			mChart.getBar().setItemLabelVisible(true);
-			mChart.getBar().getItemLabelPaint().setColor((int)Color.rgb(72, 61, 139)); 
+			mChart.getBar().getItemLabelPaint().setColor(Color.rgb(72, 61, 139)); 
 			mChart.getBar().getItemLabelPaint().setFakeBoldText(true);
 			
 			mChart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
@@ -170,19 +170,19 @@ public class SpinnerBarChart01View extends DemoView {
 		dataSeriesA.add(50d); 
 		dataSeriesA.add(25d);
 		dataSeriesA.add(20d);
-		BarData BarDataA = new BarData("Google",dataSeriesA,(int)Color.rgb(73, 135, 218));
+		BarData BarDataA = new BarData("Google",dataSeriesA,Color.rgb(73, 135, 218));
 				
 		List<Double> dataSeriesB= new LinkedList<Double>();	
 		dataSeriesB.add(35d); 		
 		dataSeriesB.add(65d);
 		dataSeriesB.add(75d);
-		BarData BarDataB = new BarData("Baidu",dataSeriesB,(int)Color.rgb(224, 4, 0));
+		BarData BarDataB = new BarData("Baidu",dataSeriesB,Color.rgb(224, 4, 0));
 		
 		List<Double> dataSeriesC= new LinkedList<Double>();	
 		dataSeriesC.add(15d);
 		dataSeriesC.add(10d);
 		dataSeriesC.add(5d);
-		BarData BarDataC = new BarData("Bing",dataSeriesC,(int)Color.rgb(255, 185, 0));
+		BarData BarDataC = new BarData("Bing",dataSeriesC,Color.rgb(255, 185, 0));
 		
 		chartData.add(BarDataA);
 		chartData.add(BarDataB);

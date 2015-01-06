@@ -214,7 +214,7 @@ public class PieChart extends CirChart{
 												 float cirY,
 												 float radius)
 	{				
-		float radialRadius = (float) (radius * 0.8f);				
+		float radialRadius = radius * 0.8f;				
 		int color = paintArc.getColor();		
 		int darkerColor = DrawHelper.getInstance().getDarkerColor(color);
 	

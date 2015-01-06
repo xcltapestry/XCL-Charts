@@ -224,20 +224,8 @@ public class PieData {
 				Angle =  MathHelper.getInstance().round( 
 								MathHelper.getInstance().mul( 360f,
 									MathHelper.getInstance().div(currentValue,100f) ) ,2);												
-				//Angle =  MathHelper.getInstance().round(360f *  (currentValue / 100f),2) ; //rint
 			}
 			
-			
-			/*
-			float currentValue = this.getPercentage();			
-			if(currentValue >= 1.01f || currentValue < 0.0f)
-			{
-				Log.e(TAG,"输入的比例不合规范.须在0~1之间. 当前为:"+Float.toString(currentValue));			
-			}else{						
-				Angle =  MathHelper.getInstance().round( 
-								MathHelper.getInstance().mul( 360f,currentValue ) ,2);	
-			}
-			*/
 		}catch(Exception ex)
 		{
 			Angle = -1f;

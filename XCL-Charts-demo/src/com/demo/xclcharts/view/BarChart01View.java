@@ -73,12 +73,12 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 	
 	private List<CustomLineData> mCustomLineDataset = new ArrayList<CustomLineData>();
 
-	private int colorORACLE = (int)Color.rgb(186, 20, 26);
-	private int colorMSSQL = (int)Color.rgb(1, 188, 242);
-	private int colorMYSQL = (int)Color.rgb(0, 75, 106);
-	private int colorOTHER = (int)Color.rgb(27, 188, 155);		
+	private int colorORACLE = Color.rgb(186, 20, 26);
+	private int colorMSSQL = Color.rgb(1, 188, 242);
+	private int colorMYSQL = Color.rgb(0, 75, 106);
+	private int colorOTHER = Color.rgb(27, 188, 155);		
 	
-	private int colorTitalAxes = (int)Color.rgb(244, 109, 67);
+	private int colorTitalAxes = Color.rgb(244, 109, 67);
 	private int colorPlotArea = Color.rgb(254, 224, 144); 
 	
 	
@@ -345,7 +345,7 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		chart.getPlotLegend().show();	
 		
 		//当值与轴最小值相等时，不显示轴
-		chart.hideEqualAxisMinBar();
+		chart.hideBarEqualAxisMin();
 		
 		//批注
 		List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();

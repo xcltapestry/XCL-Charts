@@ -63,7 +63,8 @@ public class DrawHelper {
 	
 	private void initRectF()
 	{
-		if(null == mRectF) mRectF = new RectF();
+		if(null == mRectF)
+			mRectF = new RectF();
 	}
 	
 	private void initPath()

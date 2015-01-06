@@ -69,7 +69,7 @@ public class PlotGrid {
 		{
 			mPaintEvenBgColor = new Paint();
 			mPaintEvenBgColor.setStyle(Style.FILL);						
-			mPaintEvenBgColor.setColor((int)Color.rgb(239, 239, 239)); 					
+			mPaintEvenBgColor.setColor(Color.rgb(239, 239, 239)); 					
 			mPaintEvenBgColor.setAntiAlias(true);
 		}
 	}
@@ -92,7 +92,7 @@ public class PlotGrid {
 			mPaintGridLineHorizontal = new Paint();
 			mPaintGridLineHorizontal.setAntiAlias(true);
 			mPaintGridLineHorizontal.setStrokeWidth(1);
-			mPaintGridLineHorizontal.setColor((int)Color.rgb(180, 205, 230));
+			mPaintGridLineHorizontal.setColor(Color.rgb(180, 205, 230));
 		}		
 	}
 	
@@ -101,7 +101,7 @@ public class PlotGrid {
 		if(null == mPaintGridLineVertical)
 		{
 			mPaintGridLineVertical = new Paint();	
-			mPaintGridLineVertical.setColor((int)Color.rgb(180, 205, 230));				
+			mPaintGridLineVertical.setColor(Color.rgb(180, 205, 230));				
 			mPaintGridLineVertical.setStrokeWidth(1);
 			mPaintGridLineVertical.setAntiAlias(true);
 		}

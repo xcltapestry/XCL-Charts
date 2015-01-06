@@ -30,6 +30,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
@@ -206,7 +207,7 @@ public class ChartsActivity extends Activity {
 	       
 	       //缩放控件放置在FrameLayout的上层，用于放大缩小图表
 		   FrameLayout.LayoutParams frameParm = new FrameLayout.LayoutParams(
-		   FrameLayout.LayoutParams.WRAP_CONTENT,FrameLayout.LayoutParams.WRAP_CONTENT);  
+		   LayoutParams.WRAP_CONTENT,LayoutParams.WRAP_CONTENT);  
 		   frameParm.gravity = Gravity.BOTTOM|Gravity.RIGHT;  
 		
 		   /*

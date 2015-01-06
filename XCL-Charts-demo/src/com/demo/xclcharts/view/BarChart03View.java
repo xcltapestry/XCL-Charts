@@ -181,14 +181,14 @@ public class BarChart03View extends DemoView implements Runnable{
 	
 		//依数据值确定对应的柱形颜色.
 		List<Integer> dataColorA= new LinkedList<Integer>();
-		dataColorA.add((int)Color.RED);	
-		dataColorA.add((int)Color.BLUE);	
-		dataColorA.add((int)Color.GREEN);	
-		dataColorA.add((int)Color.YELLOW);	
+		dataColorA.add(Color.RED);	
+		dataColorA.add(Color.BLUE);	
+		dataColorA.add(Color.GREEN);	
+		dataColorA.add(Color.YELLOW);	
 				
 		//BarData BarDataA = new BarData("",dataSeriesA,dataColorA,(int)Color.rgb(53, 169, 239));
 		chartData.clear();
-		chartData.add(new BarData("",dataSeriesA,dataColorA,(int)Color.rgb(53, 169, 239)));
+		chartData.add(new BarData("",dataSeriesA,dataColorA,Color.rgb(53, 169, 239)));
 	}
 	
 	private void chartLabels()
@@ -204,34 +204,34 @@ public class BarChart03View extends DemoView implements Runnable{
 	 */
 	private void chartCustomLines()
 	{				
-		CustomLineData line1 = new CustomLineData("及格线",60d,(int)Color.RED,7);
+		CustomLineData line1 = new CustomLineData("及格线",60d,Color.RED,7);
 		line1.setCustomLineCap(XEnum.DotStyle.PRISMATIC);		
 		line1.setLabelHorizontalPostion(Align.LEFT);
 		line1.setLabelOffset(15);	
 		line1.getLineLabelPaint().setColor(Color.RED);
 		mCustomLineDataset.add(line1);
 		
-		CustomLineData line2 = new CustomLineData("没过打屁股",60d,(int)Color.RED,7);
+		CustomLineData line2 = new CustomLineData("没过打屁股",60d,Color.RED,7);
 		line2.setLabelHorizontalPostion(Align.CENTER);
 		line2.hideLine();
 		mCustomLineDataset.add(line2);
 		
-		CustomLineData line3 = new CustomLineData("良好",80d,(int)Color.rgb(35, 172, 57),5);	
+		CustomLineData line3 = new CustomLineData("良好",80d,Color.rgb(35, 172, 57),5);	
 		line3.setCustomLineCap(XEnum.DotStyle.RECT);		
 		line3.setLabelHorizontalPostion(Align.LEFT);	
 		line3.setLineStyle(XEnum.LineStyle.DOT);
 		mCustomLineDataset.add(line3);
 		
-		CustomLineData line4 = new CustomLineData("优秀",90d,(int)Color.rgb(53, 169, 239),5);	
+		CustomLineData line4 = new CustomLineData("优秀",90d,Color.rgb(53, 169, 239),5);	
 		line4.setCustomLineCap(XEnum.DotStyle.TRIANGLE);
 		line4.setLabelOffset(15);
-		line4.getLineLabelPaint().setColor((int)Color.rgb(216, 44, 41));		
+		line4.getLineLabelPaint().setColor(Color.rgb(216, 44, 41));		
 		line4.setLineStyle(XEnum.LineStyle.DASH);
 		mCustomLineDataset.add(line4);
 		
 		int average =  calcAvg() ;
 		CustomLineData line6 = new CustomLineData("本次考试平均得分:"+Integer.toString(average),
-														(double)average,(int)Color.BLUE,5);
+														(double)average,Color.BLUE,5);
 		line6.setLabelHorizontalPostion(Align.CENTER);
 		line6.setLineStyle(XEnum.LineStyle.DASH);
 		line6.getLineLabelPaint().setColor(Color.RED);
@@ -290,7 +290,7 @@ public class BarChart03View extends DemoView implements Runnable{
           				dataColorA.add(barData.getDataColor().get(k));  
           			}
           			
-          			BarData animationBarData = new BarData("",dataSeries,dataColorA,(int)Color.rgb(53, 169, 239));
+          			BarData animationBarData = new BarData("",dataSeries,dataColorA,Color.rgb(53, 169, 239));
           			animationData.add(animationBarData);
           			chart.setDataSource(animationData);
           			postInvalidate(); 

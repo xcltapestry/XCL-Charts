@@ -79,7 +79,8 @@ public abstract class GraphicalView extends View {
 	  */
 	 public abstract void render(Canvas canvas);
 	 			 
-	 public void onDraw(Canvas canvas)
+	 @Override
+	public void onDraw(Canvas canvas)
 	  {		 
 		  try {								  			  
 				render(canvas);								
@@ -134,7 +135,7 @@ public abstract class GraphicalView extends View {
 		 * 原因:android自3.0引入了硬件加速，即使用GPU进行绘图,但它并不能完善的支持所有的绘图，
 		 * 通常表现为内容(如Rect或Path)不可见，异常或渲染错误。所以类了保证图表的正常显示，强制禁用掉.
 		 */		
-		private void disableHardwareAccelerated()
+		protected void disableHardwareAccelerated()
 		{			
 			if(SysinfoHelper.getInstance().supportHardwareAccelerated())
 			{		

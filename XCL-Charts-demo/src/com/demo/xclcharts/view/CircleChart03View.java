@@ -113,7 +113,7 @@ public class CircleChart03View extends GraphicalView {
 			
 		}else if(per < 70){
 			mDataInfo = "充满活力";
-			chart.getLabelPaint().setColor((int)Color.rgb(85, 41, 124));
+			chart.getLabelPaint().setColor(Color.rgb(85, 41, 124));
 			chart.getDataInfoPaint().setColor(Color.WHITE);
 		}else{
 			mDataInfo = "不堪重负";
@@ -122,7 +122,7 @@ public class CircleChart03View extends GraphicalView {
 		}
 		//PieData(标签，百分比，在饼图中对应的颜色)
 		mlPieData.clear();		
-		mlPieData.add(new PieData(Integer.toString(per)+"%",per,(int)Color.rgb(72, 201, 176)));		
+		mlPieData.add(new PieData(Integer.toString(per)+"%",per,Color.rgb(72, 201, 176)));		
 	}
 
 	@Override

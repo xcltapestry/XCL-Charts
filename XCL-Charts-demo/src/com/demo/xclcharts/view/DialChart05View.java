@@ -54,7 +54,7 @@ public class DialChart05View extends GraphicalView {
 							
 				//设置标题背景			
 				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor( (int)Color.rgb(28, 129, 243) );
+				chart.setBackgroundColor( Color.rgb(28, 129, 243) );
 				//绘制边框
 				chart.showRoundBorder();
 						
@@ -106,9 +106,9 @@ public class DialChart05View extends GraphicalView {
 			ringPercentage.add( 1 - 2 * 0.33f);
 			
 			List<Integer> rcolor  = new ArrayList<Integer>();				
-			rcolor.add((int)Color.rgb(133, 206, 130));
-			rcolor.add((int)Color.rgb(252, 210, 9));		
-			rcolor.add((int)Color.rgb(229, 63, 56));	
+			rcolor.add(Color.rgb(133, 206, 130));
+			rcolor.add(Color.rgb(252, 210, 9));		
+			rcolor.add(Color.rgb(229, 63, 56));	
 			chart.addStrokeRingAxis(0.7f,0.6f, ringPercentage, rcolor);
 									
 			List<String> rlabels2  = new ArrayList<String>();
@@ -118,7 +118,7 @@ public class DialChart05View extends GraphicalView {
 			}
 			chart.addInnerTicksAxis(0.6f, rlabels2);
 								
-			chart.getPlotAxis().get(1).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243) );
+			chart.getPlotAxis().get(1).getFillAxisPaint().setColor(Color.rgb(28, 129, 243) );
 			
 			chart.getPlotAxis().get(0).hideAxisLine();
 			chart.getPlotAxis().get(2).hideAxisLine();

@@ -135,13 +135,13 @@ public class ClickPieChart01View extends GraphicalView {
 	{
 		//设置图表数据源		
 		
-		chartData.add(new PieData("48","48%",45,(int)Color.rgb(215, 124, 124)));
-		chartData.add(new PieData("15","15%",15,(int)Color.rgb(253, 180, 90)));
-		chartData.add(new PieData("5","5%",5,(int)Color.rgb(77, 83, 97)));
-		chartData.add(new PieData("10","10%",10f,(int)Color.rgb(253, 180, 90)));
+		chartData.add(new PieData("48","48%",45,Color.rgb(215, 124, 124)));
+		chartData.add(new PieData("15","15%",15,Color.rgb(253, 180, 90)));
+		chartData.add(new PieData("5","5%",5,Color.rgb(77, 83, 97)));
+		chartData.add(new PieData("10","10%",10f,Color.rgb(253, 180, 90)));
 		
 		//将此比例块突出显示
-		chartData.add(new PieData("其它","25%",25,(int)Color.rgb(52, 194, 188),true));
+		chartData.add(new PieData("其它","25%",25,Color.rgb(52, 194, 188),true));
 	}
 	
 	@Override

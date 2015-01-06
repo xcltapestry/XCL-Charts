@@ -143,7 +143,7 @@ public class BarChart3D extends BarChart{
 	{		
 		 //得到数据源
 		 List<BarData> chartDataSource = this.getDataSource(); 
-		 if(null == chartDataSource) return false;	
+		 if(null == chartDataSource||chartDataSource.size() == 0) return false;	
 			 					
 			//得到Y 轴分类横向间距高度
 			 float YSteps = getVerticalYSteps(getCateTickCount()); //getHorizontalYSteps();	
@@ -154,6 +154,7 @@ public class BarChart3D extends BarChart{
 			 
 			//依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度	
 			int barNumber = getDatasetSize(chartDataSource);  
+			if(barNumber <= 0)return false;
 			int currNumber = 0;			
 			
 			float[] ret = mBar3D.getBarHeightAndMargin(YSteps, barNumber);	
@@ -168,14 +169,14 @@ public class BarChart3D extends BarChart{
 										  mul((barNumber - 1) , barInnerMargin));	
 			
 			float scrWidth = plotArea.getPlotWidth(); //plotArea.getWidth();
-			float valueWidth = (float) dataAxis.getAxisRange();
+			float valueWidth = dataAxis.getAxisRange();
 			
 			for(int i=0;i<barNumber;i++)
 			{					    
 				//得到分类对应的值数据集
 				BarData bd = chartDataSource.get(i) ; 
 				List<Double> barValues = bd.getDataSet(); 
-				if(null == barValues) continue ;
+				if(null == barValues || barValues.size() == 0) continue ;
 				List<Integer> barDataColor = bd.getDataColor();	
 				//设置成对应的颜色	
 				int barDefualtColor = bd.getColor();
@@ -222,12 +223,14 @@ public class BarChart3D extends BarChart{
 			return true;
 	}
 	
+	@Override
 	protected float get3DOffsetX()// 分类		
 	{					
 		float tfx = (float) (mBar3D.getOffsetX() * 2);
 		return tfx;
 	}	
 	
+	@Override
 	protected float get3DBaseOffsetX()// 分类		
 	{						
 		double baseTickness = mBar3D.getAxis3DBaseThickness();
@@ -237,6 +240,7 @@ public class BarChart3D extends BarChart{
 		return (float) baseOffsetX;
 	}	
 	
+	@Override
 	protected float get3DBaseOffsetY()// 分类		
 	{							
 		//3D 偏移值		
@@ -265,7 +269,7 @@ public class BarChart3D extends BarChart{
 							 		
 		 //得到分类轴数据集
 		List<String> dataSet =  categoryAxis.getDataSet();
-		if(null == dataSet) return false;	
+		if(null == dataSet||dataSet.size() == 0) return false;	
 				
 		// 依传入的分类个数与轴总宽度算出要画的分类间距数是多少
 		// 总宽度 / 分类个数 = 间距长度					
@@ -274,8 +278,9 @@ public class BarChart3D extends BarChart{
 			
 		//得到数据源
 		List<BarData> chartDataSource = this.getDataSource();
-		if(null == chartDataSource) return false;	
+		if(null == chartDataSource || chartDataSource.size() == 0) return false;	
 		int barNumber = getDatasetSize(chartDataSource);
+		if(barNumber <= 0)return false;
 		int currNumber = 0;			 
 
 		float[] ret = mBar3D.getBarWidthAndMargin(XSteps, barNumber);

@@ -135,7 +135,7 @@ public class SplineChart01View extends DemoView {
 			plot.showHorizontalLines();
 			plot.showVerticalLines();			
 			plot.getHorizontalLinePaint().setStrokeWidth(3);
-			plot.getHorizontalLinePaint().setColor((int)Color.rgb(127, 204, 204));			
+			plot.getHorizontalLinePaint().setColor(Color.rgb(127, 204, 204));			
 			plot.setHorizontalLineStyle(XEnum.LineStyle.DOT);
 		
 			
@@ -145,11 +145,11 @@ public class SplineChart01View extends DemoView {
 			//chart.getCategoryAxis().getAxisPaint().setStrokeWidth(
 			//		plot.getHorizontalLinePaint().getStrokeWidth());
 			
-			chart.getDataAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
-			chart.getCategoryAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
+			chart.getDataAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
 			
-			chart.getDataAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
-			chart.getCategoryAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
+			chart.getDataAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
 			
 			//居中
 			chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
@@ -239,7 +239,7 @@ public class SplineChart01View extends DemoView {
 		linePoint1.add(new PointD(55d, 33d));
 		linePoint1.add(new PointD(62d, 45d));
 		SplineData dataSeries1 = new SplineData("青菜萝卜够吃",linePoint1,
-				(int)Color.rgb(54, 141, 238) );	
+				Color.rgb(54, 141, 238) );	
 		//把线弄细点
 		dataSeries1.getLinePaint().setStrokeWidth(2);
 		
@@ -253,7 +253,7 @@ public class SplineChart01View extends DemoView {
 		linePoint2.add(new PointD(72d, 70d));	
 		linePoint2.add(new PointD(85d, 68d));	
 		SplineData dataSeries2 = new SplineData("饭管够",linePoint2,
-				(int)Color.rgb(255, 165, 132) );
+				Color.rgb(255, 165, 132) );
 		
 				
 		dataSeries2.setLabelVisible(true);		

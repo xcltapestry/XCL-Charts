@@ -121,10 +121,10 @@ public class DySplineChart extends ChartView{
 			 if(null == dataSeries2)dataSeries2 = new SplineData();
 			 
 			 dataSeries1.setDotStyle(XEnum.DotStyle.DOT);
-			 dataSeries1.setLineColor((int)Color.rgb(54, 141, 238));
+			 dataSeries1.setLineColor(Color.rgb(54, 141, 238));
 			 
 			 dataSeries2.setDotStyle(XEnum.DotStyle.RING);
-			 dataSeries2.setLineColor((int)Color.rgb(255, 165, 132));
+			 dataSeries2.setLineColor(Color.rgb(255, 165, 132));
 			 
 			 //把线弄细点
 			 dataSeries1.getLinePaint().setStrokeWidth(2);
@@ -177,11 +177,11 @@ public class DySplineChart extends ChartView{
 				//标签轴最小值
 				chart1.setCategoryAxisMin(0);	
 						
-				chart1.getDataAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
-				chart1.getCategoryAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
+				chart1.getDataAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
+				chart1.getCategoryAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
 				
-				chart1.getDataAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
-				chart1.getCategoryAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
+				chart1.getDataAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+				chart1.getCategoryAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
 				
 				//居中
 				chart1.getDataAxis().setHorizontalTickAlign(Align.CENTER);
@@ -266,11 +266,11 @@ public class DySplineChart extends ChartView{
 				//标签轴最小值
 				chart2.setCategoryAxisMin(0);	
 						
-				chart2.getDataAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
-				chart2.getCategoryAxis().getAxisPaint().setColor((int)Color.rgb(127, 204, 204));
+				chart2.getDataAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
+				chart2.getCategoryAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
 				
-				chart2.getDataAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
-				chart2.getCategoryAxis().getTickMarksPaint().setColor((int)Color.rgb(127, 204, 204));
+				chart2.getDataAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+				chart2.getCategoryAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
 				
 				//居中
 				chart2.getDataAxis().setHorizontalTickAlign(Align.CENTER);

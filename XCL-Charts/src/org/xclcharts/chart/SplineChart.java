@@ -85,12 +85,14 @@ public class SplineChart extends LnChart{
 		return XEnum.ChartType.SPLINE;
 	}
 
+	@Override
 	protected void categoryAxisDefaultSetting()
 	{		
 		if(null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
 	
+	@Override
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null != dataAxis)
@@ -114,6 +116,11 @@ public class SplineChart extends LnChart{
 	{		
 		this.mDataSet = dataSeries;		
 	}	
+	
+	public List<SplineData>  getDataSource()
+	{
+		return this.mDataSet;
+	}
 	
 	/**
 	 *  显示数据的数据轴最大值
@@ -298,7 +305,7 @@ public class SplineChart extends LnChart{
 		    if(spData.getLabelVisible())
         	{            			
         		//请自行在回调函数中处理显示格式
-    			spData.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(), 
+    			spData.getLabelOptions().drawLabel(canvas, pLine.getDotLabelPaint(), 
     					dotInfo.getLabel(),
     					dotInfo.mX ,dotInfo.mY,itemAngle,spData.getLineColor());
         	}   			
@@ -358,6 +365,7 @@ public class SplineChart extends LnChart{
 
 	/////////////////////////////////////////////
 		
+	@Override
 	protected void drawClipPlot(Canvas canvas)
 	{
 		if(renderPlot(canvas) == true)
@@ -372,6 +380,7 @@ public class SplineChart extends LnChart{
 	}
 
 	
+	@Override
 	protected void drawClipLegend(Canvas canvas)
 	{
 		//图例

@@ -2,11 +2,8 @@ package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map.Entry;
-
 import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
@@ -98,8 +95,8 @@ public class SplineChart03View  extends DemoView {
 			
 			//设置图的背景色
 			chart.setApplyBackgroundColor(true);
-			chart.setBackgroundColor( (int)Color.rgb(212, 194, 129) );
-			chart.getBorder().setBorderLineColor((int)Color.rgb(179, 147, 197));
+			chart.setBackgroundColor( Color.rgb(212, 194, 129) );
+			chart.getBorder().setBorderLineColor(Color.rgb(179, 147, 197));
 					
 			//调轴线与网络线风格
 			chart.getCategoryAxis().hideTickMarks();
@@ -109,7 +106,7 @@ public class SplineChart03View  extends DemoView {
 			//chart.hideTopAxis();
 			//chart.hideRightAxis();				
 			
-			chart.getPlotGrid().getHorizontalLinePaint().setColor((int)Color.rgb(179, 147, 197));
+			chart.getPlotGrid().getHorizontalLinePaint().setColor(Color.rgb(179, 147, 197));
 			chart.getCategoryAxis().getAxisPaint().setColor( 
 						chart.getPlotGrid().getHorizontalLinePaint().getColor());
 			chart.getCategoryAxis().getAxisPaint().setStrokeWidth(
@@ -172,7 +169,7 @@ public class SplineChart03View  extends DemoView {
 		linePoint1.add(new PointD(96d, 68d));
 		
 		SplineData dataSeries1 = new SplineData("线一",linePoint1,
-				(int)Color.rgb(54, 141, 238) );	
+				Color.rgb(54, 141, 238) );	
 		//把线弄细点
 		dataSeries1.getLinePaint().setStrokeWidth(2);
 		dataSeries1.setLabelVisible(true);	
@@ -190,7 +187,7 @@ public class SplineChart03View  extends DemoView {
 	
 		
 		SplineData dataSeries2 = new SplineData("线二",linePoint2,
-				(int)Color.rgb(255, 165, 132) );
+				Color.rgb(255, 165, 132) );
 		
 							
 		dataSeries2.setDotStyle(XEnum.DotStyle.RING);				
@@ -206,11 +203,11 @@ public class SplineChart03View  extends DemoView {
 		linePoint3.add(new PointD(65d, 95d));		
 			
 		SplineData dataSeries3 = new SplineData("线三",linePoint3,
-				(int)Color.rgb(84, 206, 231) );
+				Color.rgb(84, 206, 231) );
 									
 		dataSeries3.setDotStyle(XEnum.DotStyle.RING);		
-		dataSeries3.getDotPaint().setColor((int)Color.rgb(75, 166, 51));
-		dataSeries3.getPlotLine().getPlotDot().setRingInnerColor( (int)Color.rgb(123, 89, 168) );
+		dataSeries3.getDotPaint().setColor(Color.rgb(75, 166, 51));
+		dataSeries3.getPlotLine().getPlotDot().setRingInnerColor( Color.rgb(123, 89, 168) );
 			
 			
 		//设定数据源		

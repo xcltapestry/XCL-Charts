@@ -110,7 +110,7 @@ public class BarChart extends AxesChart {
 	/**
 	 * 当值与轴最小值相等时，不显示柱形及标签
 	 */
-	public void hideEqualAxisMinBar()
+	public void hideBarEqualAxisMin()
 	{
 		mEqualAxisMin = false;
 	}
@@ -118,30 +118,31 @@ public class BarChart extends AxesChart {
 	/**
 	 *  当值与轴最小值相等时，正常显示柱形及标签
 	 */
-	public void showEqualAxisMinBar()
+	public void showBarEqualAxisMin()
 	{
 		mEqualAxisMin = true;
 	}	
 
 	/**
 	 * 设置定制线值
-	 * @param customLineDataSet 定制线数据集合
+	 * @param lineSet 定制线数据集合
 	 */
-	public void setCustomLines( List<CustomLineData> customLineDataSet)
+	public void setCustomLines( List<CustomLineData> lineSet)
 	{
 		if(null == mCustomLine)mCustomLine = new PlotCustomLine();
-		mCustomLine.setCustomLines(customLineDataSet);
+		mCustomLine.setCustomLines(lineSet);
 	}
-
+		
 	/**
 	 * 分类轴的数据源
 	 * 
 	 * @param categories
 	 *            分类集
 	 */
-	public void setCategories( List<String> categories) {	
+	public void setCategories(List<String> categories) {	
 		if(null != categoryAxis)categoryAxis.setDataBuilding(categories);
 	}
+		
 	
 	/**
 	 * 设置批注
@@ -222,6 +223,7 @@ public class BarChart extends AxesChart {
 	}
 	
 	
+	@Override
 	protected void categoryAxisDefaultSetting()
 	{		
 		if(null == categoryAxis) return;
@@ -245,6 +247,7 @@ public class BarChart extends AxesChart {
 	}
 	
 
+	@Override
 	protected void dataAxisDefaultSetting()
 	{		
 		if(null == dataAxis) return;
@@ -414,7 +417,7 @@ public class BarChart extends AxesChart {
 			
 		if( 0 == tickCount)
 		{
-			//Log.e(TAG,"分类轴数据源为0!");
+			Log.w(TAG,"分类轴数据源为0!");
 			return ;
 		}
 			
@@ -536,7 +539,7 @@ public class BarChart extends AxesChart {
 	 */
 	protected boolean renderHorizontalBar(Canvas canvas) {
 		
-		if(null == mDataSet) return false;				
+		if(null == mDataSet||mDataSet.size() == 0) return false;				
 
 		// 得到Y 轴分类横向间距高度
 		float YSteps = getVerticalYSteps(getCateTickCount()); 
@@ -545,6 +548,7 @@ public class BarChart extends AxesChart {
 			
 		// 依柱形宽度，多柱形间的偏移值 与当前数据集的总数据个数得到当前分类柱形要占的高度
 		int barNumber = getDatasetSize(mDataSet); 
+		if(barNumber <= 0 ) return false;
 		int currNumber = 0;
 		
 		float[] ret = mFlatBar.getBarHeightAndMargin(YSteps, barNumber);
@@ -746,7 +750,7 @@ public class BarChart extends AxesChart {
 	 */
 	protected boolean renderVerticalBar(Canvas canvas) {
 		
-		if(null == mDataSet) return false;	
+		if(null == mDataSet || mDataSet.size() == 0) return false;	
 		// 得到分类轴数据集
 		List<String> dataSet = categoryAxis.getDataSet();
 		if(null == dataSet) return false;	
@@ -759,6 +763,7 @@ public class BarChart extends AxesChart {
 												mFlatBar.getItemLabelPaint());
 					
 		int barNumber = getDatasetSize(mDataSet); 
+		if(barNumber <= 0)return false;
 		int currNumber = 0;
 		float[] ret = mFlatBar.getBarWidthAndMargin(XSteps, barNumber);
 		if(null == ret||ret.length != 2)
@@ -893,8 +898,9 @@ public class BarChart extends AxesChart {
 		 if(null == dataSource) return 0;
 		 
 		 int ret = dataSource.size();
+		 int count = ret;
 		// X 轴 即分类轴
-		for (int i = 0; i < dataSource.size(); i++) 
+		for (int i = 0; i < count; i++) 
 		{			
 			BarData bd = dataSource.get(i);	
 			List<Double> barValues = bd.getDataSet();

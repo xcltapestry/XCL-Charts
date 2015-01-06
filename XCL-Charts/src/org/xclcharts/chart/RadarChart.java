@@ -330,7 +330,7 @@ public class RadarChart extends RdChart{
 	private int getAxisTickCount()
 	{		
 		if(null == dataAxis) return 0;
-		return (int) Math.round(dataAxis.getAixTickCount() + 1);
+		return Math.round(dataAxis.getAixTickCount() + 1);
 	}
 	
 	/**

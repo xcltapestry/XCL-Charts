@@ -43,8 +43,6 @@ import android.util.Log;
 /**
  * @ClassName AnimationBar01View
  * @Description  柱形图柱形渐显动画例子,<br/>
- *  * 	问动画效果的人太多了，其实图表库就应当只管绘图，动画效果就交给View或SurfaceView吧,
- * 	看看我弄的效果有多靓. ~_~
  * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
  */
 
@@ -175,7 +173,7 @@ public class BarChart06View extends DemoView implements Runnable{
 				dataSeries.add((double) num);				
 			}
 			BarData barData = new BarData("柱形渐显动画",dataSeries,
-					(int)Color.rgb(arrColorRgb[i][0], arrColorRgb[i][1], arrColorRgb[i][2])); 
+					Color.rgb(arrColorRgb[i][0], arrColorRgb[i][1], arrColorRgb[i][2])); 
 			chartData.add(barData);
 		}
 		

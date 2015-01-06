@@ -75,7 +75,7 @@ public class StackBarChart  extends BarChart{
 		 if(null == categoryAxis.getDataSet()) return false;		 
 		
 		 float axisScreenWidth  =  getPlotScreenWidth(); 
-		 float axisDataRange = (float) dataAxis.getAxisRange(); 	
+		 float axisDataRange = dataAxis.getAxisRange(); 	
 		 float valueWidth = axisDataRange; 
 		 
 		//步长
@@ -174,7 +174,7 @@ public class StackBarChart  extends BarChart{
 					
 			float XSteps = getVerticalXSteps(dataSet.size() + 1 );			 
 			float axisScreenHeight  =  getAxisScreenHeight(); 
-			float axisDataHeight =  (float) dataAxis.getAxisRange(); 			
+			float axisDataHeight =  dataAxis.getAxisRange(); 			
 			float barWidht = mul(XSteps,0.5f);	
 			
 			 float currentX = 0.0f,currentY = 0.0f,labelX = 0.f;

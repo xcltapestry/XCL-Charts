@@ -137,7 +137,7 @@ public class RoundAxisRender extends RoundAxis{
 						Angle = mInitAngle;
 					}else{
 						//Angle =  MathHelper.getInstance().add(Angle,stepsAngle);
-						Angle = (float) MathHelper.getInstance().add(mInitAngle, i * stepsAngle);													
+						Angle = MathHelper.getInstance().add(mInitAngle, i * stepsAngle);													
 					}									
 					
 					MathHelper.getInstance().calcArcEndPointXY(cirX, cirY, innerRadius1, Angle); 								

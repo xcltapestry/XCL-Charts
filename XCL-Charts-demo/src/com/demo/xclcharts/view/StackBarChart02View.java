@@ -151,7 +151,7 @@ public class StackBarChart02View extends DemoView {
 			
 			//定义标签轴标签显示颜色
 			chart.getCategoryAxis().getTickLabelPaint().
-				setColor((int)Color.rgb(1, 188, 242));
+				setColor(Color.rgb(1, 188, 242));
 					
 			//定义柱形上标签显示格式
 			chart.getBar().setItemLabelVisible(true);
@@ -192,8 +192,8 @@ public class StackBarChart02View extends DemoView {
 		dataSeriesB.add(657.65d); 
 
 		
-		BarDataSet.add(new BarData("预算(Budget)",dataSeriesA,(int)Color.rgb(64, 175, 240)));
-		BarDataSet.add(new BarData("实际(Actual)",dataSeriesB,(int)Color.rgb(247, 156, 27)));
+		BarDataSet.add(new BarData("预算(Budget)",dataSeriesA,Color.rgb(64, 175, 240)));
+		BarDataSet.add(new BarData("实际(Actual)",dataSeriesB,Color.rgb(247, 156, 27)));
 	}
 	private void chartLabels()
 	{

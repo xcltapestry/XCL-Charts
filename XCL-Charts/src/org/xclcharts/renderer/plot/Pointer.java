@@ -106,7 +106,7 @@ public class Pointer {
 		if(null == mPaintPoint)
 		{
 			mPaintPoint = new Paint();
-			mPaintPoint.setColor((int)Color.rgb(235, 138, 61));
+			mPaintPoint.setColor(Color.rgb(235, 138, 61));
 			mPaintPoint.setStrokeWidth(3);
 			mPaintPoint.setStyle(Style.FILL); 
 			mPaintPoint.setAntiAlias(true);
@@ -125,7 +125,7 @@ public class Pointer {
 			mPaintBaseCircle = new Paint();
 			mPaintBaseCircle.setStyle(Style.FILL);
 			mPaintBaseCircle.setAntiAlias(true);	
-			mPaintBaseCircle.setColor((int)Color.rgb(235, 138, 61));
+			mPaintBaseCircle.setColor(Color.rgb(235, 138, 61));
 			mPaintBaseCircle.setStrokeWidth(8);
 		}
 		return mPaintBaseCircle;

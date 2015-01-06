@@ -150,7 +150,7 @@ public class BarChart3D02View extends DemoView {
 			chart.getBar().getItemLabelPaint().setTextSize(22);
 		
 			//定义基座颜色
-			chart.setAxis3DBaseColor((int)Color.rgb(132, 162, 197));
+			chart.setAxis3DBaseColor(Color.rgb(132, 162, 197));
 			
 			//激活点击监听
 			chart.ActiveListenItemClick();
@@ -177,8 +177,8 @@ public class BarChart3D02View extends DemoView {
 		dataSeriesB.add(17d); 
 		dataSeriesB.add(35d); 
 		
-		chartData.add(new BarData("湖南",dataSeriesA,(int)Color.rgb(224, 62, 54)));
-		chartData.add(new BarData("福建",dataSeriesB,(int)Color.rgb(140, 71, 222)));
+		chartData.add(new BarData("湖南",dataSeriesA,Color.rgb(224, 62, 54)));
+		chartData.add(new BarData("福建",dataSeriesB,Color.rgb(140, 71, 222)));
 	}
 	
 	private void chartLabels()

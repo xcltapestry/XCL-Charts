@@ -105,7 +105,7 @@ public class MathHelper {
 	    }
 	    else if (Float.compare(cirAngle,180.0f) == 0)
 	    {
-	        mPosX = (float) (cirX - radius);
+	        mPosX = cirX - radius;
 	        mPosY = cirY;
 	    }
 	    else if (Float.compare(cirAngle,180.0f) == 1 &&

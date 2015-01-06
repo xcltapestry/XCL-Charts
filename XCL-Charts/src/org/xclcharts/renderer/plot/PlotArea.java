@@ -179,13 +179,13 @@ public class PlotArea {
 	 * @return 宽度
 	 */
 	public float getWidth() {		
-		mWidth = (float)Math.abs(mRight - mLeft);		
+		mWidth = Math.abs(mRight - mLeft);		
 		return mWidth;
 	}
 	
 	
 	public float getPlotWidth() {		
-		return (float)Math.abs(mRight + mExtWidth - mLeft);		
+		return Math.abs(mRight + mExtWidth - mLeft);		
 	}
 	
 

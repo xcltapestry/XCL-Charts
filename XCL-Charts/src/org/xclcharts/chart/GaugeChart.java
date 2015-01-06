@@ -94,7 +94,7 @@ public class GaugeChart extends CirChart{
 			mPaintTick = new Paint();
 			mPaintTick.setStyle(Style.FILL);
 			mPaintTick.setAntiAlias(true);	
-			mPaintTick.setColor( (int)Color.rgb(50, 149, 222) ); 
+			mPaintTick.setColor( Color.rgb(50, 149, 222) ); 
 			mPaintTick.setStrokeWidth(1);
 		}
 		
@@ -127,7 +127,7 @@ public class GaugeChart extends CirChart{
 		{
 			mPaintDount = new Paint();		
 			mPaintDount.setStyle(Style.STROKE);
-			mPaintDount.setColor((int)Color.rgb(50, 149, 222));
+			mPaintDount.setColor(Color.rgb(50, 149, 222));
 			mPaintDount.setAntiAlias(true);
 			mPaintDount.setStrokeWidth(2);
 		}

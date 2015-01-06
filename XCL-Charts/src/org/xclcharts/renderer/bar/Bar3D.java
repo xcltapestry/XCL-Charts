@@ -56,7 +56,7 @@ public class Bar3D extends Bar{
 	//3D效果厚度
 	private int mAxisBaseThickness = 20;
 	//底盘颜色
-	private int mAxisBaseColor = (int)Color.rgb(73, 172, 72);
+	private int mAxisBaseColor = Color.rgb(73, 172, 72);
 	
 	private Path mPathRectangle2D = new Path();
 	private Paint mPaintLine = new Paint();

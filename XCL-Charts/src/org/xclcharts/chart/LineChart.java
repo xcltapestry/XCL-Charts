@@ -81,10 +81,19 @@ public class LineChart extends LnChart{
 		{										
 			this.mDataSet = dataSet;		
 		}			
+		
+		/**
+		 * 返回数据源
+		 * @return 数据源
+		 */
+		public List<LineData> getDataSource()
+		{
+			return this.mDataSet;
+		}
 						
 						
 		/**
-		 *  设置当值与底轴的最小值相等时，线是否与轴连结显示. 默认为False
+		 *  设置当值与底轴的最小值相等时，线是否与轴连结显示. 默认为连接(true)
 		 * @param visible 是否连接
 		 */
 		public void setLineAxisIntersectVisible( boolean visible)
@@ -113,7 +122,7 @@ public class LineChart extends LnChart{
 			
 			if(null == bd)
 			{
-				//Log.e(TAG,"传入的线的数据序列参数为空.");
+				Log.i(TAG,"传入的线的数据序列参数为空.");
 				return false;
 			}
 			
@@ -125,14 +134,14 @@ public class LineChart extends LnChart{
 			//得到分类轴数据集
 			List<String> dataSet =  categoryAxis.getDataSet();
 			if(null == dataSet ||dataSet.size() == 0){
-				//Log.e(TAG,"分类轴数据为空.");
+				Log.w(TAG,"分类轴数据为空.");
 				return false;
 			}		
 			//数据序列
 			List<Double> chartValues = bd.getLinePoint();
 			if(null == chartValues ||chartValues.size() == 0 )
 			{
-				//Log.e(TAG,"当前分类的线数据序列值为空.");
+				Log.w(TAG,"当前分类的线数据序列值为空.");
 				return false;
 			}
 				
@@ -213,8 +222,8 @@ public class LineChart extends LnChart{
 	            		
 	            		if(bd.getLabelVisible()) //标签
 	                	{	                	            
-	            			bd.getPlotLabel().drawLabel(canvas, pLine.getDotLabelPaint(), 
-	            					getFormatterItemLabel(bv), lineStopX, lineStopY, // lineStopX - radius, lineStopY
+	            			bd.getLabelOptions().drawLabel(canvas, pLine.getDotLabelPaint(), 
+	            					getFormatterItemLabel(bv), lineStopX, lineStopY,
 	            					itemAngle,bd.getLineColor());
 	                	}
 	            			            		
@@ -239,7 +248,7 @@ public class LineChart extends LnChart{
 		{											
 			if(null == mDataSet) 
 			{
-				//Log.e(TAG,"数据轴数据为空.");
+				Log.w(TAG,"数据轴数据为空.");
 				return false;
 			}			
 			

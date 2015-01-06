@@ -61,7 +61,7 @@ public class AxisTitle {
 		 mPaintLeftAxisTitle.setTextAlign(Align.CENTER);
 		 mPaintLeftAxisTitle.setAntiAlias(true);
 		 mPaintLeftAxisTitle.setTextSize(26);
-		 mPaintLeftAxisTitle.setColor((int)Color.rgb(255, 153, 204));
+		 mPaintLeftAxisTitle.setColor(Color.rgb(255, 153, 204));
 		}
 	}
 	
@@ -74,7 +74,7 @@ public class AxisTitle {
 		 mPaintLowerAxisTitle.setAntiAlias(true);
 		 
 		 mPaintLowerAxisTitle.setTextSize(26);
-		 mPaintLowerAxisTitle.setColor((int)Color.rgb(58, 65, 83));
+		 mPaintLowerAxisTitle.setColor(Color.rgb(58, 65, 83));
 		}
 	}
 	
@@ -87,7 +87,7 @@ public class AxisTitle {
 		 mPaintRightAxisTitle.setAntiAlias(true);
 		 
 		 mPaintRightAxisTitle.setTextSize(26);
-		 mPaintRightAxisTitle.setColor((int)Color.rgb(51, 204, 204));	
+		 mPaintRightAxisTitle.setColor(Color.rgb(51, 204, 204));	
 		}
 	}
 	

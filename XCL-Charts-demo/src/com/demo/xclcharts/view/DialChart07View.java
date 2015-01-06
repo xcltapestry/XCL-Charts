@@ -88,7 +88,7 @@ public class DialChart07View extends GraphicalView {
 				
 				//设置标题背景			
 				chart.setApplyBackgroundColor(true);
-				chart.setBackgroundColor( (int)Color.rgb(28, 129, 243) );
+				chart.setBackgroundColor( Color.rgb(28, 129, 243) );
 				//绘制边框
 				chart.showRoundBorder();
 				
@@ -138,12 +138,12 @@ public class DialChart07View extends GraphicalView {
 				ringPercentage.add(rper);
 				
 				List<Integer> rcolor  = new ArrayList<Integer>();			
-				rcolor.add((int)Color.rgb(242, 110, 131));
-				rcolor.add((int)Color.rgb(238, 204, 71));
-				rcolor.add((int)Color.rgb(42, 231, 250));
-				rcolor.add((int)Color.rgb(140, 196, 27));						
+				rcolor.add(Color.rgb(242, 110, 131));
+				rcolor.add(Color.rgb(238, 204, 71));
+				rcolor.add(Color.rgb(42, 231, 250));
+				rcolor.add(Color.rgb(140, 196, 27));						
 				chart180.addStrokeRingAxis(0.75f,0.6f, ringPercentage, rcolor);
-				chart180.getPlotAxis().get(0).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243) );
+				chart180.getPlotAxis().get(0).getFillAxisPaint().setColor(Color.rgb(28, 129, 243) );
 				
 				Paint paintTB = new Paint();
 				paintTB.setColor(Color.WHITE);
@@ -172,10 +172,10 @@ public class DialChart07View extends GraphicalView {
 				ringPercentage.add(rper);
 				
 				List<Integer> rcolor  = new ArrayList<Integer>();			
-				rcolor.add((int)Color.rgb(242, 110, 131));
-				rcolor.add((int)Color.rgb(238, 204, 71));				
+				rcolor.add(Color.rgb(242, 110, 131));
+				rcolor.add(Color.rgb(238, 204, 71));				
 				chart90.addStrokeRingAxis(0.75f,0.6f, ringPercentage, rcolor);				
-				chart90.getPlotAxis().get(0).getFillAxisPaint().setColor((int)Color.rgb(28, 129, 243) );			
+				chart90.getPlotAxis().get(0).getFillAxisPaint().setColor(Color.rgb(28, 129, 243) );			
 				chart90.getPointer().setLength(0.65f);	
 
 				Paint paintTB = new Paint();
@@ -225,8 +225,8 @@ public class DialChart07View extends GraphicalView {
 			chart.getPointer().getPointerPaint().setStrokeWidth(3);			
 			chart.getPointer().getPointerPaint().setStyle(Style.FILL);		
 	
-			chart.getPointer().getPointerPaint().setColor((int)Color.rgb(242, 110, 131));		
-			chart.getPointer().getBaseCirclePaint().setColor((int)Color.rgb(238, 204, 71));
+			chart.getPointer().getPointerPaint().setColor(Color.rgb(242, 110, 131));		
+			chart.getPointer().getBaseCirclePaint().setColor(Color.rgb(238, 204, 71));
 			chart.getPointer().setBaseRadius(10f);
 			
 		}
