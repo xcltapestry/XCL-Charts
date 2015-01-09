@@ -28,7 +28,6 @@ import java.util.List;
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -181,14 +180,52 @@ public class PieChart01View extends DemoView implements Runnable{
 	{
 		  try {       
 			 
+			    chart.setDataSource(chartData);
+			  	int count = 360 / 10;
+			  	
+	          	for(int i=1;i<count ;i++)
+	          	{
+	          		Thread.sleep(40);
+	          		
+	          		chart.setTotalAngle(10 * i);
+	          		
+	          		//激活点击监听
+	    			if(count - 1 == i)
+	    			{
+	    				chart.setTotalAngle(360);
+	    				
+	    				chart.ActiveListenItemClick();
+	    				//显示边框线，并设置其颜色
+	    				chart.getArcBorderPaint().setColor(Color.YELLOW);
+	    				chart.getArcBorderPaint().setStrokeWidth(3);
+	    			}
+	    			
+	          		postInvalidate();            				          	          	
+	          }
+			  
+          }
+          catch(Exception e) {
+              Thread.currentThread().interrupt();
+          }       
+		  
+	}
+	
+	/*
+	 * 另一种动画
+	private void chartAnimation()
+	{
+		  try {       
+			 
 			  	float sum = 0.0f;
 			  	int count = chartData.size();
 	          	for(int i=0;i< count ;i++)
 	          	{
 	          		Thread.sleep(150);
+	          	
 	          		ArrayList<PieData> animationData = new ArrayList<PieData>();
 	        
 	          		sum = 0.0f;
+	          			          		
 	          		for(int j=0;j<=i;j++)
 	          		{            			            			
 	          			animationData.add(chartData.get(j));
@@ -199,7 +236,7 @@ public class PieChart01View extends DemoView implements Runnable{
 	          		animationData.add(new PieData("","",  MathHelper.getInstance().sub(100.0f , sum),
 	          											  Color.argb(1, 0, 0, 0)));		          		
 	          		chart.setDataSource(animationData);
-	          		
+	          	
 	          		//激活点击监听
 	    			if(count - 1 == i)
 	    			{
@@ -218,7 +255,8 @@ public class PieChart01View extends DemoView implements Runnable{
           }       
 		  
 	}
-	
+	*/
+		
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

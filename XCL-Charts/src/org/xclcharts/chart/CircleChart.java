@@ -342,8 +342,10 @@ public class CircleChart extends CirChart {
                     }
                     
                     
-                    float per = (float) cData.getPercentage();                    
-                    currentAngle = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);                                    
+                   // float per = (float) cData.getPercentage();                    
+                    //currentAngle = MathHelper.getInstance().round(mul(180f, div(per, 100f)),2);
+                    
+                    currentAngle = MathHelper.getInstance().getSliceAngle(180f, (float) cData.getPercentage());                    
                     drawPercent(canvas, paintArc, cirX, hCirY, hRadius , 180f,  currentAngle);
                     
                     if(isShowInnerFill())  //内部填充
@@ -358,7 +360,7 @@ public class CircleChart extends CirChart {
                     	canvas.drawText(mDataInfo, cirX, hCirY - infoHeight, getDataInfoPaint());
 
                 } else {
-                    currentAngle = cData.getSliceAngle();
+                    currentAngle = MathHelper.getInstance().getSliceAngle(360.f, (float) cData.getPercentage());
                     
                     if(isShowInnerBG())
                     	canvas.drawCircle(cirX, cirY, radius, getBgCirclePaint());

@@ -189,18 +189,18 @@ public class SplineChart extends LnChart{
 		
 		if(null == bd)
 		{
-			Log.e(TAG,"传入的数据序列参数为空.");
+			Log.w(TAG,"传入的数据序列参数为空.");
 			return;
 		}
 		if( Double.compare(mMaxValue, mMinValue) == -1)
 		{
-			Log.e(TAG,"轴最大值小于最小值.");
+			Log.w(TAG,"轴最大值小于最小值.");
 			return ;
 		}
 		
 		if( Double.compare(mMaxValue, mMinValue) == 0)
 		{
-			Log.e(TAG,"轴最大值与最小值相等.");
+			Log.w(TAG,"轴最大值与最小值相等.");
 			return ;
 		}
 				

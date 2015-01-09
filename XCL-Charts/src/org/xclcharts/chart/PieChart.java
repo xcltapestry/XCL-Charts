@@ -71,6 +71,9 @@ public class PieChart extends CirChart{
 	//保存标签的坐标信息
 	protected ArrayList<PlotArcLabelInfo> mLstLabels = null;
 	
+	//总角度
+	private float mTotalAngle = 360.f;
+	
 	public PieChart()
 	{
 		if(null == mLstLabels) mLstLabels = new ArrayList<PlotArcLabelInfo>();
@@ -114,6 +117,24 @@ public class PieChart extends CirChart{
 	public List<PieData> getDataSource()
 	{
 		return mDataset;
+	}
+	
+	/**
+	 * 设置总圆心角度,默认360
+	 * @param total 总角度
+	 */
+	public void setTotalAngle(float total)
+	{
+		mTotalAngle = total;
+	}
+	
+	/**
+	 * 返回当前总圆心角度
+	 * @return 总角度
+	 */
+	public float getTotalAngle()
+	{
+		return mTotalAngle;
 	}
 	
 	/**
@@ -236,7 +257,7 @@ public class PieChart extends CirChart{
 		if(Float.compare(Angle, 0.0f) == 0 
 				|| Float.compare(Angle, 0.0f) == -1)
 		{
-			Log.w(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(Angle));
+			//Log.i(TAG, "扇区圆心角小于等于0度. 当前圆心角为:"+Float.toString(Angle));
 			return false;
 		}
 		return true;
@@ -319,7 +340,8 @@ public class PieChart extends CirChart{
 			for(int i=0;i<count;i++)			
 			{					
 				PieData cData = mDataset.get(i);
-				currentAngle = cData.getSliceAngle();		
+				//currentAngle = cData.getSliceAngle();	
+				currentAngle = MathHelper.getInstance().getSliceAngle(getTotalAngle(), (float) cData.getPercentage());
 				if(!validateAngle(currentAngle))continue;			
 				geArcPaint().setColor(cData.getSliceColor());	
 								
@@ -385,7 +407,8 @@ public class PieChart extends CirChart{
 				
 		for(PieData cData : mDataset)
 		{			
-			currentValue = cData.getSliceAngle();			
+			//currentValue = cData.getSliceAngle();		
+			currentValue = MathHelper.getInstance().getSliceAngle(getTotalAngle(), (float) cData.getPercentage());
 			totalAngle = add(totalAngle,currentValue);				
 			//Log.e(TAG,"圆心角:"+Float.toString(currentValue)+" 合计:"+Float.toString(totalAngle));						
 			if( Float.compare(totalAngle,0.0f) == -1)
@@ -395,10 +418,10 @@ public class PieChart extends CirChart{
 						+" 当前圆心角:"+Float.toString( currentValue )
 						+" 当前百分比:"+Double.toString( cData.getPercentage() ));
 				//return false;
-			}else if( Float.compare(totalAngle, 360.5f) == 1) 
+			}else if( Float.compare(totalAngle, getTotalAngle() + 0.5f) == 1) 
 			{
-			//	//圆心角总计大于360度
-				Log.w(TAG,"传入参数不合理，圆心角总计大于360.5度. 现有圆心角合计:"
+				//圆心角总计大于360度
+				Log.w(TAG,"传入参数不合理，圆心角总计大于总角度. 现有圆心角合计:"
 							+Float.toString(totalAngle));
 				//return false;
 			}

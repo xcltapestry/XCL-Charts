@@ -185,7 +185,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		//将标签与对应的数据集分别绑定
 		//标签对应的数据集
 		List<Double> dataSeries1= new LinkedList<Double>();	
-		dataSeries1.add(0.01); //55
+		dataSeries1.add(0d); //55
 		dataSeries1.add((double)60); 
 		dataSeries1.add((double)71); 
 		dataSeries1.add((double)40);
@@ -204,7 +204,7 @@ public class AreaChart01View extends DemoView implements Runnable {
 		dataSeries3.add((double)65); 	
 		dataSeries3.add((double)75); 
 		dataSeries3.add((double)55); 
-		
+				
 		//设置每条线各自的显示属性
 		//key,数据集,线颜色,区域颜色
 		AreaData line1 = new AreaData("小熊",dataSeries1,Color.BLUE,Color.YELLOW);
@@ -230,10 +230,11 @@ public class AreaChart01View extends DemoView implements Runnable {
 		//line3.getDotLabelPaint().setColor(Color.YELLOW);
 		line3.setLineStyle(XEnum.LineStyle.DOT);		
 		
-		
+	
 		mDataset.add(line1);		
 		mDataset.add(line3);
 		mDataset.add(line2);	
+							
 	}
 	
 	private void chartLabels()

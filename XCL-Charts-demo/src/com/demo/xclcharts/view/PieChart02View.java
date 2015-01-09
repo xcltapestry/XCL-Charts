@@ -30,6 +30,7 @@ import java.util.List;
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
+import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
@@ -51,7 +52,7 @@ import android.view.MotionEvent;
  * 
  */
 
-public class PieChart02View extends DemoView {
+public class PieChart02View extends DemoView implements Runnable{
 
 	 private String TAG = "PieChart02View";
 	 private PieChart chart = new PieChart();	
@@ -79,6 +80,7 @@ public class PieChart02View extends DemoView {
 	 {
 		 chartDataSet();	
 		 chartRender();
+		 new Thread(this).start();
 	 }	 		 	
 	
 	@Override  
@@ -110,7 +112,7 @@ public class PieChart02View extends DemoView {
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);
 			
 			//设定数据源
-			chart.setDataSource(chartData);												
+			//chart.setDataSource(chartData);												
 		
 			//标题
 			chart.setTitle("擂茶配方比");
@@ -122,6 +124,7 @@ public class PieChart02View extends DemoView {
 			//显示边框
 			//chart.showRoundBorder();
 			
+			/*
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
@@ -133,6 +136,7 @@ public class PieChart02View extends DemoView {
 			legend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
 			legend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
 			legend.showBox();
+			*/
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -153,7 +157,7 @@ public class PieChart02View extends DemoView {
 		chartData.add(new PieData("白糖","白糖(5%)",5,Color.rgb(75, 132, 1)));
 		
 		//将此比例块突出显示		
-		PieData pd = new PieData("花生","花生:35%",35,Color.rgb(180, 205, 230),true);
+		PieData pd = new PieData("花生","花生:35%",35,Color.rgb(180, 205, 230));
 		pd.setItemLabelRotateAngle(45.f);
 		chartData.add(pd);
 		
@@ -161,7 +165,7 @@ public class PieChart02View extends DemoView {
 		pdOther.setCustLabelStyle(XEnum.SliceLabelStyle.INSIDE,Color.BLACK);		
 		chartData.add(pdOther);
 		
-		PieData pdTea = new PieData("茶叶","茶叶(30%)",30,Color.rgb(253, 180, 90));		
+		PieData pdTea = new PieData("茶叶","茶叶(30%)",30,Color.rgb(253, 180, 90),true);		
 		pdTea.setCustLabelStyle(XEnum.SliceLabelStyle.OUTSIDE,Color.rgb(253, 180, 90));
 		chartData.add(pdTea);			
 	}
@@ -239,5 +243,74 @@ public class PieChart02View extends DemoView {
 											
 		this.invalidate();						
 	}
+	
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		try {          
+         	chartAnimation();         	
+         }
+         catch(Exception e) {
+             Thread.currentThread().interrupt();
+         }  
+	}
+	private void chartAnimation()
+	{
+		  try {       
+			 
+			  	float sum = 0.0f;
+			  	int count = chartData.size();
+	          	for(int i=0;i< count ;i++)
+	          	{
+	          		Thread.sleep(150);
+	          	
+	          		ArrayList<PieData> animationData = new ArrayList<PieData>();
+	        
+	          		sum = 0.0f;
+	          			          		
+	          		for(int j=0;j<=i;j++)
+	          		{            			            			
+	          			animationData.add(chartData.get(j));
+	          			sum = (float) MathHelper.getInstance().add(
+	          									sum , chartData.get(j).getPercentage());	          			
+	          		}   		          		
+	          			          			          				          				          	
+	          		animationData.add(new PieData("","",  MathHelper.getInstance().sub(100.0f , sum),
+	          											  Color.argb(1, 0, 0, 0)));		          		
+	          		chart.setDataSource(animationData);
+	          	
+	          		//激活点击监听
+	    			if(count - 1 == i)
+	    			{
+	    				//chart.ActiveListenItemClick();
+	    				//显示边框线，并设置其颜色
+	    				//chart.getArcBorderPaint().setColor(Color.YELLOW);
+	    				//chart.getArcBorderPaint().setStrokeWidth(3);
+	    				
+	    				//激活点击监听
+	    				chart.ActiveListenItemClick();
+	    				chart.showClikedFocus();
+	    				chart.disablePanMode();
+	    				
+	    				//显示图例
+	    				PlotLegend legend = chart.getPlotLegend();	
+	    				legend.show();
+	    				legend.setHorizontalAlign(XEnum.HorizontalAlign.CENTER);
+	    				legend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+	    				legend.showBox();
+	    				
+	    			}
+	    			
+	          		postInvalidate();            				          	          	
+	          }
+			  
+          }
+          catch(Exception e) {
+              Thread.currentThread().interrupt();
+          }       
+		  
+	}
+	
 	 
 }

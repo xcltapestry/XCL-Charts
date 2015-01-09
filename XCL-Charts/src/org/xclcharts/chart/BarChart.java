@@ -314,7 +314,7 @@ public class BarChart extends AxesChart {
 				
 		if( 0 == tickCount)
 		{
-			//Log.e(TAG,"数据轴数据源为0!");
+			Log.w(TAG,"数据轴数据源为0!");
 			return ;
 		}
 		//}else if (1 == tickCount)  //label仅一个时右移
@@ -448,7 +448,7 @@ public class BarChart extends AxesChart {
 		boolean showTicks = true;
 		
 		//绘制
-		for (int i = 0; i < tickCount; i++)  //tickCount
+		for (int i = 0; i < tickCount; i++) 
 		{			
 			switch(pos)
 			{				 
@@ -457,8 +457,7 @@ public class BarChart extends AxesChart {
 				case VERTICAL_CENTER:								
 					// 依初超始Y坐标与分类间距算出当前刻度的Y坐标
 					currentY = sub(axisY, mul((i + 1) , YSteps));		
-					
-					
+										
 					// 从左到右的横向网格线
 					drawHorizontalGridLines(canvas,plotArea.getLeft(),plotArea.getRight(),
 																i,tickCount,YSteps,currentY);
@@ -470,11 +469,7 @@ public class BarChart extends AxesChart {
 					if(XEnum.BarCenterStyle.SPACE == mBarCenterStyle)
 					{						
 						//if(i == tickCount - 1)continue;
-						 if(i == tickCount - 1)
-						 {
-							 showTicks = false;
-						 }
-						 
+						if(i == tickCount - 1)showTicks = false;
 						labelY = add(currentY,div(YSteps,2));
 					}
 																																	 
@@ -768,7 +763,7 @@ public class BarChart extends AxesChart {
 		float[] ret = mFlatBar.getBarWidthAndMargin(XSteps, barNumber);
 		if(null == ret||ret.length != 2)
 		{
-			Log.e(TAG,"分隔间距计算失败.");
+			Log.w(TAG,"分隔间距计算失败.");
 			return false;
 		}
 		float barWidth = ret[0];

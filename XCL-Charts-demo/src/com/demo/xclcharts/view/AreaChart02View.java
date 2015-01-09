@@ -190,6 +190,7 @@ public class AreaChart02View extends DemoView {
 	{
 		//将标签与对应的数据集分别绑定
 		//标签对应的数据集
+	
 		List<Double> dataSeries1= new LinkedList<Double>();	
 		dataSeries1.add((double)0);//0.001);  //25  0.001
 		dataSeries1.add((double)50); 
@@ -258,6 +259,52 @@ public class AreaChart02View extends DemoView {
 		mDataset.add(line3);		
 		mDataset.add(line1);
 		mDataset.add(line2);	
+		
+		
+		List<Double> dataSeries4 = new LinkedList<Double>();			
+		dataSeries4.add((double)0); 
+		dataSeries4.add((double)55); 
+		dataSeries4.add((double)0); 	
+		dataSeries4.add((double)0); 
+		dataSeries4.add((double)65); 
+		
+		
+		List<Double> dataSeries5 = new LinkedList<Double>();			
+		dataSeries5.add((double)36); 
+		dataSeries5.add((double)37); 
+		dataSeries5.add((double)0); 	
+		dataSeries5.add((double)0); 
+		dataSeries5.add((double)0); 
+		
+		
+		List<Double> dataSeries6 = new LinkedList<Double>();			
+		dataSeries6.add((double)36); 
+		dataSeries6.add((double)0); 
+		dataSeries6.add((double)0); 	
+		dataSeries6.add((double)0); 
+		dataSeries6.add((double)73); 
+		
+		AreaData line4 = new AreaData("line4",dataSeries4,
+				Color.BLUE,Color.BLUE); 
+		//设置线上每点对应标签的颜色
+		//line3.getDotLabelPaint().setColor(Color.YELLOW);
+		line4.setLineStyle(XEnum.LineStyle.DOT);	
+		
+		AreaData line5 = new AreaData("line5",dataSeries5,
+				Color.CYAN,Color.CYAN); 
+		//设置线上每点对应标签的颜色
+		//line3.getDotLabelPaint().setColor(Color.YELLOW);
+		line5.setLineStyle(XEnum.LineStyle.SOLID);	
+		
+		AreaData line6 = new AreaData("line6",dataSeries6,
+				Color.YELLOW,Color.YELLOW); 
+		//设置线上每点对应标签的颜色
+		//line3.getDotLabelPaint().setColor(Color.YELLOW);
+		line6.setLineStyle(XEnum.LineStyle.DASH);	
+		
+		mDataset.add(line4);		
+		mDataset.add(line5);
+		mDataset.add(line6);
 		
 	}
 	

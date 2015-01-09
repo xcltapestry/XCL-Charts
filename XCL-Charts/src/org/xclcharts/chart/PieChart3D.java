@@ -77,7 +77,8 @@ public class PieChart3D extends PieChart{
 			  {			  
 				    PieData cData =  chartDataSource.get(j);	
 				    if(null == cData) continue;
-					currentAngle = cData.getSliceAngle();						
+					//currentAngle = cData.getSliceAngle();		
+					currentAngle = MathHelper.getInstance().getSliceAngle(getTotalAngle(), (float) cData.getPercentage());
 					if(!validateAngle(currentAngle)) continue;
 					geArcPaint().setColor(cData.getSliceColor());	
 					
@@ -134,7 +135,8 @@ public class PieChart3D extends PieChart{
 		{
 		 	PieData cData = chartDataSource.get(j);	
 		 	if(null == cData) continue;
-		 	currentAngle = cData.getSliceAngle();
+		 	//currentAngle = cData.getSliceAngle();
+		 	currentAngle = MathHelper.getInstance().getSliceAngle(getTotalAngle(), (float) cData.getPercentage());
 		 	if(!validateAngle(currentAngle)) continue;		  
 		 	geArcPaint().setColor( DrawHelper.getInstance().getDarkerColor(
 		 												cData.getSliceColor()) ); 						

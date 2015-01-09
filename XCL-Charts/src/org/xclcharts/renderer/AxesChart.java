@@ -74,8 +74,8 @@ public class AxesChart extends EventChart {
 	//是否将轴封闭
 	private boolean mAxesClosed = false;	
 	
-	private float myMargin = 10.0f;
-	private float mxMargin = 15.0f;
+	private float myMargin = -10.0f;
+	private float mxMargin = -25.f;// 25.0f; //散点和气泡要注意下
 	
 	//轴刻度的位置信息
 	protected ArrayList<PlotAxisTick> mLstDataTick = null;
@@ -161,20 +161,20 @@ public class AxesChart extends EventChart {
 				case LEFT: //Y
 				case RIGHT:			
 				case VERTICAL_CENTER:
-					if( !t.isShowTickMarks() || !isDrawYAxisTickMarks(t.Y,mMoveY)) showTicks = false;
+					if( !t.isShowTickMarks() || !isDrawYAxisTickMarks(t.Y,mMoveY)) showTicks = false;					
 					  categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
 							  showTicks);					
 					break;							
 				case TOP: //X
 				case BOTTOM:		
 				case HORIZONTAL_CENTER:
-					if( !t.isShowTickMarks() || !isDrawXAxisTickMarks(t.X,mMoveX) ) showTicks = false;
+					if( !t.isShowTickMarks() || !isDrawXAxisTickMarks(t.X,mMoveX) ) showTicks = false;								
 						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
 								showTicks);		
 					break;			
 			
 			} //switch end
-			
+			showTicks = true;
 		}
 	}
 	
@@ -267,7 +267,7 @@ public class AxesChart extends EventChart {
 	 * @return X轴步长
 	 */
 	protected float getVerticalXSteps(int tickCount) {
-		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)			
+		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)	
 		return  (div(getPlotScreenWidth() ,tickCount)); 
 	}
 		
@@ -327,11 +327,8 @@ public class AxesChart extends EventChart {
 	
 	protected boolean isDrawXAxisTickMarks(float currentX,float moveX)
 	{
-		if(Float.compare(currentX , plotArea.getLeft() - moveX ) == -1 || 
-				Float.compare(currentX , plotArea.getRight() - moveX) == 1 )				
-		{
-			return false;
-		}
+		if(Float.compare(currentX + moveX , plotArea.getLeft()  ) == -1 ) return false;
+		if(Float.compare(currentX + moveX , plotArea.getRight()  ) ==  1 ) return false;
 		return true;
 	}
 	

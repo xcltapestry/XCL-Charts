@@ -1,30 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="293" key="DIALOG_WIDTH"/>
-		<item value="319" key="DIALOG_Y_ORIGIN"/>
-		<item value="409" key="DIALOG_HEIGHT"/>
-		<item value="958" key="DIALOG_X_ORIGIN"/>
+		<item value="412" key="DIALOG_WIDTH"/>
+		<item value="209" key="DIALOG_Y_ORIGIN"/>
+		<item value="699" key="DIALOG_X_ORIGIN"/>
+		<item value="344" key="DIALOG_HEIGHT"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="initRectF" key="selection"/>
+		<item value="getArcBorderPaint" key="selection"/>
 		<list key="findhistory">
-			<item value="drawLine"/>
-			<item value="initRectF"/>
-			<item value="renderLine"/>
-			<item value="getDatasetSize"/>
-			<item value="mControlPanRange"/>
-			<item value="mEnablePanMode"/>
-			<item value="panmode"/>
-			<item value="mTranslateXY"/>
+			<item value="getArcBorderPaint"/>
+			<item value="chartAnimation"/>
+			<item value="mTotalAngle"/>
+			<item value="360.f"/>
+			<item value="isDrawXAxisTickMarks"/>
+			<item value="case HORIZONTAL_CENTER:"/>
+			<item value="setXCoordFirstTickmarksBegin"/>
+			<item value="mBarCenterStyle"/>
 		</list>
 		<list key="replacehistory">
+			<item value="getTotalAngle()"/>
 			<item value="getLabelOptions("/>
 			<item value="getLabelOptions"/>
 			<item value="ArrayList"/>
@@ -32,7 +33,6 @@
 			<item value="getLowerTitle"/>
 			<item value="getLeftTitle"/>
 			<item value="float"/>
-			<item value="colorTitalAxes"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

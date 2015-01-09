@@ -51,8 +51,10 @@ public class LineChart extends LnChart{
 	private boolean mLineAxisIntersectVisible = true;
 	
 	//图例
-	private List<LnData> mLstKey = new ArrayList<LnData>();		
-			
+	private List<LnData> mLstKey = new ArrayList<LnData>();	
+	
+
+								
 	public LineChart()
 	{
 		
@@ -108,7 +110,35 @@ public class LineChart extends LnChart{
 		public boolean getLineAxisIntersectVisible()
 		{
 			return mLineAxisIntersectVisible;
-		}						
+		}	
+		
+		/**
+		 * 设置柱形居中位置,依刻度线居中或依刻度中间点居中。
+		 * @param style 居中风格
+		 */
+		public void setBarCenterStyle(XEnum.BarCenterStyle style)
+		{
+			mBarCenterStyle = style;
+		}
+		
+		/**
+		 * 返回柱形居中位置,依刻度线居中或依刻度中间点居中。
+		 * @return 居中风格
+		 */
+		public XEnum.BarCenterStyle getBarCenterStyle()
+		{
+			return mBarCenterStyle;
+		}
+		
+		/**
+		 * 设置线图的X坐标开始计算位置，默认false,即从轴上开始,true则表示从第一个刻度线位置开始
+		 * @param status 状态
+		 */
+		public void setXCoordFirstTickmarksBegin(boolean status)
+		{
+			mXCoordFirstTickmarksBegin = status;
+		}
+
 				
 		/**
 		 * 绘制线
@@ -129,7 +159,7 @@ public class LineChart extends LnChart{
 			float initX =  plotArea.getLeft();
             float initY =  plotArea.getBottom();             
 			float lineStartX = initX,lineStartY = initY;         
-            float lineStopX = 0.0f,lineStopY = 0.0f;        
+            float lineStopX = 0.0f,lineStopY = 0.0f;                               
             													
 			//得到分类轴数据集
 			List<String> dataSet =  categoryAxis.getDataSet();
@@ -149,32 +179,36 @@ public class LineChart extends LnChart{
 			float XSteps = 0.0f;	
 			int j = 0; //,childID = 0;	
 			int tickCount = dataSet.size();		
-			if( 0 == tickCount)
-			{
-				//Log.e(TAG,"分类轴数据源为0!");
-				return false;
-			}else if (1 == tickCount)  //label仅一个时右移
-			{
-				j = 1;
-			}			
-			int labeltickCount = getCategoryAxisCount();
-			XSteps = getVerticalXSteps(labeltickCount);
-			
-			
+			if (1 == tickCount)j = 1;  //label仅一个时右移 !mXCoordFirstTickmarksBegin && 
+					
+			int labeltickCount = getCategoryAxisCount();		
+			XSteps = getVerticalXSteps(labeltickCount );
+						
+			 						
 			float itemAngle = bd.getItemLabelRotateAngle();
 			PlotLine pLine = bd.getPlotLine();   
 			PlotDot pDot = pLine.getPlotDot();	        
 			float radius = pDot.getDotRadius();	
 			double bv = 0.d;
-					
+			
 		    //画线
 			int count = chartValues.size();
 			for(int i=0;i<count;i++)
             {								
 				bv = chartValues.get(i);            	
-            	lineStopY = getVPValPosition(bv);			            
-            	lineStopX = add(initX , j * XSteps);        	            	
-            	        	
+            	lineStopY = getVPValPosition(bv);		            	            	
+            	
+            	if(mXCoordFirstTickmarksBegin)
+				{
+            		lineStopX = add(initX , mul((j+1) , XSteps));  
+				}else{
+					lineStopX = add(initX , mul(j , XSteps));  
+				}          
+            	//当柱图与线图混合，且柱图柱形为BarCenterStyle.SPACE时
+            	if(mXCoordFirstTickmarksBegin && 
+            			XEnum.BarCenterStyle.SPACE == mBarCenterStyle)
+            					lineStopX = sub(lineStopX ,div(XSteps,2)); 
+            	            	            	           
             	if(0 == j)
             	{
             		lineStartX = lineStopX;
@@ -192,8 +226,7 @@ public class LineChart extends LnChart{
             	}else{
 	            	        
 	            	if(type.equalsIgnoreCase("LINE"))
-	            	{
-	            		
+	            	{	            		
 	            		if(getLineAxisIntersectVisible() == true ||
 	            					Float.compare(lineStartY, initY) != 0 )	
 	            		{	            		
@@ -214,7 +247,7 @@ public class LineChart extends LnChart{
 					                		lineStopY - radius + mMoveY,
 					    					lineStopX + radius + mMoveX, 
 					    					lineStopY + radius + mMoveY);  
-	            			lineStopX = lineStopX  + radius;           			
+	            			lineStopX = add(lineStopX  , radius);           			
 	                	}
 	            		
 	            		//显示批注形状
@@ -228,7 +261,7 @@ public class LineChart extends LnChart{
 	                	}
 	            			            		
 	            	}else{
-	            		Log.e(TAG,"未知的参数标识。"); //我不认识你，我不认识你。
+	            		Log.w(TAG,"未知的参数标识。"); //我不认识你，我不认识你。
 	            		return false;
 	            	}      				
             	

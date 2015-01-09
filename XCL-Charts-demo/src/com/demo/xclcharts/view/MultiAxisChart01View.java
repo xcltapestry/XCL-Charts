@@ -223,6 +223,9 @@ public class MultiAxisChart01View extends DemoView {
 			chart.getPlotGrid().hideOddRowBgColor();
 			chart.getPlotGrid().hideVerticalLines();
 			
+			chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
+			//chart.getCategoryAxis().hideAxisLabels();
+			
 		}
 		
 		/**
@@ -232,7 +235,7 @@ public class MultiAxisChart01View extends DemoView {
 		{
 			//标签轴
 			lnChart.setCategories(chartLabelsLn);		
-			lnChart.getCategoryAxis().hide();	
+			//lnChart.getCategoryAxis().hide();	
 			
 			//设定数据源						
 			lnChart.setDataSource(chartDatasetLn);
@@ -282,17 +285,17 @@ public class MultiAxisChart01View extends DemoView {
 			//实际的折线图的数据集
 			//标签1对应的数据集
 			LinkedList<Double> virtual= new LinkedList<Double>();	
-			virtual.add(0d); 			
+			//virtual.add(0d); 			
 			virtual.add(95d); 
 			virtual.add(100d); 
-			virtual.add(0d); 
+			//virtual.add(0d); 
 			
 			//标签2对应的数据集
 			LinkedList<Double> physical= new LinkedList<Double>();				
-			physical.add(0d); 
+			//physical.add(0d); 
 			physical.add(110d); 
 			physical.add(125d); 
-			physical.add(0d); 
+			//physical.add(0d); 
 			
 			//将标签与对应的数据集分别绑定
 			LineData lineData1 = new LineData("Virtual RT",virtual,Color.rgb(234, 83, 71));
@@ -308,10 +311,10 @@ public class MultiAxisChart01View extends DemoView {
 		private void chartLnLabels()
 		{
 			//折线图坐标系是封闭，所以前后要加上两个空白的
-			chartLabelsLn.add(" "); 
+			//chartLabelsLn.add(" "); 
 			chartLabelsLn.add("4 Cores Per Node"); 
 			chartLabelsLn.add("8 Cores per Node"); 	
-			chartLabelsLn.add(" "); 
+			//chartLabelsLn.add(" "); 
 		}
 		
 		private void chartLnRender()
@@ -327,6 +330,11 @@ public class MultiAxisChart01View extends DemoView {
 				
 				//允许线与轴交叉时，线会断开
 				lnChart.setLineAxisIntersectVisible(false);
+																
+				lnChart.setXCoordFirstTickmarksBegin(true);
+				lnChart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
+				lnChart.getCategoryAxis().hideAxisLabels();
+				//lnChart.getPlotArea().setBackgroundColor(true, Color.BLUE);
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

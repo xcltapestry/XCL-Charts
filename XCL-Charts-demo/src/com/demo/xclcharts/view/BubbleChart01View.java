@@ -98,7 +98,7 @@ public class BubbleChart01View extends DemoView {
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(10, ltrb[1], 10, ltrb[3]);	
+			chart.setPadding(15, ltrb[1], 15, ltrb[3]);	
 			
 			//显示边框
 			chart.showRoundBorder();

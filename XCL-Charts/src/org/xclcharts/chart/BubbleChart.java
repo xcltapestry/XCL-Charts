@@ -211,7 +211,7 @@ public class BubbleChart extends LnChart{
 
 	private float calcRaidus(float scale,float scaleTotalSize,float bubbleRadius)
 	{
-		 return  ( bubbleRadius  * (scale / scaleTotalSize) );		
+		return mul(bubbleRadius,div(scale,scaleTotalSize));
 	}
 	
 	
@@ -259,19 +259,12 @@ public class BubbleChart extends LnChart{
 	{
 		if(!getPlotQuadrant().isShow())return;
 		
-		float axisScreenWidth = getPlotScreenWidth(); 
-    	float axisScreenHeight = getPlotScreenHeight();
-		float axisDataHeight = dataAxis.getAxisRange(); 	
-						
 		Double xValue = getPlotQuadrant().getQuadrantXValue();
 	    Double yValue = getPlotQuadrant().getQuadrantYValue();	    
-	    	   
-	    //对应的Y坐标
-	    float centerY = (float) (axisScreenHeight * ( (yValue - dataAxis.getAxisMin() ) / axisDataHeight)) ;  
-	                	
-    	//对应的X坐标	  	  
-	    float centerX = (float) (axisScreenWidth * ( (xValue - mMinValue ) / (mMaxValue - mMinValue))) ;  
-    	    	   
+	   
+	    float centerX = getLnXValPosition(xValue,mMaxValue,mMinValue);	
+	    float centerY = getVPValPosition(yValue);	
+	        	    	   
 	    mPlotQuadrant.drawQuadrant(canvas, centerX, centerY, 
 			   plotArea.getLeft(), plotArea.getPlotTop(), plotArea.getPlotRight(), plotArea.getBottom());	    
 	}

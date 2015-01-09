@@ -21,10 +21,7 @@
  */
 package org.xclcharts.chart;
 
-import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XEnum;
-
-import android.util.Log;
 
 /**
  * @ClassName PieData
@@ -34,7 +31,7 @@ import android.util.Log;
  */
 public class PieData {
 	
-	private final String TAG ="PieData";
+	//private final String TAG ="PieData";
 
 	private String mPieKey = "";
 	private String mPieLabel = "";
@@ -206,36 +203,7 @@ public class PieData {
 	{
 		return mPieColor;
 	}
-	
-	/**
-	 * 将百分比转换为饼图显示角度
-	 * @return 圆心角度
-	 */
-	public float getSliceAngle() 
-	{			
-		float Angle = 0.0f;
-		try{
-			
-			float currentValue = (float) this.getPercentage();
-			if(currentValue >= 101f || currentValue < 0.0f)
-			{
-				Log.e(TAG,"输入的百分比不合规范.须在0~100之间.");			
-			}else{						
-				Angle =  MathHelper.getInstance().round( 
-								MathHelper.getInstance().mul( 360f,
-									MathHelper.getInstance().div(currentValue,100f) ) ,2);												
-			}
-			
-		}catch(Exception ex)
-		{
-			Angle = -1f;
-		}finally{
-			
-		}
-		return  Angle;
-	}
-	
-	
+		
 	/**
 	 * 返回标签在显示时的旋转角度
 	 * @return 旋转角度

@@ -99,7 +99,7 @@ public class ScatterChart01View extends DemoView {
 						
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(5, ltrb[1], 5, ltrb[3]);							
+			chart.setPadding(15, ltrb[1], 15, ltrb[3]);							
 			
 			//数据源	
 			chart.setCategories(labels);

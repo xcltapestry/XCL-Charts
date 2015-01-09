@@ -28,7 +28,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart08View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart09View"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.FunnelChart01View"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -56,8 +55,9 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.centerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CoordsCenterStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 </qualifiedTypeNameHistroy>

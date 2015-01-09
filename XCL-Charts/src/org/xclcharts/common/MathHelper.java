@@ -196,6 +196,38 @@ public class MathHelper {
       	return Math.hypot(nx, ny);
     }	
     
+    
+    /**
+     * 将百分比转换为图心角角度
+     * @param totalAngle	总角度(如:360度)
+     * @param percentage	百分比
+     * @return 圆心角度
+     */
+	public float getSliceAngle(float totalAngle,float percentage) 
+	{			
+		float Angle = 0.0f;
+		try{
+			
+			float currentValue = percentage;
+			if(currentValue >= 101f || currentValue < 0.0f)
+			{
+				//Log.e(TAG,"输入的百分比不合规范.须在0~100之间.");			
+			}else{						
+				Angle =  MathHelper.getInstance().round( 
+								MathHelper.getInstance().mul(totalAngle,
+									MathHelper.getInstance().div(currentValue,100f) ) ,2);												
+			}
+			
+		}catch(Exception ex)
+		{
+			Angle = -1f;
+		}finally{
+			
+		}
+		return  Angle;
+	}
+	
+    
         
     public void disableHighPrecision()
     {
