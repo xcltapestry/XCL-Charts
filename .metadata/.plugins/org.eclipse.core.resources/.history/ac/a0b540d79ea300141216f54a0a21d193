@@ -103,8 +103,8 @@ public class SplineChart01View extends DemoView {
 			chart.setPadding(ltrb[0], ltrb[1], ltrb[2], ltrb[3]);	
 			
 			//平移时收缩下
-			//float margin = DensityUtil.dip2px(getContext(), 20);
-			//chart.setXTickMarksOffsetMargin(margin);
+			float margin = DensityUtil.dip2px(getContext(), 20);
+			chart.setXTickMarksOffsetMargin(margin);
 			
 			//显示边框
 			chart.showRoundBorder();
@@ -188,7 +188,7 @@ public class SplineChart01View extends DemoView {
 			chart.showDyLine();
 			chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Vertical);
 			//扩大实际绘制宽度
-			//chart.getPlotArea().extWidth(500.f);
+			chart.getPlotArea().extWidth(500.f);
 			
 			//封闭轴
 			chart.setAxesClosed(true);
@@ -268,9 +268,6 @@ public class SplineChart01View extends DemoView {
 		
 		//线1的数据集
 				List<PointD> linePoint1 = new ArrayList<PointD>();
-				
-				linePoint1.add(new PointD(2d, 8d));
-				
 				linePoint1.add(new PointD(5d, 8d));
 				
 				linePoint1.add(new PointD(10d, 12d));
@@ -282,42 +279,19 @@ public class SplineChart01View extends DemoView {
 				//linePoint1.add(new PointD(62d, 45d));
 				SplineData dataSeries1 = new SplineData("青菜萝卜够吃",linePoint1,
 						Color.rgb(54, 141, 238) );
-				//把线弄细点
-				dataSeries1.getLinePaint().setStrokeWidth(2);
-				
-				
-
-				//线2的数据集
-				List<PointD> linePoint2 = new ArrayList<PointD>();
-				linePoint2.add(new PointD(1d, 50d));
-				linePoint2.add(new PointD(2d, 52d));
-				linePoint2.add(new PointD(3d, 53d));
-				linePoint2.add(new PointD(8d, 55d));
-				SplineData dataSeries2 = new SplineData("饭管够",linePoint2,
-						Color.rgb(255, 165, 132) );
-				
-						
-				dataSeries2.setLabelVisible(true);		
-				dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
-				dataSeries2.getDotLabelPaint().setColor(Color.RED);	
-				
 				chartData.add(dataSeries1);	
-				chartData.add(dataSeries2);	
+				
 	}
 	
 	private void chartLabels()
 	{
-		labels.add("0");
-		labels.add("5");
-		labels.add("10");
-		
-		//labels.add("5:52:33");
-		//labels.add("5:52:35");
-		//labels.add("5:52:37");
-		//labels.add("5:52:39");
-		//labels.add("5:52:41");
-		//labels.add("5:52:43");
-		//labels.add("5:52:45");
+		labels.add("5:52:33");
+		labels.add("5:52:35");
+		labels.add("5:52:37");
+		labels.add("5:52:39");
+		labels.add("5:52:41");
+		labels.add("5:52:43");
+		labels.add("5:52:45");
 	}
 
 	@Override

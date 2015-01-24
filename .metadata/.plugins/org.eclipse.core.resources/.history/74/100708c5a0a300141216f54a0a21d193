@@ -289,9 +289,7 @@ public class SplineChart01View extends DemoView {
 
 				//线2的数据集
 				List<PointD> linePoint2 = new ArrayList<PointD>();
-				linePoint2.add(new PointD(1d, 50d));
-				linePoint2.add(new PointD(2d, 52d));
-				linePoint2.add(new PointD(3d, 53d));
+				linePoint2.add(new PointD(2d, 50d));
 				linePoint2.add(new PointD(8d, 55d));
 				SplineData dataSeries2 = new SplineData("饭管够",linePoint2,
 						Color.rgb(255, 165, 132) );
