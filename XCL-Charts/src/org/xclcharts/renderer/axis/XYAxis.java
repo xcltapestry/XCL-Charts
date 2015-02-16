@@ -299,13 +299,8 @@ public class XYAxis extends Axis {
 					labelX, labelsStartY,
 					getTickLabelRotateAngle(), canvas,
 					getTickLabelPaint());
-		}
-		
+		}		
 	}
-	
-	
-
-	
 	
 	
 	//只针对renderHorizontalTick()，处理标签文字太长，分多行显示的情况,

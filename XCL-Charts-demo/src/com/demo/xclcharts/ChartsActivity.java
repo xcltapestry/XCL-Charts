@@ -49,6 +49,7 @@ import com.demo.xclcharts.view.BarChart09View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.BubbleChart01View;
+import com.demo.xclcharts.view.CircleChart04View;
 import com.demo.xclcharts.view.DemoView;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.FunnelChart01View;
@@ -74,6 +75,7 @@ import com.demo.xclcharts.view.SplineChart02View;
 import com.demo.xclcharts.view.SplineChart03View;
 import com.demo.xclcharts.view.StackBarChart01View;
 import com.demo.xclcharts.view.StackBarChart02View;
+
 
 /**
  * @ClassName ChartsActivity
@@ -165,7 +167,8 @@ public class ChartsActivity extends Activity {
 			new QuadrantChart01View(this),	//象限图
 			
 			new FunnelChart01View(this), //漏斗图(Desc)
-			new FunnelChart02View(this) //漏斗图(Asc)
+			new FunnelChart02View(this), //漏斗图(Asc)
+			new CircleChart04View(this) //圆形图
 		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  

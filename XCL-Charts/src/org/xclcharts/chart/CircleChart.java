@@ -33,6 +33,7 @@ import org.xclcharts.renderer.XEnum;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PointF;
 import android.graphics.Paint.Align;
 import android.graphics.RectF;
 import android.util.Log;
@@ -62,13 +63,16 @@ public class CircleChart extends CirChart {
     //内部背景填充
     private boolean mShowInnerBG = true;
     
+    //显示圆形箭头标示
+    private boolean mShowCap = false;    
 
     //数据源
     protected List<PieData> mDataSet;
     
     private float moRadius = 0.9f;
     private float miRadius = 0.8f;
-        
+    
+   
 
     public CircleChart() {
     
@@ -240,6 +244,32 @@ public class CircleChart extends CirChart {
     	miRadius = radius;
     }
     
+    /**
+     * 是否显示圆形箭头标示(仅限360度圆形才有)
+     * @return 状态
+     */
+    public boolean isShowCap()
+    {
+    	return mShowCap; 
+    }
+    
+    /**
+     * 显示圆形箭头标示(仅限360度圆形才有. <br/>
+     * 起始色默认为圆背景色，如没设，则默认为内部填充色)
+     */
+    public void ShowCap()
+    {
+    	mShowCap = true;
+    }
+    
+    /**
+     * 隐藏圆形箭头标示
+     */
+    public void HideCap()
+    {
+    	mShowCap = false;
+    }
+    
 
     /**
      * 依比例绘制扇区
@@ -348,6 +378,7 @@ public class CircleChart extends CirChart {
                     currentAngle = MathHelper.getInstance().getSliceAngle(180f, (float) cData.getPercentage());                    
                     drawPercent(canvas, paintArc, cirX, hCirY, hRadius , 180f,  currentAngle);
                     
+                                      
                     if(isShowInnerFill())  //内部填充
                     {
                     	drawPercent(canvas, getFillCirclePaint(), cirX, hCirY ,iRadius, 180f, 180f);
@@ -366,12 +397,44 @@ public class CircleChart extends CirChart {
                     	canvas.drawCircle(cirX, cirY, radius, getBgCirclePaint());
                     	// canvas.drawCircle(cirX, cirY, (float) (Math.round(radius * 0.9f)), mPaintFillCircle);
                     
-                    if(isShowInnerFill())
-                    	canvas.drawCircle(cirX, cirY, 
-                    					MathHelper.getInstance().round(mul(radius , moRadius),2), getFillCirclePaint());
                     
-
+                    if(isShowInnerFill())
+                    {
+                    	float fillRadius = MathHelper.getInstance().round(mul(radius , moRadius),2);
+                    	canvas.drawCircle(cirX, cirY, fillRadius, getFillCirclePaint());                                     
+                    }
+        	    	        	    	                    
                     canvas.drawArc(arcRF0, mOffsetAngle, currentAngle, true, paintArc);
+                    
+     				//////////////////
+                    if(isShowCap() && (isShowInnerBG() || isShowInnerFill()) )
+                    {
+                    	
+	                    float cap = MathHelper.getInstance().round(mul(radius , miRadius ),2);
+	                    float capRadius = cap +  (radius - cap) /2 ;
+	                    
+	                    //箭头
+	                    if(isShowInnerBG())
+	                    {
+	                    	paintArc.setColor( getBgCirclePaint().getColor() );
+	                    }else{
+	                    	paintArc.setColor( getFillCirclePaint().getColor() );
+	                    }
+	        	    	PointF pointBegin = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
+	        	    						capRadius,getInitialAngle() ); 	
+	        	    	
+	        	    	canvas.drawLine(cirX,cirY, pointBegin.x,pointBegin.y, paintArc);        	    	
+	        	    	canvas.drawCircle(pointBegin.x,pointBegin.y, (radius - cap) /2, paintArc);
+	                    
+	                    //箭头                    
+	        	    	PointF point = MathHelper.getInstance().calcArcEndPointXY(cirX,cirY,
+	        	    					capRadius,add(mOffsetAngle , currentAngle) ); 	                   
+	                   
+	        	    	paintArc.setColor(cData.getSliceColor());        	    	
+	        	    	canvas.drawLine(cirX,cirY, point.x,point.y, paintArc);        	    	
+	        	    	canvas.drawCircle(point.x,point.y, (radius - cap) /2, paintArc);
+                    }
+        	    	////////////////////        	    	
                     
                     if(isShowInnerFill())
                     	canvas.drawCircle(cirX, cirY, 
@@ -381,7 +444,7 @@ public class CircleChart extends CirChart {
                        canvas.drawText(cData.getLabel(), cirX, getCirY(cirY,LabelHeight), getLabelPaint());
 
                     if ("" != mDataInfo)
-                        canvas.drawText(mDataInfo, cirX, add(cirY , infoHeight), getDataInfoPaint());
+                        canvas.drawText(mDataInfo, cirX, add(cirY , infoHeight), getDataInfoPaint());                                                                               
                 }
 
                 break;

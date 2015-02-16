@@ -12,8 +12,8 @@
 	  	<item>竖向3D柱形图 </item>
 	  	<item>横向3D柱形图</item>
 	  	
-	  	<item>正负背向式图一 </item>
-	  	<item>正负背向式图二</item>
+	  	<item>正负背向式(横向) </item>
+	  	<item>正负背向式(竖向)</item>
 	  	
 	  	<item>竖向堆积柱形图 </item>
 	  	<item>横向堆积柱形图 </item>
@@ -51,8 +51,9 @@
      	 
      	 <item>漏斗图(Desc)</item>
      	 <item>漏斗图(Asc)</item>
+     	  <item>圆形图</item>
         
-     	 <item>双线图</item> 
+     	 <item>线图并行混合</item> 
         <item>仪表盘-混合图</item> 
          <item>仪表盘-测试网速</item> 
          <item>仪表盘-速率</item> 
@@ -117,6 +118,7 @@
         <item>Bubble Chart + Scatter Chart + Spline chart</item>
          <item>Funnel Chart</item>
           <item>Funnel Chart</item>
+            <item>Circle Chart</item>
        
         <item>Activity传值，自动刷新</item> 
        <item>Dial Chart</item> 

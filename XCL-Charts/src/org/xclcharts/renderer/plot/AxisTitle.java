@@ -47,6 +47,12 @@ public class AxisTitle {
 	 
 	 protected XEnum.AxisTitleStyle mAxisTitleStyle = XEnum.AxisTitleStyle.NORMAL;
 	 protected String mCrossPointTitle = "";
+	 
+	 //偏移距离
+	 protected float mLeftAxisTitleOffsetX = 0.f;
+	 protected float mRightAxisTitleOffsetX = 0.f;
+	 protected float mLowerAxisTitleOffsetY = 0.f;
+	 
 	
 	public AxisTitle()
 	{							
@@ -184,5 +190,28 @@ public class AxisTitle {
 		this.mCrossPointTitle = title;
 	}
 	
-
+	/**
+	 * 左边轴标题偏移距离
+	 * @param offset 偏移距离
+	 */
+	public void setLeftAxisTitleOffsetX(float offset){
+		mLeftAxisTitleOffsetX = offset;
+	}
+	
+	/**
+	 * 右边轴标题偏移距离
+	 * @param offset 偏移距离
+	 */
+	public void setRightAxisTitleOffsetX(float offset){
+		mRightAxisTitleOffsetX = offset;
+	}
+	
+	/**
+	 * 底部轴标题偏移距离
+	 * @param offset 偏移距离
+	 */
+	public void setLowerAxisTitleOffsetY(float offset){
+		mLowerAxisTitleOffsetY = offset;
+	}
+	
 }

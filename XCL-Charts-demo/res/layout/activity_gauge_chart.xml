@@ -14,15 +14,14 @@
 	         android:id="@+id/chart_view"
 	         android:layout_width="400dip"  
 	         android:layout_height="200dip"  			        
-	         android:layout_centerInParent="true"
+	        android:layout_centerInParent="true"
 	      />   	
-	         
-    	
+	  
    				 
    		 <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+             android:orientation="horizontal"
             android:id="@+id/lay_sk"
             android:layout_below="@+id/chart_view"
            android:layout_alignParentLeft="true"  
@@ -37,12 +36,17 @@
                		android:layout_height="50dip"  
 			        android:layout_marginBottom="136dp" />
 			        
+			        
 			        <TextView  
 				    android:id="@+id/tv_process"
 				    android:layout_width="wrap_content"
 				    android:layout_height="wrap_content" 
 				    android:text="@string/seekbar_label"
 				    />
+			        
+			        
+			      
+			       
           </LinearLayout>
 
 </RelativeLayout>

@@ -9,6 +9,7 @@ import java.util.Random;
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.CustomLineData;
+import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
@@ -17,6 +18,8 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -212,10 +215,24 @@ public class BarChart08View extends DemoView{
 								
 	}
 	
+	private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
 	@Override
     public void render(Canvas canvas) {
         try{
             chart.render(canvas);
+            
+            
+            paint.setTextSize(22);
+            paint.setColor(Color.RED);
+            
+            float textHeight = DrawHelper.getInstance().getPaintFontHeight(paint);
+            paint.setTextAlign(Align.LEFT);
+            canvas.drawText("Y轴标题",chart.getPlotArea().getLeft(), chart.getPlotArea().getTop() - textHeight ,paint);
+            
+            paint.setTextAlign(Align.RIGHT);
+            canvas.drawText("X轴标题",chart.getPlotArea().getRight(), chart.getPlotArea().getBottom() + textHeight ,paint);
+            
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }

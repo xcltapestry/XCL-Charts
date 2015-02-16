@@ -58,6 +58,7 @@ public class CirChart extends EventChart{
 	private Paint mPaintLabel = null;
 	//初始偏移角度
 	protected float mOffsetAngle = 0.0f;//180;	
+	protected float mInitOffsetAngle = 0.0f;
 	
 	//折线标签基类
 	private LabelBrokenLineRender mLabelLine = null;
@@ -111,7 +112,7 @@ public class CirChart extends EventChart{
 	 */
 	public void setInitialAngle(float Angle)
 	{
-		mOffsetAngle = Angle;
+		mInitOffsetAngle = mOffsetAngle = Angle;
 	}
 	
 	/**
@@ -120,8 +121,18 @@ public class CirChart extends EventChart{
 	 */
 	public float getInitialAngle()
 	{
+		return mInitOffsetAngle;
+	}
+	
+	/**
+	 * 返回图的当前偏移角度
+	 * @return 偏移角度
+	 */
+	public float getOffsetAngle()
+	{
 		return mOffsetAngle;
 	}
+	
 
 	/**
 	 * 设置标签显示在扇区的哪个位置(里面，外面，隐藏)
