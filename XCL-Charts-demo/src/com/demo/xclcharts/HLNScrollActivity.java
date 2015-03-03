@@ -23,7 +23,8 @@ public class HLNScrollActivity extends Activity {
 		this.setTitle("折线图左右滑动");
 			
 		horiView = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
-		horiView.setPadding(70, 0, 0, 0);
+		//horiView.setPadding(70, 0, 0, 0);
+	
 		
 		//设置horizontalScrollvView拉到头和尾的时候没有阴影颜色
 		horiView.setOverScrollMode(View.OVER_SCROLL_NEVER);

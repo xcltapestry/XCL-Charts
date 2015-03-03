@@ -137,12 +137,15 @@ public abstract class GraphicalView extends View {
 		 */		
 		protected void disableHardwareAccelerated()
 		{			
+			//View.isHardwareAccelerated() 
+			//Canvas.isHardwareAccelerated()
+			
 			if(SysinfoHelper.getInstance().supportHardwareAccelerated())
 			{		
 				//是否开启了硬件加速,如开启将其禁掉
 				if(!isHardwareAccelerated())
 				{
-					setLayerType(View.LAYER_TYPE_SOFTWARE,null); 
+					setLayerType(View.LAYER_TYPE_NONE,null);  //LAYER_TYPE_SOFTWARE
 				}
 			}
 		}					 

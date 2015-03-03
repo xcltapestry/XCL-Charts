@@ -54,7 +54,9 @@ public class LineChart03View  extends GraphicalView {
 	private void chartRender()
 	{
 		try {				
-			setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			//setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			setLayerType(View.LAYER_TYPE_NONE, null);
+				
 
 			//设定数据源
 			chart.setCategories(labels);								
@@ -182,17 +184,36 @@ public class LineChart03View  extends GraphicalView {
         chart.setChartRange(w,h);
     }  
 	
+	/*
+	 * 
+	 1. 右边轴view 遮住右边view视图中最左边点或线的处理办法：
+	xml  FrameLayout 中 LineChart03View_left 要放到后面，放前面会盖住scrollview中的图
+	HLNScrollActivity 中的horiView.setPadding()可以注释掉
+	然后在 LineChart03View 中 通过设置chart.setpadding中的left来对整齐
+	或通过  chart.setChartRange()中的x位置来偏移即可
+	
+	 2. 如果觉得左滑范围太大，可以调整 HLNScrollActivity中 的horiView.setPadding()
+	 也可以调整  chart.setChartRange()中的x位置如 chart.setChartRange(60,0, ....)
+	*/
+	
 	@Override
     public void render(Canvas canvas) {
         try{
         	        
         	//设置图表大小
-	        chart.setChartRange(0,0,
-	        		this.getLayoutParams().width - 10,
-	        		 this.getLayoutParams().height - 10);
-	        //设置绘图区内边距	  
-	        chart.setPadding( 0,120, 100,180 );	
+	       // chart.setChartRange(0,0,
+	       // chart.setChartRange(60,0,
+	       // 		this.getLayoutParams().width - 10, this.getLayoutParams().height - 10);
+	      //  //设置绘图区内边距	  
+	      //  chart.setPadding( 0,120, 100,180 );	
 	        
+	        
+	        // chart.setChartRange(60,0, //设置x位置为60
+	        chart.setChartRange(0,0,
+	        		this.getLayoutParams().width - 10, this.getLayoutParams().height - 10);
+	        //设置绘图区内边距	  
+	        chart.setPadding( 70,120, 100,180 );	
+	    
             chart.render(canvas);
         } catch (Exception e){
         	Log.e(TAG, e.toString());

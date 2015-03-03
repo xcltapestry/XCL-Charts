@@ -14,20 +14,22 @@
 						android:layout_height="800dip" 		         
 	            		android:layout_centerInParent="true"	           		             
              >      
-                                    
+                    <!--                 
+           		
                <com.demo.xclcharts.view.LineChart03View_left
 			         android:id="@+id/circle_view"
 			         android:layout_width="300dp"
 					 android:layout_height="500dp" 	
 			         android:layout_gravity="left"
-			       />   	 
+			       />   	  -->
+			       
 			                  
                     <HorizontalScrollView
 				        android:id="@+id/horizontalScrollView1"
 				        android:layout_width="match_parent"
 				        android:layout_height="match_parent"
-						android:scrollbars="none"
-	            		android:fadingEdge="none"	            		 
+						           android:scrollbars="none"
+	            		android:fadingEdge="none"	 		 
 	            		android:layout_marginLeft="0dp"
 	            	    android:layout_marginRight="0dp"	            		        
 				        >				
@@ -40,11 +42,18 @@
 				            	                
 				             <com.demo.xclcharts.view.LineChart03View
 						         android:id="@+id/lineChartView_right"
-						         android:layout_width="800dp"
+						         android:layout_width="1800dp"
 						         android:layout_height="500dp" />	
 			         	            
 				        </LinearLayout>
 				    </HorizontalScrollView>
+				    
+                   <com.demo.xclcharts.view.LineChart03View_left
+			         android:id="@+id/circle_view"
+			         android:layout_width="300dp"
+					 android:layout_height="500dp" 	
+			         android:layout_gravity="left"
+			       />   
 	                  
 		  </FrameLayout>	    
      
