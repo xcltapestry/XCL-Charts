@@ -1,7 +1,7 @@
 XCL-Charts
 ==========
 
-<b>XCL-Charts V2.2</b><br/>
+<b>XCL-Charts V2.3</b><br/>
   Android开源图表库(XCL-Charts is a free charting library for Android platform.) <br/>
  &nbsp;&nbsp;&nbsp;&nbsp;XCL-Charts基于Android原生Canvas来绘制各种图表,使用简便,定制灵活。<br/>
  &nbsp;&nbsp;&nbsp;&nbsp;目前支持<b>(3D/非3D,背向式)柱形图(Bar Chart)、3D/非3D饼图(Pie Chart)、堆积图(Stacked Bar Chart)、面积图(Area Chart)、

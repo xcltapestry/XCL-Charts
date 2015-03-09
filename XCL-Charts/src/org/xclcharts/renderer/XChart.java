@@ -449,10 +449,16 @@ public class XChart implements IRender {
 	 * @return 是否有绘制
 	 */
 	protected boolean drawAnchor(List<AnchorDataPoint> anchorSet,
-								int dataID,int childID,Canvas canvas,float x,float y)
+								int dataID,int childID,Canvas canvas,float x,float y,float radius)
 	{
 		if(null == anchorSet || -1 == dataID)return false;
 		int count = anchorSet.size();
+		
+		float left = getPlotArea().getLeft();
+		float right = getPlotArea().getRight();
+		float top = getPlotArea().getTop();
+		float bottom = getPlotArea().getBottom();
+		
 		for(int i=0;i<count;i++)
 		{
 			AnchorDataPoint an = anchorSet.get(i);
@@ -461,7 +467,8 @@ public class XChart implements IRender {
 				if( (-1 == childID || -1 == an.getDataChildID() ) 
 					|| ( -1 != childID && an.getDataChildID() == childID))
 				{
-					AnchorRender.getInstance().renderAnchor(canvas, an, x, y);
+					AnchorRender.getInstance().renderAnchor(canvas, an, x, y,radius,
+															left,top,right,bottom);
 					return true;
 				}
 			}

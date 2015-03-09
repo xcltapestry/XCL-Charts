@@ -170,6 +170,8 @@ public class LineChart01View extends DemoView {
 			//chart.getCategoryAxis().showTickMarks();
 			//chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.MIDDLE);
 			
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());
@@ -192,7 +194,10 @@ public class LineChart01View extends DemoView {
 		lineData1.getDotLabelPaint().setTextSize(22);
 		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		lineData1.setItemLabelRotateAngle(45.f);
-		lineData1.getLabelOptions().hideBox();
+		
+		lineData1.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.TEXT);
+		
+		//lineData1.getLabelOptions().
 		
 		//lineData1.setDataSet(dataSeries);
 		//this.invalidate();
@@ -221,7 +226,7 @@ public class LineChart01View extends DemoView {
 		LineData lineData3 = new LineData("圆点",dataSeries3,Color.rgb(123, 89, 168));
 		lineData3.setDotStyle(XEnum.DotStyle.DOT);
 		//lineData3.setLabelVisible(true);
-		//lineData3.getDotLabelPaint().setTextAlign(Align.CENTER);
+		//lineData3.getDotLabelPaint().setTextAlign(Align.CENTER);				
 		
 		//Line 4
 		LinkedList<Double> dataSeries4= new LinkedList<Double>();	
@@ -234,6 +239,10 @@ public class LineChart01View extends DemoView {
 		lineData4.setDotStyle(XEnum.DotStyle.PRISMATIC);
 		//把线弄细点
 		lineData4.getLinePaint().setStrokeWidth(2);
+		
+		lineData4.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.CIRCLE);
+		lineData4.getLabelOptions().getBox().getBackgroundPaint().setColor(Color.GREEN);	
+		lineData4.setLabelVisible(true);	
 		
 		//Line 5
 		LinkedList<Double> valuesE= new LinkedList<Double>();	

@@ -134,7 +134,8 @@ public class FlatBar extends Bar{
 	{				
 		 XEnum.BarStyle style = getBarStyle();		 
 		 if(Float.compare(top, bottom)==0) return true;
-		
+		 
+		if(null == mPath)mPath = new Path();			
 		if( XEnum.BarStyle.OUTLINE == style)
 		{
 			int barColor = getBarPaint().getColor();						
@@ -149,13 +150,14 @@ public class FlatBar extends Bar{
 			//getBarPaint().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
 			getBarPaint().setColor(barColor);
 			getBarPaint().setStrokeWidth(5);
-			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
+			//canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
+			
+			drawPathBar(left,top,right,bottom,canvas);			
 			getBarPaint().setStrokeWidth(pWidth);
 			return true;
 		}else if( XEnum.BarStyle.TRIANGLE == style){	
 			
-			float mid = 0.0f;				
-			if(null == mPath)mPath = new Path();						
+			float mid = 0.0f;												
 			switch(this.getBarDirection())
 			{
 			case HORIZONTAL:
@@ -206,9 +208,8 @@ public class FlatBar extends Bar{
 			if(getBarStyle() != XEnum.BarStyle.FILL)
 			{
 				setBarGradient(left,top,right,bottom);
-			}
-			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
-		
+			}					
+			drawPathBar(left,top,right,bottom,canvas);
 		}
 		return true;
 	}
@@ -225,5 +226,15 @@ public class FlatBar extends Bar{
 		drawBarItemLabel(text,x,y,canvas);
 	}
 	
+	private void drawPathBar(float left,float top,float right,float bottom,Canvas canvas)
+	{
+		mPath.moveTo(left, bottom);
+		mPath.lineTo(left, top);
+		mPath.lineTo(right,top);
+		mPath.lineTo(right, bottom);
+		mPath.close();
+		canvas.drawPath(mPath, getBarPaint());		
+		mPath.reset();
+	}
 	
 }

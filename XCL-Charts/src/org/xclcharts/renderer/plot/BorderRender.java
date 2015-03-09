@@ -24,6 +24,7 @@ package org.xclcharts.renderer.plot;
 import org.xclcharts.common.DrawHelper;
 
 import android.graphics.Canvas;
+import android.graphics.Path;
 import android.graphics.RectF;
 /**
  * @ClassName BorderRender
@@ -34,7 +35,7 @@ import android.graphics.RectF;
 public class BorderRender extends Border {
 	
 	private RectF mRect = new RectF();	
-	
+	private Path mPath = null;
 	
 
 	public BorderRender()
@@ -72,8 +73,7 @@ public class BorderRender extends Border {
 	public void renderBox(Canvas canvas,RectF rect,
 							boolean showBoxBorder,boolean showBackground)
 	{			
-		setPaintLineStyle();	
-											
+		setPaintLineStyle();							
 		switch(getBorderRectType())
 		{
 			case RECT:		
@@ -93,6 +93,36 @@ public class BorderRender extends Border {
 			break;
 		}			
 	}
+	
+
+	public void renderCapBox(Canvas canvas,RectF rect,float capHeight,
+			boolean showBoxBorder,boolean showBackground)
+	{	
+		
+		setPaintLineStyle();	
+		
+		if(null == mPath) mPath = new Path();
+				
+		float centerX = rect.left + rect.width() * 0.5f;			
+		float AngleH = capHeight; 						
+		float AngleY = rect.bottom;
+		
+		mPath.moveTo(rect.left, rect.bottom);
+		mPath.lineTo(rect.left, rect.top);
+		mPath.lineTo(rect.right, rect.top);
+		mPath.lineTo(rect.right, rect.bottom);
+		mPath.lineTo( centerX + AngleH, AngleY);
+		mPath.lineTo( centerX , AngleY + AngleH );
+		mPath.lineTo( centerX - AngleH, AngleY);
+		mPath.close();				
+		if(showBackground)		
+			canvas.drawPath(mPath, getBackgroundPaint());
+		if(showBoxBorder)
+			canvas.drawPath(mPath, getLinePaint());
+		mPath.reset();
+		
+	}
+	
 
 	/**
 	 * 绘制边

@@ -69,6 +69,19 @@ public class StackBarChart  extends BarChart{
 		return flatBar;
 	}
 	
+	private float getHBarHeight(float YSteps)
+	{
+		float barHeight = MathHelper.getInstance().round(mul(YSteps,0.5f),2);	
+		float maxHeight = flatBar.getBarMaxPxHeight();
+		
+		if( Float.compare(maxHeight, 0.0f) ==  1 && 
+				Float.compare(barHeight, maxHeight) == 1 )
+		{
+			barHeight = maxHeight;
+		}
+		return barHeight;
+	}
+	
 	@Override
 	protected boolean renderHorizontalBar(Canvas canvas)
 	{
@@ -80,8 +93,8 @@ public class StackBarChart  extends BarChart{
 		 
 		//步长
 		 float YSteps = getVerticalYSteps(getCateTickCount());	
-		 int   barHeight = (int) MathHelper.getInstance().round(mul(YSteps,0.5f),2);		 
-		 
+		 float barHeight = getHBarHeight(YSteps); 	
+				 
 		 int cateSize = categoryAxis.getDataSet().size();
 		 int dataSize = 0;
 		 float labelY = 0.f;
@@ -98,8 +111,7 @@ public class StackBarChart  extends BarChart{
 				 {
 					 labelY = add(currentY ,div(YSteps,2)); 
 					 currentY = labelY;
-				 }
-				 
+				 }				 
 				 
 				//得到数据源
 				List<BarData> chartDataSource = this.getDataSource();
@@ -142,7 +154,7 @@ public class StackBarChart  extends BarChart{
 	           		float labelLeftX = add(currentX , valuePostion/2);
 	           		
 	           		//在柱形的顶端显示上批注形状
-					drawAnchor(this.getAnchorDataPoint(),i,r,canvas,labelLeftX,labelY);
+					drawAnchor(this.getAnchorDataPoint(),i,r,canvas,labelLeftX,labelY,0.0f);
 	           		
 					//柱形的当前值
 					flatBar.renderBarItemLabel(getFormatterItemLabel(bv),labelLeftX, labelY , canvas);							
@@ -161,6 +173,20 @@ public class StackBarChart  extends BarChart{
 		return true;
 	}
 	
+	private float getVBarWidth(float XSteps)
+	{				
+		float barWidth = mul(XSteps,0.5f);	
+		float maxWidth = flatBar.getBarMaxPxWidth();
+		
+		if( Float.compare(maxWidth, 0.0f) ==  1 && 
+				Float.compare(barWidth, maxWidth) == 1 )
+		{
+			barWidth = maxWidth;
+		}
+		return barWidth;
+	}
+	
+	
 	@Override
 	protected boolean renderVerticalBar(Canvas canvas)
 	{						
@@ -175,7 +201,7 @@ public class StackBarChart  extends BarChart{
 			float XSteps = getVerticalXSteps(dataSet.size() + 1 );			 
 			float axisScreenHeight  =  getAxisScreenHeight(); 
 			float axisDataHeight =  dataAxis.getAxisRange(); 			
-			float barWidht = mul(XSteps,0.5f);	
+			float barWidth = getVBarWidth(XSteps); // mul(XSteps,0.5f);	
 			
 			 float currentX = 0.0f,currentY = 0.0f,labelX = 0.f;
 			
@@ -218,9 +244,9 @@ public class StackBarChart  extends BarChart{
 						}
 						
 						//柱形
-						float leftX = sub(currentX , barWidht/2);
+						float leftX = sub(currentX , barWidth/2);
 						float topY =  sub(currentY , valuePostion);
-						float rightX = add(currentX , barWidht/2);						
+						float rightX = add(currentX , barWidth/2);						
 						flatBar.renderBar(leftX, topY, rightX, currentY, canvas);
 						//保存位置
 						saveBarRectFRecord(i,r,leftX + mMoveX, topY + mMoveY,rightX + mMoveX, currentY + mMoveY); 
@@ -231,7 +257,7 @@ public class StackBarChart  extends BarChart{
 		           		float labelLeftY = sub(currentY , valuePostion/2);
 		           		
 		           		//在柱形的顶端显示上批注形状
-						drawAnchor(this.getAnchorDataPoint(),i,r,canvas,labelX,labelLeftY);
+						drawAnchor(this.getAnchorDataPoint(),i,r,canvas,labelX,labelLeftY,0.0f);
 						
 						//柱形的当前值
 						flatBar.renderBarItemLabel(getFormatterItemLabel(bv), 

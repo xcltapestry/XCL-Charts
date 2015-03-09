@@ -284,6 +284,7 @@ public class CirChart extends EventChart{
 		if(null == mPlotLabel)
 		{
 			mPlotLabel = new PlotLabelRender();
+			mPlotLabel.setLabelBoxStyle(XEnum.LabelBoxStyle.TEXT);
 		}
 		return mPlotLabel;
 	}

@@ -108,6 +108,16 @@ public class XEnum {
 		}
 		
 		/**
+		 * 标签标注框形状
+		 * @author XCL
+		 *
+		 */
+		public enum LabelBoxStyle{
+			TEXT,RECT,CIRCLE,CAPRECT
+		}
+		
+		
+		/**
 		 * 用于设定柱形的风格，仅对flatbar有效
 		 * @author XCL
 		 *
@@ -188,7 +198,7 @@ public class XEnum {
 		 *
 		 */
 		public enum AnchorStyle{
-			RECT,CIRCLE
+			RECT,CIRCLE,VLINE,HLINE,TOBOTTOM,TOTOP,TOLEFT,TORIGHT
 		}
 		
 		

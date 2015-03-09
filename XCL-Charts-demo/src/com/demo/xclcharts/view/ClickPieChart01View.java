@@ -118,11 +118,10 @@ public class ClickPieChart01View extends GraphicalView {
 			//激活点击监听
 			chart.ActiveListenItemClick();
 			
-			//标签
-			chart.getPlotLabel().showBox();
 			
 			//显示标签框
-			chart.getPlotLabel().showBox();
+			chart.getPlotLabel().setLabelBoxStyle(XEnum.LabelBoxStyle.RECT);
+		//	chart.getPlotLabel().setLabelBoxStyle(XEnum.LabelBoxStyle.RECT)
 			chart.getPlotLabel().getBox().setBorderLineColor(Color.rgb(0, 126, 231));
 			
 		} catch (Exception e) {

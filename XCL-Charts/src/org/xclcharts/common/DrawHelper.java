@@ -259,7 +259,8 @@ public class DrawHelper {
 	               paint.setStyle(Paint.Style.FILL);  
 	               break;
 	        }
-	        canvas.drawPath(mPath,paint);		 		 
+	        canvas.drawPath(mPath,paint);		
+	        mPath.reset();
 	}
 	
 	
@@ -292,6 +293,7 @@ public class DrawHelper {
 		//PathEffect effects = new DashPathEffect(new float[] { 2, 2, 2, 2}, 1);  
 		paint.setPathEffect(getDotLineStyle());  
 		canvas.drawLine(startX, startY, stopX, stopY, paint); 
+		paint.setPathEffect(null);
 	}
 	
 	/**
@@ -311,7 +313,8 @@ public class DrawHelper {
 		//虚实线
 		//PathEffect effects = new DashPathEffect(new float[] { 4, 8, 5, 10}, 1);  
 		paint.setPathEffect(getDashLineStyle());  
-		canvas.drawLine(startX, startY, stopX, stopY, paint);  		
+		canvas.drawLine(startX, startY, stopX, stopY, paint);  
+		paint.setPathEffect(null);
 	}
 	
 	
@@ -363,7 +366,8 @@ public class DrawHelper {
 	        mRectF.right  = cirX  +  radius ;  
 	        mRectF.bottom  = cirY +  radius ;  	        			
 			//在饼图中显示所占比例  
-			canvas.drawArc(mRectF, startAngle, sweepAngle, useCenter, paintArc);		
+			canvas.drawArc(mRectF, startAngle, sweepAngle, useCenter, paintArc);	
+			mRectF.setEmpty();
 		}catch( Exception e){
 			throw e;
 		}
@@ -385,7 +389,9 @@ public class DrawHelper {
 			//弧形			 
 			 initPath();			 
 			 mPath.addArc(mRectF,startAngle, sweepAngle); 
-			 canvas.drawPath(mPath, paintArc);			 			 
+			 canvas.drawPath(mPath, paintArc);	
+			 mRectF.setEmpty();
+			 mPath.reset();
 		}catch( Exception e){
 			throw e;
 		}

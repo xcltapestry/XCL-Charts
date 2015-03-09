@@ -180,6 +180,8 @@ public class StackBarChart01View extends DemoView {
 			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
 			
 			chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
+			
+			//chart.disablePanMode();
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

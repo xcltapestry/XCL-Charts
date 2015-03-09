@@ -103,6 +103,8 @@ public class LineChart03View  extends GraphicalView {
 			mAnchorSet.add(an3);
 			chart.setAnchorDataPoint(mAnchorSet);
 			
+			chart.disablePanMode(); //禁掉平移，这样线上的标注框在最左和最右时才能显示全
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			Log.e(TAG, e.toString());

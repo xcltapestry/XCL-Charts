@@ -100,15 +100,17 @@ public class AreaChart extends LnChart {
 			mPaintAreaFill = new Paint();
 			mPaintAreaFill.setStyle(Style.FILL);
 			mPaintAreaFill.setAntiAlias(true);
-			mPaintAreaFill.setColor((int) Color.rgb(73, 172, 72));
+			mPaintAreaFill.setColor(Color.rgb(73, 172, 72));
 		}
 	}
 
+	@Override
 	protected void categoryAxisDefaultSetting() {
 		if (null != categoryAxis)
 			categoryAxis.setHorizontalTickAlign(Align.CENTER);
 	}
 
+	@Override
 	protected void dataAxisDefaultSetting() {
 		if (null != dataAxis)
 			dataAxis.setHorizontalTickAlign(Align.LEFT);
@@ -549,7 +551,7 @@ public class AreaChart extends LnChart {
 
 			// 显示批注形状
 			drawAnchor(getAnchorDataPoint(), dataID, i, canvas, dotInfo.mX,
-					dotInfo.mY);
+					dotInfo.mY,radius);
 
 			if (bd.getLabelVisible()) {
 				bd.getLabelOptions().drawLabel(canvas, pLine.getDotLabelPaint(),

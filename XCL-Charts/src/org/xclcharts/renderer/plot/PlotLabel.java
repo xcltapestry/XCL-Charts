@@ -42,15 +42,24 @@ public class PlotLabel {
 			
 	//box
 	protected BorderRender mBorder = null;
-	protected boolean mShowBox = false;
+	//protected boolean mShowBox = false;
 	protected boolean mShowBoxBorder = true;
 	protected boolean mShowBackground = true;
+	
+	//protected boolean mShowBoxCap = true;
 			
 	//标签起始偏移多少距离
 	protected float mOffsetX = 0.0f;
 	protected float mOffsetY = 0.0f;
 	
 	protected final int DEF_BOX_BG_ALPHA = 100;
+	
+	//带箭头的框中，箭头的高度
+	protected float mScale = 0.2f;
+	//圆框半径
+	protected float mRadius = 0.f;
+	
+	protected XEnum.LabelBoxStyle mLabelBoxStyle = XEnum.LabelBoxStyle.CAPRECT;
 				
 	public PlotLabel() {
 		// TODO Auto-generated constructor stub						
@@ -77,13 +86,6 @@ public class PlotLabel {
 		}
 	 }
 
-	 /**
-	 * 不显示标签框		
-	 */
-	public void hideBox()
-	{
-		mShowBox = false;
-	}
 	
 	/**
 	 * 不显示标签边框		
@@ -101,16 +103,7 @@ public class PlotLabel {
 		mShowBackground = false;
 	}
 	
-	/**
-	 * 显示标签框		
-	 */
-	public void showBox()
-	{
-		mShowBox = true;
-		showBorder();
-		showBackground();
-	}
-	
+
 	/**
 	 * 显示标签边框		
 	 */
@@ -125,8 +118,53 @@ public class PlotLabel {
 	public void showBackground()
 	{
 		mShowBackground = true;
+	}	
+	
+	/**
+	 * 带箭头的标识框中，其箭头的高度(占整宽度的比例)
+	 * @param scale 比例
+	 */
+	public void setCapBoxAngleHeight(float scale)
+	{
+		mScale = scale;
 	}
+	
+	/**
+	 * 圆形标识框中，其半径长度
+	 * @param radius 半径
+	 */
+	public void setCircleBoxRadius(float radius)
+	{
+		mRadius = radius;
+	}
+			
+			
+	/**
+	 * 显示标签标识风格。默认为带箭头的标识框
+	 * @param style 风格
+	 */
+	public void setLabelBoxStyle(XEnum.LabelBoxStyle style)
+	{
+		mLabelBoxStyle = style;
 		
+		if(XEnum.LabelBoxStyle.TEXT ==  mLabelBoxStyle)
+		{
+			this.hideBorder();
+			this.hideBackground();
+			return;
+		}
+		
+		if(XEnum.LabelBoxStyle.CIRCLE ==  mLabelBoxStyle)
+		{
+			this.hideBorder();
+			showBackground();
+		}else{
+			showBorder();
+			showBackground();
+		}		
+	}	
+	
+
 	 /**
 	  * 标签向X方向偏移多少距离
 	  * @param offset 偏移值

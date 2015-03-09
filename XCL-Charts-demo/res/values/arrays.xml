@@ -58,7 +58,7 @@
          <item>仪表盘-测试网速</item> 
          <item>仪表盘-速率</item> 
           <item>仪表盘-功能演示</item> 
-          <item>点击处理的例子</item>    
+          <item>点击图块例子</item>    
         
         <item>左右滑动柱形图</item> 
         <item>左右滑动折线图</item> 
@@ -125,7 +125,7 @@
         <item>Dial Chart</item>  
         <item>Dial Chart</item>        
         <item>Dial Chart</item>     
-        <item>Activity调用点击的例子</item> 
+        <item>Activity点击图块切换View时可参考此例</item> 
        
         <item>左轴右ScrollView显示图表</item> 
         <item>左轴右ScrollView显示图表</item>       

@@ -631,7 +631,7 @@ public class BarChart extends AxesChart {
 				labelLeftY = sub(barBottom , barHeight / 2);
 				
 				//在柱形的顶端显示上柱形的批注形状
-				drawAnchor(this.mAnchorSet,i,j,canvas,labelLeftX,labelLeftY);				
+				drawAnchor(this.mAnchorSet,i,j,canvas,labelLeftX,labelLeftY,0.0f);				
 				
 				// 柱形顶端标识
 				if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
@@ -844,7 +844,7 @@ public class BarChart extends AxesChart {
 				labelTopX = add(drawBarStartX , barWidth / 2);
 				
 				//在柱形的顶端显示批注
-				drawAnchor(this.mAnchorSet,i,j,canvas,labelTopX,labelTopY);
+				drawAnchor(this.mAnchorSet,i,j,canvas,labelTopX,labelTopY,0.0f);
 								
 				// 在柱形的顶端显示上柱形当前值
 				if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)

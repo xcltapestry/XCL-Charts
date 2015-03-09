@@ -202,7 +202,7 @@ public class MultiAxisChart03View extends DemoView {
 		line2.getDotLabelPaint().setColor(Color.rgb(83, 148, 235));
 		//设置点标签
 		line2.setLabelVisible(true);
-		line2.getLabelOptions().showBox();
+		line2.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.CAPRECT);
 		line2.getLabelOptions().setOffsetY(20.f);
 		
 		line2.setApplayGradient(true);
@@ -322,7 +322,7 @@ public class MultiAxisChart03View extends DemoView {
 		lineData1.getDotLabelPaint().setTextSize(22);
 		lineData1.getDotLabelPaint().setTextAlign(Align.LEFT);	
 		lineData1.setItemLabelRotateAngle(45.f);
-		lineData1.getLabelOptions().hideBox();
+		lineData1.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.RECT);
 		
 		//Line 2
 		LinkedList<Double> dataSeries2= new LinkedList<Double>();	
@@ -336,7 +336,7 @@ public class MultiAxisChart03View extends DemoView {
 		lineData2.getPlotLine().getDotPaint().setColor(Color.RED);
 		lineData2.setLabelVisible(true);		
 		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
-		lineData2.getLabelOptions().showBox();
+		lineData2.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.CAPRECT);
 		//lineData2.setLineStyle(XEnum.LineStyle.DASH);
 		
 		
@@ -347,7 +347,7 @@ public class MultiAxisChart03View extends DemoView {
 		dataSeries3.add((double)45);  
 		LineData lineData3 = new LineData("角",dataSeries3,Color.rgb(199, 64, 219));
 		lineData3.setDotStyle(XEnum.DotStyle.TRIANGLE);				
-		lineData3.getLabelOptions().hideBox();
+		lineData3.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.TEXT);
 	
 		chartData.add(line2);
 		chartData.add(lineData1);

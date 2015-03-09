@@ -172,6 +172,9 @@ public class StackBarChart02View extends DemoView {
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
 			chart.setPlotPanMode(XEnum.PanMode.VERTICAL);
+			
+			//设置柱子的最大高度范围，不然有些数据太少时，柱子太高不太好看。 
+			chart.getBar().setBarMaxPxHeight(100.f);
 				
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

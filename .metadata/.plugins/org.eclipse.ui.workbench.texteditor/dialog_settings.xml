@@ -2,9 +2,9 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="412" key="DIALOG_WIDTH"/>
-		<item value="348" key="DIALOG_Y_ORIGIN"/>
+		<item value="200" key="DIALOG_Y_ORIGIN"/>
 		<item value="344" key="DIALOG_HEIGHT"/>
-		<item value="686" key="DIALOG_X_ORIGIN"/>
+		<item value="949" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
@@ -13,26 +13,26 @@
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="drawLeftAxisTitle" key="selection"/>
+		<item value=".set" key="selection"/>
 		<list key="findhistory">
-			<item value="drawLeftAxisTitle"/>
-			<item value="miRadius"/>
-			<item value="moRadius"/>
-			<item value="setPercentage"/>
-			<item value="isShowInnerBG"/>
-			<item value="getInitialAngle"/>
-			<item value="setCategories"/>
-			<item value="paintArc"/>
+			<item value=".set"/>
+			<item value="mDataSet"/>
+			<item value="setdata"/>
+			<item value="mBarMaxWidth"/>
+			<item value="mBarMaxHeight"/>
+			<item value="barWidht"/>
+			<item value="barHeight"/>
+			<item value="mPath.rest"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mBarMaxPxWidth"/>
+			<item value="mBarMaxPxHeight"/>
+			<item value="barWidth"/>
+			<item value="mScale"/>
 			<item value="ArrayList"/>
 			<item value="getTotalAngle()"/>
 			<item value="getLabelOptions("/>
 			<item value="getLabelOptions"/>
-			<item value="getRightTitle"/>
-			<item value="getLowerTitle"/>
-			<item value="getLeftTitle"/>
-			<item value="float"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

@@ -209,7 +209,7 @@ public class BarChart3D extends BarChart{
 	                float labelTopY = sub(drawBarButtomY , barHeight/2);
 					
 					//在柱形的顶端显示上批注形状
-					drawAnchor(this.getAnchorDataPoint(),i,j,canvas,rightX,labelTopY);
+					drawAnchor(this.getAnchorDataPoint(),i,j,canvas,rightX,labelTopY,0.0f);
 	                
                 	//在柱形的顶端显示上柱形的当前值	  
 					if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
@@ -343,7 +343,7 @@ public class BarChart3D extends BarChart{
 				float labelTopX = add(drawBarStartX , barWidth/2);
 				
 				//在柱形的顶端显示上批注形状
-				drawAnchor(this.getAnchorDataPoint(),i,j,canvas,labelTopX,topY);
+				drawAnchor(this.getAnchorDataPoint(),i,j,canvas,labelTopX,topY,0.0f);
 				
            		//在柱形的顶端显示上柱形的当前值
            		mBar3D.renderBarItemLabel(getFormatterItemLabel(bv),labelTopX ,	topY, canvas);

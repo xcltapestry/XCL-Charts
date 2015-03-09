@@ -238,7 +238,8 @@ public class AreaChart02View extends DemoView {
 		//设置点标签
 		line2.setLabelVisible(true);
 		line2.getDotLabelPaint().setTextAlign(Align.CENTER);	
-		line2.getLabelOptions().showBox();
+		line2.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.CIRCLE);
+		line2.getLabelOptions().getBox().getBackgroundPaint().setColor(Color.GREEN);
 		line2.getLabelOptions().setOffsetY(30.f);
 		line2.setApplayGradient(true);
 		line2.setGradientDirection(XEnum.Direction.HORIZONTAL);

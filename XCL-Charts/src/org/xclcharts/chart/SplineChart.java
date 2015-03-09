@@ -300,7 +300,7 @@ public class SplineChart extends LnChart{
         	}
 		    
 		   //显示批注形状
-			drawAnchor(getAnchorDataPoint(),dataID,i,canvas,dotInfo.mX,dotInfo.mY);
+			drawAnchor(getAnchorDataPoint(),dataID,i,canvas,dotInfo.mX,dotInfo.mY,radius);
 		    
 		    if(spData.getLabelVisible())
         	{            			

@@ -65,7 +65,7 @@ public class LnData {
 		mLabelVisible = visible;
 		
 		getLabelOptions().setOffsetY(15.f);
-		getLabelOptions().showBox();
+		//getLabelOptions().showBox();
 	}
 	
 	/**

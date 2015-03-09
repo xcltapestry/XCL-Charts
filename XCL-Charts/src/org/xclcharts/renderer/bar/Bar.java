@@ -69,6 +69,11 @@ public class Bar {
 	//柱形所占总比例
 	private float mBarTickSpacePercent = 0.7f;
 	
+	//柱子最大宽度
+	private float mBarMaxPxWidth = 0.0f;
+	//柱子最大高度
+	private float mBarMaxPxHeight = 0.0f;
+	
 	public Bar()
 	{				
 		
@@ -222,6 +227,43 @@ public class Bar {
 	}
 	
 	/**
+	 * 设置柱子的最大宽度范围，仅在竖向柱图中有效
+	 * @param width 最大宽度
+	 */
+	public void setBarMaxPxWidth(float width)
+	{
+		mBarMaxPxWidth = width;
+	}
+	
+	/**
+	 * 返回柱子的最大宽度范围，仅在竖向柱图中有效
+	 * @return 最大宽度
+	 */
+	public float getBarMaxPxWidth()
+	{
+		return mBarMaxPxWidth;
+	}
+	
+	/**
+	 * 设置柱子的最大高度范围，仅在横向柱图中有效
+	 * @param height 最大高度
+	 */
+	public void setBarMaxPxHeight(float height)
+	{
+		mBarMaxPxHeight = height;
+	}
+	
+	/**
+	 * 返回柱子的最大高度范围，仅在横向柱图中有效
+	 * @return 最大高度范围
+	 */
+	public float getBarMaxPxHeight()
+	{
+		return mBarMaxPxHeight;
+	}
+	
+	
+	/**
 	 * 计算同标签多柱形时的Y分隔
 	 * @param YSteps    Y轴步长
 	 * @param barNumber  柱形个数
@@ -243,6 +285,13 @@ public class Bar {
 																 barTotalInnerMargin) , 
 									barNumber);			
 			float[] ret = new float[2];
+			
+			if( Float.compare(mBarMaxPxHeight, 0.0f) ==  1 && 
+					Float.compare(barHeight, mBarMaxPxHeight) == 1 )
+			{
+				barHeight = mBarMaxPxHeight;
+			}
+			
 			ret[0] = barHeight;
 			ret[1] = barInnerMargin;
 			
@@ -272,6 +321,12 @@ public class Bar {
 			float barWidth = MathHelper.getInstance().div(barTotalWidth , barNumber);		
 			
 			float[] ret = new float[2];
+			
+			if( Float.compare(mBarMaxPxWidth, 0.0f) ==  1 && 
+					Float.compare(barWidth, mBarMaxPxWidth) == 1 )
+			{
+				barWidth = mBarMaxPxWidth;
+			}
 			ret[0] = barWidth;
 			ret[1] = barInnerMargin;			
 			return ret;

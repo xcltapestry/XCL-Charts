@@ -48,6 +48,8 @@ public class AnchorDataPoint {
 	
 	private float mRadius = 30.f;
 	
+	private int mLineWidth = -1;
+	//private XEnum.LineStyle  mLineStyle = XEnum.LineStyle.SOLID;
 	
 	public AnchorDataPoint()
 	{
@@ -140,7 +142,25 @@ public class AnchorDataPoint {
 		return mAnchorTextColor;
 	}
 	
+	public void setLineWidth(int size)
+	{
+		mLineWidth = size;
+	}
 	
+	public int getLineWidth()
+	{
+		return mLineWidth;
+	}	
+	
+	//public XEnum.LineStyle getLineStyle()
+	//{
+	//	return mLineStyle;
+	//}
+
+	//public void setLineStyle(XEnum.LineStyle style)
+	//{
+	//	 mLineStyle = style;
+	//}			
 	
 	public void setAlpha(int alpha)
 	{

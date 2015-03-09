@@ -251,12 +251,12 @@ public class LineChart extends LnChart{
 	                	}
 	            		
 	            		//显示批注形状
-	    				drawAnchor(getAnchorDataPoint(),dataID,i,canvas,lineStopX - radius,lineStopY);
+	    				drawAnchor(getAnchorDataPoint(),dataID,i,canvas,lineStopX - radius,lineStopY,radius);
 	            		
 	            		if(bd.getLabelVisible()) //标签
 	                	{	                	            
 	            			bd.getLabelOptions().drawLabel(canvas, pLine.getDotLabelPaint(), 
-	            					getFormatterItemLabel(bv), lineStopX, lineStopY,
+	            					getFormatterItemLabel(bv), lineStopX  - radius, lineStopY,
 	            					itemAngle,bd.getLineColor());
 	                	}
 	            			            		

@@ -174,6 +174,7 @@ public class LineChart02View extends DemoView implements Runnable{
 			//扩展绘图区右边分割的范围，让定制线的说明文字能显示出来
 			chart.getClipExt().setExtRight(150.f);
 			
+			
 			//chart.getDataAxis().hide();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -216,6 +217,7 @@ public class LineChart02View extends DemoView implements Runnable{
 		lineData2.getPlotLine().getDotPaint().setColor(Color.rgb(234, 142, 43));
 		lineData2.getDotLabelPaint().setColor(Color.rgb(234, 142, 43));
 		lineData2.setLabelVisible(true);	
+		lineData2.getLabelOptions().getBox().getBackgroundPaint().setColor(Color.rgb(76, 76, 76));
 		//lineData2.getPlotLabel().hideBox();
 	
 		//Line 3
@@ -326,8 +328,7 @@ public class LineChart02View extends DemoView implements Runnable{
           		if(i == count - 1)
           		{
           			chart.getDataAxis().show();
-          			chart.getDataAxis().showAxisLabels();
-          			
+          			chart.getDataAxis().showAxisLabels();          			
           		}
           		postInvalidate();            		
           	}            	

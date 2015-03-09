@@ -358,7 +358,7 @@ public class BubbleChart extends LnChart{
             	
             	
             	//显示批注形状
-				drawAnchor(getAnchorDataPoint(),dataID,i,canvas,XvaluePos,YvaluePos);
+				drawAnchor(getAnchorDataPoint(),dataID,i,canvas,XvaluePos,YvaluePos,curRadius);
             	
             	if(bd.getLabelVisible())
             	{            			

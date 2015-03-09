@@ -222,6 +222,8 @@ public class AreaChart01View extends DemoView implements Runnable {
 		line2.getDotLabelPaint().setColor(Color.RED);
 		//设置点标签
 		line2.setLabelVisible(true);
+		line2.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.RECT);
+		line2.getLabelOptions().getBox().getBackgroundPaint().setColor(Color.rgb(250, 194, 142));
 		
 		
 		AreaData line3 = new AreaData("小小小熊",dataSeries3,
@@ -370,14 +372,32 @@ public class AreaChart01View extends DemoView implements Runnable {
 		
 		AnchorDataPoint an2 = new AnchorDataPoint(1,3,XEnum.AnchorStyle.CIRCLE);
 		an2.setBgColor(Color.GRAY);
+		an2.setAnchorStyle(XEnum.AnchorStyle.CIRCLE);
+		
 		
 		AnchorDataPoint an3 = new AnchorDataPoint(1,4,XEnum.AnchorStyle.CIRCLE);
 		an3.setBgColor(Color.RED);
 		an3.setAnchorStyle(XEnum.AnchorStyle.RECT);
 		an3.setAreaStyle(XEnum.DataAreaStyle.STROKE);
+		
+		//从点到底的标识线
+		AnchorDataPoint an4 = new AnchorDataPoint(2,2,XEnum.AnchorStyle.TOBOTTOM);
+		an4.setBgColor(Color.YELLOW);
+		an4.setLineWidth(15);
+		
+		AnchorDataPoint an5 = new AnchorDataPoint(2,1,XEnum.AnchorStyle.TORIGHT);
+		an5.setBgColor(Color.WHITE);
+		an5.setLineWidth(15);
+		
+		//AnchorDataPoint an6 = new AnchorDataPoint(2,1,XEnum.AnchorStyle.HLINE);
+		//an6.setBgColor(Color.WHITE);
+		//an6.setLineWidth(15);
 	
 		mAnchorSet.add(an2);
 		mAnchorSet.add(an3);
+		mAnchorSet.add(an4);
+		mAnchorSet.add(an5);
+		//mAnchorSet.add(an6);
 		chart.setAnchorDataPoint(mAnchorSet);		
 				
 				
