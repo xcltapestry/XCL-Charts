@@ -66,7 +66,7 @@ public class CategoryAxisRender extends CategoryAxis {
 							float centerX,float centerY,
 							String text,float labelX, float labelY, boolean isTickVisible)
 	{			
-	  renderHorizontalTick(xchart,canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
+	   renderHorizontalTick(xchart,canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
 	}
 	
 	
@@ -81,10 +81,8 @@ public class CategoryAxisRender extends CategoryAxis {
 							String text,float labelX, float labelY, 
 							boolean isTickVisible)
 	{		
-			renderVerticalTick(canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
+		renderVerticalTick(canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
 	}
-	
-	
 	
 	/**
 	 * 绘制轴线
@@ -96,13 +94,14 @@ public class CategoryAxisRender extends CategoryAxis {
 	public void renderAxis(Canvas canvas,float startX,float startY,float stopX,float stopY)
 	{
 		if(isShow() && isShowAxisLine())
-			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+			drawAxisLine(canvas,startX, startY, stopX, stopY);
 	}
 	
 	public void renderAxisLine(Canvas canvas,float startX,float startY,float stopX,float stopY)
-	{	
-			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+	{		
+		drawAxisLine(canvas,startX, startY, stopX, stopY);
 	}
+
 	
 	/**
 	 * 设置分类轴数据源
@@ -113,5 +112,4 @@ public class CategoryAxisRender extends CategoryAxis {
 		 mDataSet = dataSet;
 	}
 	
-
 }

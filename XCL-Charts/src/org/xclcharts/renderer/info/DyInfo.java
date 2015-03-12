@@ -32,6 +32,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.graphics.Paint.Style;
@@ -68,6 +69,15 @@ public class DyInfo {
 	protected Align mPositionAlign = Align.RIGHT;
 	private float mRectWidth = 0.0f;
 	private float mRectHeight = 0.0f;
+	
+	//带箭头的框中，箭头的高度
+	protected float mScale = 0.2f;
+	//圆框半径
+		protected float mRadius = 0.f;
+	
+	protected boolean mShowBoxBorder = true;
+	protected boolean mShowBackground = true;
+		
 	
 	public DyInfo()
 	{
@@ -156,7 +166,9 @@ public class DyInfo {
 			}
 			
 			maxHeight += textHeight;		
-		}			
+		}		
+		//paint.reset();
+		
 		maxHeight += 2 * mMargin + countText  * mRowSpan;
 		maxWidth += 2 * mMargin;		
 		
@@ -207,12 +219,6 @@ public class DyInfo {
 		mStyle = style;
 	}
 	
-	//public void setAlign(Align align)
-	//{
-	//	mPositionAlign = align;
-	//}
-
-	
 	protected void addInfo(String text,Paint paint)
 	{
 		PlotDot dot = new PlotDot();
@@ -243,28 +249,34 @@ public class DyInfo {
 		
 		getContentRect();		
 		if(null == mRect) return;
-		
+				
 		if(XEnum.DyInfoStyle.RECT == mStyle)
 		{
-			canvas.drawRect(mRect, this.getBackgroundPaint());				
-			canvas.drawRect(mRect, this.getBorderPaint());
+			if(mShowBackground)canvas.drawRect(mRect, this.getBackgroundPaint());				
+			if(mShowBoxBorder)canvas.drawRect(mRect, this.getBorderPaint());
+		}else if(XEnum.DyInfoStyle.CAPRECT == mStyle){
+				
+			renderCapBox(canvas,mRect);		
+		}else if(XEnum.DyInfoStyle.CIRCLE == mStyle){				
+			renderCircle(canvas,mRect);	
 		}else{
-			canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY, this.getBackgroundPaint());	
-			canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY,this.getBorderPaint());
+			if(mShowBackground)canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY, this.getBackgroundPaint());	
+			if(mShowBoxBorder)canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY,this.getBorderPaint());
 		}
 		
 		float currDotsX = mRect.left + mMargin;
 		float currRowY = mRect.top + mMargin;
 		float textHeight = 0.0f;	
 		float currTextX = currDotsX ;
-
-		Paint paint = null;		
+					
+		
+		int j = 0;		
 		for(int i=0;i<countText;i++)
-		{
-			if(countPaint > i) paint = mClickedPaint.get(i);
-			if(null == paint) break;
-			
-			textHeight = DrawHelper.getInstance().getPaintFontHeight(paint);	
+		{			
+			if(countPaint > i) j = i;
+			if(null == mClickedPaint.get(j)) break;
+						
+			textHeight = DrawHelper.getInstance().getPaintFontHeight( mClickedPaint.get(j) );	
 			
 			if(countDots > i)
 			{
@@ -275,20 +287,79 @@ public class DyInfo {
 					PlotDotRender.getInstance().renderDot(canvas,plot, 						 
 							currDotsX + (textHeight / 2), 
 							currRowY + (textHeight / 2), 
-							paint);		
+							mClickedPaint.get(j));		
 					
 					currTextX = currDotsX + textHeight + mColSpan;
 				}
 			}
-			if(countText > i)canvas.drawText(mClickedText.get(i),currTextX , currRowY + textHeight,paint);
+			
+			if(countText > i)
+				canvas.drawText(mClickedText.get(i),currTextX , 
+						currRowY + textHeight, mClickedPaint.get(j));
 							
 			currRowY += textHeight + mRowSpan;		
 			currTextX = currDotsX ;
 		}			
-		
+	
 		
 	}
 	
+	/**
+	 * 带箭头的标识框中，其箭头的高度(占整宽度的比例)
+	 * @param scale 比例
+	 */
+	public void setCapBoxAngleHeight(float scale)
+	{
+		mScale = scale;
+	}
+	
+	
+	private void renderCapBox(Canvas canvas,RectF rect){
+		
+		if( !mShowBackground && !mShowBoxBorder)return;
+		
+		float AngleH = rect.width() * mScale; //0.2f ; 		
+		rect.top -= AngleH;
+		rect.bottom -= AngleH;
+				
+		float centerX = rect.left + rect.width() * 0.5f;					
+		float AngleY = rect.bottom;
+		
+		Path path = new Path();
+		path.moveTo(rect.left, rect.bottom);
+		path.lineTo(rect.left, rect.top);
+		path.lineTo(rect.right, rect.top);
+		path.lineTo(rect.right, rect.bottom);
+		path.lineTo( centerX + AngleH, AngleY);
+		path.lineTo( centerX , AngleY + AngleH );
+		path.lineTo( centerX - AngleH, AngleY);
+		path.close();	
+		
+		if(mShowBackground)canvas.drawPath(path, this.getBackgroundPaint());				
+		if(mShowBoxBorder)canvas.drawPath(path, this.getBorderPaint());		
+	}
+	
+	/**
+	 * 圆形标识框中，其半径长度
+	 * @param radius 半径
+	 */
+	public void setCircleBoxRadius(float radius)
+	{
+		mRadius = radius;
+	}
+	
+	private void renderCircle(Canvas canvas,RectF rect)
+	{
+		float radius = Math.max(rect.width(),rect.height()) / 2 + 5;		
+		if(Float.compare(mRadius,0.0f) != 0 )radius = mRadius;
+				
+		if(mShowBackground)
+			canvas.drawCircle(rect.centerX(),rect.centerY(),radius, this.getBackgroundPaint());				
+		if(mShowBoxBorder)
+			canvas.drawCircle(rect.centerX(),rect.centerY(),radius, this.getBorderPaint());	
+		
+	}
+							
 	protected void clear()
 	{
 		if(null != mClickedDotStyle)mClickedDotStyle.clear();
@@ -320,11 +391,44 @@ public class DyInfo {
 				mRect.bottom = mCenterXY.y;	
 				break;
 			default:
-				break;
-				
+				break;				
 		}
 		
 	}
+	
+	
+	/**
+	 * 不显示标签边框		
+	 */
+	public void hideBorder()
+	{
+		mShowBoxBorder = false;
+	}
+	
+	/**
+	 * 不显示标签背景	
+	 */
+	public void hideBackground()
+	{
+		mShowBackground = false;
+	}
+	
+
+	/**
+	 * 显示标签边框		
+	 */
+	public void showBorder()
+	{
+		mShowBoxBorder = true;
+	}
+	
+	/**
+	 * 显示图背景		
+	 */
+	public void showBackground()
+	{
+		mShowBackground = true;
+	}	
 	
 	
 }

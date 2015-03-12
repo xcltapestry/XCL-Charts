@@ -194,11 +194,11 @@ public class RangeBarChart01View extends DemoView {
 			chart.setKey("图例");
 			
 			
-			//激活点击监听
+			//激活点击监听			
 			chart.ActiveListenItemClick();
 			chart.showClikedFocus();
 			
-			chart.enablePanMode();
+			//chart.enablePanMode();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -269,11 +269,12 @@ public class RangeBarChart01View extends DemoView {
 	
 	
 	//触发监听
+
 	private void triggerClick(float x,float y)
 	{
-		
+				
 		BarPosition record = chart.getPositionRecord(x,y);			
-		if( null == record) return;
+		if( null == record) return;		
 		
 		/*
 		RangeBarData bData = BarDataSet.get(record.getDataID());		

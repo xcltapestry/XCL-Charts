@@ -300,7 +300,7 @@ public class PieChart01View extends DemoView implements Runnable{
 			pData.setSelected(true);
 		}
 		mSelectedID = record.getDataID();
-		this.invalidate();		
+		this.refreshChart();		
 				
 		/*
 		boolean isInvaldate = true;		

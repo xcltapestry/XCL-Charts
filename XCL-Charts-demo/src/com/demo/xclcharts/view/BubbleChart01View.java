@@ -353,11 +353,15 @@ public class BubbleChart01View extends DemoView {
 						}	
 						
 						//在点击处显示tooltip
-						mPaintTooltips.setColor(Color.RED);				
+						mPaintTooltips.setColor(Color.WHITE);				
 						chart.getToolTip().setCurrentXY(x,y);
 						chart.getToolTip().addToolTip(" Key:"+lData.getKey(),mPaintTooltips);	
 						chart.getToolTip().addToolTip(
 								Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);					
+						chart.getToolTip().setStyle(XEnum.DyInfoStyle.CAPRECT);								
+						chart.getToolTip().setAlign(Align.CENTER);
+						chart.getToolTip().getBackgroundPaint().setColor(Color.parseColor("#9400D3"));
+
 						
 						this.invalidate();						
 				     break;

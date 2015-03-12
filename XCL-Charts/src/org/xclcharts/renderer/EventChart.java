@@ -39,6 +39,7 @@ import org.xclcharts.renderer.info.ToolTipRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
@@ -67,6 +68,7 @@ public class EventChart extends XChart {
 	private PointF mFocusPoint = null;
 	private float mFocusRadius = 0.0f;	
 	private RectF mFocusRect = null;	
+	//private Path mFocusPath = null;
 	private ArcPosition mFocusArcPosition = null;
 	private boolean mFocusArcSelect = false;
 	
@@ -388,18 +390,30 @@ public class EventChart extends XChart {
 		if(!mShowClikedFocus) return true;
 		if(-1 == mSelectID) return false;
 		if(null == mFocusRect) return false;
+		
+		//if(null == mFocusPath) mFocusPath = new Path();
 
 		if( mSelectDataID == dataID &&
 				mSelectDataChildID == childID	)
 		{			
+			
 			mFocusRect.left = left;
 			mFocusRect.top = top;
 			mFocusRect.right = right;
-			mFocusRect.bottom = bottom;
-					
+			mFocusRect.bottom = bottom;											
 			canvas.drawRect(mFocusRect, getFocusPaint());
-
-			mFocusRect = null;			
+			mFocusRect.setEmpty();	
+			
+			/*
+			mFocusPath.moveTo(left, bottom);
+			mFocusPath.lineTo(left, top);
+			mFocusPath.lineTo(right, top);
+			mFocusPath.lineTo(right, bottom);
+			mFocusPath.close();
+			canvas.drawPath(mFocusPath, getFocusPaint());
+			mFocusPath.reset();
+			*/
+			
 			clearSelected();
 		}		
 		

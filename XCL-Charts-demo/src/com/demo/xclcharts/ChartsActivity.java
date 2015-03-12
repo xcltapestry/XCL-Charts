@@ -107,11 +107,20 @@ import com.demo.xclcharts.view.StackBarChart02View;
  *  禁用图表区的平移     
  *  	chart.disablePanMode()
  *  
+ *   平移默认是打开的。如果出现图或标识在绘图区外显示不全，可以禁掉此模式即可。
+ *  
+ *  
  *  如果要展示的图表数据比较长或多，可以通过调整绘图区宽度chart.getPlotArea().extWidth(增加宽度);
  *  或整个图的大小，即chart.setChartRange()的值。
  *  然后用户可以通过平移图表区的方式来展示未显示出来的数据. 
  *  注意，此方式性能会有些损失，超大量的就不用尝试这种方式了， 
  *  对于这种超大量的可以通过ScrollView控件方式来处理,具体可参考"左右滑动折线图"的例子。
+ *  
+ *  
+ *  如还有其它问题,可访问:
+ *    http://blog.csdn.net/xcl168/article/details/42318669
+ *  有一份简单的教程与常见问题解答。
+ *    也可加群直接问.
  *  
  * @author XCL
  *

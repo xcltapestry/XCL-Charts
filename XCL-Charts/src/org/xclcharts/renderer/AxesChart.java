@@ -773,8 +773,7 @@ public class AxesChart extends EventChart {
 					//绘制Y轴tick和marks			
 					canvas.save();																	
 					canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
-									plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
-					
+									plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);					
 							canvas.translate(0 , offsetY );			
 							
 							drawClipDataAxisGridlines(canvas);					

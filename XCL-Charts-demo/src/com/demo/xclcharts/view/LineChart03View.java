@@ -54,8 +54,8 @@ public class LineChart03View  extends GraphicalView {
 	private void chartRender()
 	{
 		try {				
-			//setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-			setLayerType(View.LAYER_TYPE_NONE, null);
+			setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+			//setLayerType(View.LAYER_TYPE_NONE, null);
 				
 
 			//设定数据源

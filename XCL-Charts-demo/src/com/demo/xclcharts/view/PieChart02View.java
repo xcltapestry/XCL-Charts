@@ -59,7 +59,7 @@ public class PieChart02View extends DemoView implements Runnable{
 	 private LinkedList<PieData> chartData = new LinkedList<PieData>();
 	 Paint mPaintToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	 
-	 private int mSelectedID = -1;
+	 //private int mSelectedID = -1;
 	
 	 public PieChart02View(Context context) {
 		super(context);
@@ -137,6 +137,7 @@ public class PieChart02View extends DemoView implements Runnable{
 			legend.setVerticalAlign(XEnum.VerticalAlign.BOTTOM);
 			legend.showBox();
 			*/
+			chart.disablePanMode();
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -209,7 +210,7 @@ public class PieChart02View extends DemoView implements Runnable{
 		
 		PieData pData = chartData.get(record.getDataID());		
 		
-		boolean isInvaldate = true;		
+	//	boolean isInvaldate = true;		
 		for(int i=0;i < chartData.size();i++)
 		{	
 			PieData cData = chartData.get(i);
@@ -217,7 +218,7 @@ public class PieChart02View extends DemoView implements Runnable{
 			{
 				if(cData.getSelected()) 
 				{
-					isInvaldate = false;
+					//isInvaldate = false;
 					break;
 				}else{
 					cData.setSelected(true);	
@@ -241,7 +242,7 @@ public class PieChart02View extends DemoView implements Runnable{
 		chart.getToolTip().addToolTip(" key:" + pData.getKey() +
 							" Label:" + pData.getLabel(),mPaintToolTip);	
 											
-		this.invalidate();						
+		this.refreshChart();						
 	}
 	
 	
@@ -287,6 +288,8 @@ public class PieChart02View extends DemoView implements Runnable{
 	    				//显示边框线，并设置其颜色
 	    				//chart.getArcBorderPaint().setColor(Color.YELLOW);
 	    				//chart.getArcBorderPaint().setStrokeWidth(3);
+	    				
+	    			
 	    				
 	    				//激活点击监听
 	    				chart.ActiveListenItemClick();

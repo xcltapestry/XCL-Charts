@@ -40,18 +40,6 @@ public class ToolTip extends DyInfo{
 	
 	}
 	
-	/*
-	public void showRectHint()
-	{
-		setStyle(XEnum.DyInfoStyle.RECT);
-	}
-	
-	public void showRoundRectHint()
-	{
-		setStyle(XEnum.DyInfoStyle.ROUNDRECT);
-	}
-	*/
-	
 	/**
 	 * 设置是方形不是椭圆形框
 	 * @param style 框显示风格

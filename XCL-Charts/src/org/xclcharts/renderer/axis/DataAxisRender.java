@@ -164,15 +164,13 @@ public class DataAxisRender extends DataAxis {
 	{
 		if(isShow() && isShowAxisLine())
 		{
-			//绘制轴范围分区
-			//绘制轴线
-			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+			drawAxisLine(canvas,startX, startY, stopX, stopY); 
 		}
 	}	
 	
 	public void renderAxisLine(Canvas canvas, float startX,float startY,float stopX,float stopY)
-	{
-		canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+	{		
+		drawAxisLine(canvas,startX, startY, stopX, stopY); 
 	}	
 	
 

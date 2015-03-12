@@ -309,8 +309,7 @@ public class PlotCustomLine {
 			//绘制箭头			
 			renderLineCapHorizontalPlot( canvas, line, currentX,capY);
 						
-			//绘制标签
-		
+			//绘制标签		
 			DrawHelper.getInstance().drawRotateText(
 									line.getLabel(), currentX, currentY,
 									line.getLabelRotateAngle(),
@@ -364,7 +363,7 @@ public class PlotCustomLine {
 	 */
 	public void setCustomLines(List<CustomLineData> customLineDataSet)
 	{
-		if(null != mCustomLineDataset) mCustomLineDataset.clear();
+		//if(null != mCustomLineDataset) mCustomLineDataset.clear();
 		mCustomLineDataset = customLineDataSet;
 	}
 	

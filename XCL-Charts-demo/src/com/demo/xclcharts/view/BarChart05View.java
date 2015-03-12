@@ -181,6 +181,9 @@ public class BarChart05View extends DemoView implements Runnable{
 			 chart.getClipExt().setExtTop(10.f);
 			 chart.getClipExt().setExtRight(100.f);
 			 
+			 chart.getDataAxis().setAxisLineStyle(XEnum.AxisLineStyle.CAP);
+			 chart.getCategoryAxis().setAxisLineStyle(XEnum.AxisLineStyle.CAP);
+			 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

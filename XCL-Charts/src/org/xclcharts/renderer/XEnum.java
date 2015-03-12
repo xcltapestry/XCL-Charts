@@ -49,8 +49,17 @@ public class XEnum {
 		{
 			TOP,MIDDLE,BOTTOM
 		}
-	
 		
+		/**
+		 * 设置轴线风格
+		 * @author XCL
+		 *
+		 */
+		public enum AxisLineStyle
+		{
+			NONE,CAP,FILLCAP
+		}
+			
 		/**
 		 * 对于圆形的图，如饼图之类，用来确定标签的显示位置
 		 * @author XCL  
@@ -284,7 +293,7 @@ public class XEnum {
 		 *
 		 */
 		public enum DyInfoStyle {			
-			RECT,ROUNDRECT
+			RECT,ROUNDRECT,CAPRECT,CIRCLE
 		}
 		
 		/**

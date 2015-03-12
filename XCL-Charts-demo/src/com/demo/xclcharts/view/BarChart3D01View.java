@@ -177,7 +177,7 @@ public class BarChart3D01View extends DemoView {
 			
 			
 			//扩展横向显示范围
-			chart.getPlotArea().extWidth(200f);
+		//	chart.getPlotArea().extWidth(200f);
 			
 			//标签文字与轴间距
 			chart.getCategoryAxis().setTickLabelMargin(5);

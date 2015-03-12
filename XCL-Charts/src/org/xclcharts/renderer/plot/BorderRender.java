@@ -51,8 +51,6 @@ public class BorderRender extends Border {
 		return mBorderSpadding;
 	}
 	
-	
-	 
 	 private void setPaintLineStyle()
 	 {
 		 switch(getBorderLineStyle())
@@ -119,8 +117,7 @@ public class BorderRender extends Border {
 			canvas.drawPath(mPath, getBackgroundPaint());
 		if(showBoxBorder)
 			canvas.drawPath(mPath, getLinePaint());
-		mPath.reset();
-		
+		mPath.reset();		
 	}
 	
 

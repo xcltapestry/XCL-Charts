@@ -339,7 +339,8 @@ public class LineChart01View extends DemoView {
 			chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);
 			chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),mPaintTooltips);		
 			chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),mPaintTooltips);
-						
+				
+			
 			//当前标签对应的其它点的值
 			int cid = record.getDataChildID();
 			String xLabels = "";			

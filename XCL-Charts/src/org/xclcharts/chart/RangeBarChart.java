@@ -309,11 +309,11 @@ public class RangeBarChart  extends AxesChart {
 			//保存位置
 			saveBarRectFRecord(i,0,currentX - barWidthHalf + mMoveX, barMaxPos + mMoveY,
 								   currentX + barWidthHalf + mMoveX, barMinPos + mMoveY );
-			
+		
 			 //显示焦点框
        		drawFocusRect(canvas,i,0,currentX - barWidthHalf ,barMaxPos,
 					   currentX + barWidthHalf ,barMinPos);
-			
+       					
 			if(getLabelVisible())
 			{
 				//柱形标签

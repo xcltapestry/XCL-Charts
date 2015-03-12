@@ -69,7 +69,7 @@ public abstract class GraphicalView extends View {
 	 /**
 	  * 刷新图表
 	  */
-	 public void refresh(){
+	 public void refreshChart(){
 		 this.invalidate();
 	 }	 
 	 
@@ -105,7 +105,7 @@ public abstract class GraphicalView extends View {
 		}
 		
 		private int measureWidth(int measureSpec) {
-			int result = 0;
+			int result = 100;
 			int specMode = MeasureSpec.getMode(measureSpec);
 			int specSize = MeasureSpec.getSize(measureSpec);
 
@@ -113,12 +113,12 @@ public abstract class GraphicalView extends View {
 				result = specSize;
 			} else if (specMode == MeasureSpec.AT_MOST) { //wrap_content
 				result = Math.min(result, specSize);
-			}
+			}			
 			return result;
 		}
 
 		private int measureHeight(int measureSpec) {
-			int result = 0;
+			int result = 100;
 			int specMode = MeasureSpec.getMode(measureSpec);
 			int specSize = MeasureSpec.getSize(measureSpec);
 
@@ -126,7 +126,7 @@ public abstract class GraphicalView extends View {
 				result = specSize;
 			} else if (specMode == MeasureSpec.AT_MOST) { //wrap_content
 				result = Math.min(result, specSize);
-			}
+			}			
 			return result;
 		}
 		
@@ -145,7 +145,8 @@ public abstract class GraphicalView extends View {
 				//是否开启了硬件加速,如开启将其禁掉
 				if(!isHardwareAccelerated())
 				{
-					setLayerType(View.LAYER_TYPE_NONE,null);  //LAYER_TYPE_SOFTWARE
+					//setLayerType(View.LAYER_TYPE_NONE,null);  //LAYER_TYPE_SOFTWARE
+					setLayerType(View.LAYER_TYPE_SOFTWARE,null);
 				}
 			}
 		}					 

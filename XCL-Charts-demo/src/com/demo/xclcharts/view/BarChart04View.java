@@ -168,6 +168,9 @@ public class BarChart04View extends DemoView {
 			 
 			 //柱形和标签居中方式
 			 chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
+			 
+			 chart.getDataAxis().setAxisLineStyle(XEnum.AxisLineStyle.FILLCAP);
+			 chart.getCategoryAxis().setAxisLineStyle(XEnum.AxisLineStyle.FILLCAP);
 			// chart.showRoundBorder();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

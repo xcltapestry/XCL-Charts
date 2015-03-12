@@ -31,6 +31,7 @@ import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.graphics.Path;
 
 /**
  * @ClassName XYAxis
@@ -58,7 +59,13 @@ public class XYAxis extends Axis {
 	
 	//刻度标记与轴的间距
 	private int mTickLabelMargin = 10;	
+		
+	protected boolean mShowAxisLineStyle = true;
 	
+	private XEnum.AxisLineStyle mAxisLineStyle = XEnum.AxisLineStyle.NONE;
+	
+	private float mAxisLineStyleWidth = 20.f;
+	private float mAxisLineStyleHeight = 30.f;
 
 	public XYAxis() {
 		
@@ -150,9 +157,7 @@ public class XYAxis extends Axis {
 			}
 			
 			if(this.isShowAxisLabels())
-				labelStartX = MathHelper.getInstance().sub(marksStartX , getTickLabelMargin());
-				
-												
+				labelStartX = MathHelper.getInstance().sub(marksStartX , getTickLabelMargin());															
 			break;
 		}
 		case CENTER: {
@@ -182,8 +187,7 @@ public class XYAxis extends Axis {
 						MathHelper.getInstance().add(markeStopX, 
 									this.getAxisPaint().getStrokeWidth() / 2),
 						centerY,
-						getTickMarksPaint());	
-			
+						getTickMarksPaint());				
 		}
 
 		//标签
@@ -194,7 +198,7 @@ public class XYAxis extends Axis {
 			textHeight /=4;
 							
 			
-			if(Align.LEFT == getHorizontalTickAlign()) //处理多行标签,待做
+			if(Align.LEFT == getHorizontalTickAlign()) //处理多行标签
 			{
 				float width = 0.0f;
 				if (isShowTickMarks()) {
@@ -240,11 +244,9 @@ public class XYAxis extends Axis {
 			{
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
 				marksStopY = centerY;				
-			}
-			
-				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
-				marksStopY = centerY;	
-			
+			}			
+			marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
+			marksStopY = centerY;				
 			break;
 		}
 		case MIDDLE: {
@@ -277,7 +279,8 @@ public class XYAxis extends Axis {
 
 		
 		if (isShowTickMarks() && isTickVisible) {
-			float mstartX = MathHelper.getInstance().sub(marksStartY,  getAxisPaint().getStrokeWidth() /2 ) ;
+			float mstartX = MathHelper.getInstance().sub(marksStartY, 
+								getAxisPaint().getStrokeWidth() /2 ) ;
 			
 			//if( Float.compare(mstartX, xchart.getPlotArea().getLeft()) == -1) ||
 			//		Float.compare(mstartX, xchart.getPlotArea().getRight()) == 1 	)
@@ -290,8 +293,7 @@ public class XYAxis extends Axis {
 					marksStopY, getTickMarksPaint());
 			//}
 		}
-		
-		
+				
 		if (isShowAxisLabels()) {
 
 			//定制化显示格式			
@@ -384,4 +386,80 @@ public class XYAxis extends Axis {
 		return mTickLabelMargin;
 	}
 	
+	/**
+	 * 设置轴线上三角箭头属性
+	 * @param width  箭头宽度
+	 * @param hieght 箭头高度
+	 */
+	public void setAxisLinxCapWH(float width,float hieght)
+	{
+		mAxisLineStyleWidth = width;
+		mAxisLineStyleHeight = hieght;
+	}
+	
+	/**
+	 * 设置轴线风格
+	 * @param style 风格
+	 */
+	public void setAxisLineStyle(XEnum.AxisLineStyle style)
+	{
+		mAxisLineStyle = style;
+	}
+	
+	//绘制轴线
+	protected void drawAxisLine(Canvas canvas, float startX,float startY,float stopX,float stopY)
+	{				
+		if(XEnum.AxisLineStyle.CAP == mAxisLineStyle 
+				|| XEnum.AxisLineStyle.FILLCAP == mAxisLineStyle )
+		{
+			float w = mAxisLineStyleWidth / 2;
+			float angleTop = 0.f;
+			float axisEnd =mAxisLineStyleHeight/2;
+			
+			Path path = new Path();
+			if(Float.compare(startY, stopY) != 0) //竖轴
+			{
+				angleTop = stopY - mAxisLineStyleHeight;			
+				float angleLeftX = stopX - w;
+				float angleRightX = stopX + w;
+				
+				axisEnd = angleTop + axisEnd;				
+				if(XEnum.AxisLineStyle.FILLCAP == mAxisLineStyle)
+				{
+					path.moveTo(angleLeftX, axisEnd);
+					path.lineTo(stopX, angleTop);
+					path.lineTo(angleRightX, axisEnd);
+					path.close();
+					canvas.drawPath(path, getAxisPaint());
+					canvas.drawLine(startX, startY, stopX,axisEnd, this.getAxisPaint());
+				}else{
+					canvas.drawLine(startX, startY, stopX, angleTop, this.getAxisPaint());					
+					canvas.drawLine(angleLeftX, axisEnd, stopX, angleTop, this.getAxisPaint());
+					canvas.drawLine(angleRightX, axisEnd, stopX, angleTop, this.getAxisPaint());						
+				}											
+			}else{				
+				angleTop = stopX + mAxisLineStyleHeight;
+				float angleTopY = stopY - w;
+				float angleBottom = stopY + w;		
+				
+				axisEnd = angleTop - axisEnd;				
+				if(XEnum.AxisLineStyle.FILLCAP == mAxisLineStyle)
+				{
+					path.moveTo(axisEnd, angleTopY);
+					path.lineTo(angleTop, stopY);
+					path.lineTo(axisEnd, angleBottom);
+					path.close();
+					canvas.drawPath(path, getAxisPaint());					
+					canvas.drawLine(startX, startY, axisEnd,stopY , this.getAxisPaint());					
+				}else{			
+					canvas.drawLine(startX, startY, angleTop,stopY , this.getAxisPaint());
+					canvas.drawLine(axisEnd, angleTopY, angleTop, stopY, this.getAxisPaint());
+					canvas.drawLine(axisEnd, angleBottom, angleTop, stopY, this.getAxisPaint());						
+				}
+			}									
+		}else{ //none
+			canvas.drawLine(startX, startY, stopX, stopY, this.getAxisPaint());
+		}
+			
+	}
 }

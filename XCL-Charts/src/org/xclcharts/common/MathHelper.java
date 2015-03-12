@@ -91,7 +91,7 @@ public class MathHelper {
 	    	mPosX = add(cirX , (float)Math.cos(arcAngle) * radius);
 	        mPosY = add(cirY , (float)Math.sin(arcAngle) * radius) ;
 	    }
-	    else if (Float.compare(cirAngle,00.0f) == 0)
+	    else if (Float.compare(cirAngle,90.0f) == 0)
 	    {
 	        mPosX = cirX;
 	        mPosY = add(cirY , radius);

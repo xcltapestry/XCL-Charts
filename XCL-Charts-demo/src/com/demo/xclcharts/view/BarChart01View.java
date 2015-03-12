@@ -474,15 +474,25 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			chart.getFocusPaint().setStrokeWidth(3);		
 			chart.getFocusPaint().setColor(Color.GREEN);							
 			
+			
 			//在点击处显示tooltip
-			mPaintToolTip.setColor(colorTitalAxes);		
-			mDotToolTip.setDotStyle(XEnum.DotStyle.RECT);		
+			mPaintToolTip.setAntiAlias(true);
+			mPaintToolTip.setColor(bData.getColor());	
+			
+			
+			mDotToolTip.setDotStyle(XEnum.DotStyle.RECT);	
+			mDotToolTip.setColor(Color.BLUE); //bData.getColor());	
+		
 			chart.getToolTip().setCurrentXY(x,y);
 			chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);		
 			chart.getToolTip().addToolTip(mDotToolTip,bData.getKey(), mPaintToolTip);
 			chart.getToolTip().addToolTip(
 						"数量:" +Double.toString(bValue),mPaintToolTip);
 			chart.getToolTip().getBackgroundPaint().setAlpha(100);
+			chart.getToolTip().setAlign(Align.CENTER);
+			
+			chart.getToolTip().setInfoStyle(XEnum.DyInfoStyle.CIRCLE);
+			//chart.getToolTip().getBackgroundPaint().setColor(Color.rgb(30, 30, 30));
 			this.invalidate();
 		}
 		
