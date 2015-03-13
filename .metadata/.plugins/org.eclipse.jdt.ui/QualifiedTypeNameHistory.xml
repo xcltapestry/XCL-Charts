@@ -29,7 +29,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.chart.FunnelChart"/>
 <fullyQualifiedTypeName name="org.xclcharts.chart.FunnelData"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.SortType"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
 <fullyQualifiedTypeName name="android.graphics.Region"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.FunnelChart02View"/>
@@ -42,11 +41,9 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.centerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CoordsCenterStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.CircleChart04View"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelBoxStyle"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLineCap"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 </qualifiedTypeNameHistroy>

@@ -2,29 +2,30 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="412" key="DIALOG_WIDTH"/>
-		<item value="392" key="DIALOG_Y_ORIGIN"/>
+		<item value="389" key="DIALOG_Y_ORIGIN"/>
+		<item value="787" key="DIALOG_X_ORIGIN"/>
 		<item value="344" key="DIALOG_HEIGHT"/>
-		<item value="651" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="isRegEx"/>
 		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="AxisLineStyle" key="selection"/>
+		<item value="mXAxisCustomLine" key="selection"/>
 		<list key="findhistory">
-			<item value="AxisLineCap"/>
-			<item value="renderVerticalBar"/>
-			<item value="angel"/>
-			<item value="renderAxisLine"/>
-			<item value="mRadius"/>
-			<item value="paint"/>
-			<item value="mShowBoxBorder"/>
-			<item value="mScale"/>
+			<item value="mXAxisCustomLine"/>
+			<item value="mCustomLineDataset"/>
+			<item value="setVerticalPlot"/>
+			<item value="plotArea"/>
+			<item value="renderCategoryAxisCustomlines"/>
+			<item value="renderCapLabelHorizontalPlot"/>
+			<item value="mCustomLine"/>
+			<item value="setCategoryAxisCustomLines"/>
 		</list>
 		<list key="replacehistory">
+			<item value="mXCustomLineDataset"/>
 			<item value="AxisLineStyle"/>
 			<item value="angle"/>
 			<item value="mBarMaxPxWidth"/>
@@ -32,7 +33,6 @@
 			<item value="barWidth"/>
 			<item value="mScale"/>
 			<item value="ArrayList"/>
-			<item value="getTotalAngle()"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

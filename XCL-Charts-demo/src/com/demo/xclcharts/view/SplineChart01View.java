@@ -30,7 +30,6 @@ import java.util.List;
 import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
-import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XChart;

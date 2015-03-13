@@ -104,7 +104,7 @@ public class LineChart02View extends DemoView implements Runnable{
 			//设定数据源
 			chart.setCategories(labels);								
 		//	chart.setDataSource(chartData);
-			chart.setCustomLines(mCustomLineDataset);
+			//chart.setCustomLines(mCustomLineDataset);
 			
 			//数据轴最大值
 			chart.getDataAxis().setAxisMax(3500);
@@ -328,7 +328,9 @@ public class LineChart02View extends DemoView implements Runnable{
           		if(i == count - 1)
           		{
           			chart.getDataAxis().show();
-          			chart.getDataAxis().showAxisLabels();          			
+          			chart.getDataAxis().showAxisLabels();   
+          			
+          			chart.setCustomLines(mCustomLineDataset);
           		}
           		postInvalidate();            		
           	}            	

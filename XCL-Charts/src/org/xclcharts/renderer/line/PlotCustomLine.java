@@ -268,6 +268,38 @@ public class PlotCustomLine {
 		return true;
 	}
 	
+	// PlotAreaRender plotArea,
+	
+	public boolean renderCategoryAxisCustomlines(Canvas canvas,
+						float  plotScreenWidth,
+						PlotAreaRender plotArea,
+						double maxValue,double minValue) {
+		
+		setPlotArea(plotArea);
+					
+		for(CustomLineData line : mCustomLineDataset)
+		{			
+			line.getCustomLinePaint().setColor(line.getColor());
+			line.getCustomLinePaint().setStrokeWidth(line.getLineStroke());
+						
+			float pos = MathHelper.getInstance().getLnPlotXValPosition(
+					plotScreenWidth, plotArea.getLeft(), line.getValue(), maxValue, minValue);
+			
+			float currentX = MathHelper.getInstance().add(plotArea.getLeft() , pos);
+														
+			//绘制线	
+			if(line.isShowLine())
+				DrawHelper.getInstance().drawLine(line.getLineStyle(), 
+												currentX, plotArea.getBottom(),
+												currentX, plotArea.getTop(),
+												canvas, line.getCustomLinePaint());
+						
+			//绘制标签和箭头
+			renderCapLabelHorizontalPlot(canvas,line,pos);
+		}		
+		return true;
+	}
+	
 	
 	/**
 	 * 绘制标签和箭头

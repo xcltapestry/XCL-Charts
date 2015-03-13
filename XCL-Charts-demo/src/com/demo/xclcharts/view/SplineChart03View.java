@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
@@ -16,6 +18,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -31,6 +34,11 @@ public class SplineChart03View  extends DemoView {
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
 	
 	private Paint mPaintTooltips = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
+	//setCategoryAxisCustomLines
+	// splinechart支持横向和竖向定制线
+	private List<CustomLineData> mXCustomLineDataset = new ArrayList<CustomLineData>();
+	private List<CustomLineData> mYCustomLineDataset = new ArrayList<CustomLineData>();
 	
 	public SplineChart03View(Context context) {
 		super(context);
@@ -51,6 +59,7 @@ public class SplineChart03View  extends DemoView {
 	 private void initView()
 	 {
 			chartLabels();
+			chartCustomeLines();
 			chartDataSet();	
 			chartRender();
 	 }
@@ -78,6 +87,7 @@ public class SplineChart03View  extends DemoView {
 			//数据源	
 			chart.setCategories(labels);
 			chart.setDataSource(chartData);
+			
 						
 			//坐标系
 			//数据轴最大值
@@ -85,13 +95,15 @@ public class SplineChart03View  extends DemoView {
 			//chart.getDataAxis().setAxisMin(0);
 			//数据轴刻度间隔
 			chart.getDataAxis().setAxisSteps(10);
-			
-			
+			chart.setCustomLines(mYCustomLineDataset); //y轴
+						
 			
 			//标签轴最大值
 			chart.setCategoryAxisMax(100);	
 			//标签轴最小值
 			chart.setCategoryAxisMin(0);	
+			//chart.setCustomLines(mXCustomLineDataset); //y轴
+			chart.setCategoryAxisCustomLines(mXCustomLineDataset); //x轴
 			
 			//设置图的背景色
 			chart.setApplyBackgroundColor(true);
@@ -226,6 +238,24 @@ public class SplineChart03View  extends DemoView {
 		labels.add("");
 		labels.add("周日");
 	}
+	
+	/**
+	 * 期望线/分界线
+	 */
+	private void chartCustomeLines()
+	{				
+		CustomLineData cdx1 =new CustomLineData("稍好",30d,Color.rgb(35, 172, 57),5);
+		CustomLineData cdx2 =new CustomLineData("舒适",40d,Color.rgb(69, 181, 248),5);		
+		cdx1.setLabelVerticalAlign(XEnum.VerticalAlign.MIDDLE);		
+		mXCustomLineDataset.add(cdx1);
+		mXCustomLineDataset.add(cdx2);	
+		
+				
+		CustomLineData cdy1 = new CustomLineData("定制线",45d,Color.rgb(69, 181, 248),5);
+		cdy1.setLabelHorizontalPostion(Align.CENTER);		
+		mYCustomLineDataset.add(cdy1);	
+	}
+	
 	
 	@Override
 	public void render(Canvas canvas) {

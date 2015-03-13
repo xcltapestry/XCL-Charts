@@ -29,6 +29,7 @@ import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.LnChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.line.DotInfo;
+import org.xclcharts.renderer.line.PlotCustomLine;
 import org.xclcharts.renderer.line.PlotDot;
 import org.xclcharts.renderer.line.PlotDotRender;
 import org.xclcharts.renderer.line.PlotLine;
@@ -71,6 +72,9 @@ public class SplineChart extends LnChart{
 	
 	//平滑曲线
   	private XEnum.CrurveLineStyle mCrurveLineStyle = XEnum.CrurveLineStyle.BEZIERCURVE;	
+  	
+ // 用于绘制定制线(分界线)
+ 	private PlotCustomLine mXAxisCustomLine = null;
 
 		
 	public SplineChart()
@@ -140,6 +144,18 @@ public class SplineChart extends LnChart{
 		mMinValue = value;
 	}	
 	
+	
+	/**
+	 * 设置分类轴的竖向定制线值
+	 * 
+	 * @param customLineDataset
+	 *            定制线数据集合
+	 */
+	public void setCategoryAxisCustomLines(List<CustomLineData> customLineDataset) {
+		if (null == mXAxisCustomLine) mXAxisCustomLine = new PlotCustomLine();
+		mXAxisCustomLine.setCustomLines(customLineDataset);
+	}		
+	
 	/**
 	 * 设置标签的显示格式
 	 * @param callBack 回调函数
@@ -182,6 +198,8 @@ public class SplineChart extends LnChart{
 	{
 		return mCrurveLineStyle;
 	}
+	
+	
 	
 				
 	private void calcAllPoints( SplineData bd,List<PointF> lstPoints,List<DotInfo> lstDotInfo)
@@ -373,7 +391,15 @@ public class SplineChart extends LnChart{
 			if(null != mCustomLine) //画横向定制线
 			{
 				mCustomLine.setVerticalPlot(dataAxis, plotArea, getPlotScreenHeight());
-				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);	
+				mCustomLine.renderVerticalCustomlinesDataAxis(canvas);										
+			}
+			
+			if(null != mXAxisCustomLine) //画x轴上的竖向定制线
+			{				
+				mXAxisCustomLine.renderCategoryAxisCustomlines(
+								canvas,
+								this.getPlotScreenWidth(),this.plotArea,
+								mMaxValue,mMinValue);	
 			}
 			
 		}

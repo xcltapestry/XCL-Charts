@@ -227,7 +227,22 @@ public class MathHelper {
 		return  Angle;
 	}
 	
-    
+	
+	//函数来自LnChart，位置算法现在到处都是，可以考虑优化下。[各轴，定制线]
+	public float getLnPlotXValPosition(float plotScreenWidth,float plotAreaLeft,
+								   double xValue, double maxValue,double minValue) {
+		// 对应的X坐标
+		double maxminRange = sub(maxValue, minValue);
+		double xScale = div(sub(xValue, minValue), maxminRange);
+		return mul(plotScreenWidth, (float) xScale);
+	}    
+	
+	public float getLnXValPosition(float plotScreenWidth,float plotAreaLeft,
+			   double xValue, double maxValue,double minValue) {
+		// 对应的X坐标
+		return add(plotAreaLeft, 
+				getLnXValPosition(plotScreenWidth,plotAreaLeft,xValue,maxValue,minValue) );
+	}    		
         
     public void disableHighPrecision()
     {
