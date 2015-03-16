@@ -51,6 +51,10 @@ public class AnchorDataPoint {
 	private int mLineWidth = -1;
 	//private XEnum.LineStyle  mLineStyle = XEnum.LineStyle.SOLID;
 	
+	private float mCapRectW = 20.f;
+	private float mCapRectH = 10.f;
+	
+	
 	public AnchorDataPoint()
 	{
 		
@@ -192,6 +196,26 @@ public class AnchorDataPoint {
 		return mDataAreaStyle;
 	}
 	
+	/**
+	 * 当风格为CAPRECT时，可用此函数来设置三角形的宽/高
+	 * @param width  三角形的宽
+	 * @param height 三角形的高
+	 */
+	public void setCapRectWH(float width,float height)
+	{
+		mCapRectW = width;
+		mCapRectH = height;
+	}
+		
 	
+	public float getCapRectW()
+	{
+		return mCapRectW;
+	}
+	
+	public float getCapRectH()
+	{
+		return mCapRectH;
+	}
 
 }

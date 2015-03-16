@@ -259,6 +259,8 @@ public class DyInfo {
 			renderCapBox(canvas,mRect);		
 		}else if(XEnum.DyInfoStyle.CIRCLE == mStyle){				
 			renderCircle(canvas,mRect);	
+		//}else if(XEnum.DyInfoStyle.ELLIPSE == mStyle){				
+		
 		}else{
 			if(mShowBackground)canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY, this.getBackgroundPaint());	
 			if(mShowBoxBorder)canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY,this.getBorderPaint());

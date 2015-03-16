@@ -35,6 +35,7 @@ import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.AnchorDataPoint;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -58,6 +59,9 @@ public class LineChart02View extends DemoView implements Runnable{
 	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<LineData> chartData = new LinkedList<LineData>();
 	private List<CustomLineData> mCustomLineDataset = new LinkedList<CustomLineData>();
+	
+	//批注
+	List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
 
 	public LineChart02View(Context context) {
 		super(context);
@@ -257,6 +261,15 @@ public class LineChart02View extends DemoView implements Runnable{
 		chartData.add(lineData4);
 		chartData.add(lineData5);
 		chartData.add(lineData6); 
+		
+
+		//批注
+		//List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
+		AnchorDataPoint an4 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.CAPRECT);
+		an4.setAnchor("批注");
+		an4.setBgColor(Color.rgb(255, 145, 126));
+		mAnchorSet.add(an4);
+		chart.setAnchorDataPoint(mAnchorSet);	
 	}
 	
 	private void chartLabels()

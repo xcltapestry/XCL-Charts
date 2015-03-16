@@ -360,10 +360,15 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		
 		AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
 		an3.setBgColor(Color.rgb(255, 145, 126));
+		
+		AnchorDataPoint an4 = new AnchorDataPoint(0,1,XEnum.AnchorStyle.CAPRECT);
+		an4.setBgColor(Color.rgb(255, 145, 126));
+		an4.setAnchor("我是批注");
 				
 		mAnchorSet.add(an1);
 		mAnchorSet.add(an2);
 		mAnchorSet.add(an3);
+		mAnchorSet.add(an4);
 		chart.setAnchorDataPoint(mAnchorSet);	
 				
 		chart.setApplyBackgroundColor(true); 

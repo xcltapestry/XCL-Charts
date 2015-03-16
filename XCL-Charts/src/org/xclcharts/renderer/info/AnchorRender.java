@@ -21,8 +21,13 @@
  */
 package org.xclcharts.renderer.info;
 
+import org.xclcharts.common.DrawHelper;
+import org.xclcharts.renderer.XEnum;
+
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
 
@@ -63,7 +68,11 @@ public class AnchorRender {
 		
 		if(null == pAnchor) return;
 		
+		
 		float radius = pAnchor.getRadius();
+		
+		
+		
 		
 		switch(pAnchor.getAreaStyle())
 		{
@@ -85,6 +94,9 @@ public class AnchorRender {
 		//XEnum.LineStyle lstyle = pAnchor.getLineStyle();
 		
 		switch (pAnchor.getAnchorStyle()) {
+		case CAPRECT:
+			renderCapBox(canvas,pAnchor,cx, cy, radius);
+			break;
 		//case DOT:										
 		//	canvas.drawCircle(cx, cy, radius, getBgPaint());	
 		//	break;
@@ -126,15 +138,65 @@ public class AnchorRender {
 			break;
 		default:
 		}			
-		
-		if(pAnchor.getAnchor() != "")
+								
+		if(pAnchor.getAnchor() != "" && 
+				pAnchor.getAnchorStyle() != XEnum.AnchorStyle.CAPRECT)
 		{
 			getTextPaint().setColor(pAnchor.getTextColor());
 			getTextPaint().setTextSize(pAnchor.getTextSize());
 			canvas.drawText(pAnchor.getAnchor(), cx, cy, getTextPaint());
 		}
+		
 		getBgPaint().setStrokeWidth(width);
 	}
+	
+	
+	private void renderCapBox(Canvas canvas,AnchorDataPoint pAnchor,
+					float cirX,float cirY,float radius){
+		
+		
+		float angleW = pAnchor.getCapRectW() / 2;//20.f;
+		float angleH = pAnchor.getCapRectH(); //10.f;
+		
+		if(Float.compare(radius, angleW) == -1 || Float.compare(radius, angleW) == 0)
+		{
+			radius = angleW + 10.f;
+		}		
+		
+		float fontH = angleH + 5.f;		
+		float extW = angleW + radius;
+	
+		if(pAnchor.getAnchor() != "")
+		{
+			fontH = DrawHelper.getInstance().calcTextHeight(getTextPaint(), pAnchor.getAnchor());
+			fontH += 5.f;		
+			
+			float FontW = DrawHelper.getInstance().getTextWidth(getTextPaint(), pAnchor.getAnchor());			
+			if( Float.compare( extW * 2,FontW) == -1 ) extW = FontW/2;			
+			extW += 3.f;
+		}			
+				
+		Path path = new Path();
+		path.moveTo(cirX, cirY);
+		path.lineTo(cirX - angleW , cirY - angleH);
+		path.lineTo(cirX - extW , cirY - angleH);		
+		path.lineTo(cirX - extW,  cirY - angleH - fontH);
+		path.lineTo(cirX + extW,  cirY - angleH - fontH);
+		path.lineTo(cirX + extW,  cirY - angleH );
+		path.lineTo(cirX + angleW,  cirY - angleH );
+		path.lineTo(cirX, cirY);
+		path.close();
+		canvas.drawPath(path, getBgPaint());	
+		
+		if(pAnchor.getAnchor() != "")
+		{
+			getTextPaint().setColor(pAnchor.getTextColor());
+			getTextPaint().setTextSize(pAnchor.getTextSize());
+			canvas.drawText(pAnchor.getAnchor(), cirX,  cirY - angleH - fontH/3, getTextPaint());			
+		}
+		path.reset();
+	}
+
 	
 	
 	private void renderRect(Canvas canvas,Paint paint,
@@ -153,7 +215,11 @@ public class AnchorRender {
 	
 	private Paint getTextPaint()
 	{
-		if(null == mPaintText) mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);		
+		if(null == mPaintText)
+		{
+			mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);		
+			mPaintText.setTextAlign(Align.CENTER);
+		}
 		return mPaintText;
 	}
 	

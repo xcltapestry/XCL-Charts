@@ -207,7 +207,7 @@ public class XEnum {
 		 *
 		 */
 		public enum AnchorStyle{
-			RECT,CIRCLE,VLINE,HLINE,TOBOTTOM,TOTOP,TOLEFT,TORIGHT
+			RECT,CAPRECT,CIRCLE,VLINE,HLINE,TOBOTTOM,TOTOP,TOLEFT,TORIGHT
 		}
 		
 		
@@ -293,7 +293,7 @@ public class XEnum {
 		 *
 		 */
 		public enum DyInfoStyle {			
-			RECT,ROUNDRECT,CAPRECT,CIRCLE
+			RECT,ROUNDRECT,CAPRECT,CIRCLE //,ELLIPSE
 		}
 		
 		/**
