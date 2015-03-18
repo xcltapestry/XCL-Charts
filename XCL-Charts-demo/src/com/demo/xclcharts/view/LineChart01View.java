@@ -335,7 +335,9 @@ public class LineChart01View extends DemoView {
 			
 			//在点击处显示tooltip
 			mPaintTooltips.setColor(Color.RED);				
-			chart.getToolTip().setCurrentXY(x,y);
+			//chart.getToolTip().setCurrentXY(x,y);
+			chart.getToolTip().setCurrentXY(record.getPosition().x,record.getPosition().y); 
+			
 			chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);
 			chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),mPaintTooltips);		
 			chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),mPaintTooltips);

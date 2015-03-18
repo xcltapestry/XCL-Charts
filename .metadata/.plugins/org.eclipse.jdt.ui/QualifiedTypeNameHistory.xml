@@ -58,6 +58,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLineCap"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
-<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
+<fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 </qualifiedTypeNameHistroy>

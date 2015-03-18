@@ -301,7 +301,7 @@ public class CircleChart extends CirChart {
         }
     }
     
-    private float getCirY(float cirY,int labelHeight)
+    private float getCirY(float cirY,float labelHeight)
     {
     	float txtY = cirY;
     	if("" == mDataInfo )
@@ -337,9 +337,9 @@ public class CircleChart extends CirChart {
             //用于存放当前百分比的圆心角度
             float currentAngle = 0.0f;
 
-            int infoHeight = DrawHelper.getInstance().getPaintFontHeight(getDataInfoPaint());
-            int LabelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
-            int textHeight = LabelHeight + infoHeight;
+            float infoHeight = DrawHelper.getInstance().getPaintFontHeight(getDataInfoPaint());
+            float LabelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
+            float textHeight = LabelHeight + infoHeight;
 
             for (PieData cData : mDataSet) {
                 paintArc.setColor(cData.getSliceColor());

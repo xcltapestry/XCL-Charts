@@ -53,6 +53,7 @@ public class AnchorDataPoint {
 	
 	private float mCapRectW = 20.f;
 	private float mCapRectH = 10.f;
+	private float mCapRectHeight = 30.f;
 	
 	
 	public AnchorDataPoint()
@@ -201,12 +202,21 @@ public class AnchorDataPoint {
 	 * @param width  三角形的宽
 	 * @param height 三角形的高
 	 */
-	public void setCapRectWH(float width,float height)
-	{
-		mCapRectW = width;
-		mCapRectH = height;
+	public void setCapRectAngleWH(float capWidth,float capHeight)
+	{		
+		mCapRectW = capWidth;
+		mCapRectH = capHeight;
 	}
 		
+	/**
+	 * 当风格为CAPRECT时，设置Rect的高度
+	 * @param rectHeight
+	 */
+	public void setCapRectHeight(float rectHeight)
+	{
+		mCapRectHeight = rectHeight;
+	}
+	
 	
 	public float getCapRectW()
 	{
@@ -217,5 +227,12 @@ public class AnchorDataPoint {
 	{
 		return mCapRectH;
 	}
+	
+	public float getCapRectHeight()
+	{
+		return mCapRectHeight;
+	}
+	
+	
 
 }

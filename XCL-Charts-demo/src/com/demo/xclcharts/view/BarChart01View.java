@@ -486,8 +486,13 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			
 			
 			mDotToolTip.setDotStyle(XEnum.DotStyle.RECT);	
-			mDotToolTip.setColor(Color.BLUE); //bData.getColor());	
-		
+			mDotToolTip.setColor(Color.BLUE); //bData.getColor());
+			
+			//位置显示方法一:
+			//用下列方法可以让tooltip显示在柱形顶部
+			//chart.getToolTip().setCurrentXY(record.getRectF().centerX(),record.getRectF().top);
+			//位置显示方法二:
+			//用下列方法可以让tooltip在所点击位置显示
 			chart.getToolTip().setCurrentXY(x,y);
 			chart.getToolTip().setStyle(XEnum.DyInfoStyle.ROUNDRECT);		
 			chart.getToolTip().addToolTip(mDotToolTip,bData.getKey(), mPaintToolTip);

@@ -26,9 +26,9 @@ import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
+import android.graphics.Path;
 import android.graphics.RectF;
 
 /**
@@ -66,13 +66,8 @@ public class AnchorRender {
 					AnchorDataPoint pAnchor, float cx, float cy,float cradius,
 					float left,float top,float right, float bottom) {
 		
-		if(null == pAnchor) return;
-		
-		
-		float radius = pAnchor.getRadius();
-		
-		
-		
+		if(null == pAnchor) return;		
+		float radius = pAnchor.getRadius();	
 		
 		switch(pAnchor.getAreaStyle())
 		{
@@ -89,9 +84,7 @@ public class AnchorRender {
 		if( pAnchor.getLineWidth() > -1 )
 		{			
 			getBgPaint().setStrokeWidth(pAnchor.getLineWidth());
-		}
-		
-		//XEnum.LineStyle lstyle = pAnchor.getLineStyle();
+		}		
 		
 		switch (pAnchor.getAnchorStyle()) {
 		case CAPRECT:
@@ -107,33 +100,21 @@ public class AnchorRender {
 			canvas.drawCircle(cx, cy, radius, getBgPaint());
 			break;			
 		case VLINE:	
-			// DrawHelper.getInstance().drawLine(lstyle, 
-			//		 cx, top,cx, bottom,canvas, getBgPaint());	
 			canvas.drawLine(cx, top,cx, bottom, getBgPaint());
 			break;
 		case HLINE:	
-			 //DrawHelper.getInstance().drawLine(lstyle, 
-			//		 left, cy,right, cy,canvas, getBgPaint());
 			canvas.drawLine(left, cy,right, cy, getBgPaint());
 			break;
 		case TOBOTTOM:				
-			// DrawHelper.getInstance().drawLine(XEnum.LineStyle.DOT, //lstyle, 
-			//		 cx, cy + cradius,cx,bottom,canvas, getBgPaint());	
 			canvas.drawLine(cx, cy + cradius,cx,bottom, getBgPaint());
 			break;
 		case TOTOP:		
-			//DrawHelper.getInstance().drawLine(lstyle, 
-			//		cx, cy - cradius,cx, top,canvas, getBgPaint());	
 			canvas.drawLine(cx, cy - cradius,cx, top, getBgPaint());
 			break;
 		case TOLEFT:	
-			//DrawHelper.getInstance().drawLine(lstyle, 
-			//		cx - cradius, cy,left, cy,canvas, getBgPaint());
 			canvas.drawLine(cx - cradius, cy,left, cy, getBgPaint());
 			break;
-		case TORIGHT:	
-			//DrawHelper.getInstance().drawLine(lstyle, 
-			//		cx + cradius, cy,right, cy,canvas, getBgPaint());	
+		case TORIGHT:		
 			canvas.drawLine(cx + cradius, cy,right, cy, getBgPaint());
 			break;
 		default:
@@ -158,30 +139,30 @@ public class AnchorRender {
 		float angleW = pAnchor.getCapRectW() / 2;//20.f;
 		float angleH = pAnchor.getCapRectH(); //10.f;
 		
+		float fontH =  pAnchor.getCapRectHeight(); // angleH ; // + 5.f;		
+		float extW = angleW + radius;	
+		
 		if(Float.compare(radius, angleW) == -1 || Float.compare(radius, angleW) == 0)
 		{
-			radius = angleW + 10.f;
-		}		
-		
-		float fontH = angleH + 5.f;		
-		float extW = angleW + radius;
-	
-		if(pAnchor.getAnchor() != "")
-		{
-			fontH = DrawHelper.getInstance().calcTextHeight(getTextPaint(), pAnchor.getAnchor());
-			fontH += 5.f;		
+			extW = angleW + 30.f;
+		}			
 			
-			float FontW = DrawHelper.getInstance().getTextWidth(getTextPaint(), pAnchor.getAnchor());			
+		String anchor = pAnchor.getAnchor().trim();					
+		if(pAnchor.getAnchor() != "")
+		{			
+			float textHeight = DrawHelper.getInstance().getPaintFontHeight(getTextPaint()) + 30.f;			
+			if(Float.compare(textHeight, fontH) == 1) fontH = textHeight;			
+			float FontW = DrawHelper.getInstance().getTextWidth(getTextPaint(), anchor);			
 			if( Float.compare( extW * 2,FontW) == -1 ) extW = FontW/2;			
 			extW += 3.f;
-		}			
-				
+		}	
+								
 		Path path = new Path();
 		path.moveTo(cirX, cirY);
 		path.lineTo(cirX - angleW , cirY - angleH);
 		path.lineTo(cirX - extW , cirY - angleH);		
-		path.lineTo(cirX - extW,  cirY - angleH - fontH);
-		path.lineTo(cirX + extW,  cirY - angleH - fontH);
+		path.lineTo(cirX - extW, cirY - angleH - fontH);
+		path.lineTo(cirX + extW,  cirY - angleH - fontH); 
 		path.lineTo(cirX + extW,  cirY - angleH );
 		path.lineTo(cirX + angleW,  cirY - angleH );
 		path.lineTo(cirX, cirY);
@@ -192,9 +173,12 @@ public class AnchorRender {
 		{
 			getTextPaint().setColor(pAnchor.getTextColor());
 			getTextPaint().setTextSize(pAnchor.getTextSize());
-			canvas.drawText(pAnchor.getAnchor(), cirX,  cirY - angleH - fontH/3, getTextPaint());			
+			canvas.drawText(anchor, cirX,  cirY - angleH - fontH/3, getTextPaint());			
 		}
 		path.reset();
+		
+		mPaintText = null;
+		
 	}
 
 	
@@ -219,6 +203,7 @@ public class AnchorRender {
 		{
 			mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);		
 			mPaintText.setTextAlign(Align.CENTER);
+			//mPaintText.setTextSize(22);
 		}
 		return mPaintText;
 	}

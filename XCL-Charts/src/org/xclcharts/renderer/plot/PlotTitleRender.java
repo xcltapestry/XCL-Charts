@@ -55,9 +55,9 @@ public class PlotTitleRender extends PlotTitle{
 	{
 		//排除掉border width
 	
-		int titleHeight = 0;
-		int subtitleHeight = 0;
-		int totalHeight = 0;
+		float titleHeight = 0.f;
+		float subtitleHeight = 0.f;
+		float totalHeight = 0.f;
 		
 		float titleInitY = 0.0f;
 		

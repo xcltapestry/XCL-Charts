@@ -389,7 +389,7 @@ public class RadarChart extends RdChart{
 		
 		mArrayRadius = new Float[dataAxisTickCount];
 		
-		int labelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
+		float labelHeight = DrawHelper.getInstance().getPaintFontHeight(getLabelPaint());
 		float labelRadius = this.getRadius() + labelHeight + mLabelOffset;
 		float currAgent = 0.0f;
 				

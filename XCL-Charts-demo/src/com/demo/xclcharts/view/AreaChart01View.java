@@ -306,11 +306,14 @@ public class AreaChart01View extends DemoView implements Runnable {
 		//在点击处显示tooltip
 		mPaintTooltips.setColor(Color.YELLOW);			
 		chart.getToolTip().getBackgroundPaint().setColor(Color.GRAY);
-		chart.getToolTip().setCurrentXY(x,y);
+		//chart.getToolTip().setCurrentXY(x,y);
+		chart.getToolTip().setCurrentXY(record.getPosition().x,record.getPosition().y); 
+		chart.getToolTip().setStyle(XEnum.DyInfoStyle.CAPRECT);	
+		
 		chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),mPaintTooltips);
 		chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),mPaintTooltips);		
 		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(lValue),mPaintTooltips);
-		chart.getToolTip().setAlign(Align.LEFT);
+		chart.getToolTip().setAlign(Align.CENTER);
 					
 		this.invalidate();
 		

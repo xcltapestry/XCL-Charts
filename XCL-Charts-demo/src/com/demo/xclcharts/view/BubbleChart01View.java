@@ -326,6 +326,8 @@ public class BubbleChart01View extends DemoView {
 		}else{			
 			PointPosition record = chart.getPositionRecord(x,y);			
 			if( null == record) return;
+			
+			
 	
 			BubbleData lData = chartData.get(record.getDataID());
 			List<PointD> mapPoint =  lData.getDataSet();	
@@ -353,8 +355,9 @@ public class BubbleChart01View extends DemoView {
 						}	
 						
 						//在点击处显示tooltip
-						mPaintTooltips.setColor(Color.WHITE);				
-						chart.getToolTip().setCurrentXY(x,y);
+						mPaintTooltips.setColor(Color.WHITE);									
+						chart.getToolTip().setCurrentXY(record.getPosition().x,record.getPosition().y); 
+						
 						chart.getToolTip().addToolTip(" Key:"+lData.getKey(),mPaintTooltips);	
 						chart.getToolTip().addToolTip(
 								Double.toString(xValue)+","+Double.toString(yValue),mPaintTooltips);					

@@ -133,11 +133,10 @@ public class DrawHelper {
 	 * @param paint 画笔
 	 * @return 高度
 	 */
-	public int getPaintFontHeight(Paint paint)
+	public float getPaintFontHeight(Paint paint)
 	{
 	     FontMetrics fm = paint.getFontMetrics();
-		 int charHeight = (int) Math.ceil(fm.descent - fm.ascent);
-		 return charHeight;
+	     return (float) Math.ceil(fm.descent - fm.ascent);
 	}
 	 
 	/**
@@ -159,7 +158,7 @@ public class DrawHelper {
 	 * @param str   字符串
 	 * @return 高度
 	 */
-	public int calcTextHeight(Paint paint,String str)
+	public float calcTextHeight(Paint paint,String str)
 	{		
 		if(str.length() == 0) return 0;
 		return getPaintFontHeight(paint) * str.length();

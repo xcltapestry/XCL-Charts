@@ -193,7 +193,7 @@ public class XYAxis extends Axis {
 		//标签
 		//  当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
 		if (isShowAxisLabels()) {			
-			int textHeight = DrawHelper.getInstance().getPaintFontHeight(
+			float textHeight = DrawHelper.getInstance().getPaintFontHeight(
 														getTickLabelPaint());
 			textHeight /=4;
 							
