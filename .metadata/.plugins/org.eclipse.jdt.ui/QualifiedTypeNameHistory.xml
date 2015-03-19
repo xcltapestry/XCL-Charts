@@ -44,15 +44,12 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.MathHelper"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.CircleChart04View"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotArea"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelBoxStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLineCap"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelBoxStyle"/>
+<fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
 </qualifiedTypeNameHistroy>

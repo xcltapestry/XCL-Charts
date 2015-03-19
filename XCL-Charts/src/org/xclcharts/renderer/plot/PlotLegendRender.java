@@ -490,7 +490,7 @@ public class PlotLegendRender extends PlotLegend{
 		rect.top = mKeyLabelY;
 		rect.bottom = mKeyLabelY + mRectHeight;	
 				
-		mBorder.renderBox(canvas, rect,mShowBoxBorder,mShowBackground);			
+		mBorder.renderRect(canvas, rect,mShowBoxBorder,mShowBackground);			
 	}
 		
 	private void refreshLst()

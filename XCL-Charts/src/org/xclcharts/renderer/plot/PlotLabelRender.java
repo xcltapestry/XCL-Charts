@@ -110,13 +110,32 @@ public class PlotLabelRender extends PlotLabel{
 			mRectBox.right = right;
 			mRectBox.top = top;
 			mRectBox.bottom = bottom;	
-							
-			if(XEnum.LabelBoxStyle.CAPRECT ==  mLabelBoxStyle)
+						
+			if(XEnum.LabelBoxStyle.RECT == mLabelBoxStyle)
 			{
-			    drawCapBox(canvas,label,x ,y - mMargin ,itemAngle,paint);
-			}else{ //RECT
 				drawBox(canvas); 	
-				DrawHelper.getInstance().drawRotateText(label,x ,y - mMargin ,itemAngle, canvas, paint);			
+				DrawHelper.getInstance().drawRotateText(label,x ,y - mMargin ,itemAngle, canvas, paint);	
+			}else{
+				float AngleH = mRectBox.width() * mScale; //0.2f ;			
+				mRectBox.top -= AngleH;
+				mRectBox.bottom -= AngleH;					
+				initBox();	
+				if(mBorderColor != -1)mBorder.setBorderLineColor(mBorderColor);					
+				
+				switch(mLabelBoxStyle)
+				{
+				case CAPRECT:
+					mBorder.renderCapRect(canvas, mRectBox,AngleH,mShowBoxBorder,mShowBackground);	
+					break;
+				case CAPROUNDRECT:
+					mBorder.renderCapRound(canvas, mRectBox,AngleH,mShowBoxBorder,mShowBackground);	
+					break;
+				case ROUNDRECT:
+					mBorder.renderRound(canvas, mRectBox,AngleH,mShowBoxBorder,mShowBackground);	
+					break;		
+				default: 		
+				}
+				DrawHelper.getInstance().drawRotateText(label,x ,y - mMargin -AngleH ,itemAngle,canvas, paint);			
 			}
 			mRectBox.setEmpty();						
 		}
@@ -139,24 +158,8 @@ public class PlotLabelRender extends PlotLabel{
 	{			
 		initBox();	
 		if(mBorderColor != -1)mBorder.setBorderLineColor(mBorderColor);
-		mBorder.renderBox(canvas, mRectBox,mShowBoxBorder,mShowBackground);		
+		mBorder.renderRect(canvas, mRectBox,mShowBoxBorder,mShowBackground);		
 	}
 	
-	//
-	private void drawCapBox(Canvas canvas,
-			String label,float labelX,float labelY,float labelAngle,Paint labelPaint)
-	{		
-		float AngleH = mRectBox.width() * mScale; //0.2f ; 
-		
-		mRectBox.top -= AngleH;
-		mRectBox.bottom -= AngleH;
-				
-		initBox();	
-		if(mBorderColor != -1)mBorder.setBorderLineColor(mBorderColor);		
-		mBorder.renderCapBox(canvas, mRectBox,AngleH,mShowBoxBorder,mShowBackground);	
-		DrawHelper.getInstance().drawRotateText(label,labelX ,labelY -AngleH ,labelAngle,
-								canvas, labelPaint);
-		
-	}
-		
+	
 }

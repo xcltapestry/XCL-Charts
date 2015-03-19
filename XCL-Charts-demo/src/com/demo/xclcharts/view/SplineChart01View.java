@@ -202,7 +202,7 @@ public class SplineChart01View extends DemoView {
 			//批注
 			List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
 			
-			AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.RECT);
+			AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.CAPROUNDRECT);
 			an1.setAlpha(200);
 			an1.setBgColor(Color.RED);
 			an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
@@ -283,8 +283,7 @@ public class SplineChart01View extends DemoView {
 						Color.rgb(54, 141, 238) );
 				//把线弄细点
 				dataSeries1.getLinePaint().setStrokeWidth(2);
-				
-				
+								
 
 				//线2的数据集
 				List<PointD> linePoint2 = new ArrayList<PointD>();
@@ -299,6 +298,12 @@ public class SplineChart01View extends DemoView {
 				dataSeries2.setLabelVisible(true);		
 				dataSeries2.setDotStyle(XEnum.DotStyle.RECT);				
 				dataSeries2.getDotLabelPaint().setColor(Color.RED);	
+				
+				//设置round风格的标签
+				//dataSeries2.getLabelOptions().showBackground();
+				dataSeries2.getLabelOptions().getBox().getBackgroundPaint().setColor(Color.GREEN);
+				dataSeries2.getLabelOptions().getBox().setRoundRadius(8);
+				dataSeries2.getLabelOptions().setLabelBoxStyle(XEnum.LabelBoxStyle.CAPROUNDRECT);
 				
 				chartData.add(dataSeries1);	
 				chartData.add(dataSeries2);	

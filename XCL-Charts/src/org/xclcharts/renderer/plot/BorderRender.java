@@ -26,6 +26,7 @@ import org.xclcharts.common.DrawHelper;
 import android.graphics.Canvas;
 import android.graphics.Path;
 import android.graphics.RectF;
+import android.graphics.Paint.Style;
 /**
  * @ClassName BorderRender
  * @Description  图边框绘制类
@@ -68,7 +69,7 @@ public class BorderRender extends Border {
 	 }
 	 
 	 
-	public void renderBox(Canvas canvas,RectF rect,
+	public void renderRect(Canvas canvas,RectF rect,
 							boolean showBoxBorder,boolean showBackground)
 	{			
 		setPaintLineStyle();							
@@ -93,7 +94,7 @@ public class BorderRender extends Border {
 	}
 	
 
-	public void renderCapBox(Canvas canvas,RectF rect,float capHeight,
+	public void renderCapRect(Canvas canvas,RectF rect,float capHeight,
 			boolean showBoxBorder,boolean showBackground)
 	{	
 		
@@ -118,6 +119,82 @@ public class BorderRender extends Border {
 		if(showBoxBorder)
 			canvas.drawPath(mPath, getLinePaint());
 		mPath.reset();		
+	}
+	
+	
+	public void renderCapRound(Canvas canvas,RectF rect,float capHeight,
+			boolean showBoxBorder,boolean showBackground)
+	{	
+		
+		setPaintLineStyle();			
+				
+		float centerX = rect.left + rect.width() * 0.5f;			
+		float AngleH = capHeight; 						
+		float AngleY = rect.bottom;		
+		
+		if(null == mRect)mRect = new RectF();
+		mRect.left = rect.left + mBorderSpadding;
+		mRect.top = rect.top + mBorderSpadding;
+		mRect.right = rect.right - mBorderSpadding;
+		mRect.bottom = rect.bottom - mBorderSpadding;	
+		
+		getBackgroundPaint().setStyle(Style.FILL);
+		//getLinePaint().setStyle(Style.STROKE);
+		
+		if(showBackground)	
+		  canvas.drawRoundRect(mRect, this.getRoundRadius(), this.getRoundRadius(), getBackgroundPaint());
+				
+		  
+		if(null == mPath) mPath = new Path();		
+		if(showBackground)
+		{			
+			float pHeight = DrawHelper.getInstance().getPaintFontHeight(getBackgroundPaint());
+			mPath.moveTo( centerX + AngleH, AngleY - pHeight);
+			mPath.lineTo( centerX , AngleY + AngleH );
+			mPath.lineTo( centerX - AngleH, AngleY - pHeight);
+			mPath.close();		
+			canvas.drawPath(mPath, getBackgroundPaint());
+			mPath.reset();
+		}
+		
+		
+		/*
+		if(showBoxBorder)
+		{										
+			mPath.moveTo(rect.left, rect.bottom);
+			mPath.lineTo(rect.left, rect.top);
+			mPath.lineTo(rect.right, rect.top);
+			mPath.lineTo(rect.right, rect.bottom);
+			mPath.lineTo( centerX + AngleH, AngleY);
+			mPath.lineTo( centerX , AngleY + AngleH );
+			mPath.lineTo( centerX - AngleH, AngleY);
+			mPath.close();		
+			canvas.drawPath(mPath, getLinePaint());
+			mPath.reset();
+		}
+		*/
+		
+	}
+	
+	
+	public void renderRound(Canvas canvas,RectF rect,float capHeight,
+			boolean showBoxBorder,boolean showBackground)
+	{	
+		
+		setPaintLineStyle();	
+		
+		if(null == mRect)mRect = new RectF();
+		mRect.left = rect.left + mBorderSpadding;
+		mRect.top = rect.top + mBorderSpadding;
+		mRect.right = rect.right - mBorderSpadding;
+		mRect.bottom = rect.bottom - mBorderSpadding;	
+		
+		if(showBackground)	
+		  canvas.drawRoundRect(mRect, this.getRoundRadius(), this.getRoundRadius(), getBackgroundPaint());
+		
+		if(showBoxBorder)	
+			  canvas.drawRoundRect(mRect, this.getRoundRadius(), this.getRoundRadius(), getLinePaint());
+				
 	}
 	
 

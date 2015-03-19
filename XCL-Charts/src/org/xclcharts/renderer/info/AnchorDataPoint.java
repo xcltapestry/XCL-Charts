@@ -47,6 +47,7 @@ public class AnchorDataPoint {
 	private XEnum.DataAreaStyle mDataAreaStyle = XEnum.DataAreaStyle.STROKE;
 	
 	private float mRadius = 30.f;
+	private float mRoundRaidus = 15.f;
 	
 	private int mLineWidth = -1;
 	//private XEnum.LineStyle  mLineStyle = XEnum.LineStyle.SOLID;
@@ -232,6 +233,26 @@ public class AnchorDataPoint {
 	{
 		return mCapRectHeight;
 	}
+	
+	
+	/**
+	 * 设置角圆弧半径
+	 * @param radius 半径
+	 */
+	public void setRoundRadius(int radius)
+	{
+		mRoundRaidus = radius;
+	}
+	
+	/**
+	 * 返回角圆弧半径
+	 * @return 半径
+	 */
+	public float getRoundRadius()
+	{		
+		return mRoundRaidus;		
+	}
+	
 	
 	
 

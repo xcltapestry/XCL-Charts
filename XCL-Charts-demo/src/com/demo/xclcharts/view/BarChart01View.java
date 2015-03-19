@@ -355,10 +355,10 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 		an1.setBgColor(Color.rgb(203, 189, 231));
 		//an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
 		
-		AnchorDataPoint an2 = new AnchorDataPoint(1,1,XEnum.AnchorStyle.CIRCLE);
+		AnchorDataPoint an2 = new AnchorDataPoint(1,1,XEnum.AnchorStyle.CIRCLE); //CIRCLE
 		an2.setBgColor(Color.GRAY);
 		
-		AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
+		AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT); //CAPROUNDRECT  RECT
 		an3.setBgColor(Color.rgb(255, 145, 126));
 		
 		AnchorDataPoint an4 = new AnchorDataPoint(0,1,XEnum.AnchorStyle.CAPRECT);

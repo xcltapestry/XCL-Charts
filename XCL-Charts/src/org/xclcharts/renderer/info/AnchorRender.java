@@ -22,7 +22,6 @@
 package org.xclcharts.renderer.info;
 
 import org.xclcharts.common.DrawHelper;
-import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -88,53 +87,53 @@ public class AnchorRender {
 		
 		switch (pAnchor.getAnchorStyle()) {
 		case CAPRECT:
-			renderCapBox(canvas,pAnchor,cx, cy, radius);
+		case CAPROUNDRECT:
+		case ROUNDRECT:	
+			renderRoundRect(canvas,pAnchor,cx, cy,radius);
 			break;
-		//case DOT:										
-		//	canvas.drawCircle(cx, cy, radius, getBgPaint());	
-		//	break;
-		case RECT:	
-			renderRect(canvas,getBgPaint(),radius,cx, cy);			
-			break;
-		case CIRCLE:			
-			canvas.drawCircle(cx, cy, radius, getBgPaint());
-			break;			
-		case VLINE:	
-			canvas.drawLine(cx, top,cx, bottom, getBgPaint());
-			break;
-		case HLINE:	
-			canvas.drawLine(left, cy,right, cy, getBgPaint());
-			break;
-		case TOBOTTOM:				
-			canvas.drawLine(cx, cy + cradius,cx,bottom, getBgPaint());
-			break;
-		case TOTOP:		
-			canvas.drawLine(cx, cy - cradius,cx, top, getBgPaint());
-			break;
-		case TOLEFT:	
-			canvas.drawLine(cx - cradius, cy,left, cy, getBgPaint());
-			break;
-		case TORIGHT:		
-			canvas.drawLine(cx + cradius, cy,right, cy, getBgPaint());
-			break;
-		default:
-		}			
-								
-		if(pAnchor.getAnchor() != "" && 
-				pAnchor.getAnchorStyle() != XEnum.AnchorStyle.CAPRECT)
-		{
-			getTextPaint().setColor(pAnchor.getTextColor());
-			getTextPaint().setTextSize(pAnchor.getTextSize());
-			canvas.drawText(pAnchor.getAnchor(), cx, cy, getTextPaint());
+		default:		
+			switch (pAnchor.getAnchorStyle()) {
+			case RECT:	
+				renderRect(canvas,getBgPaint(),radius,cx, cy);
+				break;	
+			case CIRCLE:			
+				canvas.drawCircle(cx, cy, radius, getBgPaint());
+				break;			
+			case VLINE:	
+				canvas.drawLine(cx, top,cx, bottom, getBgPaint());
+				break;
+			case HLINE:	
+				canvas.drawLine(left, cy,right, cy, getBgPaint());
+				break;
+			case TOBOTTOM:				
+				canvas.drawLine(cx, cy + cradius,cx,bottom, getBgPaint());
+				break;
+			case TOTOP:		
+				canvas.drawLine(cx, cy - cradius,cx, top, getBgPaint());
+				break;
+			case TOLEFT:	
+				canvas.drawLine(cx - cradius, cy,left, cy, getBgPaint());
+				break;
+			case TORIGHT:		
+				canvas.drawLine(cx + cradius, cy,right, cy, getBgPaint());
+				break;
+			default:
+			}		
+									
+			if(pAnchor.getAnchor().trim() != "" )
+			{
+				getTextPaint().setColor(pAnchor.getTextColor());
+				getTextPaint().setTextSize(pAnchor.getTextSize());
+				canvas.drawText(pAnchor.getAnchor(), cx, cy, getTextPaint());
+			}		
 		}
 		
 		getBgPaint().setStrokeWidth(width);
 	}
 	
-	
-	private void renderCapBox(Canvas canvas,AnchorDataPoint pAnchor,
-					float cirX,float cirY,float radius){
-		
+	private void renderRoundRect(Canvas canvas,
+			AnchorDataPoint pAnchor,
+			float cirX,float cirY,float radius){
 		
 		float angleW = pAnchor.getCapRectW() / 2;//20.f;
 		float angleH = pAnchor.getCapRectH(); //10.f;
@@ -152,11 +151,45 @@ public class AnchorRender {
 		{			
 			float textHeight = DrawHelper.getInstance().getPaintFontHeight(getTextPaint()) + 30.f;			
 			if(Float.compare(textHeight, fontH) == 1) fontH = textHeight;			
-			float FontW = DrawHelper.getInstance().getTextWidth(getTextPaint(), anchor);			
-			if( Float.compare( extW * 2,FontW) == -1 ) extW = FontW/2;			
-			extW += 3.f;
+			float textWidth = DrawHelper.getInstance().getTextWidth(getTextPaint(), anchor);		
+			if( Float.compare(textWidth, extW ) == 1 ) extW = textWidth;			
 		}	
-								
+		
+		switch (pAnchor.getAnchorStyle()) {
+		case CAPRECT:
+			renderCapRect(canvas,pAnchor,cirX, cirY, radius,angleW,angleH,fontH,extW);			
+			break;
+		case CAPROUNDRECT:
+			renderCapRound(canvas,pAnchor,cirX,cirY,radius,angleW,angleH,fontH,extW);
+			break;
+		case ROUNDRECT:
+			renderRound(canvas,pAnchor,cirX, cirY, radius,angleW,angleH,fontH,extW);
+			break;
+		default:
+		}		
+		
+		if(pAnchor.getAnchor() != "")
+		{
+			getTextPaint().setColor(pAnchor.getTextColor());
+			getTextPaint().setTextSize(pAnchor.getTextSize());
+			canvas.drawText(anchor, cirX,  cirY - angleH - fontH/3, getTextPaint());			
+		}
+		mPaintText = null;
+	}
+	
+	private void renderCapRound(Canvas canvas,AnchorDataPoint pAnchor,
+			float cirX,float cirY,float radius,
+			float angleW,float angleH,float fontH,float extW){
+		//round Rect这种强制bgPaint为fill
+		getBgPaint().setStyle(Style.FILL);			
+		renderRound(canvas,pAnchor,cirX,cirY,radius,angleW,angleH,fontH,extW);		
+		renderCap(canvas,pAnchor,cirX,cirY,radius,angleW,angleH,fontH,extW);
+	}
+	
+	private void renderCapRect(Canvas canvas,AnchorDataPoint pAnchor,
+			float cirX,float cirY,float radius,
+			float angleW,float angleH,float fontH,float extW){
+				
 		Path path = new Path();
 		path.moveTo(cirX, cirY);
 		path.lineTo(cirX - angleW , cirY - angleH);
@@ -167,26 +200,43 @@ public class AnchorRender {
 		path.lineTo(cirX + angleW,  cirY - angleH );
 		path.lineTo(cirX, cirY);
 		path.close();
-		canvas.drawPath(path, getBgPaint());	
-		
-		if(pAnchor.getAnchor() != "")
-		{
-			getTextPaint().setColor(pAnchor.getTextColor());
-			getTextPaint().setTextSize(pAnchor.getTextSize());
-			canvas.drawText(anchor, cirX,  cirY - angleH - fontH/3, getTextPaint());			
-		}
-		path.reset();
-		
-		mPaintText = null;
-		
+		canvas.drawPath(path, getBgPaint());		
+		path.reset();	
 	}
 
+	private void renderRound(Canvas canvas,AnchorDataPoint pAnchor,
+			float cirX,float cirY,float radius,
+			float angleW,float angleH,float fontH,float extW){
+		
+		if(null == mRect)mRect = new RectF();		
+		mRect.left =  cirX - extW;
+		mRect.top =   cirY - angleH - fontH; 
+		mRect.right =  cirX + extW;
+		mRect.bottom = cirY - angleH;
+		
+		getBgPaint().setStyle(Style.FILL);	
+		
+		canvas.drawRoundRect(mRect, pAnchor.getRoundRadius(), 
+				pAnchor.getRoundRadius(), getBgPaint());	
+		mRect.setEmpty();
+	}
 	
-	
+	private void renderCap(Canvas canvas,AnchorDataPoint pAnchor,
+			float cirX,float cirY,float radius,
+			float angleW,float angleH,float fontH,float extW){		
+							
+		Path path = new Path();
+		path.moveTo(cirX, cirY);
+		path.lineTo(cirX - angleW , cirY - angleH);
+		path.lineTo(cirX + angleW,  cirY - angleH );
+		path.close();
+		canvas.drawPath(path, getBgPaint());		
+		path.reset();					
+	}
+
 	private void renderRect(Canvas canvas,Paint paint,
 							float radius,float cirX,float cirY )
-	{
-		
+	{		
 		if(null == mRect)mRect = new RectF();
 		
 		mRect.left =  (cirX - radius);
@@ -203,7 +253,6 @@ public class AnchorRender {
 		{
 			mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);		
 			mPaintText.setTextAlign(Align.CENTER);
-			//mPaintText.setTextSize(22);
 		}
 		return mPaintText;
 	}

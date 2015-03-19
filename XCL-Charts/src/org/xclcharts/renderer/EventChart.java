@@ -39,7 +39,6 @@ import org.xclcharts.renderer.info.ToolTipRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.graphics.PointF;
 import android.graphics.RectF;
 import android.util.Log;
