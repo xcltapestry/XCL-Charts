@@ -50,7 +50,6 @@
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
 <fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Path"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLineCap"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
@@ -60,4 +59,5 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelBoxStyle"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Style"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 </qualifiedTypeNameHistroy>

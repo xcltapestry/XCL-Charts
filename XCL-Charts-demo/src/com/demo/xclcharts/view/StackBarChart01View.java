@@ -265,8 +265,11 @@ public class StackBarChart01View extends DemoView {
 		
 		//在点击处显示tooltip
 		pToolTip.setColor(Color.WHITE);		
-		chart.getToolTip().setAlign(Align.LEFT);
+		chart.getToolTip().setAlign(Align.CENTER);
+		chart.getToolTip().setInfoStyle(XEnum.DyInfoStyle.CIRCLE);
 		chart.getToolTip().getBackgroundPaint().setColor(Color.BLACK);
+		
+		//chart.getToolTip().setCurrentXY(record.getRectF().centerX(),record.getRectF().centerY());				
 		chart.getToolTip().setCurrentXY(x,y);	
 		chart.getToolTip().addToolTip(label+" Current Value:" +Double.toString(bValue),pToolTip);
 		

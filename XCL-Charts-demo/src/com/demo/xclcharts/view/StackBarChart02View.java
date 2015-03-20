@@ -258,7 +258,9 @@ public class StackBarChart02View extends DemoView {
 		pToolTip.setColor(Color.WHITE);		
 		chart.getToolTip().setAlign(Align.CENTER);
 		chart.getToolTip().getBackgroundPaint().setColor(Color.BLUE);
-		chart.getToolTip().setCurrentXY(x,y);	
+		chart.getToolTip().setInfoStyle(XEnum.DyInfoStyle.CAPROUNDRECT);
+		//chart.getToolTip().setCurrentXY(x,y);	
+		chart.getToolTip().setCurrentXY(record.getRectF().centerX(),record.getRectF().top);				
 		chart.getToolTip().addToolTip(" Current Value:" +Double.toString(bValue),pToolTip);
 		
 		this.invalidate();

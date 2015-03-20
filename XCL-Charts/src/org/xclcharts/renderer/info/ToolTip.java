@@ -41,7 +41,7 @@ public class ToolTip extends DyInfo{
 	}
 	
 	/**
-	 * 设置是方形不是椭圆形框
+	 * 设置是方形不是椭圆形框，其中CAPROUNDRECT风格无边框功能
 	 * @param style 框显示风格
 	 */
 	public void setInfoStyle(XEnum.DyInfoStyle style)

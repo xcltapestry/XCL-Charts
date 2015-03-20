@@ -73,7 +73,7 @@ public class DyInfo {
 	//带箭头的框中，箭头的高度
 	protected float mScale = 0.2f;
 	//圆框半径
-		protected float mRadius = 0.f;
+	protected float mRadius = 0.f;
 	
 	protected boolean mShowBoxBorder = true;
 	protected boolean mShowBackground = true;
@@ -249,22 +249,23 @@ public class DyInfo {
 		
 		getContentRect();		
 		if(null == mRect) return;
-				
+		
 		if(XEnum.DyInfoStyle.RECT == mStyle)
 		{
 			if(mShowBackground)canvas.drawRect(mRect, this.getBackgroundPaint());				
 			if(mShowBoxBorder)canvas.drawRect(mRect, this.getBorderPaint());
-		}else if(XEnum.DyInfoStyle.CAPRECT == mStyle){
-				
-			renderCapBox(canvas,mRect);		
+		}else if(XEnum.DyInfoStyle.CAPRECT == mStyle){				
+			renderCapRect(canvas,mRect);		
+		}else if(XEnum.DyInfoStyle.CAPROUNDRECT == mStyle){	
+			renderCapRound(canvas,mRect);				
 		}else if(XEnum.DyInfoStyle.CIRCLE == mStyle){				
 			renderCircle(canvas,mRect);	
-		//}else if(XEnum.DyInfoStyle.ELLIPSE == mStyle){				
-		
+		//}else if(XEnum.DyInfoStyle.ELLIPSE == mStyle){						
 		}else{
 			if(mShowBackground)canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY, this.getBackgroundPaint());	
 			if(mShowBoxBorder)canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY,this.getBorderPaint());
 		}
+		
 		
 		float currDotsX = mRect.left + mMargin;
 		float currRowY = mRect.top + mMargin;
@@ -316,7 +317,7 @@ public class DyInfo {
 	}
 	
 	
-	private void renderCapBox(Canvas canvas,RectF rect){
+	private void renderCapRect(Canvas canvas,RectF rect){
 		
 		if( !mShowBackground && !mShowBoxBorder)return;
 		
@@ -339,6 +340,27 @@ public class DyInfo {
 		
 		if(mShowBackground)canvas.drawPath(path, this.getBackgroundPaint());				
 		if(mShowBoxBorder)canvas.drawPath(path, this.getBorderPaint());		
+	}
+	
+	private void renderCapRound(Canvas canvas,RectF rect){
+		
+		//if( !mShowBackground && !mShowBoxBorder)return;		
+		if(!mShowBackground)return;		//此风格无边框
+		float AngleH = rect.width() * mScale; //0.2f ; 		
+		rect.top -= AngleH;
+		rect.bottom -= AngleH;
+				
+		float centerX = rect.left + rect.width() * 0.5f;					
+		float AngleY = rect.bottom;
+		
+		Path path = new Path();
+		path.moveTo( centerX + AngleH, AngleY);
+		path.lineTo( centerX , AngleY + AngleH );
+		path.lineTo( centerX - AngleH, AngleY);
+		path.close();			
+		canvas.drawRoundRect(mRect, mRoundRectX, mRoundRectY, getBackgroundPaint());		 
+		canvas.drawPath(path, this.getBackgroundPaint());
+		path.reset();
 	}
 	
 	/**

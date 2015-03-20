@@ -293,7 +293,7 @@ public class XEnum {
 		 *
 		 */
 		public enum DyInfoStyle {			
-			RECT,ROUNDRECT,CAPRECT,CIRCLE //,ELLIPSE
+			RECT,ROUNDRECT,CAPRECT,CIRCLE,CAPROUNDRECT //,ELLIPSE
 		}
 		
 		/**
