@@ -324,7 +324,7 @@ public class SplineChart extends LnChart{
         	{            			
         		//请自行在回调函数中处理显示格式
     			spData.getLabelOptions().drawLabel(canvas, pLine.getDotLabelPaint(), 
-    					dotInfo.getLabel(),
+    					getFormatterDotLabel(dotInfo.getLabel()),
     					dotInfo.mX ,dotInfo.mY,itemAngle,spData.getLineColor());
         	}   			
 		}

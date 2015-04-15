@@ -52,8 +52,6 @@ public class LineChart extends LnChart{
 	
 	//图例
 	private List<LnData> mLstKey = new ArrayList<LnData>();	
-	
-
 								
 	public LineChart()
 	{
