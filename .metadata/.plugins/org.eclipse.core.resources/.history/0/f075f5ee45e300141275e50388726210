@@ -353,7 +353,8 @@ public class DyInfo {
 		float centerX = rect.left + rect.width() * 0.5f;					
 		float AngleY = rect.bottom;
 		
-		float fh = DrawHelper.getInstance().getPaintFontHeight(getBackgroundPaint());		
+		float fh = DrawHelper.getInstance().getPaintFontHeight(getBackgroundPaint());
+		
 		Path path = new Path();
 		path.moveTo( centerX + AngleH, AngleY - fh);
 		path.lineTo( centerX , AngleY + AngleH );

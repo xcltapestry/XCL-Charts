@@ -126,7 +126,7 @@ public class BorderRender extends Border {
 			boolean showBoxBorder,boolean showBackground)
 	{			
 		
-		
+		/*
 		if(!showBackground)	return;
 		setPaintLineStyle();			
 				
@@ -155,7 +155,7 @@ public class BorderRender extends Border {
 		mPath.close();		
 		canvas.drawPath(mPath, getBackgroundPaint());
 		mPath.reset();
-	
+	*/
 		
 		
 		/*

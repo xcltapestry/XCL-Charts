@@ -126,7 +126,6 @@ public class BorderRender extends Border {
 			boolean showBoxBorder,boolean showBackground)
 	{			
 		
-		
 		if(!showBackground)	return;
 		setPaintLineStyle();			
 				
@@ -149,7 +148,7 @@ public class BorderRender extends Border {
 		if(null == mPath) mPath = new Path();	
 		
 		float pHeight = DrawHelper.getInstance().getPaintFontHeight(getBackgroundPaint());
-		mPath.moveTo( centerX + AngleH, AngleY - pHeight );
+		mPath.moveTo( centerX + AngleH, AngleY - pHeight);
 		mPath.lineTo( centerX , AngleY + AngleH );
 		mPath.lineTo( centerX - AngleH, AngleY - pHeight);
 		mPath.close();		

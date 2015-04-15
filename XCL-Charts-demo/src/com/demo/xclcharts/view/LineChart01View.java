@@ -165,6 +165,7 @@ public class LineChart01View extends DemoView {
 			//收缩绘图区右边分割的范围，让绘图区的线不显示出来
 			chart.getClipExt().setExtRight(0.f);
 			
+			
 			//test x坐标从刻度线而不是轴开始
 			//chart.setXCoordFirstTickmarksBegin(true);
 			//chart.getCategoryAxis().showTickMarks();

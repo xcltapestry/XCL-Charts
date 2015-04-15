@@ -122,7 +122,7 @@ public class PlotLabelRender extends PlotLabel{
 				initBox();	
 				if(mBorderColor != -1)mBorder.setBorderLineColor(mBorderColor);					
 				
-				
+				/*
 				switch(mLabelBoxStyle)
 				{
 				case CAPRECT:
@@ -136,7 +136,7 @@ public class PlotLabelRender extends PlotLabel{
 					break;		
 				default: 		
 				}
-				
+				*/
 				DrawHelper.getInstance().drawRotateText(label,x ,y - mMargin -AngleH ,itemAngle,canvas, paint);			
 			}
 			mRectBox.setEmpty();						

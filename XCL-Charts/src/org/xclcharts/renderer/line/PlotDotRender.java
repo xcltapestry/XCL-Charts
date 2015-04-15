@@ -206,9 +206,7 @@ public class PlotDotRender {
 		mRect.right =  right;
 		mRect.bottom =  bottom;
 	}
-	
-
-	
+		
 	private void renderRect(Canvas canvas,Paint paint,float radius,float cirX,float cirY )
 	{
 		paint.setStyle(Style.FILL);	

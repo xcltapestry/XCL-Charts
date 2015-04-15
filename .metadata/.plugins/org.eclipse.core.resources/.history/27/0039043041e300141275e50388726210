@@ -124,17 +124,16 @@ public class BorderRender extends Border {
 	
 	public void renderCapRound(Canvas canvas,RectF rect,float capHeight,
 			boolean showBoxBorder,boolean showBackground)
-	{			
+	{	
 		
-		
-		if(!showBackground)	return;
 		setPaintLineStyle();			
 				
 		float centerX = rect.left + rect.width() * 0.5f;			
 		float AngleH = capHeight; 						
 		float AngleY = rect.bottom;		
 		
-	
+		if(showBackground)	
+		{
 		if(null == mRect)mRect = new RectF();
 		mRect.left = rect.left + mBorderSpadding;
 		mRect.top = rect.top + mBorderSpadding;
@@ -142,20 +141,23 @@ public class BorderRender extends Border {
 		mRect.bottom = rect.bottom - mBorderSpadding;	
 		
 		getBackgroundPaint().setStyle(Style.FILL);
-		//getLinePaint().setStyle(Style.STROKE);				
-		canvas.drawRoundRect(mRect, this.getRoundRadius(), this.getRoundRadius(), getBackgroundPaint());
-
-	  
-		if(null == mPath) mPath = new Path();	
+		//getLinePaint().setStyle(Style.STROKE);
 		
-		float pHeight = DrawHelper.getInstance().getPaintFontHeight(getBackgroundPaint());
-		mPath.moveTo( centerX + AngleH, AngleY - pHeight );
-		mPath.lineTo( centerX , AngleY + AngleH );
-		mPath.lineTo( centerX - AngleH, AngleY - pHeight);
-		mPath.close();		
-		canvas.drawPath(mPath, getBackgroundPaint());
-		mPath.reset();
-	
+		
+		  canvas.drawRoundRect(mRect, this.getRoundRadius(), this.getRoundRadius(), getBackgroundPaint());
+		}
+		  
+		if(null == mPath) mPath = new Path();		
+		if(showBackground)
+		{			
+			float pHeight = DrawHelper.getInstance().getPaintFontHeight(getBackgroundPaint());
+			mPath.moveTo( centerX + AngleH, AngleY - pHeight);
+			mPath.lineTo( centerX , AngleY + AngleH );
+			mPath.lineTo( centerX - AngleH, AngleY - pHeight);
+			mPath.close();		
+			canvas.drawPath(mPath, getBackgroundPaint());
+			mPath.reset();
+		}
 		
 		
 		/*
