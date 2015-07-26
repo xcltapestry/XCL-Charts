@@ -184,6 +184,11 @@ public class BarChart05View extends DemoView implements Runnable{
 			 chart.getDataAxis().setAxisLineStyle(XEnum.AxisLineStyle.CAP);
 			 chart.getCategoryAxis().setAxisLineStyle(XEnum.AxisLineStyle.CAP);
 			 
+			 
+			// 修改轴标签字体大小
+			 chart.getDataAxis().getTickLabelPaint().setTextSize(26);
+			 chart.getCategoryAxis().getTickLabelPaint().setTextSize(36);
+			 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -156,7 +156,7 @@ public class RadarChart01View extends DemoView {
 	private void chartDataSet()
 	{
 		LinkedList<Double> dataSeriesA= new LinkedList<Double>();	
-		dataSeriesA.add(20d); 
+		dataSeriesA.add(0d); //20d
 		dataSeriesA.add(10d); 
 		dataSeriesA.add(30d); 
 		dataSeriesA.add(25d);

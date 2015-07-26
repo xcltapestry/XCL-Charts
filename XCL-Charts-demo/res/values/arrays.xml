@@ -52,6 +52,7 @@
      	 <item>漏斗图(Desc)</item>
      	 <item>漏斗图(Asc)</item>
      	  <item>圆形图</item>
+     	  <item>漏斗图(另一种)</item>
         
      	 <item>线图并行混合</item> 
         <item>仪表盘-混合图</item> 
@@ -117,8 +118,10 @@
         <item>RangeBar Chart</item>     
         <item>Bubble Chart + Scatter Chart + Spline chart</item>
          <item>Funnel Chart</item>
-          <item>Funnel Chart</item>
-            <item>Circle Chart</item>
+         <item>Funnel Chart</item>
+         <item>Circle Chart</item>
+         <item>Funnel Chart (另一种)</item>
+         
        
         <item>Activity传值，自动刷新</item> 
        <item>Dial Chart</item> 

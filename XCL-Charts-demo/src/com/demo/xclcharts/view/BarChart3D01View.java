@@ -185,6 +185,9 @@ public class BarChart3D01View extends DemoView {
 			//不使用精确计算，忽略Java计算误差
 			chart.disableHighPrecision();
 			
+			// 设置轴标签字体大小
+			chart.getDataAxis().getTickLabelPaint().setTextSize(26);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

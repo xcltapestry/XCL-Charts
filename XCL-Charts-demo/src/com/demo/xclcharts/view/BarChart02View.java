@@ -120,6 +120,8 @@ public class BarChart02View extends DemoView {
 											
 			chart.getDataAxis().getTickLabelPaint().
 									setColor(Color.rgb(199, 88, 122));
+		
+			
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 
 				@Override

@@ -460,6 +460,13 @@ public class RadarChart extends RdChart{
 			int i = 0;
 			for(Double data : dataset)
 			{
+				if( Double.compare(data, 0.d) == 0)
+				{
+					arrayDataX[i] = plotArea.getCenterX();
+					arrayDataY[i] =plotArea.getCenterY();
+					i++; //标签
+					continue;
+				}
 			   Double per = (data - dataAxis.getAxisMin() ) / dataAxis.getAxisRange();
 			   float curRadius = (float) (getRadius() * per);
 						   

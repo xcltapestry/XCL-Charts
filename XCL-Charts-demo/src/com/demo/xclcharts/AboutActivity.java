@@ -70,7 +70,7 @@ public class AboutActivity extends Activity {
 				+ " <br/><big>About the Author</big>"
 				+ " <br/><b>熊传亮</b>"
 				+ "   <br/>&nbsp;&nbsp;&nbsp;&nbsp;有Oracle 10g OCP 及IBM Certified Systems Expert认证，" +
-				"目前在深圳是一名挂着DBA职位，写着C/C++的DBA。 "
+				"会点数据库、C/C++、Golang、挂着架构师的空名头,其实就一做后台的。 "
 				+ " <b>^_^</b>"		
 				+ " <br/><br/>有什么改进或建议可发邮件联系或至博客留言。 "
 				+ " <br/><big>Blog:http://blog.csdn.net/xcl168</big> "

@@ -2,37 +2,37 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="412" key="DIALOG_WIDTH"/>
-		<item value="392" key="DIALOG_Y_ORIGIN"/>
-		<item value="796" key="DIALOG_X_ORIGIN"/>
-		<item value="344" key="DIALOG_HEIGHT"/>
+		<item value="436" key="DIALOG_Y_ORIGIN"/>
+		<item value="346" key="DIALOG_HEIGHT"/>
+		<item value="835" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="" key="selection"/>
+		<item value="mDataSet" key="selection"/>
 		<list key="findhistory">
-			<item value="renderCapRound"/>
-			<item value="getFormatterItemLabel"/>
-			<item value="getFormatterDotLabel"/>
-			<item value="setDotLabelFormatter"/>
-			<item value="drawLabel"/>
-			<item value="mRoundRectX"/>
-			<item value="mRadius"/>
-			<item value="CAPROUNDRECT"/>
+			<item value="mDataSet"/>
+			<item value="cpath"/>
+			<item value="fBoderPath"/>
+			<item value="funnelHeight"/>
+			<item value="funnelWidth"/>
+			<item value="getmPaintLabel"/>
+			<item value="paint"/>
+			<item value="fHalfTopWidth"/>
 		</list>
 		<list key="replacehistory">
+			<item value="cPath"/>
+			<item value="getPaintLabel"/>
+			<item value="fHalfTopWidth"/>
+			<item value="fHalfBottomWidth"/>
+			<item value="Funnel2Data"/>
 			<item value="drawCapRect"/>
 			<item value="mXCustomLineDataset"/>
 			<item value="AxisLineStyle"/>
-			<item value="angle"/>
-			<item value="mBarMaxPxWidth"/>
-			<item value="mBarMaxPxHeight"/>
-			<item value="barWidth"/>
-			<item value="mScale"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">

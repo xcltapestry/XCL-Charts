@@ -71,34 +71,34 @@ public class FunnelChart02View  extends DemoView {
 	 
 	 
 	 private void chartRender()
-		{
-			try {
-				
-				//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
-				int [] ltrb = getBarLnDefaultSpadding();
-				chart.setPadding(ltrb[0],ltrb[1], ltrb[2],  ltrb[3]);	
+	{
+		try {
 			
-						
-				//标题
-				chart.setTitle("漏斗图");
-				chart.addSubtitle("(XCL-Charts Demo)");	
-				//数据源
-				chart.setDataSource(chartData);
-				
-				chart.setSortType(XEnum.SortType.ASC);
-				
-				chart.setLabelAlign(XEnum.HorizontalAlign.CENTER);
-				
-				chart.getLabelPaint().setColor(Color.WHITE);
-				chart.getLabelPaint().setTextSize(18);
-				
-				chart.getFunnelLinePaint().setColor(Color.WHITE);
-				 
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0],ltrb[1], ltrb[2],  ltrb[3]);	
+		
+					
+			//标题
+			chart.setTitle("漏斗图");
+			chart.addSubtitle("(XCL-Charts Demo)");	
+			//数据源
+			chart.setDataSource(chartData);
+			
+			chart.setSortType(XEnum.SortType.ASC);
+			
+			chart.setLabelAlign(XEnum.HorizontalAlign.CENTER);
+			
+			chart.getLabelPaint().setColor(Color.WHITE);
+			chart.getLabelPaint().setTextSize(18);
+			
+			chart.getFunnelLinePaint().setColor(Color.WHITE);
+			 
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+	}
 	 
 	private void chartDataSet()
 	{	

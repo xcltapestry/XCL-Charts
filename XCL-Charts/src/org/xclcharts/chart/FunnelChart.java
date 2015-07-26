@@ -446,7 +446,7 @@ public class FunnelChart extends EventChart {
 			{
 				pStart.y = pStop.y = plotArea.getTop();
 			}else{
-				pStart.y = pStop.y =   plotArea.getBottom();
+				pStart.y = pStop.y = plotArea.getBottom();
 			}									
 			if(d.getAlpha() != -1)getPaint().setAlpha(d.getAlpha());	
 			drawTriangle(canvas,cx, pStart,pStop );

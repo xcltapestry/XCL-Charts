@@ -118,7 +118,9 @@ public class BarChart03View extends DemoView implements Runnable{
 			//数据轴
 			chart.getDataAxis().setAxisMax(105);
 			chart.getDataAxis().setAxisMin(0);
-			chart.getDataAxis().setAxisSteps(5);		
+			chart.getDataAxis().setAxisSteps(5);	
+			
+			
 			//指隔多少个轴刻度(即细刻度)后为主刻度
 			chart.getDataAxis().setDetailModeSteps(5);
 			

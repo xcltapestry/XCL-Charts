@@ -1,0 +1,282 @@
+package org.xclcharts.chart;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import org.xclcharts.common.CurveHelper;
+import org.xclcharts.common.MathHelper;
+import org.xclcharts.common.PointHelper;
+import org.xclcharts.renderer.EventChart;
+import org.xclcharts.renderer.XEnum;
+
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
+import android.graphics.Path;
+import android.graphics.PointF;
+import android.graphics.PorterDuffXfermode;
+import android.util.Log;
+
+import android.graphics.PorterDuff;
+
+public class FunnelChart2 extends EventChart {
+	private  static final String TAG = "FunnelChart2";
+	
+	
+	//图的初始宽度
+		private float mPlotWidthPercent = 100.f;
+		private Paint mPaint = null;
+	//	private Paint mPaintFunnelLine = null;
+		
+		private Paint mPaintLabel = null;
+		
+		private List<Funnel2Data> mDataSet;
+		
+		private int mBgColor = Color.WHITE;
+		
+	
+	public FunnelChart2() {		
+		
+	}
+	
+	/**
+	 * 返回图的数据源
+	 * @return 数据源
+	 */
+	public List<Funnel2Data> getDataSource() {
+		return mDataSet;
+	}
+	
+	/**
+	 * 设置数据源
+	 * @param dataSet 数据集
+	 */
+	public void setDataSource(List<Funnel2Data> dataSet)
+	{
+		mDataSet = dataSet;
+	}
+	
+	public Paint getPaint()
+	{
+		if(null == mPaint)mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		return mPaint;
+	}
+	
+	
+	public Paint getmPaintLabel()
+	{
+		if(null == mPaintLabel)
+		{
+			mPaintLabel = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPaintLabel.setColor(Color.BLACK);
+		}
+		return mPaintLabel;
+	}
+	
+	public void setBgColor(int color)
+	{
+		mBgColor = color;
+	}
+	
+	protected void renderPlot5(Canvas canvas)
+	{
+		if(mDataSet.size() ==0 )return;
+		//if(mPaint == null)mPaint = new Paint();
+		// mPaint.setColor(Color.BLUE);
+		 
+		 float funnelWidth =  plotArea.getPlotWidth();
+		 float funnelHeight =  plotArea.getPlotHeight();
+		
+		 float y = plotArea.getPlotTop();
+		 
+		 Paint paint = new Paint();
+		 paint.setColor(Color.RED);
+		 
+		 float fHalfTopWidth  =  div(funnelWidth , 5) ;
+		 float fHalfBottomWidth  =  div(funnelWidth , 2) ;		
+		 float funnelTopWidth  = mul(fHalfTopWidth , 2) ; 
+		 //float funnelBottomWidth  =  mul(fHalfBottomWidth , 2) ;
+
+		 
+		 Path fBoderPath =new Path();		
+		 
+		 float funnelTopStartX =sub( plotArea.getCenterX() , fHalfTopWidth) ;
+		 float funnelTopStopX = add( plotArea.getCenterX() , fHalfTopWidth) ;		 		 
+		 		
+		 fBoderPath.moveTo(plotArea.getLeft(),plotArea.getBottom());
+		 fBoderPath.lineTo(plotArea.getRight(), plotArea.getBottom());
+		 fBoderPath.lineTo(funnelTopStopX, plotArea.getTop());
+		 fBoderPath.lineTo(funnelTopStartX, plotArea.getTop());				 		 
+		 fBoderPath.close();		 
+		//paint.setStyle(Style.STROKE);
+		 paint.setStyle(Style.FILL);
+		// paint.setColor(Color.YELLOW); //mDataSet.get(0).getColor());
+		 
+		 paint.setColor(mDataSet.get(0).getColor());
+		 canvas.drawPath(fBoderPath, paint);
+		 /*
+		 for(int i=0;i<mDataSet.size();i++)
+		 {
+		 int xx  =  mDataSet.get(i).getColor();
+		 paint.setColor(Color.BLACK);
+		 canvas.drawText(Integer.toString(xx) ,  20, 200 + i*10, paint);
+		 }
+		*/
+		 List<PointF> lstTop = new ArrayList<PointF>();
+		 List<PointF> lstCenter = new ArrayList<PointF>();
+		 List<PointF> lstRight = new ArrayList<PointF>();
+		 
+		
+		 int dataSize = mDataSet.size();
+		 float fx = funnelTopStartX ; //sub(plotArea.getCenterX() , fHalfTopWidth );
+		 float fy = plotArea.getTop() ;
+		 
+		 // 依chartPercentData 得到上面的线的比例
+		 for(int i=0;i<dataSize;i++) 
+		 {
+			 fx = add(fx,mul( funnelTopWidth , mDataSet.get(i).getPercentData()));
+			 lstTop.add(new PointF(fx, fy));
+		 }
+		 
+		 fy = plotArea.getBottom();
+		 float fSpaddWidth = div(sub(funnelWidth , funnelTopWidth ) , 2);		 
+		 for(int i=0;i<dataSize;i++) 
+		 {	 
+			 fy = sub(fy, mul(funnelHeight, mDataSet.get(i).getBaseData())  );
+			 float rx = mul(fSpaddWidth, sub(1,div(fy,funnelHeight))); 
+			 float leftX = plotArea.getLeft() + rx ;
+			 float rightX = plotArea.getRight() - rx ;					 			 	 
+			 float cx = leftX + ((rightX - leftX) * mDataSet.get(i).getPercentData() );					 
+			 lstCenter.add(new PointF(cx,fy));	
+		 }		 
+		 
+		 fy = plotArea.getBottom();		 	 		 
+		 for(int i=0;i<dataSize;i++) 
+		 {			 
+			 fy = sub(fy, mul( funnelHeight , mDataSet.get(i).getPercentData())) ;	
+			 lstRight.add(new PointF(plotArea.getRight(),fy));	 			 
+		 }	
+		 ////////////////////////////
+		 
+		//float rCenterX =  div( sub(plotArea.getRight(), funnelTopStopX),2);
+		//if(mPaintLabel == null ) mPaintLabel =  new Paint();
+		
+					
+		 List<Float> lstLabel = new ArrayList<Float>();		 
+		 float labelY = 0.f;		 
+		 float labelX =  add(funnelTopStopX, div(fSpaddWidth,2) );
+		 
+		 Path bezierPath = new Path();
+		 for(int i=0;i<lstTop.size();i++)
+		 {			 			 								 
+			if(i == 0){
+				labelY = div(lstRight.get(i).y,2);
+			}else {					
+				labelY = div( sub(lstRight.get(i).y,lstRight.get(i - 1).y) ,2) ;
+				labelY = sub(lstRight.get(i).y, labelY);
+				lstLabel.add(  labelY );
+			}
+			
+			
+			// if(i ==0 )continue;			 
+			 if( i + 1 >= lstTop.size() ){
+				 continue;
+			 }
+			 getPaint().setColor(mDataSet.get(i+1).getColor());
+			 
+			// getPaint().setColor(mDataSet.get(i).getColor());
+			 	
+				bezierPath.moveTo(lstTop.get(i).x, lstTop.get(i).y);
+				PointF ctl2 = PointHelper.percent(lstTop.get(i), 0.7f,lstCenter.get(i), 0.5f);
+				bezierPath.quadTo(ctl2.x, ctl2.y,lstCenter.get(i).x, lstCenter.get(i).y);
+				
+				PointF ctl3 = PointHelper.percent(lstCenter.get(i), 0.1f,lstRight.get(i), 0.9f);
+				bezierPath.quadTo(ctl3.x, ctl3.y,lstRight.get(i).x, lstRight.get(i).y);
+
+				bezierPath.lineTo(funnelTopStopX, plotArea.getTop());												
+				bezierPath.close();
+				canvas.drawPath(bezierPath, getPaint());
+				bezierPath.reset();												
+		 }
+		 
+		 paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+		 Path cpath = new Path();
+		 cpath.moveTo(plotArea.getRight(),plotArea.getBottom());
+		 cpath.lineTo(plotArea.getRight(), plotArea.getTop());
+		 cpath.lineTo(funnelTopStopX, plotArea.getTop());
+		 cpath.close();
+		 Paint p = new Paint();
+		 p.setColor(mBgColor);
+		// p.setColor(Color.BLACK) ; 
+		 canvas.drawPath(cpath, p);		 
+		 cpath.reset();
+		 cpath.moveTo(plotArea.getLeft(),plotArea.getTop());
+		 cpath.lineTo(funnelTopStartX, plotArea.getTop());
+		 cpath.lineTo(plotArea.getLeft(), plotArea.getBottom());
+		 		 
+		 cpath.close();
+		 p.setColor(mBgColor);
+		 canvas.drawPath(cpath, p);
+		 
+		 getmPaintLabel();	
+		 for(int i=0;i<lstLabel.size();i++)
+		 {
+			 try{					
+					canvas.drawText(mDataSet.get(i).getLabel(), labelX,  lstLabel.get(i), mPaintLabel);
+				}catch( Exception ex){
+					
+				}
+		 }
+		 
+		 ////////////////////////////
+	}
+	
+
+	@Override
+	protected boolean postRender(Canvas canvas) throws Exception 
+	{	
+		try {
+			super.postRender(canvas);
+			
+			//计算主图表区范围
+			 calcPlotRange();
+			 
+			 canvas.drawColor(mBgColor);
+			 
+			//画Plot Area背景			
+			 plotArea.render(canvas);	
+			 
+			 
+			//绘制标题
+			renderTitle(canvas);
+			
+			//绘制图表
+		//	renderPlot(canvas);
+			
+			//renderPlot3(canvas);
+			
+			renderPlot5(canvas);
+			
+			//显示焦点
+			renderFocusShape(canvas);
+		
+			//响应提示
+			renderToolTip(canvas);
+		} catch (Exception e) {
+			throw e;
+		}
+		return true;
+	}
+	
+	/////////////////////
+	public class LineDots {
+		public float top = 0f;
+		public float center = 0f;
+		public float right = 0f;
+	
+	//////////////////////////
+	}
+
+}

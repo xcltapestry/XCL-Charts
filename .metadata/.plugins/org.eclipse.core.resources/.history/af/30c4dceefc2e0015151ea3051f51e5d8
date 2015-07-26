@@ -1,0 +1,68 @@
+package com.demo.xclcharts.view;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.xclcharts.chart.FunnelChart;
+import org.xclcharts.chart.FunnelChart2;
+import org.xclcharts.renderer.XChart;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.util.AttributeSet;
+import android.util.Log;
+
+public class FunnelChart201View extends DemoView {
+	
+	private String TAG = "FunnelChart201View";
+	private FunnelChart2 chart = new FunnelChart2();
+	
+	public FunnelChart201View(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		initView();
+	}
+	
+	public FunnelChart201View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public FunnelChart201View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+		 	//chartDataSet();	
+			//chartRender();
+	 }
+	
+	 
+	 @Override  
+	    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+	        super.onSizeChanged(w, h, oldw, oldh);  
+	       //图所占范围大小
+	       chart.setChartRange(w,h);
+	    }  
+		
+		@Override
+	    public void render(Canvas canvas) {
+	        try{
+	            chart.render(canvas);
+	            
+	        } catch (Exception e){
+	        	Log.e(TAG, e.toString());
+	        }
+	    }
+		
+		@Override
+		public List<XChart> bindChart() {
+			// TODO Auto-generated method stub		
+			List<XChart> lst = new ArrayList<XChart>();
+			lst.add(chart);		
+			return lst;
+		}
+
+}

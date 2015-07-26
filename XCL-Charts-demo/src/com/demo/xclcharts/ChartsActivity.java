@@ -54,6 +54,7 @@ import com.demo.xclcharts.view.DemoView;
 import com.demo.xclcharts.view.DountChart01View;
 import com.demo.xclcharts.view.FunnelChart01View;
 import com.demo.xclcharts.view.FunnelChart02View;
+import com.demo.xclcharts.view.FunnelChart201View;
 import com.demo.xclcharts.view.LineChart01View;
 import com.demo.xclcharts.view.LineChart02View;
 import com.demo.xclcharts.view.MultiAxisChart01View;
@@ -182,7 +183,8 @@ public class ChartsActivity extends Activity {
 			
 			new FunnelChart01View(this), //漏斗图(Desc)
 			new FunnelChart02View(this), //漏斗图(Asc)
-			new CircleChart04View(this) //圆形图
+			new CircleChart04View(this), //圆形图
+			new FunnelChart201View(this) //漏斗图(另一种风格)
 		}; 
 				
 		Bundle bunde = this.getIntent().getExtras();  
