@@ -88,6 +88,9 @@ public class BarChart06View extends DemoView implements Runnable{
 			chartDataSet();
 			chartRender();
 			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
+			
 			new Thread(this).start();
 	 }
 	 
@@ -194,13 +197,6 @@ public class BarChart06View extends DemoView implements Runnable{
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 	@Override
 	public void run() {

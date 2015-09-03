@@ -25,14 +25,12 @@ package com.demo.xclcharts.view;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.xclcharts.chart.PieChart;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.event.click.ArcPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotLegend;
 
@@ -80,6 +78,9 @@ public class PieChart02View extends DemoView implements Runnable{
 	 {
 		 chartDataSet();	
 		 chartRender();
+		 
+		//綁定手势滑动事件
+			this.bindTouch(this,chart);
 		 new Thread(this).start();
 	 }	 		 	
 	
@@ -180,14 +181,6 @@ public class PieChart02View extends DemoView implements Runnable{
 	        }
 	}
 
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

@@ -51,9 +51,17 @@ public class ChartTouch implements IChartTouch {
 	
 	private final float FIXED_RANGE = 8.0f;
 	
+	private float mPanRatio = 1.f; 
+	
 	public ChartTouch(View view, XChart chart) {
 		this.mChart = chart;
 		this.mView = view;
+	}
+	
+	public ChartTouch(View view, XChart chart,float panRatio) {
+		this.mChart = chart;
+		this.mView = view;
+		this.mPanRatio = panRatio;
 	}
 				
 	@Override
@@ -150,6 +158,15 @@ public class ChartTouch implements IChartTouch {
 			      }
 		    }	        
 	    }  
+	 
+	 /**
+	  * 用于限定可平移的范围(大于0),默认为1
+	  * @param ratio
+	  */
+	 public void setPanRatio(float ratio)
+	 {
+		 mPanRatio = ratio;
+	 }
 
 		//用来设置图表的位置   	
 		private void setLocation(float oldX, float oldY,
@@ -175,12 +192,19 @@ public class ChartTouch implements IChartTouch {
 	    	 //不让其滑动出可显示范围
 	    	 if(mChart.getCtlPanRangeStatus())
 	    	 {
-		      	  if( Float.compare( Math.abs(xx), mChart.getPlotArea().getPlotWidth()/2) == 1)
+	    		 float xr = 1.f,yr = 1.f;
+	    		 
+	    		  if( Float.compare(mPanRatio,0.f) > 0 ){
+	    			  xr = mChart.getPlotArea().getPlotWidth()/mPanRatio;
+	    			  yr = mChart.getHeight()/mPanRatio;
+	    		  }
+	    		  
+		      	  if( Float.compare( Math.abs(xx),xr) == 1) // 
 		      	  {
 		      		  return;
 		      	  }
 		      	  
-		      	  if( Float.compare( Math.abs(yy), mChart.getHeight()/2) == 1)
+		      	  if( Float.compare( Math.abs(yy),yr) == 1) //mChart.getHeight()/2)
 		      	  {
 		      		  return;
 		      	  }

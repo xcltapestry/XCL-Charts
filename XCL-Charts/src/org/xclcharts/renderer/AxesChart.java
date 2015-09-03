@@ -151,26 +151,36 @@ public class AxesChart extends EventChart {
 	protected void drawCategoryAxisLabels(Canvas canvas,
 										  ArrayList<PlotAxisTick> lstLabels)
 	{
+		
 		if(null == lstLabels) return ;
 		
 		boolean showTicks = true;
-		for(PlotAxisTick t : lstLabels)
+		for(int i=0;i<lstLabels.size();i++) 
 		{
+			PlotAxisTick t = lstLabels.get(i);
 			switch(mCategoryAxisLocation)
 			{				 
 				case LEFT: //Y
 				case RIGHT:			
 				case VERTICAL_CENTER:
 					if( !t.isShowTickMarks() || !isDrawYAxisTickMarks(t.Y,mMoveY)) showTicks = false;					
-					  categoryAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
+					  categoryAxis.renderAxisHorizontalTick(
+							  this.getLeft(),
+							  this.getPlotArea().getLeft(),
+							  canvas,t.X,t.Y, 
+							  t.Label,t.labelX,t.labelY,
 							  showTicks);					
 					break;							
 				case TOP: //X
 				case BOTTOM:		
 				case HORIZONTAL_CENTER:
+					XEnum.ODD_EVEN oe = (i%2 != 0)?XEnum.ODD_EVEN.ODD:XEnum.ODD_EVEN.EVEN;
+				
 					if( !t.isShowTickMarks() || !isDrawXAxisTickMarks(t.X,mMoveX) ) showTicks = false;								
-						categoryAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,t.labelX,t.labelY,
-								showTicks);		
+						categoryAxis.renderAxisVerticalTick(
+								canvas,t.X,t.Y, 
+								t.Label,t.labelX,t.labelY,
+								showTicks,oe);	
 					break;			
 			
 			} //switch end
@@ -183,8 +193,12 @@ public class AxesChart extends EventChart {
 	{
 		
 		if(null == lstLabels) return ;		
-		for(PlotAxisTick t : lstLabels)
+		
+		for(int i=0;i<lstLabels.size();i++) 
 		{
+			PlotAxisTick t = lstLabels.get(i);
+			XEnum.ODD_EVEN oe = (i%2 != 0)?XEnum.ODD_EVEN.ODD: XEnum.ODD_EVEN.EVEN;
+	
 			dataAxis.setAxisTickCurrentID(t.ID);
 			
 			switch(mDataAxisLocation)
@@ -192,14 +206,15 @@ public class AxesChart extends EventChart {
 				case LEFT: //Y
 				case RIGHT:			
 				case VERTICAL_CENTER:
-						dataAxis.renderAxisHorizontalTick(this,canvas,t.X,t.Y, t.Label,
+						dataAxis.renderAxisHorizontalTick(this.getLeft(),this.getPlotArea().getLeft(),
+															canvas,t.X,t.Y, t.Label,
 															isDrawYAxisTickMarks(t.Y,mMoveY));										
 					break;							
 				case TOP: //X
 				case BOTTOM:	
 				case HORIZONTAL_CENTER:
 						dataAxis.renderAxisVerticalTick(canvas,t.X,t.Y, t.Label,
-															isDrawXAxisTickMarks(t.X,mMoveX));										
+															isDrawXAxisTickMarks(t.X,mMoveX),oe);										
 					break;			
 			} //switch end
 		}
@@ -266,7 +281,7 @@ public class AxesChart extends EventChart {
 	 * @param num 刻度标记总数 
 	 * @return X轴步长
 	 */
-	protected float getVerticalXSteps(int tickCount) {
+	public float getVerticalXSteps(int tickCount) {
 		//柱形图为了让柱形显示在tick的中间，会多出一个步长即(dataSet.size()+1)	
 		return  (div(getPlotScreenWidth() ,tickCount)); 
 	}

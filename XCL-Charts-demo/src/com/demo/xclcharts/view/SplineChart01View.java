@@ -32,7 +32,6 @@ import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.info.AnchorDataPoint;
 import org.xclcharts.renderer.plot.PlotGrid;
@@ -82,6 +81,9 @@ public class SplineChart01View extends DemoView {
 			chartLabels();
 			chartDataSet();	
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 	 
@@ -198,7 +200,9 @@ public class SplineChart01View extends DemoView {
 			//不使用精确计算，忽略Java计算误差,提高性能
 			chart.disableHighPrecision();
 			
-			
+			//仅能横向移动
+			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
+									
 			//批注
 			List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
 			
@@ -333,13 +337,6 @@ public class SplineChart01View extends DemoView {
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

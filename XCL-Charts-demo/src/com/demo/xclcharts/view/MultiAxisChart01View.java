@@ -83,6 +83,10 @@ public class MultiAxisChart01View extends DemoView {
 			chartLnDataSet();	
 			chartRender();
 			chartLnRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
+			this.bindTouch(this,lnChart);
 		}
 		
 		
@@ -352,13 +356,4 @@ public class MultiAxisChart01View extends DemoView {
 	        }
 	    }
 
-
-		@Override
-		public List<XChart> bindChart() {
-			// TODO Auto-generated method stub
-			List<XChart> lst = new ArrayList<XChart>();
-			lst.add(chart);		
-			lst.add(lnChart);
-			return lst;
-		}
 }

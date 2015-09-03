@@ -59,8 +59,7 @@ public class SplineChart02View extends DemoView {
 	private LinkedList<String> labels = new LinkedList<String>();
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
 	
-	
-	
+		
 	public SplineChart02View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -83,6 +82,9 @@ public class SplineChart02View extends DemoView {
 		 chartLabels();
 			chartDataSet();	
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 	
@@ -230,14 +232,6 @@ public class SplineChart02View extends DemoView {
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
-	
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

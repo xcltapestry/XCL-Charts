@@ -21,13 +21,10 @@
  */
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.xclcharts.chart.ArcLineChart;
 import org.xclcharts.chart.ArcLineData;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -70,6 +67,8 @@ public class ArcLineChart01View extends DemoView {
 	 {
 		 	chartDataSet();	
 			chartRender();
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 	 	
 	@Override  
@@ -161,14 +160,6 @@ public class ArcLineChart01View extends DemoView {
         	Log.e(TAG, e.toString());
         }
     }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
-
+	
 
 }

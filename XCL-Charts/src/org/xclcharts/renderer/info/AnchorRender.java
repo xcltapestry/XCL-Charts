@@ -98,24 +98,43 @@ public class AnchorRender {
 				break;	
 			case CIRCLE:			
 				canvas.drawCircle(cx, cy, radius, getBgPaint());
+				
 				break;			
 			case VLINE:	
-				canvas.drawLine(cx, top,cx, bottom, getBgPaint());
+				//canvas.drawLine(cx, top,cx, bottom, getBgPaint());
+				DrawHelper.getInstance().drawLine(pAnchor.getLineStyle(), 
+						cx, top,cx, bottom,
+						canvas, getBgPaint());
 				break;
 			case HLINE:	
-				canvas.drawLine(left, cy,right, cy, getBgPaint());
+				//canvas.drawLine(left, cy,right, cy, getBgPaint());
+				DrawHelper.getInstance().drawLine(pAnchor.getLineStyle(), 
+						left, cy,right, cy,
+						canvas, getBgPaint());
 				break;
 			case TOBOTTOM:				
-				canvas.drawLine(cx, cy + cradius,cx,bottom, getBgPaint());
+				//canvas.drawLine(cx, cy + cradius,cx,bottom, getBgPaint());				
+				DrawHelper.getInstance().drawLine(pAnchor.getLineStyle(), 
+						cx, cy + cradius,cx,bottom,
+						canvas, getBgPaint());				
 				break;
 			case TOTOP:		
-				canvas.drawLine(cx, cy - cradius,cx, top, getBgPaint());
+				//canvas.drawLine(cx, cy - cradius,cx, top, getBgPaint());
+				DrawHelper.getInstance().drawLine(pAnchor.getLineStyle(), 
+						cx, cy - cradius,cx, top,
+						canvas, getBgPaint());	
 				break;
 			case TOLEFT:	
-				canvas.drawLine(cx - cradius, cy,left, cy, getBgPaint());
+				//canvas.drawLine(cx - cradius, cy,left, cy, getBgPaint());
+				DrawHelper.getInstance().drawLine(pAnchor.getLineStyle(), 
+						cx - cradius, cy,left, cy,
+						canvas, getBgPaint());
 				break;
 			case TORIGHT:		
-				canvas.drawLine(cx + cradius, cy,right, cy, getBgPaint());
+				//canvas.drawLine(cx + cradius, cy,right, cy, getBgPaint());
+				DrawHelper.getInstance().drawLine(pAnchor.getLineStyle(), 
+						cx + cradius, cy,right, cy,
+						canvas, getBgPaint());
 				break;
 			default:
 			}		

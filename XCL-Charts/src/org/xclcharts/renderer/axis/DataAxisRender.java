@@ -32,6 +32,7 @@ package org.xclcharts.renderer.axis;
 
 import org.xclcharts.common.MathHelper;
 import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 
@@ -123,17 +124,25 @@ public class DataAxisRender extends DataAxis {
 	//	return (!isPrimaryTick()?false:isShowAxisLabels());	
 	//}
 
+
 	/**
 	 * 绘制横向刻度标记
+	 * @param chatLeft  图最左边
+	 * @param plotLeft	绘图区最左边
 	 * @param canvas	画布
 	 * @param centerX	中心点X坐标
 	 * @param centerY	中心点Y坐标
 	 * @param text		文本
+	 * @param isTickVisible	是否显示
 	 */
-	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
-								float centerX,float centerY,String text,boolean isTickVisible)
-	{						
-		renderHorizontalTick(xchart,canvas, centerX,centerY,text,centerX,centerY,isTickVisible);	
+	public 	void renderAxisHorizontalTick(float chatLeft,float plotLeft,
+			Canvas canvas, 
+			float centerX,float centerY,
+			String text,
+			boolean isTickVisible)
+	{								
+		renderHorizontalTick(chatLeft,plotLeft,canvas, 
+							 centerX,centerY,text,centerX,centerY,isTickVisible);
 	}
 
 
@@ -146,9 +155,9 @@ public class DataAxisRender extends DataAxis {
 	 */
 	public void renderAxisVerticalTick(Canvas canvas,float centerX,float centerY,
 			String text,
-			boolean isTickVisible)
+			boolean isTickVisible,XEnum.ODD_EVEN oe)
 	{		
-		renderVerticalTick(canvas,centerX,centerY,text,centerX,centerY,isTickVisible);		
+		renderVerticalTick(canvas,centerX,centerY,text,centerX,centerY,isTickVisible,oe);		
 	}
 		
 

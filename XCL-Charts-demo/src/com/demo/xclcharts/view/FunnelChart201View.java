@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.xclcharts.chart.Funnel2Data;
 import org.xclcharts.chart.FunnelChart2;
-import org.xclcharts.renderer.XChart;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -46,6 +45,8 @@ public class FunnelChart201View extends DemoView {
 	 {
 		 	chartDataSet();	
 			chartRender();
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	
 	 private void chartRender()
@@ -98,12 +99,5 @@ public class FunnelChart201View extends DemoView {
 	        }
 	    }
 		
-		@Override
-		public List<XChart> bindChart() {
-			// TODO Auto-generated method stub		
-			List<XChart> lst = new ArrayList<XChart>();
-			lst.add(chart);		
-			return lst;
-		}
 
 }

@@ -32,7 +32,6 @@ import org.xclcharts.chart.AreaData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.info.AnchorDataPoint;
 
@@ -88,6 +87,9 @@ public class AreaChart01View extends DemoView implements Runnable {
 		chartRender();
 		
 		new Thread(this).start();
+		
+		//綁定手势滑动事件
+		this.bindTouch(this,chart);
 	 }
 	
 	@Override  
@@ -256,14 +258,6 @@ public class AreaChart01View extends DemoView implements Runnable {
         	Log.e(TAG, e.toString());
         }
     }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 
 	@Override

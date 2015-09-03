@@ -46,6 +46,7 @@ import com.demo.xclcharts.view.BarChart05View;
 import com.demo.xclcharts.view.BarChart06View;
 import com.demo.xclcharts.view.BarChart08View;
 import com.demo.xclcharts.view.BarChart09View;
+import com.demo.xclcharts.view.BarChart10View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.BubbleChart01View;
@@ -74,6 +75,8 @@ import com.demo.xclcharts.view.ScatterChart01View;
 import com.demo.xclcharts.view.SplineChart01View;
 import com.demo.xclcharts.view.SplineChart02View;
 import com.demo.xclcharts.view.SplineChart03View;
+import com.demo.xclcharts.view.SplineChart04View;
+import com.demo.xclcharts.view.SplineChart05View;
 import com.demo.xclcharts.view.StackBarChart01View;
 import com.demo.xclcharts.view.StackBarChart02View;
 
@@ -152,6 +155,8 @@ public class ChartsActivity extends Activity {
 			new BarChart08View(this),	//正负背向式图
 			new BarChart09View(this),	//正负背向式图(横向)
 			
+			new BarChart10View(this),   // 双轴柱形图
+			
 			new StackBarChart01View(this),	//竖向堆积柱形图
 			new StackBarChart02View(this),	//横向堆积柱形图
 			new LineChart01View(this),	//折线图(封闭式)
@@ -159,6 +164,8 @@ public class ChartsActivity extends Activity {
 			new SplineChart03View(this),	//平滑曲线图
 			new SplineChart01View(this),	//普通曲线图
 			new SplineChart02View(this),	//三角函数曲线图
+			new SplineChart04View(this),  // github
+			new SplineChart05View(this),
 			new AreaChart01View(this),	//区域图
 			new AreaChart02View(this),	//平滑区域图
 			new MultiAxisChart01View(this),

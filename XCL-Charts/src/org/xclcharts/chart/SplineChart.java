@@ -143,8 +143,7 @@ public class SplineChart extends LnChart{
 	{
 		mMinValue = value;
 	}	
-	
-	
+		
 	/**
 	 * 设置分类轴的竖向定制线值
 	 * 
@@ -198,10 +197,7 @@ public class SplineChart extends LnChart{
 	{
 		return mCrurveLineStyle;
 	}
-	
-	
-	
-				
+							
 	private void calcAllPoints( SplineData bd,List<PointF> lstPoints,List<DotInfo> lstDotInfo)
 	{
 		
@@ -317,6 +313,8 @@ public class SplineChart extends LnChart{
 		    	//childID++;
         	}
 		    
+		    //Log.e("spchart","dataID:"+Float.toString(dataID));
+		    //Log.e("spchart","  I:"+Integer.toString(i));
 		   //显示批注形状
 			drawAnchor(getAnchorDataPoint(),dataID,i,canvas,dotInfo.mX,dotInfo.mY,radius);
 		    

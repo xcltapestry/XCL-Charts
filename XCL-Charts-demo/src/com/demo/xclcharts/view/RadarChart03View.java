@@ -21,7 +21,6 @@
  */
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -29,7 +28,7 @@ import java.util.Map;
 
 import org.xclcharts.chart.PieData;
 import org.xclcharts.chart.RoseChart;
-import org.xclcharts.renderer.XChart;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -90,6 +89,11 @@ public class RadarChart03View extends DemoView {
 			
 			chartRender3();
 			chartDataSet3();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chartRose);
+			this.bindTouch(this,chartRose3);
+			this.bindTouch(this,chartRose1);
 	 }
 	 	 
 	
@@ -282,19 +286,6 @@ public class RadarChart03View extends DemoView {
         	Log.e(TAG, e.toString());
         }
     }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		
-		lst.add(chartRose);
-		lst.add(chartRose3);
-		lst.add(chartRose1);
-		return lst;
-	}
-	
-	
 
 
 }

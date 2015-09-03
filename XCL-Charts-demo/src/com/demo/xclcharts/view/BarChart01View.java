@@ -35,7 +35,6 @@ import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.info.AnchorDataPoint;
 import org.xclcharts.renderer.info.DyLine;
@@ -111,6 +110,11 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
 			//饼图
 			chartPieDataSet();
 			chartPieRender();	
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
+			this.bindTouch(this,chartPie);
+						
 			new Thread(this).start();
 	 }
 	
@@ -272,14 +276,6 @@ public class BarChart01View extends DemoView implements Runnable{ //DemoView
         }
     }			
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);	
-		lst.add(chartPie);	
-		return lst;
-	}
 
 	@Override
 	public void run() {

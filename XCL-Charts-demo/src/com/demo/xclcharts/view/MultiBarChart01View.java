@@ -22,7 +22,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +30,6 @@ import org.xclcharts.chart.BarData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -89,6 +87,10 @@ public class MultiBarChart01View extends DemoView {
 			chartDataSet2();
 			chartRender();
 			chartRender2();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
+			this.bindTouch(this,chart2);
 			
 	 }
 	
@@ -314,14 +316,6 @@ public class MultiBarChart01View extends DemoView {
         }
     }			
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);
-		lst.add(chart2);
-		return lst;
-	}
 
 	//重载掉，让其不能移动,实际应用时，可直接继承GraphicalView
 

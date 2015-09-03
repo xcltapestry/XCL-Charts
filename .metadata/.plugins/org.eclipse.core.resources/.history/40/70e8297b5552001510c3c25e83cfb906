@@ -1,0 +1,431 @@
+
+
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @Copyright Copyright (c) 2014 XCL-Charts (www.xclcharts.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 1.0
+ */
+package com.demo.xclcharts.view;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+
+import org.xclcharts.chart.CustomLineData;
+import org.xclcharts.chart.PointD;
+import org.xclcharts.chart.SplineChart;
+import org.xclcharts.chart.SplineData;
+import org.xclcharts.common.DensityUtil;
+import org.xclcharts.common.IFormatterTextCallBack;
+import org.xclcharts.event.click.PointPosition;
+import org.xclcharts.renderer.XEnum;
+import org.xclcharts.renderer.info.AnchorDataPoint;
+import org.xclcharts.renderer.plot.PlotGrid;
+
+import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Align;
+import android.graphics.Paint.Style;
+import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
+/**
+ * @ClassName SplineChart01View
+ * @Description  曲线图 的例子
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ */
+public class SplineChart04View extends DemoView {
+
+	private String TAG = "SplineChart04View";
+	private SplineChart chart = new SplineChart();
+	//分类轴标签集合
+	private LinkedList<String> labels = new LinkedList<String>();
+	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
+	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
+	
+	private List<CustomLineData> mCustomLineDataset = new LinkedList<CustomLineData>();
+	
+	public SplineChart04View(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+		initView();
+	}
+	
+	public SplineChart04View(Context context, AttributeSet attrs){   
+        super(context, attrs);   
+        initView();
+	 }
+	 
+	 public SplineChart04View(Context context, AttributeSet attrs, int defStyle) {
+			super(context, attrs, defStyle);
+			initView();
+	 }
+	 
+	 private void initView()
+	 {
+			chartLabels();
+			chartDataSet();	
+			chartDesireLines();
+			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
+	 }
+	 
+	 
+	@Override  
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {  
+        super.onSizeChanged(w, h, oldw, oldh);  
+       //图所占范围大小
+        chart.setChartRange(w,h);
+    }  				
+	
+	
+	private void chartRender()
+	{
+		try {
+						
+			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
+			int [] ltrb = getBarLnDefaultSpadding();
+			chart.setPadding(ltrb[0] + DensityUtil.dip2px(this.getContext(), 10), ltrb[1],
+						ltrb[2]+DensityUtil.dip2px(this.getContext(), 20), ltrb[3]);	
+			
+			
+			
+			//平移时收缩下
+			//float margin = DensityUtil.dip2px(getContext(), 20);
+			//chart.setXTickMarksOffsetMargin(margin);
+			
+			//显示边框
+			chart.showRoundBorder();
+			
+			//数据源	
+			chart.setCategories(labels);
+			chart.setDataSource(chartData);
+			chart.setCustomLines(mCustomLineDataset);
+						
+			//坐标系
+			//数据轴最大值
+			chart.getDataAxis().setAxisMax(20);
+			//chart.getDataAxis().setAxisMin(0);
+			//数据轴刻度间隔
+			chart.getDataAxis().setAxisSteps(5);
+			
+			//标签轴最大值
+			chart.setCategoryAxisMax(6);	
+			//标签轴最小值
+			chart.setCategoryAxisMin(0);	
+			
+			//设置图的背景色
+			//chart.setBackgroupColor(true,Color.BLACK);
+			//设置绘图区的背景色
+			//chart.getPlotArea().setBackgroupColor(true, Color.WHITE);
+			
+			//背景网格
+			PlotGrid plot = chart.getPlotGrid();		
+			plot.hideHorizontalLines();
+			plot.hideVerticalLines();
+			/*
+			plot.showHorizontalLines();
+			plot.showVerticalLines();			
+			plot.getHorizontalLinePaint().setStrokeWidth(3);
+			plot.getHorizontalLinePaint().setColor(Color.rgb(127, 204, 204));			
+			plot.setHorizontalLineStyle(XEnum.LineStyle.DOT);
+		*/
+			
+			//把轴线设成和横向网络线一样和大小和颜色,演示下定制性，这块问得人较多
+			//chart.getDataAxis().getAxisPaint().setStrokeWidth(
+			//		plot.getHorizontalLinePaint().getStrokeWidth());
+			//chart.getCategoryAxis().getAxisPaint().setStrokeWidth(
+			//		plot.getHorizontalLinePaint().getStrokeWidth());
+			
+			chart.getDataAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getAxisPaint().setColor(Color.rgb(127, 204, 204));
+			
+			chart.getDataAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+			chart.getCategoryAxis().getTickMarksPaint().setColor(Color.rgb(127, 204, 204));
+			
+			chart.getCategoryAxis().setTickLabelRotateAngle(0.45f);
+			
+			//定义数据轴标签显示格式
+			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
+	
+				@Override
+				public String textFormatter(String value) {
+					// TODO Auto-generated method stub		
+					Double tmp = Double.parseDouble(value);
+					DecimalFormat df=new DecimalFormat("#0");
+					String label = df.format(tmp).toString();				
+					return (label);
+				}
+				
+			});
+			
+			
+			
+			//居中
+			//chart.getDataAxis().setHorizontalTickAlign(Align.CENTER);
+			//chart.getDataAxis().getTickLabelPaint().setTextAlign(Align.CENTER);
+			
+			//居中显示轴 
+			//plot.hideHorizontalLines();
+			//plot.hideVerticalLines();	
+			//chart.setDataAxisLocation(XEnum.AxisLocation.VERTICAL_CENTER);
+			//chart.setCategoryAxisLocation(XEnum.AxisLocation.HORIZONTAL_CENTER);
+			
+			
+			//定义交叉点标签显示格式,特别备注,因曲线图的特殊性，所以返回格式为:  x值,y值
+			//请自行分析定制
+			chart.setDotLabelFormatter(new IFormatterTextCallBack(){
+	
+				@Override
+				public String textFormatter(String value) {
+					// TODO Auto-generated method stub						
+					String label = "("+value+")";				
+					return (label);
+				}
+				
+			});
+			//标题
+			chart.setTitle("New GitHub repositories");
+			chart.addSubtitle("(XCL-Charts Demo)");
+			chart.getAxisTitle().setLeftTitle("Percentage (annual)");
+			chart.getAxisTitle().getLeftTitlePaint().setColor(Color.BLACK);
+			
+			//激活点击监听
+			//chart.ActiveListenItemClick();
+			//为了让触发更灵敏，可以扩大5px的点击监听范围
+			//chart.extPointClickRange(5);
+			//chart.showClikedFocus();
+			
+			//显示十字交叉线
+			//chart.showDyLine();
+			//chart.getDyLine().setDyLineStyle(XEnum.DyLineStyle.Vertical);
+			//扩大实际绘制宽度
+			//chart.getPlotArea().extWidth(500.f);
+			
+			//封闭轴
+			//chart.setAxesClosed(true);
+			
+			//将线显示为直线，而不是平滑的
+		//	chart.setCrurveLineStyle(XEnum.CrurveLineStyle.BEELINE);
+			
+			//不使用精确计算，忽略Java计算误差,提高性能
+			chart.disableHighPrecision();
+			
+			//仅能横向移动
+			//chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
+			chart.disablePanMode();
+			chart.hideBorder();
+			chart.getPlotLegend().hide();
+			
+							
+			/*
+			//批注
+			List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
+			
+			AnchorDataPoint an1 = new AnchorDataPoint(2,0,XEnum.AnchorStyle.CAPROUNDRECT);
+			an1.setAlpha(200);
+			an1.setBgColor(Color.RED);
+			an1.setAreaStyle(XEnum.DataAreaStyle.FILL);
+			
+			AnchorDataPoint an2 = new AnchorDataPoint(1,1,XEnum.AnchorStyle.CIRCLE);
+			an2.setBgColor(Color.GRAY);
+			
+			AnchorDataPoint an3 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.RECT);
+			an3.setBgColor(Color.BLUE);
+					
+			mAnchorSet.add(an1);
+			mAnchorSet.add(an2);
+			mAnchorSet.add(an3);
+			chart.setAnchorDataPoint(mAnchorSet);	*/
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Log.e(TAG, e.toString());
+		}
+	}
+	private void chartDataSet()
+	{
+		
+				//线1的数据集
+				List<PointD> linePoint1 = new ArrayList<PointD>();				
+				linePoint1.add(new PointD(0d, 3d));	
+				linePoint1.add(new PointD(1d, 9d));					
+				linePoint1.add(new PointD(2d, 8d));				
+				linePoint1.add(new PointD(3d, 7d));				
+				linePoint1.add(new PointD(6d, 15d));
+				SplineData dataSeries1 = new SplineData("Go",linePoint1,
+						Color.rgb(54, 141, 238) );
+				//把线弄细点
+				dataSeries1.getLinePaint().setStrokeWidth(2);
+				dataSeries1.setDotStyle(XEnum.DotStyle.HIDE);		
+				dataSeries1.setLabelVisible(false);					
+
+				//线2的数据集
+				List<PointD> linePoint2 = new ArrayList<PointD>();
+				linePoint2.add(new PointD(0d, 10d));
+				linePoint2.add(new PointD(1d, 8d));
+				linePoint2.add(new PointD(2d, 7d));
+				linePoint2.add(new PointD(3d, 3d));
+				linePoint2.add(new PointD(6d, 18d));
+				SplineData dataSeries2 = new SplineData("C++",linePoint2,
+						Color.rgb(255, 165, 132) );										
+				dataSeries2.setLabelVisible(false);		
+				dataSeries2.setDotStyle(XEnum.DotStyle.HIDE);		
+				
+				//线2的数据集
+				List<PointD> linePoint3 = new ArrayList<PointD>();
+				linePoint3.add(new PointD(0d, 8d));
+				linePoint3.add(new PointD(1d, 13d));
+				linePoint3.add(new PointD(2d, 11d));
+				linePoint3.add(new PointD(3d, 15d));
+				linePoint3.add(new PointD(6d, 16d));
+				SplineData dataSeries3 = new SplineData("Java",linePoint3,
+						Color.rgb(77, 184, 73) );										
+				dataSeries3.setLabelVisible(false);		
+				dataSeries3.setDotStyle(XEnum.DotStyle.HIDE);
+				
+				chartData.add(dataSeries1);	
+				chartData.add(dataSeries2);	
+				chartData.add(dataSeries3);	
+	}
+	
+	private void chartLabels()
+	{
+		labels.add("2018");
+		labels.add("2019");
+		labels.add("2020");
+		labels.add("2021");
+		labels.add("2022");
+		labels.add("2023");
+	}
+	
+	private void chartDesireLines()
+	{			
+		CustomLineData s = new CustomLineData("GO",15d,Color.rgb(54, 141, 238),3);
+		s.setLineStyle(XEnum.LineStyle.SOLID);
+		s.hideLine();		
+		s.getLineLabelPaint().setColor(Color.rgb(54, 141, 238));
+		s.getLineLabelPaint().setTextSize(29);
+		mCustomLineDataset.add(s);
+		
+		CustomLineData s2 = new CustomLineData("C++",18d,Color.rgb(255, 165, 132),3);
+		s2.setLineStyle(XEnum.LineStyle.SOLID);
+		s2.hideLine();		
+		s2.getLineLabelPaint().setColor(Color.rgb(255, 165, 132));
+		s2.getLineLabelPaint().setTextSize(27);
+		mCustomLineDataset.add(s2);
+	
+		CustomLineData s3 = new CustomLineData("Java",16d,Color.rgb(77, 184, 73),3);
+		s3.setLineStyle(XEnum.LineStyle.DASH);
+		s3.getLineLabelPaint().setColor(Color.rgb(77, 184, 73));
+		s3.getLineLabelPaint().setTextSize(25);
+		s3.hideLine();		
+		mCustomLineDataset.add(s3);
+		
+	}
+	
+
+	@Override
+    public void render(Canvas canvas) {
+        try{
+            chart.render(canvas);
+        } catch (Exception e){
+        	Log.e(TAG, e.toString());
+        }
+    }
+
+	
+	@Override
+	public boolean onTouchEvent(MotionEvent event) {
+		// TODO Auto-generated method stub		
+		
+		super.onTouchEvent(event);
+				
+		if(event.getAction() == MotionEvent.ACTION_UP) 
+		{			
+			triggerClick(event.getX(),event.getY());	
+		}
+		return true;
+	}
+	
+	
+	//触发监听
+	private void triggerClick(float x,float y)
+	{		
+		//交叉线
+		if(chart.getDyLineVisible())chart.getDyLine().setCurrentXY(x,y);		
+		if(!chart.getListenItemClickStatus())
+		{
+			if(chart.getDyLineVisible()&&chart.getDyLine().isInvalidate())this.invalidate();
+		}else{	
+			PointPosition record = chart.getPositionRecord(x,y);			
+			if( null == record) return;
+	
+			if(record.getDataID() >= chartData.size()) return;
+			SplineData lData = chartData.get(record.getDataID());
+			List<PointD> linePoint =  lData.getLineDataSet();	
+			int pos = record.getDataChildID();
+			int i = 0;
+			Iterator it = linePoint.iterator();
+			while(it.hasNext())
+			{
+				PointD  entry=(PointD)it.next();	
+				
+				if(pos == i)
+				{							 						
+				     Double xValue = entry.x;
+				     Double yValue = entry.y;	
+				  
+				        float r = record.getRadius();
+						chart.showFocusPointF(record.getPosition(),r * 2);		
+						chart.getFocusPaint().setStyle(Style.STROKE);
+						chart.getFocusPaint().setStrokeWidth(3);		
+						if(record.getDataID() >= 2)
+						{
+							chart.getFocusPaint().setColor(Color.BLUE);
+						}else{
+							chart.getFocusPaint().setColor(Color.RED);
+						}	
+						
+						//在点击处显示tooltip
+						pToolTip.setColor(Color.RED);				
+						chart.getToolTip().setCurrentXY(x,y);
+						chart.getToolTip().addToolTip(" Key:"+lData.getLineKey(),pToolTip);
+						chart.getToolTip().addToolTip(" Label:"+lData.getLabel(),pToolTip);		
+						chart.getToolTip().addToolTip(" Current Value:" +Double.toString(xValue)+","+Double.toString(yValue),pToolTip);
+						chart.getToolTip().getBackgroundPaint().setAlpha(100);
+						this.invalidate();
+						
+				     break;
+				}
+		        i++;
+			}//end while
+		}
+	}
+	
+	
+}

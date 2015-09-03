@@ -52,13 +52,6 @@ public class DemoView extends ChartView{
 			super(context, attrs, defStyle);
 		
 	 }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	//Demo中bar chart所使用的默认偏移值。
 	//偏移出来的空间用于显示tick,axistitle....

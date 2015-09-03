@@ -176,16 +176,15 @@ public class DrawHelper {
 									float x ,float y,float angle,
 									Canvas canvas,
 									Paint paint 
-									){
-		
+									){	
 		if("" == text|| text.length() == 0 ) return;
 		
 		if(angle != 0){
 			canvas.rotate(angle, x, y); 
-		}		
-		canvas.drawText(text, x, y, paint);
-		if(angle != 0){
-			canvas.rotate(-angle, x, y); 
+			canvas.drawText(text, x, y, paint);
+			canvas.rotate(-1 * angle, x, y);
+		}else{
+			canvas.drawText(text, x, y, paint);
 		}
 	}			
 	

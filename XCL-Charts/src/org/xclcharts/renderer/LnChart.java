@@ -83,13 +83,13 @@ public class LnChart extends AxesChart {
 	}
 
 	/**
-	 * 返回指定数据在图中的坐标位置
+	 * 返回指定数据在图中的竖向坐标位置
 	 * 
 	 * @param bv
 	 *            数据
 	 * @return 坐标位置
 	 */
-	protected float getVPValPosition(double bv) {
+	public float getVPValPosition(double bv) {
 		float vaxlen = (float) MathHelper.getInstance().sub(bv,
 				dataAxis.getAxisMin());
 		float valuePostion = mul(getPlotScreenHeight(),
@@ -330,6 +330,7 @@ public class LnChart extends AxesChart {
 					 if(i == tickCount - 1)showTicks = false;
 					 labelY = add(currentY,div(YSteps,2));
 				 }	
+				 
 				 mLstCateTick.add(new PlotAxisTick(axisX, currentY, dataSet.get(i),labelX,labelY,showTicks));
 
 				break;

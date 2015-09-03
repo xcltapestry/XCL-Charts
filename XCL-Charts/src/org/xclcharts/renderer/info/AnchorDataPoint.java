@@ -56,6 +56,9 @@ public class AnchorDataPoint {
 	private float mCapRectH = 10.f;
 	private float mCapRectHeight = 30.f;
 	
+	//线的风格(点或线之类)
+	protected XEnum.LineStyle mLineStyle = XEnum.LineStyle.SOLID;
+	
 	
 	public AnchorDataPoint()
 	{
@@ -254,6 +257,23 @@ public class AnchorDataPoint {
 	}
 	
 	
+	/**
+	 * 设置线的风格(点或线之类)
+	 * @param style 线的风格
+	 */
+	public void setLineStyle(XEnum.LineStyle  style)
+	{
+		mLineStyle = style;
+	}
 	
+	
+	/**
+	 * 返回线的风格
+	 * @return 线的风格
+	 */
+	public XEnum.LineStyle getLineStyle()
+	{
+		return mLineStyle;		
+	}
 
 }

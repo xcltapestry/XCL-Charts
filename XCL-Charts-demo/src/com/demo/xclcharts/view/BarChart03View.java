@@ -22,7 +22,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,7 +30,6 @@ import org.xclcharts.chart.BarData;
 import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -75,10 +73,13 @@ public class BarChart03View extends DemoView implements Runnable{
 	 
 	 private void initView()
 	 {
-		 chartLabels();
+		 	chartLabels();
 			chartDataSet();
 			chartCustomLines();
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 			
 			new Thread(this).start();
 	 }
@@ -254,13 +255,6 @@ public class BarChart03View extends DemoView implements Runnable{
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 	@Override
 	public void run() {

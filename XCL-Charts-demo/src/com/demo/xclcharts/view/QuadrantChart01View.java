@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+
 import org.xclcharts.chart.BubbleChart;
 import org.xclcharts.chart.BubbleData;
 import org.xclcharts.chart.PointD;
@@ -35,7 +36,6 @@ import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -94,6 +94,11 @@ public class QuadrantChart01View extends DemoView {
 		 
 		 chartDataSetSp();	
 		 chartRenderSp();
+		 
+		//綁定手势滑动事件
+			this.bindTouch(this,chart); 
+			this.bindTouch(this,chartScat); 
+			this.bindTouch(this,chartSp); 
 	 }
 	 
 	 
@@ -431,16 +436,6 @@ public class QuadrantChart01View extends DemoView {
 	        }
 	    }
 
-		@Override
-		public List<XChart> bindChart() {
-			// TODO Auto-generated method stub		
-			List<XChart> lst = new ArrayList<XChart>();
-			lst.add(chart);	
-			lst.add(chartScat);	
-			lst.add(chartSp);	
-			return lst;
-		}
-		
 		@Override
 		public boolean onTouchEvent(MotionEvent event) {
 			// TODO Auto-generated method stub		

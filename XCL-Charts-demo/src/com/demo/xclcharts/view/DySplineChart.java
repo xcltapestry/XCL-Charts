@@ -23,7 +23,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,7 +31,6 @@ import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.view.ChartView;
 
@@ -152,6 +150,10 @@ public class DySplineChart extends ChartView{
 			//忽略Java的float计算误差
 			chart1.disableHighPrecision();
 			chart2.disableHighPrecision();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart1);
+			this.bindTouch(this,chart2);
 	 }
 	 
 	 
@@ -367,12 +369,5 @@ public class DySplineChart extends ChartView{
 	        }
 	    }
 
-		@Override
-		public List<XChart> bindChart() {
-			// TODO Auto-generated method stub		
-			List<XChart> lst = new ArrayList<XChart>();
-			lst.add(chart1);		
-			lst.add(chart2);	
-			return lst;
-		}
+	
 }

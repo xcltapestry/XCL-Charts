@@ -23,7 +23,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,10 +33,9 @@ import org.xclcharts.chart.LineData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
-import org.xclcharts.renderer.axis.DataAxis;
 import org.xclcharts.renderer.axis.CategoryAxis;
+import org.xclcharts.renderer.axis.DataAxis;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -85,6 +83,10 @@ public class MultiAxisChart02View extends DemoView {
 		
 		chartRender();
 		chartLnRender();
+		
+		//綁定手势滑动事件
+				this.bindTouch(this,chart);
+				this.bindTouch(this,lnChart);
 	}
 
 	@Override  
@@ -344,13 +346,5 @@ public class MultiAxisChart02View extends DemoView {
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		lst.add(lnChart);
-		return lst;
-	}
 	
 }

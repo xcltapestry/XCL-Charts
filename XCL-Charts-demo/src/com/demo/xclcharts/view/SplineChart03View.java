@@ -11,7 +11,6 @@ import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -62,6 +61,9 @@ public class SplineChart03View  extends DemoView {
 			chartCustomeLines();
 			chartDataSet();	
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 	 
@@ -266,13 +268,6 @@ public class SplineChart03View  extends DemoView {
 	    }
 	}
 	
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

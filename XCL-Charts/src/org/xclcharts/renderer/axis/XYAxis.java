@@ -26,7 +26,6 @@ import java.util.List;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.common.MathHelper;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
@@ -66,6 +65,9 @@ public class XYAxis extends Axis {
 	
 	private float mAxisLineStyleWidth = 20.f;
 	private float mAxisLineStyleHeight = 30.f;
+	
+	// 标签按哪种风格显示
+	protected XEnum.LabelLineFeed mLineFeed = XEnum.LabelLineFeed.NORMAL;
 
 	public XYAxis() {
 		
@@ -130,22 +132,38 @@ public class XYAxis extends Axis {
 		}
 		return itemLabel;
 	}
-
+	
+	
+	/**
+	 * 设置横轴标签换行方式
+	 *    NORMAL: 不换行 <br\>
+	 *    ODD_EVEN: 奇数位置标签先换行 <br/>
+	 *    EVEN_ODD：偶数位置标签先换行
+	 * @param lineFeed
+	 */
+	public void setLabelLineFeed(XEnum.LabelLineFeed lineFeed){
+		this.mLineFeed = lineFeed;
+	}
+	
+		
 	/**
 	 * 竖轴坐标标签，依左，中，右，决定标签横向显示在相对中心点的位置
 	 * @param centerX 轴上中点X坐标
 	 * @param centerY 轴上中点X坐标
 	 * @param text    标签文本
 	 */
-	protected void renderHorizontalTick(XChart xchart,Canvas canvas, 
-											float centerX, float centerY,
-									String text,float labelX, float labelY,
-									boolean isTickVisible) {
-		
+
+	// odd-even
+	protected void renderHorizontalTick(float chatLeft,float plotLeft,
+			Canvas canvas, 
+			float centerX, float centerY,
+			String text,float labelX, float labelY,
+			boolean isTickVisible) {
+
 		if (false == isShow())return;
 		float marksStartX = centerX;
 		float markeStopX = centerX;
-
+		
 		float labelStartX = labelX;
 		float labelStartY = labelY;
 
@@ -179,7 +197,7 @@ public class XYAxis extends Axis {
 		default:
 			break;
 		}
-
+		
 		//横轴刻度线
 		if (isShowTickMarks() && isTickVisible) 
 		{				
@@ -193,33 +211,37 @@ public class XYAxis extends Axis {
 		//标签
 		//  当标签文本太长时，可以考虑分成多行显示如果实在太长，则开发用...来自己处理
 		if (isShowAxisLabels()) {			
-			float textHeight = DrawHelper.getInstance().getPaintFontHeight(
-														getTickLabelPaint());
-			textHeight /=4;
-							
-			
-			if(Align.LEFT == getHorizontalTickAlign()) //处理多行标签
-			{
-				float width = 0.0f;
-				if (isShowTickMarks()) {
-					width = markeStopX - xchart.getLeft();
-				}else{
-					//width = xchart.getPlotArea().getLeft() - xchart.getLeft();					
-					width = MathHelper.getInstance().sub(
-							xchart.getPlotArea().getLeft() , xchart.getLeft());					
-				}
-				//renderLeftAxisTickMaskLabel(canvas,centerX,centerY,text,width );
-				renderLeftAxisTickMaskLabel(canvas,labelStartX, labelStartY + textHeight,text,width );
-			}else{
-				//*/
-				DrawHelper.getInstance().drawRotateText(
-						getFormatterLabel(text), labelStartX, labelStartY + textHeight,
-						getTickLabelRotateAngle(), canvas,
-						getTickLabelPaint());
+			renderHorizontalTickLabels(chatLeft,plotLeft,canvas,
+					 	 labelStartX,labelStartY,markeStopX,text );				
+		}
+				
+	}
+	
+	//画标签
+	private void renderHorizontalTickLabels(float chatLeft,float plotLeft,Canvas canvas,
+								float labelStartX,float labelStartY,
+								float markeStopX,
+								String text   )
+	{
+		float labelHeight = DrawHelper.getInstance().getPaintFontHeight(
+				getTickLabelPaint());
+		float textHeight  = labelHeight/4;
+		if(Align.LEFT == getHorizontalTickAlign()) //处理多行标签
+		{
+			float width = 0.0f;
+			if (isShowTickMarks()) {
+				width = markeStopX - chatLeft;
+			}else{				
+				width = MathHelper.getInstance().sub(plotLeft ,chatLeft);					
 			}
-			
+			renderLeftAxisTickMaskLabel(canvas,labelStartX, labelStartY + textHeight,text,width );				
+		}else{		
+			DrawHelper.getInstance().drawRotateText(
+					getFormatterLabel(text), labelStartX,labelStartY + textHeight,
+					getTickLabelRotateAngle(), canvas,getTickLabelPaint());	
 		}
 	}
+	
 
 	/**
 	 * 横轴坐标标签，决定标签显示在相对中心点的上方，中间还是底部位置
@@ -230,7 +252,7 @@ public class XYAxis extends Axis {
 	protected void renderVerticalTick(Canvas canvas, 
 									 float centerX, float centerY,  
 									 String text,float labelX, float labelY, 
-									 boolean isTickVisible) {
+									 boolean isTickVisible,XEnum.ODD_EVEN oe) {
 		if (!isShow())return;
 
 		float marksStartY = centerY;
@@ -240,8 +262,7 @@ public class XYAxis extends Axis {
 		switch (getVerticalTickPosition()) {
 		case TOP: {
 			
-			if (isShowTickMarks()) 
-			{
+			if (isShowTickMarks()){
 				marksStartY = MathHelper.getInstance().sub(centerY , getTickMarksLength());
 				marksStopY = centerY;				
 			}			
@@ -266,10 +287,8 @@ public class XYAxis extends Axis {
 			
 			if(this.isShowAxisLabels())
 			{
-				labelsStartY = marksStopY
-						+ getTickLabelMargin()
-						+ DrawHelper.getInstance()
-								.getPaintFontHeight(getTickLabelPaint())
+				labelsStartY = marksStopY + getTickLabelMargin()
+						+ DrawHelper.getInstance().getPaintFontHeight(getTickLabelPaint())
 						/ 3;
 			}
 			break;
@@ -293,14 +312,34 @@ public class XYAxis extends Axis {
 					marksStopY, getTickMarksPaint());
 			//}
 		}
-				
+		
+	
 		if (isShowAxisLabels()) {
-
+			
+			float labelHeight = DrawHelper.getInstance().getPaintFontHeight(
+					getTickLabelPaint());
+		
+			float currY = labelsStartY ;							
+			if(this.mLineFeed != XEnum.LabelLineFeed.NORMAL){																					
+				switch(this.mLineFeed)
+				{
+				case ODD_EVEN:
+					if(oe == XEnum.ODD_EVEN.ODD)currY +=  labelHeight  ;			
+					break;
+				case EVEN_ODD:
+					if(oe == XEnum.ODD_EVEN.EVEN)currY +=  labelHeight  ;	
+					break;
+				case NORMAL:
+					break;
+				}
+			}
+			
 			//定制化显示格式			
 			DrawHelper.getInstance().drawRotateText(getFormatterLabel(text),
-					labelX, labelsStartY,
+					labelX, currY, //labelsStartY,
 					getTickLabelRotateAngle(), canvas,
 					getTickLabelPaint());
+			//Log.e("t2","2angle:"+Float.toString(getTickLabelRotateAngle()));
 		}		
 	}
 	

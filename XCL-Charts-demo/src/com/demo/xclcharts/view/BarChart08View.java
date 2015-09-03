@@ -54,6 +54,9 @@ public class BarChart08View extends DemoView{
 			chartDataSet();
 			chartDesireLines();
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 	 
@@ -237,13 +240,5 @@ public class BarChart08View extends DemoView{
         	Log.e(TAG, e.toString());
         }
     }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 }

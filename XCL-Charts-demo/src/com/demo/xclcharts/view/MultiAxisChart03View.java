@@ -15,7 +15,6 @@ import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.plot.PlotGrid;
 
@@ -84,6 +83,11 @@ public class MultiAxisChart03View extends DemoView {
 		chartRenderLn();
 		chartRenderLnAxes();
 		chartRenderPie();
+		
+		//綁定手势滑动事件
+		this.bindTouch(this,chart);
+		this.bindTouch(this,chartLn);
+		// this.bindTouch(this,chartLnAxes);
 	 }
 	
 	@Override  
@@ -498,16 +502,7 @@ public class MultiAxisChart03View extends DemoView {
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		lst.add(chartLn);
-		//lst.add(chartLnAxes);
-		//lst.add(chartPie);
-		return lst;
-	}
+
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

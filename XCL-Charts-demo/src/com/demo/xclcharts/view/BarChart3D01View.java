@@ -23,7 +23,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,8 +32,8 @@ import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -82,6 +81,9 @@ public class BarChart3D01View extends DemoView {
 		 	chartLabels();
 			chartDataSet();	
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 	@Override  
@@ -98,7 +100,8 @@ public class BarChart3D01View extends DemoView {
 			
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....	
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding( DensityUtil.dip2px(getContext(), 50),ltrb[1], ltrb[2], ltrb[3]);
+			chart.setPadding( DensityUtil.dip2px(getContext(), 50),ltrb[1], 
+							ltrb[2], ltrb[3] + DensityUtil.dip2px(getContext(), 25) );
 			
 			//显示边框
 			chart.showRoundBorder();
@@ -148,6 +151,9 @@ public class BarChart3D01View extends DemoView {
 				
 			});
 			
+			//设置标签轴标签交错换行显示
+			chart.getCategoryAxis().setLabelLineFeed(XEnum.LabelLineFeed.EVEN_ODD);
+		
 			//定义标签轴标签显示格式
 			chart.getCategoryAxis().setLabelFormatter(new IFormatterTextCallBack(){
 	
@@ -243,14 +249,6 @@ public class BarChart3D01View extends DemoView {
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
-	
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

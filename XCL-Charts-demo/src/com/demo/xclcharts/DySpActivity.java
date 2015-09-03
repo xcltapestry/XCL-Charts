@@ -125,14 +125,26 @@ public class DySpActivity extends Activity {
 			double x = random.nextInt(maxX)%(maxX-minX+1) + minX;		
 			double y = random.nextInt(maxY)%(maxY-minY+1) + minY;	
 	        
-			for(int i=0;i<10;i++)
+			for(int i=0;i<5;i++)
 			{
-				x +=i*10;	
-				y +=i*10;
+				//x +=i*10;	
+				//y +=i*10;
 				
-				linePoint1.add(new PointD(x + 50, y+50));
-				linePoint2.add(new PointD(x, y));									
+				x += 12;
+				y += 10;
+				
+				//linePoint1.add(new PointD(x + 50, y+50));
+				linePoint1.add(new PointD(x, y));									
 			}
+			
+			linePoint1.add(new PointD(45, 70));
+			linePoint1.add(new PointD(50, 90));
+			linePoint1.add(new PointD(65, 60));
+	
+			linePoint2.add(new PointD(5, 10));
+			linePoint2.add(new PointD(18, 65));
+			linePoint2.add(new PointD(20, 55));
+			linePoint2.add(new PointD(40, 70));
 					
 			chartView.refreshChart(linePoint1, linePoint2);		
 			

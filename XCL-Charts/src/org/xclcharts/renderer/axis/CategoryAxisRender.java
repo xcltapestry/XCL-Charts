@@ -25,7 +25,7 @@ package org.xclcharts.renderer.axis;
 
 import java.util.List;
 
-import org.xclcharts.renderer.XChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
@@ -40,6 +40,7 @@ import android.graphics.Paint.Align;
 public class CategoryAxisRender extends CategoryAxis { 
 	
 
+	
 	public CategoryAxisRender()
 	{		
 		getTickLabelPaint().setTextAlign(Align.CENTER);				
@@ -62,12 +63,25 @@ public class CategoryAxisRender extends CategoryAxis {
 	 * @param centerY	点Y坐标
 	 * @param text	内容
 	 */	
+	/*
 	public 	void renderAxisHorizontalTick(XChart xchart,Canvas canvas, 
 							float centerX,float centerY,
 							String text,float labelX, float labelY, boolean isTickVisible)
 	{			
 	   renderHorizontalTick(xchart,canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
 	}
+	*/
+	public 	void renderAxisHorizontalTick(float chatLeft,float plotLeft,
+			Canvas canvas, 
+			float centerX,float centerY,
+			String text,
+			float labelX, float labelY, boolean isTickVisible) //,XEnum.ODD_EVEN oe)
+	{			
+		renderHorizontalTick(chatLeft,plotLeft,
+				canvas,centerX,centerY,
+				text,labelX,labelY,isTickVisible); //,oe);
+	}
+
 	
 	
 	/**
@@ -79,9 +93,9 @@ public class CategoryAxisRender extends CategoryAxis {
 	public void renderAxisVerticalTick(Canvas canvas,
 							float centerX,float centerY,
 							String text,float labelX, float labelY, 
-							boolean isTickVisible)
+							boolean isTickVisible,XEnum.ODD_EVEN oe)
 	{		
-		renderVerticalTick(canvas,centerX,centerY,text,labelX,labelY,isTickVisible);
+		renderVerticalTick(canvas,centerX,centerY,text,labelX,labelY,isTickVisible,oe);
 	}
 	
 	/**

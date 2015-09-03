@@ -21,14 +21,11 @@
  */
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.xclcharts.chart.PieChart3D;
 import org.xclcharts.chart.PieData;
 import org.xclcharts.event.click.ArcPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -75,6 +72,10 @@ public class PieChart3D01View extends DemoView implements Runnable{
 	 {
 		 	chartDataSet();		
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
+			
 			new Thread(this).start();
 	 }
 	 
@@ -142,14 +143,6 @@ public class PieChart3D01View extends DemoView implements Runnable{
         	Log.e(TAG, e.toString());
         }
     }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 	@Override
 	public void run() {

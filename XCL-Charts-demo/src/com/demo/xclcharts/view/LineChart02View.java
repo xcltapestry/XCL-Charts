@@ -33,7 +33,6 @@ import org.xclcharts.chart.LineData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.info.AnchorDataPoint;
 
@@ -86,6 +85,9 @@ public class LineChart02View extends DemoView implements Runnable{
 			chartDesireLines();
 			chartRender();
 			new Thread(this).start();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 	
@@ -177,6 +179,12 @@ public class LineChart02View extends DemoView implements Runnable{
 			
 			//扩展绘图区右边分割的范围，让定制线的说明文字能显示出来
 			chart.getClipExt().setExtRight(150.f);
+			
+			//设置标签交错换行显示
+			chart.getCategoryAxis().setLabelLineFeed(XEnum.LabelLineFeed.ODD_EVEN);	
+			
+			//仅能横向移动
+			chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
 			
 			
 			//chart.getDataAxis().hide();
@@ -304,13 +312,6 @@ public class LineChart02View extends DemoView implements Runnable{
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
 
 	@Override
 	public void run() {

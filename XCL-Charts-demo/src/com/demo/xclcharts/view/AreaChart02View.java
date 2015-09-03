@@ -23,7 +23,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,7 +32,6 @@ import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -85,6 +83,9 @@ public class AreaChart02View extends DemoView {
 		chartLabels();
 		chartDataSet();		
 		chartRender();
+		
+		//綁定手势滑动事件
+		this.bindTouch(this,chart);
 	 }
 	
 	@Override  
@@ -303,6 +304,11 @@ public class AreaChart02View extends DemoView {
 		//line3.getDotLabelPaint().setColor(Color.YELLOW);
 		line6.setLineStyle(XEnum.LineStyle.DASH);	
 		
+		//设置线上点的大小
+		//line6.setDotRadius(radius)
+		//设置线的粗线
+		//line6.getLinePaint().setStrokeWidth(5);
+				
 		mDataset.add(line4);		
 		mDataset.add(line5);
 		mDataset.add(line6);
@@ -326,15 +332,6 @@ public class AreaChart02View extends DemoView {
         	Log.e(TAG, e.toString());
         }
     }
-
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
-
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {

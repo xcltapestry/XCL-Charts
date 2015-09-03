@@ -656,7 +656,7 @@ public class BarChart extends AxesChart {
 	}		
 	
 	/**
-	 * 返回指定数据在图中的坐标位置
+	 * 返回指定数据在图中的横向坐标位置
 	 * @param bv 数据
 	 * @return 坐标位置
 	 */
@@ -667,7 +667,7 @@ public class BarChart extends AxesChart {
 		return (add(plotArea.getLeft() , valuePostion));						
 	}
 	
-	private float getHPDataAxisStdX()
+	public float getHPDataAxisStdX()
 	{
 		if(dataAxis.getAxisStdStatus())
 		{		
@@ -677,7 +677,7 @@ public class BarChart extends AxesChart {
 		}
 	}
 		
-	private float getVPDataAxisStdY()
+	public float getVPDataAxisStdY()
 	{
 		if(dataAxis.getAxisStdStatus())
 		{
@@ -688,11 +688,11 @@ public class BarChart extends AxesChart {
 	}
 	
 	/**
-	 * 返回指定数据在图中的坐标位置
+	 * 返回指定数据在图中的竖向坐标位置
 	 * @param bv 数据
 	 * @return 坐标位置
 	 */
-	private float getVPValPosition(double bv)
+	public float getVPValPosition(double bv)
 	{
 		float vaxlen = (float) MathHelper.getInstance().sub(bv, dataAxis.getAxisMin());				
 		float valuePostion = mul(getPlotScreenHeight(), div( vaxlen,dataAxis.getAxisRange() ) );

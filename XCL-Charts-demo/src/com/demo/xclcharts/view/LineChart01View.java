@@ -22,14 +22,11 @@
  */
 package com.demo.xclcharts.view;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.xclcharts.chart.LineChart;
 import org.xclcharts.chart.LineData;
 import org.xclcharts.event.click.PointPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
@@ -80,6 +77,9 @@ public class LineChart01View extends DemoView {
 		 	chartLabels();
 			chartDataSet();	
 			chartRender();
+			
+			//綁定手势滑动事件
+			this.bindTouch(this,chart);
 	 }
 	 
 
@@ -216,6 +216,9 @@ public class LineChart01View extends DemoView {
 		lineData2.setLabelVisible(true);		
 		lineData2.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
 		lineData2.setLineStyle(XEnum.LineStyle.DASH);
+		
+		// 设置点大小
+		//lineData2.getPlotLine().getPlotDot().setDotRadius(radius);
 						
 		//Line 3
 		LinkedList<Double> dataSeries3= new LinkedList<Double>();	
@@ -281,14 +284,6 @@ public class LineChart01View extends DemoView {
         }
     }
 
-	@Override
-	public List<XChart> bindChart() {
-		// TODO Auto-generated method stub		
-		List<XChart> lst = new ArrayList<XChart>();
-		lst.add(chart);		
-		return lst;
-	}
-	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		// TODO Auto-generated method stub		
