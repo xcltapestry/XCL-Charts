@@ -59,10 +59,10 @@ public class CustomLineData {
 	private  int mLabelOffset = 0;
 		
 	//定制线画笔
-	private Paint mPaintCustomLine = null;
-	private Paint mPaintLineLabel = null;
+	private Paint mPaintCustomLine=null;
+	private Paint mPaintLineLabel=null;
 	//是否显示线
-	private boolean mLineVisible = true;	
+	private boolean mLineVisible=true;	
 	
 	
 	public CustomLineData()

@@ -53,7 +53,7 @@ public class CircleChart extends CirChart {
     private String mDataInfo = "";
     private XEnum.CircleType mDisplayType = XEnum.CircleType.FULL;
     //内环填充颜色
-    private Paint mPaintBgCircle = null;
+    private Paint mPaintBgCircle=null;
     private Paint mPaintFillCircle = null;
     private Paint mPaintDataInfo = null;
     
@@ -315,7 +315,7 @@ public class CircleChart extends CirChart {
     /**
      * 绘制图
      */
-    protected boolean renderPlot(Canvas canvas) {
+    protected boolean renderPlot(Canvas canvas){
         try {
 
             //中心点坐标

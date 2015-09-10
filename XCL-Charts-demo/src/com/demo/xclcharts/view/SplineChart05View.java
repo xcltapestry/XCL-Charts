@@ -1,6 +1,5 @@
 package com.demo.xclcharts.view;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -11,7 +10,6 @@ import org.xclcharts.chart.PointD;
 import org.xclcharts.chart.SplineChart;
 import org.xclcharts.chart.SplineData;
 import org.xclcharts.common.DensityUtil;
-import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.PointPosition;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.info.AnchorDataPoint;
@@ -21,7 +19,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -41,7 +38,7 @@ public class SplineChart05View extends DemoView {
 	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
 	// splinechart支持横向和竖向定制线
-	private List<CustomLineData> mXCustomLineDataset = new ArrayList<CustomLineData>();
+	//private List<CustomLineData> mXCustomLineDataset = new ArrayList<CustomLineData>();
 	//private List<CustomLineData> mYCustomLineDataset = new ArrayList<CustomLineData>();
 	
 	public SplineChart05View(Context context) {

@@ -38,6 +38,7 @@ public class PlotDot {
 	
 	private int mColor = Color.BLACK;
 	private int mRingInnerColor = Color.WHITE;
+	private int mRing2InnerColor = Color.RED;
 	
 	//Triangle 三角  	
 	//线上的点为圆或角
@@ -79,12 +80,31 @@ public class PlotDot {
 	}
 	
 	/**
+	 * 设置点形状为环形时，最内部所填充的颜色.仅对环形有效
+	 * @param color 最内部填充颜色
+	 */
+	public void setRing2InnerColor(int color)
+	{
+		mRing2InnerColor = color;
+	}
+	
+	
+	/**
 	 * 设置当前环形点内部填充颜色
 	 * @return 内部填充颜色
 	 */
 	public int getRingInnerColor()
 	{
 		return mRingInnerColor;
+	}
+	
+	/**
+	 * 设置当前环形点最内部填充颜色
+	 * @return 内部填充颜色
+	 */
+	public int getRing2InnerColor()
+	{
+		return mRing2InnerColor;
 	}
 	
 

@@ -229,6 +229,7 @@ public class LineChart01View extends DemoView {
 		dataSeries3.add(95d);
 		LineData lineData3 = new LineData("圆点",dataSeries3,Color.rgb(123, 89, 168));
 		lineData3.setDotStyle(XEnum.DotStyle.DOT);
+		lineData3.setDotRadius(20);
 		//lineData3.setLabelVisible(true);
 		//lineData3.getDotLabelPaint().setTextAlign(Align.CENTER);				
 		
@@ -257,13 +258,32 @@ public class LineChart01View extends DemoView {
 		LineData lineData5 = new LineData("定制",valuesE,Color.rgb(234, 142, 43));
 		lineData5.setDotRadius(15);
 		lineData5.setDotStyle(XEnum.DotStyle.TRIANGLE);
+				
+		//Line 2
+		LinkedList<Double> dataSeries6= new LinkedList<Double>();	
+		dataSeries6.add((double)50); 
+		dataSeries6.add((double)52); 
+		dataSeries6.add((double)53); 	
+		dataSeries6.add((double)55); 
+		dataSeries6.add((double)40); 
+		LineData lineData6 = new LineData("圆环2",dataSeries6,Color.rgb(75, 166, 51));
+		lineData6.setDotStyle(XEnum.DotStyle.RING2);				
+		lineData6.getPlotLine().getDotPaint().setColor(Color.RED);
+		lineData6.setLabelVisible(true);		
+		//lineData6.getPlotLine().getPlotDot().setRingInnerColor(Color.GREEN);
+		//lineData6.getPlotLine().getPlotDot().setRing2InnerColor(Color.GREEN);
+		//lineData6.setLineStyle(XEnum.LineStyle.DASH);
+		lineData6.getDotLabelPaint().setColor(Color.rgb(212, 64, 39));
+		lineData6.getLabelOptions().getBox().getBackgroundPaint().setColor(Color.rgb(57, 172, 241));
+		lineData6.getLabelOptions().getBox().setBorderLineColor(Color.YELLOW);
+		
 		
 		chartData.add(lineData1);
 		chartData.add(lineData2);
 		chartData.add(lineData3);
 		chartData.add(lineData4);
 		chartData.add(lineData5);
-		
+		chartData.add(lineData6);
 	}
 	
 	private void chartLabels()

@@ -127,6 +127,9 @@ public class PlotDotRender {
 		case RING:					
 			renderRing(canvas,paint,radius,pDot,cirX, cirY);
 			break;
+		case RING2:					
+			renderRing2(canvas,paint,radius,pDot,cirX, cirY);
+			break;
 		case TRIANGLE: // 等腰三角形
 			renderTriangle(canvas,paint,radius,cirX, cirY);			
 			break;
@@ -157,6 +160,20 @@ public class PlotDotRender {
 
         getInnerFillPaint().setColor(pDot.getRingInnerColor());
         canvas.drawCircle(cX, bottom,ringRadius, getInnerFillPaint());         
+	}
+	
+	private void renderRing2(Canvas canvas,Paint paint,float radius,
+			PlotDot pDot,float cX ,float bottom)
+	{
+		float ringRadius = radius * 0.7f; // MathHelper.getInstance().mul(radius, 0.7f);		
+		canvas.drawCircle(cX, bottom, radius, paint);
+	
+		getInnerFillPaint().setColor(pDot.getRingInnerColor());
+		canvas.drawCircle(cX, bottom,ringRadius, getInnerFillPaint());        
+		
+		ringRadius = radius * 0.3f;
+		getInnerFillPaint().setColor(pDot.getRing2InnerColor());
+		canvas.drawCircle(cX, bottom,ringRadius, getInnerFillPaint());    
 	}
 	
 	private void renderTriangle(Canvas canvas,Paint paint,float radius,float cirX,float cirY)

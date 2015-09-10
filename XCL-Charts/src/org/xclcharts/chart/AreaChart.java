@@ -648,7 +648,7 @@ public class AreaChart extends LnChart {
 	}
 
 	@Override
-	protected void drawClipLegend(Canvas canvas) {
+	protected void drawClipLegend(Canvas canvas){
 		plotLegend.renderLineKey(canvas, mLstKey);
 		mLstKey.clear();
 	}
