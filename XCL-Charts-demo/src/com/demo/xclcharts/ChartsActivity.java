@@ -47,6 +47,7 @@ import com.demo.xclcharts.view.BarChart06View;
 import com.demo.xclcharts.view.BarChart08View;
 import com.demo.xclcharts.view.BarChart09View;
 import com.demo.xclcharts.view.BarChart10View;
+import com.demo.xclcharts.view.BarChart11View;
 import com.demo.xclcharts.view.BarChart3D01View;
 import com.demo.xclcharts.view.BarChart3D02View;
 import com.demo.xclcharts.view.BubbleChart01View;
@@ -156,6 +157,7 @@ public class ChartsActivity extends Activity {
 			new BarChart09View(this),	//正负背向式图(横向)
 			
 			new BarChart10View(this),   // 双轴柱形图
+			new BarChart11View(this),   // 顶轴横向柱形图
 			
 			new StackBarChart01View(this),	//竖向堆积柱形图
 			new StackBarChart02View(this),	//横向堆积柱形图

@@ -362,6 +362,11 @@ public class XEnum {
 		public enum ODD_EVEN {		
 			ODD,EVEN,NONE
 		}
+		
+		//柱形标签位置
+		public enum ItemLabelStyle {			
+			NORMAL,INNER,OUTER
+		}
 				
 		/**
 		 * 图的所属类型

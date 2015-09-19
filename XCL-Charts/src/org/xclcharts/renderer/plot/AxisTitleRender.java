@@ -223,6 +223,7 @@ public class AxisTitleRender extends AxisTitle implements IRender{
 		 float axisTitleTextStartY = Math.round(top + (bottom - top -  axisTitleTextHeight) /2 );	          
          //得到单个轴标题文字高度     		
  		 float axisTitleCharHeight = 0.0f ;
+ 		  		 		
          for(int i= 0; i< axisTitle.length();i++)
          {        	 
         	 axisTitleCharHeight = DrawHelper.getInstance().getTextWidth(

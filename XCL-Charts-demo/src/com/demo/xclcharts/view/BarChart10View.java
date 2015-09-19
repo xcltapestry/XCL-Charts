@@ -231,9 +231,9 @@ public class BarChart10View extends DemoView {
 		s.setLineStyle(XEnum.LineStyle.DOT);
 		mCustomLineDataset.add(s);
 	
-		mCustomLineDataset.add(new CustomLineData("",50d,Color.WHITE,3));
-		mCustomLineDataset.add(new CustomLineData("",100d,Color.WHITE,6));
-		mCustomLineDataset.add(new CustomLineData("",150d,Color.WHITE,3));
+		mCustomLineDataset.add(new CustomLineData("",50d,Color.rgb(242, 242, 242),3));
+		mCustomLineDataset.add(new CustomLineData("",100d,Color.rgb(242, 242, 242),6));
+		mCustomLineDataset.add(new CustomLineData("",150d,Color.rgb(242, 242, 242),3));
 		
 		//mCustomLineDataset.add(new CustomLineData("200",200d,Color.BLACK,4));
 		//mCustomLineDataset.add(new CustomLineData("250",250d,Color.RED,5));

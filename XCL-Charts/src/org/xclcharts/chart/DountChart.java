@@ -162,9 +162,22 @@ public class DountChart  extends PieChart{
 	private void renderCenterText(Canvas canvas)
 	{		
 		if(mCenterText.length() > 0 )
-		{			
-			canvas.drawText(mCenterText, 
-				plotArea.getCenterX(), plotArea.getCenterY(), getCenterTextPaint());
+		{									
+			if( mCenterText.indexOf("\n") > 0 ){
+				float textY = plotArea.getCenterY();
+				float textHeight = DrawHelper.getInstance().getPaintFontHeight(getCenterTextPaint());
+				 
+	 			 String[] arr = mCenterText.split("\n");
+	 			 for(int i=0;i<arr.length;i++){	 				 
+	 				canvas.drawText(arr[i], 
+	 						plotArea.getCenterX(),textY , getCenterTextPaint());	 				
+	 				textY += textHeight;
+	 			 }
+	 		 }else{
+	 			canvas.drawText(mCenterText, 
+	 					plotArea.getCenterX(), plotArea.getCenterY(), getCenterTextPaint());
+	 		 }
+			
 		}
 	}
 

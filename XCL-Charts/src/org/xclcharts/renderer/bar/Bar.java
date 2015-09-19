@@ -47,6 +47,8 @@ public class Bar {
 	//确定是横向柱形还是竖向柱形图
 	private XEnum.Direction mBarDirection = XEnum.Direction.VERTICAL;
 	
+	private XEnum.ItemLabelStyle mItemLabelStyle = XEnum.ItemLabelStyle.NORMAL;
+	
 	//柱形画笔
 	private Paint mPaintBar = null;
 	
@@ -93,6 +95,14 @@ public class Bar {
 	 */
 	public void setBarDirection(XEnum.Direction direction) {
 		this.mBarDirection = direction;
+	}
+	
+	/**
+	 * 设置柱形标签显示位置
+	 * @param style 内/外/中间
+	 */
+	public void setItemLabelStyle(XEnum.ItemLabelStyle style){
+		this.mItemLabelStyle = style;
 	}
 
 	/**
@@ -342,7 +352,7 @@ public class Bar {
 	protected void drawBarItemLabel(String text,float x,float y,Canvas canvas)
 	{
 		//在柱形的顶端显示上柱形的当前值			
-		if(getItemLabelsVisible())
+		if(getItemLabelsVisible() && text.length()> 0)
 		{							
 			//要依横向还是竖向
 			//如果是背向式的，还要看是向上还是向下
@@ -350,18 +360,47 @@ public class Bar {
 			float cx = x;
 			float cy = y;
 			
+			
 			switch(mBarDirection)
 			{
 			case VERTICAL:
-				cy -= this.mItemLabelAnchorOffset;
+				
+				float textHeight = DrawHelper.getInstance().getPaintFontHeight(getItemLabelPaint());
+				// NORMAL,INNER,OUTER
+				switch(mItemLabelStyle)
+				{
+				case OUTER:
+					cy -= this.mItemLabelAnchorOffset;
+					cy -= textHeight;
+					break;
+				case INNER:
+					cy += this.mItemLabelAnchorOffset;
+					cy += textHeight;
+					break;
+				default:
+					cy -= this.mItemLabelAnchorOffset;
+				}																						
 				break;
 			case HORIZONTAL:
-				cx += this.mItemLabelAnchorOffset;
+				float textWidth = DrawHelper.getInstance().getTextWidth(getItemLabelPaint(), text);						
+				switch(mItemLabelStyle)
+				{
+				case OUTER:
+					cx += this.mItemLabelAnchorOffset;
+					cx += textWidth;
+					break;
+				case INNER:										
+					cx -= this.mItemLabelAnchorOffset;
+					cx -= textWidth;
+					break;
+				default:
+					cx += this.mItemLabelAnchorOffset;
+				}
 				break;	
 			default:
 				break;
 			}
-			
+															
 			DrawHelper.getInstance().drawRotateText(text,
 								cx ,
 								cy,

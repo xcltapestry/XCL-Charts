@@ -55,6 +55,9 @@ public class PlotTitleRender extends PlotTitle{
 	{
 		//排除掉border width
 	
+		String title = getTitle();
+		String subTitle = getSubtitle();
+		
 		float titleHeight = 0.f;
 		float subtitleHeight = 0.f;
 		float totalHeight = 0.f;
@@ -67,13 +70,13 @@ public class PlotTitleRender extends PlotTitle{
 		float subtitleX = 0.0f;
 		float subtitleY = 0.0f;
 		
-		if(this.getTitle().length() == 0 && getSubtitle().length() == 0) return;	
+		if(title.length() == 0 && subTitle.length() == 0) return;	
 
-		if(getTitle().length() > 0 )
+		if(title.length() > 0 )
 		{
 			 titleHeight = DrawHelper.getInstance().getPaintFontHeight(getTitlePaint());			
 		}
-		if(getTitle().length() > 0 )
+		if(title.length() > 0 )
 		{
 			subtitleHeight = DrawHelper.getInstance().getPaintFontHeight(getSubtitlePaint());
 		}			
@@ -131,15 +134,36 @@ public class PlotTitleRender extends PlotTitle{
 						
 			break;
 		}
-		if(getTitle().length() > 0 )
-		{		
-			canvas.drawText(
-					getTitle(),titleX , titleY, this.getTitlePaint());
+		
+		
+		
+		if(title.length() > 0 )
+		{					
+			 if( title.indexOf("\n") > 0 ){
+	 			 String[] arr = title.split("\n");
+	 			 for(int i=0;i<arr.length;i++){
+	 				canvas.drawText(
+	 						arr[i],titleX , titleY, this.getTitlePaint());
+	 				titleY += titleHeight;
+	 				subtitleY += titleHeight;
+	 			 }
+	 		 }else{
+	 			canvas.drawText(title,titleX , titleY, this.getTitlePaint());
+	 		 }			 			
 		}
-		if(getSubtitle().length() > 0 )
+		
+		
+		if(subTitle.length() > 0 )
 		{
-			canvas.drawText(
-					getSubtitle(),subtitleX , subtitleY, this.getSubtitlePaint());
+			 if( subTitle.indexOf("\n") > 0 ){
+	 			 String[] arr = subTitle.split("\n");
+	 			 for(int i=0;i<arr.length;i++){
+	 				canvas.drawText(arr[i],subtitleX , subtitleY, this.getSubtitlePaint());
+	 				subtitleY += subtitleHeight;
+	 			 }
+			 }else{
+				 canvas.drawText(subTitle,subtitleX , subtitleY, this.getSubtitlePaint());
+			 }
 		}
 	}
 }
