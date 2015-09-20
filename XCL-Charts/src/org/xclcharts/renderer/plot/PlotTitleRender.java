@@ -134,36 +134,9 @@ public class PlotTitleRender extends PlotTitle{
 						
 			break;
 		}
+	
+		subtitleY = DrawHelper.getInstance().drawText(canvas, this.getTitlePaint(), title, titleX, titleY);		
+		 DrawHelper.getInstance().drawText(canvas, this.getTitlePaint(), subTitle, subtitleX, subtitleY);
 		
-		
-		
-		if(title.length() > 0 )
-		{					
-			 if( title.indexOf("\n") > 0 ){
-	 			 String[] arr = title.split("\n");
-	 			 for(int i=0;i<arr.length;i++){
-	 				canvas.drawText(
-	 						arr[i],titleX , titleY, this.getTitlePaint());
-	 				titleY += titleHeight;
-	 				subtitleY += titleHeight;
-	 			 }
-	 		 }else{
-	 			canvas.drawText(title,titleX , titleY, this.getTitlePaint());
-	 		 }			 			
-		}
-		
-		
-		if(subTitle.length() > 0 )
-		{
-			 if( subTitle.indexOf("\n") > 0 ){
-	 			 String[] arr = subTitle.split("\n");
-	 			 for(int i=0;i<arr.length;i++){
-	 				canvas.drawText(arr[i],subtitleX , subtitleY, this.getSubtitlePaint());
-	 				subtitleY += subtitleHeight;
-	 			 }
-			 }else{
-				 canvas.drawText(subTitle,subtitleX , subtitleY, this.getSubtitlePaint());
-			 }
-		}
 	}
 }

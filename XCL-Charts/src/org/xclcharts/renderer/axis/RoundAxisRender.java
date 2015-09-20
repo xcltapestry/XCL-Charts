@@ -400,7 +400,8 @@ public class RoundAxisRender extends RoundAxis{
 														int color,String label) throws Exception
 		{		
 				     
-			if(color >= -1) getAxisPaint().setColor(color);		   		     
+			//if(color >= -1) 
+				getAxisPaint().setColor(color);		   		     
 			
 			 if(Float.compare(sweepAngle, 0.0f) < 0){
 					Log.e(TAG,"负角度???!!!");

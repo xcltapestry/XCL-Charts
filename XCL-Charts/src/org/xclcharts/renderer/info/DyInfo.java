@@ -297,8 +297,10 @@ public class DyInfo {
 			}
 			
 			if(countText > i)
-				canvas.drawText(mClickedText.get(i),currTextX , 
-						currRowY + textHeight, mClickedPaint.get(j));
+				 DrawHelper.getInstance().drawText(canvas, 
+						 mClickedPaint.get(j),
+						 mClickedText.get(i), 
+						 currTextX, currRowY + textHeight);
 							
 			currRowY += textHeight + mRowSpan;		
 			currTextX = currDotsX ;

@@ -181,10 +181,12 @@ public class DrawHelper {
 		
 		if(angle != 0){
 			canvas.rotate(angle, x, y); 
-			canvas.drawText(text, x, y, paint);
+			//canvas.drawText(text, x, y, paint);
+			drawText(canvas,paint,text,x,y);
 			canvas.rotate(-1 * angle, x, y);
 		}else{
-			canvas.drawText(text, x, y, paint);
+			//canvas.drawText(text, x, y, paint);
+			drawText(canvas,paint,text,x,y);
 		}
 	}			
 	
@@ -394,6 +396,23 @@ public class DrawHelper {
 			throw e;
 		}
 	}	
-		
-
+	 	
+	//绘制有换行的文本
+	public float drawText(Canvas canvas,Paint paint,String text,float x,float y)
+	{
+		if(text.length() > 0 )
+		{					
+			 if( text.indexOf("\n") > 0 ){
+				 float height = getPaintFontHeight(paint);	
+	 			 String[] arr = text.split("\n");
+	 			 for(int i=0;i<arr.length;i++){
+	 				canvas.drawText(arr[i],x , y, paint);
+	 				y += height;
+	 			 }
+			 }else{
+				 canvas.drawText(text,x , y, paint);
+			 }		
+		}
+		 return y;
+	}
 }

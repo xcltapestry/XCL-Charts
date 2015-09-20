@@ -87,7 +87,7 @@ public class BarChart11View extends DemoView {
 					
 			//标题
 			chart.setTitle("Cloud Computing Services\n(SOHO/SMB) - Overall Scores");
-		//	chart.addSubtitle("(XCL-Charts Demo)");	
+			chart.addSubtitle("(XCL-Charts Demo)");	
 			chart.setTitleAlign(XEnum.HorizontalAlign.CENTER);
 			
 			//数据源
@@ -163,6 +163,8 @@ public class BarChart11View extends DemoView {
 			 chart.getCategoryAxis().getAxisPaint().setColor(Color.rgb(106, 194, 57));
 			 
 			 chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
+			 
+			 chart.ActiveListenItemClick();
 								
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

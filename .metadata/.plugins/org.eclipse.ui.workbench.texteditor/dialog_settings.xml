@@ -2,27 +2,27 @@
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
-		<item value="321" key="DIALOG_Y_ORIGIN"/>
-		<item value="529" key="DIALOG_X_ORIGIN"/>
+		<item value="337" key="DIALOG_Y_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="860" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="INNER" key="selection"/>
+		<item value="countText" key="selection"/>
 		<list key="findhistory">
+			<item value="countText"/>
+			<item value="drawRotateText"/>
+			<item value="drawText"/>
+			<item value="&gt;-1"/>
 			<item value="inner"/>
 			<item value="setItemLabelVisible"/>
 			<item value="-1"/>
 			<item value="setLineStyle"/>
-			<item value="getLineStyle"/>
-			<item value="mXCustomLineDataset"/>
-			<item value="getAnchorDataPoint()"/>
-			<item value="postRender"/>
 		</list>
 		<list key="replacehistory">
 			<item value="cPath"/>

@@ -31,7 +31,6 @@ package org.xclcharts.renderer.axis;
  */
 
 import org.xclcharts.common.MathHelper;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;

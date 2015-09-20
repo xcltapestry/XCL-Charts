@@ -400,7 +400,7 @@ public class Bar {
 			default:
 				break;
 			}
-															
+									
 			DrawHelper.getInstance().drawRotateText(text,
 								cx ,
 								cy,

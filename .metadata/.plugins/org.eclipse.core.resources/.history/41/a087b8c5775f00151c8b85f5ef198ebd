@@ -7,7 +7,6 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
-import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
@@ -17,7 +16,6 @@ import org.xclcharts.renderer.XEnum;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -37,11 +35,6 @@ public class BarChart11View extends DemoView {
 	//轴数据源
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
-	private List<CustomLineData> mCustomLineDataset = new LinkedList<CustomLineData>();
-	
-	
-	//CategoryAxisRender cateAxis =new CategoryAxisRender();
-	
 
 	public BarChart11View(Context context) {
 		super(context);
@@ -63,7 +56,7 @@ public class BarChart11View extends DemoView {
 	 {		 
 		 	chartLabels();
 			chartDataSet();	
-			chartDesireLines();
+		
 			chartRender();
 			
 			//綁定手势滑动事件
@@ -85,38 +78,37 @@ public class BarChart11View extends DemoView {
 			
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....		
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(ltrb[0], ltrb[1], ltrb[2] + 100.f, ltrb[3]);	
-			//DensityUtil.dip2px(this.getContext(), 20)
+			chart.setPadding(ltrb[0] +  DensityUtil.dip2px(this.getContext(), 40),
+					ltrb[1] +  DensityUtil.dip2px(this.getContext(), 10) , ltrb[2], ltrb[3]);	
+			
 			
 			//显示边框
-			chart.showRoundBorder();
+			//chart.showRoundBorder();
 					
 			//标题
-			chart.setTitle("Cloud Computing Services (Enterprise) - Overall Scores");
-			chart.addSubtitle("(XCL-Charts Demo)");	
-			chart.setTitleAlign(XEnum.HorizontalAlign.LEFT);
+			chart.setTitle("Cloud Computing Services\n(SOHO/SMB) - Overall Scores");
+		//	chart.addSubtitle("(XCL-Charts Demo)");	
+			chart.setTitleAlign(XEnum.HorizontalAlign.CENTER);
 			
 			//数据源
 			chart.setDataSource(chartData);
 			chart.setCategories(chartLabels);	
-			chart.setCustomLines(mCustomLineDataset);
-		
 			
 			//数据轴
 			chart.getDataAxis().setAxisMax(8);
 			chart.getDataAxis().setAxisMin(6);
 			chart.getDataAxis().setAxisSteps(1);		
-	
-		
+			
 			chart.getDataAxis().hideAxisLine();
-			chart.getDataAxis().hideTickMarks();
-			chart.getPlotGrid().hideHorizontalLines();
-			chart.getPlotGrid().hideVerticalLines();
+			chart.getDataAxis().hideTickMarks();	
 			chart.getCategoryAxis().hideTickMarks();
 			
-			chart.setCategoryAxisLocation(XEnum.AxisLocation.TOP);
+			chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
+			chart.getCategoryAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
 			
-			
+			chart.setChartDirection(XEnum.Direction.HORIZONTAL);			
+			chart.setDataAxisLocation(XEnum.AxisLocation.TOP);
+									
 			//定义数据轴标签显示格式
 			chart.getDataAxis().setLabelFormatter(new IFormatterTextCallBack(){
 	
@@ -124,23 +116,20 @@ public class BarChart11View extends DemoView {
 				public String textFormatter(String value) {
 					// TODO Auto-generated method stub		
 					Double tmp = Double.parseDouble(value);
-					DecimalFormat df=new DecimalFormat("#0");
+					DecimalFormat df=new DecimalFormat("#0.0");
 					String label = df.format(tmp).toString();				
 					return (label);
 				}
 				
 			});
 			
-			//标签旋转45度
-			chart.getCategoryAxis().setTickLabelRotateAngle(45f);
-			chart.getCategoryAxis().getTickLabelPaint().setTextSize(15);
 			
 			//设定格式
 			chart.setItemLabelFormatter(new IFormatterDoubleCallBack() {
 				@Override
 				public String doubleFormatter(Double value) {
 					// TODO Auto-generated method stub
-					DecimalFormat df=new DecimalFormat("#0");					 
+					DecimalFormat df=new DecimalFormat("#0.0");					 
 					String label = df.format(value).toString();
 					return label;
 				}});
@@ -152,19 +141,29 @@ public class BarChart11View extends DemoView {
 			 //提高性能
 			 chart.disableHighPrecision();
 			 
-			 //柱形和标签居中方式
-			 chart.setBarCenterStyle(XEnum.BarCenterStyle.TICKMARKS);
-			 			
-			 chart.getCategoryAxis().setLabelLineFeed(XEnum.LabelLineFeed.EVEN_ODD);
-			 chart.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
-			 chart.setDataAxisLocation(XEnum.AxisLocation.RIGHT);
-		
-			 chart.setPlotPanMode(XEnum.PanMode.HORIZONTAL);
-			 chart.getCategoryAxis().setLabelLineFeed(XEnum.LabelLineFeed.EVEN_ODD);
-			 chart.getCategoryAxis().hideAxisLine();
-			 chart.getDataAxis().setHorizontalTickAlign(Align.RIGHT);
-			 chart.getDataAxis().setTickLabelMargin( DensityUtil.dip2px(this.getContext(), 30) );
-			 							
+			 chart.setApplyBackgroundColor(true);
+			 chart.setBackgroundColor(Color.BLACK);
+			 
+			 chart.getDataAxis().getTickLabelPaint().setColor(Color.WHITE);
+			 chart.getCategoryAxis().getTickLabelPaint().setColor(Color.WHITE);
+			 chart.getPlotTitle().getTitlePaint().setColor(Color.WHITE);
+			 chart.getPlotTitle().getSubtitlePaint().setColor(Color.WHITE);
+			 chart.getBar().getItemLabelPaint().setColor(Color.WHITE);
+			 
+			 chart.getPlotGrid().getVerticalLinePaint().setColor(Color.rgb(106, 194, 57));
+			
+			 chart.getPlotGrid().getHorizontalLinePaint().setColor(Color.rgb(106, 194, 57));
+			// chart.getPlotGrid().showHorizontalLines();
+			 chart.getPlotGrid().showVerticalLines();
+			 
+			 chart.getBar().setBarStyle(XEnum.BarStyle.FILL);
+			 chart.getBar().setItemLabelVisible(true);
+			 chart.getBar().getItemLabelPaint().setTextSize(22);
+			 chart.getBar().setItemLabelStyle(XEnum.ItemLabelStyle.INNER);
+			 chart.getCategoryAxis().getAxisPaint().setColor(Color.rgb(106, 194, 57));
+			 
+			 chart.getDataAxis().setVerticalTickPosition(XEnum.VerticalAlign.TOP);
+								
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -180,19 +179,23 @@ public class BarChart11View extends DemoView {
 		dataSeriesA.add(7.9d);
 		dataColorA.add(Color.rgb(205, 5, 5));	
 		
-		dataSeriesA.add(7.1d);
+		dataSeriesA.add(7.8d);
+		dataColorA.add(Color.rgb(205, 5, 5));
+		
+		dataSeriesA.add(7.3d);
 		dataColorA.add(Color.rgb(203, 203, 203));	
 		
 		dataSeriesA.add(6.9d);
 		dataColorA.add(Color.rgb(203, 203, 203));	
+		dataSeriesA.add(6.9d);
+		dataColorA.add(Color.rgb(203, 203, 203));	
 		
-		dataSeriesA.add(6.7d);
+		dataSeriesA.add(6.4d);
 		dataColorA.add(Color.rgb(203, 203, 203));	
 		
 		dataSeriesA.add(7.2d);
 		dataColorA.add(Color.rgb(137, 137, 137));	
-		
-
+	
 		
 		//此地的颜色为Key值颜色及柱形的默认颜色
 		BarData BarDataA = new BarData("",dataSeriesA,dataColorA,
@@ -202,8 +205,7 @@ public class BarChart11View extends DemoView {
 	}
 	
 	private void chartLabels()
-	{		
-		
+	{				
 		chartLabels.add("Carbonite");
 		chartLabels.add("Dropbox");
 		chartLabels.add("Google Drive");
@@ -211,60 +213,16 @@ public class BarChart11View extends DemoView {
 		chartLabels.add("Box");
 		chartLabels.add("SugarSync");
 		chartLabels.add("AVERAGE");
-	}	
-	
-	/**
-	 * 期望线/分界线
-	 */
-	private void chartDesireLines()
-	{			
-		CustomLineData s = new CustomLineData("",0d,Color.BLUE,3);
-		s.setLineStyle(XEnum.LineStyle.DOT);
-		mCustomLineDataset.add(s);
-	
-		mCustomLineDataset.add(new CustomLineData("",50d,Color.WHITE,3));
-		mCustomLineDataset.add(new CustomLineData("",100d,Color.WHITE,6));
-		mCustomLineDataset.add(new CustomLineData("",150d,Color.WHITE,3));
-		
-		//mCustomLineDataset.add(new CustomLineData("200",200d,Color.BLACK,4));
-		//mCustomLineDataset.add(new CustomLineData("250",250d,Color.RED,5));
-		mCustomLineDataset.add(new CustomLineData("",300d,Color.GREEN,5));
-		
-	}
-	
-	
+	}		
 
 	@Override
     public void render(Canvas canvas) {
         try{
-            chart.render(canvas);
-       
-            /*
-            float margin =  DrawHelper.getInstance().getPaintFontHeight(
-            		chart.getCategoryAxis().getTickLabelPaint()
-            ) + chart.getCategoryAxis().getTickLabelMargin() ;
-            
-            margin +=  DrawHelper.getInstance().getPaintFontHeight(
-            		cateAxis.getTickLabelPaint()) / 3;
-            
-            
-            cateAxis.renderAxis(canvas, 
-            		chart.getPlotArea().getLeft(),
-            		chart.getPlotArea().getBottom() + margin ,
-            		chart.getPlotArea().getRight(), 
-            		chart.getPlotArea().getBottom() + margin );
-            
-            cateAxis.setDataBuilding(chartLabels);
-            */
-            
-            
-            
+            chart.render(canvas);                  
         } catch (Exception e){
         	Log.e(TAG, e.toString());
         }
     }
-
-
 	
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
