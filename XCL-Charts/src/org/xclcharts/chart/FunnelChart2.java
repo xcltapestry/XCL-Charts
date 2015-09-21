@@ -26,6 +26,7 @@ import java.util.List;
 
 import org.xclcharts.common.PointHelper;
 import org.xclcharts.renderer.EventChart;
+import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -43,7 +44,7 @@ import android.graphics.PointF;
  */
 
 public class FunnelChart2 extends EventChart {
-	    private  static final String TAG = "FunnelChart2";
+	    //private  static final String TAG = "FunnelChart2";
 		
 		private Paint mPaint = null;
 		private Paint mPaintLabel = null;		
@@ -53,6 +54,12 @@ public class FunnelChart2 extends EventChart {
 	
 	public FunnelChart2() {		
 		
+	}
+	
+	@Override
+	public XEnum.ChartType getType()
+	{
+		return XEnum.ChartType.FUNNEL;
 	}
 	
 	/**

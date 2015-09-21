@@ -114,10 +114,7 @@ public class PlotTitleRender extends PlotTitle{
 			
 			titleX = Math.round(chartLeft + chartWidth / 2);
 			titleY = titleInitY;
-			
-			subtitleX = titleX;
-			subtitleY = titleY + subtitleHeight;
-			
+						
 			getTitlePaint().setTextAlign(Align.CENTER);			
 			getSubtitlePaint().setTextAlign(Align.CENTER);	
 			break;
@@ -125,18 +122,17 @@ public class PlotTitleRender extends PlotTitle{
 			
 			titleX = chartRight;
 			titleY = titleInitY;
-			
-			subtitleX = titleX;
-			subtitleY = titleY + subtitleHeight;
-			
+									
 			getTitlePaint().setTextAlign(Align.RIGHT);			
-			getSubtitlePaint().setTextAlign(Align.RIGHT);			
-						
+			getSubtitlePaint().setTextAlign(Align.RIGHT);								
 			break;
 		}
 	
 		subtitleY = DrawHelper.getInstance().drawText(canvas, this.getTitlePaint(), title, titleX, titleY);		
-		 DrawHelper.getInstance().drawText(canvas, this.getTitlePaint(), subTitle, subtitleX, subtitleY);
+		subtitleX = titleX;
+		subtitleY = titleY + subtitleHeight;
+		
+		DrawHelper.getInstance().drawText(canvas, this.getTitlePaint(), subTitle, subtitleX, subtitleY);
 		
 	}
 }

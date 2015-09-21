@@ -37,10 +37,6 @@ public class SplineChart05View extends DemoView {
 	private LinkedList<SplineData> chartData = new LinkedList<SplineData>();
 	Paint pToolTip = new Paint(Paint.ANTI_ALIAS_FLAG);
 	
-	// splinechart支持横向和竖向定制线
-	//private List<CustomLineData> mXCustomLineDataset = new ArrayList<CustomLineData>();
-	//private List<CustomLineData> mYCustomLineDataset = new ArrayList<CustomLineData>();
-	
 	public SplineChart05View(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
@@ -237,24 +233,7 @@ public class SplineChart05View extends DemoView {
 				mAnchorSet.add(an7);
 				chart.setAnchorDataPoint(mAnchorSet);		
 	}
-	
-	/*
-	private void chartCustomeLines()
-	{				
-		CustomLineData cdx1 =new CustomLineData("AA",3d,Color.rgb(35, 172, 57),5);
-		CustomLineData cdx2 =new CustomLineData("BBB",5d,Color.rgb(69, 181, 248),5);		
-		cdx1.setLabelVerticalAlign(XEnum.VerticalAlign.BOTTOM);		
-		cdx2.setLabelVerticalAlign(XEnum.VerticalAlign.TOP);	
-		cdx2.setLabelHorizontalPostion(Align.CENTER);
-		//mXCustomLineDataset.add(cdx1);
-		//mXCustomLineDataset.add(cdx2);	
-		
-				
-		//CustomLineData cdy1 = new CustomLineData("定制线",8d,Color.rgb(69, 181, 248),5);
-		//cdy1.setLabelHorizontalPostion(Align.CENTER);		
-		//mYCustomLineDataset.add(cdy1);	
-	}
-	*/
+
 
 	@Override
     public void render(Canvas canvas) {
@@ -305,14 +284,15 @@ public class SplineChart05View extends DemoView {
 				
 				if(pos == i)
 				{							 						
-				     Double xValue = entry.x;
-				     Double yValue = entry.y;	
+				    // Double xValue = entry.x;
+				    // Double yValue = entry.y;	
 				  
 				        float r = record.getRadius();
-						chart.showFocusPointF(record.getPosition(),r*2);		
+							
 						chart.getFocusPaint().setStyle(Style.FILL);
 						chart.getFocusPaint().setStrokeWidth(6);		
 						chart.getFocusPaint().setColor(Color.rgb(237, 92, 92));
+						chart.showFocusPointF(record.getPosition(),r*2);	
 						
 						/*
 						//在点击处显示tooltip

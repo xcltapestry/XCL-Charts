@@ -73,7 +73,11 @@ public class AxesChart extends EventChart {
 	
 	//是否将轴封闭
 	private boolean mAxesClosed = false;	
-	
+		
+	// 对于轴标签滑动时的显示处理并不是很好，不过已经没精力重构了。
+	// 目前可用下面的方式来限定:
+	//     可通过指定下面两个参数值来限定x/y轴标签可移出的范围
+	//     但注意这两个参数是同时限制上下或左右。
 	private float myMargin = -10.0f;
 	private float mxMargin = -25.f;// 25.0f; //散点和气泡要注意下
 	
@@ -92,8 +96,7 @@ public class AxesChart extends EventChart {
 		
 		initChart();		
 	}
-	
-	
+		
 	/**
 	 * 初始化设置
 	 */
@@ -323,7 +326,7 @@ public class AxesChart extends EventChart {
 	 */
 	
 	protected boolean isDrawYAxisTickMarks(float currentY,float moveY)
-	{
+	{				
 		if(Float.compare(currentY , plotArea.getTop() - moveY) == -1 || 
 				Float.compare(currentY, plotArea.getBottom()  - moveY) == 1 )
 		{
@@ -342,8 +345,8 @@ public class AxesChart extends EventChart {
 	
 	protected boolean isDrawXAxisTickMarks(float currentX,float moveX)
 	{
-		if(Float.compare(currentX + moveX , plotArea.getLeft()  ) == -1 ) return false;
-		if(Float.compare(currentX + moveX , plotArea.getRight()  ) ==  1 ) return false;
+		if(Float.compare(currentX + moveX , plotArea.getLeft() ) == -1 ) return false;
+		if(Float.compare(currentX + moveX , plotArea.getRight() ) ==  1 ) return false;
 		return true;
 	}
 	
@@ -847,9 +850,9 @@ public class AxesChart extends EventChart {
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{			
 			//绘制Y轴tick和marks			
-			canvas.save();								
-				canvas.clipRect(this.getLeft() , this.getTop() + yMargin,   
-								this.getRight(), this.getBottom() - yMargin);
+			canvas.save();											
+				canvas.clipRect(this.getLeft() ,this.getTop() + yMargin,   
+								this.getRight(),this.getBottom() - yMargin);
 					canvas.translate(0 , offsetY );					
 					drawClipDataAxisTickMarks(canvas);	
 			canvas.restore();	
@@ -862,9 +865,10 @@ public class AxesChart extends EventChart {
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{				
 			//绘制X轴tick和marks			
-			canvas.save();				
+			canvas.save();			
+			
 				canvas.clipRect(this.getLeft() + xMargin, this.getTop(),  
-								this.getRight() - xMargin, this.getBottom()); //this.getRight() + xMargin
+								this.getRight() - xMargin,this.getBottom()); //this.getRight() + xMargin
 			
 					canvas.translate(offsetX,0);
 					drawClipCategoryAxisTickMarks(canvas);	
@@ -922,7 +926,9 @@ public class AxesChart extends EventChart {
 				gWidth = this.getPlotGrid().getHorizontalLinePaint().getStrokeWidth();
 			
 			//绘制X轴tick和marks			
-			canvas.save();							
+			canvas.save();		
+			
+			
 			canvas.clipRect(plotArea.getLeft() - gWidth , plotArea.getTop() - gWidth, 
 					plotArea.getRight() + gWidth, plotArea.getBottom() + gWidth);
 					canvas.translate(offsetX,0);
@@ -959,7 +965,7 @@ public class AxesChart extends EventChart {
 		//////////////////////////////////////////////////			
 		//轴线		
 		drawClipAxisLine(canvas);
-				
+					
 		if( XEnum.PanMode.HORIZONTAL == this.getPlotPanMode()
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{																	
@@ -967,8 +973,7 @@ public class AxesChart extends EventChart {
 			canvas.save();	
 			     //放开，排除掉border的宽度
 				canvas.clipRect(this.getLeft() + xMargin , this.getTop(), 
-								this.getRight() - xMargin, this.getBottom());
-										
+								this.getRight() - xMargin, this.getBottom());			
 					canvas.translate(offsetX,0);
 					drawClipDataAxisTickMarks(canvas);
 			canvas.restore();	
@@ -980,10 +985,9 @@ public class AxesChart extends EventChart {
 				|| XEnum.PanMode.FREE == this.getPlotPanMode() )
 		{													
 			//绘制Y轴tick和marks			
-			canvas.save();								
+			canvas.save();													
 					canvas.clipRect(this.getLeft() , this.getTop() + yMargin, 
-									this.getRight(), this.getBottom() - yMargin); 
-					
+									this.getRight(), this.getBottom() - yMargin); 		
 					canvas.translate(0 , offsetY );										
 					drawClipCategoryAxisTickMarks(canvas);					
 			canvas.restore();	
