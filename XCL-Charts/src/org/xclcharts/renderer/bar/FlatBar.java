@@ -26,9 +26,12 @@ import org.xclcharts.common.DrawHelper;
 import org.xclcharts.renderer.XEnum;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.LinearGradient;
+import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Path;
+import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.Log;
 
@@ -135,25 +138,26 @@ public class FlatBar extends Bar{
 		 XEnum.BarStyle style = getBarStyle();		 
 		 if(Float.compare(top, bottom)==0) return true;
 		 
+		 if( XEnum.BarStyle.ROUNDBAR == style)
+		 {
+				canvas.drawRoundRect(new RectF(left ,bottom,right,top ),						
+						getBarRoundRadius(), getBarRoundRadius(),getBarPaint());	
+				return true;
+		 }
+		 
 		if(null == mPath)mPath = new Path();			
 		if( XEnum.BarStyle.OUTLINE == style)
 		{
-			int barColor = getBarPaint().getColor();						
-			int lightColor = DrawHelper.getInstance().getLightColor(barColor,150);
-			float pWidth = getBarPaint().getStrokeWidth();
-			
-			getBarPaint().setStyle(Style.FILL);
-			getBarPaint().setColor(lightColor);
-			canvas.drawRect( left ,bottom,right,top  ,getBarPaint());
+			int barColor = getBarPaint().getColor();
+			int lightColor = DrawHelper.getInstance().getLightColor(barColor,mOutlineAlpha);		
+			getBarOutlinePaint().setColor(lightColor); 
+			canvas.drawRect( left ,bottom,right,top  ,getBarOutlinePaint());
 			
 			getBarPaint().setStyle(Style.STROKE);			
-			//getBarPaint().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-			getBarPaint().setColor(barColor);
-			getBarPaint().setStrokeWidth(5);
-			//canvas.drawRect( left ,bottom,right,top  ,getBarPaint());	
-			
+			//getBarPaint().setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));		
+			getBarPaint().setStrokeWidth(mBorderWidth);
 			drawPathBar(left,top,right,bottom,canvas);			
-			getBarPaint().setStrokeWidth(pWidth);
+			getBarPaint().setStrokeWidth(mBorderWidth); //pWidth);
 			return true;
 		}else if( XEnum.BarStyle.TRIANGLE == style){	
 			

@@ -132,7 +132,7 @@ public class PlotTitleRender extends PlotTitle{
 		subtitleX = titleX;
 		subtitleY = titleY + subtitleHeight;
 		
-		DrawHelper.getInstance().drawText(canvas, this.getTitlePaint(), subTitle, subtitleX, subtitleY);
+		DrawHelper.getInstance().drawText(canvas, this.getSubtitlePaint(), subTitle, subtitleX, subtitleY);
 		
 	}
 }

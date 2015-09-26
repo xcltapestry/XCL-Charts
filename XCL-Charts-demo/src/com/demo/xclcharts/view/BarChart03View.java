@@ -138,14 +138,17 @@ public class BarChart03View extends DemoView implements Runnable{
 					DecimalFormat df=new DecimalFormat("#0");
 					String label = df.format(tmp).toString();				
 					return (label);
-				}
-				
-			});
-			
+				}				
+			});			
 			
 			//在柱形顶部显示值
 			chart.getBar().setItemLabelVisible(true);
 			chart.getBar().setBarStyle(XEnum.BarStyle.OUTLINE);
+			chart.getBar().setBorderWidth(5);
+			chart.getBar().setOutlineAlpha(150);
+			
+			//chart.getBar().setBarRoundRadius(5);
+			//chart.getBar().setBarStyle(XEnum.BarStyle.ROUNDBAR);
 		
 			//chart.setPlotPanMode(XEnum.PanMode.FREE);	
 			chart.disablePanMode();

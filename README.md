@@ -82,6 +82,7 @@ http://blog.csdn.net/xcl168/article/details/42318669 <br/>
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchartcloud.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/circlechart2.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/funnelchart2.png)
+![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/roundbarchart.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart_hh.png)
 ![](https://raw.githubusercontent.com/xcltapestry/XCL-Charts/master/screens/barchart_hhh.png)
 

@@ -132,7 +132,7 @@ public class XEnum {
 		 *
 		 */
 		public enum BarStyle {
-			GRADIENT,FILL,STROKE,OUTLINE,TRIANGLE
+			GRADIENT,FILL,STROKE,OUTLINE,TRIANGLE,ROUNDBAR
 		}
 		
 		/**

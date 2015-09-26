@@ -51,6 +51,9 @@ public class Bar {
 	
 	//柱形画笔
 	private Paint mPaintBar = null;
+	//内部柱形
+	private Paint mPaintOutlineBar = null;
+	
 	
 	//文字画笔
 	private Paint mPaintItemLabel = null;		
@@ -75,6 +78,30 @@ public class Bar {
 	private float mBarMaxPxWidth = 0.0f;
 	//柱子最大高度
 	private float mBarMaxPxHeight = 0.0f;
+	
+	//圆柱形的半径
+	protected float mBarRoundRaidus = 15.0f;
+	protected int mOutlineAlpha = 150;
+	protected int mBorderWidth = 0;
+	
+	/**
+	 * 设置角圆弧半径
+	 * @param radius 半径
+	 */
+	public void setBarRoundRadius(int radius)
+	{
+		mBarRoundRaidus = radius;
+	}
+	
+	/**
+	 * 返回角圆弧半径
+	 * @return 半径
+	 */
+	public float getBarRoundRadius()
+	{		
+		return mBarRoundRaidus;		
+	}
+	
 	
 	public Bar()
 	{				
@@ -118,6 +145,35 @@ public class Bar {
 			mPaintBar.setStyle(Style.FILL);
 		}				
 		return mPaintBar;
+	}
+	
+	/**
+	 * 柱形风格为outline时,内部柱形的画笔
+	 * @return 画笔
+	 */
+	public Paint getBarOutlinePaint() {
+		if(null == mPaintOutlineBar)
+		{
+			mPaintOutlineBar = new Paint(Paint.ANTI_ALIAS_FLAG);
+			mPaintOutlineBar.setStyle(Style.FILL);
+		}
+		return mPaintOutlineBar;
+	}
+	
+	/**
+	 * 柱形风格为outline时,内部柱形颜色相对于外围柱形的透明度
+	 * @param alpha 透明度
+	 */
+	public void setOutlineAlpha(int alpha){ 
+		mOutlineAlpha = alpha;
+	}
+	
+	/**
+	 * 柱形风格为outline时,外部柱形的宽度
+	 * @param width 宽度
+	 */
+	public void setBorderWidth(int width){
+		mBorderWidth = width;
 	}
 	
 	/**

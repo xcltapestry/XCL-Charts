@@ -13,16 +13,16 @@
 		<item value="false" key="isRegEx"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="myMargin" key="selection"/>
+		<item value="chartData2" key="selection"/>
 		<list key="findhistory">
+			<item value="chartData2"/>
+			<item value="mRaidus"/>
+			<item value="outline"/>
+			<item value="getFormatterDotLabel"/>
+			<item value="mLabelFormatter"/>
 			<item value="myMargin"/>
 			<item value="getType"/>
 			<item value="mxMargin"/>
-			<item value="getFocusPaint"/>
-			<item value="showFocusPointF"/>
-			<item value="countText"/>
-			<item value="drawRotateText"/>
-			<item value="drawText"/>
 		</list>
 		<list key="replacehistory">
 			<item value="cPath"/>

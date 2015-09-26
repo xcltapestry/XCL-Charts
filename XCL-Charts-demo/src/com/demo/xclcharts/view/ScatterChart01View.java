@@ -178,6 +178,21 @@ public class ScatterChart01View extends DemoView {
 			//不使用精确计算，忽略Java计算误差
 			chart.disableHighPrecision();
 			
+			/*
+			//定义交叉点标签显示格式,特别备注,因图的特殊性，所以返回格式为:  x值,y值
+			//请自行分析定制
+			chart.setDotLabelFormatter(new IFormatterTextCallBack(){
+	
+				@Override
+				public String textFormatter(String value) {
+					// TODO Auto-generated method stub						
+					String label = "("+value+")";				
+					return (label);
+				}
+				
+			});*/
+			
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
