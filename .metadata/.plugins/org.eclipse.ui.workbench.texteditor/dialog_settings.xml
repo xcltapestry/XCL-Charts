@@ -3,26 +3,26 @@
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
 		<item value="273" key="DIALOG_WIDTH"/>
 		<item value="260" key="DIALOG_Y_ORIGIN"/>
-		<item value="1017" key="DIALOG_X_ORIGIN"/>
 		<item value="399" key="DIALOG_HEIGHT"/>
+		<item value="1017" key="DIALOG_X_ORIGIN"/>
 		<item value="1|微软雅黑|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|微软雅黑" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="true" key="wrap"/>
-		<item value="false" key="casesensitive"/>
 		<item value="false" key="isRegEx"/>
+		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="false" key="wholeword"/>
-		<item value="setCategoryAxisLocation" key="selection"/>
+		<item value="mCustomLineDataset" key="selection"/>
 		<list key="findhistory">
+			<item value="mCustomLineDataset"/>
+			<item value="mAreaAlpha"/>
+			<item value="getAreaFillPaint"/>
+			<item value="initPaint"/>
+			<item value="mPaintAreaFill"/>
 			<item value="setCategoryAxisLocation"/>
 			<item value="mCategoryAxisLocation"/>
 			<item value="getDataAxisLocation"/>
-			<item value="getCategoryAxisLocation"/>
-			<item value="std"/>
-			<item value="mItemLabelStyle"/>
-			<item value="renderBarItemLabel"/>
-			<item value="drawBarItemLabel"/>
 		</list>
 		<list key="replacehistory">
 			<item value="cPath"/>

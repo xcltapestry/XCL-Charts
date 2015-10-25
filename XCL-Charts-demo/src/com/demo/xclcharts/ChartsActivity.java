@@ -38,6 +38,7 @@ import android.widget.RelativeLayout;
 import com.demo.xclcharts.view.ArcLineChart01View;
 import com.demo.xclcharts.view.AreaChart01View;
 import com.demo.xclcharts.view.AreaChart02View;
+import com.demo.xclcharts.view.AreaChart03View;
 import com.demo.xclcharts.view.BarChart01View;
 import com.demo.xclcharts.view.BarChart02View;
 import com.demo.xclcharts.view.BarChart03View;
@@ -175,6 +176,8 @@ public class ChartsActivity extends Activity {
 			new SplineChart05View(this),
 			new AreaChart01View(this),	//区域图
 			new AreaChart02View(this),	//平滑区域图
+			new AreaChart03View(this),	//
+			
 			new MultiAxisChart01View(this),
 			new MultiAxisChart02View(this),
 			new MultiBarChart01View(this),	//多柱形堆积效果图

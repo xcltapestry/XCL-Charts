@@ -94,14 +94,15 @@ public class AreaChart extends LnChart {
 	public XEnum.ChartType getType() {
 		return XEnum.ChartType.AREA;
 	}
-
-	private void initPaint() {
+		
+	public Paint getAreaFillPaint(){
 		if (null == mPaintAreaFill) {
 			mPaintAreaFill = new Paint();
 			mPaintAreaFill.setStyle(Style.FILL);
 			mPaintAreaFill.setAntiAlias(true);
 			mPaintAreaFill.setColor(Color.rgb(73, 172, 72));
-		}
+		}		
+		return mPaintAreaFill;
 	}
 
 	@Override
@@ -595,7 +596,7 @@ public class AreaChart extends LnChart {
 			return false;
 		}
 
-		this.initPaint();
+		//this.initPaint();
 		if (null == mPathArea)
 			mPathArea = new Path();
 
@@ -611,12 +612,12 @@ public class AreaChart extends LnChart {
 
 			switch (getCrurveLineStyle()) {
 			case BEZIERCURVE:
-				renderBezierArea(canvas, mPaintAreaFill, mPathArea, areaData,
+				renderBezierArea(canvas, getAreaFillPaint(), mPathArea, areaData,
 						mLstPathPoints);
 				renderBezierCurveLine(canvas, mPathArea, areaData, mLstPoints);
 				break;
 			case BEELINE:
-				renderArea(canvas, mPaintAreaFill, mPathArea, areaData,
+				renderArea(canvas, getAreaFillPaint(), mPathArea, areaData,
 						mLstPathPoints);
 				renderLine(canvas, areaData, mLstPoints);
 				break;

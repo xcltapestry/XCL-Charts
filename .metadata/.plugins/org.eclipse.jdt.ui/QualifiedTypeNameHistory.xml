@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart09View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.FunnelChart01View"/>
 <fullyQualifiedTypeName name="java.util.List"/>
 <fullyQualifiedTypeName name="android.graphics.PointF"/>
@@ -42,8 +41,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.plot.PlotGrid"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LabelLineFeed"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.SplineChart05View"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart11View"/>
@@ -60,4 +57,7 @@
 <fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AnchorStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAreaStyle"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.view.AreaChart03View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.Direction"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.LineStyle"/>
 </qualifiedTypeNameHistroy>

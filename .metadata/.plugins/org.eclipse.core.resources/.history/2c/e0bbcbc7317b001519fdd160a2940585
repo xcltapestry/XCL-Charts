@@ -1,3 +1,25 @@
+/**
+ * Copyright 2014  XCL-Charts
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ * 
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ * 	
+ * @Project XCL-Charts 
+ * @Description Android图表基类库
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ * @Copyright Copyright (c) 2014 XCL-Charts (www.xclcharts.com)
+ * @license http://www.apache.org/licenses/  Apache v2 License
+ * @version 2.3
+ */
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
@@ -7,23 +29,23 @@ import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
-import org.xclcharts.chart.CustomLineData;
-import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
-import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.event.click.BarPosition;
 import org.xclcharts.renderer.XEnum;
 import org.xclcharts.renderer.info.AnchorDataPoint;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint.Align;
-import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.MotionEvent;
-import android.widget.Toast;
+
+
+/**
+ * @ClassName BarChart13View
+ * @Description  圆角柱形图例子(横向) 
+ *  
+ * @author XiongChuanLiang<br/>(xcl_168@aliyun.com)
+ */
 
 public class BarChart13View  extends DemoView {
 	private static final String TAG = "BarChart13View";
@@ -73,13 +95,13 @@ public class BarChart13View  extends DemoView {
 		try {
 			//设置绘图区默认缩进px值,留置空间显示Axis,Axistitle....	
 			int [] ltrb = getBarLnDefaultSpadding();
-			chart.setPadding(DensityUtil.dip2px(getContext(), 50),ltrb[1], ltrb[2],  ltrb[3]);
-			
-	
-			chart.setTitle("每日收益情况111");
+			chart.setPadding(ltrb[0],ltrb[1], ltrb[2],  ltrb[3]);
+				
+			chart.setTitle("附近广场舞调查 (共23支舞队)");
 			chart.addSubtitle("(XCL-Charts Demo)");		
-			chart.setTitleVerticalAlign(XEnum.VerticalAlign.MIDDLE);
-			chart.setTitleAlign(XEnum.HorizontalAlign.LEFT);
+			chart.setTitleVerticalAlign(XEnum.VerticalAlign.BOTTOM);
+			chart.setTitleAlign(XEnum.HorizontalAlign.RIGHT);
+			chart.getPlotTitle().getTitlePaint().setColor(Color.rgb(255, 9, 52));
 		
 			//数据源
 			chart.setDataSource(chartData);
@@ -108,7 +130,7 @@ public class BarChart13View  extends DemoView {
 			chart.getCategoryAxis().hideAxisLine();
 			chart.getCategoryAxis().hideTickMarks();
 			chart.getDataAxis().hide();
-		
+			chart.getCategoryAxis().getTickLabelPaint().setColor(Color.rgb(166, 84, 254));
 			
 			//标签轴文字旋转-45度
 			//chart.getCategoryAxis().setTickLabelRotateAngle(-45f);
@@ -125,9 +147,9 @@ public class BarChart13View  extends DemoView {
 					// TODO Auto-generated method stub
 					
 					if(Double.compare(value, 200d) == 0) {
-						return "1) 小鸡 小鸡";
+						return "1) 小苹果";
 					}else if (Double.compare(value, 250d) == 0) {
-						return "2) 小苹果";
+						return "2) 今夜舞起来";
 					}else if (Double.compare(value, 300d) == 0) {
 						return "3) 最炫民族风";
 					}else if (Double.compare(value, 350d) == 0) {
@@ -142,23 +164,19 @@ public class BarChart13View  extends DemoView {
 				}});	
 			
 				  
-			//激活点击监听
-		//	chart.ActiveListenItemClick();
 			chart.disablePanMode();
-			chart.showClikedFocus();
-			
-			chart.showBorder();
+			//chart.showBorder();
 			
 			//批注
 			List<AnchorDataPoint> mAnchorSet = new ArrayList<AnchorDataPoint>();
 			
 			AnchorDataPoint an0 = new AnchorDataPoint(0,0,XEnum.AnchorStyle.ROUNDRECT);
 			an0.setBgColor(Color.rgb(255, 145, 126));
-			an0.setAnchor("20%");
+			an0.setAnchor("64%");
 			
 			AnchorDataPoint an1 = new AnchorDataPoint(0,1,XEnum.AnchorStyle.ROUNDRECT); 
 			an1.setBgColor(Color.rgb(255, 145, 126));
-			an1.setAnchor("31%");
+			an1.setAnchor("53%");
 			
 			AnchorDataPoint an2 = new AnchorDataPoint(0,2,XEnum.AnchorStyle.ROUNDRECT);
 			an2.setBgColor(Color.rgb(255, 145, 126));
@@ -167,13 +185,13 @@ public class BarChart13View  extends DemoView {
 			AnchorDataPoint an3 = new AnchorDataPoint(0,3,XEnum.AnchorStyle.CIRCLE); 
 			an3.setBgColor(Color.rgb(56, 127, 255));
 			an3.setAreaStyle(XEnum.DataAreaStyle.FILL);
-			an3.setAnchor("53%");
+			an3.setAnchor("二");
 			an3.setTextColor(Color.WHITE);
 			
 			AnchorDataPoint an4 = new AnchorDataPoint(0,4,XEnum.AnchorStyle.CIRCLE);
 			an4.setBgColor(Color.rgb(56, 127, 255));
 			an4.setAreaStyle(XEnum.DataAreaStyle.FILL);
-			an4.setAnchor("64%");
+			an4.setAnchor("一");
 			an4.setTextColor(Color.WHITE);
 			
 			mAnchorSet.add(an0);
@@ -220,11 +238,11 @@ public class BarChart13View  extends DemoView {
 	
 	private void chartLabels()
 	{		
-		chartLabels.add("GG广场舞"); 
-		chartLabels.add("MM广场舞"); 
-		chartLabels.add("JJ广场舞"); 
-		chartLabels.add("YY广场舞"); 
-		chartLabels.add("TT广场舞"); 
+		chartLabels.add("**楼下广场/16人"); 
+		chartLabels.add("**小镇广场/35人"); 
+		chartLabels.add("**公园/3支队伍/平均60人"); 
+		chartLabels.add("**文体中心/5支队伍/平均50人/7点半-9点"); 
+		chartLabels.add("天虹**/6队伍/最大300人分6方队/(已成大气)"); 
 	}
 	
 	@Override
@@ -236,39 +254,7 @@ public class BarChart13View  extends DemoView {
         }
     }
 
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		// TODO Auto-generated method stub		
-		super.onTouchEvent(event);		
-		if(event.getAction() == MotionEvent.ACTION_UP) 
-		{			
-			triggerClick(event.getX(),event.getY());
-		}
-		return true;
-	}
-	
-	
-	//触发监听
-	private void triggerClick(float x,float y)
-	{		
-		BarPosition record = chart.getPositionRecord(x,y);			
-		if( null == record) return;
-		
-		BarData bData = chartData.get(record.getDataID());					
-		Double bValue = bData.getDataSet().get(record.getDataChildID());			
 
-		Toast.makeText(this.getContext(),
-				"info:" + record.getRectInfo() +
-				" Key:" + bData.getKey() + 							
-				" Current Value:" + Double.toString(bValue), 
-				Toast.LENGTH_SHORT).show();		
-			
-		chart.showFocusRectF(record.getRectF());		
-		chart.getFocusPaint().setStyle(Style.STROKE);
-		chart.getFocusPaint().setStrokeWidth(3);		
-		chart.getFocusPaint().setColor(Color.GREEN);	
-		this.invalidate();
-	}
-	
+
 }
 

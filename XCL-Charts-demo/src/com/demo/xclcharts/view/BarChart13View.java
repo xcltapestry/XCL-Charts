@@ -242,7 +242,7 @@ public class BarChart13View  extends DemoView {
 		chartLabels.add("**小镇广场/35人"); 
 		chartLabels.add("**公园/3支队伍/平均60人"); 
 		chartLabels.add("**文体中心/5支队伍/平均50人/7点半-9点"); 
-		chartLabels.add("天虹**/6队伍/最大300人分6方队/(已成大气)"); 
+		chartLabels.add("天虹**/6队伍/最大300人分6方队/(已成大气候)"); 
 	}
 	
 	@Override
