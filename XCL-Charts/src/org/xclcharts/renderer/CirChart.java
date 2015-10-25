@@ -342,14 +342,14 @@ public class CirChart extends EventChart{
 		}
 		
 		if(XEnum.SliceLabelStyle.INSIDE  == labelStyle)
-		{			 
+		{			 			
 			//显示在扇形的内部
 			position = renderLabelInside(canvas,text,cData.getItemLabelRotateAngle(),
-												cirX,cirY,radius,calcAngle,showLabel);
+												cirX,cirY,radius,calcAngle,showLabel);								
 		}else if(XEnum.SliceLabelStyle.OUTSIDE == labelStyle){
 			//显示在扇形的外部
-			position = renderLabelOutside(canvas,text,cData.getItemLabelRotateAngle(),
-												cirX,cirY,radius,calcAngle,showLabel);		
+			position = renderLabelOutside(canvas,text, cData.getItemLabelRotateAngle(),
+												cirX,cirY,radius,calcAngle,showLabel);													
 		}else if(XEnum.SliceLabelStyle.BROKENLINE == labelStyle){				
 			//显示在扇形的外部
 			//1/4处为起始点

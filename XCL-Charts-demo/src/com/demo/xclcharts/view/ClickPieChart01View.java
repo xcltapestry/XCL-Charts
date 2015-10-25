@@ -134,13 +134,28 @@ public class ClickPieChart01View extends GraphicalView {
 	{
 		//设置图表数据源		
 		
-		chartData.add(new PieData("48","48%",45,Color.rgb(215, 124, 124)));
-		chartData.add(new PieData("15","15%",15,Color.rgb(253, 180, 90)));
-		chartData.add(new PieData("5","5%",5,Color.rgb(77, 83, 97)));
-		chartData.add(new PieData("10","10%",10f,Color.rgb(253, 180, 90)));
+		PieData pd1 = new PieData("48","48%",45,Color.rgb(215, 124, 124));
+		//pd1.setItemLabelRotateAngle(90);
+		
+		PieData pd2 = new PieData("15","15%",15,Color.rgb(253, 180, 90));
+		//pd2.setItemLabelRotateAngle(90);
+		
+		PieData pd3 = new PieData("5","5%",5,Color.rgb(77, 83, 97));
+		//pd3.setItemLabelRotateAngle(90);
+		
+		PieData pd4 =new PieData("10","10%",10f,Color.rgb(253, 180, 90));
+		//pd4.setItemLabelRotateAngle(90); //360 * 0.10f);
+		
+		PieData pd5 =new PieData("其它","25%",25,Color.rgb(52, 194, 188),true);
+		//pd5.setItemLabelRotateAngle(90);
+				
+		chartData.add(pd1);
+		chartData.add(pd2);
+		chartData.add(pd3);
+		chartData.add(pd4);
 		
 		//将此比例块突出显示
-		chartData.add(new PieData("其它","25%",25,Color.rgb(52, 194, 188),true));
+		chartData.add(pd5);
 	}
 	
 	@Override

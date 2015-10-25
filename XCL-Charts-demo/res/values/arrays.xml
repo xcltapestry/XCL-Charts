@@ -17,8 +17,9 @@
 	  	
 	  	<item>右轴柱形图</item>
 	  	<item>顶轴横向柱形图</item>
-	  	<item>圆柱形图</item>
-	  	
+	  	<item>圆角柱形图</item>
+	  	<item>圆角柱形图(横向)</item>
+	
 	  	
 	  	<item>竖向堆积柱形图 </item>
 	  	<item>横向堆积柱形图 </item>
@@ -95,6 +96,7 @@
 	  <item>定制右轴柱形图</item>
 	   <item>横向柱形图 云存储</item>
 	   <item>Round Bar</item>
+	   	<item>圆角柱形图(横向)</item>
 	  
 	  <item>Stacked Bar Chart</item> 
 	  <item>Stacked Bar Chart</item>

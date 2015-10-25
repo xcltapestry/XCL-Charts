@@ -35,6 +35,7 @@ import org.xclcharts.renderer.plot.AxisTitleRender;
 
 import android.graphics.Canvas;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * @ClassName AxesChart
@@ -658,10 +659,10 @@ public class AxesChart extends EventChart {
 		switch(mCategoryAxisLocation)
 		{
 		case LEFT:
-			categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop); 
+			categoryAxis.renderAxis(canvas,plotLeft, plotBottom, plotLeft, plotTop); 		
 			break;
 		case RIGHT:
-			categoryAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom); 
+			categoryAxis.renderAxis(canvas,plotRight, plotTop, plotRight, plotBottom);		
 			break;
 		case VERTICAL_CENTER:
 			categoryAxis.renderAxis(canvas,vcX, plotTop, vcX, plotBottom); 

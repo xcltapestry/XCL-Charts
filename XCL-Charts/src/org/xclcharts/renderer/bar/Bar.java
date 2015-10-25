@@ -131,6 +131,14 @@ public class Bar {
 	public void setItemLabelStyle(XEnum.ItemLabelStyle style){
 		this.mItemLabelStyle = style;
 	}
+	
+	/**
+	 * 返回柱形标签显示位置
+	 * @return
+	 */
+	public XEnum.ItemLabelStyle getItemLabelStyle(){
+		return this.mItemLabelStyle;
+	}
 
 	/**
 	 * 开放柱形画笔

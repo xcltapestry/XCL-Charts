@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart08View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart09View"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.FunnelChart01View"/>
 <fullyQualifiedTypeName name="java.util.List"/>
@@ -14,7 +13,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.AnchorDataPoint"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.line.PlotDotRender"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.info.AnchorRender"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AnchorStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.centerStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.CoordsCenterStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarCenterStyle"/>
@@ -35,7 +33,6 @@
 <fullyQualifiedTypeName name="org.xclcharts.common.DrawHelper"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ODD_EVEN"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLineStyle"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAreaStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.PanMode"/>
 <fullyQualifiedTypeName name="android.graphics.Paint.Align"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.HorizontalAlign"/>
@@ -50,14 +47,17 @@
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DyInfoStyle"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart11View"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLocation"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.VerticalAlign"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ChartType"/>
 <fullyQualifiedTypeName name="android.graphics.RectF"/>
-<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
-<fullyQualifiedTypeName name="android.graphics.Color"/>
 <fullyQualifiedTypeName name="android.graphics.Paint"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
 <fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart12View"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.BarStyle"/>
+<fullyQualifiedTypeName name="com.demo.xclcharts.view.BarChart13View"/>
+<fullyQualifiedTypeName name="android.graphics.Color"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AxisLocation"/>
 <fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.ItemLabelStyle"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.AnchorStyle"/>
+<fullyQualifiedTypeName name="org.xclcharts.renderer.XEnum.DataAreaStyle"/>
 </qualifiedTypeNameHistroy>

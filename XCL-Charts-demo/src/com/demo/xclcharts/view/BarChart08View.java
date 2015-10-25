@@ -1,7 +1,6 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -12,7 +11,6 @@ import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.DrawHelper;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;

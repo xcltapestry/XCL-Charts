@@ -637,7 +637,12 @@ public class BarChart extends AxesChart {
 				if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
 				{					
 				}else{
-					mFlatBar.renderBarItemLabel(label,labelLeftX, labelLeftY,canvas);
+					if( mFlatBar.getItemLabelStyle() == XEnum.ItemLabelStyle.BOTTOM )  {
+						mFlatBar.renderBarItemLabel(label,barLeft, labelLeftY,canvas);
+					}else{
+						mFlatBar.renderBarItemLabel(label,labelLeftX, labelLeftY,canvas);
+					}
+					
 				}
 				
 				//显示焦点框
@@ -789,12 +794,13 @@ public class BarChart extends AxesChart {
 			
 			// 设成对应的颜色
 			mFlatBar.getBarPaint().setColor(bd.getColor());
-												
+									
+			
 			// 画出分类对应的所有柱形
 			int countChild = barValues.size();
 			for (int j = 0; j < countChild; j++) {
 				Double bv = barValues.get(j);
-					
+												
 				setBarDataColor(mFlatBar.getBarPaint(),barDataColor,j,bd.getColor());				
 				currLabelX = add(plotArea.getLeft() , mul((j + 1) , XSteps));
 												
@@ -830,10 +836,12 @@ public class BarChart extends AxesChart {
 					 barTop = topY;						
 					 barRight = add(drawBarStartX , barWidth);
 					 barBottom = plotArea.getBottom() ;
-				}				
+				}		
+				
+			
 				// 画出柱形
 				mFlatBar.renderBar(barLeft,barBottom,barRight,barTop,canvas);
-				
+								
 				//保存位置
 				saveBarRectFRecord(i,j,barLeft + mMoveX,barTop + mMoveY,
 									barRight  + mMoveX,barBottom + mMoveY); 
@@ -850,13 +858,20 @@ public class BarChart extends AxesChart {
 				if(!mEqualAxisMin && Double.compare(dataAxis.getAxisMin(), bv)  == 0)
 				{					
 				}else{
+					if( mFlatBar.getItemLabelStyle() == XEnum.ItemLabelStyle.BOTTOM )  {
+						mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),labelTopX,barBottom, canvas);
+					}else{
 					mFlatBar.renderBarItemLabel(getFormatterItemLabel(bv),
 												labelTopX,labelTopY, canvas);	
+					}
 				}
+				
+				
 			}
 			currNumber++;
 		}
-
+		
+		
 		//画竖向柱形图的定制线		
 		if(null != mCustomLine)
 		{

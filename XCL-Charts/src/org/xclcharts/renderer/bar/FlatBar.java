@@ -236,8 +236,8 @@ public class FlatBar extends Bar{
 		mPath.lineTo(left, top);
 		mPath.lineTo(right,top);
 		mPath.lineTo(right, bottom);
-		mPath.close();
-		canvas.drawPath(mPath, getBarPaint());		
+		mPath.close();				
+		canvas.drawPath(mPath, getBarPaint());			
 		mPath.reset();
 	}
 	

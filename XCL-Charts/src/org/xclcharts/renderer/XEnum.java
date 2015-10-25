@@ -365,7 +365,7 @@ public class XEnum {
 		
 		//柱形标签位置
 		public enum ItemLabelStyle {			
-			NORMAL,INNER,OUTER
+			NORMAL,INNER,OUTER,BOTTOM
 		}
 				
 		/**

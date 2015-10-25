@@ -23,22 +23,22 @@
 package com.demo.xclcharts.view;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.xclcharts.chart.BarChart;
 import org.xclcharts.chart.BarData;
+import org.xclcharts.chart.CustomLineData;
 import org.xclcharts.common.DensityUtil;
 import org.xclcharts.common.IFormatterDoubleCallBack;
 import org.xclcharts.common.IFormatterTextCallBack;
 import org.xclcharts.event.click.BarPosition;
-import org.xclcharts.renderer.XChart;
 import org.xclcharts.renderer.XEnum;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.graphics.Paint.Style;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -58,6 +58,7 @@ public class BarChart02View extends DemoView {
 	//标签轴
 	private List<String> chartLabels = new LinkedList<String>();
 	private List<BarData> chartData = new LinkedList<BarData>();
+	
 
 	public BarChart02View(Context context) {
 		super(context);
@@ -78,7 +79,7 @@ public class BarChart02View extends DemoView {
 	 private void initView()
 	 {		 
 		 	chartLabels();
-			chartDataSet();	
+			chartDataSet();			
 			chartRender();
 			
 			//綁定手势滑动事件
@@ -205,6 +206,8 @@ public class BarChart02View extends DemoView {
 		chartLabels.add("槟榔"); 				
 		chartLabels.add("纯净水(强势插入，演示多行标签)"); 
 	}
+	
+	
 
 	@Override
     public void render(Canvas canvas) {
