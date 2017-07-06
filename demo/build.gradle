@@ -22,6 +22,12 @@ android {
     }
 }
 
+repositories {
+    maven {
+        url 'https://dl.bintray.com/xcl-charts/Xcl-Charts/'
+    }
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
@@ -29,5 +35,6 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.3.1'
     testCompile 'junit:junit:4.12'
-    compile project(path: ':lib')
+//    compile project(path: ':lib')
+    compile 'org.xclcharts:lib:2.4'
 }
